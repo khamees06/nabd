@@ -340,7 +340,7 @@
           <h2>قسم العمليات الجراحية</h2>
           <p>ثلاث حالات تمريضية تتبع المريض من التجهيز إلى غرفة العمليات ثم الإفاقة، مع قائمة التحقق الجراحية لمنظمة الصحة العالمية.</p>
           <ol class="v7-or-steps"><li><b>1</b>قبل العملية</li><li><b>2</b>داخل غرفة العمليات</li><li><b>3</b>غرفة الإفاقة</li></ol>
-          <button class="v7-btn-outline focus-ring" type="button" onclick="document.getElementById('index-demo-cta').click()">جرّب القسم</button>
+          <button class="v7-btn-outline focus-ring" type="button" onclick="nbDemoLogin('rana'); setTimeout(() => document.getElementById('home-or')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400)">جرّب القسم</button>
         </div>
         <div class="v7-quote v7-uni">
           <img src="img/or/banner.jpg" alt="فريق جراحي أثناء عملية" loading="lazy" decoding="async" onerror="nbImgFail(this)">
@@ -453,7 +453,7 @@
       </div>
 
       <div id="home-nurse" class="hidden space-y-4">
-        <div id="home-or" class="nb-path-card">
+        <div id="home-or" class="nb-path-card scroll-mt-20">
           <span class="v7-eyebrow">جديد</span>
           <h2 class="text-slate-900">العمليات الجراحية</h2>
           <p>تابع المريض من التجهيز إلى غرفة العمليات ثم الإفاقة.</p>

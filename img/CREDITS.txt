@@ -1,0 +1,98 @@
+Photos in this folder come from Wikimedia Commons. Each keeps its own licence.
+
+hero.jpg
+  https://commons.wikimedia.org/wiki/File:Craig_Joint_Theater_Hospital_Helps_Build_Afghan_Nursing_Foundation_DVIDS212443.jpg
+  Tech. Sgt. John Jung — Public domain
+welcome.jpg
+  https://commons.wikimedia.org/wiki/File:PHOTOS_INSIDE_THE_CLASSROOM_UPDATED014.jpg
+  Monirb — CC BY-SA 4.0
+univ.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_050223-N-8796S-085_Cmdr._Suzanne_Clark,_a_U.S._Navy_Nurse_assigned_to_the_Military_Sealift_Command_(MSC)_hospital_ship_USNS_Mercy_(T-AH_19),_takes_questions_after_giving_a_lecture_on_diabetes_to_Indonesian_nursing_stude.jpg
+  U.S. Navy photo by Photographer's Mate 2nd Class Timothy Smith — Public domain
+cases/cardio.jpg
+  https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_bolster_readiness_through_LAMAT_25_(8978308).jpg
+  U.S. Air Force photo by Maj. Stephani Schafer — Public domain
+cases/resp.jpg
+  https://commons.wikimedia.org/wiki/File:Medical_professional_examines_chest_X-rays_in_a_clinic_setting.jpg
+  Shixart1985 — CC BY 2.0
+cases/gi.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_090715-N-9689V-008_Republic_of_Singapore_Navy_Maj._Boon_Hor_Ho_examines_a_local_man_suffering_from_abdominal_pain_during_a_Pacific_Partnership_2009_medical_civic_action_project_at_Niu%27ui_Hospital.jpg
+  U.S. Navy photo by Mass Communication Specialist 2nd Class Joshua Valcarcel — Public domain
+cases/obgyn.jpg
+  https://commons.wikimedia.org/wiki/File:Pacific_Partnership_2025_Provides_Medical_Care_to_Samoa_Locals_During_a_Community_Health_Engagement_at_Faleolo_Medical_Center_(9379658).jpg
+  U.S. Navy photo by Petty Officer 3rd Class Ethan Lambert — Public domain
+cases/abdomen.jpg
+  https://commons.wikimedia.org/wiki/File:Experiencing_menstrual_pain_with_hot_water_bottle.jpg
+  Vulvani — CC BY-SA 4.0
+cases/ortho.jpg
+  https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg
+  Chaim Mintz — CC BY-SA 4.0
+cases/peds.jpg
+  https://commons.wikimedia.org/wiki/File:Doctor_checks_a_childs_heartbeat_at_a_medical_office.jpg
+  Shixart1985 — CC BY 2.0
+nc/bp.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_070919-N-6278K-106_Laura_Seris,_a_registered_nurse_and_Project_Hope_volunteer_attached_to_Military_Sealift_Command_hospital_ship_USNS_Comfort_(T-AH_20),_takes_a_blood_pressure_reading_from_a_patient.jpg
+  U.S. Navy photo by Mass Communication Specialist 2nd Class Joan E. Kretschmer — Public domain
+nc/bleed.jpg
+  https://commons.wikimedia.org/wiki/File:Fire_Controlman_watching_arm_being_wrapped_during_first_aid_class_aboard_USS_Benfold_(DDG-65)_180628-N-GR120-0104.jpg
+  Mass Communication Specialist 2nd Class Anna Van Nuys — CC BY-SA 2.0
+nc/wound.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_080628-N-9689V-007_Lt._Todd_Hlavac,_a_staff_nurse_assigned_to_the_Military_Sealift_Command_hospital_ship_USNS_Mercy_(T-AH_19),_changes_the_dressing_for_a_Vietnamese_patient_before_his_discharge_to_a_local_hospital.jpg
+  U.S. Navy photo by Mass Communication Specialist 3rd Class Joshua Valcarcel — Public domain
+nc/sugar.jpg
+  https://commons.wikimedia.org/wiki/File:Blood_Glucose_Check_-_Howrah_-_2015-04-12_7637.JPG
+  Biswarup Ganguly — CC BY 3.0
+nc/fever.jpg
+  https://commons.wikimedia.org/wiki/File:Healthcare_professional_checks_temperature_with_digital_thermometer_during_patient_consultation_in_a_medical_office_undefined.jpg
+  Shixart1985 — CC BY 2.0
+nc/iv.jpg
+  https://commons.wikimedia.org/wiki/File:Perfusion_en_intraveineuse_dans_la_main.jpg
+  Futurhit12 — CC BY-SA 4.0
+nc/vitals.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_110714-N-RM525-060_Hospitalman_Seckisiesha_Isaac,_from_New_York,_prepares_to_take_a_woman%27s_temperature_at_a_pre-screening_vital_signs_stat.jpg
+  U.S. Navy photo by Mass Communication Specialist 2nd Class Jonathen E. Davis — Public domain
+nc/chest.jpg
+  https://commons.wikimedia.org/wiki/File:Heartache-1846050_1920.jpg
+  freestocks.org — CC0
+nc/hypo.jpg
+  https://commons.wikimedia.org/wiki/File:Hypobox.jpg
+  Whispyhistory — CC BY-SA 4.0
+nc/sepsis.jpg
+  https://commons.wikimedia.org/wiki/File:Monitor_theo_d%E1%BB%8Fi_b%E1%BB%87nh_nh%C3%A2n.jpg
+  Huynhvn — CC0
+nb/bp.jpg
+  https://commons.wikimedia.org/wiki/File:Nurse_takes_a_patient's_blood_pressure.jpg
+  see the file page for author and licence
+nb/bp2.jpg
+  https://commons.wikimedia.org/wiki/File:Nurse_checks_blood_pressure.jpg
+  see the file page for author and licence
+nb/amman.jpg
+  https://commons.wikimedia.org/wiki/File:Sunset_over_citadel_in_Amman,_Jordan.jpg
+  see the file page for author and licence
+nb/ecg.jpg
+  https://commons.wikimedia.org/wiki/File:Normal_12_lead_EKG.jpg
+  see the file page for author and licence
+nb/iv.jpg
+  https://commons.wikimedia.org/wiki/File:Intravenous_cannula_01.JPG
+  see the file page for author and licence
+nb/steth.jpg
+  https://commons.wikimedia.org/wiki/File:Physical_exam_of_child_with_stethoscope_on_chest.jpeg
+  see the file page for author and licence
+nb/hands.jpg
+  https://commons.wikimedia.org/wiki/File:MNHandWashingNurse.jpg
+  see the file page for author and licence
+nb/cxr_normal.png
+  https://commons.wikimedia.org/wiki/File:Chest_Xray_PA_3-8-2010.png
+  see the file page for author and licence
+nb/cxr_pneu.jpg
+  https://commons.wikimedia.org/wiki/File:Pneumonia_x-ray.jpg
+  see the file page for author and licence
+nb/thermo.jpg
+  https://commons.wikimedia.org/wiki/File:Fieberthermometer_BW_2.JPG
+  see the file page for author and licence
+nb/bandage.jpg
+  https://commons.wikimedia.org/wiki/File:Fingergazevernband.jpg
+  see the file page for author and licence
+nb/ankle_fx.jpg
+  cropped (left panel) from https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg
+  Chaim Mintz — CC BY-SA 4.0

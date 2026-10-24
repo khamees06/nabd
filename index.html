@@ -1,0 +1,2003 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>نَبْض الأردن | أكاديمية المحاكاة السريرية</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+  
+  
+  
+  
+  
+  <link rel="stylesheet" href="style.css">
+  <link rel="stylesheet" href="theme.css">
+  <script>/* until script.js loads, a missing photo just hides */ window.nbImgFail = window.nbImgFail || function (el) { el.style.visibility = "hidden"; };</script>
+  
+</head>
+<body class="min-h-screen flex flex-col bg-[#F6F4EF] text-slate-900 selection:bg-teal-700 selection:text-white">
+
+  <!-- =========================================================
+       1A. PUBLIC HEADER (Shown ONLY in Guest Mode on Index Page)
+       ========================================================= -->
+  <header id="public-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+    <!-- Right: Brand Identity -->
+    <div class="flex items-center gap-3">
+      <button id="public-brand-btn" class="flex items-center gap-3 text-right group focus-ring rounded-xl p-1" aria-label="العودة لأعلى صفحة نبض التعريفية">
+        <div class="nb-logo">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="nb-display font-bold text-base text-slate-900 block leading-none">نَبْض الأردن</span>
+          
+          
+        </div>
+      </button>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="التنقل في الصفحة الرئيسية">
+      <a href="#sec-how" class="nav-link-item" data-pub-anchor="sec-how">كيف تعمل نبض؟</a>
+      <a href="#sec-specs" class="nav-link-item" data-pub-anchor="sec-specs">التخصصات</a>
+      <a href="#sec-level" class="nav-link-item" data-pub-anchor="sec-level">اختبر مستواك</a>
+      <a href="#sec-universities" class="nav-link-item" data-pub-anchor="sec-universities">التدريب الجامعي</a>
+    </nav>
+    <!-- Left: Clear Login & Create Account Buttons + 3-Line Sidebar Button on Far Left -->
+    <div class="flex items-center gap-2.5 shrink-0">
+      
+      <button id="public-login-btn" class="px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors shadow-xs focus-ring">
+        تسجيل الدخول
+      </button>
+      <button id="public-register-btn" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-teal-800 border border-slate-200 text-xs sm:text-sm font-semibold transition-colors focus-ring">
+        إنشاء حساب
+      </button>
+
+      <!-- 3-Line Hamburger Icon on the Far Left -->
+      <button id="public-open-sidebar-btn" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition-colors border border-slate-200/80 focus-ring" aria-label="فتح القائمة الجانبية العامة" title="فتح القائمة الجانبية">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       1B. APPLICATION HEADER (Shown ONLY When Signed In)
+       ========================================================= -->
+  <header id="app-header" class="hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+    <!-- Right: Brand Identity -->
+    <div class="flex items-center gap-3">
+      <button id="app-brand-btn" class="flex items-center gap-3 text-right group focus-ring rounded-xl p-1" aria-label="الذهاب إلى الصفحة الرئيسية للتدريب">
+        <div class="w-10 h-10 rounded-xl bg-teal-700 text-white flex items-center justify-center shadow-xs group-hover:bg-teal-800 transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-bold text-base text-slate-900 tracking-tight block leading-none">نَبْض الأردن</span>
+          <span class="text-xs text-slate-500 mt-1 block">مساحة التدريب السريري</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Center: Clean Training Workspace Navigation Links (Not a gray pill-filter box) -->
+    <nav class="hidden md:flex items-center gap-3" aria-label="التنقل في مساحة التدريب">
+      <button id="app-nav-home" data-app-view="home" class="app-nav-btn nav-link-item active">
+        الرئيسية
+      </button>
+      <button id="app-nav-er" class="nav-link-item text-sky-800 hover:text-sky-900 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+        <span>غرفة الطوارئ</span>
+      </button>
+      <button id="app-nav-cases" data-app-view="cases-scroll" class="app-nav-btn nav-link-item">
+        الحالات والتدريب
+      </button>
+      <button id="app-nav-uni" data-app-view="university" class="app-nav-btn nav-link-item text-teal-800">
+        الجلسات الجامعية
+      </button>
+      <button id="app-nav-coach" data-app-view="coach" class="app-nav-btn nav-link-item">
+        المدرب السريري
+      </button>
+    </nav>
+
+    <!-- Left: User Account Avatar Circle + Dropdown Menu + 3-Line Sidebar Button on Far Left -->
+    <div class="flex items-center gap-2.5 shrink-0 relative">
+      
+      <!-- User Avatar Button -->
+      <div class="relative">
+        <button id="user-menu-btn" aria-expanded="false" aria-haspopup="true" class="flex items-center gap-2.5 pl-2.5 pr-1.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200/80 border border-slate-200/80 transition-colors focus-ring" title="قائمة الحساب والملف الشخصي">
+          <div id="header-avatar-circle" class="w-8 h-8 rounded-full bg-teal-700 text-white font-bold text-xs flex items-center justify-center overflow-hidden shrink-0">
+            <span id="user-avatar-fallback">ر م</span>
+          </div>
+          <span id="header-user-short-name" class="hidden sm:inline text-xs font-bold text-slate-800">حسابي</span>
+          <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <!-- Account Dropdown Menu -->
+        <div id="account-dropdown-menu" role="menu" class="hidden absolute left-0 mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 text-right">
+          <div class="px-4 py-2.5 border-b border-slate-100">
+            <div id="dropdown-user-name" class="text-sm font-bold text-slate-900">رنا المحاسنة</div>
+            <div id="dropdown-user-role" class="text-xs text-teal-700 font-medium mt-0.5">طالبة تمريض · السنة الرابعة</div>
+            <span id="dropdown-demo-badge" class="inline-block mt-1 px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 text-xs font-semibold">وضع العرض التجريبي</span>
+          </div>
+
+          <div class="py-1">
+            <button data-drop-view="profile" data-profile-tab="overview" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+              <span>ملفي الشخصي</span>
+              <span class="text-slate-400">←</span>
+            </button>
+            <button data-drop-view="profile" data-profile-tab="history" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+              <span>سجل الجلسات</span>
+              <span class="text-slate-400">←</span>
+            </button>
+            <button data-drop-view="profile" data-profile-tab="certificate" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-bold text-teal-800 hover:bg-teal-50/70 flex items-center justify-between">
+              <span>وثيقة إثبات الإنجاز (للطباعة)</span>
+              <span class="text-teal-700">←</span>
+            </button>
+            <button data-drop-view="profile" data-profile-tab="settings" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+              <span>الإعدادات</span>
+              <span class="text-slate-400">←</span>
+            </button>
+          </div>
+
+          <div class="border-t border-slate-100 py-1">
+            <button id="dropdown-switch-demo-btn" class="w-full text-right px-4 py-2 text-xs sm:text-sm font-semibold text-teal-800 hover:bg-teal-50/70 flex items-center justify-between">
+              <span>تسجيل الدخول بحساب آخر</span>
+            </button>
+            <button id="dropdown-logout-btn" class="w-full text-right px-4 py-2 text-xs sm:text-sm font-semibold text-rose-700 hover:bg-rose-50/70 flex items-center justify-between">
+              <span>تسجيل الخروج</span>
+              <span>←</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Line Hamburger Icon on the Far Left -->
+      <button id="app-open-sidebar-btn" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition-colors border border-slate-200/80 focus-ring" aria-label="فتح القائمة الجانبية للتطبيق" title="فتح القائمة الجانبية">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       COLLAPSIBLE SIDEBAR DRAWER (Dual Mode: Guest vs Signed-In)
+       ========================================================= -->
+  <div id="sidebar-backdrop" class="fixed inset-0 z-70 bg-slate-900/40 backdrop-blur-xs hidden" style="z-index: 70;"></div>
+  <aside id="app-sidebar" aria-label="القائمة الجانبية" aria-hidden="true" class="sidebar-floating-drawer fixed top-0 left-0 z-75 h-full max-w-[88vw] bg-white transform -translate-x-full transition-transform duration-300 flex flex-col" style="z-index: 75;">
+    <div class="v7-drawer-head">
+      <span>حسابك في نبض</span>
+      <button id="close-sidebar-btn" class="focus-ring" aria-label="إغلاق القائمة الجانبية" title="إغلاق القائمة (Esc)">✕</button>
+    </div>
+    <div class="v7-user">
+      <span class="v7-av" id="side-user-av" aria-hidden="true">ن</span>
+      <div><b id="side-user-name">نَبْض الأردن</b><small id="sidebar-subtitle">تصفح التعريف بالمنصة</small></div>
+    </div>
+
+    <!-- guest links -->
+    <nav id="sidebar-guest-nav" class="overflow-y-auto flex-1" aria-label="روابط الصفحة">
+      <div class="v7-group">
+        <a href="#sec-how" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>كيف تعمل نبض؟</span></a>
+        <a href="#sec-roles" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/></svg><span>المسارات</span></a>
+        <a href="#sec-specs" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>التخصصات</span></a>
+        <a href="#sec-level" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>اختبر مستواك</span></a>
+        <a href="#sec-universities" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>التدريب الجامعي</span></a>
+      </div>
+    </nav>
+
+    <!-- signed-in links -->
+    <nav id="sidebar-app-nav" class="hidden overflow-y-auto flex-1" aria-label="التنقل في مساحة التدريب">
+      <div class="v7-group">
+        <button type="button" data-side-app="home" data-v7-view="view-home" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>الرئيسية</span></button>
+      </div>
+      <div class="v7-group">
+        <p>التدريب السريري</p>
+        <button type="button" id="side-er-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>غرفة الطوارئ</span></button>
+        <button type="button" class="v7-item" onclick="document.getElementById('app-nav-cases').click()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>الحالات التخصصية</span></button>
+        <button type="button" data-side-app="coach" data-v7-view="view-coach" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>المدرب السريري</span></button>
+      </div>
+      <div class="v7-group">
+        <p>سجلي</p>
+        <button type="button" data-side-app="debrief" data-v7-view="view-debrief" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><span>تقرير آخر جلسة</span></button>
+        <button type="button" data-side-app="profile" data-v7-view="view-profile" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>الملف الشخصي</span></button>
+        <button type="button" id="side-cert-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg><span>إثبات الإنجاز</span><span class="v7-tag">PDF</span></button>
+      </div>
+      <div class="v7-group">
+        <p>المسار الجامعي</p>
+        <button type="button" id="side-uni-portal-btn" data-v7-view="view-university" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>الجلسات الجامعية</span></button>
+      </div>
+      <div class="v7-group">
+        <p>إعدادات الحساب</p>
+        <button type="button" class="dropdown-item-btn v7-item" data-drop-view="profile" data-profile-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span>الإعدادات</span></button>
+      </div>
+    </nav>
+
+    <div class="v7-foot">
+      <div id="sidebar-guest-footer" class="grid gap-2">
+        <button type="button" id="side-guest-login-btn">تسجيل الدخول</button>
+        <button type="button" id="side-guest-register-btn">إنشاء حساب جديد</button>
+      </div>
+      <div id="sidebar-app-footer" class="hidden grid gap-2">
+        <button type="button" id="side-switch-demo-btn">تسجيل الدخول بحساب آخر</button>
+        <button type="button" id="side-logout-btn">تسجيل الخروج</button>
+      </div>
+      <small>تجربة تعليمية · بياناتك على هذا الجهاز</small>
+    </div>
+  </aside>
+
+  <!-- =========================================================
+       TOAST NOTIFICATION BANNER
+       ========================================================= -->
+  <div id="calm-toast" role="status" aria-live="polite" class="fixed bottom-5 left-5 z-100 hidden max-w-md bg-slate-900 text-white px-4 py-3 rounded-2xl shadow-lg border border-slate-700 text-xs sm:text-sm leading-relaxed flex items-center justify-between gap-3" style="z-index: 100;">
+    <span id="calm-toast-text"></span>
+    <button id="calm-toast-close" class="text-slate-400 hover:text-white font-bold px-1.5" aria-label="إغلاق الإشعار">✕</button>
+  </div>
+
+  <!-- =========================================================
+       MAIN VIEWPORT CONTAINER
+       ========================================================= -->
+  <main id="main-container" class="flex-1 w-full">
+
+    <!-- =======================================================
+         VIEW 0: PUBLIC LANDING PAGE (INDEX)
+         Calm medical aesthetic, honest copy, clear hierarchy
+         ======================================================= -->
+    <section id="view-index" class="nb-index">
+
+      <!-- Hero -->
+      <div class="nb-hero">
+        <div class="nb-hero-copy">
+          <span class="v7-eyebrow">منصة للمحاكاة والتعليم السريري</span>
+          <h1><span>تدرّب على الحالة.</span> <span>اجمع الأدلة.</span> <span class="em">اتخذ قرارك بثقة.</span></h1>
+          <p>مريض افتراضي تحاوره، وفحوصات تطلبها، ثم تقييم يوضّح لك ما أصبت فيه وما فاتك.</p>
+          <div class="nb-cta" aria-label="ابدأ من هنا">
+            <button id="index-register-cta" class="p focus-ring" type="button">ابدأ التدريب</button>
+            <button id="index-demo-cta" class="d focus-ring" type="button">دخول تجريبي</button>
+          </div>
+          <div class="v7-hero-links">
+            <button id="index-login-cta" class="focus-ring" type="button">لديك حساب؟ تسجيل الدخول</button>
+            <a href="#sec-level" id="index-level-cta" class="focus-ring">اختبر مستواك</a>
+          </div>
+          <ul class="v7-checks"><li>تعلّم بالمحاكاة</li><li>تقييم بعد التسليم</li><li>للطب والتمريض</li></ul>
+        </div>
+        <figure class="v7-hero-media">
+          <img src="img/hero.jpg" alt="ممرضة تتابع مريضاً في سريره" loading="eager" decoding="async" onerror="nbImgFail(this)">
+          <figcaption><b>تجربة سريرية متكاملة</b><span>مقابلة · أدلة · قرار · تقييم</span></figcaption>
+        </figure>
+      </div>
+
+      <!-- Learning journey -->
+      <div id="sec-how" class="scroll-mt-20 v7-band">
+        <div class="v7-head">
+          <span class="v7-eyebrow">رحلة التعلّم</span>
+          <h2>كل حالة تبدأ بسؤال، وتنتهي بفهم أعمق.</h2>
+        </div>
+        <ol class="v7-steps">
+          <li><b>01</b><h3>ابدأ حالة</h3><p>اختر تخصصاً أو حالة طوارئ عشوائية.</p></li>
+          <li><b>02</b><h3>قابل المريض</h3><p>اسأل وافحص واطلب ما تحتاجه.</p></li>
+          <li><b>03</b><h3>اتخذ قرارك</h3><p>شخّص أو نفّذ الأوامر بأمان.</p></li>
+          <li><b>04</b><h3>سلّم وراجع</h3><p>سلّم الحالة واقرأ تقييمك.</p></li>
+        </ol>
+      </div>
+
+      <!-- Two tracks -->
+      <div id="sec-roles" class="scroll-mt-20 v7-section">
+        <div class="v7-head">
+          <span class="v7-eyebrow">مساران</span>
+          <h2>اختر مسارك</h2>
+        </div>
+        <div class="nb-roles2">
+          <article class="nb-track-card">
+            <div class="nb-tc-img"><img src="img/nc/bp.jpg" alt="ممرضة تقيس ضغط الدم لمريض" loading="lazy" decoding="async" onerror="nbImgFail(this)"></div>
+            <div class="nb-tc-body">
+              <span class="nb-pill">مسار التمريض</span>
+              <h3>قيّم الحالة وتصرّف بأمان</h3>
+              <p>قِس العلامات الحيوية، بلّغ الطبيب، ونفّذ أوامره ثم سلّم الحالة.</p>
+            </div>
+          </article>
+          <article class="nb-track-card">
+            <div class="nb-tc-img"><img src="img/cases/resp.jpg" alt="طبيب يفحص مريضاً بالسماعة" loading="lazy" decoding="async" onerror="nbImgFail(this)"></div>
+            <div class="nb-tc-body">
+              <span class="nb-pill">مسار الطب</span>
+              <h3>افحص وشخّص واختر العلاج</h3>
+              <p>خذ القصة، اطلب الفحوصات المبررة، واكتب خطة واضحة للفريق.</p>
+            </div>
+          </article>
+        </div>
+      </div>
+
+      <!-- Specialties -->
+      <div id="sec-specs" class="scroll-mt-20 v7-section">
+        <div class="v7-head">
+          <span class="v7-eyebrow">مجالات متعددة</span>
+          <h2>اختر التخصص الذي يناسبك</h2>
+        </div>
+        <ul class="v7-specs">
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/><path d="M3.5 12h4l1.5-3 3 6 1.5-3h4"/></svg>القلب وألم الصدر</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M12 12c-1 1.2-2.4 2-4 2"/><path d="M12 12c1 1.2 2.4 2 4 2"/><path d="M8.5 6.5C5.5 7 3 11 3 15.5 3 18.5 4.5 20 6.5 20c2.2 0 3.5-1.6 3.5-4.5V8"/><path d="M15.5 6.5C18.5 7 21 11 21 15.5c0 3-1.5 4.5-3.5 4.5-2.2 0-3.5-1.6-3.5-4.5V8"/></svg>الجهاز التنفسي</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18v-6a5 5 0 0 1 10 0v6"/><path d="M5 18h14v3H5z"/><path d="M12 2v2"/><path d="M4.2 5.2l1.4 1.4"/><path d="M19.8 5.2l-1.4 1.4"/></svg>الطوارئ</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s-6 6.5-6 11a6 6 0 0 0 12 0c0-4.5-6-11-6-11z"/><path d="M9.5 14.5h5"/></svg>الأمراض المزمنة</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 20.5l10-10a4.95 4.95 0 0 0-7-7l-10 10a4.95 4.95 0 0 0 7 7z"/><path d="M8.5 8.5l7 7"/></svg>سلامة الأدوية</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.4 5.6a4 4 0 0 0-5.7 0L5.6 12.7a4 4 0 0 0 5.7 5.7l7.1-7.1a4 4 0 0 0 0-5.7z"/><path d="M10 12h.01"/><path d="M12 10h.01"/><path d="M14 12h.01"/><path d="M12 14h.01"/></svg>الجروح والنزيف</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z"/><path d="M9 11h.01"/><path d="M15 11h.01"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>الأطفال</li>
+          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>النسائية والتوليد</li>
+        </ul>
+      </div>
+
+      <!-- Level placement quiz -->
+      <div id="sec-level" class="scroll-mt-20 nb-quiz">
+        <aside class="nb-quiz-aside">
+          <span class="v7-eyebrow">قبل أن تبدأ</span>
+          <h2>ابدأ من مستواك</h2>
+          <p>٨ أسئلة قصيرة نقترح بعدها مستوى وغرفاً مناسبة لك.</p>
+          <p class="v7-note">النتيجة إرشادية ولا تدخل في درجاتك.</p>
+        </aside>
+        <div class="nb-quiz-main" id="nb-quiz-main"></div>
+      </div>
+
+      <!-- Evidence workspace -->
+      <div class="v7-split">
+        <div class="v7-quote">
+          <p>«ما السؤال الذي طرحته؟ ما الدليل الذي جمعته؟ وكيف أثّر اختيارك على النتيجة؟»</p>
+          <span>تقرير التقييم يجيب عن الثلاثة بعد كل حالة.</span>
+        </div>
+        <div class="v7-split-copy">
+          <span class="v7-eyebrow">أثر كل محادثة</span>
+          <h2>مساحة عمل تُظهر كيف وصلت إلى قرارك</h2>
+          <p>المحادثة والعلامات الحيوية والفحوصات في شاشة واحدة، وبعد التسليم تراجع خطواتك خطوة بخطوة.</p>
+          <button type="button" class="v7-btn-outline focus-ring" onclick="document.getElementById('index-demo-cta').click()">جرّب حالة الآن</button>
+        </div>
+      </div>
+
+      <!-- Universities -->
+      <div id="sec-universities" class="scroll-mt-20 v7-split">
+        <div class="v7-quote v7-uni">
+          <img src="img/univ.jpg" alt="أستاذ جامعي يدرّس طلبة التمريض" loading="lazy" decoding="async" onerror="nbImgFail(this)">
+          <div><b>تجربة جامعية واضحة</b><span>الأستاذ الجامعي يسند الحالات ويتابع تقارير الطلبة.</span></div>
+        </div>
+        <div class="v7-split-copy">
+          <span class="v7-eyebrow">للجامعات وأعضاء هيئة التدريس</span>
+          <h2>أنشئ جلسة، شارك الدعوة، تابع التقدّم.</h2>
+          <p>واجبات الطلبة ونتائجهم في مكان واحد.</p>
+          <button id="index-uni-demo-btn" class="v7-btn-outline focus-ring" type="button">البوابة الجامعية</button>
+        </div>
+      </div>
+
+      <!-- Closing call to action -->
+      <div class="v7-final">
+        <div>
+          <h2>الممارسة تسبق التقييم.</h2>
+          <p>ابدأ حالتك الأولى، وتعلّم من كل قرار.</p>
+        </div>
+        <button type="button" class="focus-ring" onclick="document.getElementById('index-demo-cta').click()">ابدأ الآن</button>
+      </div>
+    </section>
+
+    <!-- =======================================================
+         VIEW 1: SIGNED-IN HOME PAGE
+         Strict Order:
+         1. Personal Welcome
+         2. Emergency Room Entry (Calm Medical Blue/Teal, No Red Glow)
+         3. Specialized Cases Intro + Centered Solid Dept Filter
+         4. Case Cards (Preserving design & images, refined spacing)
+         5. Single Wide Clinical Coach Card
+         ======================================================= -->
+    <section id="view-home" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-9">
+
+      <!-- 1. Personal Welcome Card -->
+      <div class="bg-white v7-welcome">
+        <div class="v7-welcome-copy">
+          <div class="inline-flex items-center gap-2 text-xs flex-wrap">
+            <span id="home-welcome-role">طالبة تمريض · السنة الرابعة</span>
+            <span id="home-demo-indicator" class="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 text-xs">حساب تجريبي</span>
+          </div>
+          <h1 id="home-welcome-name">أهلاً بك</h1>
+          <p id="home-welcome-sub">ابدأ بحالة طوارئ أو اختر تخصصاً للتدرب.</p>
+          <div class="v7-welcome-actions">
+            <button id="home-quick-profile-btn" class="focus-ring" type="button">ملفي وتقدّمي</button>
+            <button id="home-quick-uni-btn" class="focus-ring" type="button">البوابة الجامعية</button>
+          </div>
+        </div>
+        <figure><img src="img/welcome.jpg" alt="طلبة يتدربون في مختبر المحاكاة" loading="lazy" decoding="async" onerror="nbImgFail(this)"></figure>
+      </div>
+
+      <div id="home-skip-note" class="nb-skipnote hidden"><span>تخطّيت اختبار المستوى، لذلك نتعامل معك كمبتدئ ونبدأ بمسار التعلّم.</span><button type="button" id="skip-take-btn">أجرِ الاختبار الآن</button></div>
+
+      <div id="home-learn" class="nb-path-card hidden">
+        <div style="display:flex;justify-content:space-between;gap:.6rem;flex-wrap:wrap;align-items:center"><h2 style="margin:0" class="text-slate-900">مسار التعلّم <span id="home-track-chip" class="nb-pill" style="margin-right:.4rem"></span></h2></div>
+        <p id="learn-sub" style="font-size:.82rem;color:#425D69;margin:.3rem 0 .8rem"></p>
+        <div id="learn-steps" class="nb-lsteps"></div>
+      </div>
+
+      <!-- 1A. Training path (level, stats, recommended rooms) -->
+      <div id="home-path" class="nb-path">
+        <div class="nb-path-card nb-path-dark">
+          <div style="display:flex;gap:1rem;align-items:center">
+            <svg class="nb-donut" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255, 255, 255, 0.16)" stroke-width="10"/><circle id="path-donut" cx="60" cy="60" r="50" fill="none" stroke="#6CC9CE" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)"/><text id="path-donut-txt" x="60" y="67" text-anchor="middle" fill="#FFFFFF" font-size="24" font-weight="700">--</text></svg>
+            <div><div style="font-size:.74rem;color:#A3B3BA">مستواك الحالي</div><div id="path-level" style="font-size:1.25rem;font-weight:700;color:#FFFFFF">--</div><div id="path-level-src" style="font-size:.7rem;color:#A3B3BA;line-height:1.6"></div></div>
+          </div>
+          <div class="nb-hist" id="path-hist" aria-hidden="true"></div>
+          <div class="nb-kpis"><div><b id="path-k1" class="font-num">0</b><small>جلسات مكتملة</small></div><div><b id="path-k2" class="font-num">--</b><small>معدل التخصصات</small></div><div><b id="path-k3" class="font-num">--</b><small>معدل الطوارئ</small></div></div>
+          <button type="button" id="path-retake" class="nb-ghost-btn">أعد اختبار المستوى</button>
+          <label class="nb-switch"><input type="checkbox" id="osce-toggle"> وضع الامتحان الموقوت (OSCE): مؤقت وبدون تلميحات</label>
+          <div id="path-retake-note" style="font-size:.7rem;color:#A3B3BA;margin-top:.4rem"></div>
+        </div>
+        <div class="nb-path-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem"><h2 style="margin:0;font-size:1.02rem" class="text-slate-900">غرف مقترحة لك الآن</h2><span id="path-tip" style="font-size:.76rem;color:#193B4A;background:#E6F2F4;border:1px solid #DCE7EB;border-radius:99px;padding:.15rem .7rem"></span></div>
+          <div id="path-rooms"></div>
+        </div>
+      </div>
+
+      <div id="home-nurse" class="hidden space-y-4">
+        <div class="nb-path-card">
+          <h2 style="margin:0 0 .3rem" class="text-slate-900">حالات التمريض</h2>
+          <div id="nurse-filter" class="nb-filter2"></div>
+          <div id="nurse-cards"></div>
+        </div>
+      </div>
+
+      <!-- 1B. PROFESSOR EXCLUSIVE HOME DASHBOARD (Shown directly on Home when Professor is logged in) -->
+      <div id="home-professor-section" class="hidden bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-xs font-bold">قسم الأستاذ الجامعي المباشر</span>
+              <span class="text-xs text-slate-500 font-num">مساق NUR-402 / MED-410</span>
+              <span id="prof-invite">رمز دعوة شعبتك: <b id="prof-invite-code">--</b> <button type="button" id="prof-invite-copy" style="color:#1A3643;font-weight:700">نسخ</button></span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">تقارير الطلبة والجلسات</h2>
+            <p class="text-xs sm:text-sm text-slate-600">راجع إجابات كل طالب، أو أسند حالة جديدة.</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 flex-wrap">
+            <button type="button" id="home-prof-tab-reports-btn" class="px-4 py-2 rounded-xl bg-teal-700 text-white text-xs font-bold transition-colors focus-ring">
+              مراجعة تقارير الطلاب (7)
+            </button>
+            <button type="button" id="home-prof-tab-create-btn" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors focus-ring">
+              + إنشاء وإسناد جلسة جديدة
+            </button>
+            <button type="button" id="home-prof-open-full-uni-btn" class="px-3.5 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-semibold transition-colors focus-ring">
+              الداشبورد الكاملة ←
+            </button>
+          </div>
+        </div>
+
+        <!-- Professor KPI Summary Strip -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+            <div class="text-xs text-slate-500 font-medium">الطلبة المسجلون بالشعبة</div>
+            <div class="text-xl font-bold text-slate-900 font-num" id="home-prof-kpi-total">7 طلاب نشطين</div>
+            <div class="text-xs text-teal-700 font-semibold">تمريض سريري + طب بشري</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+            <div class="text-xs text-slate-500 font-medium">التسليمات المكتملة</div>
+            <div class="text-xl font-bold text-emerald-700 font-num" id="home-prof-kpi-submitted">7 / 7 (100%)</div>
+            <div class="text-xs text-slate-600">5 منشورة · 2 بانتظار الاعتماد</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+            <div class="text-xs text-slate-500 font-medium">متوسط درجات الشعبة</div>
+            <div class="text-xl font-bold text-teal-700 font-num" id="home-prof-kpi-avg">83%</div>
+            <div class="text-xs text-slate-600">أعلى درجة: 95% · أدنى درجة: 64%</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1">
+            <div class="text-xs text-amber-900 font-bold">أبرز نقاط الضعف المرصودة</div>
+            <div class="text-xs font-bold text-amber-800 leading-snug">طلب فحوصات إضافية بلا مبرر تفريقي مقنع (طالبان)</div>
+            <div class="text-xs text-amber-700">وإغفال فحص النبض المحيطي (طالب)</div>
+          </div>
+        </div>
+
+        <!-- Sub-pane 1: Quick Student Reports Table on Home -->
+        <div id="home-prof-reports-pane" class="space-y-3.5">
+          <div class="flex items-center justify-between flex-wrap gap-2 bg-teal-50/60 border border-teal-200/80 px-4 py-2.5 rounded-xl">
+            <span class="text-xs sm:text-sm font-bold text-slate-800">اضغط «عرض الإجابات» لفتح ملف الطالب.</span>
+            <span class="text-xs text-teal-800 bg-white px-2.5 py-1 rounded-lg border border-teal-200 font-bold">7 محاولات</span>
+          </div>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl shadow-2xs bg-white">
+            <table class="prof-structured-table">
+              <thead>
+                <tr>
+                  <th>الطالب وزر التفاصيل</th>
+                  <th>الحالة السريرية المختبرة</th>
+                  <th>التشخيص السريري المستنتج</th>
+                  <th>الفحوصات وتبرير الإضافي</th>
+                  <th class="text-center">الدرجة</th>
+                  <th class="text-center">إجراء المعلم</th>
+                </tr>
+              </thead>
+              <tbody id="home-prof-cohort-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub-pane 2: Quick Session Creator on Home -->
+        <div id="home-prof-create-pane" class="hidden p-5 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900">جلسة جديدة للشعبة</h3>
+            <span class="text-xs text-teal-700 font-semibold">تظهر للطلبة فوراً</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-case-title">عنوان الجلسة السريرية:</label>
+              <input id="home-doc-case-title" type="text" value="حالة ألم صدري حاد مع ارتفاع ضغط الدم" class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-case-dept">القسم السريري:</label>
+              <select id="home-doc-case-dept" class="w-full p-2.5 rounded-xl bg-white border border-slate-200">
+                <option value="cardio">القلب والأوعية الدموية</option>
+                <option value="resp">الأمراض الصدرية والتنفسية</option>
+                <option value="ortho">العظام والكسور</option>
+                <option value="gi">الباطنية والجهاز الهضمي</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-patient-name">اسم المريض والعمر:</label>
+              <input id="home-doc-patient-name" type="text" value="محمود السعدي (56 سنة)" class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-patient-allergy">المعلومة الحرجة / الحساسية:</label>
+              <input id="home-doc-patient-allergy" type="text" value="حساسية من البنسلين + تاريخ قرحة معدية" class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-patient-complaint">الشكوى الأولية عند بدء الجلسة:</label>
+              <input id="home-doc-patient-complaint" type="text" value="أشعر بألم عاصر في الصدر مع خفقان ودوخة منذ الصباح." class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button type="button" id="home-doc-save-case-btn" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+              حفظ الجلسة وإسنادها للطلاب الآن
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 2. Emergency Room Entry Card (Calm Medical Blue/Teal, No Red Glow/Shadow/Alarm) -->
+      <div id="home-er-card" class="bg-white">
+        <div class="v7-er-main">
+          <span class="v7-eyebrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>غرفة الطوارئ</span>
+          <h2>حالة جديدة. قرارك يبدأ من أول سؤال.</h2>
+          <p>حالة عشوائية من تخصص لا تعرفه مسبقاً.</p>
+          <button id="launch-er-random-btn" class="focus-ring" type="button">ادخل غرفة الطوارئ ←</button>
+        </div>
+        <div class="v7-er-steps">
+          <div><span>كيف تسير المحاكاة؟</span><h3>ثلاث مراحل، خطوة بخطوة</h3></div>
+          <ol>
+            <li><b>01</b><strong>قابل المريض</strong><small>اسأل واطلب الفحوصات.</small></li>
+            <li><b>02</b><strong>سلّم الحالة</strong><small>بصيغة SBAR.</small></li>
+            <li><b>03</b><strong>راجع أداءك</strong><small>تقرير مفصّل بعد التسليم.</small></li>
+          </ol>
+        </div>
+      </div>
+
+      <!-- 3. Student cases: choose a specialty, then narrow by level or status -->
+      <div id="home-cases-anchor" class="space-y-6 pt-2">
+        <div class="home-cases-heading space-y-1.5">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">الحالات حسب التخصص</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">اختر التخصص، ثم ابدأ الحالة.</p>
+        </div>
+
+        <!-- Specialty filter -->
+        <div class="home-cases-filter flex flex-col items-start gap-2">
+          <div id="dept-filter-bar" role="tablist" aria-label="فلتر الأقسام السريرية" class="inline-flex items-center justify-start gap-1.5 flex-wrap bg-white p-2 rounded-2xl border border-slate-200 shadow-2xs max-w-full">
+            <!-- Populated by JS -->
+          </div>
+          <div id="filtered-cases-count" class="text-xs font-semibold text-slate-500" aria-live="polite">
+            عرض 6 حالات تدريبية
+          </div>
+        </div>
+
+        <div class="home-level-filter flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-semibold text-slate-500">المستوى والإنجاز</span>
+          <div id="case-filter2" class="nb-filter2"></div>
+        </div>
+        <!-- 4. Case Cards Grid + Empty State -->
+        <div id="cases-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="cases-empty-state" class="hidden bg-white border border-slate-200 rounded-2xl p-10 text-center max-w-lg mx-auto space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center mx-auto font-bold text-lg">؟</div>
+          <h3 class="text-base font-bold text-slate-900">لا توجد حالات متاحة في هذا القسم حالياً</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">جرّب تخصصاً آخر أو ابدأ حالة طوارئ عشوائية.</p>
+          <div class="pt-1">
+            <button id="reset-dept-filter-btn" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+              عرض جميع الأقسام
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 4B. UNIVERSITY STUDENT SESSIONS SECTION (Placed directly BEFORE Clinical Coach for University Students) -->
+      <div id="home-student-uni-section" class="hidden bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200/80 text-xs font-bold">الجلسات والواجبات الجامعية</span>
+              <span id="home-student-uni-badge" class="text-xs text-slate-500">مساقات التدريب السريري</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">جلساتك الجامعية</h2>
+            <p class="text-xs sm:text-sm text-slate-600">حالات أسندها لك الأستاذ الجامعي.</p>
+          </div>
+          <button type="button" id="home-student-open-uni-btn" class="self-start sm:self-center px-4 py-2.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold transition-colors focus-ring">
+            كل الجلسات ←
+          </button>
+        </div>
+
+        <div class="grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+          <!-- Assigned Case 1 -->
+          <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900">واجب نشط</span>
+                <span class="text-xs text-amber-800 font-semibold">التسليم: غداً</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">حالة قلب وأوعية دموية مترافقة مع السكري</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">د. عبدالرحمن المجالي · تخطيط القلب والتروبونين.</p>
+            </div>
+            <button type="button" data-uni-start="case_cardio_dm" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors focus-ring">
+              بدء الجلسة الجامعية ←
+            </button>
+          </div>
+
+          <!-- Assigned Case 2 -->
+          <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900">واجب نشط</span>
+                <span class="text-xs text-slate-500 font-semibold">التسليم: بعد يومين</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">حالة جهاز تنفسي حادة مترافقة مع قصور كلوي</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">د. عبدالرحمن المجالي · غازات الدم ووظائف الكلى.</p>
+            </div>
+            <button type="button" data-uni-start="case_resp_renal" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors focus-ring">
+              بدء الجلسة الجامعية ←
+            </button>
+          </div>
+
+          <!-- Graded & Published Feedback Card -->
+          <div class="p-5 rounded-2xl border border-emerald-200/90 bg-emerald-50/40 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900">تقييم معتمد ومنشور ✓</span>
+                <span class="text-sm font-bold text-emerald-800 font-num">91%</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">حالة باطنية وجهاز هضمي (سارة العلي)</h3>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                <strong>ملاحظة د. عبدالرحمن المجالي:</strong> «تحليل ممتاز لنتيجة فحص البول وتعداد الكريات البيض، وانتباه سليم لاستبعاد الأشعة بسبب الحمل المبكر.»
+              </p>
+            </div>
+            <button type="button" data-uni-start="case_gi_allergy" class="uni-start-case-btn w-full py-2 rounded-xl bg-white hover:bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold transition-colors focus-ring">
+              إعادة استعراض الحالة
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 5. Clinical coach -->
+      <div id="home-coach-banner" class="bg-white">
+        <div class="v7-coach-copy">
+          <span class="v7-coach-ic"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg></span>
+          <div><h2>المدرب السريري</h2><p>راجع خطواتك بعد كل جلسة وتدرّب على ما فاتك.</p></div>
+        </div>
+        <button id="open-coach-view-btn" class="focus-ring" type="button">انتقل إلى المدرب ←</button>
+      </div>
+
+    </section>
+
+    <!-- =======================================================
+         VIEW 2: CLINICAL SIMULATION SESSION
+         Clean, spacious chat-first layout:
+         - Ultra-slim top action bar
+         - Patient identity card inside scrollable chat stream
+         - Collapsible suggested questions drawer (toggled via button)
+         ======================================================= -->
+    <section id="view-observe" class="hidden max-w-5xl mx-auto px-4 sm:px-8 py-6 space-y-4">
+      <div class="nb-vhead"><div><span id="obs-badge" class="nb-pill"></span><h1 id="obs-title" style="margin:.4rem 0 .2rem"></h1><p id="obs-sub" style="margin:0;font-size:.85rem;color:#425D69"></p></div><button id="obs-exit" type="button" class="nb-btn-ghost">خروج</button></div>
+      <div class="nb-obs"><div id="obs-stream" class="nb-stream"></div>
+        <aside class="nb-why"><h3 style="margin:0 0 .4rem">لماذا فعل الخبير ذلك؟</h3><div id="obs-why" style="font-size:.84rem;line-height:1.95;color:#1F3D4A"></div></aside></div>
+      <div class="nb-obs-ctl"><div id="obs-prog" class="nb-q-prog" style="flex:1;margin:0"></div><button id="obs-auto" type="button" class="nb-btn-ghost">تشغيل تلقائي</button><button id="obs-next" type="button" class="nb-btn" style="width:auto;padding:.7rem 1.4rem">التالي</button></div>
+      <div id="obs-check" class="hidden nb-box"></div>
+    </section>
+
+    <section id="view-nurse" class="hidden max-w-[1440px] mx-auto px-4 sm:px-8 py-6 space-y-4">
+      <div class="nb-vhead"><div><span id="nurse-badge" class="nb-pill"></span><h1 id="nurse-title" style="margin:.4rem 0 .2rem"></h1><p id="nurse-sub" style="margin:0;font-size:.85rem;color:#425D69"></p></div><button id="nurse-exit" type="button" class="nb-btn-ghost">خروج</button></div>
+      <div id="nurse-body" class="nr-wrap"></div>
+    </section>
+
+    <section id="view-sim" class="hidden w-full max-w-[1440px] mx-auto px-0 sm:px-3 py-0 h-[calc(100dvh-4rem)] flex flex-col overflow-hidden">
+
+      <!-- Main Simulation Workspace Body (Starts Directly Below Header to Bottom of Screen - Zero Bars Above Chat) -->
+      <div class="flex-1 flex gap-2.5 min-h-0 relative overflow-hidden">
+
+        <!-- PRIMARY AREA: Clinical Chat Directly From Under Header to Bottom of Screen -->
+        <div id="sim-chat-column" class="flex-1 bg-white border-x sm:border border-slate-200/90 sm:rounded-b-2xl shadow-2xs flex flex-col min-w-0 min-h-0 overflow-hidden">
+
+          <div id="sim-osce-bar" role="timer"><span>وضع الامتحان (OSCE)</span><span>الوقت المتبقي <b id="sim-osce-time" class="font-num">--:--</b></span><span>التلميحات معطّلة</span></div>
+          <div id="sim-level-hint" role="note"></div>
+          <!-- Scrollable Chat Messages Stream (Starts at 0px below header! First row holds transient session info) -->
+          <div id="sim-chat-messages" class="flex-1 overflow-y-auto px-3 sm:px-5 py-3 space-y-3 bg-[#FAF9F6] min-h-0" aria-live="polite">
+            <!-- Populated by JS: First row is #sim-inline-patient-card which disappears when messages continue -->
+          </div>
+
+          <!-- Compact Suggested Questions Strip (Integrated at bottom above input, auto-collapsible) -->
+          <div id="sim-suggestions-bar" class="px-3 py-1.5 border-t border-slate-100 bg-white shrink-0">
+            <div id="sim-suggested-questions" class="flex items-center gap-1.5 overflow-x-auto pb-0.5">
+              <!-- Populated by JS -->
+            </div>
+          </div>
+
+          <!-- Fixed Bottom Chat Input & Action Bar (Contains Input + Send + Vitals/Tools/SBAR Actions) -->
+          <div class="p-2.5 border-t border-slate-200/80 bg-white flex items-center gap-1.5 sm:gap-2 shrink-0 flex-wrap sm:flex-nowrap">
+            <button id="sim-voice-btn" type="button" class="p-2 rounded-xl border border-slate-200 text-slate-600 hover:text-teal-700 hover:bg-slate-50 transition-colors shrink-0 focus-ring" title="التحدث بالصوت" aria-label="إدخال صوتي">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"/><path d="M19 10v2a7 7 0 0 1-14 0v-2"/><line x1="12" x2="12" y1="19" y2="22"/></svg>
+            </button>
+            <input id="sim-chat-input" type="text" placeholder="اكتب سؤالك للمريض..." class="flex-1 min-w-[160px] text-xs sm:text-sm bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 focus:outline-none focus:bg-white focus:border-teal-600 transition-colors" />
+            <button id="sim-send-btn" type="button" class="px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors shrink-0 focus-ring">
+              إرسال
+            </button>
+            <button id=" toggle-sim-tools-btn-quick" type="button" onclick="document.getElementById('sim-measure-vitals-btn').click()" class="px-2.5 py-2 rounded-xl bg-slate-900 hover:bg-slate-800 text-emerald-300 text-xs font-bold transition-colors shrink-0 focus-ring" title="قياس العلامات الحيوية وإرسالها للشات">
+              العلامات
+            </button>
+            <button id="toggle-sim-tools-btn" aria-expanded="true" type="button" class="px-2.5 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 border border-slate-200/80 text-xs font-semibold transition-colors flex items-center gap-1 shrink-0 focus-ring" title="إظهار/إخفاء لوحة العلامات والمفكرة والفحوصات">
+              <svg class="w-3.5 h-3.5 text-teal-700" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+              <span id="toggle-sim-tools-label" class="hidden sm:inline">الفحوصات</span>
+            </button>
+            <button id="open-handover-modal-btn" type="button" class="px-3 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-colors shadow-2xs shrink-0 focus-ring">
+              تسليم SBAR
+            </button>
+          </div>
+        </div>
+
+        <div id="sim-tools-backdrop" class="fixed inset-0 z-45 bg-slate-900/40 backdrop-blur-xs hidden lg:hidden" style="z-index: 45;"></div>
+        <aside id="sim-tools-panel" aria-label="أدوات الجلسة السريرية" class="hidden lg:flex fixed inset-y-0 left-0 z-48 w-[350px] sm:w-[390px] max-w-[92vw] lg:static lg:z-auto lg:w-[390px] xl:w-[410px] bg-white border border-slate-200/90 lg:rounded-2xl shadow-2xl lg:shadow-2xs flex-col min-h-0 overflow-hidden transition-all duration-200" style="z-index: 48;">
+
+          <!-- Mobile Drawer Header + Tabs -->
+          <div class="p-2 border-b border-slate-100 bg-slate-50/80 flex items-center justify-between gap-2 shrink-0">
+            <div class="grid grid-cols-2 gap-1.5 flex-1">
+              <button id="side-tab-vitals" data-stab="vitals" class="sim-side-tab py-1.5 px-2.5 rounded-xl text-xs font-bold transition-all bg-white text-teal-800 shadow-2xs border border-slate-200/70 focus-ring">
+                العلامات
+              </button>
+              <button id="side-tab-workup" data-stab="workup" class="sim-side-tab py-1.5 px-2.5 rounded-xl text-xs font-bold transition-all text-slate-600 hover:text-slate-900 focus-ring">
+                الفحوصات (<span id="workup-count-badge">0</span>)
+              </button>
+            </div>
+            <button id="close-sim-tools-mobile" class="lg:hidden w-7 h-7 rounded-lg bg-slate-200/80 text-slate-700 flex items-center justify-center text-xs font-bold" aria-label="إغلاق لوحة الأدوات">
+              ✕
+            </button>
+          </div>
+
+          <div class="flex-1 overflow-y-auto p-3.5 space-y-3.5 min-h-0">
+
+            <!-- TAB 1: VITALS MONITOR + NURSE SCRATCHPAD -->
+            <div id="side-pane-vitals" class="space-y-3.5">
+              <div class="bg-slate-900 text-white rounded-2xl p-3.5 border border-slate-800 space-y-2.5">
+                <div class="flex items-center justify-between border-b border-slate-800 pb-2">
+                  <div class="flex items-center gap-2">
+                    <span class="w-2 h-2 rounded-full bg-emerald-400 animate-pulse"></span>
+                    <span class="text-xs font-semibold text-slate-200">شاشة العلامات الحيوية</span>
+                  </div>
+                  <button id="sim-measure-vitals-btn" class="px-2.5 py-1 rounded-lg bg-teal-600 hover:bg-teal-500 text-white text-xs font-semibold transition-colors focus-ring">
+                    قياس العلامات الآن
+                  </button>
+                </div>
+
+                <div class="bg-slate-950/80 rounded-xl p-1.5 border border-slate-800/80">
+                  <svg class="w-full h-7" viewBox="0 0 400 40" preserveAspectRatio="none" role="img" aria-label="مخطط نبض القلب">
+                    <path class="ecg-animated" d="M 0 22 L 40 22 Q 46 16 52 22 L 65 22 L 70 28 L 76 5 L 82 35 L 88 22 L 105 16 L 115 22 L 170 22 Q 176 16 182 22 L 195 22 L 200 28 L 206 5 L 212 35 L 218 22 L 235 16 L 245 22 L 300 22 Q 306 16 312 22 L 325 22 L 330 28 L 336 5 L 342 35 L 348 22 L 365 16 L 375 22 L 400 22" fill="none" stroke="#0F7D44" stroke-width="2" stroke-linecap="round"/>
+                  </svg>
+                </div>
+
+                <div class="grid grid-cols-2 gap-2 font-num">
+                  <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-2">
+                    <div class="text-xs text-slate-400 flex justify-between"><span>النبض HR</span><span>bpm</span></div>
+                    <div id="sim-v-hr" class="text-lg font-bold text-emerald-400 mt-0.5">--</div>
+                  </div>
+                  <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-2">
+                    <div class="text-xs text-slate-400 flex justify-between"><span>الضغط BP</span><span>mmHg</span></div>
+                    <div id="sim-v-bp" class="text-lg font-bold text-sky-400 mt-0.5">--/--</div>
+                  </div>
+                  <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-2">
+                    <div class="text-xs text-slate-400 flex justify-between"><span>الأكسجين SpO2</span><span>%</span></div>
+                    <div id="sim-v-spo2" class="text-lg font-bold text-teal-300 mt-0.5">--%</div>
+                  </div>
+                  <div class="bg-slate-950/60 border border-slate-800 rounded-xl p-2">
+                    <div class="text-xs text-slate-400 flex justify-between"><span>الحرارة Temp</span><span dir="ltr">°C</span></div>
+                    <div id="sim-v-temp" class="text-lg font-bold text-amber-300 mt-0.5">--.-</div>
+                  </div>
+                </div>
+                <div id="sim-vitals-note" class="text-xs text-slate-300">
+                  اضغط «قياس العلامات الآن» لعرض القراءات.
+                </div>
+              </div>
+
+              <!-- Nurse's Personal Scratchpad -->
+              <div class="space-y-1.5">
+                <div class="flex items-center justify-between">
+                  <label for="nurse-scratchpad" class="text-xs font-bold text-slate-800">ملاحظاتك</label>
+                  <span class="text-xs text-slate-500">تنتقل إلى التسليم</span>
+                </div>
+                <textarea id="nurse-scratchpad" rows="4" placeholder="الحساسية، الأدوية، القراءات..." class="w-full p-3 rounded-2xl bg-[#F8F6F2] border border-slate-200 text-xs text-slate-800 leading-relaxed focus:outline-none focus:bg-white focus:border-teal-600 resize-none"></textarea>
+              </div>
+            </div>
+
+            <!-- SECTION 2: DIAGNOSTIC WORKUP MENU -->
+            <div id="side-pane-workup" class="space-y-2.5 pt-2.5 border-t border-slate-200/80">
+              <div class="flex items-center justify-between">
+                <strong class="text-xs font-bold text-teal-900">الفحوصات والصور:</strong>
+                <span id="workup-log-status" class="text-xs font-semibold text-teal-700"></span>
+              </div>
+
+              <div class="flex items-center gap-1 flex-wrap" id="workup-category-tabs">
+                <button data-wcat="all" class="wcat-btn px-2 py-1 rounded-lg text-xs font-semibold bg-teal-700 text-white">الكل</button>
+                <button data-wcat="bedside" class="wcat-btn px-2 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">سريري</button>
+                <button data-wcat="lab" class="wcat-btn px-2 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">مختبر وبول</button>
+                <button data-wcat="imaging" class="wcat-btn px-2 py-1 rounded-lg text-xs font-semibold bg-slate-100 text-slate-700 hover:bg-slate-200">أشعة وتخطيط</button>
+              </div>
+
+              <div id="dynamic-workup-buttons" class="space-y-1.5 pr-0.5">
+                <!-- Populated by JS -->
+              </div>
+
+              <div id="dynamic-workup-viewer" class="hidden"></div>
+            </div>
+
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- =======================================================
+         VIEW 3: DEBRIEF & STRUCTURED REPORT
+         Includes Empty State when no session has been completed yet!
+         ======================================================= -->
+    <section id="view-debrief" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+
+      <!-- Empty State (Shown if user opens Report before completing any session) -->
+      <div id="debrief-empty-state" class="bg-white border border-slate-200/90 rounded-3xl p-8 sm:p-12 text-center max-w-xl mx-auto space-y-4 shadow-xs my-6">
+        <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 border border-teal-200/70 flex items-center justify-center mx-auto">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h2 class="text-xl font-bold text-slate-900">لا يوجد تقرير جلسة مكتمل حالياً</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          لا يُنشأ تقرير التقييم والنتيجة إلا بعد إتمام جلسة محاكاة سريرية وتسليم ملخص الحالة. ابدأ حالة من الأقسام المتخصصة أو من غرفة الطوارئ العشوائية لعرض تقريرك التفصيلي.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <button id="empty-debrief-go-home" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors focus-ring">
+            اختيار حالة سريرية
+          </button>
+          <button id="empty-debrief-go-er" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold transition-colors focus-ring">
+            بدء حالة طوارئ عشوائية
+          </button>
+        </div>
+      </div>
+
+      <!-- Completed Report Content -->
+      <div id="debrief-report-content" class="hidden space-y-6">
+
+        <!-- Disclaimer Banner: Educational Reference Comparison -->
+        <div class="bg-teal-50/80 border border-teal-200 rounded-2xl px-4 py-3 text-xs text-teal-900 flex items-center justify-between gap-3 flex-wrap">
+          <span><strong>ملاحظة:</strong> يقارن التقرير خطواتك بسيناريو تعليمي مرجعي، ولا يُعدّ حكماً طبياً.</span>
+        </div>
+
+        <!-- Top Executive Summary -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <span id="rep-eval-type-badge" class="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200/70">
+              تقرير المراجعة السريرية
+            </span>
+            <h1 id="rep-main-title" class="text-xl sm:text-2xl font-bold text-slate-900">--</h1>
+            <p id="rep-case-subtitle" class="text-sm text-slate-600">--</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 shrink-0">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">الدرجة المستحقة</div>
+              <div id="rep-total-score" class="text-2xl font-bold text-teal-700 font-num mt-0.5">0%</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">حالة المحاولة</div>
+              <div id="rep-pass-status" class="text-sm sm:text-base font-bold text-slate-900 mt-1">--</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">المحاور المستقصاة</div>
+              <div id="rep-discovered-count" class="text-2xl font-bold text-teal-700 font-num mt-0.5">0/0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE 1: Clinical Competency Breakdown -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">تفصيل الدرجة</h2>
+            <p class="text-xs text-slate-500 mt-0.5">مقارنة خطواتك المسجلة في الجلسة مع معايير السيناريو المرجعي</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5">المحور التدريبي</th>
+                  <th class="px-5 py-3.5">الوزن النسبي</th>
+                  <th class="px-5 py-3.5">الدليل الموثق من سجل المحاولة</th>
+                  <th class="px-5 py-3.5">الدرجة التقديرية</th>
+                  <th class="px-5 py-3.5">الملاحظة التوجيهية</th>
+                </tr>
+              </thead>
+              <tbody id="rep-competency-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 2: Inquiry & Safety Audit -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">ثانياً: مراجعة أسئلة الاستجواب والتحقق من سلامة المريض</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5">محور الاستجواب / التحقق</th>
+                  <th class="px-5 py-3.5">الحالة في الحوار</th>
+                  <th class="px-5 py-3.5">الدليل والتوقيت في السجل</th>
+                  <th class="px-5 py-3.5">الأهمية السريرية في السيناريو</th>
+                </tr>
+              </thead>
+              <tbody id="rep-inquiry-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 3: Workup & Timestamps Log -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">ثالثاً: سجل الفحوصات المطلوبة وتوقيت طلبها في الجلسة</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5">الفحص / الإجراء</th>
+                  <th class="px-5 py-3.5">حالة الطلب وتوقيته</th>
+                  <th class="px-5 py-3.5">صلة الفحص بالحالة وملاحظة السلامة</th>
+                </tr>
+              </thead>
+              <tbody id="rep-workup-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 4: Handover Comparison -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">رابعاً: مقارنة تسليم SBAR المقدم مع الإجابة النموذجية المرجعية</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5 w-48">البند</th>
+                  <th class="px-5 py-3.5">ما كتبته عند تسليم الحالة</th>
+                  <th class="px-5 py-3.5">النموذج السريري المرجعي المقترح</th>
+                </tr>
+              </thead>
+              <tbody id="rep-handover-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="rep-compare" class="hidden nb-box" style="font-size:.84rem;line-height:1.9"></div>
+
+        <div class="flex flex-wrap justify-end gap-3 pt-2">
+          <button id="rep-retry-btn" class="px-5 py-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-sm font-semibold transition-colors focus-ring">حاول نفس الحالة مرة أخرى</button>
+          <button id="rep-go-profile-btn" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold transition-colors focus-ring">
+            عرض ملفي الشخصي وسجل الجلسات
+          </button>
+          <button id="rep-back-home-btn" class="px-6 py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors shadow-xs focus-ring">
+            العودة إلى الرئيسية والحالات
+          </button>
+        </div>
+
+      </div>
+    </section>
+
+    <!-- =======================================================
+         VIEW 4: INTERACTIVE AI CLINICAL COACH (#view-coach)
+         Organized, high-contrast layout:
+         - Primary Coach Workspace on the Right/Center (expands to full width when sidebar is closed)
+         - Collapsible Weakness Mastery Sidebar on the LEFT (toggled via button just like the simulation sidebar)
+         ======================================================= -->
+    <section id="view-coach" class="hidden max-w-[1440px] mx-auto px-2 sm:px-4 py-1.5 sm:py-2">
+      <div class="flex gap-3 items-stretch relative min-h-[540px] h-[calc(100dvh-4.75rem)]">
+
+        <!-- PRIMARY AREA (Right/Center, Flex-1): Interactive Conversational Coach Workspace (Maximized Chat Area) -->
+        <div id="coach-main-column" class="flex-1 bg-white border border-slate-200 rounded-2xl shadow-xs flex flex-col min-w-0 min-h-0 overflow-hidden">
+          <!-- Ultra-Compact Single-Line Coach Header Bar -->
+          <div class="px-3.5 py-2 border-b border-slate-200/80 bg-white flex items-center justify-between gap-2 shrink-0 flex-wrap">
+            <div class="flex items-center gap-2 min-w-0">
+              <div class="w-8 h-8 rounded-xl bg-teal-700 text-white flex items-center justify-center font-bold text-xs shadow-2xs shrink-0">
+                م
+              </div>
+              <h1 class="text-sm sm:text-base font-bold text-slate-900 truncate">المدرب السريري</h1>
+              <span id="coach-active-module-badge" class="px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-900 border border-teal-300 text-xs font-bold">القلب والطوارئ</span>
+            </div>
+
+            <!-- Left Actions in Coach Header: Back Home + Toggle Left Weakness Sidebar Button -->
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" id="coach-back-home-btn" class="px-3 py-1.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors focus-ring">
+                الرئيسية
+              </button>
+              <button type="button" id="toggle-coach-weakness-btn" aria-expanded="false" class="px-3 py-1.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-300 text-xs font-bold transition-colors flex items-center gap-1.5 focus-ring" title="إظهار أو إخفاء شريط نقاط الضعف الجانبي">
+                <svg class="w-3.5 h-3.5 text-teal-700 shrink-0" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><rect x="3" y="3" width="18" height="18" rx="2"/><path d="M9 3v18"/></svg>
+                <span id="toggle-coach-weakness-label">المحاور (4)</span>
+              </button>
+            </div>
+          </div>
+
+          <!-- Scrollable Coach Chat Messages (Expanded Height, Right-Aligned RTL, High-Contrast Typography) -->
+          <div id="coach-chat-messages" class="flex-1 overflow-y-auto px-3.5 sm:px-5 py-3.5 space-y-3.5 bg-[#F8F6F2] min-h-0" aria-live="polite">
+            <!-- Populated by JS -->
+          </div>
+
+          <!-- Compact Single-Row Quick Assist & Hint Strip -->
+          <div class="px-3.5 py-1.5 border-t border-slate-200/80 bg-slate-50 flex items-center justify-between gap-2 flex-wrap shrink-0">
+            <div class="flex items-center gap-1.5 overflow-x-auto" id="coach-quick-chips">
+              <!-- Populated by JS -->
+            </div>
+            <div class="flex items-center gap-1.5 shrink-0">
+              <button type="button" id="coach-give-hint-btn" class="px-2.5 py-1 rounded-lg bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-300 text-xs font-bold transition-colors">تلميح</button>
+              <button type="button" id="coach-header-next-btn" class="px-2.5 py-1 rounded-lg bg-teal-50 hover:bg-teal-100 text-teal-900 border border-teal-200 text-xs font-bold transition-colors">التالي ←</button>
+            </div>
+          </div>
+
+          <!-- Coach Chat Input Bar -->
+          <div class="p-2.5 sm:p-3 border-t border-slate-200 bg-white flex items-center gap-2 shrink-0">
+            <input id="coach-chat-input" type="text" placeholder="اكتب إجابتك…" class="flex-1 text-xs sm:text-sm font-medium text-slate-900 bg-slate-50 border border-slate-200 rounded-xl px-3.5 py-2 focus:outline-none focus:bg-white focus:border-teal-600" />
+            <button id="coach-send-btn" type="button" class="px-5 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors shrink-0 shadow-2xs focus-ring">
+              إرسال
+            </button>
+          </div>
+        </div>
+
+        <!-- COLLAPSIBLE LEFT SIDEBAR: Weakness Mastery Queue & Progress (#coach-weakness-panel) with Neat Border Radius -->
+        <div id="coach-weakness-backdrop" class="fixed inset-0 z-45 bg-slate-900/40 backdrop-blur-xs hidden lg:hidden" style="z-index: 45;"></div>
+        <aside id="coach-weakness-panel" aria-label="شريط نقاط الضعف ومحاور التقوية" class="sidebar-floating-drawer rounded-r-3xl hidden lg:hidden fixed inset-y-0 left-0 z-48 w-[340px] sm:w-[375px] max-w-[92vw] lg:static lg:z-auto lg:w-[360px] xl:w-[385px] bg-white border border-slate-200 rounded-3xl shadow-2xl lg:shadow-xs flex-col justify-between p-4 min-h-0 overflow-hidden transition-all duration-200" style="z-index: 48;">
+          <div class="space-y-4 overflow-y-auto flex-1 min-h-0 pr-0.5">
+            <!-- Panel Header with Close / Collapse Button -->
+            <div class="flex items-center justify-between border-b border-slate-200/80 pb-3">
+              <div>
+                <span class="text-xs font-bold text-teal-700 block">الشريط الجانبي · خطة التقوية</span>
+                <h2 class="text-base font-bold text-slate-900 mt-0.5">نقاط الضعف ومحاور التدريب</h2>
+              </div>
+              <button type="button" id="close-coach-weakness-btn" class="w-8 h-8 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 flex items-center justify-center text-xs font-bold transition-colors focus-ring" aria-label="إغلاق شريط نقاط الضعف" title="إخفاء شريط نقاط الضعف">
+                ✕
+              </button>
+            </div>
+
+            <!-- Mastery Progress Box -->
+            <div class="p-4 rounded-2xl bg-teal-50/80 border border-teal-200 space-y-2.5">
+              <div class="flex items-center justify-between text-xs sm:text-sm">
+                <span class="font-bold text-teal-900">نسبة إتقان نقاط الضعف:</span>
+                <span id="coach-mastery-percent" class="font-bold text-teal-900 bg-white px-2.5 py-0.5 rounded-lg border border-teal-200 font-num">0% (0/4 مكتمل)</span>
+              </div>
+              <div class="w-full h-2.5 rounded-full bg-teal-100 overflow-hidden">
+                <div id="coach-mastery-bar" class="h-full bg-teal-700 transition-all duration-300" style="width: 0%;"></div>
+              </div>
+              <p id="coach-remaining-count" class="text-xs sm:text-sm text-teal-900 font-semibold leading-snug">
+                باقي عليك 4 نقاط ضعف للتدرب عليها واجتيازها مع المدرب.
+              </p>
+            </div>
+
+            <!-- Interactive Weakness Checklist Queue -->
+            <div class="space-y-2.5">
+              <div class="text-xs sm:text-sm font-bold text-slate-800">اضغط على أي محور لبدء تمرين المحاكاة الخاص به:</div>
+              <div id="coach-weakness-queue" class="space-y-2.5">
+                <!-- Populated by JS -->
+              </div>
+            </div>
+          </div>
+
+          <div class="pt-3.5 mt-3 border-t border-slate-200/80 flex items-center justify-between gap-2 shrink-0">
+            <button type="button" id="coach-next-drill-btn" class="flex-1 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+              التمرين التالي ←
+            </button>
+            <button type="button" id="coach-reset-drills-btn" class="px-3.5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs sm:text-sm font-bold transition-colors focus-ring">
+              إعادة الضبط
+            </button>
+          </div>
+        </aside>
+
+      </div>
+    </section>
+
+    <!-- =======================================================
+         VIEW 5: USER PROFILE & PROGRESS (#view-profile)
+         Reflects active user & role accurately; no fake stats for new users;
+         houses Strengths, Areas for Development, Session History & Settings
+         ======================================================= -->
+    <section id="view-profile" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+
+      <!-- Profile Header Card -->
+      <div class="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col md:flex-row md:items-center justify-between gap-6">
+        <div class="flex items-center gap-4">
+          <div id="profile-avatar-box" class="w-16 h-16 rounded-2xl bg-teal-700 text-white font-bold text-xl flex items-center justify-center shadow-xs shrink-0 overflow-hidden">
+            ر م
+          </div>
+          <div class="space-y-1">
+            <div class="flex items-center gap-2 flex-wrap">
+              <h1 id="profile-name-heading" class="text-xl sm:text-2xl font-bold text-slate-900">--</h1>
+              <span id="profile-role-pill" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">--</span>
+              <span id="profile-demo-pill" class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">وضع العرض التجريبي</span>
+            </div>
+            <p id="profile-email-uni" class="text-sm text-slate-500">--</p>
+          </div>
+        </div>
+
+        <!-- Profile Stats -->
+        <div class="grid grid-cols-3 gap-3 shrink-0">
+          <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+            <div class="text-xl font-bold text-slate-900 font-num" id="profile-stat-sessions">0</div>
+            <div class="text-xs text-slate-500 mt-0.5">جلسات مكتملة</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+            <div class="text-xl font-bold text-teal-700 font-num" id="profile-stat-spec">--</div>
+            <div class="text-xs text-slate-500 mt-0.5">معدل التخصصي</div>
+          </div>
+          <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+            <div class="text-xl font-bold text-sky-700 font-num" id="profile-stat-er">--</div>
+            <div class="text-xs text-slate-500 mt-0.5">معدل الطوارئ</div>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Navigation Sub-tabs -->
+      <div class="no-print flex items-center justify-between gap-2 flex-wrap border-b border-slate-200 pb-3" role="tablist">
+        <div class="flex items-center gap-2 flex-wrap">
+          <button data-ptab="dash" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-teal-700 text-white focus-ring">لوحتي</button>
+          <button data-ptab="overview" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 focus-ring">
+            نقاط القوة والتطوير
+          </button>
+          <button data-ptab="history" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 focus-ring">
+            سجل الجلسات السابقة
+          </button>
+          <button data-ptab="certificate" id="profile-tab-cert-btn" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-teal-900 hover:bg-teal-50 border border-teal-300 focus-ring">
+            وثيقة إثبات الإنجاز والطباعة
+          </button>
+          <button data-ptab="settings" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 focus-ring">
+            إعدادات الحساب والتدريب
+          </button>
+        </div>
+        <button type="button" id="profile-quick-open-cert-btn" class="px-4 py-2 rounded-xl bg-emerald-700 hover:bg-emerald-800 text-white text-xs font-bold transition-colors shadow-2xs flex items-center gap-1.5 focus-ring">
+          <span>وثيقة الإنجاز</span>
+        </button>
+      </div>
+
+      <!-- Profile Pane 0: dashboard -->
+      <div id="profile-pane-dash" class="space-y-4">
+        <div class="nb-dash">
+          <div class="nb-dc"><h3>مستواي</h3><div id="dash-level"></div></div>
+          <div class="nb-dc"><h3>مهاراتي بحسب القسم</h3><div id="dash-skills"></div></div>
+          <div class="nb-dc"><h3>نقاط الضعف مع المدرب</h3><div id="dash-coach"></div></div>
+        </div>
+        <div class="nb-dash">
+          <div class="nb-dc"><h3>آخر الجلسات</h3><div id="dash-recent"></div></div>
+          <div class="nb-dc"><h3>أخطائي المتكررة</h3><div id="path-mistakes"></div></div>
+          <div class="nb-dc"><h3>ملاحظات الأستاذ الجامعي</h3><div id="path-notes"></div></div>
+        </div>
+      </div>
+
+      <!-- Profile Pane 1: Evaluations, Strengths, Development & Recommendations -->
+      <div id="profile-pane-overview" class="hidden grid grid-cols-1 lg:grid-cols-3 gap-6">
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-3">
+          <div class="flex items-center gap-2 text-emerald-800 font-bold text-sm">
+            <span class="w-2.5 h-2.5 rounded-full bg-emerald-500"></span>
+            <h2>نقاط القوة المرصودة</h2>
+          </div>
+          <ul id="profile-strengths-list" class="text-sm text-slate-600 space-y-2 list-disc list-inside leading-relaxed">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-3">
+          <div class="flex items-center gap-2 text-amber-800 font-bold text-sm">
+            <span class="w-2.5 h-2.5 rounded-full bg-amber-500"></span>
+            <h2>ما يحتاج إلى تطوير</h2>
+          </div>
+          <ul id="profile-weaknesses-list" class="text-sm text-slate-600 space-y-2 list-disc list-inside leading-relaxed">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+
+        <div class="bg-white border border-slate-200/90 rounded-2xl p-6 shadow-xs space-y-3">
+          <div class="flex items-center gap-2 text-teal-800 font-bold text-sm">
+            <span class="w-2.5 h-2.5 rounded-full bg-teal-600"></span>
+            <h2>التوصيات التدريبية القادمة</h2>
+          </div>
+          <ul id="profile-recommendations-list" class="text-sm text-slate-600 space-y-2 list-disc list-inside leading-relaxed">
+            <!-- Populated by JS -->
+          </ul>
+        </div>
+      </div>
+
+      <!-- Profile Pane 2: Session History -->
+      <div id="profile-pane-history" class="hidden bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+        <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between">
+          <div>
+            <h2 class="text-base font-bold text-slate-900">سجل الجلسات التدريبية</h2>
+            <p class="text-xs text-slate-500">الجلسات التي تم إتمامها ضمن الحساب الحالي</p>
+          </div>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs sm:text-sm">
+            <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+              <tr>
+                <th class="px-5 py-3.5">الحالة السريرية</th>
+                <th class="px-5 py-3.5">نوع الجلسة</th>
+                <th class="px-5 py-3.5">التاريخ</th>
+                <th class="px-5 py-3.5">الفحوصات المطلوبة</th>
+                <th class="px-5 py-3.5">نتيجة المراجعة</th>
+              </tr>
+            </thead>
+            <tbody id="profile-history-tbody" class="divide-y divide-slate-100">
+              <!-- Populated by JS -->
+            </tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Profile Pane 3: Account Settings -->
+      <div id="profile-pane-settings" class="hidden bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 max-w-2xl">
+        <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">إعدادات الحساب وتفضيلات المحاكاة</h2>
+        <div class="space-y-4 text-sm">
+          <label class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 cursor-pointer">
+            <div>
+              <div class="font-bold text-slate-800">النطق الصوتي الآلي لردود المريض</div>
+              <div class="text-xs text-slate-500">تشغيل القراءة الصوتية التلقائية عند توفرها في المتصفح</div>
+            </div>
+            <input type="checkbox" id="setting-tts-default" class="w-4 h-4 text-teal-600 rounded" />
+          </label>
+
+          <details class="nb-api" id="coach-api-box" style="border:1px solid #DCE5E9;border-radius:.9rem;overflow:hidden">
+            <summary>ربط تجريبي بـ API (اختياري) <span id="coach-api-state">متوقف</span></summary>
+            <div class="nb-api-body">
+              <p>للتجربة فقط. يُفضّل أن يشير العنوان إلى خادم وسيط عندك يحتفظ بالمفتاح، لا إلى مزوّد مباشرة. يُرسل فقط نص إجابتك وعنوان المحور ونقاط ضعفك. عند أي فشل يعود المدرب للتقييم المحلي.</p>
+              <input id="coach-api-url" type="url" dir="ltr" placeholder="https://your-proxy.example.com/coach">
+              <input id="coach-api-key" type="password" dir="ltr" placeholder="مفتاح اختياري (يُحفظ للجلسة فقط)">
+              <label><input id="coach-api-on" type="checkbox"> تفعيل المدرب عبر API</label>
+              <button type="button" id="coach-api-save" class="nb-btn-ghost">حفظ</button>
+            </div>
+          </details>
+
+          <div class="p-4 rounded-xl bg-slate-50 border border-slate-200/80 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+            <div>
+              <div class="font-bold text-slate-800">تسجيل الدخول بحساب آخر</div>
+              <div class="text-xs text-slate-500">استخدم بريداً مسجلاً للوصول إلى حسابك الآخر.</div>
+            </div>
+            <button id="settings-switch-demo-btn" class="px-4 py-2 rounded-xl bg-white hover:bg-slate-100 text-teal-800 border border-slate-200 text-xs font-bold transition-colors shrink-0 focus-ring">
+              تسجيل الدخول
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- Profile Pane 4: Printable Training Completion & Competency Certificate (#profile-pane-certificate) -->
+      <div id="profile-pane-certificate" class="hidden space-y-5">
+        <!-- Action Bar Above Certificate (Hidden when printing) -->
+        <div class="no-print bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
+          <div class="space-y-0.5">
+            <h2 class="text-sm sm:text-base font-bold text-slate-900">وثيقة إثبات الإنجاز والتدريب السريري المعتمدة</h2>
+            <p class="text-xs text-slate-600">جاهزة للطباعة أو الحفظ PDF.</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0">
+            <button type="button" id="print-certificate-btn" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors shadow-xs flex items-center gap-2 focus-ring">
+              <svg class="w-4 h-4" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><polyline points="6 9 6 2 18 2 18 9"/><path d="M6 18H4a2 2 0 0 1-2-2v-5a2 2 0 0 1 2-2h16a2 2 0 0 1 2 2v5a2 2 0 0 1-2 2h-2"/><rect x="6" y="14" width="12" height="8"/></svg>
+              <span>طباعة الوثيقة / حفظ PDF</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Official Certificate Document Sheet -->
+        <div id="printable-certificate-area" class="cert-official-frame p-6 sm:p-10 space-y-6 bg-white">
+          <!-- Certificate Header -->
+          <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-4 border-b-2 border-teal-700/30 pb-5">
+            <div class="flex items-center gap-3.5">
+              <div class="w-14 h-14 rounded-2xl bg-teal-700 text-white flex items-center justify-center shadow-xs shrink-0">
+                <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round">
+                  <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+                </svg>
+              </div>
+              <div>
+                <div class="text-xs font-bold text-teal-800">منصة نَبْض للتدريب والمحاكاة السريرية التمريضية والطبية</div>
+                <h3 class="text-lg sm:text-2xl font-bold text-slate-900 mt-0.5">وثيقة إثبات إنجاز وتدريب سريري</h3>
+                <div class="text-xs text-slate-600 font-medium">Certificate of Clinical Simulation Training & SBAR Competency</div>
+              </div>
+            </div>
+            <div class="text-right sm:text-left bg-white/90 border border-teal-200 rounded-2xl px-4 py-2.5 shrink-0">
+              <div class="text-xs text-slate-500">رقم التوثيق المرجعي:</div>
+              <div id="cert-serial-num" class="text-xs sm:text-sm font-bold text-teal-900 font-num">NABD-2026-8492</div>
+              <div id="cert-issue-date" class="text-xs text-slate-600 font-num mt-0.5">تاريخ الإصدار: 2026-10-18</div>
+            </div>
+          </div>
+
+          <!-- Certificate Body Statement -->
+          <div class="text-center max-w-3xl mx-auto space-y-3 py-2">
+            <p class="text-xs sm:text-sm font-semibold text-teal-800">تشهد وحدة التدريب والمحاكاة السريرية في منصة «نَبْض» بأن المتدرب/ـة:</p>
+            <div id="cert-trainee-name" class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight py-1 border-b border-teal-200 inline-block px-8">
+              رنا المحاسنة
+            </div>
+            <div id="cert-trainee-meta" class="text-xs sm:text-sm font-bold text-teal-900">
+              طالب جامعي · التخصص: التمريض — جامعة العلوم والتكنولوجيا الأردنية
+            </div>
+            <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-1">
+              قد أتمّ بنجاح متطلبات التدريب السريري التفاعلي على تقييم الحالات المرضية المتخصصة وحالات الطوارئ، شاملاً الاستجواب السريري المنهجي، قياس العلامات الحيوية، قراءة التحاليل المخبرية والصور التشخيصية، التحقق من معايير سلامة المريض، وتسليم الحالات وفق بروتوكول <strong>SBAR</strong> القياسي.
+            </p>
+          </div>
+
+          <!-- Quantitative Competency Summary Grid inside Certificate -->
+          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+            <div class="p-3.5 rounded-2xl bg-white border border-teal-200/90 shadow-2xs">
+              <div class="text-xs text-slate-500 font-semibold">إجمالي الجلسات المنجزة</div>
+              <div id="cert-stat-sessions" class="text-xl font-bold text-slate-900 font-num mt-1">8 جلسات</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white border border-teal-200/90 shadow-2xs">
+              <div class="text-xs text-slate-500 font-semibold">معدل التقييم التخصصي</div>
+              <div id="cert-stat-spec" class="text-xl font-bold text-teal-800 font-num mt-1">86%</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-white border border-teal-200/90 shadow-2xs">
+              <div class="text-xs text-slate-500 font-semibold">معدل جاهزية الطوارئ</div>
+              <div id="cert-stat-er" class="text-xl font-bold text-sky-800 font-num mt-1">81%</div>
+            </div>
+            <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-300 shadow-2xs">
+              <div class="text-xs text-emerald-900 font-semibold">حالة الكفاءة السريرية</div>
+              <div id="cert-stat-status" class="text-sm sm:text-base font-bold text-emerald-800 mt-1.5">مجتاز ومعتمد ✓</div>
+            </div>
+          </div>
+
+          <!-- Verified Completed Clinical Cases Table inside Certificate -->
+          <div class="space-y-2">
+            <div class="text-xs sm:text-sm font-bold text-slate-900">بيان الحالات السريرية المنجزة والموثقة في سجل المتدرب:</div>
+            <div class="overflow-x-auto border border-teal-200 rounded-2xl bg-white">
+              <table class="w-full text-right text-xs">
+                <thead class="bg-teal-50/80 border-b border-teal-200 text-teal-900 font-bold">
+                  <tr>
+                    <th class="px-4 py-2.5">الحالة السريرية المنجزة</th>
+                    <th class="px-4 py-2.5">نمط التدريب / القسم</th>
+                    <th class="px-4 py-2.5">تاريخ الإنجاز</th>
+                    <th class="px-4 py-2.5">الفحوصات المنفذة</th>
+                    <th class="px-4 py-2.5">النتيجة المعتمدة</th>
+                  </tr>
+                </thead>
+                <tbody id="cert-cases-tbody" class="divide-y divide-slate-100">
+                  <!-- Populated by JS -->
+                </tbody>
+              </table>
+            </div>
+          </div>
+
+          <!-- Official Signatures & Stamp Footer -->
+          <div class="pt-4 border-t border-teal-200/80 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center text-xs">
+            <div class="space-y-1">
+              <div class="text-slate-500 font-medium">إشراف واعتماد القسم الأكاديمي:</div>
+              <div class="font-bold text-slate-900 text-sm">د. عبدالرحمن المجالي</div>
+              <div class="text-teal-800 font-semibold">الأستاذ الجامعي — التدريب والمحاكاة السريرية</div>
+            </div>
+            <div class="flex justify-center">
+              <div class="w-24 h-24 rounded-full border-2 border-dashed border-teal-700 bg-teal-50/60 flex flex-col items-center justify-center text-center p-2">
+                <span class="text-xs font-bold text-teal-900">ختم الاعتماد</span>
+                <span class="text-xs text-teal-700 font-num font-bold">NABD 2026</span>
+                <span class="text-xs text-emerald-700 font-bold">مُصدّق ✓</span>
+              </div>
+            </div>
+            <div class="sm:text-left space-y-1">
+              <div class="text-slate-500 font-medium">حالة الوثيقة:</div>
+              <div class="font-bold text-emerald-800">وثيقة إلكترونية رسمية قابلة للطباعة</div>
+              <div id="cert-email-footer" class="text-slate-600 font-num">rana.m@just.edu.jo</div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+    </section>
+
+    <!-- =======================================================
+         VIEW 6: ACADEMIC UNIVERSITY PORTAL (#view-university)
+         Organized strictly by active user role (Student vs Supervisor)
+         ======================================================= -->
+    <section id="view-university" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+
+      <!-- Top Banner -->
+      <div class="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <span id="uni-portal-badge" class="inline-block text-xs font-semibold text-teal-800 bg-teal-50 px-3 py-1 rounded-full border border-teal-200/60">
+            القسم الأكاديمي الجامعي
+          </span>
+          <h1 id="uni-portal-title" class="text-xl font-bold text-slate-900">بوابة الشعب والواجبات السريرية</h1>
+          <p id="uni-portal-desc" class="text-sm text-slate-600">الحالات المسندة ونتائجها.</p>
+        </div>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <button id="uni-Explicit-role-switch-btn" class="px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold transition-colors focus-ring">
+            تسجيل الدخول بحساب آخر
+          </button>
+          <button id="uni-back-home-btn" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors focus-ring">
+            العودة للرئيسية
+          </button>
+        </div>
+      </div>
+
+      <!-- STUDENT ROLE CONTENT -->
+      <div id="uni-student-content" class="space-y-5">
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h2 class="text-base font-bold text-slate-900">الحالات والواجبات السريرية المسندة لك من الأستاذ الجامعي</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+              <div class="space-y-1.5">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">مساق NUR-402 · د. عبدالرحمن المجالي</span>
+                <h3 class="text-base font-bold text-slate-900 pt-1">واجب تقييم: حالة قلب وأوعية دموية مترافقة مع السكري</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">المطلوب: استجواب المريض، قياس العلامات، طلب تخطيط القلب وفحص السكر، وتسليم ملخص الحالة.</p>
+              </div>
+              <button data-uni-start="case_cardio_dm" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+                بدء حل الواجب السريري
+              </button>
+            </div>
+
+            <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+              <div class="space-y-1.5">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">مساق NUR-405 · د. سمر الحسن</span>
+                <h3 class="text-base font-bold text-slate-900 pt-1">واجب تقييم: حالة جهاز تنفسي حادة مترافقة مع قصور كلوي</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">المطلوب: تقييم نقص الأكسجة والانتباه لموانع الصبغة الوريدية لدى مريض الكلى.</p>
+              </div>
+              <button data-uni-start="case_resp_renal" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+                بدء حل الواجب السريري
+              </button>
+            </div>
+            <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4 md:col-span-2">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="space-y-1">
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">تقييم فصلي قيد المراجعة · غير منشور</span>
+                  <h3 class="text-base font-bold text-slate-900 pt-1">نتيجة الاختبار السريري النصفي (تُنشر بعد اعتماد الأستاذ الجامعي)</h3>
+                </div>
+                <button id="try-open-unpublished-btn" type="button" class="px-4 py-2 rounded-xl bg-slate-200 text-slate-600 text-xs font-bold">
+                  النتيجة غير منشورة (مقفلة)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPERVISOR / DOCTOR ROLE CONTENT (Full Academic Dashboard with Detailed Student Attempt Inspection) -->
+      <div id="uni-doctor-content" class="hidden space-y-6">
+
+        <!-- KPI Dashboard Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-semibold text-slate-500">الشعبة السريرية المسجلة</span>
+            <div class="text-2xl font-bold text-slate-900 font-num" id="uni-prof-kpi-count">7 طلاب</div>
+            <span class="text-xs text-teal-700 font-medium block">تمريض سريري (4) · طب بشري (3)</span>
+          </div>
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-semibold text-slate-500">التسليمات وجودة الاستجواب</span>
+            <div class="text-2xl font-bold text-emerald-700 font-num" id="uni-prof-kpi-sub">100% مكتمل</div>
+            <span class="text-xs text-slate-600 block">تحقق السلامة والحساسية: 86% من الشعبة</span>
+          </div>
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-semibold text-slate-500">متوسط التحليل السريري وSBAR</span>
+            <div class="text-2xl font-bold text-teal-700 font-num" id="uni-prof-kpi-avg">83%</div>
+            <span class="text-xs text-slate-600 block">أعلى أداء: ليان الزعبي (94%)</span>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-bold text-amber-900">تنبيهات الفحوصات غير المبررة</span>
+            <div class="text-base font-bold text-amber-800">طالبان طلبا صوراً/فحوصات خارج الاستطباب</div>
+            <span class="text-xs text-amber-700 block">عمر الخالدي وأحمد السالم (انظر التفاصيل بالجدول)</span>
+          </div>
+        </div>
+
+        <!-- Organized Cohort Table Card -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">تقارير طلبة الشعبة (NUR-402 / MED-410)</h2>
+              <p class="text-xs text-slate-500">اضغط «عرض الإجابات» لفتح ملف الطالب.</p>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <select id="prof-cohort-filter" class="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700">
+                <option value="all">جميع التخصصات والسنوات (7)</option>
+                <option value="التمريض">طلاب التمريض</option>
+                <option value="الطب">طلاب الطب البشري</option>
+                <option value="weakness">طلاب لديهم فحوصات غير مبررة / ثغرات</option>
+              </select>
+              <button id="doc-export-csv-btn" class="px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold transition-colors focus-ring">
+                تصدير السجل الكامل (CSV)
+              </button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="prof-structured-table">
+              <thead>
+                <tr>
+                  <th>الطالب</th>
+                  <th>التخصص والسنة</th>
+                  <th>الحالة السريرية المختبرة</th>
+                  <th>التشخيص المستنتج من الطالب</th>
+                  <th>الفحوصات وتبرير الإضافي</th>
+                  <th class="text-center">الدرجة والنشر</th>
+                  <th class="text-center">إجراء المعلم</th>
+                </tr>
+              </thead>
+              <tbody id="uni-prof-cohort-tbody">
+                <!-- Populated dynamically by renderProfessorCohortTables() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Supervisor Case Builder -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs space-y-4">
+          <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">إضافة حالة سريرية تدريبية جديدة (خاص بالأستاذ الجامعي)</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-case-title">عنوان الحالة السريرية والأمراض المرافقة:</label>
+              <input id="doc-case-title" type="text" value="حالة باطنية مترافقة مع ارتفاع ضغط الدم والسكري" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-case-dept">القسم السريري:</label>
+              <select id="doc-case-dept" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600">
+                <option value="cardio">القلب والأوعية الدموية</option>
+                <option value="resp">الأمراض الصدرية والتنفسية</option>
+                <option value="ortho">العظام والكسور</option>
+                <option value="gi">الباطنية والجهاز الهضمي</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-patient-name">اسم المريض الافتراضي والعمر:</label>
+              <input id="doc-patient-name" type="text" value="سامي النجار (54 سنة)" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-patient-allergy">المعلومة الحرجة / الحساسية التي يجب أن يسأل الطالب عنها:</label>
+              <input id="doc-patient-allergy" type="text" value="حساسية من مضادات الالتهاب غير الستيرويدية (NSAIDs)" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+            </div>
+          </div>
+
+          <div class="text-xs sm:text-sm">
+            <label class="font-semibold text-slate-700 block mb-1" for="doc-patient-complaint">شكوى المريض عند بدء الحوار:</label>
+            <input id="doc-patient-complaint" type="text" value="أشعر بصداع شديد في مؤخرة الرأس مع دوخة وزغللة بالعيون منذ الصباح، ونسيت أخذ دواء الضغط أمس." class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+          </div>
+
+          <button id="doc-save-case-btn" class="px-6 py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors shadow-xs focus-ring">
+            حفظ الحالة وإضافتها لبطاقات الصفحة الرئيسية
+          </button>
+        </div>
+      </div>
+
+    </section>
+
+  </main>
+
+  <!-- =========================================================
+       MODAL 1: STRUCTURED SBAR HANDOVER (Scrollable Body + Pinned Header/Footer)
+       ========================================================= -->
+  <div id="handover-modal" role="dialog" aria-modal="true" aria-labelledby="handover-modal-title" class="fixed inset-0 z-85 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-4" style="z-index: 85;">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Fixed Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white">
+        <div>
+          <span class="text-xs font-semibold text-teal-700">قبل عرض الدرجة</span>
+          <h2 id="handover-modal-title" class="text-base sm:text-lg font-bold text-slate-900">تسليم الحالة (SBAR)</h2>
+        </div>
+        <button id="close-handover-modal-btn" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs focus-ring" aria-label="إغلاق">✕</button>
+      </div>
+
+      <!-- Scrollable Modal Body -->
+      <div id="handover-modal-body" class="p-6 overflow-y-auto flex-1 min-h-0 space-y-4">
+
+        <div class="space-y-3.5 text-xs sm:text-sm">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <label class="font-bold text-slate-800" for="handover-recipient">١. جهة الاستلام:</label>
+            <button id="copy-scratchpad-to-sbar-btn" type="button" class="text-xs font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100 px-3 py-1 rounded-lg border border-teal-200/70 focus-ring">
+              استيراد ملاحظات مفكرتي الشخصية
+            </button>
+          </div>
+          <select id="handover-recipient" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600">
+            <option value="doctor">تسليم وتصعيد للطبيب المناوب</option>
+            <option value="next_nurse">تسليم للممرض / الممارس المستلم في المناوبة التالية</option>
+          </select>
+
+          <div>
+            <label class="font-bold text-slate-800 block mb-1" for="handover-diagnosis-input">٢. التشخيص المبدئي:</label>
+            <input id="handover-diagnosis-input" type="text" placeholder="اكتب تشخيصك المبدئي" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+          </div>
+
+          <div id="handover-extra-workups-box" class="hidden p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-2">
+            <div class="text-xs font-bold text-amber-900">تبرير الفحوصات/الصور الإضافية التي طلبتها خارج الاستطباب الأساسي للحالة:</div>
+            <p class="text-xs text-amber-800">برّر كل فحص إضافي؛ التبرير غير المقنع يخصم 5 نقاط.</p>
+            <div id="handover-extra-workups-list" class="space-y-2"></div>
+          </div>
+
+          <div>
+            <label class="font-bold text-slate-800 block mb-1" for="handover-summary-input">٣. الوضع والخلفية <bdi dir="ltr">(S &amp; B)</bdi>:</label>
+            <textarea id="handover-summary-input" rows="3" placeholder="اكتب الوضع الحالي للمريض (Situation) والخلفية المرضية والحساسية (Background) التي وثقتها..." class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600 resize-none leading-relaxed"></textarea>
+          </div>
+
+          <div>
+            <label class="font-bold text-slate-800 block mb-1" for="handover-action-input">٤. التقييم والتوصية <bdi dir="ltr">(A &amp; R)</bdi>:</label>
+            <textarea id="handover-action-input" rows="3" placeholder="اكتب قراءات التقييم ونتائج الفحوصات التي طلبتها (Assessment) والتوصية للمناوب التالي (Recommendation)..." class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600 resize-none leading-relaxed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fixed Modal Footer -->
+      <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-end gap-2.5 shrink-0">
+        <button id="cancel-handover-btn" type="button" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs sm:text-sm font-semibold focus-ring">
+          العودة لاستكمال الجلسة
+        </button>
+        <button id="confirm-handover-submit-btn" type="button" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold shadow-xs focus-ring">
+          سلّم واعرض التقرير
+        </button>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 2: AUTHENTICATION & EXPLICIT DEMO LOGIN
+       Does NOT pretend random email/password is server-authenticated;
+       provides explicit Demo Accounts + Local Registration
+       ========================================================= -->
+  
+  <div id="level-modal" role="dialog" aria-modal="true" class="fixed inset-0 hidden items-center justify-center p-3" style="z-index:85;background:rgba(25, 59, 74, 0.55)">
+    <div class="nb-quiz" style="max-width:56rem;width:100%;max-height:92vh;overflow:auto">
+      <aside class="nb-quiz-aside"><h2 id="level-aside-title">إعادة اختبار المستوى</h2><p id="level-aside-text">نكرر الاختبار بين فترة وأخرى لقياس تحسّنك وتحديث الغرف المقترحة.</p><button type="button" id="level-modal-close" class="nb-ghost-btn" style="align-self:flex-start;margin-top:auto">إغلاق</button></aside>
+      <div class="nb-quiz-main" id="nb-quiz-modal-main"></div>
+    </div>
+  </div>
+
+  <div id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" class="fixed inset-0 z-85 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-3" style="z-index: 85;">
+    <div class="nb-auth nb-auth-simple">
+      <div class="nb-auth-main">
+        <div class="nb-auth-brand">
+          <div class="nb-logo" aria-hidden="true"><svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></div>
+          <span class="nb-display">نَبْض الأردن</span>
+          <button id="close-auth-modal-btn" class="nb-auth-close focus-ring" type="button" aria-label="إغلاق">✕</button>
+        </div>
+
+        <h2 id="auth-modal-title" class="nb-auth-title">تسجيل الدخول</h2>
+
+        <!-- Login Pane -->
+        <form id="auth-pane-login" class="nb-auth-form" style="margin-top:1.1rem">
+          <label class="nb-field"><span>البريد الإلكتروني</span>
+            <input id="login-email" type="email" placeholder="name@university.edu.jo" autocomplete="username" required />
+          </label>
+          <label class="nb-field"><span>كلمة المرور</span>
+            <input id="login-pass" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required />
+          </label>
+          <div id="login-error-msg" role="alert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs leading-relaxed" style="margin-bottom:.8rem"></div>
+          <button id="submit-login-btn" type="submit" class="nb-btn focus-ring">تسجيل الدخول</button>
+          <div class="nb-auth-alt">ليس لديك حساب؟ <button id="auth-tab-register" type="button" class="nb-auth-link">إنشاء حساب</button></div>
+
+          <!-- Demo entry: ready accounts for the jury, no registration -->
+          <div class="nb-demo-login" role="group" aria-labelledby="nb-demo-title">
+            <div class="nb-demo-head">
+              <span id="nb-demo-title">دخول تجريبي</span>
+              <small>حسابات جاهزة للعرض، بدون تسجيل</small>
+            </div>
+            <div class="nb-demo-opts">
+              <button type="button" class="focus-ring" data-demo-login="rana"><b>طالبة تمريض</b><span>رنا المحاسنة · السنة الرابعة</span></button>
+              <button type="button" class="focus-ring" data-demo-login="med_student"><b>طالب طب</b><span>زيد العبداللات · السنة الرابعة</span></button>
+              <button type="button" class="focus-ring" data-demo-login="doctor"><b>أستاذ جامعي</b><span>د. عبدالرحمن المجالي · لوحة الشعبة</span></button>
+            </div>
+          </div>
+        </form>
+
+        <!-- Registration Pane (2 steps) -->
+        <div id="auth-pane-register" class="hidden" style="margin-top:1.1rem">
+          <div class="nb-steps" aria-hidden="true">
+            <span class="dot on" id="reg-dot-1">1</span><span style="">بياناتك</span>
+            <span class="bar" id="reg-bar"></span>
+            <span class="dot" id="reg-dot-2">2</span><span>دراستك أو عملك</span>
+          </div>
+
+          <div class="nb-step is-on" id="reg-step-1">
+            <label class="nb-field"><span>الاسم الكامل</span>
+              <input id="reg-name" type="text" placeholder="مثال: أحمد الزعبي" autocomplete="name" />
+            </label>
+            <label class="nb-field"><span>البريد الإلكتروني</span>
+              <input id="reg-email" type="email" placeholder="name@university.edu.jo" autocomplete="email" />
+            </label>
+            <label class="nb-field"><span>كلمة المرور</span>
+              <input id="reg-pass" type="password" placeholder="٨ أحرف على الأقل" autocomplete="new-password" minlength="8" />
+            </label>
+            <div class="nb-field" style="margin-bottom:.4rem"><span>نوع الحساب</span></div>
+            <div class="nb-rolecards" id="reg-rolecards">
+              <button type="button" data-rc="nursing" class="is-on"><strong>طالب تمريض</strong></button>
+              <button type="button" data-rc="medicine"><strong>طالب طب</strong></button>
+              <button type="button" data-rc="supervisor"><strong>أستاذ جامعي</strong></button>
+            </div>
+            <select id="reg-role" class="hidden" aria-hidden="true">
+              <option value="student" selected>طالب جامعي</option>
+              <option value="practitioner">ممارس صحي</option>
+              <option value="professor">أستاذ جامعي</option>
+            </select>
+            <div id="reg-error-msg" role="alert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs" style="margin-bottom:.8rem"></div>
+            <button id="reg-next-btn" type="button" class="nb-btn focus-ring">التالي ←</button>
+          </div>
+
+          <div class="nb-step" id="reg-step-2">
+            <div class="nb-trackchip" id="reg-track-chip"><b>مسار التمريض</b></div>
+            <label class="nb-field hidden"><span>التخصص (Specialty)</span>
+              <select id="reg-specialty">
+                <option value="التمريض">التمريض (Nursing)</option>
+                <option value="الطب">الطب البشري (Medicine)</option>
+              </select>
+            </label>
+            <label class="nb-field" id="reg-year-wrap"><span>السنة الدراسية</span>
+              <select id="reg-year">
+                <option value="1">السنة الأولى (مبتدئ)</option>
+                <option value="2">السنة الثانية (مبتدئ)</option>
+                <option value="3">السنة الثالثة (متقدم)</option>
+                <option value="4" selected>السنة الرابعة (متقدم)</option>
+                <option value="5">السنة الخامسة / السادسة (طب سريري)</option>
+              </select>
+            </label>
+            <label class="nb-field"><span>رمز الشعبة (اختياري)</span><input id="reg-code" type="text" placeholder="مثال: NUR-JU-2026" style="direction:ltr;text-align:right" /></label>
+            <label class="nb-field"><span>الجامعة / الجهة</span>
+              <input id="reg-uni" type="text" placeholder="الجامعة الأردنية، العلوم والتكنولوجيا…" />
+            </label>
+            <div id="reg-submit-error" role="alert" class="hidden p-3 rounded-xl bg-rose-50 border border-rose-200 text-rose-800 text-xs" style="margin-bottom:.8rem"></div>
+            <div style="display:flex;gap:.6rem">
+              <button id="reg-back-btn" type="button" class="nb-btn-ghost focus-ring">→ رجوع</button>
+              <button id="submit-register-btn" type="button" class="nb-btn focus-ring" style="flex:1">إنشاء الحساب وبدء التدريب</button>
+            </div>
+          </div>
+          <div class="nb-auth-alt"><span>لديك حساب؟</span> <button id="auth-tab-login" type="button" class="nb-auth-link">تسجيل الدخول</button></div>
+        </div>
+
+        <p class="nb-auth-about">محاكاة سريرية بالعربية لطلبة الطب والتمريض. يُحفظ الحساب والتقدّم على هذا الجهاز فقط.</p>
+      </div>
+    </div>
+  </div>
+
+
+  <!-- =========================================================
+       MODAL 3: INTERACTIVE MEDICAL IMAGE ZOOM & PAN LIGHTBOX
+       Allows the student or professor to zoom in (100% - 300%),
+       pan across regions of the X-Ray / CT / ECG / Ultrasound,
+       and record their own clinical reading.
+       ========================================================= -->
+  <div id="medical-image-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" class="fixed inset-0 z-90 bg-slate-900/80 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-6" style="z-index: 90;">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl space-y-3 max-h-[92vh] flex flex-col">
+      <div class="flex items-center justify-between gap-3 border-b border-slate-100 pb-3 shrink-0 flex-wrap">
+        <div>
+          <span class="text-xs font-bold text-teal-700">عارض الصور التشخيصية والتخطيط السريري (قابلة للتكبير والفحص الدقيق)</span>
+          <h2 id="lightbox-title" class="text-sm sm:text-base font-bold text-slate-900">--</h2>
+        </div>
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button type="button" id="zoom-out-btn" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold">تصغير −</button>
+          <span id="zoom-level-badge" class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-900 border border-teal-200 text-xs font-bold font-num">100%</span>
+          <button type="button" id="zoom-in-btn" class="px-3 py-1.5 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold">تكبير +</button>
+          <button type="button" id="zoom-200-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-num">200%</button>
+          <button type="button" id="zoom-300-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-num">300%</button>
+          <button type="button" id="zoom-reset-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">إعادة الضبط</button>
+          <button type="button" id="close-lightbox-btn" class="w-8 h-8 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-xs flex items-center justify-center">✕</button>
+        </div>
+      </div>
+
+      <!-- Zoomable & Pannable Image Viewport -->
+      <div id="lightbox-stage" class="img-zoom-stage flex-1 min-h-0">
+        <img id="lightbox-img" src="" alt="صورة تشخيصية للتكبير والفحص" class="max-w-full rounded-lg cursor-zoom-in select-none" />
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0 text-xs">
+        <span id="lightbox-tech-meta" class="text-slate-500">اضغط على الصورة أو أزرار التكبير أعلاه ومرّر داخل النافذة لفحص أدق تفاصيل الأشعة أو التخطيط واستنتاج النتيجة بنفسك.</span>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <input id="lightbox-quick-note" type="text" placeholder="دوّن استنتاجك من الصورة هنا ليُحفظ في بطاقة الفحص والمفكرة..." class="flex-1 sm:w-80 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:bg-white focus:border-teal-600" />
+          <button type="button" id="lightbox-save-note-btn" class="px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold shrink-0">حفظ استنتاجي ✓</button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       MODAL 4: PROFESSOR'S COMPREHENSIVE STUDENT ATTEMPT MODAL
+       Shows every single detail of a student's attempt:
+       - Deduced diagnosis, final score, publication status
+       - Full clinical inquiry log (what was asked & answered)
+       - Full workups & images ordered + student's own analysis + justification for extra tests
+       - Nurse scratchpad notes + complete SBAR handover vs reference
+       - Strengths, weaknesses, and supervisor's grading note
+       ========================================================= -->
+  <div id="student-attempt-detail-modal" role="dialog" aria-modal="true" aria-labelledby="stu-modal-title" class="fixed inset-0 z-85 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-6" style="z-index: 85;">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-5xl w-full p-5 sm:p-7 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span id="stu-modal-role-badge" class="px-3 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-xs font-bold">--</span>
+            <span id="stu-modal-pub-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">--</span>
+          </div>
+          <h2 id="stu-modal-title" class="text-lg sm:text-xl font-bold text-slate-900">--</h2>
+          <p id="stu-modal-subtitle" class="text-xs sm:text-sm text-slate-600">--</p>
+          <div id="stu-comment-box"><label for="stu-comment-input" style="font-size:.76rem;font-weight:700;color:#193B4A">ملاحظة الأستاذ الجامعي للطالب</label><textarea id="stu-comment-input" placeholder="اكتب ملاحظة تظهر للطالب في لوحته"></textarea><div style="display:flex;gap:.6rem;align-items:center;margin-top:.4rem"><button type="button" id="stu-comment-save" class="nb-btn" style="width:auto;padding:.45rem 1rem;font-size:.78rem">إرسال الملاحظة</button><span id="stu-comment-status" style="font-size:.72rem;color:#0A562F"></span></div><div id="stu-comment-last" style="font-size:.74rem;color:#425D69;margin-top:.4rem;line-height:1.8"></div></div>
+        </div>
+        <button type="button" id="close-stu-modal-btn" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center shrink-0">✕</button>
+      </div>
+
+      <!-- Summary Strip: Student's Diagnosis, Vitals, Workup Count, Final Score -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <div class="p-3.5 rounded-2xl bg-teal-50/60 border border-teal-200/80 sm:col-span-2">
+          <div class="text-xs text-teal-800 font-bold">التشخيص السريري الذي استنتجه الطالب:</div>
+          <div id="stu-modal-diagnosis" class="text-sm font-bold text-slate-900 mt-1">--</div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center">
+          <div class="text-xs text-slate-500">العلامات الحيوية والفحوصات</div>
+          <div id="stu-modal-workup-summary" class="text-sm font-bold text-slate-900 mt-1">--</div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center">
+          <div class="text-xs text-slate-500">الدرجة النهائية المستحقة</div>
+          <div id="stu-modal-score" class="text-xl font-bold text-teal-700 font-num mt-0.5">--</div>
+        </div>
+      </div>
+
+      <!-- Section 1: What the Student Asked & Answered (Clinical Inquiry Verification) -->
+      <div class="border border-slate-200/90 rounded-2xl overflow-hidden">
+        <div class="px-4 py-3 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-bold text-slate-900">أولاً: سجل استجواب الطالب للمريض (ماذا سأل الطالب وكيف تعامل مع المعطيات الحرجة؟)</h3>
+          <span id="stu-modal-inq-count" class="text-xs font-semibold text-teal-800">--</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-50/60 border-b border-slate-100 text-slate-600 font-bold">
+              <tr>
+                <th class="px-4 py-2.5">المحور السريري المطلوب</th>
+                <th class="px-4 py-2.5">حالة سؤال الطالب والتوقيت</th>
+                <th class="px-4 py-2.5">سؤال الطالب الفعلي وجواب المريض المستخرج</th>
+                <th class="px-4 py-2.5">تقييم الاستجواب</th>
+              </tr>
+            </thead>
+            <tbody id="stu-modal-inquiry-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 2: Ordered Lab Workups, Diagnostic Images, Student's Analysis & Justification for Unrelated Tests -->
+      <div class="border border-slate-200/90 rounded-2xl overflow-hidden">
+        <div class="px-4 py-3 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-bold text-slate-900">ثانياً: الفحوصات والصور التشخيصية التي طلبها الطالب + تحليله للنتيجة + تبريره للفحوصات الإضافية</h3>
+          <span class="text-xs text-slate-500">اضغط على أي صورة مرفقة لتكبيرها</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-50/60 border-b border-slate-100 text-slate-600 font-bold">
+              <tr>
+                <th class="px-4 py-2.5">الفحص / الصورة التشخيصية</th>
+                <th class="px-4 py-2.5">النتيجة الخام / مرفق الصورة</th>
+                <th class="px-4 py-2.5">تحليل واستنتاج الطالب للنتيجة</th>
+                <th class="px-4 py-2.5">صلة الفحص بالحالة وتبرير الطالب (إن كان إضافياً)</th>
+              </tr>
+            </thead>
+            <tbody id="stu-modal-workup-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 3: Student's Scratchpad Notes & SBAR Handover Submission -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2">
+          <div class="font-bold text-slate-900 border-b border-slate-200 pb-1.5">ثالثاً: ملاحظات مفكرة الطالب أثناء الجلسة</div>
+          <p id="stu-modal-scratchpad" class="text-slate-700 leading-relaxed whitespace-pre-line">--</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-teal-50/40 border border-teal-200/80 space-y-2">
+          <div class="font-bold text-teal-900 border-b border-teal-200/70 pb-1.5">رابعاً: تسليم SBAR المقدم من الطالب (S & B)</div>
+          <p id="stu-modal-sbar-sb" class="text-slate-800 leading-relaxed">--</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-teal-50/40 border border-teal-200/80 space-y-2">
+          <div class="font-bold text-teal-900 border-b border-teal-200/70 pb-1.5">تسليم SBAR المقدم من الطالب (A & R)</div>
+          <p id="stu-modal-sbar-ar" class="text-slate-800 leading-relaxed">--</p>
+        </div>
+      </div>
+
+      <!-- Section 4: Strengths, Weaknesses (including Unjustified Tests), & Supervisor Action -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200 space-y-1.5">
+          <div class="font-bold text-emerald-900">✓ نقاط القوة المرصودة في أداء الطالب:</div>
+          <ul id="stu-modal-strengths" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+        </div>
+        <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-1.5">
+          <div class="font-bold text-amber-900">نقاط الضعف / الفحوصات غير المبررة / الثغرات:</div>
+          <ul id="stu-modal-weaknesses" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+        </div>
+      </div>
+
+      <!-- Supervisor Feedback Note & Publish Toggle -->
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex-1 space-y-1">
+          <label for="stu-modal-prof-note" class="text-xs font-bold text-slate-800 block">ملاحظة الأستاذ الجامعي الموجهة للطالب (تظهر في بوابة الطالب):</label>
+          <input id="stu-modal-prof-note" type="text" class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm" />
+        </div>
+        <div class="flex items-center gap-2 shrink-0 pt-2 sm:pt-0">
+          <button type="button" id="stu-modal-toggle-pub-btn" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors">
+            اعتماد ونشر الدرجة للطالب ✓
+          </button>
+          <button type="button" id="stu-modal-close-bottom-btn" class="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors">
+            إغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       FOOTER (Public Links Only for Guests; App Links Protected)
+       ========================================================= -->
+  <footer id="site-footer" class="bg-white border-t border-slate-200/80 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-8 py-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-xs sm:text-sm">
+      <div class="space-y-2 md:col-span-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-teal-700 text-white flex items-center justify-center font-bold text-xs">ن</div>
+          <span class="font-bold text-sm text-slate-900">نَبْض الأردن — أكاديمية المحاكاة السريرية</span>
+        </div>
+        
+      </div>
+
+            <!-- Guest Footer Links (Public Only) -->
+      <div id="footer-guest-links" class="space-y-2">
+        <div class="font-bold text-slate-900 text-xs">روابط سريعة</div>
+        <ul class="space-y-1.5 text-xs text-slate-600">
+          <li><a href="#sec-roles" class="hover:text-teal-700">المسارات</a></li>
+          <li><a href="#sec-level" class="hover:text-teal-700">تحديد المستوى</a></li>
+          <li><a href="#sec-universities" class="hover:text-teal-700">البوابة الجامعية</a></li>
+        </ul>
+      </div>
+<!-- Signed-in Footer Links (Hidden for Guests) -->
+      <div id="footer-app-links" class="hidden space-y-2">
+        <div class="font-bold text-slate-900 text-xs">مساحة التدريب</div>
+        <ul class="space-y-1.5 text-xs text-slate-600">
+          <li><button data-foot-app="home" class="foot-app-link hover:text-teal-700">الرئيسية والحالات</button></li>
+          <li><button id="foot-er-btn" class="hover:text-teal-700">غرفة الطوارئ العشوائية</button></li>
+          <li><button data-foot-app="coach" class="foot-app-link hover:text-teal-700">المدرب السريري</button></li>
+          <li><button data-foot-app="profile" class="foot-app-link hover:text-teal-700">ملفي الشخصي</button></li>
+        </ul>
+      </div>
+
+      <div class="space-y-2">
+        <div class="font-bold text-slate-900 text-xs">طبيعة النموذج</div>
+        <ul class="space-y-1.5 text-xs text-slate-500">
+          <li>نموذج أولي تعليمي وتوضيحي</li>
+          <li>لطلبة الطب والتمريض</li>
+          <li>لا يُغني عن البروتوكولات السريرية المعتمدة</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-slate-100 py-3.5 px-4 sm:px-8 text-center text-xs text-slate-400">
+      جميع الحقوق محفوظة © 2026 منصة نَبْض للمحاكاة السريرية (نسخة تدريبية توضيحية)
+      <details class="v7-credits"><summary>مصادر الصور</summary><div class="nb-credit" id="nb-credits" style="margin-top:.4rem"></div></details>
+    </div>
+  </footer>
+
+  <script src="script.js" defer></script>
+  <script src="motion.js" defer></script>
+  <script src="terms.js" defer></script>
+  <script src="ui.js" defer></script>
+</body>
+</html>

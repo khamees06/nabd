@@ -3259,15 +3259,155 @@
           nbSb('B — الخلفية', ['سكري على الأنسولين، أخذ جرعة الصباح ولم يأكل، لا حساسية', 'سكري', 'لا أعرف', 'يأخذ أدوية'], 'الأنسولين والوجبة.'),
           nbSb('A — التقييم', ['استجاب للدكستروز الوريدي، السكر بعد العلاج 94 وهو واعٍ', 'أظنه تحسن', 'لا أعرف', 'ما زال سيئاً'], 'التقييم بقراءة جديدة.'),
           nbSb('R — التوصية', ['راجع جرعة الأنسولين وأوامر المراقبة وتكرار قياس السكر', 'لا حاجة', 'أوقف الأنسولين نهائياً', 'اتركه'], 'التوصية بمراجعة الطبيب للجرعة.')] }
+      },
+
+      /* ---------- 11. operating room 1: pre-op (easy) ---------- */
+      nc_or_preop: {
+        id: 'nc_or_preop', kind: 'nurse', periop: 1, levelLabel: 'سهل', deptName: 'العمليات الجراحية', durationMin: 12,
+        title: 'قبل العملية: تجهيز مريضة لاستئصال المرارة',
+        cardSummary: 'تتحقق من الهوية والموافقة والصيام والحساسية، ثم تجهّز المريضة وتسلّمها لغرفة العمليات.',
+        hint: 'اسأل عن آخر أكل وشرب قبل أن تقول إن المريضة جاهزة.',
+        patient: { name: 'سمر العبادي', age: 46, sex: 'f', bio: 'استئصال المرارة بالمنظار الساعة 11 صباحاً' },
+        doctor: { name: 'د. فراس الزعبي', dept: 'الجراحة العامة' },
+        intro: 'أنت ممرضة جناح الجراحة. مريضتك على قائمة العمليات اليوم، وعليك تجهيزها وتسليمها.',
+        vitals: { hr: 84, bp: '128/80', rr: 16, spo2: 98, temp: 36.8, avpu: 'A' },
+        ask: [NQ('id', 'التحقق من الهوية', 'ما اسمك الكامل وتاريخ ميلادك؟', 'سمر العبادي، مواليد 4 شباط 1980.', { key: 1 }),
+          NQ('consent', 'العملية والموافقة', 'هل تعرفين العملية التي ستُجرى لك؟ وهل وقّعتِ الموافقة؟', 'استئصال المرارة بالمنظار. شرح لي الطبيب أمس ووقّعت.', { key: 1 }),
+          NQ('fast', 'آخر أكل وشرب', 'متى آخر مرة أكلتِ أو شربتِ؟', 'تعشّيت أمس الساعة 8. وشعرت بالجوع صباحاً فأكلت قطعة كعك مع الشاي الساعة 9.', { key: 1, crit: 'لم تتحقق من الصيام قبل التخدير.' }),
+          NQ('allergy', 'الحساسية (دواء ولاتكس)', 'هل عندك حساسية من دواء أو من اللاتكس (القفازات المطاطية)؟', 'القفازات المطاطية تسبب لي حكة وطفحاً. ولا حساسية من الأدوية.', { key: 1, crit: 'لم تسأل عن الحساسية قبل العملية.' }),
+          NQ('meds', 'الأدوية اليومية', 'ما الأدوية التي تأخذينها؟ وماذا أخذتِ اليوم؟', 'أملوديبين للضغط، أخذته صباحاً بشربة ماء كما قالوا لي.'),
+          NQ('items', 'الحُلي وطقم الأسنان', 'هل عليكِ حُلي أو طقم أسنان أو عدسات لاصقة؟', 'خاتم زواج، وطقم أسنان علوي متحرك.')],
+        acts: [
+          NA('band', 'proc', 'التحقق من سوار الهوية ووضع سوار الحساسية', 'سوار الهوية مطابق للملف. وُضع سوار أحمر للحساسية مكتوب عليه: لاتكس.', { min: 2 }),
+          NA('chart', 'measure', 'مراجعة ملف العملية (الموافقة والفحوصات)', 'الموافقة موقّعة ومطابقة: استئصال المرارة بالمنظار. الفحوصات مرفقة.', { min: 3 }),
+          NA('prep', 'proc', 'تجهيز المريضة للعملية (رتّب الخطوات)', null, { min: 8, seq: { q: 'رتّب خطوات تجهيز المريضة قبل نقلها، وتجنّب الخاطئ منها.', steps: ['شرح ما سيحدث وطمأنة المريضة', 'إزالة الحُلي وطقم الأسنان وحفظها باسمها', 'لبس ثوب العمليات وتفريغ المثانة', 'توثيق العلامات الحيوية والتجهيز في ملف العملية'], extra: [{ t: 'حلاقة شعر منطقة العملية بشفرة', unsafe: 'حلاقة منطقة العملية بالشفرة (تزيد التهاب الجرح).' }, { t: 'إعطاؤها عصيراً لأنها جائعة', unsafe: 'كسر الصيام قبل التخدير.' }] } }),
+          NA('cannula', 'proc', 'تركيب كانيولا وريدية بتعقيم', 'تم تركيب كانيولا 20G في ظهر اليد اليسرى بتعقيم كامل.', { min: 4 }),
+          NA('latex', 'proc', 'إبلاغ غرفة العمليات بحساسية اللاتكس', 'اتصلت بغرفة العمليات: ستُجهَّز أدوات خالية من اللاتكس، وكُتبت الحساسية في الملف.', { min: 2 }),
+          NA('u_cef', 'med', 'سيفازولين 2 غ وريدياً الآن في الجناح', 'أعطيتها السيفازولين في الجناح.', { unsafe: 'مضاد وقائي أُعطي في وقت خاطئ (قبل الشق بساعات).', bad: 'الأستاذ الجامعي: المضاد الوقائي يُعطى خلال 60 دقيقة قبل الشق، والعملية تأجلت، فتضيع فائدة هذه الجرعة.' })
+        ],
+        beats: [
+          { doc: 'السيدة سمر على قائمتي الساعة 11 لاستئصال المرارة بالمنظار. جهّزيها وأبلغيني بأي مشكلة قبل النقل.', do: ['band', 'vitals', 'chart'], hint: 'اسألي عن آخر أكل وشرب وعن الحساسية، ثم قيسي العلامات وراجعي الملف.',
+            post: { labs: { title: 'فحوصات ما قبل العملية', rows: [nbLab('الهيموغلوبين Hb', '12.9', 'g/dL', '12.0–15.5', ''), nbLab('الصفائح PLT', '245', '×10³/µL', '150–400', ''), nbLab('INR', '1.0', '', '0.8–1.2', ''), nbLab('البوتاسيوم K', '4.0', 'mmol/L', '3.5–5.0', ''), nbLab('سكر الدم', '104', 'mg/dL', '70–140', '')] } },
+            rep: [{ q: 'ماذا تبلّغين الجرّاح قبل النقل؟', o: ['سمر 46 سنة لاستئصال المرارة. علاماتها وفحوصاتها طبيعية والموافقة موقّعة. لكنها أكلت كعكاً مع الشاي الساعة 9، أي قبل ساعتين فقط، وعندها حساسية من اللاتكس.', 'جاهزة تماماً للعملية الساعة 11.', 'أكلت قطعة كعك صغيرة فقط، وهذا لا يؤثر على التخدير.', 'أقترح إلغاء العملية نهائياً.'], why: 'الوجبة الخفيفة تحتاج 6 ساعات صيام قبل التخدير، والسوائل الصافية ساعتين، لتجنّب استنشاق محتوى المعدة. وحساسية اللاتكس تُبلَّغ لتجهيز أدوات خالية منه.', reply: 'شكراً. كلّمت طبيب التخدير، وأجّلنا العملية إلى الساعة 3 عصراً.', crit: { 1: 'إرسال مريضة غير صائمة إلى التخدير.', 2: 'التهوين من كسر الصيام قبل التخدير.' } }] },
+          { doc: 'أعطيها سيفازولين 2 غ وريدياً الآن قبل أن ننساه.', ord: { a: 1, why: 'المضاد الوقائي يُعطى خلال 60 دقيقة قبل الشق، والعملية تأجلت إلى الساعة 3. إعطاؤه الآن يضيّع فائدته.', crit: 'مضاد وقائي أُعطي في وقت خاطئ (قبل الشق بساعات).', reply: 'صحيح. سيعطيه طبيب التخدير في غرفة العمليات قبل الشق.' } },
+          { doc: 'جهّزيها للعملية، وركّبي كانيولا، وأبلغي غرفة العمليات بأي حساسية.', ord: { a: 0, why: 'أوامر تجهيز قياسية وآمنة.' }, do: ['prep', 'cannula', 'latex'] },
+          { doc: 'تبقى صائمة حتى العملية، ويُسمح لها برشفات ماء حتى الساعة 1 فقط.', ord: { a: 0, why: 'السوائل الصافية مسموحة حتى ساعتين قبل التخدير ما لم يقرر طبيب التخدير غير ذلك.' } }
+        ],
+        handoff: { to: 'ممرضة استقبال غرفة العمليات', items: [
+          nbSb('S — الوضع', ['سمر 46 سنة، استئصال المرارة بالمنظار، أُجّلت إلى الساعة 3 لأنها أكلت الساعة 9', 'مريضة لعملية مرارة', 'جاهزة منذ الصباح', 'لا أعرف موعد العملية'], 'من، وما العملية، وما الذي تغيّر.'),
+          nbSb('B — الخلفية', ['حساسية من اللاتكس (سوار أحمر)، لا حساسية دوائية، أملوديبين صباحاً بشربة ماء، والموافقة موقّعة', 'لا حساسية', 'تأخذ أدوية', 'الموافقة غير مهمة الآن'], 'الحساسية بالتحديد، والأدوية، والموافقة.'),
+          nbSb('A — التقييم', ['علاماتها وفحوصاتها طبيعية، كانيولا 20G، وأُزيل الخاتم وطقم الأسنان وحُفظا باسمها', 'تبدو بخير', 'لم أقس شيئاً', 'حالتها سيئة'], 'ما أُنجز بالتحديد.'),
+          nbSb('R — التوصية', ['أدوات خالية من اللاتكس، والمضاد الوقائي خلال 60 دقيقة قبل الشق، وتبقى صائمة', 'لا شيء', 'أعطوها المضاد فور وصولها', 'يمكنها الأكل الآن'], 'ما يجب أن يفعله الفريق بعدك.')] }
+      },
+
+      /* ---------- 12. operating room 2: safety checklist and count (medium) ---------- */
+      nc_or_timeout: {
+        id: 'nc_or_timeout', kind: 'nurse', periop: 2, levelLabel: 'متوسط', deptName: 'العمليات الجراحية', durationMin: 15,
+        title: 'داخل غرفة العمليات: قائمة التحقق الجراحية وعدّ الشاش',
+        cardSummary: 'ممرضة دوّارة في عملية ركبة: تمرّ على قائمة التحقق بمراحلها الثلاث، وتوقف الفريق عند أي خلل في الجهة أو المضاد الوقائي أو العدّ.',
+        hint: 'قائمة التحقق ليست شكلية: أي بند غير مطابق يوقف الفريق.',
+        patient: { name: 'عادل الرواشدة', age: 67, sex: 'm', bio: 'استبدال مفصل الركبة اليسرى' },
+        doctor: { name: 'د. باسل الشوابكة', dept: 'جراحة العظام' },
+        intro: 'أنت الممرضة الدوّارة في غرفة العمليات. تقودين قائمة التحقق وتراقبين سلامة المريض.',
+        vitals: { hr: 74, bp: '138/82', rr: 14, spo2: 99, temp: 36.6, avpu: 'A' },
+        ask: [NQ('id', 'التحقق من الهوية', 'ما اسمك الكامل وتاريخ ميلادك؟', 'عادل الرواشدة، مواليد 15 تشرين الأول 1959.', { key: 1 }),
+          NQ('site', 'العملية والجهة', 'أخبرني بكلماتك: ما العملية؟ وفي أي ركبة؟', 'تبديل مفصل الركبة اليسرى. هي التي تؤلمني منذ سنتين.', { key: 1, crit: 'لم تتحقق من الجهة مع المريض قبل التخدير.' }),
+          NQ('allergy', 'الحساسية الدوائية', 'هل عندك حساسية من أي دواء؟', 'لا، لا أعرف أن عندي حساسية.', { key: 1, crit: 'لم تسأل عن الحساسية قبل التخدير.' }),
+          NQ('fast', 'آخر أكل وشرب', 'متى آخر مرة أكلت أو شربت؟', 'آخر أكل أمس الساعة 10 مساءً، ولم أشرب شيئاً اليوم.', { key: 1 }),
+          NQ('blood', 'مميّعات الدم', 'هل تأخذ دواءً مميّعاً للدم؟', 'كنت آخذ وارفارين، وأوقفته قبل 5 أيام كما قال الطبيب.')],
+        acts: [
+          NA('signin', 'proc', 'قائمة التحقق 1: قبل التخدير (Sign In)', null, { min: 3, chk: { q: 'راجعي كل بند مع طبيب التخدير: «مطابق» إن كان صحيحاً، و«يوجد خلل» إن رأيتِ مشكلة.', items: [
+            { t: 'المريض أكّد بنفسه اسمه والعملية والجهة: الركبة اليسرى', ok: true },
+            { t: 'نموذج الموافقة موقّع: «استبدال مفصل الركبة اليسرى»', ok: true },
+            { t: 'علامة الجرّاح على الجلد: فوق الركبة اليمنى', ok: false, why: 'العلامة يجب أن تكون على الجهة نفسها في الموافقة وكلام المريض. يتوقف الفريق، ويتحقق الجرّاح ويضع العلامة بنفسه.', unsafe: 'تجاوز تناقض في جهة العملية (خطر الجراحة في الجهة الخاطئة).' },
+            { t: 'جهاز قياس الأكسجين على إصبع المريض ويعمل', ok: true },
+            { t: 'الحساسية المعروفة: لا يوجد', ok: true },
+            { t: 'خطر فقد دم أكثر من 500 مل: نعم، والدم محجوز وخطّان وريديان جاهزان', ok: true }] } }),
+          NA('timeout', 'proc', 'قائمة التحقق 2: قبل الشق (Time Out)', null, { min: 3, chk: { q: 'قبل أن يبدأ الجرّاح، تقرئين البنود بصوت عالٍ ويؤكد الفريق.', items: [
+            { t: 'كل أعضاء الفريق عرّفوا بأسمائهم وأدوارهم', ok: true },
+            { t: 'الاسم والعملية والجهة مؤكدة، والعلامة على الركبة اليسرى ظاهرة', ok: true },
+            { t: 'المضاد الوقائي: سيفازولين أُعطي في الجناح قبل 3 ساعات', ok: false, why: 'يجب أن يُعطى المضاد الوقائي خلال 60 دقيقة قبل الشق، فتُطلب جرعة جديدة قبل البدء.', unsafe: 'بدء الشق دون مضاد وقائي خلال 60 دقيقة.' },
+            { t: 'صور أشعة الركبة اليسرى معروضة في الغرفة', ok: true },
+            { t: 'مؤشرات تعقيم الأدوات سليمة', ok: true }] } }),
+          NA('count', 'proc', 'قائمة التحقق 3: قبل الخروج (Sign Out) والعدّ', null, { min: 4, chk: { q: 'قبل إغلاق الجرح: العدّ ومراجعة البنود الأخيرة.', items: [
+            { t: 'العملية المنفّذة: استبدال مفصل الركبة اليسرى', ok: true },
+            { t: 'عدّ الشاش: 20 في البداية، و19 الآن', ok: false, why: 'العدّ غير مطابق. يتوقف إغلاق الجرح ويُبحث في الجرح والغرفة، وإن لم توجد القطعة تُطلب صورة أشعة قبل خروج المريض.', unsafe: 'إغلاق الجرح مع عدّ شاش غير مطابق (خطر نسيان جسم غريب).' },
+            { t: 'عدّ الإبر والأدوات: مطابق', ok: true },
+            { t: 'العينات موسومة باسم المريض', ok: true },
+            { t: 'أعطال الأجهزة: لا يوجد', ok: true }] } }),
+          NA('search', 'proc', 'البحث عن الشاشة الناقصة مع الفريق', 'بحثنا في الجرح والأرض وسلة الشاش: وُجدت الشاشة ملتصقة بالغطاء تحت الطاولة، وصار العدّ 20 مطابقاً.', { min: 4 }),
+          NA('u_mark', 'proc', 'تصحيح علامة الجهة بنفسي على الركبة اليسرى', 'رسمت العلامة على الركبة اليسرى بنفسي.', { unsafe: 'وضع علامة الجهة من غير الجرّاح المسؤول.', bad: 'الأستاذ الجامعي: علامة الجهة يضعها الجرّاح الذي سيُجري العملية، لا الممرضة.' }),
+          NA('u_close', 'proc', 'السماح بإغلاق الجرح والبحث عن الشاشة لاحقاً', 'سُمح بإغلاق الجرح قبل حل مشكلة العدّ.', { unsafe: 'إغلاق الجرح مع عدّ شاش غير مطابق (خطر نسيان جسم غريب).', bad: 'الأستاذ الجامعي: لا يُغلق الجرح وعدّ الشاش غير مطابق.' })
+        ],
+        beats: [
+          { sys: 'غرفة العمليات 3: عادل 67 سنة على سرير العمليات، واعٍ، وطبيب التخدير جاهز. ابدئي قائمة التحقق قبل التخدير.', do: ['vitals', 'signin'], hint: 'اسألي المريض عن اسمه والجهة بكلماته، ثم افتحي «قائمة التحقق 1» من الإجراءات.',
+            rep: [{ q: 'العلامة على الركبة اليمنى، والموافقة وكلام المريض يقولان اليسرى. ماذا تفعلين؟', o: ['أوقف التخدير وأبلغ الجرّاح وطبيب التخدير فوراً، ولا نكمل حتى يتحقق الجرّاح من الملف والصور ويضع العلامة الصحيحة بنفسه', 'أكمل، فالجرّاح يعرف أي ركبة سيعملها', 'أمسح العلامة وأرسمها بنفسي على اليسرى', 'أسأل المريض مرة أخرى ثم أكمل'], why: 'أي تناقض في الجهة يوقف كل شيء. العلامة يضعها الجرّاح المسؤول بعد التحقق من الموافقة والصور.', reply: 'شكراً لأنك أوقفتِنا. تحققت من الموافقة والصور: اليسرى. وضعت العلامة على اليسرى.', crit: { 1: 'تجاوز تناقض في جهة العملية (خطر الجراحة في الجهة الخاطئة).', 2: 'وضع علامة الجهة من غير الجرّاح المسؤول.', 3: 'تجاوز تناقض في جهة العملية (خطر الجراحة في الجهة الخاطئة).' } }] },
+          { sys: 'نام المريض بعد التخدير، وعُقّم الجلد وغُطّي. حان التوقف قبل الشق.', do: ['timeout'] },
+          { doc: 'الجرعة التي أخذها في الجناح تكفي. لن ننتظر، سأبدأ الشق الآن.', ord: { a: 1, why: 'المضاد الوقائي يجب أن يكون خلال 60 دقيقة قبل الشق. تستوضحين وتطلبين جرعة جديدة قبل البدء.', crit: 'بدء الشق دون مضاد وقائي خلال 60 دقيقة.', reply: 'معك حق. طبيب التخدير يعطي سيفازولين 2 غ الآن، ونبدأ بعدها.' } },
+          { sys: 'بعد ساعتين ونصف: رُكّب المفصل والجرّاح يستعد لإغلاق الجرح. حان العدّ النهائي.', do: ['count'],
+            rep: [{ q: 'عدّ الشاش ينقص قطعة واحدة. ما التصرف الصحيح؟', o: ['أبلغ الجرّاح فوراً فيتوقف الإغلاق، ونبحث في الجرح والغرفة، وإن لم نجدها تُطلب صورة أشعة قبل خروج المريض', 'نغلق الجرح ونبحث عنها لاحقاً', 'أعدّل الرقم في السجل ليصبح مطابقاً', 'قطعة واحدة لا تهم، غالباً رُميت مع النفايات'], why: 'العدّ غير المطابق يوقف إغلاق الجرح حتى تُوجد القطعة أو تستبعدها الأشعة.', reply: 'توقفنا. ابحثي معنا.', crit: { 1: 'إغلاق الجرح مع عدّ شاش غير مطابق (خطر نسيان جسم غريب).', 2: 'تعديل سجل العدّ ليبدو مطابقاً.', 3: 'إغلاق الجرح مع عدّ شاش غير مطابق (خطر نسيان جسم غريب).' } }] },
+          { sys: 'أوقف الجرّاح الإغلاق والفريق ينتظر.', do: ['search'] },
+          { doc: 'العدّ مطابق الآن. أغلقنا الجرح، انقلوه إلى الإفاقة.', ord: { a: 0, why: 'العدّ صحيح والعملية اكتملت.' } }
+        ],
+        handoff: { to: 'ممرضة الإفاقة', items: [
+          nbSb('S — الوضع', ['عادل 67 سنة، انتهى استبدال مفصل الركبة اليسرى تحت تخدير عام', 'مريض من العمليات', 'انتهت العملية', 'لا أعرف ماذا عُمل له'], 'من، وما العملية، وأي جهة.'),
+          nbSb('B — الخلفية', ['لا حساسية، أوقف الوارفارين قبل 5 أيام، أُعيدت جرعة سيفازولين قبل الشق، وصُحّحت علامة الجهة قبل التخدير', 'لا شيء مهم', 'يأخذ أدوية', 'لم يحدث شيء أثناء العملية'], 'ما يهم الفريق التالي، ومنه ما صُحّح.'),
+          nbSb('A — التقييم', ['علاماته مستقرة، فقد دم نحو 400 مل، والعدّ النهائي مطابق بعد إيجاد الشاشة الناقصة', 'كل شيء جيد', 'نزف كثيراً', 'لم أتابع'], 'أرقام وما أُنجز.'),
+          nbSb('R — التوصية', ['مراقبة النزف والضماد ونبض القدم والألم، ومنع الجلطات حسب أوامر الجرّاح', 'لا حاجة للمتابعة', 'إعادة الوارفارين فوراً', 'نقله إلى الجناح مباشرة'], 'ما الذي تراقبه ممرضة الإفاقة.')] }
+      },
+
+      /* ---------- 13. operating room 3: recovery room (advanced) ---------- */
+      nc_or_pacu: {
+        id: 'nc_or_pacu', kind: 'nurse', periop: 3, levelLabel: 'متقدم', deptName: 'العمليات الجراحية', durationMin: 16,
+        title: 'غرفة الإفاقة: تنفّس بطيء ثم نزيف بعد العملية',
+        cardSummary: 'مريضة نعسانة بعد فتح بطن: تؤمّنين التنفس، وترفضين جرعة مورفين خطرة، ثم تكتشفين نزيفاً وتصعّدين.',
+        hint: 'في الإفاقة: المجرى الهوائي والتنفس أولاً، ثم الدورة الدموية والنزيف.',
+        patient: { name: 'مريم الحوراني', age: 38, sex: 'f', bio: 'بعد فتح بطن لاستئصال ورم ليفي من الرحم' },
+        doctor: { name: 'د. هيثم الصمادي', dept: 'التخدير والإفاقة' },
+        intro: 'أنت ممرضة غرفة الإفاقة. مريضتك وصلت من غرفة العمليات قبل دقيقتين.',
+        vitals: { hr: 92, bp: '118/72', rr: 9, spo2: 91, temp: 36.1, avpu: 'V' },
+        ask: [NQ('id', 'التحقق من الهوية (السوار)', 'ما الاسم في سوار الهوية؟ هل يطابق الملف؟', 'مريم الحوراني، مطابق للملف.', { key: 1 }),
+          NQ('handover', 'تسليم غرفة العمليات', 'ماذا قال فريق العمليات في التسليم؟', 'فقدت 600 مل دم أثناء العملية، وأخذت 2 لتر سوائل، ومورفين 6 ملغ قبل نهاية العملية، ولها أنبوب تصريف في البطن.', { key: 1 }),
+          NQ('allergy', 'الحساسية (من الملف)', 'ما الحساسية المسجلة في ملفها؟', 'الملف: لا حساسية دوائية معروفة.', { key: 1, crit: 'لم تتحقق من الحساسية قبل الأدوية.' }),
+          NQ('pain', 'الألم', 'مريم، من 0 إلى 10 كم الألم؟', '(بنعاس) ...ألم... 7 تقريباً.', { key: 1 }),
+          NQ('nausea', 'الغثيان', 'هل تشعرين بغثيان؟', 'قليلاً.')],
+        acts: [
+          NA('airway', 'proc', 'فتح المجرى الهوائي ومناداتها لتتنفس بعمق', 'رفعت ذقنها وناديتها بصوت عالٍ: فتحت عينيها وتنفست بعمق. التنفس الآن 12.', { min: 1, patch: { rr: 12 }, reveal: ['rr', 'avpu'] }),
+          NA('o2', 'med', 'أكسجين بقناع الوجه 6 ل/د', 'بدأ الأكسجين بقناع الوجه، وارتفعت الأكسجة إلى 96%.', { min: 1, patch: { spo2: 96 }, reveal: ['spo2'] }),
+          NA('para_iv', 'med', 'باراسيتامول 1 غ وريدياً', 'أعطيتها باراسيتامول 1 غ وريدياً خلال 15 دقيقة، ووثّقت الوقت.', { min: 2 }),
+          NA('pain_score', 'measure', 'تقييم الألم ودرجة النعاس', 'الألم 6 من 10، وهي نعسانة لكنها تفتح عينيها عند ندائها.', { min: 1 }),
+          NA('vitals2', 'measure', 'إعادة قياس العلامات الحيوية', 'النبض 124، الضغط 88/54، التنفس 22، الأكسجة 95%. المريضة شاحبة وجلدها بارد.', { min: 2, patch: { hr: 124, bp: '88/54', rr: 22, spo2: 95, avpu: 'A' }, reveal: ['hr', 'bp', 'rr', 'spo2', 'temp', 'avpu'] }),
+          NA('drain', 'measure', 'فحص الضماد وأنبوب التصريف', 'في أنبوب التصريف 350 مل دم أحمر قانٍ خلال 30 دقيقة، والضماد مبلل بالدم.', { min: 2 }),
+          NA('fluids', 'med', 'محلول رينجر لاكتات 500 مل بسرعة', 'بدأ رينجر لاكتات 500 مل بسرعة عبر الكانيولا.', { min: 2 }),
+          NA('xmatch', 'measure', 'سحب صورة دم وتخثّر وفصيلة وتصالب', 'سُحبت العينات ووُسمت باسم المريضة والوقت، وطُلب تجهيز وحدتي دم.', { min: 3 }),
+          NA('u_morph', 'med', 'مورفين 10 ملغ وريدياً دفعة واحدة', 'أعطيتها المورفين دفعة واحدة.', { unsafe: 'مورفين بجرعة كبيرة لمريضة نعسانة وتنفسها بطيء.', bad: 'الشاشة: التنفس 6 والأكسجة 84%! (تثبيط تنفسي).' }),
+          NA('u_ward', 'proc', 'نقلها إلى الجناح لأن العملية انتهت', 'أرسلتها إلى الجناح.', { unsafe: 'نقل مريضة غير مستقرة من الإفاقة.', bad: 'الأستاذ الجامعي: لا تخرج المريضة من الإفاقة وهي غير مستقرة.' })
+        ],
+        beats: [
+          { sys: 'وصلت مريم 38 سنة إلى الإفاقة بعد فتح بطن لاستئصال ورم ليفي من الرحم. أنتِ ممرضتها.', do: ['vitals', 'airway', 'o2'], hint: 'المجرى الهوائي والتنفس أولاً: قيسي العلامات، ثم افتحي المجرى وأعطي الأكسجين.',
+            rep: [{ q: 'كيف تبلّغين طبيب التخدير؟', o: ['مريم 38 سنة في الإفاقة بعد فتح بطن. وصلت نعسانة، والتنفس 9 والأكسجة 91%. فتحت المجرى وأعطيت الأكسجين فتحسّنا إلى 12 و96%. أخذت مورفين 6 ملغ في العمليات، ولا حساسية.', 'وصلت المريضة وهي نائمة ومرتاحة.', 'الأكسجة منخفضة قليلاً، لا شيء مهم.', 'أرجو أن تراها حين تتفرغ.'], why: 'النعاس مع تنفس بطيء وأكسجة منخفضة بعد مورفين علامة خطر، تُبلَّغ بالأرقام وبما فعلتِه.', reply: 'جيد. راقبيها عن قرب.', crit: { 1: 'تأخير الإبلاغ عن تثبيط التنفس.', 2: 'التهوين من نقص الأكسجة.', 3: 'تأخير الإبلاغ عن تثبيط التنفس.' } }] },
+          { doc: 'تقول إنها تتألم. أعطيها مورفين 10 ملغ وريدياً دفعة واحدة.', ord: { a: 2, why: 'هي نعسانة، وكان تنفسها 9، وأخذت مورفين في العمليات. جرعة كبيرة دفعة واحدة قد توقف تنفسها، فترفضين وتبلّغين.', crit: 'مورفين بجرعة كبيرة لمريضة نعسانة وتنفسها بطيء.', reply: 'معك حق. باراسيتامول وريدي الآن، ومورفين 1 إلى 2 ملغ فقط عند استيقاظها وتنفسها فوق 12.', bad: 'الشاشة: التنفس 6 والأكسجة 84%! (تثبيط تنفسي).' } },
+          { doc: 'باراسيتامول 1 غ وريدياً، وقيّمي الألم والنعاس كل 15 دقيقة.', ord: { a: 0, why: 'مسكّن آمن لا يثبّط التنفس، مع مراقبة الألم والنعاس.' }, do: ['para_iv', 'pain_score'] },
+          { sys: 'بعد 25 دقيقة: مريم شاحبة وتقول إنها تشعر بدوخة.', do: ['vitals2', 'drain'], hint: 'أعيدي القياس، وافحصي الضماد وأنبوب التصريف.',
+            rep: [{ q: 'النبض 124 والضغط 88/54، وفي أنبوب التصريف 350 مل دم خلال 30 دقيقة. ماذا تفعلين؟', o: ['أبلغ الجرّاحة وطبيب التخدير فوراً: علامات نزيف بعد العملية مع هبوط الضغط، وأبقى معها وأجهّز السوائل والعينات', 'أنتظر نصف ساعة وأعيد القياس', 'أرفع سرعة السوائل بنفسي وأكمل المراقبة', 'أعطيها مسكّناً للدوخة'], why: 'تسارع النبض وهبوط الضغط مع دم غزير في أنبوب التصريف علامات نزيف تحتاج تدخلاً فورياً من الجرّاحة.', reply: 'أبلغت الجرّاحة، وهي قادمة الآن.', crit: { 1: 'تأخير الإبلاغ عن نزيف بعد العملية.', 2: 'تغيير العلاج دون أمر طبي.', 3: 'تأخير الإبلاغ عن نزيف بعد العملية.' } },
+              { q: 'هل تستوفي مريم شروط الخروج من الإفاقة (درجة ألدريت 9 أو أكثر مع علامات مستقرة)؟', o: ['لا. الدورة الدموية غير مستقرة، فتبقى في الإفاقة أو تعود إلى العمليات حسب قرار الجرّاحة', 'نعم، فالعملية انتهت', 'نعم، لأنها صارت واعية', 'لا أعرف، أنقلها وأسأل لاحقاً'], why: 'درجة ألدريت تقيّم الحركة والتنفس والدورة الدموية والوعي والأكسجة، ويلزم 9 من 10 مع علامات مستقرة. هبوط الضغط يخفضها.', reply: 'صحيح، لن تخرج الآن.', crit: { 1: 'نقل مريضة غير مستقرة من الإفاقة.', 2: 'نقل مريضة غير مستقرة من الإفاقة.', 3: 'نقل مريضة غير مستقرة من الإفاقة.' } }] },
+          { doc: 'رينجر لاكتات 500 مل بسرعة، واسحبي صورة دم وتخثّر وتصالب لوحدتين. الجرّاحة قررت إعادتها إلى غرفة العمليات.', ord: { a: 0, why: 'إجراءات إنعاش قياسية حتى تعود إلى العمليات.' }, do: ['fluids', 'xmatch'],
+            post: { labs: { title: 'نتائج الدم العاجلة', rows: [nbLab('الهيموغلوبين Hb', '8.1', 'g/dL', '12.0–15.5', 'L'), nbLab('الصفائح PLT', '190', '×10³/µL', '150–400', ''), nbLab('INR', '1.1', '', '0.8–1.2', ''), nbLab('اللاكتات', '3.2', 'mmol/L', 'أقل من 2.0', 'H')] } } }
+        ],
+        handoff: { to: 'فريق غرفة العمليات', items: [
+          nbSb('S — الوضع', ['مريم 38 سنة، نزيف بعد فتح بطن لاستئصال ورم ليفي، وتعود إلى العمليات', 'مريضة من الإفاقة', 'عندها ألم', 'لا أعرف السبب'], 'من، وما المشكلة الآن.'),
+          nbSb('B — الخلفية', ['لا حساسية، فقدت 600 مل أثناء العملية، أخذت مورفين 6 ملغ في العمليات، ورُفض مورفين 10 ملغ بسبب بطء التنفس', 'لا شيء', 'عملية نسائية', 'أعطيتها مورفين'], 'ما أُعطي وما رُفض ولماذا.'),
+          nbSb('A — التقييم', ['النبض 124 والضغط 88/54، و350 مل دم في أنبوب التصريف خلال 30 دقيقة، وHb 8.1 واللاكتات 3.2', 'تحسّنت', 'مستقرة', 'لا أعرف'], 'أرقام وتغيّرات.'),
+          nbSb('R — التوصية', ['استمرار السوائل، وتجهيز وحدتي الدم، ومراقبة مستمرة حتى تصل إلى العمليات', 'نقلها إلى الجناح', 'إعطاؤها مورفين', 'لا شيء'], 'الخطوة التالية بوضوح.')] }
       }
     };
 
-    const NB_IMG = {"bp":{"u":"img/nb/bp.jpg","page":"https://commons.wikimedia.org/wiki/File:Nurse_takes_a_patient's_blood_pressure.jpg","alt":"قياس ضغط الدم"},"bp2":{"u":"img/nb/bp2.jpg","page":"https://commons.wikimedia.org/wiki/File:Nurse_checks_blood_pressure.jpg","alt":"ممرضة تقيس الضغط"},"amman":{"u":"img/nb/amman.jpg","page":"https://commons.wikimedia.org/wiki/File:Sunset_over_citadel_in_Amman,_Jordan.jpg","alt":"جبل القلعة، عمّان"},"ecg":{"u":"img/nb/ecg.jpg","page":"https://commons.wikimedia.org/wiki/File:Normal_12_lead_EKG.jpg","alt":"تخطيط القلب"},"iv":{"u":"img/nb/iv.jpg","page":"https://commons.wikimedia.org/wiki/File:Intravenous_cannula_01.JPG","alt":"قنية وريدية"},"steth":{"u":"img/nb/steth.jpg","page":"https://commons.wikimedia.org/wiki/File:Physical_exam_of_child_with_stethoscope_on_chest.jpeg","alt":"فحص بالسماعة"},"hands":{"u":"img/nb/hands.jpg","page":"https://commons.wikimedia.org/wiki/File:MNHandWashingNurse.jpg","alt":"غسل اليدين"},"cxr_normal":{"u":"img/nb/cxr_normal.png","page":"https://commons.wikimedia.org/wiki/File:Chest_Xray_PA_3-8-2010.png","alt":"صورة صدر طبيعية"},"cxr_pneu":{"u":"img/nb/cxr_pneu.jpg","page":"https://commons.wikimedia.org/wiki/File:Pneumonia_x-ray.jpg","alt":"صورة صدر بالتهاب رئوي"},"thermo":{"u":"img/nb/thermo.jpg","page":"https://commons.wikimedia.org/wiki/File:Fieberthermometer_BW_2.JPG","alt":"ميزان حرارة"},"bandage":{"u":"img/nb/bandage.jpg","page":"https://commons.wikimedia.org/wiki/File:Fingergazevernband.jpg","alt":"ضماد شاش"},"gluco":{"u":"img/nc/sugar.jpg","page":"https://commons.wikimedia.org/wiki/File:Blood_Glucose_Check_-_Howrah_-_2015-04-12_7637.JPG","alt":"قياس سكر الدم من الإصبع","by":"Biswarup Ganguly","lic":"CC BY 3.0"},"nc_vitals":{"u":"img/nc/vitals.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_110714-N-RM525-060_Hospitalman_Seckisiesha_Isaac,_from_New_York,_prepares_to_take_a_woman%27s_temperature_at_a_pre-screening_vital_signs_stat.jpg","alt":"قياس العلامات الحيوية","by":"U.S. Navy photo by Mass Communication Specialist 2nd Class Jonathen E. Davis","lic":"Public domain"},"nc_bp":{"u":"img/nc/bp.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_070919-N-6278K-106_Laura_Seris,_a_registered_nurse_and_Project_Hope_volunteer_attached_to_Military_Sealift_Command_hospital_ship_USNS_Comfort_(T-AH_20),_takes_a_blood_pressure_reading_from_a_patient.jpg","alt":"ممرضة تقيس ضغط الدم","by":"U.S. Navy photo by Mass Communication Specialist 2nd Class Joan E. Kretschmer","lic":"Public domain"},"nc_bleed":{"u":"img/nc/bleed.jpg","page":"https://commons.wikimedia.org/wiki/File:Fire_Controlman_watching_arm_being_wrapped_during_first_aid_class_aboard_USS_Benfold_(DDG-65)_180628-N-GR120-0104.jpg","alt":"ضماد على الساعد","by":"Mass Communication Specialist 2nd Class Anna Van Nuys","lic":"CC BY-SA 2.0"},"nc_wound":{"u":"img/nc/wound.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_080628-N-9689V-007_Lt._Todd_Hlavac,_a_staff_nurse_assigned_to_the_Military_Sealift_Command_hospital_ship_USNS_Mercy_(T-AH_19),_changes_the_dressing_for_a_Vietnamese_patient_before_his_discharge_to_a_local_hospital.jpg","alt":"تغيير ضماد معقّم","by":"U.S. Navy photo by Mass Communication Specialist 3rd Class Joshua Valcarcel","lic":"Public domain"},"nc_sugar":{"u":"img/nc/sugar.jpg","page":"https://commons.wikimedia.org/wiki/File:Blood_Glucose_Check_-_Howrah_-_2015-04-12_7637.JPG","alt":"قياس سكر الدم من الإصبع","by":"Biswarup Ganguly","lic":"CC BY 3.0"},"nc_fever":{"u":"img/nc/fever.jpg","page":"https://commons.wikimedia.org/wiki/File:Healthcare_professional_checks_temperature_with_digital_thermometer_during_patient_consultation_in_a_medical_office_undefined.jpg","alt":"ميزان حرارة رقمي","by":"Shixart1985","lic":"CC BY 2.0"},"nc_iv":{"u":"img/nc/iv.jpg","page":"https://commons.wikimedia.org/wiki/File:Perfusion_en_intraveineuse_dans_la_main.jpg","alt":"قنية وريدية في اليد","by":"Futurhit12","lic":"CC BY-SA 4.0"},"nc_chest":{"u":"img/nc/chest.jpg","page":"https://commons.wikimedia.org/wiki/File:Heartache-1846050_1920.jpg","alt":"ألم في الصدر","by":"freestocks.org","lic":"CC0"},"nc_sepsis":{"u":"img/nc/sepsis.jpg","page":"https://commons.wikimedia.org/wiki/File:Monitor_theo_d%E1%BB%8Fi_b%E1%BB%87nh_nh%C3%A2n.jpg","alt":"شاشة العلامات الحيوية","by":"Huynhvn","lic":"CC0"},"nc_hypo":{"u":"img/nc/hypo.jpg","page":"https://commons.wikimedia.org/wiki/File:Hypobox.jpg","alt":"علبة علاج نقص السكر","by":"Whispyhistory","lic":"CC BY-SA 4.0"},"hero":{"u":"img/hero.jpg","page":"https://commons.wikimedia.org/wiki/File:Craig_Joint_Theater_Hospital_Helps_Build_Afghan_Nursing_Foundation_DVIDS212443.jpg","alt":"ممرضة تعتني بمريض في سريره","by":"Tech. Sgt. John Jung","lic":"Public domain"},"welcome":{"u":"img/welcome.jpg","page":"https://commons.wikimedia.org/wiki/File:PHOTOS_INSIDE_THE_CLASSROOM_UPDATED014.jpg","alt":"طالبة تمريض تتدرب على مجسّم محاكاة","by":"Monirb","lic":"CC BY-SA 4.0"},"univ":{"u":"img/univ.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_050223-N-8796S-085_Cmdr._Suzanne_Clark,_a_U.S._Navy_Nurse_assigned_to_the_Military_Sealift_Command_(MSC)_hospital_ship_USNS_Mercy_(T-AH_19),_takes_questions_after_giving_a_lecture_on_diabetes_to_Indonesian_nursing_stude.jpg","alt":"محاضرة لطلبة التمريض","by":"U.S. Navy photo by Photographer's Mate 2nd Class Timothy Smith","lic":"Public domain"},"case_cardio":{"u":"img/cases/cardio.jpg","page":"https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_bolster_readiness_through_LAMAT_25_(8978308).jpg","alt":"تسجيل تخطيط القلب","by":"U.S. Air Force photo by Maj. Stephani Schafer","lic":"Public domain"},"case_resp":{"u":"img/cases/resp.jpg","page":"https://commons.wikimedia.org/wiki/File:Medical_professional_examines_chest_X-rays_in_a_clinic_setting.jpg","alt":"طبيب يراجع صورة صدر","by":"Shixart1985","lic":"CC BY 2.0"},"case_gi":{"u":"img/cases/gi.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_090715-N-9689V-008_Republic_of_Singapore_Navy_Maj._Boon_Hor_Ho_examines_a_local_man_suffering_from_abdominal_pain_during_a_Pacific_Partnership_2009_medical_civic_action_project_at_Niu%27ui_Hospital.jpg","alt":"فحص بطن مريض","by":"U.S. Navy photo by Mass Communication Specialist 2nd Class Joshua Valcarcel","lic":"Public domain"},"case_obgyn":{"u":"img/cases/obgyn.jpg","page":"https://commons.wikimedia.org/wiki/File:Pacific_Partnership_2025_Provides_Medical_Care_to_Samoa_Locals_During_a_Community_Health_Engagement_at_Faleolo_Medical_Center_(9379658).jpg","alt":"فحص حمل","by":"U.S. Navy photo by Petty Officer 3rd Class Ethan Lambert","lic":"Public domain"},"case_abdomen":{"u":"img/cases/abdomen.jpg","page":"https://commons.wikimedia.org/wiki/File:Experiencing_menstrual_pain_with_hot_water_bottle.jpg","alt":"ألم أسفل البطن","by":"Vulvani","lic":"CC BY-SA 4.0"},"case_ortho":{"u":"img/cases/ortho.jpg","page":"https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg","alt":"صورة أشعة لكسر في الكاحل","by":"Chaim Mintz","lic":"CC BY-SA 4.0"},"case_peds":{"u":"img/cases/peds.jpg","page":"https://commons.wikimedia.org/wiki/File:Doctor_checks_a_childs_heartbeat_at_a_medical_office.jpg","alt":"طبيب يفحص طفلة","by":"Shixart1985","lic":"CC BY 2.0"},"ankle_fx":{"u":"img/nb/ankle_fx.jpg","page":"https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg","alt":"صورة أشعة للكاحل","by":"Chaim Mintz","lic":"CC BY-SA 4.0"}};
+    const NB_IMG = {"bp":{"u":"img/nb/bp.jpg","page":"https://commons.wikimedia.org/wiki/File:Nurse_takes_a_patient's_blood_pressure.jpg","alt":"قياس ضغط الدم"},"bp2":{"u":"img/nb/bp2.jpg","page":"https://commons.wikimedia.org/wiki/File:Nurse_checks_blood_pressure.jpg","alt":"ممرضة تقيس الضغط"},"amman":{"u":"img/nb/amman.jpg","page":"https://commons.wikimedia.org/wiki/File:Sunset_over_citadel_in_Amman,_Jordan.jpg","alt":"جبل القلعة، عمّان"},"ecg":{"u":"img/nb/ecg.jpg","page":"https://commons.wikimedia.org/wiki/File:Normal_12_lead_EKG.jpg","alt":"تخطيط القلب"},"iv":{"u":"img/nb/iv.jpg","page":"https://commons.wikimedia.org/wiki/File:Intravenous_cannula_01.JPG","alt":"قنية وريدية"},"steth":{"u":"img/nb/steth.jpg","page":"https://commons.wikimedia.org/wiki/File:Physical_exam_of_child_with_stethoscope_on_chest.jpeg","alt":"فحص بالسماعة"},"hands":{"u":"img/nb/hands.jpg","page":"https://commons.wikimedia.org/wiki/File:MNHandWashingNurse.jpg","alt":"غسل اليدين"},"cxr_normal":{"u":"img/nb/cxr_normal.png","page":"https://commons.wikimedia.org/wiki/File:Chest_Xray_PA_3-8-2010.png","alt":"صورة صدر طبيعية"},"cxr_pneu":{"u":"img/nb/cxr_pneu.jpg","page":"https://commons.wikimedia.org/wiki/File:Pneumonia_x-ray.jpg","alt":"صورة صدر بالتهاب رئوي"},"thermo":{"u":"img/nb/thermo.jpg","page":"https://commons.wikimedia.org/wiki/File:Fieberthermometer_BW_2.JPG","alt":"ميزان حرارة"},"bandage":{"u":"img/nb/bandage.jpg","page":"https://commons.wikimedia.org/wiki/File:Fingergazevernband.jpg","alt":"ضماد شاش"},"gluco":{"u":"img/nc/sugar.jpg","page":"https://commons.wikimedia.org/wiki/File:Blood_Glucose_Check_-_Howrah_-_2015-04-12_7637.JPG","alt":"قياس سكر الدم من الإصبع","by":"Biswarup Ganguly","lic":"CC BY 3.0"},"nc_vitals":{"u":"img/nc/vitals.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_110714-N-RM525-060_Hospitalman_Seckisiesha_Isaac,_from_New_York,_prepares_to_take_a_woman%27s_temperature_at_a_pre-screening_vital_signs_stat.jpg","alt":"قياس العلامات الحيوية","by":"U.S. Navy photo by Mass Communication Specialist 2nd Class Jonathen E. Davis","lic":"Public domain"},"nc_bp":{"u":"img/nc/bp.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_070919-N-6278K-106_Laura_Seris,_a_registered_nurse_and_Project_Hope_volunteer_attached_to_Military_Sealift_Command_hospital_ship_USNS_Comfort_(T-AH_20),_takes_a_blood_pressure_reading_from_a_patient.jpg","alt":"ممرضة تقيس ضغط الدم","by":"U.S. Navy photo by Mass Communication Specialist 2nd Class Joan E. Kretschmer","lic":"Public domain"},"nc_bleed":{"u":"img/nc/bleed.jpg","page":"https://commons.wikimedia.org/wiki/File:Fire_Controlman_watching_arm_being_wrapped_during_first_aid_class_aboard_USS_Benfold_(DDG-65)_180628-N-GR120-0104.jpg","alt":"ضماد على الساعد","by":"Mass Communication Specialist 2nd Class Anna Van Nuys","lic":"CC BY-SA 2.0"},"nc_wound":{"u":"img/nc/wound.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_080628-N-9689V-007_Lt._Todd_Hlavac,_a_staff_nurse_assigned_to_the_Military_Sealift_Command_hospital_ship_USNS_Mercy_(T-AH_19),_changes_the_dressing_for_a_Vietnamese_patient_before_his_discharge_to_a_local_hospital.jpg","alt":"تغيير ضماد معقّم","by":"U.S. Navy photo by Mass Communication Specialist 3rd Class Joshua Valcarcel","lic":"Public domain"},"nc_sugar":{"u":"img/nc/sugar.jpg","page":"https://commons.wikimedia.org/wiki/File:Blood_Glucose_Check_-_Howrah_-_2015-04-12_7637.JPG","alt":"قياس سكر الدم من الإصبع","by":"Biswarup Ganguly","lic":"CC BY 3.0"},"nc_fever":{"u":"img/nc/fever.jpg","page":"https://commons.wikimedia.org/wiki/File:Healthcare_professional_checks_temperature_with_digital_thermometer_during_patient_consultation_in_a_medical_office_undefined.jpg","alt":"ميزان حرارة رقمي","by":"Shixart1985","lic":"CC BY 2.0"},"nc_iv":{"u":"img/nc/iv.jpg","page":"https://commons.wikimedia.org/wiki/File:Perfusion_en_intraveineuse_dans_la_main.jpg","alt":"قنية وريدية في اليد","by":"Futurhit12","lic":"CC BY-SA 4.0"},"nc_chest":{"u":"img/nc/chest.jpg","page":"https://commons.wikimedia.org/wiki/File:Heartache-1846050_1920.jpg","alt":"ألم في الصدر","by":"freestocks.org","lic":"CC0"},"nc_sepsis":{"u":"img/nc/sepsis.jpg","page":"https://commons.wikimedia.org/wiki/File:Monitor_theo_d%E1%BB%8Fi_b%E1%BB%87nh_nh%C3%A2n.jpg","alt":"شاشة العلامات الحيوية","by":"Huynhvn","lic":"CC0"},"nc_hypo":{"u":"img/nc/hypo.jpg","page":"https://commons.wikimedia.org/wiki/File:Hypobox.jpg","alt":"علبة علاج نقص السكر","by":"Whispyhistory","lic":"CC BY-SA 4.0"},"hero":{"u":"img/hero.jpg","page":"https://commons.wikimedia.org/wiki/File:Craig_Joint_Theater_Hospital_Helps_Build_Afghan_Nursing_Foundation_DVIDS212443.jpg","alt":"ممرضة تعتني بمريض في سريره","by":"Tech. Sgt. John Jung","lic":"Public domain"},"welcome":{"u":"img/welcome.jpg","page":"https://commons.wikimedia.org/wiki/File:PHOTOS_INSIDE_THE_CLASSROOM_UPDATED014.jpg","alt":"طالبة تمريض تتدرب على مجسّم محاكاة","by":"Monirb","lic":"CC BY-SA 4.0"},"univ":{"u":"img/univ.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_050223-N-8796S-085_Cmdr._Suzanne_Clark,_a_U.S._Navy_Nurse_assigned_to_the_Military_Sealift_Command_(MSC)_hospital_ship_USNS_Mercy_(T-AH_19),_takes_questions_after_giving_a_lecture_on_diabetes_to_Indonesian_nursing_stude.jpg","alt":"محاضرة لطلبة التمريض","by":"U.S. Navy photo by Photographer's Mate 2nd Class Timothy Smith","lic":"Public domain"},"case_cardio":{"u":"img/cases/cardio.jpg","page":"https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_bolster_readiness_through_LAMAT_25_(8978308).jpg","alt":"تسجيل تخطيط القلب","by":"U.S. Air Force photo by Maj. Stephani Schafer","lic":"Public domain"},"case_resp":{"u":"img/cases/resp.jpg","page":"https://commons.wikimedia.org/wiki/File:Medical_professional_examines_chest_X-rays_in_a_clinic_setting.jpg","alt":"طبيب يراجع صورة صدر","by":"Shixart1985","lic":"CC BY 2.0"},"case_gi":{"u":"img/cases/gi.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_090715-N-9689V-008_Republic_of_Singapore_Navy_Maj._Boon_Hor_Ho_examines_a_local_man_suffering_from_abdominal_pain_during_a_Pacific_Partnership_2009_medical_civic_action_project_at_Niu%27ui_Hospital.jpg","alt":"فحص بطن مريض","by":"U.S. Navy photo by Mass Communication Specialist 2nd Class Joshua Valcarcel","lic":"Public domain"},"case_obgyn":{"u":"img/cases/obgyn.jpg","page":"https://commons.wikimedia.org/wiki/File:Pacific_Partnership_2025_Provides_Medical_Care_to_Samoa_Locals_During_a_Community_Health_Engagement_at_Faleolo_Medical_Center_(9379658).jpg","alt":"فحص حمل","by":"U.S. Navy photo by Petty Officer 3rd Class Ethan Lambert","lic":"Public domain"},"case_abdomen":{"u":"img/cases/abdomen.jpg","page":"https://commons.wikimedia.org/wiki/File:Experiencing_menstrual_pain_with_hot_water_bottle.jpg","alt":"ألم أسفل البطن","by":"Vulvani","lic":"CC BY-SA 4.0"},"case_ortho":{"u":"img/cases/ortho.jpg","page":"https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg","alt":"صورة أشعة لكسر في الكاحل","by":"Chaim Mintz","lic":"CC BY-SA 4.0"},"case_peds":{"u":"img/cases/peds.jpg","page":"https://commons.wikimedia.org/wiki/File:Doctor_checks_a_childs_heartbeat_at_a_medical_office.jpg","alt":"طبيب يفحص طفلة","by":"Shixart1985","lic":"CC BY 2.0"},"ankle_fx":{"u":"img/nb/ankle_fx.jpg","page":"https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg","alt":"صورة أشعة للكاحل","by":"Chaim Mintz","lic":"CC BY-SA 4.0"},"or_banner":{"u":"img/or/banner.jpg","page":"https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_build_partnerships_in_operating_room_(8948181).jpg","alt":"فريق جراحي أثناء عملية","by":"U.S. Air Force photo by Maj. Stephani Schafer","lic":"Public domain"},"or_preop":{"u":"img/or/preop.jpg","page":"https://commons.wikimedia.org/wiki/File:USNS_Comfort_Prepares_Patients_for_Surgeries_(9113687).jpg","alt":"ممرضة تجهّز مريضاً بثوب العمليات قبل الجراحة","by":"U.S. Navy photo by Petty Officer 2nd Class Deven Fernandez","lic":"Public domain"},"or_check":{"u":"img/or/checklist.jpg","page":"https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_build_partnerships_in_operating_room_(8948178).jpg","alt":"ممرضتان تراجعان لوحة التحقق في غرفة العمليات","by":"U.S. Air Force photo by Maj. Stephani Schafer","lic":"Public domain"},"or_pacu":{"u":"img/or/pacu.jpg","page":"https://commons.wikimedia.org/wiki/File:US_Navy_100727-N-6410J-022_Medical_personnel_aboard_the_Military_Sealift_Command_hospital_ship_USNS_Mercy_(T-AH_19)_care_for_an_Indonesian_surgical_patient_in_the_post_anesthesia_care_unit_during_Pacific_Partnership_2010.jpg","alt":"رعاية مريضة في غرفة الإفاقة بعد العملية","by":"U.S. Navy photo by Mass Communication Specialist 3rd Class Matthew Jackson","lic":"Public domain"}};
     function nbImg(key, cls) { const i = NB_IMG[key]; if (!i) return ''; return `<img class="${cls || ''}" src="${i.u}" alt="${i.alt}" loading="lazy" decoding="async" referrerpolicy="no-referrer" onerror="nbImgFail(this)">`; }
     function nbImgFail(el) { const d = document.createElement('div'); d.className = (el.className || '') + ' nb-imgfb'; d.setAttribute('role', 'img'); d.setAttribute('aria-label', el.alt || ''); d.innerHTML = '<svg viewBox="0 0 24 24" width="28" height="28" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg>'; el.replaceWith(d); }
     // Photo for each specialty case card (self-hosted, see img/CREDITS.txt).
     const NB_CASE_PHOTO = { case_cardio_dm: 'img/cases/cardio.jpg', case_resp_renal: 'img/cases/resp.jpg', case_gi_allergy: 'img/cases/gi.jpg', case_obgyn_anemia: 'img/cases/obgyn.jpg', case_obgyn_dysmenorrhea: 'img/cases/abdomen.jpg', case_ortho_htn: 'img/cases/ortho.jpg', case_peds_dehydration: 'img/cases/peds.jpg' };
-    const NB_CASE_IMG = { nc_vitals_basic: 'nc_vitals', nc_bp: 'nc_bp', nc_bleed: 'nc_bleed', nc_wound: 'nc_wound', nc_sugar: 'nc_sugar', nc_fever: 'nc_fever', nc_iv: 'nc_iv', nc_chest: 'nc_chest', nc_sepsis: 'nc_sepsis', nc_hypo: 'nc_hypo' };
+    const NB_CASE_IMG = { nc_vitals_basic: 'nc_vitals', nc_bp: 'nc_bp', nc_bleed: 'nc_bleed', nc_wound: 'nc_wound', nc_sugar: 'nc_sugar', nc_fever: 'nc_fever', nc_iv: 'nc_iv', nc_chest: 'nc_chest', nc_sepsis: 'nc_sepsis', nc_hypo: 'nc_hypo', nc_or_preop: 'or_preop', nc_or_timeout: 'or_check', nc_or_pacu: 'or_pacu' };
     function nbLab(n, v, u, ref, flag) { return { n, v, u, ref, flag }; }
     function nbLabsTable(l) {
       const tag = { H: ['مرتفع', 'h'], L: ['منخفض', 'l'], C: ['حرج', 'c'] };
@@ -3491,6 +3631,7 @@
       if (miss) { nrSay('coach', 'لا يمكنك هذا الآن. أنجز أولاً: ' + miss + '.'); return; }
       if (a.seq) return nrOpenSeq(a);
       if (a.calc) return nrOpenCalc(a);
+      if (a.chk) return nrOpenChk(a);
       nrApply(a);
     }
     function nrApply(a, text) {
@@ -3514,8 +3655,36 @@
       nrRenderPrompt();
     }
     function nrOpenCalc(a) { ns.overlay = { type: 'calc', a }; nrRenderPrompt(); }
+    // Surgical safety checklist: the student marks each item as matching or as a problem.
+    function nrOpenChk(a) { ns.overlay = { type: 'chk', a, marks: a.chk.items.map(() => null) }; nrRenderPrompt(); }
+    function nrChkOverlay(p, ov) {
+      const a = ov.a, c = a.chk;
+      p.innerHTML = `<div class="nr-p nr-ov nb-chk"><div class="nr-p-h">${nrEsc(nbBidi(a.label))}</div><p class="nr-p-s">${nrEsc(c.q)}</p><ol class="nb-chk-list">${c.items.map((it, k) => `<li><span>${nrEsc(nbBidi(it.t))}</span><div class="nb-chk-b" role="group"><button type="button" data-k="${k}" data-v="1" aria-pressed="false">مطابق</button><button type="button" data-k="${k}" data-v="0" aria-pressed="false">يوجد خلل</button></div></li>`).join('')}</ol><div class="nb-cta" style="margin-top:.6rem"><button type="button" class="p" id="chk-ok">تأكيد القائمة</button><button type="button" class="g" id="chk-cancel">إلغاء</button></div></div>`;
+      const sync = () => {
+        p.querySelectorAll('.nb-chk-b button').forEach(b => { const on = ov.marks[+b.dataset.k] === +b.dataset.v; b.classList.toggle('on', on); b.setAttribute('aria-pressed', on); });
+        document.getElementById('chk-ok').disabled = ov.marks.some(m => m === null);
+      };
+      p.querySelectorAll('.nb-chk-b button').forEach(b => b.onclick = () => { ov.marks[+b.dataset.k] = +b.dataset.v; sync(); });
+      sync();
+      document.getElementById('chk-cancel').onclick = () => { ns.overlay = null; nrRenderPrompt(); };
+      document.getElementById('chk-ok').onclick = () => {
+        if (ov.marks.some(m => m === null)) { showToast('راجع كل البنود أولاً.'); return; }
+        let right = 0; const notes = [];
+        c.items.forEach((it, k) => {
+          const saidOk = ov.marks[k] === 1;
+          if (saidOk === it.ok) { right++; if (!it.ok) notes.push('أحسنت، أوقفت الفريق عند: ' + it.t + '. ' + it.why); }
+          else if (!it.ok) { ns.safety.push(it.unsafe); notes.push('فاتك خلل: ' + it.t + '. ' + it.why); }
+          else notes.push('هذا البند كان سليماً: ' + it.t + '.');
+        });
+        ns.q[a.id] = right / c.items.length;
+        ns.overlay = null;
+        nrApply(a, right === c.items.length ? 'اكتملت قائمة التحقق بمراجعة صحيحة لكل البنود.' : 'اكتملت قائمة التحقق، لكن المراجعة فاتها شيء.');
+        notes.forEach(nrCoach);
+      };
+    }
     function nrOverlay(p) {
       const ov = ns.overlay, a = ov.a;
+      if (ov.type === 'chk') return nrChkOverlay(p, ov);
       if (ov.type === 'seq') {
         const s = a.seq;
         p.innerHTML = `<div class="nr-p nr-ov"><div class="nr-p-h">${nrEsc(a.label)}</div><p class="nr-p-s">${nrEsc(s.q)}</p><div class="nb-seq"><div><h4>الخطوات المتاحة</h4><div id="seq-pool"></div></div><div><h4>ترتيبك</h4><ol id="seq-mine"></ol></div></div><div class="nb-cta" style="margin-top:.6rem"><button type="button" class="p" id="seq-ok">نفّذ الإجراء</button><button type="button" class="s" id="seq-undo">تراجع</button><button type="button" class="g" id="seq-cancel">إلغاء</button></div></div>`;
@@ -3815,7 +3984,7 @@
       if (!isNurse || !nh) return;
       const grid = document.getElementById('nurse-cards'); grid.innerHTML = '';
       nbFilterBar('nurse-filter', () => renderTrackHome(authState.user));
-      const _nl = Object.values(NB_NURSE_CASES).filter(c => !c.guided).filter(nbFltPass);
+      const _nl = Object.values(NB_NURSE_CASES).filter(c => !c.guided && !c.periop).filter(nbFltPass);
       if (!_nl.length) grid.innerHTML = '<p style="font-size:.82rem;color:#4F6A77;padding:.6rem">لا توجد حالات بهذه المعايير.</p>';
       _nl.forEach(c => {
         const lock = nbLockInfo(c); const el = document.createElement('div');
@@ -3823,6 +3992,26 @@
         el.innerHTML = `<div class="v7-case-img">${nbImg(NB_CASE_IMG[c.id], '')}</div><div class="v7-case-body"><span class="v7-case-dept"></span><h3 class="t"></h3><p class="h"></p></div><div class="v7-case-foot"><span class="v7-case-meta"><span class="nb-lvl-chip"></span><span class="font-num m"></span></span><button type="button">${lock ? 'مقفلة' : 'ابدأ الحالة ←'}</button></div>`;
         el.querySelector('.t').textContent = c.title;
         el.querySelector('.v7-case-dept').textContent = c.deptName;
+        el.querySelector('.nb-lvl-chip').textContent = c.levelLabel;
+        el.querySelector('.m').textContent = `${c.durationMin} دقيقة`;
+        el.querySelector('.h').textContent = c.cardSummary;
+        const bt = el.querySelector('button');
+        if (lock) bt.onclick = () => showToast(lock); else bt.onclick = () => nurseStart(c.id);
+        grid.appendChild(el);
+      });
+      nbRenderOr();
+    }
+    // Operating-room section on the nursing home: the three phases in order.
+    function nbRenderOr() {
+      const grid = document.getElementById('or-cards'); if (!grid) return;
+      const phase = { 1: 'المرحلة 1 · قبل العملية', 2: 'المرحلة 2 · داخل غرفة العمليات', 3: 'المرحلة 3 · غرفة الإفاقة' };
+      grid.innerHTML = '';
+      Object.values(NB_NURSE_CASES).filter(c => c.periop).sort((a, b) => a.periop - b.periop).forEach(c => {
+        const lock = nbLockInfo(c); const el = document.createElement('div');
+        el.className = 'v7-case' + (lock ? ' nb-locked-r is-locked' : '');
+        el.innerHTML = `<div class="v7-case-img">${nbImg(NB_CASE_IMG[c.id], '')}</div><div class="v7-case-body"><span class="v7-case-dept"></span><h3 class="t"></h3><p class="h"></p></div><div class="v7-case-foot"><span class="v7-case-meta"><span class="nb-lvl-chip"></span><span class="font-num m"></span></span><button type="button">${lock ? 'مقفلة' : 'ابدأ الحالة ←'}</button></div>`;
+        el.querySelector('.t').textContent = c.title;
+        el.querySelector('.v7-case-dept').textContent = phase[c.periop];
         el.querySelector('.nb-lvl-chip').textContent = c.levelLabel;
         el.querySelector('.m').textContent = `${c.durationMin} دقيقة`;
         el.querySelector('.h').textContent = c.cardSummary;

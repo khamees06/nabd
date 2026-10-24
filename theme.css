@@ -613,3 +613,31 @@ button:active { transform: translateY(1px); }
 
 /* phones and tablets: the opened tools drawer is a column, so its list scrolls */
 @media (max-width: 1023px) { #sim-tools-panel:not(.hidden) { display: flex; } }
+
+/* operating-room section: landing tile and band, nursing home cards */
+.v7-specs li.is-new { grid-column: 1 / -1; border-color: var(--signal-light); background: var(--tint-2); }
+.v7-new { margin-inline-start: auto; font-size: .72rem; font-weight: 500; color: var(--signal-strong); background: var(--surface); border: 1px solid var(--signal-light); border-radius: 999px; padding: .15rem .65rem; }
+.v7-or-steps { list-style: none; margin: 0 0 1.4rem; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+.v7-or-steps li { display: inline-flex; align-items: center; gap: .45rem; padding: .4rem .5rem .4rem .85rem; border-radius: 999px; background: var(--tint); color: var(--ink); font-size: .85rem; }
+.v7-or-steps b { width: 1.5rem; height: 1.5rem; border-radius: 50%; display: grid; place-items: center; background: var(--signal); color: #fff; font-size: .75rem; font-weight: 500; }
+#home-or .v7-eyebrow { display: inline-block; }
+#home-or h2 { margin: .25rem 0 .3rem; }
+#home-or > p { margin: 0; color: var(--ink-2); font-size: .9rem; }
+#or-cards { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 1.25rem; margin-top: 1.25rem; }
+@media (max-width: 1023px) { #or-cards { grid-template-columns: 1fr; } }
+
+/* surgical safety checklist inside the nursing room */
+#nr-prompt:has(.nb-chk) { max-height: 72%; }
+.nb-chk-list { list-style: none; margin: .5rem 0 0; padding: 0; display: grid; gap: .45rem; }
+.nb-chk-list li { display: flex; align-items: center; justify-content: space-between; gap: .75rem; padding: .6rem .75rem; border: 1px solid var(--line); border-radius: 12px; background: var(--surface); font-size: .86rem; line-height: 1.7; color: var(--ink); }
+.nb-chk-list li > span { flex: 1; min-width: 0; }
+.nb-chk-b { display: flex; gap: .35rem; flex: none; }
+.nb-chk-b button { border: 1px solid var(--line); background: var(--surface); color: var(--ink-2); border-radius: 999px; padding: .35rem .85rem; font-size: .8rem; cursor: pointer; }
+.nb-chk-b button:hover { border-color: var(--signal-light); }
+.nb-chk-b button[data-v="1"].on { background: #E7F5EC; border-color: #7CC79A; color: #1B6B3A; }
+.nb-chk-b button[data-v="0"].on { background: #FDECEC; border-color: #F0A4A0; color: #A32020; }
+#chk-ok:disabled { opacity: .5; cursor: not-allowed; }
+@media (max-width: 640px) {
+  .nb-chk-list li { flex-direction: column; align-items: stretch; gap: .45rem; }
+  .nb-chk-b button { flex: 1; padding: .5rem .6rem; }
+}

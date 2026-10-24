@@ -96,3 +96,15 @@ nb/bandage.jpg
 nb/ankle_fx.jpg
   cropped (left panel) from https://commons.wikimedia.org/wiki/File:Trimalleolar_Ankle_Fracture.jpg
   Chaim Mintz — CC BY-SA 4.0
+or/banner.jpg
+  https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_build_partnerships_in_operating_room_(8948181).jpg
+  U.S. Air Force photo by Maj. Stephani Schafer — Public domain
+or/preop.jpg
+  https://commons.wikimedia.org/wiki/File:USNS_Comfort_Prepares_Patients_for_Surgeries_(9113687).jpg
+  U.S. Navy photo by Petty Officer 2nd Class Deven Fernandez — Public domain
+or/checklist.jpg
+  https://commons.wikimedia.org/wiki/File:Reserve_Citizen_Airmen_build_partnerships_in_operating_room_(8948178).jpg
+  U.S. Air Force photo by Maj. Stephani Schafer — Public domain
+or/pacu.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_100727-N-6410J-022_Medical_personnel_aboard_the_Military_Sealift_Command_hospital_ship_USNS_Mercy_(T-AH_19)_care_for_an_Indonesian_surgical_patient_in_the_post_anesthesia_care_unit_during_Pacific_Partnership_2010.jpg
+  U.S. Navy photo by Mass Communication Specialist 3rd Class Matthew Jackson — Public domain

@@ -1663,6 +1663,11 @@
       <div class="rs-wrap">
         <div class="rs-chat">
           <div class="rs-pt" id="rs-pt"></div>
+          <nav class="rs-jump" aria-label="أدوات الحالة">
+            <button type="button" data-jump="rs-mon-card">العلامات الحيوية</button>
+            <button type="button" data-jump="rs-tests-card">الفحوصات والأشعة</button>
+            <button type="button" data-jump="rs-q-card">قائمة الأسئلة</button>
+          </nav>
           <div class="rs-feed" id="rs-feed" aria-live="polite"></div>
           <form class="rs-form" id="rs-form" autocomplete="off">
             <input id="rs-input" type="text" maxlength="300" placeholder="اكتب سؤالك للمريض… مثلاً: عندك حرارة؟" aria-label="سؤالك للمريض">
@@ -1672,12 +1677,28 @@
           <div id="rs-submit" class="rs-submit" hidden></div>
         </div>
         <aside class="rs-side">
+          <section class="rs-card rs-mon" id="rs-mon-card" aria-labelledby="rs-v-h">
+            <div class="rs-mon-h"><span class="rs-mon-dot" aria-hidden="true"></span><h3 id="rs-v-h">شاشة العلامات الحيوية</h3><button type="button" id="rs-measure">قِس الآن</button></div>
+            <div class="rs-mon-trace"><svg viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 H400" fill="none" stroke="#0F7D44" stroke-width="2"/></svg></div>
+            <div class="rs-mon-grid font-num">
+              <div class="rs-tile"><span>النبض HR <small>bpm</small></span><b id="rs-v-hr" class="c-hr">--</b></div>
+              <div class="rs-tile"><span>الضغط BP <small>mmHg</small></span><b id="rs-v-bp" class="c-bp">--/--</b></div>
+              <div class="rs-tile"><span>الأكسجين SpO2 <small>%</small></span><b id="rs-v-spo2" class="c-spo2">--</b></div>
+              <div class="rs-tile"><span>الحرارة Temp <small dir="ltr">°C</small></span><b id="rs-v-temp" class="c-temp">--.-</b></div>
+              <div class="rs-tile"><span>التنفس RR <small>/min</small></span><b id="rs-v-rr" class="c-rr">--</b></div>
+            </div>
+            <p class="rs-mon-note" id="rs-v-note">اضغط «قِس الآن» لعرض القراءات.</p>
+          </section>
+          <section class="rs-card" id="rs-tests-card">
+            <div class="rs-card-h"><h3>الفحوصات والأشعة</h3><small>طلبت: <b id="rs-tcount" class="font-num">0</b></small></div>
+            <div id="rs-tests" class="rs-tests"></div>
+          </section>
           <section class="rs-card">
             <div class="rs-card-h"><h3>ماذا يرجّح النموذج؟</h3><small>الأسئلة: <b id="rs-count" class="font-num">0</b></small></div>
             <div id="rs-bars"></div>
           </section>
           <section class="rs-card" id="rs-body" hidden></section>
-          <section class="rs-card">
+          <section class="rs-card" id="rs-q-card">
             <details class="rs-qbox"><summary>قائمة الأسئلة</summary>
               <input id="rs-qsearch" type="search" placeholder="ابحث في الأسئلة…" autocomplete="off">
               <div id="rs-qlist" class="rs-qlist"></div>
@@ -1686,7 +1707,8 @@
           <details class="rs-card rs-about"><summary>عن النموذج</summary>
             <p>شبكة عصبية تدرّبت على 1,025,602 مريضاً افتراضياً من بيانات DDXPlus، واختُبرت على 60,800 مريض تنفسي لم ترهم: شخّصت 99.5% منهم بكل الأسئلة، و86.9% بربع الأسئلة.</p>
             <p>المرضى هنا من مجموعة الاختبار نفسها. كل جواب مبني على سجل المريض: ما في السجل يقوله المريض، وما ليس فيه يجيب عنه بالنفي، إلا علامات واضحة الدلالة (مثل الكحة عند من يسعل دماً). النموذج للتدريب فقط، ولا يُستخدم لتشخيص مرضى حقيقيين.</p>
-            <p>الصياغة العربية للأسئلة والأجوبة لم يراجعها طبيب بعد.</p>
+            <p>العلامات الحيوية ونتائج الفحوصات قيم توضيحية كتبناها لكل مرض، لأن بيانات DDXPlus لا تحتوي عليها، والنموذج لا يستخدمها.</p>
+            <p>الصياغة العربية للأسئلة والأجوبة، وقيم العلامات الحيوية والفحوصات، لم يراجعها طبيب بعد.</p>
             <p class="rs-cite">البيانات: Fansi Tchango, Goel, Wen, Martel, Ghosn. <a href="https://figshare.com/articles/dataset/DDXPlus_Dataset/20043374" target="_blank" rel="noopener">DDXPlus Dataset</a> (Figshare)، برخصة <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener"><bdi>CC BY 4.0</bdi></a>. التعديلات: ترجم نبض الأسئلة والأجوبة إلى العربية، واختار المرضى التنفسيين، وحذف القيم الافتراضية من السجلات، ودرّب عليها النموذج.</p>
           </details>
         </aside>

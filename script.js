@@ -5322,7 +5322,7 @@
               <td class="px-5 py-3.5 font-bold text-slate-900">${h.caseTitle}</td>
               <td class="px-5 py-3.5 text-slate-600">${h.mode}</td>
               <td class="px-5 py-3.5 font-num text-slate-500">${h.date}</td>
-              <td class="px-5 py-3.5 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة' : h.workupCount + ' فحوصات'}</td>
+              <td class="px-5 py-3.5 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة · ' : ''}${h.workupCount} فحوصات</td>
               <td class="px-5 py-3.5 font-num font-bold text-teal-700">${h.score}</td>
             `;
             histTbody.appendChild(tr);
@@ -5365,7 +5365,7 @@
               <td class="px-4 py-2 font-bold text-slate-900">${h.caseTitle}</td>
               <td class="px-4 py-2 text-slate-700">${h.mode}</td>
               <td class="px-4 py-2 font-num text-slate-600">${h.date}</td>
-              <td class="px-4 py-2 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة' : h.workupCount + ' فحوصات'}</td>
+              <td class="px-4 py-2 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة · ' : ''}${h.workupCount} فحوصات</td>
               <td class="px-4 py-2 font-num font-bold text-teal-800">${h.score}</td>
             </tr>
           `).join('');

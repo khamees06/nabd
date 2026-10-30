@@ -20,7 +20,7 @@
     F: ['سارة', 'ليلى', 'ريم', 'هبة', 'دينا', 'نور', 'رنا', 'لينا', 'مريم', 'سلمى', 'رهف', 'آية']
   };
 
-  let M = null, POOL = null, T = null, L = null;
+  let M = null, POOL = null, T = null, L = null, CL = null;
   let evIndex = null, members = null, heads = null, loading = null;
   const S = { pt: null, tok: null, asked: new Set(), derived: new Set(), steps: [], exam: false, done: false, seen: new Set(), caseNo: 0 };
 
@@ -36,7 +36,8 @@
   const load = () => M ? Promise.resolve() : (loading = loading || fetchAll().catch(e => { loading = null; throw e; }));
   async function fetchAll() {
     const get = f => fetch(DATA + f).then(r => { if (!r.ok) throw new Error(f + ' ' + r.status); return r.json(); });
-    const [m, p, t] = await Promise.all([get('resp-model.json'), get('resp-patients.json'), get('resp-ar.json')]);
+    const [m, p, t, cl] = await Promise.all([get('resp-model.json'), get('resp-patients.json'), get('resp-ar.json'), get('resp-clinical.json')]);
+    CL = cl;
     // Weights arrive as int8 with one scale per output unit.
     L = m.layers.map(l => {
       const raw = atob(l.q);
@@ -125,6 +126,12 @@
     S.name = names[Math.floor(Math.random() * names.length)];
     S.asked = new Set([M.encoder.ev_group[evIndex[pt.init]]]);
     S.derived = new Set();
+    // The same patient always has the same readings and results.
+    S.rng = seeded(1 + POOL.indexOf(pt) * 7919);
+    S.vit = vitalsFor(pt);
+    S.measured = false;
+    S.tests = [];
+    S.results = {};
     S.steps = [{ label: 'الشكوى الأولى', p: predict(S.asked) }];
     S.done = false;
   }
@@ -169,6 +176,181 @@
     const parts = members[g].filter(n => S.tok.has(n) && T.evidences[n]).map(n => (meta[n].type === 'B' ? line(n, 'yes') : fillValues(n, line(n, 'yes'))));
     return parts.length ? parts.join(' ') : line(head, 'no');
   }
+
+  /* ---------- vitals and tests ---------- */
+  // DDXPlus records carry no vital signs or results, so data/resp-clinical.json holds illustrative
+  // ranges for each condition; each patient's values are drawn inside them. The network never sees them.
+  function seeded(a) {
+    return () => {
+      a = (a + 0x6D2B79F5) | 0;
+      let t = Math.imul(a ^ (a >>> 15), 1 | a);
+      t = (t + Math.imul(t ^ (t >>> 7), 61 | t)) ^ t;
+      return ((t ^ (t >>> 14)) >>> 0) / 4294967296;
+    };
+  }
+  const hasEv = (pt, n) => pt.ev.some(t => t.split('_@_')[0] === n);
+  const band = age => (age < 1 ? 'infant' : age < 6 ? 'toddler' : age < 12 ? 'school' : 'adult');
+
+  function vitalsFor(pt) {
+    const c = CL.conditions[M.classes[pt.path]];
+    const V = c.vitals[pt.age < 1 ? 'infant' : pt.age < 12 ? 'child' : 'adult'];
+    const r = S.rng;
+    // Breathless patients sit in the worse half of the ranges, the others in the milder half.
+    const s = hasEv(pt, 'E_66') ? 0.45 + 0.55 * r() : 0.5 * r();
+    const near = () => Math.max(0, Math.min(1, s + (r() - 0.5) * 0.3));
+    const at = (k, f) => V[k][0] + f * (V[k][1] - V[k][0]);
+    // Fever follows the record: a patient who denies it has a normal temperature.
+    const temp = !hasEv(pt, 'E_91') ? 36.5 + 0.8 * r() : c.febrile ? at('temp', r()) : 37.8 + 0.8 * r();
+    const sbp = Math.round(at('sbp', r()));
+    return {
+      s, hr: Math.round(at('hr', near())), sbp, dbp: Math.min(Math.round(at('dbp', r())), sbp - 25),
+      rr: Math.round(at('rr', near())), spo2: Math.round(V.spo2[1] - s * (V.spo2[1] - V.spo2[0])), temp: Math.round(temp * 10) / 10
+    };
+  }
+
+  // Normal ranges by age (PALS-style); a reading outside them lights its tile.
+  const NORMAL = {
+    infant: { hr: [100, 160], rr: [30, 53], sbp: [72, 104], txt: 'الرضيع' },
+    toddler: { hr: [80, 140], rr: [22, 37], sbp: [86, 106], txt: 'الطفل من سنة إلى 5 سنوات' },
+    school: { hr: [70, 120], rr: [18, 25], sbp: [97, 115], txt: 'الطفل من 6 إلى 11 سنة' },
+    adult: { hr: [50, 110], rr: [12, 21], sbp: [100, 159] }
+  };
+  window.nbRespVitals = {
+    warn(k, v) {
+      const N = NORMAL[band(S.pt ? S.pt.age : 30)];
+      if (k === 'hr') return v < N.hr[0] || v > N.hr[1];
+      if (k === 'rr') return v < N.rr[0] || v > N.rr[1];
+      if (k === 'bp') { const s = parseInt(String(v), 10); return s < N.sbp[0] || s > N.sbp[1] + 15; }
+      if (k === 'spo2') return v <= 94;
+      if (k === 'temp') return v >= 38 || v <= 36;
+      return false;
+    },
+    // Adults keep the monitor's own texts; children get theirs.
+    range(k) {
+      const N = S.pt && NORMAL[band(S.pt.age)];
+      if (!N || !N.txt) return null;
+      if (k === 'hr') return `النبض — الطبيعي عند ${N.txt}: ${N.hr[0]}–${N.hr[1]} نبضة في الدقيقة.`;
+      if (k === 'rr') return `التنفس — الطبيعي عند ${N.txt}: ${N.rr[0]}–${N.rr[1]} نفساً في الدقيقة.`;
+      if (k === 'bp') return `الضغط — الانقباضي الطبيعي عند ${N.txt}: ${N.sbp[0]}–${N.sbp[1]} ملم زئبق.`;
+      return null;
+    }
+  };
+  const ECG_REF = { infant: '100-160', toddler: '80-140', school: '70-120', adult: '60-100' };
+
+  const TILES = { hr: 'rs-v-hr', bp: 'rs-v-bp', spo2: 'rs-v-spo2', temp: 'rs-v-temp', rr: 'rs-v-rr' };
+  function showVitals(v) {
+    $(TILES.hr).textContent = v ? v.hr : '--';
+    $(TILES.bp).textContent = v ? v.sbp + '/' + v.dbp : '--/--';
+    $(TILES.spo2).textContent = v ? v.spo2 : '--';
+    $(TILES.temp).textContent = v ? v.temp.toFixed(1) : '--.-';
+    $(TILES.rr).textContent = v ? v.rr : '--';
+    $('rs-v-note').textContent = v ? 'اضغط على أي قراءة لتعرف معدلها الطبيعي.' : 'اضغط «قِس الآن» لعرض القراءات.';
+  }
+  const vitalsLine = v => `النبض ${v.hr}، الضغط ${v.sbp}/${v.dbp}، الأكسجين ${v.spo2}%، الحرارة ${v.temp.toFixed(1)}، التنفس ${v.rr}`;
+  function measure() {
+    if (!S.pt || S.done) return;
+    showVitals(S.vit);
+    if (!S.measured) say('sys', 'قِست العلامات الحيوية: ' + vitalsLine(S.vit) + '.');
+    S.measured = true;
+  }
+
+  const catOf = id => CL.catalog.find(c => c.id === id);
+  function renderTests() {
+    const groups = [['img', 'الأشعة'], ['lab', 'المختبر'], ['bed', 'بجانب السرير']];
+    $('rs-tests').innerHTML = groups.map(([g, label]) => `<h4>${label}</h4><div class="rs-tlist">${CL.catalog.filter(c => c.group === g).map(c => {
+      const on = S.tests.includes(c.id);
+      return `<button type="button" class="rs-t${on ? ' is-on' : ''}" data-t="${c.id}" aria-pressed="${on}"><b>${esc(c.ar)}</b><small dir="ltr">${esc(c.en)}</small></button>`;
+    }).join('')}</div>`).join('');
+    $('rs-tcount').textContent = String(S.tests.length);
+  }
+
+  const decimals = (r, v) => (r.param === 'pH' || r.hi < 1 ? 2 : String(r.lo).includes('.') || String(r.hi).includes('.') || r.hi <= 30 ? 1 : 0);
+  // "4.0-11.0", "< 5", ">= 0.70", "M 13.0-17.0; F 12.0-15.5", "12.0-16.0 (F); 13.5-17.5 (M)"
+  function flagOf(ref, v) {
+    let s = String(ref);
+    if (s.includes(';')) s = s.split(';').find(p => (fem() ? /\bF\b/ : /\bM\b/).test(p)) || s;
+    s = s.replace(/\([^)]*\)|\b[MF]\b/g, '').trim();
+    let m = s.match(/^(-?[\d.]+)\s*-\s*([\d.]+)$/);
+    if (m) return v < +m[1] ? 'lo' : v > +m[2] ? 'hi' : '';
+    if ((m = s.match(/^<=?\s*([\d.]+)$/))) return v > +m[1] ? 'hi' : '';
+    if ((m = s.match(/^>=?\s*([\d.]+)$/))) return v < +m[1] ? 'lo' : '';
+    return '';
+  }
+
+  function resultFor(id) {
+    if (S.results[id]) return S.results[id];
+    const t = CL.conditions[M.classes[S.pt.path]].tests[id] || {};
+    const r = S.rng, v = S.vit, b = band(S.pt.age);
+    let rows = (t.rows || []).map(x => ({ ...x }));
+    if (id === 'peak_flow' && S.pt.age < 6) rows = rows.map(x => ({ param: x.param, text: 'Unable to perform (age)', unit: '', ref: x.ref }));
+    rows.forEach(x => {
+      if (x.text != null || x.lo == null) return;
+      if (id === 'ecg' && /rate/i.test(x.param)) { x.val = v.hr; x.ref = ECG_REF[b]; return; }
+      // Oxygen in the blood gas follows the saturation on the monitor.
+      if (id === 'abg' && /PaO2/.test(x.param)) { x.val = x.hi - v.s * (x.hi - x.lo); return; }
+      x.val = x.lo + r() * (x.hi - x.lo);
+    });
+    const get = re => rows.find(x => re.test(x.param) && x.val != null);
+    if (id === 'abg') {
+      // pH from Henderson-Hasselbalch, so the gas is always internally consistent.
+      const ph = get(/^pH$/), co2 = get(/PaCO2/), hco3 = get(/HCO3/);
+      if (ph && co2 && hco3) ph.val = 6.1 + Math.log10(hco3.val / (0.0307 * co2.val));
+    }
+    if (id === 'cbc') {
+      // Leave room for monocytes and basophils in the differential.
+      const n = get(/Neutro/), l = get(/Lympho/), e = get(/Eosino/);
+      if (n && l && e && n.val + l.val + e.val > 97) l.val -= n.val + l.val + e.val - 97;
+    }
+    rows.forEach(x => {
+      if (x.val == null) { x.shown = x.text || ''; return; }
+      const d = decimals(x, x.val);
+      x.val = Number(x.val.toFixed(d));
+      x.shown = x.val.toFixed(d);
+      x.flag = flagOf(x.ref, x.val);
+    });
+    return (S.results[id] = { rows, report: t.report || '', summary: t.summary_ar || '' });
+  }
+
+  function labCard(id, open) {
+    const c = catOf(id), res = resultFor(id);
+    const table = res.rows.length ? `<table class="rs-lab" dir="ltr"><thead><tr><th>Test</th><th>Result</th><th>Reference</th></tr></thead><tbody>${res.rows.map(x =>
+      `<tr${x.flag ? ` class="is-${x.flag}"` : ''}><td>${esc(x.param)}</td><td><b>${esc(x.shown)}</b>${x.unit ? ` <small>${esc(x.unit)}</small>` : ''}${x.flag ? ` <i>${x.flag === 'hi' ? 'H' : 'L'}</i>` : ''}</td><td>${esc(x.ref)}</td></tr>`).join('')}</tbody></table>` : '';
+    const report = res.report ? `<p class="rs-report" dir="ltr">${esc(res.report)}</p>` : '';
+    // In exam mode the meaning waits for the result screen.
+    const mean = res.summary && (open || !S.exam) ? `<details class="rs-mean"${open ? ' open' : ''}><summary>ماذا تعني النتيجة؟</summary><p>${esc(res.summary)}</p></details>` : '';
+    return `<div class="rs-labcard"><div class="rs-lab-h"><b>${esc(c.ar)}</b><bdi dir="ltr">${esc(c.en)}</bdi></div>${table}${report}${mean}</div>`;
+  }
+
+  function orderTest(id) {
+    if (!S.pt || S.done || !catOf(id)) return;
+    if (S.tests.includes(id)) { say('sys', 'سبق أن طلبت هذا الفحص، ونتيجته في المحادثة أعلاه.'); return; }
+    S.tests.push(id);
+    say('lab', '', labCard(id));
+    renderTests();
+    // On a phone the panel sits below the chat: bring the result into view.
+    if (window.innerWidth < 1024) document.querySelector('#view-resp .rs-chat').scrollIntoView({ behavior: 'smooth', block: 'start' });
+  }
+
+  // Typed orders ("اعمل صورة صدر", "بدي CBC") go to the tests, not to the patient.
+  const TEST_CUES = {
+    cxr: ['صوره صدر', 'صوره للصدر', 'اشعه صدر', 'اشعه للصدر', 'اشعه الصدر', 'x-ray', 'xray', 'cxr'],
+    ctpa: ['صوره طبقيه', 'طبقي', 'ctpa', 'ct'],
+    neck_xray: ['اشعه رقبه', 'اشعه للرقبه', 'صوره رقبه', 'صوره للرقبه'],
+    cbc: ['cbc', 'تعداد دم', 'صوره دم', 'فحص دم'],
+    crp: ['crp', 'مؤشرات الالتهاب', 'procalcitonin'],
+    abg: ['abg', 'غازات'],
+    ddimer: ['دايمر', 'd-dimer', 'ddimer'],
+    viral_pcr: ['pcr', 'مسحه فيروسات', 'مسحه انفلونزا', 'مسحه كورونا'],
+    strep: ['strep', 'عقديات', 'مسحه حلق', 'مسحه للحلق'],
+    sputum: ['زراعه بلغم', 'فحص بلغم', 'عينه بلغم', 'afb', 'genexpert'],
+    ecg: ['تخطيط قلب', 'تخطيط للقلب', 'ecg', 'ekg'],
+    peak_flow: ['peak flow', 'ذروه الجريان', 'spirometry', 'سبايرومتري']
+  };
+  function matchTests(text) {
+    const t = ' ' + norm(text) + ' ';
+    return Object.keys(TEST_CUES).filter(id => TEST_CUES[id].some(c => t.includes(' ' + c + ' ') || (c.includes(' ') && t.includes(c))));
+  }
+  const VITAL_CUE = /(قيس|قس|اقيس|نقيس|افحص) .*(العلامات|الضغط|النبض|الحراره|الاكسجين)|vitals|علامات حيويه/;
 
   /* ---------- understanding the question ---------- */
   const norm = s => String(s).replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي')
@@ -353,6 +535,9 @@
     input.disabled = true;
     const caseNo = S.caseNo;
     try {
+      const tests = matchTests(text);
+      if (tests.length) { tests.forEach(orderTest); return; }
+      if (VITAL_CUE.test(norm(text))) { measure(); return; }
       let groups = null;
       const ids = await matchApi(text);
       // The student may have submitted or moved to a new patient while the question was out.
@@ -512,6 +697,10 @@
       <ol class="rs-top">${top.map(([p, i]) => `<li>${ar(i)} <b class="font-num">${pct(p)}</b></li>`).join('')}</ol>
       <h4>كيف تغيّر احتمال التشخيص الصحيح مع كل سؤال</h4>${spark(truth)}
       ${missed.length ? `<h4>أسئلة كانت ستقرّبك أكثر</h4><ul class="rs-missed">${missed.map(m => `<li><b>${esc(qText(heads[m.g]))}</b><span>الجواب: ${esc(answer(m.g))}</span></li>`).join('')}</ul>` : ''}
+      <h4>العلامات الحيوية</h4>
+      <p>${S.measured ? '' : '<b>لم تقسها.</b> في الطوارئ تُقاس أولاً. '}${esc(vitalsLine(S.vit))}.</p>
+      <h4>الفحوصات التي طلبتها (${S.tests.length})</h4>
+      ${S.tests.length ? `<ul class="rs-missed">${S.tests.map(id => `<li><b>${esc(catOf(id).ar)}</b><span>${esc(resultFor(id).summary)}</span></li>`).join('')}</ul>` : '<p>لم تطلب أي فحص.</p>'}
       <p class="rs-note">النموذج تدرّب على مرضى افتراضيين، ودوره هنا تعليمي فقط.</p>
       <div class="rs-actions"><button type="button" class="p" id="rs-next">مريض جديد</button><button type="button" class="s" id="rs-home">العودة للرئيسية</button></div>
     </div>`;
@@ -531,7 +720,7 @@
       if (u) {
         u.history = u.history || [];
         u.history.unshift({ caseTitle: 'غرفة الطوارئ التنفسية · ' + (T.conditions[tName] || tName), mode: 'غرفة الطوارئ التنفسية · ' + (S.exam ? 'امتحان' : 'تدريب'), date: new Date().toISOString().slice(0, 10),
-          workupCount: 0, questions: asked, score: `${score}% (${passed ? 'مجتاز' : 'غير مجتاز'})`, caseId: 'resp_' + tName, num: score, passed, ts: Date.now() });
+          workupCount: S.tests.length, questions: asked, score: `${score}% (${passed ? 'مجتاز' : 'غير مجتاز'})`, caseId: 'resp_' + tName, num: score, passed, ts: Date.now() });
         u.stats = u.stats || {};
         u.stats.completed = u.history.length;
         if (typeof saveAccountToStorage === 'function') saveAccountToStorage(u);
@@ -556,6 +745,10 @@
     renderAsked();
     bodyMap();
     renderQuestionList('');
+    showVitals(null);
+    // Close a normal-range tip left open for the previous patient (a click toggles it in motion.js).
+    document.querySelector('#rs-mon-card .nb-mon-tile.is-picked')?.click();
+    renderTests();
     $('rs-input').focus();
   }
 
@@ -582,6 +775,16 @@
       $('rs-qlist').querySelector(`[data-g="${g}"]`)?.focus();
     });
     $('rs-qsearch').addEventListener('input', e => renderQuestionList(e.target.value));
+    $('rs-measure').addEventListener('click', measure);
+    $('rs-tests').addEventListener('click', e => { const b = e.target.closest('.rs-t'); if (b) orderTest(b.dataset.t); });
+    v.querySelector('.rs-jump').addEventListener('click', e => {
+      const b = e.target.closest('[data-jump]');
+      if (!b) return;
+      const card = $(b.dataset.jump);
+      const d = card.querySelector('details');
+      if (d) d.open = true;
+      card.scrollIntoView({ behavior: 'smooth', block: 'start' });
+    });
     $('rs-dx-btn').addEventListener('click', openSubmit);
     $('rs-new').addEventListener('click', () => (M ? begin() : open()));
     // Switching mode mid-case would let a student peek at the bars, so it starts a new patient.
@@ -614,6 +817,8 @@
     load: async () => { await load(); if (!cues) buildCues(); },
     predict: (pt, groups) => { const keep = S.pt; S.pt = pt; const p = predict(new Set(groups)); S.pt = keep; return p; },
     start: i => begin(i), ask: g => askGroup(g), state: S, matchLocal: t => matchLocal(t),
+    measure: () => measure(), order: id => orderTest(id), result: id => resultFor(id), matchTests: t => matchTests(t),
+    get CL() { return CL; },
     get M() { return M; }, get pool() { return POOL; }
   };
 })();

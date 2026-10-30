@@ -297,11 +297,14 @@
         t.el.setAttribute('aria-label', 'اعرف المعدل الطبيعي');
       });
     }
+    // A room can supply its own normal ranges and alarm limits (the respiratory room has children).
+    const rangeOf = key => (cfg.range && cfg.range(key)) || RANGES[key];
+    const warnOf = (key, raw) => (cfg.warn ? cfg.warn(key, raw) : typeof window.nrWarn === 'function' && window.nrWarn(key, raw));
     function pick(tile) {
       const key = tile.dataset.tile;
-      if (!RANGES[key]) return;
+      if (!rangeOf(key)) return;
       if (picked === key) { picked = null; info.hidden = true; }
-      else { picked = key; info.textContent = RANGES[key]; info.hidden = false; }
+      else { picked = key; info.textContent = rangeOf(key); info.hidden = false; }
       root.querySelectorAll('.nb-mon-tile').forEach(t => t.classList.toggle('is-picked', t.dataset.tile === picked));
     }
     root.addEventListener('click', e => {
@@ -375,7 +378,7 @@
         // alarm follows the case value, so the drifting display does not make it flicker.
         const raw = t.key === 'bp' ? t.val().textContent.trim() : t.key === 'hr' ? base : firstNum(t.val());
         const known = t.key === 'bp' ? /\d+\/\d+/.test(raw) : !isNaN(raw);
-        const bad = known && typeof window.nrWarn === 'function' && !!window.nrWarn(t.key, raw);
+        const bad = known && !!warnOf(t.key, raw);
         t.el.classList.toggle('nb-alarm', bad && !t.el.classList.contains('warn'));
         if (t.key === 'hr' && bad) hrAlarm = true;
         if (t.key === 'rr' && raw > 0) resp = raw;
@@ -502,6 +505,21 @@
         hr: () => document.getElementById('sim-v-hr'),
         spo2: () => document.getElementById('sim-v-spo2'),
         dot: () => sim.querySelector('.animate-pulse'),
+        tiles: () => ids.map(([key, id]) => {
+          const v = document.getElementById(id);
+          return v ? { key, el: v.parentElement, val: () => v } : null;
+        }).filter(Boolean)
+      });
+    }
+    const rs = document.querySelector('.rs-mon:not([data-mon])');
+    if (rs) {
+      const ids = [['hr', 'rs-v-hr'], ['bp', 'rs-v-bp'], ['spo2', 'rs-v-spo2'], ['temp', 'rs-v-temp'], ['rr', 'rs-v-rr']];
+      makeMonitor(rs, {
+        hr: () => document.getElementById('rs-v-hr'),
+        spo2: () => document.getElementById('rs-v-spo2'),
+        dot: () => rs.querySelector('.rs-mon-dot'),
+        range: key => window.nbRespVitals && window.nbRespVitals.range(key),
+        warn: (key, raw) => (window.nbRespVitals ? window.nbRespVitals.warn(key, raw) : ''),
         tiles: () => ids.map(([key, id]) => {
           const v = document.getElementById(id);
           return v ? { key, el: v.parentElement, val: () => v } : null;

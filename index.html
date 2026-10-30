@@ -14,6 +14,7 @@
   
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="theme.css">
+  <link rel="stylesheet" href="resp.css">
   <script>/* until script.js loads, a missing photo just hides */ window.nbImgFail = window.nbImgFail || function (el) { el.style.visibility = "hidden"; };</script>
   
 </head>
@@ -201,6 +202,7 @@
       <div class="v7-group">
         <p>التدريب السريري</p>
         <button type="button" id="side-er-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>غرفة الطوارئ</span></button>
+        <button type="button" class="v7-item" onclick="nbOpenResp()"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M8.5 6.5C5.5 7 3 11 3 15.5 3 18.5 4.5 20 6.5 20c2.2 0 3.5-1.6 3.5-4.5V8"/><path d="M15.5 6.5C18.5 7 21 11 21 15.5c0 3-1.5 4.5-3.5 4.5-2.2 0-3.5-1.6-3.5-4.5V8"/></svg><span>الطوارئ التنفسية</span><span class="v7-tag">جديد</span></button>
         <button type="button" class="v7-item" onclick="document.getElementById('app-nav-cases').click()"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>الحالات التخصصية</span></button>
         <button type="button" data-side-app="coach" data-v7-view="view-coach" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>المدرب السريري</span></button>
       </div>
@@ -346,6 +348,22 @@
           <img src="img/or/banner.jpg" alt="فريق جراحي أثناء عملية" loading="lazy" decoding="async" onerror="nbImgFail(this)">
           <div><b>توقّف، تحقّق، ثم ابدأ</b><span>كل بند في القائمة يحمي المريض من خطأ لا يُصلَح.</span></div>
         </div>
+      </div>
+
+      <!-- Respiratory room with the trained model -->
+      <div id="sec-resp" class="scroll-mt-20 rs-band">
+        <div class="rs-band-copy">
+          <span class="v7-eyebrow">جديد</span>
+          <h2>غرفة الطوارئ التنفسية: نموذج دربناه بأنفسنا</h2>
+          <p>شبكة عصبية تعلّمت من أكثر من مليون مريض افتراضي، وتعرض لك وأنت تسأل المريض كيف يتغير ترجيحها للتشخيص.</p>
+          <button class="v7-btn-outline focus-ring" type="button" onclick="nbDemoLogin('med_student'); setTimeout(() => nbOpenResp(), 400)">جرّب الغرفة</button>
+        </div>
+        <ul class="rs-stats">
+          <li><b class="font-num">1,025,602</b><span>مريض افتراضي تعلّم منهم</span></li>
+          <li><b class="font-num">99.5%</b><span>دقة على مرضى تنفسيين لم يرهم، بكل الأسئلة</span></li>
+          <li><b class="font-num">86.9%</b><span>بربع الأسئلة فقط</span></li>
+        </ul>
+        <p class="rs-band-note">النتائج على مرضى افتراضيين، والنموذج للتدريب فقط.</p>
       </div>
 
       <!-- Level placement quiz -->
@@ -599,6 +617,16 @@
             <li><b>03</b><strong>راجع أداءك</strong><small>تقرير مفصّل بعد التسليم.</small></li>
           </ol>
         </div>
+      </div>
+
+      <!-- 2b. Respiratory emergency room with the trained model -->
+      <div id="home-resp-card" class="rs-home">
+        <div>
+          <span class="v7-eyebrow"><svg width="16" height="16" fill="none" stroke="currentColor" stroke-width="2" viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M8.5 6.5C5.5 7 3 11 3 15.5 3 18.5 4.5 20 6.5 20c2.2 0 3.5-1.6 3.5-4.5V8"/><path d="M15.5 6.5C18.5 7 21 11 21 15.5c0 3-1.5 4.5-3.5 4.5-2.2 0-3.5-1.6-3.5-4.5V8"/></svg>غرفة الطوارئ التنفسية<span class="rs-new-tag">جديد</span></span>
+          <h2>مريض جديد كل مرة، ونموذج يفكّر معك.</h2>
+          <p>اسأل المريض بلغتك، وتابع كيف تتغير احتمالات التشخيص مع كل سؤال.</p>
+        </div>
+        <button type="button" class="focus-ring" onclick="nbOpenResp()">ادخل الغرفة ←</button>
       </div>
 
       <!-- 3. Student cases: choose a specialty, then narrow by level or status -->
@@ -1617,6 +1645,54 @@
 
     </section>
 
+    <!-- =======================================================
+         VIEW: RESPIRATORY EMERGENCY ROOM (resp.js)
+         ======================================================= -->
+    <section id="view-resp" class="hidden">
+      <div class="rs-head">
+        <div>
+          <span class="v7-eyebrow">غرفة الطوارئ التنفسية · <span class="rs-new-tag">جديد</span></span>
+          <h1>اسأل المريض، ثم شخّص</h1>
+        </div>
+        <div class="rs-head-tools">
+          <label class="rs-mode-l" for="rs-mode">الوضع</label>
+          <select id="rs-mode"><option value="practice">تدريب: الاحتمالات ظاهرة</option><option value="exam">امتحان: تظهر بعد التسليم</option></select>
+          <button type="button" id="rs-new" class="rs-ghost">مريض جديد</button>
+        </div>
+      </div>
+      <div class="rs-wrap">
+        <div class="rs-chat">
+          <div class="rs-pt" id="rs-pt"></div>
+          <div class="rs-feed" id="rs-feed" aria-live="polite"></div>
+          <form class="rs-form" id="rs-form" autocomplete="off">
+            <input id="rs-input" type="text" maxlength="300" placeholder="اكتب سؤالك للمريض… مثلاً: عندك حرارة؟" aria-label="سؤالك للمريض">
+            <button type="submit" id="rs-send" class="p">اسأل</button>
+            <button type="button" id="rs-dx-btn" class="s">سلّم التشخيص</button>
+          </form>
+          <div id="rs-submit" class="rs-submit" hidden></div>
+        </div>
+        <aside class="rs-side">
+          <section class="rs-card">
+            <div class="rs-card-h"><h3>ماذا يرجّح النموذج؟</h3><small>الأسئلة: <b id="rs-count" class="font-num">0</b></small></div>
+            <div id="rs-bars"></div>
+          </section>
+          <section class="rs-card" id="rs-body" hidden></section>
+          <section class="rs-card">
+            <details class="rs-qbox"><summary>قائمة الأسئلة</summary>
+              <input id="rs-qsearch" type="search" placeholder="ابحث في الأسئلة…" autocomplete="off">
+              <div id="rs-qlist" class="rs-qlist"></div>
+            </details>
+          </section>
+          <details class="rs-card rs-about"><summary>عن النموذج</summary>
+            <p>شبكة عصبية تدرّبت على 1,025,602 مريضاً افتراضياً من بيانات DDXPlus، واختُبرت على 60,800 مريض تنفسي لم ترهم: شخّصت 99.5% منهم بكل الأسئلة، و86.9% بربع الأسئلة.</p>
+            <p>المرضى هنا من مجموعة الاختبار نفسها. كل جواب مبني على سجل المريض: ما في السجل يقوله المريض، وما ليس فيه يجيب عنه بالنفي، إلا علامات واضحة الدلالة (مثل الكحة عند من يسعل دماً). النموذج للتدريب فقط، ولا يُستخدم لتشخيص مرضى حقيقيين.</p>
+            <p>الصياغة العربية للأسئلة والأجوبة لم يراجعها طبيب بعد.</p>
+            <p class="rs-cite">البيانات: Fansi Tchango, Goel, Wen, Martel, Ghosn. <a href="https://figshare.com/articles/dataset/DDXPlus_Dataset/20043374" target="_blank" rel="noopener">DDXPlus Dataset</a> (Figshare)، برخصة <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener"><bdi>CC BY 4.0</bdi></a>. التعديلات: ترجم نبض الأسئلة والأجوبة إلى العربية، واختار المرضى التنفسيين، وحذف القيم الافتراضية من السجلات، ودرّب عليها النموذج.</p>
+          </details>
+        </aside>
+      </div>
+    </section>
+
   </main>
 
   <!-- =========================================================
@@ -2014,6 +2090,7 @@
     <div class="border-t border-slate-100 py-3.5 px-4 sm:px-8 text-center text-xs text-slate-400">
       جميع الحقوق محفوظة © 2026 منصة نَبْض للمحاكاة السريرية (نسخة تدريبية توضيحية)
       <details class="v7-credits"><summary>مصادر الصور</summary><div class="nb-credit" id="nb-credits" style="margin-top:.4rem"></div></details>
+      <details class="v7-credits"><summary>مصادر البيانات</summary><div class="nb-credit" style="margin-top:.4rem">غرفة الطوارئ التنفسية: <a href="https://figshare.com/articles/dataset/DDXPlus_Dataset/20043374" target="_blank" rel="noopener">DDXPlus Dataset</a>، Arsene Fansi Tchango وRishab Goel وZhi Wen وJulien Martel وJoumana Ghosn، منشورة على Figshare برخصة <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. التعديلات: ترجم نبض الأسئلة والأجوبة إلى العربية، واختار المرضى التنفسيين من مجموعة الاختبار، وحذف القيم الافتراضية من السجلات، ودرّب عليها نموذجاً.</div></details>
     </div>
   </footer>
 
@@ -2021,5 +2098,6 @@
   <script src="motion.js" defer></script>
   <script src="terms.js" defer></script>
   <script src="ui.js" defer></script>
+  <script src="resp.js" defer></script>
 </body>
 </html>

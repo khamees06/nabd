@@ -1671,7 +1671,7 @@
       }
     ];
 
-    const PROTECTED_VIEWS = new Set(['home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse']);
+    const PROTECTED_VIEWS = new Set(['home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp']);
     const STORAGE_KEYS = {
       ACTIVE_USER_ID: 'nabd_v2_active_user_id',
       ACCOUNTS_MAP: 'nabd_v2_accounts_map',
@@ -1998,12 +1998,12 @@
     }
 
     function showOnlySection(viewId) {
-      ['index', 'home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse'].forEach(v => {
+      ['index', 'home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp'].forEach(v => {
         const sec = document.getElementById('view-' + v);
         if (sec) sec.classList.toggle('hidden', v !== viewId);
       });
       const footer = document.getElementById('site-footer');
-      if (footer) footer.classList.toggle('hidden', viewId === 'sim' || viewId === 'nurse' || viewId === 'observe');
+      if (footer) footer.classList.toggle('hidden', viewId === 'sim' || viewId === 'nurse' || viewId === 'observe' || viewId === 'resp');
       if (viewId === 'profile' && authState.user) { try { renderProfileView(); } catch (e) { console.error(e); } }
     }
 
@@ -5322,7 +5322,7 @@
               <td class="px-5 py-3.5 font-bold text-slate-900">${h.caseTitle}</td>
               <td class="px-5 py-3.5 text-slate-600">${h.mode}</td>
               <td class="px-5 py-3.5 font-num text-slate-500">${h.date}</td>
-              <td class="px-5 py-3.5 font-num text-slate-700">${h.workupCount} فحوصات</td>
+              <td class="px-5 py-3.5 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة' : h.workupCount + ' فحوصات'}</td>
               <td class="px-5 py-3.5 font-num font-bold text-teal-700">${h.score}</td>
             `;
             histTbody.appendChild(tr);
@@ -5365,7 +5365,7 @@
               <td class="px-4 py-2 font-bold text-slate-900">${h.caseTitle}</td>
               <td class="px-4 py-2 text-slate-700">${h.mode}</td>
               <td class="px-4 py-2 font-num text-slate-600">${h.date}</td>
-              <td class="px-4 py-2 font-num text-slate-700">${h.workupCount} فحوصات</td>
+              <td class="px-4 py-2 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة' : h.workupCount + ' فحوصات'}</td>
               <td class="px-4 py-2 font-num font-bold text-teal-800">${h.score}</td>
             </tr>
           `).join('');

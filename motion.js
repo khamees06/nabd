@@ -208,11 +208,28 @@
     return m ? parseFloat(m[0]) : NaN;
   };
 
-  // A recognisable lead-II beat: P wave, QRS complex, T wave (phase 0..1).
+  // A lead-II beat drawn in real time (t = seconds since the beat began), so its widths stay
+  // true at any rate: PR 0.16 s, QRS about 0.09 s, QT from Bazett with QTc 0.40 s.
+  // A fast rate shortens the flat line between beats, not the complexes themselves.
   const bump = (p, c, w, a) => a * Math.exp(-Math.pow((p - c) / w, 2));
-  const ecgAt = p => bump(p, 0.15, 0.025, 0.12) - bump(p, 0.255, 0.008, 0.12) + bump(p, 0.28, 0.01, 1)
-    - bump(p, 0.305, 0.009, 0.28) + bump(p, 0.55, 0.05, 0.25);
-  const plethAt = p => bump(p, 0.45, 0.09, 1) + bump(p, 0.66, 0.07, 0.32);
+  const R_AT = 0.19; // seconds from the start of a beat to its R wave
+  function ecgBeat(t, rr) {
+    if (t < -0.05 || t > 1.6) return 0;
+    const qt = 0.4 * Math.sqrt(rr);
+    return bump(t, 0.06, 0.022, 0.12) - bump(t, 0.172, 0.007, 0.12) + bump(t, R_AT, 0.009, 1)
+      - bump(t, 0.21, 0.008, 0.28) + bump(t, 0.07 + qt, 0.045 * Math.sqrt(rr), 0.25);
+  }
+  // The finger pulse arrives about 0.2 s after the R wave, with a dicrotic notch.
+  function plethBeat(t) {
+    const u = t - R_AT;
+    if (u < -0.1 || u > 1.2) return 0;
+    return bump(u, 0.22, 0.08, 1) + bump(u, 0.42, 0.07, 0.3);
+  }
+  function gauss() {
+    let u = 0;
+    while (!u) u = Math.random();
+    return Math.sqrt(-2 * Math.log(u)) * Math.cos(2 * Math.PI * Math.random());
+  }
 
   let audio = null;
   function beep(spo2, alarm) {
@@ -297,9 +314,17 @@
     });
 
     const ctx = canvas.getContext('2d');
-    let W = 0, H = 0, x = 0, beats = 0, last = performance.now();
+    let W = 0, H = 0, x = 0, last = performance.now(), clock = 0;
     let lastE = null, lastP = null;
-    let hr = NaN, spo2 = NaN, hrAlarm = false, lastCheck = 0;
+    let spo2 = NaN, resp = 16, hrAlarm = false, lastCheck = 0;
+    // base: the case's heart rate as the app wrote it. hrNow: the rate the heart is beating at,
+    // which drifts around base and eases toward a new base after a change. The HR tile then shows
+    // the rate measured from the drawn beats, so the number always matches the trace.
+    let base = NaN, hrNow = NaN, drift = 0;
+    let beatT = 0, rr = 0.8, prevRR = 0.8, rDone = false;
+    const recent = [];
+    let hrEl = null, appWrote = true;
+    const watch = new MutationObserver(() => { appWrote = true; });
 
     function size() {
       const dpr = Math.min(2, window.devicePixelRatio || 1);
@@ -315,27 +340,81 @@
     }
     if ('ResizeObserver' in window) new ResizeObserver(size).observe(canvas);
 
+    // Pick up the case value whenever the app writes the HR tile (or renders a new one).
+    function readBase() {
+      const el = cfg.hr();
+      if (el !== hrEl) {
+        watch.disconnect();
+        if (el) watch.observe(el, { childList: true, characterData: true, subtree: true });
+        hrEl = el;
+        appWrote = true;
+      }
+      if (!appWrote) return;
+      appWrote = false;
+      const was = base;
+      base = firstNum(el);
+      if (!(was > 0) || !(base > 0)) {
+        // A first reading starts the heart at that rate.
+        hrNow = base;
+        recent.length = 0;
+        if (base > 0) rr = prevRR = 60 / base;
+      } else {
+        // A later change (treatment, deterioration) eases in: keep showing the measured rate.
+        showRate();
+      }
+    }
+
     function readVitals() {
       prepTiles();
-      hr = firstNum(cfg.hr());
+      readBase();
       spo2 = firstNum(cfg.spo2());
       hrAlarm = false;
+      resp = 16;
       cfg.tiles().forEach(t => {
-        // Same thresholds the nursing room already uses (nrWarn in script.js).
-        const raw = t.key === 'bp' ? t.val().textContent.trim() : firstNum(t.val());
+        // Same thresholds the nursing room already uses (nrWarn in script.js). The heart rate
+        // alarm follows the case value, so the drifting display does not make it flicker.
+        const raw = t.key === 'bp' ? t.val().textContent.trim() : t.key === 'hr' ? base : firstNum(t.val());
         const known = t.key === 'bp' ? /\d+\/\d+/.test(raw) : !isNaN(raw);
         const bad = known && typeof window.nrWarn === 'function' && !!window.nrWarn(t.key, raw);
         t.el.classList.toggle('nb-alarm', bad && !t.el.classList.contains('warn'));
         if (t.key === 'hr' && bad) hrAlarm = true;
+        if (t.key === 'rr' && raw > 0) resp = raw;
       });
-      root.classList.toggle('is-live', hr > 0);
+      root.classList.toggle('is-live', base > 0);
     }
 
-    const ecgColor = () => !(hr > 0) ? 'rgba(244, 248, 250, .28)' : hrAlarm ? '#FF7873' : '#4CC283';
-    const yE = p => H * 0.40 - (hr > 0 ? ecgAt(p) * H * 0.33 : 0);
-    const yP = p => H * 0.94 - (spo2 > 0 ? plethAt(p) * H * 0.26 * Math.max(0.35, Math.min(1, (spo2 - 78) / 20)) : 0);
+    // Next beat-to-beat interval: a slow drift of a few beats a minute, faster beats on
+    // breathing in (respiratory sinus arrhythmia, weaker at fast rates), and a little noise.
+    function nextRR() {
+      const target = hrNow > 0 ? hrNow : 75;
+      drift = Math.max(-2.5, Math.min(2.5, drift * 0.96 + gauss() * 0.35));
+      const rsa = 0.03 * Math.max(0.2, Math.min(1, (110 - target) / 40)) * Math.sin(2 * Math.PI * clock * resp / 60);
+      return Math.max(0.25, (60 / Math.max(20, target + drift)) * (1 + rsa + gauss() * 0.01));
+    }
+
+    // Like a bedside monitor: the shown rate is the average of the last few beats.
+    function showRate() {
+      // An app write still waiting in the observer queue must be read first, or the
+      // takeRecords() below would swallow it along with our own write.
+      if (watch.takeRecords().length) appWrote = true;
+      if (appWrote) { readBase(); return; }
+      if (!(base > 0) || recent.length < 3 || !hrEl) return;
+      const s = String(Math.round(60 / (recent.reduce((a, b) => a + b, 0) / recent.length)));
+      if (hrEl.textContent.trim() === s) return;
+      hrEl.textContent = s;
+      watch.takeRecords(); // our own write, not the app's
+    }
+
+    const ecgColor = () => !(base > 0) ? 'rgba(244, 248, 250, .28)' : hrAlarm ? '#FF7873' : '#4CC283';
+    const yE = v => H * 0.40 - (base > 0 ? v * H * 0.33 : 0);
+    const yP = v => H * 0.94 - (spo2 > 0 ? v * H * 0.26 * Math.max(0.35, Math.min(1, (spo2 - 78) / 20)) : 0);
+    const ecgAt = (t, cur, prev) => ecgBeat(t, cur) + ecgBeat(t + prev, prev);
+    const plethAt = t => plethBeat(t) + plethBeat(t + prevRR);
 
     function onBeat() {
+      recent.push(prevRR);
+      if (recent.length > 4) recent.shift();
+      showRate();
       const v = cfg.hr();
       if (v) { v.classList.remove('nb-beat'); void v.offsetWidth; v.classList.add('nb-beat'); }
       const dot = cfg.dot();
@@ -345,14 +424,14 @@
 
     function drawStatic() {
       ctx.clearRect(0, 0, W, H);
-      const period = hr > 0 ? 60 / hr : 1;
+      const period = base > 0 ? 60 / base : 1;
       ctx.lineWidth = 1.6;
-      [['ecg', yE, ecgColor()], ['pleth', yP, 'rgba(108, 201, 206, .85)']].forEach(([, fy, col]) => {
+      [[t => yE(ecgAt(t, period, period)), ecgColor()], [t => yP(plethBeat(t) + plethBeat(t + period)), 'rgba(108, 201, 206, .85)']].forEach(([fy, col]) => {
         ctx.strokeStyle = col;
         ctx.beginPath();
         for (let px = 0; px <= W; px += 1) {
-          const p = ((px / W) * 4 / period) % 1;
-          if (px === 0) ctx.moveTo(px, fy(p)); else ctx.lineTo(px, fy(p));
+          const y = fy(((px / W) * 4) % period);
+          if (px === 0) ctx.moveTo(px, y); else ctx.lineTo(px, y);
         }
         ctx.stroke();
       });
@@ -366,39 +445,46 @@
       if (root.offsetParent === null || !W) return;
       if (now - lastCheck > 400) {
         lastCheck = now;
-        const before = hr;
+        const before = base;
         readVitals();
-        if (reduceMotion && before !== hr) drawStatic();
+        if (reduceMotion && before !== base) drawStatic();
       }
       if (reduceMotion) return;
 
-      const period = hr > 0 ? 60 / hr : 1;
+      if (base > 0 && hrNow > 0) hrNow += (base - hrNow) * (1 - Math.exp(-dt / 2.5));
       const pxPerSec = W / 4; // four seconds across the screen
       const nx = x + dt * pxPerSec;
       const steps = Math.max(1, Math.ceil(nx - x));
-      const b0 = beats;
-      const b1 = beats + dt / period;
+      const h = dt / steps;
+
+      // Advance the heart sample by sample; a frame can cross at most one beat boundary.
+      const ptsE = [], ptsP = [];
+      for (let s = 1; s <= steps; s++) {
+        clock += h;
+        beatT += h;
+        if (beatT >= rr) { beatT -= rr; prevRR = rr; rr = nextRR(); rDone = false; }
+        if (!rDone && beatT >= R_AT) { rDone = true; if (base > 0) onBeat(); }
+        const px = x + (nx - x) * (s / steps);
+        ptsE.push([px, yE(ecgAt(beatT, rr, prevRR))]);
+        ptsP.push([px, yP(plethAt(beatT) * (1 + 0.04 * Math.sin(2 * Math.PI * clock * resp / 60)))]);
+      }
 
       // Erase just ahead of the write head, like a real sweep monitor.
       ctx.clearRect(x, 0, Math.min(W - x, (nx - x) + 14), H);
       ctx.lineWidth = 1.7;
       ctx.lineJoin = 'round';
-      for (const [kind, fy, col] of [['e', yE, ecgColor()], ['p', yP, 'rgba(108, 201, 206, .9)']]) {
+      for (const [kind, pts, col] of [['e', ptsE, ecgColor()], ['p', ptsP, 'rgba(108, 201, 206, .9)']]) {
         ctx.strokeStyle = col;
         ctx.beginPath();
         let prev = kind === 'e' ? lastE : lastP;
         if (prev) ctx.moveTo(prev[0], prev[1]);
-        for (let s = 1; s <= steps; s++) {
-          const px = x + (nx - x) * (s / steps);
-          const py = fy((b0 + (b1 - b0) * (s / steps)) % 1);
-          if (!prev) ctx.moveTo(px, py); else ctx.lineTo(px, py);
-          prev = [px, py];
+        for (const pt of pts) {
+          if (!prev) ctx.moveTo(pt[0], pt[1]); else ctx.lineTo(pt[0], pt[1]);
+          prev = pt;
         }
         ctx.stroke();
         if (kind === 'e') lastE = prev; else lastP = prev;
       }
-      if (hr > 0 && Math.floor(b1) > Math.floor(b0)) onBeat();
-      beats = b1 % 1000;
       x = nx;
       if (x >= W) { x = 0; lastE = lastP = null; }
     }
@@ -452,8 +538,11 @@
     // Views switch by toggling .hidden; rooms and lists are injected later.
     let pending = false;
     new MutationObserver(list => {
-      // Ignore the monitor's own beat/alarm class flips.
-      if (list.every(m => m.type === 'attributes' && m.target.closest && m.target.closest('.nb-mon'))) return;
+      // Ignore the monitor's own beat/alarm class flips and live heart-rate number.
+      if (list.every(m => {
+        const el = m.target.nodeType === 1 ? m.target : m.target.parentElement;
+        return el && el.closest('.nb-mon');
+      })) return;
       if (pending) return;
       pending = true;
       requestAnimationFrame(() => {

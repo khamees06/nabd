@@ -450,7 +450,7 @@
     if (api === 'off') return null;
     try {
       const r = await fetch(API, {
-        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(11000),
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(15000),
         body: JSON.stringify({
           text, history: S.chat.slice(0, -1).slice(-12), facts: S.facts, chief: S.pt.init,
           patient: { age: S.pt.age, sex: S.pt.sex, name: S.name, speaker: young() ? 'mother' : 'self' }

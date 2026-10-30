@@ -1057,13 +1057,13 @@
           'الدخول إلى المدرب السريري التفاعلي لإتمام التدريب العملي على نقاط الضعف الأربع ورفع الإتقان إلى 100%.'
         ],
         history: [
-          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'تدريب تخصصي (قلب)', date: '2026-10-10', workupCount: 3, score: '76%' },
+          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'غرفة الطوارئ (قلب)', date: '2026-10-10', workupCount: 3, score: '76%' },
           { caseTitle: 'حالة أعصاب حادة (اشتباه سكتة دماغية)', mode: 'غرفة الطوارئ', date: '2026-10-11', workupCount: 2, score: '72%' },
           { caseTitle: 'حالة طوارئ متعددة (ضيق تنفس حاد)', mode: 'غرفة الطوارئ', date: '2026-10-12', workupCount: 3, score: '75%' },
-          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'تدريب تخصصي (أطفال)', date: '2026-10-13', workupCount: 3, score: '76%' },
-          { caseTitle: 'حالة عظام وكسور مترافقة مع ارتفاع ضغط الدم', mode: 'تدريب تخصصي (عظام)', date: '2026-10-14', workupCount: 3, score: '78%' },
-          { caseTitle: 'حالة باطنية وجهاز هضمي مع حساسية دوائية', mode: 'تدريب تخصصي (باطنية)', date: '2026-10-15', workupCount: 3, score: '80%' },
-          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'تدريب تخصصي (نسائية)', date: '2026-10-16', workupCount: 3, score: '82%' }
+          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'غرفة الطوارئ (أطفال)', date: '2026-10-13', workupCount: 3, score: '76%' },
+          { caseTitle: 'حالة عظام وكسور مترافقة مع ارتفاع ضغط الدم', mode: 'غرفة الطوارئ (عظام)', date: '2026-10-14', workupCount: 3, score: '78%' },
+          { caseTitle: 'حالة باطنية وجهاز هضمي مع حساسية دوائية', mode: 'غرفة الطوارئ (باطنية)', date: '2026-10-15', workupCount: 3, score: '80%' },
+          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'غرفة الطوارئ (نسائية)', date: '2026-10-16', workupCount: 3, score: '82%' }
         ]
       },
       practitioner: {
@@ -1092,14 +1092,14 @@
           'مراجعة الحالات الأربع مع المدرب السريري التفاعلي للوصول إلى جاهزية 100%.'
         ],
         history: [
-          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'تدريب تخصصي', date: '2026-10-09', workupCount: 4, score: '90%' },
+          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'غرفة الطوارئ', date: '2026-10-09', workupCount: 4, score: '90%' },
           { caseTitle: 'حالة أعصاب حادة في المناوبة المسائية', mode: 'غرفة الطوارئ', date: '2026-10-10', workupCount: 3, score: '84%' },
-          { caseTitle: 'حالة جهاز تنفسي حادة مع قصور كلوي', mode: 'تدريب تخصصي', date: '2026-10-11', workupCount: 4, score: '88%' },
-          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'تدريب تخصصي', date: '2026-10-12', workupCount: 4, score: '86%' },
+          { caseTitle: 'حالة جهاز تنفسي حادة مع قصور كلوي', mode: 'غرفة الطوارئ', date: '2026-10-11', workupCount: 4, score: '88%' },
+          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'غرفة الطوارئ', date: '2026-10-12', workupCount: 4, score: '86%' },
           { caseTitle: 'حالة طوارئ عشوائية (ألم بطني حاد)', mode: 'غرفة الطوارئ', date: '2026-10-13', workupCount: 3, score: '85%' },
-          { caseTitle: 'حالة عظام وكسور مترافقة مع ارتفاع ضغط الدم', mode: 'تدريب تخصصي', date: '2026-10-14', workupCount: 2, score: '91%' },
+          { caseTitle: 'حالة عظام وكسور مترافقة مع ارتفاع ضغط الدم', mode: 'غرفة الطوارئ', date: '2026-10-14', workupCount: 2, score: '91%' },
           { caseTitle: 'حالة طوارئ عشوائية (منصور العمري)', mode: 'غرفة الطوارئ', date: '2026-10-15', workupCount: 4, score: '88%' },
-          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'تدريب تخصصي', date: '2026-10-16', workupCount: 3, score: '92%' }
+          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'غرفة الطوارئ', date: '2026-10-16', workupCount: 3, score: '92%' }
         ]
       },
       rana: {
@@ -1129,14 +1129,14 @@
           'تدرّبي مع المدرب السريري على نقاط الضعف الأربع.'
         ],
         history: [
-          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'تدريب تخصصي (قلب)', date: '2026-10-08', workupCount: 4, score: '88%' },
+          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'غرفة الطوارئ (قلب)', date: '2026-10-08', workupCount: 4, score: '88%' },
           { caseTitle: 'حالة أعصاب طارئة (ثقل لسان وضعف طرف)', mode: 'غرفة الطوارئ (أعصاب)', date: '2026-10-09', workupCount: 3, score: '78%' },
-          { caseTitle: 'حالة جهاز تنفسي حادة مترافقة مع قصور كلوي', mode: 'تدريب تخصصي (صدرية)', date: '2026-10-10', workupCount: 4, score: '81%' },
-          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'تدريب تخصصي (أطفال)', date: '2026-10-11', workupCount: 3, score: '79%' },
+          { caseTitle: 'حالة جهاز تنفسي حادة مترافقة مع قصور كلوي', mode: 'غرفة الطوارئ (صدرية)', date: '2026-10-10', workupCount: 4, score: '81%' },
+          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'غرفة الطوارئ (أطفال)', date: '2026-10-11', workupCount: 3, score: '79%' },
           { caseTitle: 'حالة طوارئ متعددة (سامر القاسم)', mode: 'غرفة الطوارئ', date: '2026-10-12', workupCount: 2, score: '82%' },
-          { caseTitle: 'حالة عظام وكسور مترافقة مع ارتفاع ضغط الدم', mode: 'تدريب تخصصي (عظام)', date: '2026-10-14', workupCount: 2, score: '87%' },
-          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'تدريب تخصصي (نسائية)', date: '2026-10-15', workupCount: 3, score: '89%' },
-          { caseTitle: 'حالة باطنية وجهاز هضمي (سارة العلي)', mode: 'واجب جامعي (NUR-402)', date: '2026-10-16', workupCount: 4, score: '91%' }
+          { caseTitle: 'حالة عظام وكسور مترافقة مع ارتفاع ضغط الدم', mode: 'غرفة الطوارئ (عظام)', date: '2026-10-14', workupCount: 2, score: '87%' },
+          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'غرفة الطوارئ (نسائية)', date: '2026-10-15', workupCount: 3, score: '89%' },
+          { caseTitle: 'حالة باطنية وجهاز هضمي (سارة العلي)', mode: 'غرفة الطوارئ', date: '2026-10-16', workupCount: 4, score: '91%' }
         ]
       },
       med_student: {
@@ -1165,12 +1165,12 @@
           'ابدأ جلسة مع المدرب السريري لمراجعة سلامة طلب الفحوصات بالصبغة لدى مرضى الكلى.'
         ],
         history: [
-          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'تدريب تخصصي (قلب)', date: '2026-10-09', workupCount: 4, score: '90%' },
-          { caseTitle: 'حالة جهاز تنفسي حادة مترافقة مع قصور كلوي', mode: 'تدريب تخصصي (صدرية)', date: '2026-10-10', workupCount: 4, score: '86%' },
+          { caseTitle: 'حالة قلب وأوعية دموية مترافقة مع السكري', mode: 'غرفة الطوارئ (قلب)', date: '2026-10-09', workupCount: 4, score: '90%' },
+          { caseTitle: 'حالة جهاز تنفسي حادة مترافقة مع قصور كلوي', mode: 'غرفة الطوارئ (صدرية)', date: '2026-10-10', workupCount: 4, score: '86%' },
           { caseTitle: 'حالة طوارئ عشوائية (ألم بطني حاد)', mode: 'غرفة الطوارئ', date: '2026-10-12', workupCount: 3, score: '84%' },
-          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'تدريب تخصصي (نسائية)', date: '2026-10-13', workupCount: 3, score: '87%' },
-          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'تدريب تخصصي (أطفال)', date: '2026-10-14', workupCount: 4, score: '89%' },
-          { caseTitle: 'حالة جهاز تنفسي حادة مع قصور كلوي (عبدالرحمن الزعبي)', mode: 'واجب جامعي (MED-410)', date: '2026-10-16', workupCount: 4, score: '92%' }
+          { caseTitle: 'حالة نسائية وتوليد مترافقة مع فقر دم', mode: 'غرفة الطوارئ (نسائية)', date: '2026-10-13', workupCount: 3, score: '87%' },
+          { caseTitle: 'حالة أطفال مترافقة مع جفاف وارتفاع حرارة', mode: 'غرفة الطوارئ (أطفال)', date: '2026-10-14', workupCount: 4, score: '89%' },
+          { caseTitle: 'حالة جهاز تنفسي حادة مع قصور كلوي (عبدالرحمن الزعبي)', mode: 'غرفة الطوارئ', date: '2026-10-16', workupCount: 4, score: '92%' }
         ]
       },
       doctor: {
@@ -1672,6 +1672,9 @@
     ];
 
     const PROTECTED_VIEWS = new Set(['home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp']);
+    // The site now offers the emergency room, the respiratory room and the coach. These views stay in
+    // the page (the app still writes into them) but can no longer be opened: they lead home.
+    const REMOVED_VIEWS = new Set(['university', 'observe', 'nurse']);
     const STORAGE_KEYS = {
       ACTIVE_USER_ID: 'nabd_v2_active_user_id',
       ACCOUNTS_MAP: 'nabd_v2_accounts_map',
@@ -1922,15 +1925,15 @@
       if (hwSub) {
         hwSub.textContent = isProf
           ? 'تابع تقارير الطلبة أو أسند حالة جديدة.'
-          : 'ابدأ بحالة طوارئ أو اختر تخصصاً للتدرب.';
+          : 'ابدأ بغرفة الطوارئ أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب.';
       }
 
       // Toggle Role-Specific Home Sections (Professor Dashboard vs Student University Sessions)
       const profHomeSec = document.getElementById('home-professor-section');
-      if (profHomeSec) profHomeSec.classList.toggle('hidden', !isProf);
+      if (profHomeSec) profHomeSec.classList.add('hidden');
 
       const stuHomeUniSec = document.getElementById('home-student-uni-section');
-      if (stuHomeUniSec) stuHomeUniSec.classList.toggle('hidden', !isStudent);
+      if (stuHomeUniSec) stuHomeUniSec.classList.add('hidden');
 
       renderProfileView();
       renderUniversityPortalByRole();
@@ -1940,6 +1943,7 @@
 
     /* Protected Navigation Guard */
     function navigateTo(viewId, options = {}) {
+      if (REMOVED_VIEWS.has(viewId)) { viewId = 'home'; options = {}; }
       const isAuth = Boolean(authState.isAuthenticated && authState.user);
 
       if (PROTECTED_VIEWS.has(viewId) && !isAuth) {
@@ -2039,7 +2043,7 @@
           safeStorageSet(key, { track, level, pct: parseInt(acc.stats?.avgSpec, 10) || 0, weak: [], rooms: nbPickRooms(level, [], level, track), demo: true, ts: Date.now() });
         }
       }
-      loginWithAccount(JSON.parse(JSON.stringify(acc)), `دخول تجريبي: ${acc.name}`, acc.role === 'professor' ? 'university' : 'home');
+      loginWithAccount(JSON.parse(JSON.stringify(acc)), `دخول تجريبي: ${acc.name}`, 'home');
     }
 
     function logoutUser() {
@@ -2314,7 +2318,7 @@
 
     function nbOpenRoom(id) {
       if (!(authState && authState.isAuthenticated)) { openAuthModal('login', 'سجّل الدخول لتبدأ غرفة المحاكاة المقترحة.'); return; }
-      if (NB_NURSE_CASES[id]) nurseStart(id); else startSimulationSession(id, false, true);
+      document.getElementById('launch-er-random-btn')?.click();
     }
 
     function nbRenderResult() {
@@ -2389,10 +2393,10 @@
       const level = pl ? pl.level : nbDerivedLevel(u);
       const lv = NB_LEVELS[level];
       document.getElementById('path-level').textContent = lv.name;
-      document.getElementById('path-level-src').textContent = pl ? (pl.skipped ? 'مبتدئ (تخطّيت الاختبار)' : 'من اختبار تحديد المستوى') : 'تقدير من سنتك الدراسية';
+      document.getElementById('path-level-src').textContent = 'تقدير من أدائك وسنتك الدراسية';
       const st = u.stats || {};
       const num = (x) => { const n = parseInt(x, 10); return isNaN(n) ? null : n; };
-      const avg = num(st.avgSpec);
+      const avg = num(st.avgEr);
       document.getElementById('path-k1').textContent = st.completed != null ? st.completed : 0;
       document.getElementById('path-k2').textContent = st.avgSpec || '--';
       document.getElementById('path-k3').textContent = st.avgEr || '--';
@@ -3441,6 +3445,7 @@
     /* ---------------------------- OBSERVE VIEW ---------------------------- */
     let obs = { demo: null, i: 0, auto: null };
     function obsStart(id) {
+      navigateTo('home'); return;
       const d = NB_DEMOS[id]; if (!d) return;
       obs = { demo: d, i: -1, auto: null };
       document.getElementById('obs-badge').textContent = 'مشاهدة خبير · ' + d.who;
@@ -3852,6 +3857,7 @@
 
     /* ----- start / finish ----- */
     function nurseStart(id) {
+      navigateTo('home'); return;
       const c = NB_NURSE_CASES[id]; if (!c) return;
       if (!authState.isAuthenticated) { openAuthModal('login', 'سجّل الدخول لتبدأ حالة التمريض.'); return; }
       const lock = nbLockInfo(c); if (lock) { showToast(lock); return; }
@@ -3976,16 +3982,13 @@
       const track = nbTrackOf(u);
       const isNurse = track === 'nursing';
       const er = document.getElementById('home-er-card'), cases = document.getElementById('home-cases-anchor'), nh = document.getElementById('home-nurse');
-      if (u && u.role !== 'professor') {
-        er?.classList.toggle('hidden', isNurse); cases?.classList.toggle('hidden', isNurse);
-        nh?.classList.toggle('hidden', !isNurse);
-      } else { er?.classList.remove('hidden'); cases?.classList.remove('hidden'); nh?.classList.add('hidden'); }
-      document.getElementById('app-nav-er')?.classList.toggle('hidden', !!(u && u.role !== 'professor' && isNurse));
+      er?.classList.remove('hidden'); cases?.classList.add('hidden'); nh?.classList.add('hidden');
+      document.getElementById('app-nav-er')?.classList.remove('hidden');
       const nc = document.getElementById('app-nav-cases'); if (nc) nc.textContent = (u && u.role !== 'professor' && isNurse) ? 'حالات التمريض' : 'الحالات والتدريب';
       const ws = document.getElementById('home-welcome-sub');
-      if (ws && u && u.role !== 'professor') ws.textContent = isNurse ? 'قِس العلامات، بلّغ الطبيب، ونفّذ أوامره بأمان.' : 'خذ القصة، اطلب الفحوصات المبررة، ثم سلّم قرارك.';
+      if (ws && u && u.role !== 'professor') ws.textContent = 'ابدأ بغرفة الطوارئ أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب.';
       document.getElementById('home-track-chip') && (document.getElementById('home-track-chip').textContent = !track ? '' : (isNurse ? 'مسار التمريض' : 'مسار الطب'));
-      if (!isNurse || !nh) return;
+      return;
       const grid = document.getElementById('nurse-cards'); grid.innerHTML = '';
       nbFilterBar('nurse-filter', () => renderTrackHome(authState.user));
       const _nl = Object.values(NB_NURSE_CASES).filter(c => !c.guided && !c.periop).filter(nbFltPass);
@@ -4025,6 +4028,7 @@
       });
     }
     function nbMaybeOnboard(u) {
+      return;
       if (!u || u.role === 'professor') return;
       if (nbGetPlacement()) return;
       const guest = safeStorageGet(NB_PLACEMENT_KEY, null);
@@ -4226,6 +4230,7 @@
     }
 
     function startSimulationSession(caseId, isEmergencyMode = false, goToSim = true, restoreScratchpad = true) {
+      if (goToSim && !isEmergencyMode) { navigateTo('home'); return; }
       try { updateSimLevelHint(caseId); nbStartOsce(caseId); } catch (e) {}
       if (goToSim && (!authState.isAuthenticated || !authState.user)) {
         openAuthModal('login', 'يرجى تسجيل الدخول لبدء جلسة المحاكاة.');
@@ -6049,7 +6054,7 @@
           openAuthModal('login', 'يرجى تسجيل الدخول أولاً لبدء حالة طوارئ عشوائية.');
           return;
         }
-        const keys = Object.keys(CASES_DB);
+        const keys = Object.keys(CASES_DB).filter(k => !k.startsWith('case_prof_'));
         const randKey = keys[Math.floor(Math.random() * keys.length)];
         startSimulationSession(randKey, true, true);
         showToast('بدأت حالة طوارئ عشوائية.');
@@ -6254,7 +6259,7 @@
       document.getElementById('confirm-handover-submit-btn')?.addEventListener('click', finalizeSessionAndBuildReport);
 
       // Debrief Navigation
-      document.getElementById('empty-debrief-go-home')?.addEventListener('click', () => navigateTo('home', { scrollToCases: true }));
+      document.getElementById('empty-debrief-go-home')?.addEventListener('click', () => navigateTo('home'));
       document.getElementById('rep-back-home-btn')?.addEventListener('click', () => navigateTo('home'));
       document.getElementById('rep-go-profile-btn')?.addEventListener('click', () => {
         navigateTo('profile');
@@ -6515,7 +6520,7 @@
           stats: { completed: 0, avgSpec: 'لا توجد بعد', avgEr: 'لا توجد بعد' },
           strengths: ['حساب جديد — ستظهر نقاط القوة هنا بعد إتمامك لأولى جلسات المحاكاة السريرية وتسليم SBAR.'],
           weaknesses: ['لا توجد ملاحظات مسجلة بعد قبل إجراء الجلسات.'],
-          recommendations: ['ابدأ بحالة سريرية من الصفحة الرئيسية أو جرّب غرفة الطوارئ العشوائية.'],
+          recommendations: ['ابدأ بغرفة الطوارئ العشوائية أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب السريري.'],
           history: []
         };
 

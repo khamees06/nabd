@@ -15,6 +15,7 @@
   <link rel="stylesheet" href="style.css">
   <link rel="stylesheet" href="theme.css">
   <link rel="stylesheet" href="resp.css">
+  <link rel="stylesheet" href="scope.css">
   <script>/* until script.js loads, a missing photo just hides */ window.nbImgFail = window.nbImgFail || function (el) { el.style.visibility = "hidden"; };</script>
   
 </head>
@@ -42,6 +43,7 @@
 
     <nav class="hidden md:flex items-center gap-1" aria-label="التنقل في الصفحة الرئيسية">
       <a href="#sec-how" class="nav-link-item" data-pub-anchor="sec-how">كيف تعمل نبض؟</a>
+      <a href="#sec-resp" class="nav-link-item" data-pub-anchor="sec-resp">الغرفة التنفسية</a>
       <a href="#sec-specs" class="nav-link-item" data-pub-anchor="sec-specs">التخصصات</a>
       <a href="#sec-level" class="nav-link-item" data-pub-anchor="sec-level">اختبر مستواك</a>
       <a href="#sec-universities" class="nav-link-item" data-pub-anchor="sec-universities">التدريب الجامعي</a>
@@ -283,9 +285,9 @@
           <h2>كل حالة تبدأ بسؤال، وتنتهي بفهم أعمق.</h2>
         </div>
         <ol class="v7-steps">
-          <li><b>01</b><h3>ابدأ حالة</h3><p>اختر تخصصاً أو حالة طوارئ عشوائية.</p></li>
+          <li><b>01</b><h3>ابدأ حالة</h3><p>ادخل غرفة الطوارئ أو غرفة الطوارئ التنفسية.</p></li>
           <li><b>02</b><h3>قابل المريض</h3><p>اسأل وافحص واطلب ما تحتاجه.</p></li>
-          <li><b>03</b><h3>اتخذ قرارك</h3><p>شخّص أو نفّذ الأوامر بأمان.</p></li>
+          <li><b>03</b><h3>اتخذ قرارك</h3><p>شخّص واكتب خطتك بأمان.</p></li>
           <li><b>04</b><h3>سلّم وراجع</h3><p>سلّم الحالة واقرأ تقييمك.</p></li>
         </ol>
       </div>
@@ -434,7 +436,7 @@
             <span id="home-demo-indicator" class="px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 text-xs">حساب تجريبي</span>
           </div>
           <h1 id="home-welcome-name">أهلاً بك</h1>
-          <p id="home-welcome-sub">ابدأ بحالة طوارئ أو اختر تخصصاً للتدرب.</p>
+          <p id="home-welcome-sub">ابدأ بغرفة الطوارئ أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب.</p>
           <div class="v7-welcome-actions">
             <button id="home-quick-profile-btn" class="focus-ring" type="button">ملفي وتقدّمي</button>
             <button id="home-quick-uni-btn" class="focus-ring" type="button">البوابة الجامعية</button>
@@ -920,11 +922,11 @@
         </div>
         <h2 class="text-xl font-bold text-slate-900">لا يوجد تقرير جلسة مكتمل حالياً</h2>
         <p class="text-sm text-slate-600 leading-relaxed">
-          لا يُنشأ تقرير التقييم والنتيجة إلا بعد إتمام جلسة محاكاة سريرية وتسليم ملخص الحالة. ابدأ حالة من الأقسام المتخصصة أو من غرفة الطوارئ العشوائية لعرض تقريرك التفصيلي.
+          لا يُنشأ تقرير التقييم والنتيجة إلا بعد إتمام جلسة محاكاة سريرية وتسليم ملخص الحالة. ابدأ حالة من غرفة الطوارئ العشوائية لعرض تقريرك التفصيلي.
         </p>
         <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
           <button id="empty-debrief-go-home" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors focus-ring">
-            اختيار حالة سريرية
+            العودة إلى الرئيسية
           </button>
           <button id="empty-debrief-go-er" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold transition-colors focus-ring">
             بدء حالة طوارئ عشوائية
@@ -1062,7 +1064,7 @@
             عرض ملفي الشخصي وسجل الجلسات
           </button>
           <button id="rep-back-home-btn" class="px-6 py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors shadow-xs focus-ring">
-            العودة إلى الرئيسية والحالات
+            العودة إلى الرئيسية
           </button>
         </div>
 
@@ -1202,7 +1204,7 @@
         </div>
 
         <!-- Profile Stats -->
-        <div class="grid grid-cols-3 gap-3 shrink-0">
+        <div class="grid grid-cols-2 gap-3 shrink-0">
           <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
             <div class="text-xl font-bold text-slate-900 font-num" id="profile-stat-sessions">0</div>
             <div class="text-xs text-slate-500 mt-0.5">جلسات مكتملة</div>
@@ -1397,12 +1399,12 @@
               طالب جامعي · التخصص: التمريض — جامعة العلوم والتكنولوجيا الأردنية
             </div>
             <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-1">
-              قد أتمّ بنجاح متطلبات التدريب السريري التفاعلي على تقييم الحالات المرضية المتخصصة وحالات الطوارئ، شاملاً الاستجواب السريري المنهجي، قياس العلامات الحيوية، قراءة التحاليل المخبرية والصور التشخيصية، التحقق من معايير سلامة المريض، وتسليم الحالات وفق بروتوكول <strong>SBAR</strong> القياسي.
+              قد أتمّ بنجاح متطلبات التدريب السريري التفاعلي على تقييم حالات الطوارئ وحالات الطوارئ التنفسية، شاملاً الاستجواب السريري المنهجي، قياس العلامات الحيوية، قراءة التحاليل المخبرية والصور التشخيصية، التحقق من معايير سلامة المريض، وتسليم الحالات وفق بروتوكول <strong>SBAR</strong> القياسي.
             </p>
           </div>
 
           <!-- Quantitative Competency Summary Grid inside Certificate -->
-          <div class="grid grid-cols-2 sm:grid-cols-4 gap-3 text-center">
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-3 text-center">
             <div class="p-3.5 rounded-2xl bg-white border border-teal-200/90 shadow-2xs">
               <div class="text-xs text-slate-500 font-semibold">إجمالي الجلسات المنجزة</div>
               <div id="cert-stat-sessions" class="text-xl font-bold text-slate-900 font-num mt-1">8 جلسات</div>
@@ -1445,9 +1447,9 @@
           <!-- Official Signatures & Stamp Footer -->
           <div class="pt-4 border-t border-teal-200/80 grid grid-cols-1 sm:grid-cols-3 gap-4 items-center text-xs">
             <div class="space-y-1">
-              <div class="text-slate-500 font-medium">إشراف واعتماد القسم الأكاديمي:</div>
-              <div class="font-bold text-slate-900 text-sm">د. عبدالرحمن المجالي</div>
-              <div class="text-teal-800 font-semibold">الأستاذ الجامعي — التدريب والمحاكاة السريرية</div>
+              <div class="text-slate-500 font-medium">جهة الإصدار:</div>
+              <div class="font-bold text-slate-900 text-sm">وحدة التدريب والمحاكاة</div>
+              <div class="text-teal-800 font-semibold">منصة نَبْض للمحاكاة السريرية</div>
             </div>
             <div class="flex justify-center">
               <div class="w-24 h-24 rounded-full border-2 border-dashed border-teal-700 bg-teal-50/60 flex flex-col items-center justify-center text-center p-2">
@@ -2084,17 +2086,17 @@
       <div id="footer-guest-links" class="space-y-2">
         <div class="font-bold text-slate-900 text-xs">روابط سريعة</div>
         <ul class="space-y-1.5 text-xs text-slate-600">
-          <li><a href="#sec-roles" class="hover:text-teal-700">المسارات</a></li>
-          <li><a href="#sec-level" class="hover:text-teal-700">تحديد المستوى</a></li>
-          <li><a href="#sec-universities" class="hover:text-teal-700">البوابة الجامعية</a></li>
+          <li><a href="#sec-how" class="hover:text-teal-700">كيف تعمل نبض؟</a></li>
+          <li><a href="#sec-resp" class="hover:text-teal-700">غرفة الطوارئ التنفسية</a></li>
         </ul>
       </div>
 <!-- Signed-in Footer Links (Hidden for Guests) -->
       <div id="footer-app-links" class="hidden space-y-2">
         <div class="font-bold text-slate-900 text-xs">مساحة التدريب</div>
         <ul class="space-y-1.5 text-xs text-slate-600">
-          <li><button data-foot-app="home" class="foot-app-link hover:text-teal-700">الرئيسية والحالات</button></li>
+          <li><button data-foot-app="home" class="foot-app-link hover:text-teal-700">الرئيسية</button></li>
           <li><button id="foot-er-btn" class="hover:text-teal-700">غرفة الطوارئ العشوائية</button></li>
+          <li><button type="button" class="hover:text-teal-700" onclick="nbOpenResp()">غرفة الطوارئ التنفسية</button></li>
           <li><button data-foot-app="coach" class="foot-app-link hover:text-teal-700">المدرب السريري</button></li>
           <li><button data-foot-app="profile" class="foot-app-link hover:text-teal-700">ملفي الشخصي</button></li>
         </ul>

@@ -1,0 +1,52 @@
+/* =========================================================
+   NABD — what the site offers (2026-10-30)
+   The emergency room, the respiratory room and the clinical coach stay, with the profile.
+   The university portal, specialty training, nursing cases, the learning path and the level
+   quiz are hidden here and closed in script.js (REMOVED_VIEWS and the start guards). Their
+   markup stays in the page because the app still writes into it; to bring a part back,
+   delete its selector below and its guard in script.js.
+   Every rule is !important because the app re-shows some of these blocks on sign-in and
+   theme.css forces sidebar items to display:flex !important.
+   ========================================================= */
+
+/* Landing page and its links */
+#sec-roles, #sec-specs, #sec-or, #sec-universities, #sec-level, #index-level-cta,
+#public-header a[data-pub-anchor="sec-specs"],
+#public-header a[data-pub-anchor="sec-universities"],
+#public-header a[data-pub-anchor="sec-level"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-roles"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-specs"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-universities"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-level"],
+
+/* Signed-in navigation */
+#app-nav-cases, #app-nav-uni,
+#app-sidebar .v7-item[onclick*="app-nav-cases"],
+#app-sidebar .v7-group:has(#side-uni-portal-btn),
+
+/* Student home */
+#home-quick-uni-btn, #home-skip-note, #home-learn, #home-nurse, #home-professor-section,
+#home-cases-anchor, #home-student-uni-section,
+#home-path > .nb-path-card:not(.nb-path-dark), #path-retake, #path-retake-note,
+#home-path .nb-kpis > div:has(#path-k2),
+
+/* Profile, certificate */
+#view-profile div:has(> #profile-stat-spec),
+#profile-pane-dash .nb-dc:has(#path-notes),
+#path-mistakes [data-fix],
+#printable-certificate-area div:has(> #cert-stat-spec),
+
+/* Sign-in and registration */
+#auth-modal [data-demo-login="doctor"],
+#reg-rolecards [data-rc="supervisor"],
+label.nb-field:has(#reg-code) {
+  display: none !important;
+}
+
+/* Close the gaps the hidden cells leave */
+#home-path .nb-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) {
+  #home-path { grid-template-columns: 1fr; }
+  #profile-pane-dash .nb-dash:has(#path-notes) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (min-width: 520px) { #reg-rolecards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }

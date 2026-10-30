@@ -2,14 +2,14 @@
    NABD — respiratory emergency room
    A network trained on DDXPlus (1,025,602 synthetic patients) ranks 49 conditions from the
    answers the student has collected so far. Patients come from the DDXPlus test split, which
-   the network never saw. Every patient reply is read from the patient record and phrased from
-   a fixed Arabic table: nothing the patient says is generated.
+   the network never saw. The patient speaks through Claude (api/resp-chat.js) in Jordanian Arabic,
+   from the facts of its record only; when Claude is out of reach, it answers from a fixed table.
    ========================================================= */
 (() => {
   'use strict';
 
   const DATA = 'data/';
-  const API = '/api/resp-ask';
+  const API = /\.vercel\.app$/.test(location.hostname) ? '/api/resp-chat' : 'https://nabd-smoky-one.vercel.app/api/resp-chat';
   const RESP = new Set(['URTI', 'Viral pharyngitis', 'Acute laryngitis', 'Bronchitis', 'Acute rhinosinusitis',
     'Chronic rhinosinusitis', 'Allergic sinusitis', 'Whooping cough', 'Sarcoidosis',
     'Bronchospasm / acute asthma exacerbation', 'Acute COPD exacerbation / infection', 'Pneumonia', 'Influenza',
@@ -132,8 +132,26 @@
     S.measured = false;
     S.tests = [];
     S.results = {};
+    S.chat = [];
     S.steps = [{ label: 'الشكوى الأولى', p: predict(S.asked) }];
     S.done = false;
+    S.facts = factsFor();
+  }
+
+  // What the record says, one line per question in the table's precise wording. The server decides
+  // yes or no from this list; Claude only puts the answer into words.
+  function factsFor() {
+    const out = [];
+    const meta = M.meta.evidences;
+    heads.forEach((n, g) => {
+      // A few DDXPlus records say both "smokes" and "used to smoke": the current habit wins.
+      if (n === 'E_191' && S.tok.has('E_79')) return;
+      // a: the precise formal wording; j: the same answer as the patient would say it in Jordanian.
+      const say = (m, formal) => (meta[m].type === 'B' ? line(m, 'yes', formal) : fillValues(m, line(m, 'yes', formal)));
+      if (isDerived(g)) { out.push({ id: n, a: line(n, 'yes', true), j: line(n, 'yes') }); return; }
+      members[g].forEach(m => { if (S.tok.has(m) && T.evidences[m]) out.push({ id: m, a: say(m, true), j: say(m, false) }); });
+    });
+    return out;
   }
 
   const joinAr = a => a.length < 2 ? (a[0] || '') : a.slice(0, -1).join('، ') + ' و' + a[a.length - 1];
@@ -145,10 +163,16 @@
   // Below CHILD the mother speaks about her son or daughter; women answer in the feminine.
   const young = () => S.pt.age < CHILD;
   const fem = () => S.pt.sex === 'F';
-  function line(n, key) {
+  // Shown lines are plain Jordanian (yj/nj...); `formal` gives the precise standard-Arabic wording.
+  function line(n, key, formal) {
     const t = T.evidences[n];
-    if (!t) return key === 'yes' ? 'نعم.' : 'لا.';
-    if (young()) return t[(key === 'yes' ? 'cy_' : 'cn_') + (fem() ? 'f' : 'm')] || t[key];
+    const y = key === 'yes';
+    if (!t) return y ? 'آه.' : 'لا.';
+    if (young()) {
+      const s = fem() ? 'f' : 'm';
+      return (!formal && t[(y ? 'cyj_' : 'cnj_') + s]) || t[(y ? 'cy_' : 'cn_') + s] || t[key];
+    }
+    if (!formal) { const j = t[(y ? 'yj' : 'nj') + (fem() ? '_f' : '')]; if (j) return j; }
     return (fem() && t[key + '_f']) || t[key];
   }
   const qText = n => {
@@ -168,13 +192,16 @@
   const isDerived = g => { const h = heads[g]; return !!IMPLIED[h] && !S.tok.has(h) && IMPLIED[h](); };
 
   // A question and its follow-ups are answered together, as a patient describes a symptom.
-  function answer(g) {
+  function answer(g, formal) {
     const head = heads[g];
     const meta = M.meta.evidences;
-    if (isDerived(g)) return line(head, 'yes');
-    if (!S.tok.has(head) && meta[head].type === 'B') return line(head, 'no');
-    const parts = members[g].filter(n => S.tok.has(n) && T.evidences[n]).map(n => (meta[n].type === 'B' ? line(n, 'yes') : fillValues(n, line(n, 'yes'))));
-    return parts.length ? parts.join(' ') : line(head, 'no');
+    if (isDerived(g)) return line(head, 'yes', formal);
+    // "Do you smoke?" to a former smoker: no, but he used to (DDXPlus keeps the two apart).
+    if (head === 'E_79' && !S.tok.has('E_79') && S.tok.has('E_191')) return line('E_79', 'no', formal) + ' ' + line('E_191', 'yes', formal).replace(/^(آه|نعم)،\s*/, '');
+    if (head === 'E_191' && S.tok.has('E_79')) return line('E_79', 'yes', formal);
+    if (!S.tok.has(head) && meta[head].type === 'B') return line(head, 'no', formal);
+    const parts = members[g].filter(n => S.tok.has(n) && T.evidences[n]).map(n => (meta[n].type === 'B' ? line(n, 'yes', formal) : fillValues(n, line(n, 'yes', formal))));
+    return parts.length ? parts.join(' ') : line(head, 'no', formal);
   }
 
   /* ---------- vitals and tests ---------- */
@@ -355,7 +382,9 @@
   /* ---------- understanding the question ---------- */
   const norm = s => String(s).replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي')
     .replace(/ة/g, 'ه').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي').replace(/[؟?!.,،:؛()"'«»\-_/]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
-  const STOP = new Set(['هل', 'لديك', 'عندك', 'تشعر', 'تعاني', 'من', 'في', 'او', 'ما', 'هو', 'هي', 'كان', 'اي', 'عن', 'علي', 'الي', 'مع', 'بعد', 'قبل', 'لك', 'انت', 'حاليا', 'مؤخرا', 'شي', 'شيء', 'اذا', 'يوجد', 'لا', 'نعم', 'اخر', 'الاخيره', 'الماضي', 'ايام', 'بشكل', 'عندكم', 'شو', 'ايش', 'في', 'كيف']);
+  const STOP = new Set(['هل', 'لديك', 'عندك', 'تشعر', 'تعاني', 'من', 'في', 'او', 'ما', 'هو', 'هي', 'كان', 'اي', 'عن', 'علي', 'الي', 'مع', 'بعد', 'قبل', 'لك', 'انت', 'حاليا', 'مؤخرا', 'شي', 'شيء', 'اذا', 'يوجد', 'لا', 'نعم', 'اخر', 'الاخيره', 'الماضي', 'ايام', 'بشكل', 'عندكم', 'شو', 'ايش', 'في', 'كيف',
+    // Jordanian fillers and pronouns ("عليك حرارة؟", "فيك وجع؟")
+    'عليك', 'فيك', 'معك', 'الك', 'بتحس', 'حاسس', 'هلق', 'هسا', 'هسه', 'بدي', 'شوي', 'يعني', 'طيب', 'اخوي', 'عمي', 'خالتي', 'حجي', 'حجه']);
   // Arabic words change shape with clitics and patterns (تدخن، بتدخن، تدخين، دخان), so each word is
   // compared through a few stripped forms and a skeleton without its inner long vowels.
   const PRE = ['وال', 'بال', 'فال', 'لل', 'ال', 'بت', 'بي', 'بن', 'و', 'ف', 'ب', 'ل', 'ت', 'ي', 'ن', 'ا'];
@@ -412,21 +441,29 @@
   }
   const GREET = /^(مرحب|اهلا|هلا|السلام|سلام|صباح|مساء|هاي|كيفك|كيف حالك|كيف الحال|شلونك)/;
 
-  // Claude reads free text when the site has a key. Without one (404/405/503) it is switched off;
-  // a slow or failed call falls back to the built-in matcher, and two in a row switch it off.
-  let api = /github\.io$/.test(location.hostname) || location.protocol === 'file:' ? 'off' : 'try';
+  // The patient speaks through Claude on the Vercel site; the GitHub Pages copy and the local test
+  // server call the same endpoint across origins. Without a key (404/405/503) or across two failures
+  // in a row it is switched off, and the room answers from its table.
+  let api = location.protocol === 'file:' ? 'off' : 'try';
   let apiFails = 0;
-  async function matchApi(text) {
+  async function chatApi(text) {
     if (api === 'off') return null;
     try {
-      const r = await fetch(API, { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify({ text }), signal: AbortSignal.timeout(6000) });
+      const r = await fetch(API, {
+        method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: AbortSignal.timeout(11000),
+        body: JSON.stringify({
+          text, history: S.chat.slice(0, -1).slice(-12), facts: S.facts, chief: S.pt.init,
+          patient: { age: S.pt.age, sex: S.pt.sex, name: S.name, speaker: young() ? 'mother' : 'self' }
+        })
+      });
       if (!r.ok) {
-        if ([404, 405, 503].includes(r.status) || ++apiFails >= 2) api = 'off';
+        if ([403, 404, 405, 503].includes(r.status) || ++apiFails >= 2) api = 'off';
         return null;
       }
       const j = await r.json();
+      if (typeof j.reply !== 'string' || !j.reply.trim()) return null;
       api = 'on'; apiFails = 0;
-      return (Array.isArray(j.ids) ? j.ids : []).filter(id => evIndex[id] != null);
+      return { ids: (Array.isArray(j.ids) ? j.ids : []).filter(id => evIndex[id] != null), reply: j.reply.trim() };
     } catch (e) {
       if (++apiFails >= 2) api = 'off';
       return null;
@@ -504,7 +541,36 @@
     d.innerHTML = (label ? `<span class="rs-who">${esc(label)}</span>` : '') + (text ? `<p>${esc(text)}</p>` : '') + (extra || '');
     feed.appendChild(d);
     feed.scrollTop = feed.scrollHeight;
+    // The conversation so far goes with each question, so the patient keeps the thread.
+    if (text && (who === 'pt' || who === 'me')) S.chat.push({ r: who === 'pt' ? 'p' : 's', t: text });
     return d;
+  }
+
+  function typing() {
+    const d = document.createElement('div');
+    d.className = 'rs-msg pt rs-typing';
+    d.setAttribute('aria-label', 'المريض يكتب');
+    d.innerHTML = '<span></span><span></span><span></span>';
+    $('rs-feed').appendChild(d);
+    $('rs-feed').scrollTop = $('rs-feed').scrollHeight;
+    return d;
+  }
+
+  // Count the questions a reply answered: each new one is a step for the model and the score.
+  function record(groups) {
+    let added = false;
+    groups.forEach(g => {
+      if (S.asked.has(g)) return;
+      S.asked.add(g);
+      if (isDerived(g)) S.derived.add(g);
+      S.steps.push({ label: qText(heads[g]), g, p: predict(net(S.asked)) });
+      added = true;
+    });
+    if (!added) return;
+    renderBars();
+    renderAsked();
+    bodyMap();
+    renderQuestionList($('rs-qsearch').value);
   }
 
   function renderBars() {
@@ -523,8 +589,8 @@
     $('rs-count').textContent = String(S.steps.length - 1);
   }
 
-  const howAreYou = () => young() ? (fem() ? 'ابنتي متعبة قليلاً، ولهذا جئنا.' : 'ابني متعب قليلاً، ولهذا جئنا.')
-    : fem() ? 'الحمد لله، لكني متعبة قليلاً، ولهذا جئت.' : 'الحمد لله، لكني متعب قليلاً، ولهذا جئت.';
+  const howAreYou = () => young() ? (fem() ? 'بنتي تعبانة شوي، عشان هيك جينا.' : 'ابني تعبان شوي، عشان هيك جينا.')
+    : fem() ? 'الحمد لله، بس تعبانة شوي، عشان هيك إجيت.' : 'الحمد لله، بس تعبان شوي، عشان هيك إجيت.';
 
   async function onAsk(text) {
     text = (text || '').trim();
@@ -539,18 +605,24 @@
       if (tests.length) { tests.forEach(orderTest); return; }
       if (VITAL_CUE.test(norm(text))) { measure(); return; }
       let groups = null;
-      const ids = await matchApi(text);
+      const dots = typing();
+      const r = await chatApi(text);
+      dots.remove();
       // The student may have submitted or moved to a new patient while the question was out.
       if (S.done || S.caseNo !== caseNo) return;
-      if (ids && ids.length) groups = [...new Set(ids.map(id => M.encoder.ev_group[evIndex[id]]))].slice(0, 3);
-      if (!groups) {
+      if (r) {
+        say('pt', r.reply);
+        record([...new Set(r.ids.map(id => M.encoder.ev_group[evIndex[id]]))]);
+        return;
+      }
+      {
         const found = matchLocal(text);
         if (found.length && (found.length === 1 || found[1].score < found[0].score * 0.85)) groups = [found[0].g];
         else if (found.length) {
           const chips = found.slice(0, 3).map(f => `<button type="button" class="rs-chip" data-g="${f.g}">${esc(qText(heads[f.g]))}</button>`).join('');
           say('sys', 'هل تقصد أحد هذه الأسئلة؟', `<div class="rs-chips">${chips}</div>`);
         } else if (GREET.test(norm(text))) {
-          say('pt', /كيف|شلون/.test(text) ? howAreYou() : 'أهلاً بك.');
+          say('pt', /كيف|شلون/.test(text) ? howAreYou() : 'أهلين.');
         } else {
           say('sys', 'لم أفهم السؤال. جرّب صياغة أخرى، أو اختر من «قائمة الأسئلة».');
         }
@@ -568,14 +640,8 @@
       say('pt', answer(g), '<small class="rs-again">سبق أن سألت هذا السؤال.</small>');
       return;
     }
-    S.asked.add(g);
-    if (isDerived(g)) S.derived.add(g);
     say('pt', answer(g));
-    S.steps.push({ label: qText(heads[g]), g, p: predict(net(S.asked)) });
-    renderBars();
-    renderAsked();
-    bodyMap();
-    renderQuestionList($('rs-qsearch').value);
+    record([g]);
   }
 
   function renderQuestionList(filter) {
@@ -740,7 +806,7 @@
     $('rs-pt').innerHTML = `<div class="rs-av" aria-hidden="true">${esc(S.name.charAt(0))}</div><div><b>${esc(S.name)}</b><small>${who} · ${ageAr(pt.age)}</small></div>`;
     say('sys', `${S.name}، ${who} ${f ? 'عمرها' : 'عمره'} ${ageAr(pt.age)}، ${f ? 'وصلت' : 'وصل'} إلى الطوارئ.${young() ? (f ? ' الأم تجيب عن طفلتها.' : ' الأم تجيب عن طفلها.') : ''} ${young() ? 'اسأل' : f ? 'اسألها' : 'اسأله'} عن الأعراض، ثم سلّم تشخيصك.`);
     // The chief complaint is volunteered, not an answer, so it does not open with "نعم".
-    say('pt', answer(M.encoder.ev_group[evIndex[pt.init]]).replace(/^نعم،\s*/, ''));
+    say('pt', answer(M.encoder.ev_group[evIndex[pt.init]]).replace(/^(نعم|آه|اه|أيوه)،\s*/, ''));
     renderBars();
     renderAsked();
     bodyMap();

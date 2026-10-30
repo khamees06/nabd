@@ -59,6 +59,8 @@
   // Patient speech and the student's own words are never rewritten.
   const SKIP = [
     '#sim-chat-messages > .flex-col', '.nb-b.patient', '.nb-b.nurse', '.coach-message.is-student',
+    // respiratory room: the patient's replies, the student's questions and the question list
+    '.rs-msg.pt', '.rs-msg.me', '.rs-chips', '#rs-qlist', '.rs-missed',
     'script', 'style', 'textarea', 'noscript', '[data-no-terms]', '.nb-terms'
   ].join(',');
 

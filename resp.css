@@ -56,11 +56,11 @@
 .rs-card-h h3 { margin: 0 !important; }
 .rs-card-h small { color: var(--ink-2); font-size: .8rem; }
 .rs-muted { color: var(--ink-2); font-size: .85rem; margin: 0; line-height: 1.8; }
-.rs-bar { position: relative; display: flex; justify-content: space-between; gap: .5rem; padding: .45rem .6rem; margin-bottom: .35rem; border-radius: 10px; background: var(--tint-2); overflow: hidden; font-size: .86rem; color: var(--ink); }
-.rs-bar span, .rs-bar b { position: relative; z-index: 1; }
+.rs-bar { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: baseline; gap: .3rem .75rem; padding: .5rem .65rem .6rem; margin-bottom: .35rem; border-radius: 10px; background: var(--tint-2); font-size: .86rem; color: var(--ink); line-height: 1.6; }
 .rs-bar b { font-weight: 500; color: var(--signal-strong); }
-.rs-bar i { position: absolute; inset-block: 0; inset-inline-start: 0; background: var(--tint); border-inline-end: 3px solid var(--signal); transition: width .5s ease; }
-@media (prefers-reduced-motion: reduce) { .rs-bar i { transition: none; } }
+.rs-track { grid-column: 1 / -1; display: block; height: 5px; border-radius: 999px; background: var(--line-2); overflow: hidden; text-decoration: none; }
+.rs-track i { display: block; height: 100%; border-radius: inherit; background: var(--signal); transition: width .5s ease; }
+@media (prefers-reduced-motion: reduce) { .rs-track i { transition: none; } }
 
 .rs-figs { display: grid; grid-template-columns: 1fr 1fr; gap: .5rem; }
 .rs-figs figure { margin: 0; text-align: center; }

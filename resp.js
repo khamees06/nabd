@@ -333,7 +333,8 @@
       return;
     }
     const top = last.map((p, i) => [p, i]).sort((a, b) => b[0] - a[0]).slice(0, 5);
-    box.innerHTML = top.map(([p, i]) => `<div class="rs-bar"><span>${esc(T.conditions[M.classes[i]] || M.classes[i])}</span><b class="font-num">${pct(p)}</b><i style="width:${Math.max(2, p * 100).toFixed(1)}%"></i></div>`).join('');
+    // Name and number on one line, the bar on its own line below, so nothing crosses the text.
+    box.innerHTML = top.map(([p, i]) => `<div class="rs-bar"><span>${esc(T.conditions[M.classes[i]] || M.classes[i])}</span><b class="font-num">${pct(p)}</b><s class="rs-track" aria-hidden="true"><i style="width:${Math.max(2, p * 100).toFixed(1)}%"></i></s></div>`).join('');
   }
 
   function renderAsked() {

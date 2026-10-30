@@ -190,10 +190,14 @@
     E_97: () => (S.tok.get('E_55') || []).some(v => THROAT.includes(v))
   };
   const isDerived = g => { const h = heads[g]; return !!IMPLIED[h] && !S.tok.has(h) && IMPLIED[h](); };
+  // DDXPlus asks a few things twice in other words; either one is answered from whichever the record has.
+  const TWINS = { E_144: 'E_175', E_175: 'E_144', E_161: 'E_32', E_32: 'E_161', E_76: 'E_82', E_82: 'E_76', E_155: 'E_164', E_164: 'E_155',
+    E_16: 'E_81', E_81: 'E_16', E_162: 'E_174', E_174: 'E_162' };
 
   // A question and its follow-ups are answered together, as a patient describes a symptom.
   function answer(g, formal) {
     const head = heads[g];
+    if (TWINS[head] && !S.tok.has(head) && S.tok.has(TWINS[head])) return line(TWINS[head], 'yes', formal);
     const meta = M.meta.evidences;
     if (isDerived(g)) return line(head, 'yes', formal);
     // "Do you smoke?" to a former smoker: no, but he used to (DDXPlus keeps the two apart).
@@ -404,7 +408,8 @@
     cues = Object.entries(T.evidences).map(([id, t]) => ({
       id, g: M.encoder.ev_group[evIndex[id]],
       // A cue keeps its small words when it has several ("عندك حساسية"), so it beats a bare "حساسية".
-      alt: (t.alt || []).map(a => { const all = toks(a, false); return { len: norm(a).length, toks: all.length > 1 ? all : toks(a, true) }; }).filter(a => a.toks.length),
+      // alt: the table's own cues; kw: the Jordanian words collected for each question.
+      alt: [...new Set([...(t.alt || []), ...(t.kw || [])])].map(a => { const all = toks(a, false); return { len: norm(a).length, toks: all.length > 1 ? all : toks(a, true) }; }).filter(a => a.toks.length),
       words: toks(t.q, true).filter(x => x.w.length > 2)
     }));
   }

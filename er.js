@@ -321,11 +321,19 @@
     E.pending = p;
     person(who, line);
   }
-  // "levofloxacin because of the penicillin allergy" names the allergen without ordering it.
+  // "levofloxacin instead of penicillin" names the allergen without ordering it; only the word
+  // right before each mention decides, so "tazocin without delay" is still tazocin.
   const allergicTo = (a, def, text) => {
     if (!def.allergyKw) return false;
-    const written = norm(a.agent ? a.agent + ' ' + (a.dose || '') : /(حساسي|allerg|بدل|بدون|مش )/i.test(text) ? '' : text);
-    return !!written && def.allergyKw.some(k => written.includes(norm(k)));
+    const written = norm(a.agent ? a.agent + ' ' + (a.dose || '') : text);
+    return def.allergyKw.some(k => {
+      const word = norm(k);
+      for (let i = written.indexOf(word); i >= 0; i = written.indexOf(word, i + 1)) {
+        const before = written.slice(0, i).trim().split(' ').slice(-3).join(' ');
+        if (!/(بدل|بدون|مش|غير|حساسيه|حساسيته|allerg\w*)( من| to)?( ?ب?ال)?$/.test(before) && !/^allerg/.test(written.slice(i + word.length).trim())) return true;
+      }
+      return false;
+    });
   };
 
   function order(a, text) {
@@ -376,12 +384,13 @@
     // Kept apart from E.done: a trap earns no step, and a safe drug can still follow an allergic reaction.
     E.harmed.add(a.id);
     if (allergic) E.reacted = true;
-    E.harms.push({ at: E.sim, label: allergic ? meta.ar + ' رغم الحساسية' : def.label || meta.ar, why: allergic ? def.allergyEffect : def.why });
+    const label = allergic ? meta.ar + ' رغم الحساسية' : def.label || meta.ar;
+    E.harms.push({ at: E.sim, label, why: allergic ? def.allergyEffect : def.why });
     nurse('حاضر.');
     const risk = allergic ? def.allergyRisk || 18 : def.risk || 12;
     later(0.8, () => {
       E.risk = clamp(E.risk + risk, 0, 100);
-      log('harm', 'أذى: ' + (def.label || meta.ar));
+      log('harm', 'أذى: ' + label);
       alert(allergic ? def.allergyEffect : def.effect || 'ساءت حالة المريض بعد الدواء.');
       E.anx = clamp(E.anx + 20, 0, 100);
       director('alarm');
@@ -785,5 +794,5 @@
 
   window.nbOpenER = open;
   // Test hook for the browser checks.
-  window.__nbER = { begin: id => begin(id), send, get E() { return E; }, get D() { return D; }, set api(v) { api = v; }, get api() { return api; }, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
+  window.__nbER = { begin: id => begin(id), send, allergicTo, get E() { return E; }, get D() { return D; }, set api(v) { api = v; }, get api() { return api; }, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
 })();

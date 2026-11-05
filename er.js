@@ -214,7 +214,7 @@
   const hasAny = (t, kw) => kw.some(k => { const n = norm(k); return n && (' ' + t + ' ').includes(n.length < 4 ? ' ' + n + ' ' : n); });
   function localRead(text) {
     const t = norm(text), c = E.c;
-    const facts = c.facts.filter(f => hasAny(t, f.kw)).map(f => f.id).slice(0, 3);
+    const facts = c.facts.filter(f => hasAny(t, f.kw)).map(f => f.id).filter(id => id !== 'allergy' || t.includes('حساس') || t.includes('allerg')).slice(0, 3);
     const exam = c.exam.filter(f => hasAny(t, f.kw)).map(f => f.id);
     const actions = D.actions.filter(a => hasAny(t, a.kw)).filter((a, i, all) => a.id !== 'adrenaline' || !all.some(x => x.id === 'noradrenaline')).map(a => ({ id: a.id, agent: '', dose: (text.match(/\d[\d.]*\s*[^\s،,]*/) || [''])[0] }));
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
@@ -296,7 +296,8 @@
     if (reply) person(to === 'companion' ? 'c' : to === 'nurse' ? 'n' : to === 'supervisor' ? 'd' : 'p', reply);
     if (to === 'supervisor') { E.helps++; }
     const answered = E.resolved && open ? (open.a ? open.a.id : open.id) : null;
-    (read.actions || []).filter(a => a.id !== answered).forEach(a => order(a, text));
+    const swapped = a => open && open.type === 'unsafe' && open.allergic && !allergicTo(a, E.c.care[a.id] || {}, text);
+    (read.actions || []).filter(a => a.id !== answered || swapped(a)).forEach(a => order(a, text));
     (read.tests || []).filter(x => x.id !== answered).forEach(x => orderTest(x.id, x.reason, x.reason_ok));
     E.resolved = false;
     director(to === 'companion' ? 'addressed' : 'turn');
@@ -320,15 +321,20 @@
     E.pending = p;
     person(who, line);
   }
+  // "levofloxacin because of the penicillin allergy" names the allergen without ordering it.
+  const allergicTo = (a, def, text) => {
+    if (!def.allergyKw) return false;
+    const written = norm(a.agent ? a.agent + ' ' + (a.dose || '') : /(حساسي|allerg|بدل|بدون|مش )/i.test(text) ? '' : text);
+    return !!written && def.allergyKw.some(k => written.includes(norm(k)));
+  };
+
   function order(a, text) {
     const meta = actOf(a.id);
     let def = E.c.care[a.id] || {};
     if (!meta) return;
     if (def.stableHarm && E.stage < 3) def = { ...def, ...def.stableHarm, harm: true };
-    if (E.done.has(a.id) || (E.harmed.has(a.id) && !def.allergyKw)) { nurse(`${meta.ar}؟ عملناه من شوي.`); return; }
-    // "levofloxacin because of the penicillin allergy" names the allergen without ordering it.
-    const written = norm(a.agent ? a.agent + ' ' + (a.dose || '') : /(حساسي|allerg|بدل|بدون|مش )/i.test(text) ? '' : text);
-    const allergic = def.allergyKw && def.allergyKw.some(k => written.includes(norm(k)));
+    const allergic = allergicTo(a, def, text);
+    if (!allergic && (E.done.has(a.id) || (E.harmed.has(a.id) && !def.allergyKw))) { nurse(`${meta.ar}؟ عملناه من شوي.`); return; }
     if (def.harm || allergic) { unsafe(a, meta, def, allergic); return; }
     if (meta.dose && !a.dose && !a._asked) {
       ask({ type: 'dose', a, ask: `The nurse asked the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}. good = a correct dose or flow, partial = roughly right, wrong = unsafe or wrong, na = not a reply.` }, def.rb || `${meta.ar}، كم الجرعة؟`);
@@ -369,12 +375,12 @@
   function harm(a, meta, def, allergic) {
     // Kept apart from E.done: a trap earns no step, and a safe drug can still follow an allergic reaction.
     E.harmed.add(a.id);
-    E.harms.push({ at: E.sim, label: def.label || meta.ar, why: allergic ? def.allergyEffect : def.why });
+    if (allergic) E.reacted = true;
+    E.harms.push({ at: E.sim, label: allergic ? meta.ar + ' رغم الحساسية' : def.label || meta.ar, why: allergic ? def.allergyEffect : def.why });
     nurse('حاضر.');
     const risk = allergic ? def.allergyRisk || 18 : def.risk || 12;
     later(0.8, () => {
       E.risk = clamp(E.risk + risk, 0, 100);
-      if (allergic) E.reacted = true;
       log('harm', 'أذى: ' + (def.label || meta.ar));
       alert(allergic ? def.allergyEffect : def.effect || 'ساءت حالة المريض بعد الدواء.');
       E.anx = clamp(E.anx + 20, 0, 100);
@@ -387,7 +393,10 @@
     const p = E.pending;
     E.pending = null;
     E.resolved = true;
-    if (p.type === 'dose') {
+    if (p.type === 'dose' && allergicTo({ agent: '' }, E.c.care[p.a.id] || {}, text)) {
+      // "Give an antibiotic." "Which?" "Augmentin." is the same order as naming it outright.
+      unsafe({ ...p.a, dose: text.slice(0, 40), _asked: true }, actOf(p.a.id), E.c.care[p.a.id], true);
+    } else if (p.type === 'dose') {
       if (grade === 'wrong' && !p.retried) {
         E.pending = { ...p, retried: true };
         E.wrongDoses++;
@@ -405,7 +414,7 @@
       E.tests[p.id].read = grade;
       log('read', `قراءة ${testOf(p.id).en}: ${grade === 'good' ? 'صحيحة' : grade === 'partial' ? 'ناقصة' : 'خاطئة'}`);
       if (grade === 'good') person('d', pickOf(['تمام، هيك القراءة.', 'صح، كمّل.', 'مزبوط، طيب شو الخطوة الجاية؟']));
-      else voice('d', 'supervisor', `The trainee misread the ${testOf(p.id).en}. Reference reading: ${E.c.results[p.id].key}. Point to the exact value that does not fit and ask them to look again; explain only that value.`, 'ارجع للقيمة نفسها: ' + E.c.results[p.id].key);
+      else voice('d', 'supervisor', `The trainee misread the ${testOf(p.id).en}. Reference reading: ${E.c.results[p.id].key}. Point to the exact value that does not fit and ask them to look again; explain only that value.`, `ارجع للـ${testOf(p.id).en} مرة ثانية، في إشي مش راكب مع قراءتك.`);
     }
     const next = E.queue.shift();
     if (next) ask(...next);

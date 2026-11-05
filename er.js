@@ -180,7 +180,7 @@
 
   /* ---------- talking to the server ---------- */
   const stateNow = () => ({
-    minute: E.sim, vitals: vitalsLine(), done: [...E.done.keys()].map(k => actOf(k)?.en || k),
+    minute: E.sim, vitals: vitalsLine(), done: [...E.done.keys(), ...E.harmed].map(k => actOf(k)?.en || k),
     results: Object.values(E.tests).filter(t => t.back).map(t => testOf(t.id).en + ': ' + resultText(t.id)),
   });
   async function call(body, ms = 15000) {
@@ -216,7 +216,7 @@
     const t = norm(text), c = E.c;
     const facts = c.facts.filter(f => hasAny(t, f.kw)).map(f => f.id).slice(0, 3);
     const exam = c.exam.filter(f => hasAny(t, f.kw)).map(f => f.id);
-    const actions = D.actions.filter(a => hasAny(t, a.kw)).map(a => ({ id: a.id, agent: '', dose: (text.match(/\d[\d.]*\s*[^\s،,]*/) || [''])[0] }));
+    const actions = D.actions.filter(a => hasAny(t, a.kw)).filter((a, i, all) => a.id !== 'adrenaline' || !all.some(x => x.id === 'noradrenaline')).map(a => ({ id: a.id, agent: '', dose: (text.match(/\d[\d.]*\s*[^\s،,]*/) || [''])[0] }));
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
     const tests = D.tests.filter(x => hasAny(t, x.kw)).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'weak' : 'none' }));
     const toSup = /(يا مشرف|يا استاذ|يا دكتور|شو رايك|ساعدني|مش عارف|محتار|شو اعمل)/.test(t);
@@ -267,7 +267,7 @@
     dots.remove();
     if (E !== my || E.over) return;
     const read = (r && r.read) || localRead(text);
-    apply(read, text, r ? r.to : read.to, r ? r.reply : localReply(read));
+    apply(read, text, r ? r.to : read.to, r ? (r.held ? pickOf(E.c.teach) : r.reply) : localReply(read));
   }
 
   function apply(read, text, to, reply) {
@@ -325,7 +325,7 @@
     let def = E.c.care[a.id] || {};
     if (!meta) return;
     if (def.stableHarm && E.stage < 3) def = { ...def, ...def.stableHarm, harm: true };
-    if (E.done.has(a.id)) { nurse(`${meta.ar}؟ عملناه من شوي.`); return; }
+    if (E.done.has(a.id) || (E.harmed.has(a.id) && !def.allergyKw)) { nurse(`${meta.ar}؟ عملناه من شوي.`); return; }
     // "levofloxacin because of the penicillin allergy" names the allergen without ordering it.
     const written = norm(a.agent ? a.agent + ' ' + (a.dose || '') : /(حساسي|allerg|بدل|بدون|مش )/i.test(text) ? '' : text);
     const allergic = def.allergyKw && def.allergyKw.some(k => written.includes(norm(k)));
@@ -355,7 +355,7 @@
 
   function unsafe(a, meta, def, allergic) {
     const need = allergic ? 'allergy' : def.needFact;
-    const known = need ? E.facts.has(need) : true;
+    const known = need ? E.facts.has(need) || (allergic && E.reacted) : true;
     // Asked and known: the nurse stops it. Never asked: nobody in the room knows, and it is given.
     if (known) {
       ask({ type: 'unsafe', a, def, allergic, ask: `The nurse challenged the unsafe order ${meta.en}. good = the trainee cancels or changes it, wrong = the trainee insists, na = not a reply.` }, (!allergic && def.challenge) || `دكتور، ${meta.ar}؟ في قصة حساسية، متأكد؟`);
@@ -367,12 +367,14 @@
   }
 
   function harm(a, meta, def, allergic) {
-    E.done.set(a.id, { at: E.sim, dose: a.dose || '', ok: 'harm' });
+    // Kept apart from E.done: a trap earns no step, and a safe drug can still follow an allergic reaction.
+    E.harmed.add(a.id);
+    E.harms.push({ at: E.sim, label: def.label || meta.ar, why: allergic ? def.allergyEffect : def.why });
     nurse('حاضر.');
     const risk = allergic ? def.allergyRisk || 18 : def.risk || 12;
     later(0.8, () => {
       E.risk = clamp(E.risk + risk, 0, 100);
-      E.harms.push({ at: E.sim, label: def.label || meta.ar, why: allergic ? def.allergyEffect : def.why });
+      if (allergic) E.reacted = true;
       log('harm', 'أذى: ' + (def.label || meta.ar));
       alert(allergic ? def.allergyEffect : def.effect || 'ساءت حالة المريض بعد الدواء.');
       E.anx = clamp(E.anx + 20, 0, 100);
@@ -712,7 +714,7 @@
       c, sim: 0, risk: c.risk.start, anx: c.companion.start, stage: 0, done: new Map(), effects: [], jobs: [], tests: {}, facts: new Set(), exam: new Set(),
       chat: [], log: [], riskLog: [[0, c.risk.start]], riskLogAt: 0, paintAt: -1, bpAt: 0, bpTime: 0, bp: ['--', '--'], tempKnown: false, utt: 0, turns: 0,
       comp: { last: -9, count: 0, asked: false, addressed: 0, used: new Set(), extra: false }, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
-      harms: [], caught: [], pending: null, queue: [], wrongDoses: 0, hint: -1, hints: 0, helps: 0, readAsks: 0, over: false, outcome: null, resolved: false
+      harms: [], harmed: new Set(), reacted: false, caught: [], pending: null, queue: [], wrongDoses: 0, hint: -1, hints: 0, helps: 0, readAsks: 0, over: false, outcome: null, resolved: false
     };
     chain = Promise.resolve();
     $('er-feed').innerHTML = '';

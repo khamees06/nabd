@@ -511,6 +511,20 @@
         }).filter(Boolean)
       });
     }
+    const er = document.querySelector('.er-mon:not([data-mon])');
+    if (er) {
+      const ids = [['hr', 'er-v-hr'], ['spo2', 'er-v-spo2'], ['rr', 'er-v-rr'], ['temp', 'er-v-temp'], ['bp', 'er-v-bp']];
+      makeMonitor(er, {
+        hr: () => document.getElementById('er-v-hr'),
+        spo2: () => document.getElementById('er-v-spo2'),
+        dot: () => er.querySelector('.er-mon-dot'),
+        warn: (key, raw) => (window.nbErVitals ? window.nbErVitals.warn(key, raw) : ''),
+        tiles: () => ids.map(([key, id]) => {
+          const v = document.getElementById(id);
+          return v ? { key, el: v.parentElement, val: () => v } : null;
+        }).filter(Boolean)
+      });
+    }
     const rs = document.querySelector('.rs-mon:not([data-mon])');
     if (rs) {
       const ids = [['hr', 'rs-v-hr'], ['bp', 'rs-v-bp'], ['spo2', 'rs-v-spo2'], ['temp', 'rs-v-temp'], ['rr', 'rs-v-rr']];

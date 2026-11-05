@@ -1671,10 +1671,10 @@
       }
     ];
 
-    const PROTECTED_VIEWS = new Set(['home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp']);
+    const PROTECTED_VIEWS = new Set(['home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp', 'er']);
     // The site now offers the emergency room, the respiratory room and the coach. These views stay in
     // the page (the app still writes into them) but can no longer be opened: they lead home.
-    const REMOVED_VIEWS = new Set(['university', 'observe', 'nurse']);
+    const REMOVED_VIEWS = new Set(['university', 'observe', 'nurse', 'resp', 'coach', 'sim']);
     const STORAGE_KEYS = {
       ACTIVE_USER_ID: 'nabd_v2_active_user_id',
       ACCOUNTS_MAP: 'nabd_v2_accounts_map',
@@ -1925,7 +1925,7 @@
       if (hwSub) {
         hwSub.textContent = isProf
           ? 'تابع تقارير الطلبة أو أسند حالة جديدة.'
-          : 'ابدأ بغرفة الطوارئ أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب.';
+          : 'غرفة الطوارئ مفتوحة، وباقي الغرف تُفتح لاحقاً.';
       }
 
       // Toggle Role-Specific Home Sections (Professor Dashboard vs Student University Sessions)
@@ -2002,12 +2002,12 @@
     }
 
     function showOnlySection(viewId) {
-      ['index', 'home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp'].forEach(v => {
+      ['index', 'home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp', 'er'].forEach(v => {
         const sec = document.getElementById('view-' + v);
         if (sec) sec.classList.toggle('hidden', v !== viewId);
       });
       const footer = document.getElementById('site-footer');
-      if (footer) footer.classList.toggle('hidden', viewId === 'sim' || viewId === 'nurse' || viewId === 'observe' || viewId === 'resp');
+      if (footer) footer.classList.toggle('hidden', viewId === 'sim' || viewId === 'nurse' || viewId === 'observe' || viewId === 'resp' || viewId === 'er');
       if (viewId === 'profile' && authState.user) { try { renderProfileView(); } catch (e) { console.error(e); } }
     }
 
@@ -3986,7 +3986,7 @@
       document.getElementById('app-nav-er')?.classList.remove('hidden');
       const nc = document.getElementById('app-nav-cases'); if (nc) nc.textContent = (u && u.role !== 'professor' && isNurse) ? 'حالات التمريض' : 'الحالات والتدريب';
       const ws = document.getElementById('home-welcome-sub');
-      if (ws && u && u.role !== 'professor') ws.textContent = 'ابدأ بغرفة الطوارئ أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب.';
+      if (ws && u && u.role !== 'professor') ws.textContent = 'غرفة الطوارئ مفتوحة، وباقي الغرف تُفتح لاحقاً.';
       document.getElementById('home-track-chip') && (document.getElementById('home-track-chip').textContent = !track ? '' : (isNurse ? 'مسار التمريض' : 'مسار الطب'));
       return;
       const grid = document.getElementById('nurse-cards'); grid.innerHTML = '';
@@ -6051,13 +6051,10 @@
       // Emergency Room Launchers
       const launchRandomER = () => {
         if (!authState.isAuthenticated || !authState.user) {
-          openAuthModal('login', 'يرجى تسجيل الدخول أولاً لبدء حالة طوارئ عشوائية.');
+          openAuthModal('login', 'يرجى تسجيل الدخول أولاً لدخول غرفة الطوارئ.');
           return;
         }
-        const keys = Object.keys(CASES_DB).filter(k => !k.startsWith('case_prof_'));
-        const randKey = keys[Math.floor(Math.random() * keys.length)];
-        startSimulationSession(randKey, true, true);
-        showToast('بدأت حالة طوارئ عشوائية.');
+        window.nbOpenER();
       };
       document.getElementById('app-nav-er')?.addEventListener('click', launchRandomER);
       document.getElementById('side-er-btn')?.addEventListener('click', launchRandomER);

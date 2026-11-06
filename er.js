@@ -22,7 +22,8 @@
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
-  const norm = s => String(s).replace(/[ً-ٰٟـ]/g, '').replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي')
+  // Marks only: U+0660-0669 sit inside the mark range, and those are digits.
+  const norm = s => String(s).replace(/[ً-ٰٟـ]/g, '').replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/[أإآٱ]/g, 'ا').replace(/ى/g, 'ي')
     .replace(/ة/g, 'ه').replace(/ؤ/g, 'و').replace(/ئ/g, 'ي').replace(/[؟?!.,،:؛()"'«»\-_/]/g, ' ').replace(/\s+/g, ' ').trim().toLowerCase();
   const clamp = (v, a, b) => Math.max(a, Math.min(b, v));
   const pickOf = list => list[Math.floor(Math.random() * list.length)];
@@ -211,23 +212,93 @@
   }
 
   /* ---------- reading the student without the server ---------- */
+  /* ---------- the act model: short replies when the server cannot be reached ---------- */
+  let ACT = null;
+  // nabd-model/lang/train_act.py trains this; the same text steps run here, or the weights mean nothing.
+  const actText = s => norm(s).replace(/(.)\1{2,}/g, '$1$1').replace(/\s+/g, ' ').trim();
+  const actGrams = raw => {
+    const text = actText(raw), words = text.split(' ').filter(Boolean);
+    const out = ['#w' + Math.min(words.length, 6)];
+    if (/[؟?]/.test(raw)) out.push('#q');
+    if (/[0-9٠-٩]/.test(raw)) out.push('#d');
+    if (/[a-zA-Z]/.test(raw)) out.push('#l');
+    for (const w of words) {
+      out.push('~' + w);
+      const p = ' ' + w + ' ';
+      for (let n = ACT.n[0]; n <= ACT.n[1]; n++) for (let i = 0; i <= Math.max(p.length - n, 0); i++) out.push(p.slice(i, i + n));
+    }
+    return out;
+  };
+  function readAct(raw) {
+    if (!ACT) return null;
+    if (/^[\d٠-٩][\d٠-٩./\s%\-]*$/.test(raw.trim())) return 'number';
+    const count = new Map();
+    for (const g of actGrams(raw)) { const i = ACT.index.get(g); if (i !== undefined) count.set(i, (count.get(i) || 0) + 1); }
+    const vec = [...count].map(([i, n]) => [i, (1 + Math.log(n)) * ACT.idf[i]]);
+    const z = Math.sqrt(vec.reduce((s, [, v]) => s + v * v, 0)) || 1;
+    const score = ACT.bias.slice();
+    for (const [i, v] of vec) ACT.w[i].forEach((x, k) => { score[k] += x * v / z; });
+    return ACT.acts[score.indexOf(Math.max(...score))];
+  }
+  function socialReply(act, text) {
+    const t = norm(text);
+    if (act === 'wish') return 'الله يسلمك...';
+    if (act === 'thanks') return t.includes('يعطيك') ? 'الله يعافيك...' : 'عفوا...';
+    return t.includes('سلام') ? 'وعليكم السلام...' : t.includes('صباح') ? 'صباح النور...' : 'أهلين...';
+  }
+
   const hasAny = (t, kw) => kw.some(k => { const n = norm(k); return n && (' ' + t + ' ').includes(n.length < 4 ? ' ' + n + ' ' : n); });
+  // A free-standing number with a known unit, so the 2 in O2 is not a dose.
+  const doseIn = text => (text.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/٫/g, '.').match(/(?<![A-Za-z\d.])\d+(?:\.\d+)?(?:[-–:]\d+(?:\.\d+)?)?(?:\s*(?:mg|mcg|ug|gm?|ml|l|lpm|iu|u|units?|lit(?:er|re)s?|%|مل[غج]?|مغ|مج|غرام|جرام|غم|لتر|ليتر|لترات|وحد[هة]|وحدات)(?:\/\S+)?)?(?![\p{L}\d])/iu) || [''])[0];
+
+  // The reply to an open question, offline. 'na' keeps it open and the room asks again: nothing is given on a guess.
+  function offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }) {
+    const p = E.pending;
+    if (!p || toSup || toComp) return 'na';
+    const word = readAct(text);
+    if (['greeting', 'wish', 'thanks'].includes(word)) return 'na';
+    const asks = /[؟?]/.test(text);
+    if (p.type === 'dose') {
+      if (asks || tests.length || actions.some(a => a.id !== p.a.id)) return 'na';
+      return word === 'number' || /\d/.test(t) || (!toNurse && actions.length) ? 'partial' : 'na';
+    }
+    if (p.type !== 'unsafe') return why ? 'partial' : asks || toNurse || t.length < 2 || ['yes', 'no', 'unsure', 'refuse'].includes(word) ? 'na' : 'partial';
+    // "Not sure, but give it": the last clause decides.
+    const clause = t.split(/ (?:بس|لكن) /).pop();
+    const on = s => new RegExp('(?:^| )(?:' + s + ')(?: |$)').test(clause);
+    if (on('ما بدي (?:اوقف|اغير|الغي)\\S*|ليش لا')) return 'wrong';
+    if (!on('ليش') && on('لا ت(?:عطي|كمل)\\S*|(?:ما|مش)(?: رح| راح| بدي)? [اتنب]?(?:عطي|كمل)\\S*|(?:مش|مو|ماني|لست) (?:كتير )?متاكد\\S*|بدل|بلاش|وقف\\S*|الغي\\S*|غير\\S*|معك حق')) return 'good';
+    const again = actions.some(a => a.id === p.a.id && !(p.allergic && !allergicTo(a, E.c.care[a.id] || {}, text)));
+    if ((actions.length && !again) || tests.length) return 'good';
+    if (again || on('[اتنب]?عطي\\S*|كمل\\S*')) return 'wrong';
+    if (on('لا')) return 'good';
+    if (on('متاكد\\S*|اكيد|نعم|ايوا|ايوه|اه|طبعا') || word === 'yes') return 'wrong';
+    return word === 'no' || word === 'refuse' ? 'good' : 'na';
+  }
+
   function localRead(text) {
     const t = norm(text), c = E.c;
     const facts = c.facts.filter(f => hasAny(t, f.kw)).map(f => f.id).filter(id => id !== 'allergy' || t.includes('حساس') || t.includes('allerg')).slice(0, 3);
     const exam = c.exam.filter(f => hasAny(t, f.kw)).map(f => f.id);
-    const actions = D.actions.filter(a => hasAny(t, a.kw)).filter((a, i, all) => a.id !== 'adrenaline' || !all.some(x => x.id === 'noradrenaline')).map(a => ({ id: a.id, agent: '', dose: (text.match(/\d[\d.]*\s*[^\s،,]*/) || [''])[0] }));
+    const actions = D.actions.filter(a => hasAny(t, a.kw)).filter((a, i, all) => a.id !== 'adrenaline' || !all.some(x => x.id === 'noradrenaline')).map(a => ({ id: a.id, agent: '', dose: doseIn(text) }));
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
     const tests = D.tests.filter(x => hasAny(t, x.kw)).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'weak' : 'none' }));
     const toSup = /(يا مشرف|يا استاذ|يا دكتور|شو رايك|ساعدني|مش عارف|محتار|شو اعمل)/.test(t);
     const toNurse = new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي)').test(t);
     const toComp = /(يا حجه|يا حجي|يا خالتي|يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك)/.test(t);
-    const to = toComp ? 'companion' : toSup ? 'supervisor' : toNurse || actions.length || tests.length ? 'nurse' : 'patient';
+    // Keywords go first: the model only speaks for a message nothing else could read.
+    const act = !facts.length && !exam.length && !actions.length && !tests.length ? readAct(text) : null;
+    const social = ['greeting', 'wish', 'thanks'].includes(act);
+    const to = toComp ? 'companion' : toSup && !social ? 'supervisor' : toNurse || actions.length || tests.length ? 'nurse' : 'patient';
+    const opens = /شو (اللي )?(جابك|صار معك|صاير|مالك|بك|فيك)|احكيلي شو/.test(t);
+    const asks = / (شو|وين|قديش|كم|امتي|متي|ليش|هل|ايه|shu)( |$)/.test(t) && !/شو اخبار/.test(t);
+    const small = !asks && (social || (act === null && /^(مرحب|اهلا|هلا|السلام|صباح|مساء)/.test(t)));
     return {
-      to, facts, exam, actions: toComp ? [] : actions, tests: toComp ? [] : tests, kind: toSup ? 'help' : actions.length ? 'order' : /^(مرحب|اهلا|هلا|السلام|صباح|مساء)/.test(t) ? 'smalltalk' : facts.length ? 'question' : 'other',
-      pending_ok: !E.pending ? 'na' : E.pending.type === 'unsafe' ? (/(متاكد|اعطي|عطيه|كملي|نعم|ايوا|اه )/.test(t) ? 'wrong' : 'good') : t.length > 1 ? 'partial' : 'na',
+      act, text,
+      to, facts, exam, actions: toComp ? [] : actions, tests: toComp ? [] : tests, kind: toSup && !social ? 'help' : actions.length ? 'order' : opens ? 'open' : small ? 'smalltalk' : facts.length ? 'question' : 'other',
+      pending_ok: offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }),
       tone: {
-        introduced: /(انا الدكتور|انا دكتور|انا طالب|اسمي|معك الدكتور)/.test(t), empathy: /(بفهم|معك حق|حقك|سلامتها|سلامته|لا تخاف)/.test(t),
+        introduced: /(انا الدكتور|انا دكتور|انا طالب|اسمي|معك الدكتور)/.test(t), empathy: act === 'wish' || /(بفهم|معك حق|حقك|سلامتها|سلامته|لا تخاف)/.test(t),
         rude: /(اسكت|اخرس|اطلع برا|مش شغلك|مالك دخل|غصب)/.test(t), jargon: false,
         explained: toComp && /(رح|عم ن|بنعطي|بنعمل|الوضع|حالتها|حالته)/.test(t), consent: /(بعد اذنك|ممكن اسمع|ممكن افحص|بتسمح)/.test(t),
       }
@@ -240,13 +311,14 @@
     if (read.to === 'nurse') return read.actions.length || read.tests.length ? null : 'تمام، شو بدك أعمل؟';
     if (read.to === 'companion') {
       const f = read.facts.map(id => c.facts.find(x => x.id === id)).find(x => x && x.who && x.who !== 'patient');
-      return f ? f.say : pickOf(read.tone.explained ? c.companion.lines.calm : c.companion.lines.ignored);
+      return f ? f.say : pickOf(read.tone.explained || read.tone.empathy ? c.companion.lines.calm : c.companion.lines.ignored);
     }
     if (read.actions.length || read.tests.length || read.exam.length) return null;
     const f = read.facts.map(id => c.facts.find(x => x.id === id)).find(x => x && x.who !== 'companion');
     if (f) return f.say;
     if (read.facts.length) { read.to = 'companion'; return c.facts.find(x => x.id === read.facts[0]).say; }
-    return read.kind === 'smalltalk' ? 'أهلين...' : null;
+    if (read.kind === 'open') return c.patient.opening;
+    return read.kind === 'smalltalk' ? socialReply(read.act, read.text) : null;
   }
 
   /* ---------- a message from the student ---------- */
@@ -264,10 +336,13 @@
     const dots = typing();
     const pending = E.pending;
     const r = await call({ text, pending: pending ? { ask: pending.ask } : undefined });
+    if (!r && !ACT) await loadAct();
     dots.remove();
     if (E !== my || E.over) return;
     const read = (r && r.read) || localRead(text);
-    apply(read, text, r ? r.to : read.to, r ? (r.held ? pickOf(E.c.teach) : r.reply) : localReply(read));
+    // localReply may hand a line to the companion, so read.to is only final after it.
+    const reply = r ? (r.held ? pickOf(E.c.teach) : r.reply) : localReply(read);
+    apply(read, text, r ? r.to : read.to, reply);
   }
 
   function apply(read, text, to, reply) {
@@ -290,7 +365,7 @@
 
     const open = E.pending;
     if (open && read.pending_ok && read.pending_ok !== 'na') resolve(read.pending_ok, text);
-    else if (open && (open.type === 'dose' || open.type === 'reason') && (open.wait = (open.wait || 0) + 1) === 2) nurse('دكتور، لسا مستنية جوابك على طلبك.');
+    else if (open && (open.wait = (open.wait || 0) + 1) % 2 === 0) person(open.type === 'interpret' ? 'd' : 'n', open.type === 'interpret' ? 'لسا مستني قراءتك.' : open.type === 'unsafe' ? 'دكتور، بعطي الدوا ولا لأ؟' : 'دكتور، لسا مستنية جوابك على طلبك.');
     (read.facts || []).forEach(id => E.facts.add(id));
     (read.exam || []).forEach(examine);
     if (reply) person(to === 'companion' ? 'c' : to === 'nurse' ? 'n' : to === 'supervisor' ? 'd' : 'p', reply);
@@ -317,6 +392,8 @@
   /* ---------- orders ---------- */
   // One open question at a time, the rest wait their turn.
   function ask(p, line, who = 'n') {
+    const same = q => q.type === p.type && (q.a ? q.a.id : q.id) === (p.a ? p.a.id : p.id);
+    if ((E.pending && same(E.pending)) || E.queue.some(([q]) => same(q))) return;
     if (E.pending) { E.queue.push([p, line, who]); return; }
     E.pending = p;
     person(who, line);
@@ -449,10 +526,10 @@
     later(meta.tat, () => resultBack(id));
     if (res.ind === 'harm') {
       E.risk = clamp(E.risk + 6, 0, 100);
-      voice('d', 'supervisor', `The trainee ordered ${meta.en}, which is dangerous right now: ${res.why} Stop them firmly and ask what it would change.`, `استنى، ليش ${meta.en} هلأ؟ شو رح يغيّر بالـmanagement والمريض مش stable؟`);
+      voice('d', 'supervisor', `The trainee ordered ${meta.en}, which is dangerous right now: ${res.why} Stop them firmly and ask what it would change.`, `استنى، ليش ${meta.en} هسا؟ شو رح يغيّر بالـmanagement والمريض مش stable؟`);
     } else if (res.ind === 'no' && !E.askedNo) {
       E.askedNo = true;
-      voice('d', 'supervisor', `The trainee ordered ${meta.en}, not needed here: ${res.why} Ask one short question about what it would change, without giving the answer.`, `${meta.en}؟ شو رح يغيّر بالخطة هلأ؟`);
+      voice('d', 'supervisor', `The trainee ordered ${meta.en}, not needed here: ${res.why} Ask one short question about what it would change, without giving the answer.`, `${meta.en}؟ شو رح يغيّر بالخطة هسا؟`);
     }
     director('turn');
   }
@@ -524,7 +601,7 @@
     if (E.over) return;
     const missing = keyMissing().map(k => k.label).join('، ');
     if (why === 'called') { person('d', 'شو عندك؟ بجملتين: situation وأهم رقم.'); return; }
-    if (why === 'harm') { voice('d', 'supervisor', 'Something the trainee ordered just harmed the patient. Say it calmly, ask what changed and what they do now.', 'وقف. شو تغيّر بعد آخر دوا؟ شو بتعمل هلأ؟'); return; }
+    if (why === 'harm') { voice('d', 'supervisor', 'Something the trainee ordered just harmed the patient. Say it calmly, ask what changed and what they do now.', 'وقف. شو تغيّر بعد آخر دوا؟ شو بتعمل هسا؟'); return; }
     if (why === 'urgent' && !missing) return;
     E.hint = Math.min(E.hint + 1, E.c.teach.length - 1);
     E.hints++;
@@ -771,6 +848,8 @@
     $('er-sheet').addEventListener('keydown', e => { if (e.key === 'Escape') { $('er-sheet').hidden = true; $('er-input').focus(); } });
   }
 
+  // Only the offline path needs the act model, so the room never waits for it.
+  const loadAct = () => fetch('data/er-act.json', { signal: AbortSignal.timeout(4000) }).then(r => r.json()).then(m => { ACT = { ...m, index: new Map(m.grams.map((g, i) => [g, i])), bias: m.bias.map(x => x / 100), w: m.w.map(r => r.map(x => x / 100)) }; }).catch(e => console.warn('er-act', e));
   const load = () => D ? Promise.resolve() : (loading = loading || fetch('data/er-cases.json').then(r => { if (!r.ok) throw new Error('cases'); return r.json(); }).then(j => { D = j; }).catch(e => { loading = null; throw e; }));
 
   async function open() {
@@ -784,6 +863,7 @@
     if (sound && sound.getAttribute('aria-pressed') !== 'true') sound.click();
     try {
       await load();
+      if (!ACT) loadAct();
       if (!E || E.over) begin();
       else $('er-input').focus();
     } catch (e) {
@@ -794,5 +874,5 @@
 
   window.nbOpenER = open;
   // Test hook for the browser checks.
-  window.__nbER = { begin: id => begin(id), send, allergicTo, get E() { return E; }, get D() { return D; }, set api(v) { api = v; }, get api() { return api; }, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
+  window.__nbER = { begin: id => begin(id), send, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; }, get api() { return api; }, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
 })();

@@ -213,7 +213,7 @@
 
   /* ---------- reading the student without the server ---------- */
   /* ---------- the act model: short replies when the server cannot be reached ---------- */
-  let ACT = null;
+  let ACT = null, actRetried = false;
   // nabd-model/lang/train_act.py trains this; the same text steps run here, or the weights mean nothing.
   const actText = s => norm(s).replace(/(.)\1{2,}/g, '$1$1').replace(/\s+/g, ' ').trim();
   const actGrams = raw => {
@@ -251,36 +251,51 @@
   // A free-standing number with a known unit, so the 2 in O2 is not a dose.
   const doseIn = text => (text.replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/٫/g, '.').match(/(?<![A-Za-z\d.])\d+(?:\.\d+)?(?:[-–:]\d+(?:\.\d+)?)?(?:\s*(?:mg|mcg|ug|gm?|ml|l|lpm|iu|u|units?|lit(?:er|re)s?|%|مل[غج]?|مغ|مج|غرام|جرام|غم|لتر|ليتر|لترات|وحد[هة]|وحدات)(?:\/\S+)?)?(?![\p{L}\d])/iu) || [''])[0];
 
-  // The reply to an open question, offline. 'na' keeps it open and the room asks again: nothing is given on a guess.
+  // The reply to an open question, offline. Only an un-negated yes can give a drug: any doubt or negation
+  // stops it, and whatever cannot be read stays open so the room asks again. A false harm is the worst error here.
+  const STOP = /(?:^| )[وف]?(?:لا|ما|مش|مو|ماني|لست|لن|بلاش|بدون|بدل|غير\S*|ابد|ابدا|ممنوع|مستحيل|no|not|dont|stop|cancel|وقف\S*|نوقف\S*|الغي\S*|نلغي\S*|شيل\S*|انسي\S*|غلط\S*)(?: |$)|معك حق/;
   function offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }) {
     const p = E.pending;
-    if (!p || toSup || toComp) return 'na';
+    if (!p) return 'na';
     const word = readAct(text);
-    if (['greeting', 'wish', 'thanks'].includes(word)) return 'na';
     const asks = /[؟?]/.test(text);
-    if (p.type === 'dose') {
-      if (asks || tests.length || actions.some(a => a.id !== p.a.id)) return 'na';
-      return word === 'number' || /\d/.test(t) || (!toNurse && actions.length) ? 'partial' : 'na';
-    }
-    if (p.type !== 'unsafe') return why ? 'partial' : asks || toNurse || t.length < 2 || ['yes', 'no', 'unsure', 'refuse'].includes(word) ? 'na' : 'partial';
     // "Not sure, but give it": the last clause decides.
     const clause = t.split(/ (?:بس|لكن) /).pop();
     const on = s => new RegExp('(?:^| )(?:' + s + ')(?: |$)').test(clause);
-    if (on('ما بدي (?:اوقف|اغير|الغي)\\S*|ليش لا')) return 'wrong';
-    if (!on('ليش') && on('لا ت(?:عطي|كمل)\\S*|(?:ما|مش)(?: رح| راح| بدي)? [اتنب]?(?:عطي|كمل)\\S*|(?:مش|مو|ماني|لست) (?:كتير )?متاكد\\S*|بدل|بلاش|وقف\\S*|الغي\\S*|غير\\S*|معك حق')) return 'good';
-    const again = actions.some(a => a.id === p.a.id && !(p.allergic && !allergicTo(a, E.c.care[a.id] || {}, text)));
-    if ((actions.length && !again) || tests.length) return 'good';
-    if (again || on('[اتنب]?عطي\\S*|كمل\\S*')) return 'wrong';
-    if (on('لا')) return 'good';
-    if (on('متاكد\\S*|اكيد|نعم|ايوا|ايوه|اه|طبعا') || word === 'yes') return 'wrong';
-    return word === 'no' || word === 'refuse' ? 'good' : 'na';
+    const stops = STOP.test(clause);
+    if (p.type === 'unsafe') {
+      if (toSup || toComp) return 'na';
+      if (on('ما بدي (?:اوقف|اغير|الغي)\\S*|ليش (?:لا|ما)(?: .*)?|(?:ما في|مش) مشكل\\S*|على مسؤوليتي|لا كملي')) return 'wrong';
+      if (asks) return 'na';
+      if (stops) return 'good';
+      if (actions.some(a => a.id === p.a.id && !(p.allergic && !allergicTo(a, E.c.care[a.id] || {}, text)))) return 'wrong';
+      if (/^(متاكد|اكيد|نعم|ايوا|ايوه|اه|طبعا)( |$)/.test(clause) || on('[اتنب]?عطي\\S* و\\S*(?: .*)?')) return 'wrong';
+      if (actions.length) return 'good';
+      if (tests.length) return 'na';
+      if (on('[اتنب]?عطي\\S*|كمل\\S*|متاكد\\S*|اكيد|نعم|ايوا|ايوه|اه|طبعا') || word === 'yes') return 'wrong';
+      return word === 'no' || word === 'refuse' ? 'good' : 'na';
+    }
+    const social = ['greeting', 'wish', 'thanks'].includes(word) || (word === null && /^(مرحب|اهل|هلا|السلام|صباح|مساء|شكر|يعطيك|طيب)/.test(t));
+    if (p.type === 'dose') {
+      if (toSup || toComp || social || word === 'unsure') return 'na';
+      if (stops) return 'withdraw';
+      if (asks || tests.length || actions.some(a => a.id !== p.a.id)) return 'na';
+      return word === 'number' || doseIn(text) || /(لتر|ملغ|مغ|غرام|جرع|حبه|حبتين|نص )/.test(t) || (!toNurse && actions.length) ? 'partial' : 'na';
+    }
+    if (p.type === 'reason') {
+      if (why) return 'partial';
+      if (/^(بلاش|الغي|خلص)/.test(t)) return 'withdraw';
+      if (toSup || social || asks || t.length < 2 || ['yes', 'no', 'refuse'].includes(word)) return 'na';
+      return word === 'unsure' && t.split(' ').length < 3 ? 'na' : 'partial';
+    }
+    return social || asks || word === 'unsure' || t.length < 2 ? 'na' : 'partial';
   }
 
   function localRead(text) {
     const t = norm(text), c = E.c;
     const facts = c.facts.filter(f => hasAny(t, f.kw)).map(f => f.id).filter(id => id !== 'allergy' || t.includes('حساس') || t.includes('allerg')).slice(0, 3);
     const exam = c.exam.filter(f => hasAny(t, f.kw)).map(f => f.id);
-    const actions = D.actions.filter(a => hasAny(t, a.kw)).filter((a, i, all) => a.id !== 'adrenaline' || !all.some(x => x.id === 'noradrenaline')).map(a => ({ id: a.id, agent: '', dose: doseIn(text) }));
+    const actions = D.actions.filter(a => hasAny(t, a.kw)).filter((a, i, all) => a.id !== 'adrenaline' || !all.some(x => x.id === 'noradrenaline')).filter(a => a.id !== 'iv_access' || !/nasal|نيزل/.test(t)).map(a => ({ id: a.id, agent: '', dose: doseIn(text) }));
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
     const tests = D.tests.filter(x => hasAny(t, x.kw)).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'weak' : 'none' }));
     const toSup = /(يا مشرف|يا استاذ|يا دكتور|شو رايك|ساعدني|مش عارف|محتار|شو اعمل)/.test(t);
@@ -336,7 +351,7 @@
     const dots = typing();
     const pending = E.pending;
     const r = await call({ text, pending: pending ? { ask: pending.ask } : undefined });
-    if (!r && !ACT) await loadAct();
+    if (!r && !ACT && !actRetried) { actRetried = true; await loadAct(); }
     dots.remove();
     if (E !== my || E.over) return;
     const read = (r && r.read) || localRead(text);
@@ -365,7 +380,7 @@
 
     const open = E.pending;
     if (open && read.pending_ok && read.pending_ok !== 'na') resolve(read.pending_ok, text);
-    else if (open && (open.wait = (open.wait || 0) + 1) % 2 === 0) person(open.type === 'interpret' ? 'd' : 'n', open.type === 'interpret' ? 'لسا مستني قراءتك.' : open.type === 'unsafe' ? 'دكتور، بعطي الدوا ولا لأ؟' : 'دكتور، لسا مستنية جوابك على طلبك.');
+    else if (open && ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id)) && (open.wait = (open.wait || 0) + 1) % 2 === 0) person(open.type === 'interpret' ? 'd' : 'n', open.type === 'interpret' ? 'لسا مستني قراءتك.' : open.type === 'unsafe' ? 'دكتور، بعطي الدوا ولا لأ؟' : 'دكتور، لسا مستنية جوابك على طلبك.');
     (read.facts || []).forEach(id => E.facts.add(id));
     (read.exam || []).forEach(examine);
     if (reply) person(to === 'companion' ? 'c' : to === 'nurse' ? 'n' : to === 'supervisor' ? 'd' : 'p', reply);
@@ -394,6 +409,8 @@
   function ask(p, line, who = 'n') {
     const same = q => q.type === p.type && (q.a ? q.a.id : q.id) === (p.a ? p.a.id : p.id);
     if ((E.pending && same(E.pending)) || E.queue.some(([q]) => same(q))) return;
+    // A teaching question never holds up an order.
+    if (E.pending && E.pending.type === 'interpret' && p.type !== 'interpret') E.pending = null;
     if (E.pending) { E.queue.push([p, line, who]); return; }
     E.pending = p;
     person(who, line);
@@ -428,8 +445,18 @@
     give(a, meta, def);
   }
 
+  // An order can arrive whole while its own question is still open: that question is then spent.
+  function settle(same) {
+    E.queue = E.queue.filter(([q]) => !same(q));
+    if (!E.pending || !same(E.pending)) return;
+    E.pending = null;
+    const next = E.queue.shift();
+    if (next) ask(...next);
+  }
+
   function give(a, meta, def) {
     E.done.set(a.id, { at: E.sim, dose: a.dose || '', ok: a._ok || 'good' });
+    settle(q => q.type === 'dose' && q.a.id === a.id);
     log('action', meta.ar + (a.dose ? ' (' + a.dose + ')' : ''));
     const named = a.agent && a.agent.length <= 24 ? a.agent : meta.ar;
     nurse(a.dose ? `حاضر، ${named} ${a.dose}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'));
@@ -479,7 +506,9 @@
     const p = E.pending;
     E.pending = null;
     E.resolved = true;
-    if (p.type === 'dose' && allergicTo({ agent: '' }, E.c.care[p.a.id] || {}, text)) {
+    if (grade === 'withdraw') {
+      nurse('تمام، لغيته.');
+    } else if (p.type === 'dose' && allergicTo({ agent: '' }, E.c.care[p.a.id] || {}, text)) {
       // "Give an antibiotic." "Which?" "Augmentin." is the same order as naming it outright.
       unsafe({ ...p.a, dose: text.slice(0, 40), _asked: true }, actOf(p.a.id), E.c.care[p.a.id], true);
     } else if (p.type === 'dose') {
@@ -519,6 +548,7 @@
   }
 
   function submitTest(id, reason, reasonOk) {
+    settle(q => q.type === 'reason' && q.id === id);
     const meta = testOf(id), res = E.c.results[id] || {};
     E.tests[id] = { id, at: E.sim, reason, reasonOk, ind: res.ind || 'no', back: false, read: null };
     log('test', `طلب ${meta.en} (${reason})`);

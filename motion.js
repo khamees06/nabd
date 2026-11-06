@@ -411,7 +411,9 @@
     const ecgColor = () => !(base > 0) ? 'rgba(244, 248, 250, .28)' : hrAlarm ? '#FF7873' : '#4CC283';
     const yE = v => H * 0.40 - (base > 0 ? v * H * 0.33 : 0);
     const yP = v => H * 0.94 - (spo2 > 0 ? v * H * 0.26 * Math.max(0.35, Math.min(1, (spo2 - 78) / 20)) : 0);
-    const ecgAt = (t, cur, prev) => ecgBeat(t, cur) + ecgBeat(t + prev, prev);
+    // Ventricular tachycardia: wide, fast and regular, nothing like a sinus beat.
+    const inVT = () => !!cfg.vt && cfg.vt();
+    const ecgAt = (t, cur, prev) => (inVT() ? 0.8 * Math.sin(2 * Math.PI * t / cur) : ecgBeat(t, cur) + ecgBeat(t + prev, prev));
     const plethAt = t => plethBeat(t) + plethBeat(t + prevRR);
 
     function onBeat() {
@@ -518,6 +520,7 @@
         hr: () => document.getElementById('er-v-hr'),
         spo2: () => document.getElementById('er-v-spo2'),
         dot: () => er.querySelector('.er-mon-dot'),
+        vt: () => document.getElementById('view-er').dataset.rhythm === 'vt',
         warn: (key, raw) => (window.nbErVitals ? window.nbErVitals.warn(key, raw) : ''),
         tiles: () => ids.map(([key, id]) => {
           const v = document.getElementById(id);

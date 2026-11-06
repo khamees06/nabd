@@ -36,6 +36,10 @@
 #path-mistakes [data-fix],
 #printable-certificate-area div:has(> #cert-stat-spec),
 
+/* Controls that lead nowhere while the coach and the old rooms are closed */
+#home-coach-banner, #open-coach-view-btn, #dash-coach-go, [data-foot-app="coach"],
+label.nb-switch:has(#osce-toggle), label:has(> input#setting-tts-default), #coach-api-box,
+
 /* Sign-in and registration */
 #auth-modal [data-demo-login="doctor"],
 #reg-rolecards [data-rc="supervisor"],

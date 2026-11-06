@@ -7,6 +7,7 @@
 .er-room { position: relative; height: 100%; display: grid; grid-template-rows: auto minmax(0, 1fr); gap: .6rem; }
 
 .er-top { display: flex; align-items: center; gap: .9rem; flex-wrap: wrap; }
+.er-draft { flex-basis: 100%; margin: -.35rem 0 0; font-size: .75rem; line-height: 1.5; color: var(--ink-2); }
 .er-top .er-id { display: flex; align-items: baseline; gap: .6rem; }
 .er-top .er-id b { color: var(--ink); font-weight: 500; font-size: 1.02rem; }
 .er-top .er-id span { color: var(--ink-2); font-size: .82rem; }
@@ -89,7 +90,6 @@
 .er-tile em { font-style: normal; font-size: .66rem; color: #A3B7BF; float: left; }
 .er-tile.nb-alarm { outline: 2px solid #FF6B63; }
 .er-tile.nb-alarm b { color: #FF7873; }
-.er-draft { margin: auto 0 0; font-size: .66rem; color: #7E98A2; }
 
 /* sheets */
 .er-sheet { position: absolute; inset: 0; z-index: 30; background: rgba(14, 31, 39, .35); display: grid; place-items: center; padding: .75rem; }
@@ -120,6 +120,7 @@
 .er-parts b { font-weight: 500; direction: ltr; }
 .er-chart { width: 100%; height: auto; background: var(--surface); border-radius: 12px; }
 .er-chart polyline { fill: none; stroke: var(--signal); stroke-width: 2.2; }
+.er-chart .t { font-size: 11px; fill: var(--ink-3); }
 .er-chart .g-crit { stroke: var(--danger, #C62828); stroke-dasharray: 4 4; } .er-chart .g-urg { stroke: #E39A3B; stroke-dasharray: 4 4; }
 .er-chart .m-act { fill: var(--signal-strong); } .er-chart .m-harm { fill: var(--danger, #C62828); }
 .er-good, .er-gaps { margin: 0; padding-inline-start: 1.1rem; }
@@ -146,9 +147,13 @@
   #view-er { height: calc(100dvh - 3.6rem); padding: .4rem; }
   .er-grid { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); gap: .4rem; }
   .er-mon { order: -1; padding: .4rem .5rem; gap: .3rem; flex-direction: column; }
-  .er-mon-h, .er-draft { display: none; }
+  .er-mon-h { display: none; }
+  .er-top { gap: .35rem .7rem; }
+  .er-draft { margin: 0; font-size: .72rem; }
   .er-trace { height: 54px; }
-  .er-mon .nb-mon-bar { display: none; }
+  .er-mon .nb-mon-bar { padding: 0; min-height: 0; }
+  .er-mon .nb-mon-bar > span { display: none; }
+  .er-mon .nb-mon-sound { font-size: .68rem; padding: .05rem .4rem; margin-inline-start: auto; }
   .er-tiles { grid-template-columns: repeat(5, 1fr); gap: .25rem; }
   .er-tile, .er-tile.wide { grid-column: auto; padding: .2rem .3rem; }
   .er-tile b { font-size: 1.05rem; text-align: center; }
@@ -156,6 +161,8 @@
   .er-tile em { display: none; }
   .er-people { margin-inline-start: 0; width: 100%; overflow-x: auto; }
   .er-bar { flex-wrap: wrap; }
+  /* 16px keeps iOS from zooming the page when a field takes focus. */
+  #view-er .er-bar input, #view-er .er-pane input, #view-er .er-pane textarea, #view-er .er-pane select { font-size: 16px; }
   #view-er .er-bar input { flex-basis: 100%; }
   #view-er .er-bar button { flex: 1 1 auto; }
 }

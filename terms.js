@@ -61,6 +61,8 @@
     '#sim-chat-messages > .flex-col', '.nb-b.patient', '.nb-b.nurse', '.coach-message.is-student',
     // respiratory room: the patient's replies, the student's questions and the question list
     '.rs-msg.pt', '.rs-msg.me', '.rs-chips', '#rs-qlist', '.rs-missed',
+    // emergency room: everyone speaks as written, and so does the trainee
+    '.er-msg', '#er-input',
     'script', 'style', 'textarea', 'noscript', '[data-no-terms]', '.nb-terms'
   ].join(',');
 

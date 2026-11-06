@@ -44,7 +44,7 @@
 
     <nav class="hidden md:flex items-center gap-1" aria-label="التنقل في الصفحة الرئيسية">
       <a href="#sec-how" class="nav-link-item" data-pub-anchor="sec-how">كيف تعمل نبض؟</a>
-      <a href="#sec-resp" class="nav-link-item" data-pub-anchor="sec-resp">الغرفة التنفسية</a>
+      <a href="#sec-resp" class="nav-link-item" data-pub-anchor="sec-resp">غرفة الطوارئ</a>
       <a href="#sec-specs" class="nav-link-item" data-pub-anchor="sec-specs">التخصصات</a>
       <a href="#sec-level" class="nav-link-item" data-pub-anchor="sec-level">اختبر مستواك</a>
       <a href="#sec-universities" class="nav-link-item" data-pub-anchor="sec-universities">التدريب الجامعي</a>
@@ -140,7 +140,7 @@
               <span class="text-slate-400">←</span>
             </button>
             <button data-drop-view="profile" data-profile-tab="certificate" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-bold text-teal-800 hover:bg-teal-50/70 flex items-center justify-between">
-              <span>وثيقة إثبات الإنجاز (للطباعة)</span>
+              <span>سجل التدريب (للطباعة)</span>
               <span class="text-teal-700">←</span>
             </button>
             <button data-drop-view="profile" data-profile-tab="settings" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
@@ -213,7 +213,7 @@
         <p>سجلي</p>
         <button type="button" data-side-app="debrief" data-v7-view="view-debrief" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><span>تقرير آخر جلسة</span></button>
         <button type="button" data-side-app="profile" data-v7-view="view-profile" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>الملف الشخصي</span></button>
-        <button type="button" id="side-cert-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg><span>إثبات الإنجاز</span><span class="v7-tag">PDF</span></button>
+        <button type="button" id="side-cert-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg><span>سجل التدريب</span><span class="v7-tag">PDF</span></button>
       </div>
       <div class="v7-group">
         <p>المسار الجامعي</p>
@@ -234,7 +234,7 @@
         <button type="button" id="side-switch-demo-btn">تسجيل الدخول بحساب آخر</button>
         <button type="button" id="side-logout-btn">تسجيل الخروج</button>
       </div>
-      <small>تجربة تعليمية · بياناتك على هذا الجهاز</small>
+      <small>تجربة تعليمية · حسابك على هذا الجهاز، وكلامك في الغرفة يُرسل لخدمة ذكاء اصطناعي</small>
     </div>
   </aside>
 
@@ -262,16 +262,16 @@
         <div class="nb-hero-copy">
           <span class="v7-eyebrow">منصة للمحاكاة والتعليم السريري</span>
           <h1><span>تدرّب على الحالة.</span> <span>اجمع الأدلة.</span> <span class="em">اتخذ قرارك بثقة.</span></h1>
-          <p>مريض افتراضي تحاوره، وفحوصات تطلبها، ثم تقييم يوضّح لك ما أصبت فيه وما فاتك.</p>
+          <p>مريض ومرافق وممرضة ومشرف في غرفة طوارئ واحدة، تحاورهم بالعربية، ثم تقييم يوضّح لك ما أصبت فيه وما فاتك.</p>
           <div class="nb-cta" aria-label="ابدأ من هنا">
             <button id="index-register-cta" class="p focus-ring" type="button">ابدأ التدريب</button>
-            <button id="index-demo-cta" class="d focus-ring" type="button">دخول تجريبي</button>
+            <button id="index-demo-cta" class="d focus-ring" type="button">جرّب غرفة الطوارئ</button>
           </div>
           <div class="v7-hero-links">
             <button id="index-login-cta" class="focus-ring" type="button">لديك حساب؟ تسجيل الدخول</button>
             <a href="#sec-level" id="index-level-cta" class="focus-ring">اختبر مستواك</a>
           </div>
-          <ul class="v7-checks"><li>تعلّم بالمحاكاة</li><li>تقييم بعد التسليم</li><li>للطب والتمريض</li></ul>
+          <ul class="v7-checks"><li>تعلّم بالمحاكاة</li><li>تقييم بعد التسليم</li><li>باللهجة الأردنية</li></ul>
         </div>
         <figure class="v7-hero-media">
           <img src="img/hero.jpg" alt="ممرضة تتابع مريضاً في سريره" loading="eager" decoding="async" onerror="nbImgFail(this)">
@@ -286,7 +286,7 @@
           <h2>كل حالة تبدأ بسؤال، وتنتهي بفهم أعمق.</h2>
         </div>
         <ol class="v7-steps">
-          <li><b>01</b><h3>ابدأ حالة</h3><p>ادخل غرفة الطوارئ أو غرفة الطوارئ التنفسية.</p></li>
+          <li><b>01</b><h3>ابدأ حالة</h3><p>ادخل غرفة الطوارئ.</p></li>
           <li><b>02</b><h3>قابل المريض</h3><p>اسأل وافحص واطلب ما تحتاجه.</p></li>
           <li><b>03</b><h3>اتخذ قرارك</h3><p>شخّص واكتب خطتك بأمان.</p></li>
           <li><b>04</b><h3>سلّم وراجع</h3><p>سلّم الحالة واقرأ تقييمك.</p></li>
@@ -353,20 +353,20 @@
         </div>
       </div>
 
-      <!-- Respiratory room with the trained model -->
+      <!-- The one open room -->
       <div id="sec-resp" class="scroll-mt-20 rs-band">
         <div class="rs-band-copy">
-          <span class="v7-eyebrow">جديد</span>
-          <h2>غرفة الطوارئ التنفسية: نموذج دربناه بأنفسنا</h2>
-          <p>شبكة عصبية تعلّمت من أكثر من مليون مريض افتراضي، وتعرض لك وأنت تسأل المريض كيف يتغير ترجيحها للتشخيص.</p>
+          <span class="v7-eyebrow">التدريب</span>
+          <h2>غرفة طوارئ واحدة، والكل معك فيها</h2>
+          <p>المريض والمرافق القلق والممرضة والمشرف في الغرفة نفسها. تتكلم معهم كما في الواقع، والمرافق يقاطعك، والممرضة تراجعك، وكل قرار يغيّر حالة المريض أمامك.</p>
           <button class="v7-btn-outline focus-ring" type="button" onclick="nbDemoLogin('med_student'); setTimeout(() => nbOpenER(), 400)">جرّب الغرفة</button>
         </div>
         <ul class="rs-stats">
-          <li><b class="font-num">1,025,602</b><span>مريض افتراضي تعلّم منهم</span></li>
-          <li><b class="font-num">99.5%</b><span>دقة على مرضى تنفسيين لم يرهم، بكل الأسئلة</span></li>
-          <li><b class="font-num">86.9%</b><span>بربع الأسئلة فقط</span></li>
+          <li><b class="font-num">4</b><span>حالات طوارئ: ربو، إنتان، انصمام رئوي، احتشاء قلب</span></li>
+          <li><b class="font-num">4</b><span>أشخاص معك في الغرفة</span></li>
+          <li><b class="font-num">6</b><span>محاور في التقرير بعد كل حالة</span></li>
         </ul>
-        <p class="rs-band-note">النتائج على مرضى افتراضيين، والنموذج للتدريب فقط.</p>
+        <p class="rs-band-note">نموذج أولي للتدريب فقط. الحالات لم يراجعها طبيب بعد، ولا يُستخدم لتشخيص مرضى حقيقيين. ما تكتبه في الغرفة يُرسل إلى خدمة ذكاء اصطناعي لفهمه، فلا تكتب بيانات مرضى حقيقيين.</p>
       </div>
 
       <!-- Level placement quiz -->
@@ -389,7 +389,7 @@
         <div class="v7-split-copy">
           <span class="v7-eyebrow">أثر كل محادثة</span>
           <h2>مساحة عمل تُظهر كيف وصلت إلى قرارك</h2>
-          <p>المحادثة والعلامات الحيوية والفحوصات في شاشة واحدة، وبعد التسليم تراجع خطواتك خطوة بخطوة.</p>
+          <p>المحادثة والعلامات الحيوية والفحوصات في شاشة واحدة، وبعد التسليم تقرأ تقريراً بما أحسنت فيه وما يجب أن يتغير.</p>
           <button type="button" class="v7-btn-outline focus-ring" onclick="document.getElementById('index-demo-cta').click()">جرّب حالة الآن</button>
         </div>
       </div>
@@ -1237,7 +1237,7 @@
             سجل الجلسات السابقة
           </button>
           <button data-ptab="certificate" id="profile-tab-cert-btn" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-teal-900 hover:bg-teal-50 border border-teal-300 focus-ring">
-            وثيقة إثبات الإنجاز والطباعة
+            سجل التدريب والطباعة
           </button>
           <button data-ptab="settings" class="profile-tab-btn px-4 py-2 rounded-xl text-xs sm:text-sm font-bold bg-white text-slate-700 hover:bg-slate-100 border border-slate-200 focus-ring">
             إعدادات الحساب والتدريب
@@ -1361,7 +1361,7 @@
         <!-- Action Bar Above Certificate (Hidden when printing) -->
         <div class="no-print bg-white border border-slate-200 rounded-2xl p-4 flex flex-col sm:flex-row sm:items-center justify-between gap-3 shadow-2xs">
           <div class="space-y-0.5">
-            <h2 class="text-sm sm:text-base font-bold text-slate-900">وثيقة إثبات الإنجاز والتدريب السريري المعتمدة</h2>
+            <h2 class="text-sm sm:text-base font-bold text-slate-900">سجل التدريب على المحاكاة</h2>
             <p class="text-xs text-slate-600">جاهزة للطباعة أو الحفظ PDF.</p>
           </div>
           <div class="flex items-center gap-2 shrink-0">
@@ -1384,12 +1384,12 @@
               </div>
               <div>
                 <div class="text-xs font-bold text-teal-800">منصة نَبْض للتدريب والمحاكاة السريرية التمريضية والطبية</div>
-                <h3 class="text-lg sm:text-2xl font-bold text-slate-900 mt-0.5">وثيقة إثبات إنجاز وتدريب سريري</h3>
-                <div class="text-xs text-slate-600 font-medium">Certificate of Clinical Simulation Training & SBAR Competency</div>
+                <h3 class="text-lg sm:text-2xl font-bold text-slate-900 mt-0.5">سجل تدريب على المحاكاة</h3>
+                <div class="text-xs text-slate-600 font-medium">Simulation Training Record</div>
               </div>
             </div>
             <div class="text-right sm:text-left bg-white/90 border border-teal-200 rounded-2xl px-4 py-2.5 shrink-0">
-              <div class="text-xs text-slate-500">رقم التوثيق المرجعي:</div>
+              <div class="text-xs text-slate-500">رقم السجل:</div>
               <div id="cert-serial-num" class="text-xs sm:text-sm font-bold text-teal-900 font-num">NABD-2026-8492</div>
               <div id="cert-issue-date" class="text-xs text-slate-600 font-num mt-0.5">تاريخ الإصدار: 2026-10-18</div>
             </div>
@@ -1397,7 +1397,7 @@
 
           <!-- Certificate Body Statement -->
           <div class="text-center max-w-3xl mx-auto space-y-3 py-2">
-            <p class="text-xs sm:text-sm font-semibold text-teal-800">تشهد وحدة التدريب والمحاكاة السريرية في منصة «نَبْض» بأن المتدرب/ـة:</p>
+            <p class="text-xs sm:text-sm font-semibold text-teal-800">يوضح هذا السجل تدريب المتدرب/ـة على منصة «نَبْض»:</p>
             <div id="cert-trainee-name" class="text-2xl sm:text-3xl font-bold text-slate-900 tracking-tight py-1 border-b border-teal-200 inline-block px-8">
               رنا المحاسنة
             </div>
@@ -1405,7 +1405,7 @@
               طالب جامعي · التخصص: التمريض — جامعة العلوم والتكنولوجيا الأردنية
             </div>
             <p class="text-xs sm:text-sm text-slate-700 leading-relaxed pt-1">
-              قد أتمّ بنجاح متطلبات التدريب السريري التفاعلي على تقييم حالات الطوارئ وحالات الطوارئ التنفسية، شاملاً الاستجواب السريري المنهجي، قياس العلامات الحيوية، قراءة التحاليل المخبرية والصور التشخيصية، التحقق من معايير سلامة المريض، وتسليم الحالات وفق بروتوكول <strong>SBAR</strong> القياسي.
+              جلسات تدريب على المحاكاة في غرفة الطوارئ. هذا سجل من نموذج أولي تعليمي وليس شهادة معتمدة، والحالات لم يراجعها طبيب بعد.
             </p>
           </div>
 
@@ -1420,18 +1420,18 @@
               <div id="cert-stat-spec" class="text-xl font-bold text-teal-800 font-num mt-1">86%</div>
             </div>
             <div class="p-3.5 rounded-2xl bg-white border border-teal-200/90 shadow-2xs">
-              <div class="text-xs text-slate-500 font-semibold">معدل جاهزية الطوارئ</div>
+              <div class="text-xs text-slate-500 font-semibold">معدل غرفة الطوارئ</div>
               <div id="cert-stat-er" class="text-xl font-bold text-sky-800 font-num mt-1">81%</div>
             </div>
             <div class="p-3.5 rounded-2xl bg-emerald-50/70 border border-emerald-300 shadow-2xs">
-              <div class="text-xs text-emerald-900 font-semibold">حالة الكفاءة السريرية</div>
-              <div id="cert-stat-status" class="text-sm sm:text-base font-bold text-emerald-800 mt-1.5">مجتاز ومعتمد ✓</div>
+              <div class="text-xs text-emerald-900 font-semibold">حالات الطوارئ المجتازة</div>
+              <div id="cert-stat-status" class="text-sm sm:text-base font-bold text-emerald-800 mt-1.5">--</div>
             </div>
           </div>
 
           <!-- Verified Completed Clinical Cases Table inside Certificate -->
           <div class="space-y-2">
-            <div class="text-xs sm:text-sm font-bold text-slate-900">بيان الحالات السريرية المنجزة والموثقة في سجل المتدرب:</div>
+            <div class="text-xs sm:text-sm font-bold text-slate-900">الحالات المنجزة:</div>
             <div class="overflow-x-auto border border-teal-200 rounded-2xl bg-white">
               <table class="w-full text-right text-xs">
                 <thead class="bg-teal-50/80 border-b border-teal-200 text-teal-900 font-bold">
@@ -1440,7 +1440,7 @@
                     <th class="px-4 py-2.5">نمط التدريب / القسم</th>
                     <th class="px-4 py-2.5">تاريخ الإنجاز</th>
                     <th class="px-4 py-2.5">الفحوصات المنفذة</th>
-                    <th class="px-4 py-2.5">النتيجة المعتمدة</th>
+                    <th class="px-4 py-2.5">النتيجة</th>
                   </tr>
                 </thead>
                 <tbody id="cert-cases-tbody" class="divide-y divide-slate-100">
@@ -1736,6 +1736,7 @@
             <span class="er-p" data-who="n"><i></i><b>الممرضة</b></span>
             <span class="er-p" data-who="d"><i></i><b>المشرف</b></span>
           </div>
+          <p class="er-draft">للتدريب فقط. الحالات لم يراجعها طبيب بعد.</p>
         </header>
         <div class="er-grid">
           <div class="er-stage">
@@ -1757,7 +1758,6 @@
               <div class="er-tile"><span>Temp <small dir="ltr">°C</small></span><b id="er-v-temp" class="c-temp">--.-</b></div>
               <div class="er-tile wide"><span>NIBP <small>mmHg</small><em id="er-v-bpt"></em></span><b id="er-v-bp" class="c-bp">--/--</b></div>
             </div>
-            <p class="er-draft">حالات تدريبية لم يراجعها طبيب بعد.</p>
           </aside>
         </div>
         <div id="er-sheet" class="er-sheet" hidden></div>
@@ -1944,7 +1944,7 @@
           <div class="nb-auth-alt"><span>لديك حساب؟</span> <button id="auth-tab-login" type="button" class="nb-auth-link">تسجيل الدخول</button></div>
         </div>
 
-        <p class="nb-auth-about">محاكاة سريرية بالعربية لطلبة الطب والتمريض. يُحفظ الحساب والتقدّم على هذا الجهاز فقط.</p>
+        <p class="nb-auth-about">محاكاة سريرية بالعربية. يُحفظ الحساب والتقدّم على هذا الجهاز، أما كلامك في الغرفة فيُرسل إلى خدمة ذكاء اصطناعي لفهمه.</p>
       </div>
     </div>
   </div>
@@ -2135,7 +2135,7 @@
         <div class="font-bold text-slate-900 text-xs">روابط سريعة</div>
         <ul class="space-y-1.5 text-xs text-slate-600">
           <li><a href="#sec-how" class="hover:text-teal-700">كيف تعمل نبض؟</a></li>
-          <li><a href="#sec-resp" class="hover:text-teal-700">غرفة الطوارئ التنفسية</a></li>
+          <li><a href="#sec-resp" class="hover:text-teal-700">غرفة الطوارئ</a></li>
         </ul>
       </div>
 <!-- Signed-in Footer Links (Hidden for Guests) -->

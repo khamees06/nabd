@@ -1970,6 +1970,7 @@
 
       // Handle Debrief: ONLY show report if SBAR was submitted in the current session!
       if (viewId === 'debrief') {
+        if (window.nbErReport && window.nbErReport()) return;
         const emptyEl = document.getElementById('debrief-empty-state');
         const repEl = document.getElementById('debrief-report-content');
         if (hasCompletedSessionInRun && simState.sessionCompleted && simState.sbarSubmitted) {
@@ -5326,7 +5327,7 @@
             tr.innerHTML = `
               <td class="px-5 py-3.5 font-bold text-slate-900">${h.caseTitle}</td>
               <td class="px-5 py-3.5 text-slate-600">${h.mode}</td>
-              <td class="px-5 py-3.5 font-num text-slate-500">${h.date}</td>
+              <td class="px-5 py-3.5 font-num text-slate-500">${nbDateOf(h)}</td>
               <td class="px-5 py-3.5 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة · ' : ''}${h.workupCount} فحوصات</td>
               <td class="px-5 py-3.5 font-num font-bold text-teal-700">${h.score}</td>
             `;
@@ -5350,8 +5351,11 @@
       if (certEr) certEr.textContent = u.stats.avgEr;
       const certStatus = document.getElementById('cert-stat-status');
       if (certStatus) {
-        certStatus.textContent = u.stats.completed > 0 ? 'مجتاز ومعتمد ✓' : 'قيد استكمال الجلسات';
+        const erRuns = (u.history || []).filter(h => /^er_/.test(h.caseId || ''));
+        certStatus.textContent = erRuns.length ? `${erRuns.filter(h => h.passed).length} من ${erRuns.length}` : 'لا توجد حالات بعد';
       }
+      const certDate = document.getElementById('cert-issue-date');
+      if (certDate) certDate.textContent = 'تاريخ الطباعة: ' + new Date().toISOString().slice(0, 10);
       const certEmail = document.getElementById('cert-email-footer');
       if (certEmail) certEmail.textContent = `${u.email} · ${u.uni}`;
       const certTbody = document.getElementById('cert-cases-tbody');
@@ -5360,7 +5364,7 @@
           certTbody.innerHTML = `
             <tr>
               <td colspan="5" class="px-4 py-4 text-center text-slate-500">
-                لم يتم تسجيل جلسات مكتملة بعد — أتمم جلسة سريرية لتظهر في وثيقة الإنجاز الرسمية.
+                لم تُسجَّل جلسات مكتملة بعد. أتمم حالة لتظهر في هذا السجل.
               </td>
             </tr>
           `;
@@ -5369,7 +5373,7 @@
             <tr>
               <td class="px-4 py-2 font-bold text-slate-900">${h.caseTitle}</td>
               <td class="px-4 py-2 text-slate-700">${h.mode}</td>
-              <td class="px-4 py-2 font-num text-slate-600">${h.date}</td>
+              <td class="px-4 py-2 font-num text-slate-600">${nbDateOf(h)}</td>
               <td class="px-4 py-2 font-num text-slate-700">${h.questions != null ? h.questions + ' أسئلة · ' : ''}${h.workupCount} فحوصات</td>
               <td class="px-4 py-2 font-num font-bold text-teal-800">${h.score}</td>
             </tr>
@@ -5378,6 +5382,8 @@
       }
     }
 
+
+    function nbDateOf(h) { return h.date || (h.ts ? new Date(h.ts).toISOString().slice(0, 10) : '--'); }
 
     function renderProfileDash(u) {
       const dashBtn = document.querySelector('[data-ptab="dash"]');
@@ -5404,7 +5410,7 @@
       $('dash-coach-go').onclick = () => navigateTo('coach');
       // recent
       const rec = (u.history || []).slice(0, 5);
-      $('dash-recent').innerHTML = rec.length ? rec.map(h => `<div class="nb-li"><span class="nb-sc">${h.num != null ? h.num + '%' : h.score}</span><div><b>${h.caseTitle}</b><small>${h.date} · ${h.mode}</small></div></div>`).join('') + '<button type="button" class="nb-mini" id="dash-hist-go">كل السجل</button>' : '<p class="nb-dsub">لا جلسات بعد.</p>';
+      $('dash-recent').innerHTML = rec.length ? rec.map(h => `<div class="nb-li"><span class="nb-sc">${h.num != null ? h.num + '%' : h.score}</span><div><b>${h.caseTitle}</b><small>${nbDateOf(h)} · ${h.mode}</small></div></div>`).join('') + '<button type="button" class="nb-mini" id="dash-hist-go">كل السجل</button>' : '<p class="nb-dsub">لا جلسات بعد.</p>';
       $('dash-hist-go')?.addEventListener('click', () => switchProfileSubTab('history'));
       nbRenderMistakes(u); nbRenderNotes(u);
     }
@@ -6031,7 +6037,7 @@
       document.getElementById('index-login-cta')?.addEventListener('click', () => openAuthModal('login'));
       document.getElementById('index-register-cta')?.addEventListener('click', () => openAuthModal('register'));
       document.getElementById('index-uni-demo-btn')?.addEventListener('click', () => openAuthModal('login'));
-      document.getElementById('index-demo-cta')?.addEventListener('click', () => openAuthModal('login', '', '[data-demo-login]'));
+      document.getElementById('index-demo-cta')?.addEventListener('click', () => { nbDemoLogin('med_student'); setTimeout(() => nbOpenER(), 400); });
       document.querySelectorAll('[data-demo-login]').forEach(btn => {
         btn.addEventListener('click', () => nbDemoLogin(btn.dataset.demoLogin));
       });

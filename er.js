@@ -264,7 +264,7 @@
       const clause = t.split(/ (?:بس|لكن) /).pop();
       if (/(?:^| )ليش لا(?: |$)/.test(clause)) return 'wrong';
       if (toSup || toComp || asks) return 'na';
-      if (/ما بدي (?:اوقف|اغير|الغي)|على مسؤوليتي/.test(clause)) return 'wrong';
+      if (/ما بدي (?:اوقف|اغير|الغي)|علي مسووليتي/.test(clause)) return 'wrong';
       if (STOP.test(clause) || actions.some(a => a.id !== p.a.id || (p.allergic && !allergicTo(a, E.c.care[a.id] || {}, text)))) return 'good';
       if (tests.length) return 'na';
       const plain = clause.split(' ').length <= 4 && /^(?:[اتنب]?عطي\S*|كمل\S*|متاكد|اكيد|نعم|ايوا|ايوه|اه|طبعا|yes|sure)(?: |$)/.test(clause);
@@ -281,11 +281,12 @@
     if (p.type === 'reason') {
       if (why) return 'partial';
       if (/^(?:بلاش|الغي|خلص)/.test(t)) return 'withdraw';
-      if (actions.length || tests.length || toSup || social || asks || t.length < 2 || /اطمني|يا حجه|يا عمي|يا خالتي/.test(t) || ['yes', 'no', 'refuse'].includes(word)) return 'na';
+      if ((actions.length && toNurse) || tests.some(x => x.id !== p.id) || toSup || social || asks || t.length < 2 || /اطمني|يا حجه|يا عمي|يا خالتي/.test(t) || ['yes', 'no', 'refuse'].includes(word)) return 'na';
       return word === 'unsure' && t.split(' ').length < 3 ? 'na' : 'partial';
     }
-    if (actions.length || tests.length || toComp || /ساعد|شو اعمل|مش عارف|محتار|ما بعرف/.test(t)) return 'na';
-    return social || asks || word === 'unsure' || t.length < 2 ? 'na' : 'partial';
+    if ((actions.length && toNurse) || tests.some(x => x.id !== p.id) || toComp || /ساعد|شو اعمل|مش عارف|محتار|ما بعرف/.test(t)) return 'na';
+    // A reading cannot be judged without the server, so it is taken as said.
+    return social || asks || word === 'unsure' || t.length < 2 ? 'na' : 'noted';
   }
 
   function localRead(text) {
@@ -302,12 +303,16 @@
     const act = !facts.length && !exam.length && !actions.length && !tests.length ? readAct(text) : null;
     const social = ['greeting', 'wish', 'thanks'].includes(act);
     const to = toComp ? 'companion' : toSup && !social ? 'supervisor' : toNurse || actions.length || tests.length ? 'nurse' : 'patient';
+    // "Take the adrenaline off" names a drug without ordering it.
+    const stopped = E.pending && E.pending.type === 'unsafe' && STOP.test(t) && !/بدل|badal|instead/.test(t);
+    // A reason or a reading that mentions a drug is not an order for it.
+    const answering = E.pending && ['reason', 'interpret'].includes(E.pending.type) && !toNurse;
     const opens = /شو (اللي )?(جابك|صار معك|صاير|مالك|بك|فيك)|احكيلي شو/.test(t);
     const asks = / (شو|وين|قديش|كم|امتي|متي|ليش|هل|ايه|shu)( |$)/.test(t) && !/شو اخبار/.test(t);
     const small = !asks && (social || (act === null && /^(مرحب|اهلا|هلا|السلام|صباح|مساء)/.test(t)));
     return {
       act, text,
-      to, facts, exam, actions: toComp ? [] : actions, tests: toComp ? [] : tests, kind: toSup && !social ? 'help' : actions.length ? 'order' : opens ? 'open' : small ? 'smalltalk' : facts.length ? 'question' : 'other',
+      to, facts, exam, actions: toComp || stopped || answering ? [] : actions, tests: toComp ? [] : tests, kind: toSup && !social ? 'help' : actions.length ? 'order' : opens ? 'open' : small ? 'smalltalk' : facts.length ? 'question' : 'other',
       pending_ok: offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }),
       tone: {
         introduced: /(انا الدكتور|انا دكتور|انا طالب|اسمي|معك الدكتور)/.test(t), empathy: act === 'wish' || /(بفهم|معك حق|حقك|سلامتها|سلامته|لا تخاف)/.test(t),
@@ -388,7 +393,7 @@
 
     const open = E.pending;
     if (open && read.pending_ok && read.pending_ok !== 'na') resolve(read.pending_ok, text);
-    else if (open && ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id))) remind(open);
+    else if (open && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id)))) remind(open);
     (read.facts || []).forEach(id => E.facts.add(id));
     (read.exam || []).forEach(examine);
     if (reply) person(to === 'companion' ? 'c' : to === 'nurse' ? 'n' : to === 'supervisor' ? 'd' : 'p', reply);
@@ -533,6 +538,8 @@
     } else if (p.type === 'unsafe') {
       if (grade === 'wrong') harm(p.a, actOf(p.a.id), p.def, p.allergic);
       else nurse('تمام، ما بعطيه.');
+    } else if (p.type === 'interpret' && grade === 'noted') {
+      person('d', 'طيب، كمّل.');
     } else if (p.type === 'interpret') {
       E.tests[p.id].read = grade;
       log('read', `قراءة ${testOf(p.id).en}: ${grade === 'good' ? 'صحيحة' : grade === 'partial' ? 'ناقصة' : 'خاطئة'}`);

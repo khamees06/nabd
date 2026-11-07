@@ -612,6 +612,8 @@
     if (open && open.type === 'dose' && dropNamed(text)) { open = null; read.actions = []; }
     // A bare yes to the nurse's proposal is an answer whoever reads it, unless the reader heard a refusal.
     if (open && open.type === 'dose' && open.sug && ACCEPT.test(norm(text)) && !(read.actions || []).length && !['withdraw', 'wrong'].includes(read.pending_ok)) read.pending_ok = 'good';
+    // Acting is not reading: an order sent over a teaching question is no misread result.
+    if (open && open.type === 'interpret' && ((read.actions || []).length || (read.tests || []).length)) read.pending_ok = 'na';
     if (open && read.pending_ok && read.pending_ok !== 'na') resolve(read.pending_ok, text);
     else if (open && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
     // A patient the nurse calls unresponsive does not recite a history, and nothing unheard counts as asked.

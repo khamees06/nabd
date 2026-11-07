@@ -81,6 +81,8 @@
     $('er-v-temp').textContent = E.tempKnown ? E.c.temp.toFixed(1) : '--.-';
   }
   const vitalsLine = () => { const v = E.show || live(); return `HR ${Math.round(v.hr)}, BP ${E.bp.join('/')}, RR ${Math.round(v.rr)}, SpO2 ${Math.round(v.spo2)}%`; };
+  // The same numbers as a nurse says them out loud.
+  const spokenVitals = () => { const v = E.show || live(); return `الضغط ${E.bp.join(' على ')}، النبض ${Math.round(v.hr)}، التنفس ${Math.round(v.rr)}، والـSpO2 ${Math.round(v.spo2)}%`; };
 
   // Adult limits; a reading outside them lights its tile (motion.js asks here).
   window.nbErVitals = {
@@ -155,7 +157,7 @@
         // The nurse says which numbers moved, not just that they did.
         E.bpAt = 0; paint();
         const v = live();
-        nurse(`دكتور، الأرقام أحسن: SpO2 ${Math.round(v.spo2)}%، النبض ${Math.round(v.hr)}، الضغط ${E.bp.join('/')}.`);
+        nurse(`دكتور، الأرقام أحسن: الـSpO2 ${Math.round(v.spo2)}%، النبض ${Math.round(v.hr)}، الضغط ${E.bp.join(' على ')}.`);
         E.anx = clamp(E.anx - 12, 0, 100);
         director('better');
       }
@@ -168,11 +170,28 @@
     const L = E.c.stageLines[STAGES[s]] || {};
     log('stage', ['', 'بدأ التدهور', 'تدهور واضح', 'حالة حرجة'][s]);
     if (s >= 2) alert(s === 3 ? 'إنذار حرج: ' + worst() : 'إنذار: ' + worst());
-    if (L.nurse) nurse(L.nurse);
+    const told = nurseStage(L);
+    if (told) nurse(told);
     if (L.patient) later(0.15, () => person('p', pickOf(L.patient)));
+    // The relative answers a patient who calls for them, unless they are waiting outside.
+    if (L.companion && !E.comp.used.has(L.companion) && E.sim >= E.comp.outUntil) {
+      E.comp.used.add(L.companion);
+      E.comp.lastAt = Math.max(E.comp.lastAt, E.sim + 0.3);
+      later(0.3, () => { if (E.sim >= E.comp.outUntil) person('c', L.companion); });
+    }
     E.anx = clamp(E.anx + 14, 0, 100);
     director(s >= 2 ? 'alarm' : 'worse');
     if (s >= 2) coach(s === 3 ? 'critical' : 'urgent');
+  }
+  // The nurse says a falling number only while the monitor shows it falling: the case lists each
+  // sign with its limit ([vital, limit, words, '>' for too high]); what the eye sees is always said.
+  function nurseStage(L) {
+    if (!L.parts) return L.nurse;
+    E.bpAt = 0; paint();
+    const v = live(), val = k => (k === 'sbp' ? +E.bp[0] : v[k]);
+    const hit = L.parts.filter(([k, lim, , dir]) => (dir === '>' ? val(k) > lim : val(k) < lim)).map(p => p[2]);
+    const all = [...hit, ...(L.rest || [])];
+    return all.length ? `دكتور، ${all.join('، و')}.` : L.held || L.nurse;
   }
   const worst = () => { const v = live(); return v.spo2 <= 90 ? `SpO2 ${Math.round(v.spo2)}%` : v.sbp < 95 ? `BP ${Math.round(v.sbp)}` : `HR ${Math.round(v.hr)}`; };
   const later = (min, fn) => E.jobs.push({ at: E.sim + min, fn });
@@ -480,6 +499,8 @@
 
   // A drug word is not an order: "بلاش اسبرين" and "بتاخدي اسبرين؟" must never give the drug.
   const NEGATED = /(?:^| )[وف]?(?:لا|ما|مش|مو|بلاش|بدون|ممنوع|غير|مستحيل|اياك\S*|اوعك|اوعي|حذار|نتجنب|تجنب\S*|نبعد|اوقف\S*|نوقف|وقف\S*|شيل\S*|الغي\S*|avoid|no|not|never|dont|don t|without|stop|hold|لسا ما)(?: \S+){0,2}$|(?:^| )(?:بدل|بدال|instead of)(?: \S+)?$/;
+  // Asking the relative to step out or wait by the door.
+  const STEP_OUT = /(?:^| )(?:برا|بره|عالباب|الباب|اطلع\S*|استن\S*|تستن\S*|ابعد\S*|وسع\S*)(?: |$)/;
   const ORDER = /(?:^| )[وف]?(?:[اتنبي]?عط[يو]\S*|اعط\S*|حط\S*|ركب\S*|علق\S*|ابدا\S*|بلش\S*|جيب\S*|جهز\S*|شغل\S*|اطلب\S*|اسحب\S*|قيس\S*|افحص\S*|شيك\S*|عيد\S*|نادي\S*|اتصل\S*|ارفع\S*|اعمل\S*|سوي\S*|فعل|فعلي(?:ه|ها)?|فعلو\S*|بدي|بدنا|لازم|خلينا|يلا|give|start|hang|push|need|order|call|get|put|run|draw|repeat|check|activate)(?: |$)/;
   const HISTORY = /^(?:هل|شو|ليش|كيف|قديش|كم|وين|مين|متي|امتي|لما|بتاخد\S*|بياخد\S*|بتوخذ\S*|بيوخذ\S*|اخذت\S*|اخدت\S*|عملت\S*|عندك|عنده|عندها|في عند\S*|جربت\S*|استعملت\S*|بتستعمل\S*|بيستعمل\S*|بتستخدم\S*|بتتحسس\S*|بيتحسس\S*|صار معك)(?: |$)/;
   const ASKS_ABOUT = /(?:بدي (?:اعرف|اسالك|اتاكد)|لازم اعرف|خلينا نشوف|شو صار|(?:^| )(?:اعطوك|اعطوه|اعطوها|اعطاه|اعطيتي|اخذتي|اخدتي)(?: |$))/;
@@ -559,7 +580,8 @@
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
     const tests = said(D.tests).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'ungraded' : 'none' }));
     const toSup = /(يا مشرف|يا استاذ|يا دكتور|شو رايك|ساعدني|مش عارف|محتار|شو اعمل)/.test(t);
-    const toNurse = new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي)').test(t);
+    // "The numbers?" is asked of the nurse, who reads the monitor, never of the patient.
+    const toNurse = new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي|الارقام|ارقامه|ارقامها|علامات حيويه|vitals)').test(t);
     const toComp = /(يا حجه|يا حجي|يا خالتي|يا خاله|يا ست |يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك|بنتك|ابوك|جوزك|زوجك|مرتك|زوجتك|معك حق|فهمت عليك|ما تخاف|ما تخافي|لا تخاف|لا تخافي|لا تقلق|يا عمو|عمو)/.test(t) || t.includes('يا ' + norm(c.companion.name)) || t.includes(norm(c.companion.name) + ' ');
     // Keywords go first: the model only speaks for a message nothing else could read.
     const act = !facts.length && !exam.length && !actions.length && !tests.length ? readAct(text) : null;
@@ -603,7 +625,7 @@
     // Telling the family the plan names the treatment; it does not order it.
     if (read.unclear && read.to !== 'companion') { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
     if (read.to === 'nurse' && !read.actions.length && !read.tests.length) {
-      return /(ضغط|نبض|اكسجين|ارقام|حراره|تنفس|spo2|bp|hr)/.test(t) ? 'الأرقام: ' + vitalsLine() + '.' : 'تمام، شو بدك أعمل؟';
+      return /(ضغط|نبض|اكسجين|ارقام|حراره|تنفس|spo2|bp|hr)/.test(t) ? spokenVitals() + '.' : 'تمام، شو بدك أعمل؟';
     }
     if (read.to === 'nurse') return null;
     // Spoken to, the relative answers what was said; being told what is happening settles them.
@@ -659,7 +681,11 @@
   function remind(open) {
     open.wait = (open.wait || 0) + 1;
     if (open.type === 'interpret') {
-      if (open.wait >= 2) settle(q => q === open);
+      if (open.wait >= 2) {
+        settle(q => q === open);
+        // A question left unanswered is closed out loud, once a case, not dropped in silence.
+        if (!E.readNudged) { E.readNudged = true; person('d', `طيب، ارجعلي عالـ${testOf(open.id).en} لما تخلّص هالخطوة.`); }
+      }
       return;
     }
     // She names the drug she is waiting on: a busy doctor has forgotten which one.
@@ -675,6 +701,7 @@
   function apply(read, text, to, reply) {
     const t = read.tone || {};
     E.collect = [];
+    E.rbBuf = [];
     E.turns++;
     if (t.introduced) E.comm.introduced = true;
     if (t.consent) E.comm.consent = true;
@@ -688,7 +715,9 @@
       const c = E.comp;
       c.asked = null; c.ignored = 0; c.unheard = 0; c.heardTurn = E.turns;
       c.addressed++;
-      if (t.explained || t.empathy) { E.comm.explained = true; E.anx = clamp(E.anx - 24, 0, 100); c.lastTurn = E.turns + 1; c.lastAt = E.sim; c.gen++; log('comm', 'شرح للأهل فهدأوا'); }
+      // Asked to wait outside, the relative is out of the room for a while; spoken to again, back in.
+      c.outUntil = STEP_OUT.test(norm(text)) ? E.sim + 3 : 0;
+      if (t.explained || t.empathy) { E.comm.explained = true; E.anx = clamp(E.anx - 24, 0, 100); c.lastTurn = E.turns + 1; c.lastAt = E.sim; c.gen++; c.explainedTurn = E.turns; log('comm', 'شرح للأهل فهدأوا'); }
       else E.anx = clamp(E.anx - 6, 0, 100);
     } else {
       // Seeing the team work steadies a relative; a question left hanging does not.
@@ -698,20 +727,28 @@
     }
 
     let open = E.pending;
+    // Words to the relative answer nobody's open question. (Offline, "patient" is only the default reader's guess.)
+    if (open && to === 'companion' && !(read.actions || []).length && !(read.tests || []).length) read.pending_ok = 'na';
     if (open && open.type === 'dose' && dropNamed(text)) { open = null; read.actions = []; }
     // A bare yes to the nurse's proposal is an answer whoever reads it, unless the reader heard a refusal.
     if (open && open.type === 'dose' && open.sug && ACCEPT.test(norm(text)) && !(read.actions || []).length && !['withdraw', 'wrong'].includes(read.pending_ok)) read.pending_ok = 'good';
     // Acting is not reading: an order sent over a teaching question is no misread result.
     if (open && open.type === 'interpret' && ((read.actions || []).length || (read.tests || []).length)) read.pending_ok = 'na';
-    if (open && read.pending_ok && read.pending_ok !== 'na') resolve(read.pending_ok, text);
-    else if (open && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
+    // What a "yes" gave is read back before the nurse's next question.
+    if (open && read.pending_ok && read.pending_ok !== 'na') { resolve(read.pending_ok, text); flushBack(); E.rbBuf = []; }
+    // Talking to the relative does not use up the supervisor's question.
+    else if (open && !(open.type === 'interpret' && to === 'companion') && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
     // A patient the nurse calls unresponsive does not recite a history, and nothing unheard counts as asked.
     const mute = E.stage === 3 && (to === 'patient' || to === 'room');
     const line = mute ? pickOf((E.c.stageLines.critical || {}).patient || ['...']) : reply;
     if (line && !mute && (to === 'patient' || to === 'companion' || to === 'room')) {
       (read.saidFact ? [read.saidFact] : read.facts || []).forEach(id => {
         const f = E.c.facts.find(x => x.id === id);
-        if (f && (to === 'companion' ? f.who && f.who !== 'patient' : f.who !== 'companion')) E.facts.add(id);
+        if (f && (to === 'companion' ? f.who && f.who !== 'patient' : f.who !== 'companion')) {
+          // Some answers the nurse acts on at once, such as an allergy going on the chart and a band.
+          if (f.nurseNote && !E.facts.has(id)) later(0.3, () => nurse(f.nurseNote));
+          E.facts.add(id);
+        }
       });
     }
     (read.exam || []).forEach(examine);
@@ -722,6 +759,7 @@
     const once = (x, i, all) => all.findIndex(y => y.id === x.id) === i;
     (read.actions || []).filter(once).filter(a => a.id !== answered || swapped(a)).forEach(a => order(a, text));
     (read.tests || []).filter(once).filter(x => x.id !== answered).forEach(x => orderTest(x.id, x.reason, x.reason_ok));
+    flushBack();
     const col = (E.collect || []).filter(x => E.pending === x.p || E.queue.some(([q]) => q === x.p));
     E.collect = null;
     if (col.length) {
@@ -959,19 +997,23 @@
     };
     E.jobs.push({ at, fn: fire });
   }
+  // What a nurse calls each treatment when she says what it did.
+  const SPOKEN = { oxygen: 'الأكسجين', fluids: 'السوايل', antibiotics: 'المضاد', neb_salbutamol: 'البخار', neb_ipratropium: 'البخار', steroid: 'الكورتيزون', magnesium: 'المغنيسيوم', adrenaline: 'الأدرينالين', noradrenaline: 'النورأدرينالين', atropine: 'الأتروبين', nitrate: 'النترات', diuretic: 'المدر', insulin: 'الإنسولين', potassium: 'البوتاسيوم', opioid: 'المسكّن', sit_up: 'القعدة', airway: 'التنفس الصناعي', anticoag: 'المميع', aspirin: 'الأسبرين', iv_access: 'الكانيولا' };
   function respond(names, ids, before) {
     if (!E || E.over) return;
     E.bpAt = 0;
     paint();
     const v = live(), n = k => Math.round(v[k]), b = k => Math.round(before[k]);
     const parts = [];
-    if (n('spo2') - b('spo2') >= 2) parts.push(`SpO2 من ${b('spo2')} صارت ${n('spo2')}`);
-    if (b('rr') - n('rr') >= 3) parts.push(`التنفس من ${b('rr')} نزل لـ${n('rr')}`);
-    if (b('hr') - n('hr') >= 5) parts.push(`النبض من ${b('hr')} نزل لـ${n('hr')}`);
-    else if (n('hr') - b('hr') >= 8 && before.hr < 60) parts.push(`النبض من ${b('hr')} طلع لـ${n('hr')}`);
-    if (n('sbp') - b('sbp') >= 5 || (E.c.hyper && b('sbp') - n('sbp') >= 8)) parts.push(`الضغط صار ${n('sbp')}/${n('dbp')}`);
+    // Said the way a nurse says it at the bedside, not a chart entry.
+    if (n('spo2') - b('spo2') >= 2) parts.push(`الـSpO2 طلعت من ${b('spo2')} لـ${n('spo2')}`);
+    if (b('rr') - n('rr') >= 3) parts.push(`التنفس نزل من ${b('rr')} لـ${n('rr')}`);
+    if (b('hr') - n('hr') >= 5) parts.push(`النبض نزل من ${b('hr')} لـ${n('hr')}`);
+    else if (n('hr') - b('hr') >= 8 && before.hr < 60) parts.push(`النبض طلع من ${b('hr')} لـ${n('hr')}`);
+    if (n('sbp') - b('sbp') >= 5 || (E.c.hyper && b('sbp') - n('sbp') >= 8)) parts.push(`الضغط صار ${n('sbp')} على ${n('dbp')}`);
     if (!parts.length) return;
-    nurse(`بعد ${names.join(' و')}: ${parts.join('، ')}.`);
+    const who = [...new Set(ids.map((id, i) => SPOKEN[id] || names[i]))].join(' و');
+    nurse(`بعد ${who}، ${parts.join('، و')}.`);
     // The relative sees it too.
     E.anx = clamp(E.anx - 5, 0, 100);
     if (!E.vtNow && E.stage < 3) {
@@ -982,6 +1024,23 @@
     }
   }
 
+  // A message with three orders gets one "حاضر، X، وY، وZ." and one "done" line, not six lines.
+  const joinSaid = list => list.map(([t, name]) => t.replace(/^حاضر[،.]?\s*/, '').replace(/[.。]\s*$/, '').trim() || name).join('، و');
+  function sayBack(text, name) {
+    if (E.rbBuf) E.rbBuf.push([text, name]);
+    else nurse(text);
+  }
+  function flushBack() {
+    const list = E.rbBuf || [];
+    E.rbBuf = null;
+    if (list.length === 1) nurse(list[0][0]);
+    else if (list.length > 1) nurse(`حاضر، ${joinSaid(list)}.`);
+  }
+  function sayDone(text) {
+    if (!E.doneBuf) { E.doneBuf = []; later(0.005, () => { const list = E.doneBuf || []; E.doneBuf = null; if (list.length) nurse(list.length === 1 ? list[0] : list.map(t => t.replace(/[.。]\s*$/, '')).join('، و') + '.'); }); }
+    E.doneBuf.push(text);
+  }
+
   function give(a, meta, def) {
     const prev = E.done.get(a.id);
     const amt = amountOf(a, def, a.said || '');
@@ -989,7 +1048,11 @@
     settle(q => q.type === 'dose' && q.a.id === a.id);
     log('action', meta.ar + (a.dose ? ' (' + a.dose + ')' : ''));
     const named = a.agent && a.agent.length <= 24 ? a.agent : meta.ar;
-    nurse(a.sayDose ? `حاضر، ${a.sayDose}.` : a.dose ? `حاضر، ${named} ${a.dose}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'));
+    // The drug's name once: "سلاين 500 مل سلاين" is not how anyone reads an order back.
+    const withName = a.dose && norm(a.dose).includes(norm(named)) ? a.dose : `${named} ${a.dose}`;
+    // Asked for the numbers, she reads them at once; "حاضر" is for orders, said once for all of a message's orders.
+    if (a.id === 'bp_repeat') { E.bpAt = 0; paint(); nurse(`قست الضغط هسا: ${spokenVitals()}.`); }
+    else sayBack(a.sayDose ? `حاضر، ${a.sayDose}.` : a.dose ? `حاضر، ${withName}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'), meta.ar);
     // More of the same adds something; saying the same flow again does not.
     const higher = !prev || !(meta.repeat && meta.repeat.up) || amt > (prev.top || 0);
     const share = prev ? (meta.repeat ? meta.repeat.again : 0) : 1;
@@ -1017,8 +1080,8 @@
     }
     later(0.1, () => {
       if (a.id === 'temp') { E.tempKnown = true; paint(); }
-      if (a.id === 'bp_repeat') { E.bpAt = 0; paint(); nurse(`الضغط ${E.bp.join('/')}.`); return; }
-      if (def.done) nurse(def.done);
+      if (a.id === 'bp_repeat') return;
+      if (def.done) sayDone(def.done);
       if (a.id === 'call_senior' || a.id === 'call_icu') coach('called');
     });
     // What the relative says about this very step, or else, for a needle or a drug, at most a question about it.
@@ -1113,8 +1176,12 @@
     } else if (p.type === 'interpret') {
       E.tests[p.id].read = grade;
       log('read', `قراءة ${testOf(p.id).en}: ${grade === 'good' ? 'صحيحة' : grade === 'partial' ? 'ناقصة' : 'خاطئة'}`);
+      // The instruction goes first and the findings are cut to fit; the diagnosis never reaches the supervisor's words.
+      const en = testOf(p.id).en, found = resultText(p.id);
+      const brief = head => head + found.slice(0, Math.max(0, 295 - head.length));
       if (grade === 'good') person('d', pickOf(['تمام، هيك القراءة.', 'صح، كمّل.', 'مزبوط، طيب شو الخطوة الجاية؟']));
-      else voice('d', 'supervisor', `The trainee misread the ${testOf(p.id).en}. Reference reading: ${E.c.results[p.id].key}. Point to the exact value that does not fit and ask them to look again; explain only that value.`, `ارجع للـ${testOf(p.id).en} مرة ثانية، في إشي مش راكب مع قراءتك.`);
+      else if (grade === 'partial') voice('d', 'supervisor', brief(`The trainee read the ${en} partly right. Say it is right so far, then point to the one finding they left out, by its lead, value or place, and ask what it means. Never name the diagnosis, the artery or the procedure. Findings: `), `صح لحد هون، بس في إشي ناقص بالـ${en}. شو كمان شايف؟`);
+      else voice('d', 'supervisor', brief(`The trainee misread the ${en}. Point to one lead or value that does not fit their reading and ask them to look again. Never name the diagnosis, the artery or the procedure. Findings: `), `ارجع للـ${en} مرة ثانية، في إشي مش راكب مع قراءتك.`);
     }
     nextQuestion();
   }
@@ -1142,8 +1209,10 @@
     if (res.before && E.done.has(res.before)) E.lateTests.push({ ar: meta.ar, why: res.beforeWhy });
     E.tests[id] = { id, at: E.sim, reason, reasonOk, ind, why, back: false, read: null };
     log('test', `طلب ${meta.en}${reason ? ' (' + reason + ')' : ''}`);
-    resultBack(id);
-    buildRecords();
+    // Blood is drawn through the cannula: ordered in the same breath, the results come after it is in.
+    const iv = E.done.get('iv_access');
+    if (iv && E.sim - iv.at < 0.05) later(0.12, () => { resultBack(id); buildRecords(); });
+    else { resultBack(id); buildRecords(); }
     if (ind === 'harm') {
       E.risk = clamp(E.risk + 6, 0, 100);
       voice('d', 'supervisor', `The trainee ordered ${meta.en}, which is dangerous right now: ${why} Stop them firmly and ask what it would change.`, `استنى، ليش ${meta.en} هسا؟ شو رح يغيّر بالـmanagement والمريض مش stable؟`);
@@ -1172,7 +1241,7 @@
     // A culture drawn is not a result yet: nothing to read for hours.
     const waiting = /incubat/i.test(res.report || '');
     t.el = say('lab', '', labCard(id));
-    if (waiting) nurse('سحبت الزراعة، والنتيجة بعد يومين.');
+    if (waiting) nurse('سحبت الزراعة من مكانين، والنتيجة بعد يوم أو يومين.');
     if (!waiting && res.key && (res.ind === 'indicated' || res.ind === 'acceptable') && E.readAsks < 3) {
       E.readAsks++;
       ask({ type: 'interpret', id, ask: `The supervisor asked the trainee to read the ${testOf(id).en}. Reference reading: ${res.key}. good = matches, partial = incomplete, wrong = contradicts, na = not a reply.` }, pickOf([`شو بتقرأ بالـ${testOf(id).en}؟`, `طيب، الـ${testOf(id).en} شو بيحكيلك؟`]), 'd');
@@ -1188,7 +1257,7 @@
   // {say, unless} or {say, fact} only while the trainee has not found that fact,
   // {say, after} not before that simulated minute (a confession comes late).
   const fresh = list => list.map(x => (typeof x === 'string' ? { say: x } : x))
-    .filter(x => x.say && !E.comp.used.has(x.say) && !(x.stage && E.stage < x.stage) && !(x.after && E.sim < x.after) && !(x.unless && E.facts.has(x.unless)) && !(x.fact && E.facts.has(x.fact)));
+    .filter(x => x.say && !E.comp.used.has(x.say) && !(x.stage && E.stage < x.stage) && !(x.after && E.sim < x.after) && !(x.unless && E.facts.has(x.unless)) && !(x.when && !E.facts.has(x.when)) && !(x.fact && E.facts.has(x.fact)));
   const busyNow = () => E.turns - E.busyTurn <= 1;
   function compSay(x, after = 0) {
     const c = E.comp;
@@ -1197,10 +1266,12 @@
     // A question still waiting to be said is dropped once the doctor has explained.
     const gen = c.gen;
     later(after, () => {
-      if (E.comp.gen !== gen && /[؟?]/.test(x.say)) { E.comp.count--; return; }
+      if ((E.comp.gen !== gen && /[؟?]/.test(x.say)) || E.sim < E.comp.outUntil) { E.comp.count--; return; }
       person('c', x.say);
       const told = (E.c.companion.tells || {})[x.say];
       if (told) E.facts.add(told);
+      // A line can carry the nurse's answer to it.
+      if (x.nurse) later(0.15, () => nurse(x.nurse));
     });
     // Twice unheard while the doctor works: the nurse settles the relative and nudges the doctor once.
     if (++c.unheard >= 2 && !c.nurseStep && E.c.companion.nurse && E.stage < 3) {
@@ -1214,7 +1285,9 @@
   // A line tied to what was just done or asked for: the relative sees it happen.
   function compOn(kind, id, after, always) {
     const list = fresh(((E.c.companion.lines || {})[kind] || {})[id] || []);
-    if (!list.length) return false;
+    if (!list.length || E.sim < E.comp.outUntil) return false;
+    // Just told what is happening, a relative does not ask about it again.
+    if (/[؟?]/.test(list[0].say) && E.turns - E.comp.explainedTurn <= 3) { E.comp.used.add(list[0].say); return false; }
     // The first moments belong to the doctor: a remark about this step waits a little,
     // and two remarks stand a minute apart, or the later one is let go.
     if (!always) {
@@ -1232,6 +1305,8 @@
   function director(evt) {
     if (!E || E.over || evt === 'addressed') return;
     const a = E.anx, turns = E.turns - E.comp.lastTurn, mins = E.sim - E.comp.lastAt;
+    // Waiting outside, the relative comes back in only for a crisis.
+    if (E.sim < E.comp.outUntil) { if (evt === 'alarm' && E.stage >= 3) E.comp.outUntil = 0; else return; }
     if (evt === 'alarm' || evt === 'worse') { if (mins >= 0.5) breakIn(evt); return; }
     // The first moments belong to the doctor: the relative said their piece on arrival.
     if (E.turns < 3 && E.sim < 1.5) return;
@@ -1555,7 +1630,7 @@
     E = {
       c, sim: 0, risk: c.risk.start, anx: c.companion.start, stage: 0, done: new Map(), effects: [], jobs: [], tests: {}, facts: new Set(), exam: new Set(),
       chat: [], log: [], riskLog: [[0, c.risk.start]], riskLogAt: 0, paintAt: -1, bpAt: 0, bpTime: 0, bp: ['--', '--'], tempKnown: false, utt: 0, turns: 0,
-      comp: { lastTurn: -9, lastAt: -9, count: 0, asked: null, addressed: 0, used: new Set(), extra: 0, angry: false, ignored: 0, procs: 0, unheard: 0, nurseStep: false, heardTurn: 0, gen: 0 }, busyTurn: -9, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
+      comp: { lastTurn: -9, lastAt: -9, count: 0, asked: null, addressed: 0, used: new Set(), extra: 0, angry: false, ignored: 0, procs: 0, unheard: 0, nurseStep: false, heardTurn: 0, gen: 0, outUntil: 0, explainedTurn: -9 }, busyTurn: -9, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
       harms: [], harmed: new Set(), reacted: false, caught: [], pending: null, queue: [], wrongDoses: [], unneeded: [], lateTests: [], askedNo: 0, hint: -1, hints: 0, helps: 0, readAsks: 0, over: false, outcome: null, resolved: false,
       topStage: 0, anxTop: c.companion.start, vtNow: false, vtAt: null, shockedAt: null, anaph: null, draft: null,
       mods: [], improved: 0, nudged: false, collect: null, resp: null, saidBy: new Set(), holdAsked: false

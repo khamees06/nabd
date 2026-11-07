@@ -769,7 +769,7 @@
       const rest = [E.pending, ...E.queue.map(([q]) => q)].filter(q => isDose(q) && q.sug);
       E.queue = E.queue.filter(([q]) => !rest.includes(q));
       if (rest.includes(E.pending)) E.pending = null;
-      rest.forEach(q => order({ ...q.a, dose: q.sug, sayDose: q.tip.split(' (أو')[0], _asked: true }, text));
+      rest.forEach(q => order({ ...q.a, dose: q.sug, sayDose: q.tip.split(' (أو')[0].split('، ')[0], _asked: true }, text));
     }
     nextQuestion();
     return true;
@@ -1057,7 +1057,7 @@
       const meta = actOf(p.a.id), def = E.c.care[p.a.id] || {};
       const accepted = ACCEPT.test(norm(text));
       const a = { ...p.a, dose: doseIn(text) || (accepted && p.sug) || '', _asked: true, _ok: grade, said: (p.a.said || '') + ' ' + text };
-      if (accepted && p.sug && !doseIn(text)) a.sayDose = p.tip.split(' (أو')[0];
+      if (accepted && p.sug && !doseIn(text)) a.sayDose = p.tip.split(' (أو')[0].split('، ')[0];
       // "Yes" to "which one?" names nothing.
       if (accepted && !p.sug) { E.pending = p; E.resolved = false; nurse('أي نوع بالزبط، وقديش؟'); return; }
       if (doseBad({ ...a, dose: '' }, def, text, grade)) {
@@ -1071,7 +1071,7 @@
       } else if (!(a.dose && overTotal(a, meta, def))) {
         give(a, meta, def);
         // One "yes" takes every other proposal she made in the same breath.
-        if (accepted) for (const item of E.queue.filter(([q]) => q.type === 'dose' && q.sug)) { E.queue.splice(E.queue.indexOf(item), 1); order({ ...item[0].a, dose: item[0].sug, sayDose: item[0].tip.split(' (أو')[0], _asked: true }, text); }
+        if (accepted) for (const item of E.queue.filter(([q]) => q.type === 'dose' && q.sug)) { E.queue.splice(E.queue.indexOf(item), 1); order({ ...item[0].a, dose: item[0].sug, sayDose: item[0].tip.split(' (أو')[0].split('، ')[0], _asked: true }, text); }
       }
     } else if (p.type === 'reason') {
       if (grade === 'wrong' && !p.retried) {

@@ -309,3 +309,54 @@
   #view-er .er-brief-f button { width: 100%; }
   .er-sheet.er-brief-wrap { padding: .4rem; }
 }
+
+/* nurse mode 2026-11-07: the role switch in the start briefing */
+.er-role-sw { display: flex; flex-wrap: wrap; align-items: center; gap: .4rem; font-size: .84rem; color: var(--ink-2); }
+.er-role-sw .er-role-l { font-weight: 500; color: var(--ink); }
+#view-er .er-role-sw button { border: 1px solid var(--line) !important; background: var(--surface) !important; color: var(--ink) !important; border-radius: 999px !important; padding: .22rem .85rem !important; font: inherit; font-size: .84rem; cursor: pointer; min-height: 2.2rem; }
+#view-er .er-role-sw button[aria-checked="true"] { background: var(--tint) !important; border-color: var(--signal) !important; color: var(--signal-strong) !important; font-weight: 500; }
+#view-er .er-role-sw button:focus-visible { outline: 2px solid var(--signal); outline-offset: 2px; }
+.er-role-sw .er-small { flex-basis: 100%; margin: 0; }
+.er-role-now { margin: 0; font-size: .84rem; color: var(--ink-2); }
+.er-brief-scope { background: var(--tint-2); border-radius: 12px; padding: .55rem .75rem; }
+.er-brief-scope h4 small { font-weight: 400; color: var(--ink-3); }
+
+/* nurse mode: the doctor out of the room, and the instructor */
+.er-p[data-out] { opacity: .6; border-style: dashed; }
+
+/* nurse mode: the doctor's orders in the side panel */
+.er-ord { display: grid; gap: .35rem; border: 1px solid var(--line-2); border-radius: 12px; padding: .5rem .55rem; background: var(--tint-2); }
+.er-ord[hidden] { display: none; }
+.er-ord h4 { margin: 0; font-size: .82rem; font-weight: 500; color: var(--signal-strong); }
+.er-ord-list { list-style: none; margin: 0; padding: 0; display: grid; gap: .3rem; max-height: 16rem; overflow-y: auto; }
+.er-ord-row { display: grid; grid-template-columns: minmax(0, 1fr) auto; align-items: center; gap: .15rem .5rem; border: 1px solid var(--line); border-radius: 10px; background: var(--surface); padding: .35rem .5rem; }
+.er-ord-row.is-open { border-color: var(--signal); }
+.er-ord-row p { margin: 0; font-size: .8rem; line-height: 1.6; color: var(--ink); grid-column: 1; }
+.er-ord-row p b { font-weight: 500; }
+.er-ord-row p bdi { color: var(--ink-2); }
+.er-ord-meta { display: flex; flex-wrap: wrap; align-items: center; gap: .25rem; }
+.er-ord-meta small { color: var(--ink-3); font-size: .7rem; }
+.er-ord-chip { display: inline-block; font-size: .68rem; line-height: 1.5; border-radius: 999px; padding: 0 .45rem; border: 1px solid var(--line-2); color: var(--ink-2); background: var(--surface); }
+.er-ord-chip.is-wait { border-color: #E8B65A; color: #7A4A00; background: #FFF8E1; }
+.er-ord-chip.is-done { border-color: var(--signal); color: var(--signal-strong); background: var(--tint); }
+.er-ord-chip.is-x { text-decoration: line-through; color: var(--ink-3); }
+.er-ord-chip.is-rem { border-style: dashed; }
+.er-ord-chip.is-doc { color: #5B4BB5; border-color: #C9C1EE; }
+#view-er .er-ord-row button { grid-column: 2; grid-row: 1 / span 2; border: 1px solid var(--signal) !important; background: var(--signal) !important; color: #fff !important; border-radius: 999px !important; padding: .2rem .8rem !important; font: inherit; font-size: .78rem; cursor: pointer; min-height: 2rem; }
+#view-er .er-ord-row button:focus-visible { outline: 2px solid var(--signal-strong); outline-offset: 2px; }
+#er-test[data-badge]:not([data-badge=""])::after { content: attr(data-badge); display: inline-block; margin-inline-start: .3rem; min-width: 1.2rem; border-radius: 999px; background: #E39A3B; color: #fff; font-size: .7rem; line-height: 1.2rem; text-align: center; }
+
+/* nurse mode: who may order a test, in the tests list */
+.er-tag { display: block; font-style: normal; font-size: .64rem; line-height: 1.4; margin-top: .1rem; direction: rtl; }
+.er-tag-own { color: var(--signal-strong); }
+.er-tag-ord { color: #5B4BB5; }
+.er-tag-need { color: #7A4A00; }
+.er-tests tr.is-blocked td { color: var(--ink-3); }
+@media (max-width: 1023px) {
+  #view-er .er-ord-row button { min-height: 2.5rem; }
+}
+
+/* nurse mode review fix 2026-11-07: the report's notes grouped by the seven sections */
+.er-report-n .er-sec { border-top: 1px solid var(--line); padding-top: .45rem; margin-top: .45rem; }
+.er-report-n .er-sec h5 { margin: 0 0 .2rem; font-size: .88rem; font-weight: 500; color: var(--ink); }
+.er-report-n .er-sec-k { margin: .25rem 0 .1rem; font-size: .76rem; font-weight: 500; color: var(--ink-2); }

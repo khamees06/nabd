@@ -22,6 +22,14 @@
   let D = null, loading = null, api = location.protocol === 'file:' ? 'off' : 'try', apiFails = 0, apiRetryAt = 0, apiNoted = false;
   let E = null, tickId = null, last = 0;
   const seen = new Set();
+  /* nurse mode 2026-11-07: the trainee can be the ER nurse responsible for the bed instead of the resident.
+     Every nurse-only path sits behind NM(); the doctor room is unchanged. roleWanted is the role asked for
+     before a case starts (briefing switch or test harness); null means "from the user's track". */
+  let roleWanted = null;
+  const NM = () => !!E && E.role === 'nurse';
+  // Patient, relative and instructor lines were written for a doctor: "يا دكتور" is dropped for the nurse.
+  // Third-person «الدكتور» stays.
+  const forNurse = s => String(s == null ? '' : s).replace(/(^|[\s،,!؟?.…])يا دكتور(?:ه|ة)?[،,]?\s*/g, '$1').replace(/^(?:دكتور[!،,]?\s*)+/, '').replace(/\s+([.،,!؟?])/g, '$1').trim();
 
   const $ = id => document.getElementById(id);
   const esc = s => String(s == null ? '' : s).replace(/[&<>"]/g, m => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;' }[m]));
@@ -139,10 +147,12 @@
     if (E.sim - E.paintAt >= 0.12) { paint(); E.paintAt = E.sim; }
     for (const j of E.jobs.filter(x => E.sim >= x.at)) { E.jobs.splice(E.jobs.indexOf(j), 1); j.fn(); }
     stageCheck();
+    if (NM()) nurseTick();
     // The patient is steady: the supervisor asks whether he is ready to hand over, once.
-    if (!E.nudged && E.risk <= E.c.risk.watch - 6 && netRate() <= 0 && !keyMissing().length && E.done.size >= 3 && E.sim > 2) {
+    // (Nurse mode: only once the doctor knows, and the instructor asks for an SBAR handover.)
+    if (!E.nudged && E.risk <= E.c.risk.watch - 6 && netRate() <= 0 && !keyMissing().length && E.done.size >= 3 && E.sim > 2 && (!NM() || E.nurse.esc.calledAt !== null || E.nurse.present)) {
       E.nudged = true;
-      later(0.2, () => person('d', pickOf(['الأرقام استقرت. بقي إشي بدك تعمله؟ ولا جاهز تسلّم؟', 'تمام، الوضع أحسن. شو الخطة، والوجهة؟'])));
+      later(0.2, () => person('d', NM() ? 'الأرقام استقرت. جاهز تسلّم الحالة بصيغة SBAR؟' : pickOf(['الأرقام استقرت. بقي إشي بدك تعمله؟ ولا جاهز تسلّم؟', 'تمام، الوضع أحسن. شو الخطة، والوجهة؟'])));
     }
     // An order waiting on a dose is not given: the nurse says so rather than let him think it was.
     const open = E.pending;
@@ -153,7 +163,7 @@
     const hold = E.c.risk.hold;
     if (hold && !E.holdAsked && !E.done.has(hold.until) && E.sim > 7 && E.risk <= hold.at + 1) {
       E.holdAsked = true;
-      person('d', hold.ask || 'الأرقام ثابتة بس ما تحسنت. شو الخطوة الناقصة؟');
+      person('d', NM() ? (E.nurse.orders.some(o => openOrd(o)) ? 'الأرقام ما تحسنت. في أمر من الدكتور لسا ما تنفّذ؟' : 'الأرقام ما تحسنت. لازم الدكتور يعرف؟') : hold.ask || 'الأرقام ثابتة بس ما تحسنت. شو الخطوة الناقصة؟');
     }
     alarm(now);
     if (E.risk >= 100) arrest();
@@ -182,6 +192,7 @@
     }
     E.stage = s;
     E.topStage = Math.max(E.topStage, s);
+    if (NM()) for (let k = 1; k <= s; k++) if (E.nurse.stageAt[k] === undefined) E.nurse.stageAt[k] = E.sim;
     if (E.vtNow && E.vtAt === null) E.vtAt = E.sim;
     if (s >= 2) { E.bpAt = 0; paint(); }
     const L = E.c.stageLines[STAGES[s]] || {};
@@ -189,6 +200,8 @@
     if (s >= 2) alert(s === 3 ? 'إنذار حرج: ' + worst() : 'إنذار: ' + worst());
     const told = nurseStage(L);
     if (told) nurse(told);
+    // Nurse mode: nobody reads the monitor for the trainee; what the eye sees at the bedside is noted.
+    if (NM()) { const seenNow = L.seen || (L.rest || []).join('، و') || forNurse(L.nurse || ''); if (seenNow) say('exam', 'تلاحظ: ' + seenNow); }
     if (L.patient) later(0.15, () => person('p', pickOf(L.patient)));
     // The relative answers a patient who calls for them, unless they are waiting outside.
     if (L.companion && !E.comp.used.has(L.companion) && E.sim >= E.comp.outUntil) {
@@ -198,7 +211,8 @@
     }
     E.anx = clamp(E.anx + 14, 0, 100);
     director(s >= 2 ? 'alarm' : 'worse');
-    if (s >= 2) coach(s === 3 ? 'critical' : 'urgent');
+    if (NM()) nurseStageRise(s);
+    else if (s >= 2) coach(s === 3 ? 'critical' : 'urgent');
   }
   // The nurse says a falling number only while the monitor shows it falling: the case lists each
   // sign with its limit ([vital, limit, words, '>' for too high]); what the eye sees is always said.
@@ -236,7 +250,7 @@
   }
 
   /* ---------- the stream ---------- */
-  const LABEL = () => ({ p: E.c.patient.name, c: E.c.companion.name, n: 'الممرضة ' + E.c.nurse.name, d: 'المشرف', me: 'أنت' });
+  const LABEL = () => (NM() ? { p: E.c.patient.name, c: E.c.companion.name, n: 'د. ' + E.nurse.doc, d: 'المشرفة ' + E.c.nurse.name, me: 'أنت' } : { p: E.c.patient.name, c: E.c.companion.name, n: 'الممرضة ' + E.c.nurse.name, d: 'المشرف', me: 'أنت' });
   // Latin runs keep their own order inside Arabic: "12-lead ECG", "5 mg".
   const bidi = s => String(s == null ? '' : s).split(/([A-Za-z0-9](?:[A-Za-z0-9 .,\-/%+]|\([A-Za-z0-9 .,\-/%+]*\))*(?<![ .,\-/+])|[A-Za-z0-9])/).map((x, i) => (i % 2 ? `<bdi dir="ltr">${esc(x)}</bdi>` : esc(x))).join('');
   function say(who, text, extra) {
@@ -254,11 +268,18 @@
   }
   function person(who, text) {
     if (!E || E.over || !text) return;
+    // Nurse mode: nobody in the room calls the nurse «دكتور». A line that was only the address is skipped.
+    if (NM() && (who === 'p' || who === 'c' || who === 'd')) { const s = forNurse(text); if (s !== String(text).trim() && !/[\p{L}\p{N}]/u.test(s)) return; text = s; }
     say(who, text);
     E.chat.push({ r: who === 'me' ? 's' : who === 'p' ? 'p' : who === 'c' ? 'c' : who === 'n' ? 'n' : 'd', t: text });
     E.utt++;
   }
-  const nurse = text => person('n', text);
+  // The ER nurse's line in the doctor room. In nurse mode the trainee is the nurse, so her line is either
+  // dropped (alt undefined), said as a plain room note (alt string), or said by the instructor (alt {d}).
+  function nurse(text, alt) { if (NM()) return nurseAlt(alt); person('n', text); }
+  function nurseAlt(alt) { if (alt === undefined || alt === null) return; if (typeof alt === 'string') sys(alt); else if (alt.d) person('d', alt.d); }
+  // Nurse mode: the only way the doctor (n) speaks. Fixed lines only, never model-written.
+  const docSay = t => person('n', t);
   const sys = text => say('sys', text);
   function alert(text) { say('alarm', text); }
   const log = (type, text) => E.log.push({ at: E.sim, type, text });
@@ -294,7 +315,7 @@
     try {
       const r = await fetch(API, {
         method: 'POST', headers: { 'Content-Type': 'application/json' }, signal: timeout(ms),
-        body: JSON.stringify({ case: E.c.id, risk: E.risk, anx: E.anx, state: stateNow(), history: E.chat.slice(-14), ...body })
+        body: JSON.stringify({ case: E.c.id, risk: E.risk, anx: E.anx, state: stateNow(), history: E.chat.slice(-14), ...(NM() ? { role: 'nurse', orders: E.nurse.orders.slice(0, 12).map(o => o.ar + ': ' + (o.cancelled ? 'cancelled' : o.doneAt != null ? 'done' : 'pending')) } : {}), ...body })
       });
       if (!r.ok) {
         if ([403, 404, 405, 429, 503].includes(r.status) || ++apiFails >= 3) goOff();
@@ -569,7 +590,7 @@
   // The same word means different things; these are the ones trainees actually type.
   // Tests a collision rule adds although none of their own words were typed.
   let FORCED = new Set();
-  function collisions(t, ids) {
+  function collisions(t, ids, ord = ORDER) {
     FORCED = new Set();
     if (/مضاد (?:صفيحات|تخثر|حموض)/.test(t) && !/مضاد حيوي/.test(t)) ids.delete('antibiotics');
     if (/قسطره بول|foley|فولي/.test(t)) { ids.delete('cath_lab'); ids.delete('urine'); }
@@ -592,7 +613,7 @@
     if (/(?:في|على|ب|in) ?\d+ ?(?:مل|ml|cc)/.test(t) && [...ids].some(id => id !== 'fluids')) ids.delete('fluids');
     if (/كابتوبريل|captopril|نيفيديبين|nifedipine|adalat|اداليت/.test(t)) ids.delete('nitrate');
     if (/بطن|abdom|appendi/.test(t)) ids.delete('ctpa');
-    if (!ORDER.test(t) && !/defib|ديفيب|ديفب|cardiovert/.test(t) && t.split(' ').length > 2) ids.delete('shock');
+    if (!ord.test(t) && !/defib|ديفيب|ديفب|cardiovert/.test(t) && t.split(' ').length > 2) ids.delete('shock');
     // "heparin 4000 units IV bolus" is a way of giving heparin.
     if (/bolus|بولس/.test(t) && !/سوائل|سلاين|saline|fluid|محلول|رينجر/.test(t) && [...ids].some(id => id !== 'fluids')) ids.delete('fluids');
     return ids;
@@ -608,6 +629,8 @@
   const nz = s => norm(s).replace(/(^| )(?:وال|بال|لل|ال|و|ب)(?=[a-z])/g, '$1').replace(/([a-z0-9])([ء-ي])/g, '$1 $2').replace(/([ء-ي])([a-z])/g, '$1 $2');
   function localRead(text) {
     const t = nz(text), c = E.c;
+    // Nurse mode: first-person acts (بقيس، ركّبت) are acts too, and the nurse's own words for a vitals check count.
+    const ORD = NM() ? ORDER_N : ORDER, ACTS = NM() ? E.nurse.acts : D.actions;
     // Every question mark ends a question of its own, and each is read alone.
     const clauseFacts = cl => {
       let fx = c.facts.filter(f => hasAny(cl, f.kw)).map(f => f.id).filter(id => id !== 'allergy' || /حساس|تحسس|allerg/.test(cl));
@@ -617,10 +640,10 @@
     };
     const asked = text.split(/[؟?]/).map(x => nz(x).trim()).filter(Boolean);
     let facts = [...new Set((asked.length > 1 ? asked : [t]).flatMap(clauseFacts))].slice(0, 3);
-    let exam = c.exam.filter(f => hasAny(t, f.kw)).map(f => f.id);
-    const verb = ORDER.test(t);
+    let exam = c.exam.filter(f => hasAny(t, f.kw) || (NM() && hasAny(firstP(t), f.kw))).map(f => f.id);
+    const verb = ORD.test(t);
     // A message can hold a question and an order: every sentence is judged on its own, so a «؟» in one never cancels the other.
-    const orderish = p => { const pt = nz(p); return ORDER.test(pt) || URGENT.test(pt) || !!doseIn(p); };
+    const orderish = p => { const pt = nz(p); return ORD.test(pt) || URGENT.test(pt) || !!doseIn(p); };
     const parts = (text.match(/[^؟?]+[؟?]?/g) || [text]).map(p => p.trim()).filter(Boolean).flatMap(p => {
       if (!p.includes('،') || !/[؟?]\s*$/.test(p)) return [p];
       const cl = p.split('،').map(x => x.trim()).filter(Boolean);
@@ -633,24 +656,24 @@
       const pt = nz(p);
       const past3 = ASKS_PAST3.test(pt) && (/[؟?]/.test(p) || PAST_WORD.test(pt));
       if (/[؟?]/.test(p)) return (!IMPV.test(pt) && !(FPQ.test(pt) && !/(?:^| )(?:اذا|لو)(?: |$)/.test(pt))) || ASKS_ABOUT.test(pt) || past3;
-      return (HISTORY.test(pt) && !ORDER.test(pt)) || ASKS_ABOUT.test(pt) || past3;
+      return (HISTORY.test(pt) && !ORD.test(pt)) || ASKS_ABOUT.test(pt) || past3;
     };
     const ordParts = parts.filter(p => !asksPart(p));
     const asking = !ordParts.length;
     // What the order-reading below looks at: the sentences that are not questions.
     const tO = ordParts.length === parts.length ? t : nz(ordParts.join(' '));
-    const named = list => { const ids = collisions(tO, new Set(list.filter(a => hasAny(tO, a.kw)).map(a => a.id))); const keep = FORCED; const out = list.filter(a => ids.has(a.id)); FORCED = keep; return out; };
-    const stated = named(D.actions);
+    const named = list => { const ids = collisions(tO, new Set(list.filter(a => hasAny(tO, a.kw)).map(a => a.id)), ORD); const keep = FORCED; const out = list.filter(a => ids.has(a.id)); FORCED = keep; return out; };
+    const stated = named(ACTS);
     const forbids = !asking && stated.some(a => { const at = mentionsOf(tO, a.kw); return at.length && !at.some(i => freeAt(tO, i)); });
     const condBefore = i => /(?:^| )(?:لو(?! سمحت)|اذا)(?: |$)/.test((' ' + tO + ' ').slice(0, i));
     const said = list => (asking ? [] : named(list).filter(a => FORCED.has(a.id) || mentionsOf(tO, a.kw).some(i => freeAt(tO, i) && !condBefore(i))));
     const short = tO.split(' ').length <= 3;
     const ordText = ordParts.join(' ');
-    const found = said(D.actions).map(a => { const dose = clauseDose(ordText || text, a.kw, said(D.actions).length > 1); return { a, dose }; });
+    const found = said(ACTS).map(a => { const dose = clauseDose(ordText || text, a.kw, said(ACTS).length > 1); return { a, dose }; });
     // A long sentence with no verb is talk about the drug: the nurse checks instead of acting.
-    const drugs = found.filter(x => ORDER.test(tO) || URGENT.test(tO) || x.dose || short || (tO.split(' ').length <= 5 && !actOf(x.a.id).dose));
+    const drugs = found.filter(x => ORD.test(tO) || URGENT.test(tO) || x.dose || short || (tO.split(' ').length <= 5 && !actOf(x.a.id).dose));
     const unclear = found.find(x => !drugs.includes(x));
-    const strict = a => mentionsOf(tO, a.kw).some(i => ORDER.test((' ' + tO + ' ').slice(0, i).trim().split(' ').slice(-3).join(' ')));
+    const strict = a => mentionsOf(tO, a.kw).some(i => ORD.test((' ' + tO + ' ').slice(0, i).trim().split(' ').slice(-3).join(' ')));
     // A cannula or a vitals check has no dose: "12-lead" beside it is not one.
     const actions = drugs.map(({ a, dose: d0 }) => { const dose = actOf(a.id).dose ? d0 : ''; return { id: a.id, agent: '', dose, bare: !dose && !strict(a) }; });
     // Keywords missed it: the trained reader looks for a finding this patient's record answers.
@@ -686,7 +709,7 @@
     const opens = /شو (اللي )?(جابك|صار معك|صاير|مالك|بك|فيك)|احكيلي شو/.test(t);
     const asks = / (شو|وين|قديش|كم|امتي|متي|ليش|هل|ايه|shu)( |$)/.test(' ' + t) && !/شو اخبار/.test(t);
     const small = !asks && (social || (act === null && /^(مرحب|اهلا|هلا|السلام|صباح|مساء)/.test(t)));
-    return {
+    const out = {
       act, text, forbids, unclear: unclear ? actOf(unclear.a.id).ar : '', toPat, named: D.actions.filter(a => hasAny(t, a.kw)).map(a => a.id), typedOrder: (verb || !!doseIn(text)) && !asking,
       to, facts, exam, actions: talkOnly || stopped || answering ? [] : actions, tests: talkOnly ? [] : tests, kind: toSup && !social ? 'help' : actions.length ? 'order' : opens ? 'open' : small ? 'smalltalk' : facts.length ? 'question' : 'other',
       pending_ok: offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse, toPat }),
@@ -696,8 +719,165 @@
         explained: toComp && /(?:^| )[وف]?(?:رح|راح|عم ن\S*|بنعطي|بنعمل|الوضع|حالتها|حالته)(?: |$)/.test(t), consent: /(بعد اذنك|ممكن اسمع|ممكن افحص|بتسمح)/.test(t),
       }
     };
+    // Nurse mode: who is meant is decided again (the doctor is on the phone, the instructor stands behind).
+    return NM() ? nurseShape(out, t, text, false) : out;
   }
   const VITALS_Q = /(ضغط|نبض|اكسجين|ارقام|الرقم|حراره|تنفس|ساتورشن|ساتوريشن|spo2|sat|bp|hr)/;
+
+  /* ---------- nurse mode: reading the trainee (2026-11-07) ---------- */
+  // What the nurse does herself is said in the first person: بقيس، ركّبت، بعطيه.
+  const SELF = /(?:^| )[وف]?(?:رح |راح |ح|هسا |خليني )?(?:ب|ا)?(?:قيس|قست|عطي|عطيت|اعطيت|ركبت|حطيت|سحبت|علقت|شغلت|رفعت|قعدت|عملت|بعمل|جهزت|بركب|بحط|بعطي|بسحب|بشغل|بعلق)\S*(?: |$)|i'?ll |i will /;
+  const ORDER_N = new RegExp(ORDER.source + '|' + SELF.source);
+  // The instructor by name or title; the generic "help me" phrases go to her only when nothing else is meant.
+  // Review fixes 2026-11-07: the instructor's name alone at the start ("سناء شو الخطوة؟") calls her too.
+  const SUPV_N = name => new RegExp('(يا مشرف(?:ه)?|المشرفه|يا استاذ(?:ه)?|يا ' + name + '(?: |$)|^' + name + '(?: |$))');
+  const SUPV_GEN = /(ساعديني|ساعدني|شو (?:ب)?رايك|شو اعمل|مش عارف|محتار|بتنصح\S*|انصحيني|نصيحه|شو (?:لازم |بدي |المفروض )?(?:اعمل|نعمل) (?:هسا|بعد|كمان)|شو (?:لازم|المفروض) (?:اعمل|نعمل)|الخطوه الجايه|شو بعد(?: |$))/;
+  const DOCV = name => new RegExp('(?:^|\\s)(?:يا\\s+)?(?:دكتور|دكتوره|د)(?:\\s+' + name + ')?(?=\\s|$)|(?:^|\\s)يا\\s+' + name + '(?=\\s|$)|^' + name + '(?=\\s|$)');
+  // "دكتور طارق رح يجي" is said about the doctor, not to him.
+  const DOC_3P = /^\s+(?:رح|راح|ح|بيجي|بتيجي|جاي|جايه|بيشوف|بتشوف|بيعرف|بتعرف|عرف|عرفت|اجا|اجت|وصل|وصلت|بيطلب|بتطلب|طلب|طلبت|قال|قالت|حكي|حكت|مشغول|مشغوله|بيعطي|بتعطي|علي الطريق|على الطريق|عالطريق)(?:\s|$)/;
+  const CALL_N = /(?:اتصل|بتصل|رح اتصل|ناد|بناد|كلم|بكلم|بلغ|ببلغ|خبر|بخبر|اسال|بسال|بدي)\S* (?:علي |على |ب|لل|عال)?(?:ال)?(?:دكتور|دكتوره|طبيب|طبيبه|مقيم)|(?:احكي|بحكي|نحكي|حكيت|رح احكي)\S* (?:مع |لل|ل|عال|علي |على |ب)(?:ال)?(?:دكتور|دكتوره|طبيب|طبيبه|مقيم)|(?:^| )sbar (?:لل|ل|عال)?(?:ال)?(?:دكتور|دكتوره|طبيب|طبيبه)|(?:^| )(?:ال)?(?:دكتور|دكتوره|طبيب|طبيبه)\S* (?:لازم|بد\S*) (?:يعرف|تعرف|يجي|تيجي|يشوف|تشوف)|call (?:the )?doctor|\bpage\b/;
+  const HELP_CALL = /(كود|code blue|نادوا فريق|فريق الانعاش|rapid response)/;
+  // (The text is normalised: «مجرى» arrives as «مجري».)
+  const AIRWAY_ASSESS = /(?:قيم|بقيم|تقييم|افحص|بفحص|assess|check|شيك|بشيك|بتشيك)\S* (?:علي |على |عل )?(?:ال)?(?:airway|مجر[يى] (?:ال)?(?:هوا|تنفس)|ممر الهوائي)|مجر[يى] (?:ال)?(?:هوا(?:ء)?|تنفس) (?:مفتوح|سالك|نظيف)|airway (?:patent|clear|ok)/;
+  const DRAW = /(?:سحبت|بسحب|اسحب|رح اسحب)\S* (?:ال)?(?:دم|عينات|عينه)|draw (?:the )?bloods?|blood samples/;
+  const NURSE_KW = { bp_repeat: ['بقيس الضغط', 'قست الضغط', 'علامات حيويه', 'العلامات', 'vitals', 'الارقام', 'news'], temp: ['بقيس الحراره', 'قست الحراره'], sit_up: ['رفعت راس', 'برفع راس', 'رفعت السرير', 'قعدتها', 'قعدته', 'بقعدها', 'بقعده', 'رفعت الجلسه'] };
+  const NURSE_VITALS = /(علامات حيويه|العلامات|vitals|الارقام|news|(?:^| )(?:ال)?سات(?: |$))/;
+  const ALLERGY_W = /(حساسي|تحسس|allerg|nkda)/;
+  // A plan or a suggestion names a drug without giving it.
+  const SUGGEST = /(بقترح|اقترح|نقترح|بستني|استني (?:ال)?دكتور|لما (?:ي|ت)طلب|بعد ما (?:ي|ت)طلب|قبل ما (?:ي|ت)طلب|(?:^| )(?:ال)?(?:دكتور|دكتوره|طبيب|طبيبه) (?:رح|راح|ح|بي|بت)\S*|ما رح (?:ا|ن)?عطي|ما ب(?:ا|ن)?عطي|بد(?:و|ها) امر|بحتاج امر|(?:^| )(?:رح|راح|ح|هلا|هسا) (?:ب)?ن(?:عطي|حط|ركب|علق|بلش)\S*)/;
+  // Steps the nurse says she did, by the short names nurses use; checked against the open orders only.
+  const ORDER_ALIAS = { cxr: /(?:^| )(?:ال)?(?:صوره|اشعه)(?! (?:ال)?دم)(?: |$)/, kft: /(?:^| )(?:ال)?كلي(?: |$)/, cbc: /(?:^| )صوره (?:ال)?دم(?: |$)/, urine: /(?:^| )(?:ال)?بول(?: |$)/, blood_culture: /(?:^| )(?:ال)?زراع\S*/, airway: /سيباب|سي باب/, antibiotics: /(?:^| )(?:ال)?ليفو\S*/ };
+  const EXEC_V = /(?:^| )[وف]?(?:طلبت|بطلب|بعتت|بعت|ببعت|سحبت|بسحب|ركبت|بركب|عطيت|اعطيت|بعطي|حطيت|علقت|بلشت|ضفت|عملت|خلصت|نفذت)\S*/;
+  const BAND = /(سوار|اسواره|سجلت الحساسيه)/;
+  // The nurse narrates her examination in the first person: «بسمع صدرها» is «اسمع صدر».
+  const firstP = s => (' ' + s + ' ').replace(/ (?:بسمع|سمعت|بتسمع|رح اسمع|خليني اسمع)(?= )/g, ' اسمع').replace(/ (?:بفحص|فحصت|رح افحص|خليني افحص)(?= )/g, ' افحص')
+    .replace(/ (?:بشوف|شفت|رح اشوف|خليني اشوف)(?= )/g, ' شوف').replace(/ (اسمع|افحص|شوف) ال(?=\S)/g, ' $1 ').replace(/ شكل(?:ها|ه) العام(?= )/g, ' الشكل العام').replace(/ (?:وعيها|وعيه)(?= )/g, ' وعي').trim();
+  // Which people a message calls, and which comes first.
+  function nurseVocs(t) {
+    const R = E.nurse.rx;
+    let iDoc = t.search(R.docv);
+    const iSup = t.search(R.supv), iComp = t.search(R.compv);
+    if (iDoc >= 0) {
+      const m = t.slice(iDoc).match(R.docv);
+      if (m && !/يا\s/.test(m[0]) && DOC_3P.test(t.slice(iDoc + m.index + m[0].length))) iDoc = -1;
+    }
+    let first = iDoc >= 0 && (iSup < 0 || iDoc <= iSup) ? 'doc' : iSup >= 0 ? 'sup' : null;
+    // "يا أم يزن، دكتور طارق جاي": the relative is spoken to first.
+    if (iComp >= 0 && (first === null || iComp < (first === 'doc' ? iDoc : iSup))) first = 'comp';
+    const call = CALL_N.test(t), help = HELP_CALL.test(t);
+    return { first, call, help, gen: SUPV_GEN.test(t), voc: (first !== null && first !== 'comp') || call || help };
+  }
+  // Every action and test a message names, whatever it says about it.
+  const mentionedIds = t => [...E.nurse.acts.filter(a => hasAny(t, a.kw)).map(a => a.id), ...D.tests.filter(x => hasAny(t, x.kw)).map(x => x.id)];
+  const openOrd = o => !o.cancelled && o.doneAt == null && !o.doctorDoes;
+  // Who a message is for, in the nurse room; the same rules for the offline reader and the server's reading.
+  // It only annotates the reading: apply() commits what it means.
+  function nurseShape(read, t, text, online) {
+    const N = E.nurse, X = N.esc;
+    read.actions = (read.actions || []).slice(); read.tests = (read.tests || []).slice();
+    read.facts = read.facts || []; read.exam = read.exam || []; read.tone = { ...(read.tone || {}) };
+    const v = nurseVocs(t);
+    if (v.voc) { read.facts = []; read.exam = []; }
+    if (/(?:^| )(?:انا|معك|اسمي)(?: \S+)? (?:ال)?ممرض|ممرضتك|ممرضك(?: |$)/.test(t)) read.tone.introduced = true;
+    if (AIRWAY_ASSESS.test(t)) { read.actions = read.actions.filter(a => a.id !== 'airway'); read.airwayAssess = true; }
+    if (DRAW.test(t) && !read.tests.some(x => (testOf(x.id) || {}).group === 'lab')) read.draw = true;
+    const callAct = read.actions.some(a => a.id === 'call_senior' || a.id === 'call_icu');
+    read.escalate = v.call || v.help || callAct;
+    read.help = v.help;
+    const hasQ = /[؟?]/.test(text), rbPhrase = /(بعيد الاوامر|خليني اعيد|يعني بدك)/.test(t);
+    const open = N.orders.filter(openOrd), openIds = open.map(o => o.id);
+    // Review fixes 2026-11-07. A band on the wrist is not the allergy question.
+    if (BAND.test(t) && !hasQ) { read.facts = read.facts.filter(f => f !== 'allergy'); read.band = true; }
+    // An open order by the short name nurses use ("بعتت الكلى", "عطيته ليفو"), or "the drug" when one drug is open.
+    if (!read.actions.length && !read.tests.length && open.length && EXEC_V.test(t) && !hasQ) {
+      const hit = open.filter(o => ORDER_ALIAS[o.id] && ORDER_ALIAS[o.id].test(t));
+      const drugs = open.filter(o => o.kind === 'act' && !o.reminder && isDrug(o.id));
+      if (!hit.length && /(?:^| )(?:ال)?(?:دوا|دواء|ابره|حقنه|علاج)(?: |$)/.test(t)) {
+        if (drugs.length === 1) hit.push(drugs[0]);
+        else if (drugs.length > 1) { read.whichDrug = drugs.map(o => o.ar); read.noHelp = true; }
+      }
+      hit.forEach(o => (o.kind === 'test' ? read.tests.push({ id: o.id, reason: '', reason_ok: 'none' }) : read.actions.push({ id: o.id, agent: '', dose: '' })));
+      if (hit.length) { read.facts = []; read.exam = []; }
+    }
+    if (!read.actions.length && !read.tests.length && /(?:خلصت|نفذت|عملت)\S* (?:كل )?(?:ال)?اوامر|(?:خلصت|عملت) كل (?:ا)?شي/.test(t)) { read.allOrders = true; read.facts = []; read.exam = []; }
+    // "بقترح نعطيها فنتولين", "الدكتور رح يعطيها كورتيزون": a drug named, nothing given, no gap.
+    if (SUGGEST.test(t)) {
+      const plain = !/(بقترح|اقترح|نقترح)/.test(t);
+      const keep = id => NURSE_OWN.has(id) || NURSE_TESTS.has(id) || id === 'oxygen' || (plain && openIds.includes(id));
+      const sug = [...read.actions.map(a => a.id), ...read.tests.map(x => x.id)].filter(id => !keep(id));
+      if (sug.length) { read.suggested = sug; read.noHelp = true; read.actions = read.actions.filter(a => keep(a.id)); read.tests = read.tests.filter(x => keep(x.id)); }
+      else if (!read.actions.length && !read.tests.length && !read.facts.length && !read.exam.length) { read.planOnly = true; read.noHelp = true; }
+      // A drug named in a plan is not a history question.
+      if (!hasQ) read.facts = read.facts.filter(f => !HIST_FACTS.has(f) || f === 'allergy');
+    }
+    // Executing an order names its carrier ("بوتاسيوم عالسوائل") or an order already done: those are mentions.
+    if (read.actions.some(a => openIds.includes(a.id)) || read.tests.some(x => openIds.includes(x.id))) {
+      const doneOrd = id => N.orders.some(o => o.id === id && o.doneAt != null && !o.repeat) && !openIds.includes(id);
+      const vehicle = id => id === 'fluids' && !openIds.includes('fluids') && /(?:عال|علي ال|على ال|مع ال|بال|في ال|ع ال)(?:سوائل|محلول|سيروم|سلاين)/.test(t);
+      read.actions = read.actions.filter(a => !(doneOrd(a.id) || vehicle(a.id)));
+      read.tests = read.tests.filter(x => !doneOrd(x.id));
+    }
+    const mentioned = mentionedIds(t);
+    const namesOpen = mentioned.some(id => openIds.includes(id)) || read.actions.some(a => openIds.includes(a.id)) || read.tests.some(x => openIds.includes(x.id));
+    // The doctor asked about allergies: a short answer in the next turns is for him.
+    const allergen = Object.values(E.c.care).some(d => d.allergyKw && hasAny(t, d.allergyKw)) || /(اسبرين|aspirin|بنسلين|بنسيلين|penicillin|بروفين|ibuprofen)/.test(t);
+    // («عنده ضغط وسكري» is history, not this answer: «ما عنده» alone, or with an allergy word, is.)
+    const ALLERGY_ANS = /^(?:لا|لاء|لأ|اه|ايوه|ايوا|نعم|اكيد|مافي|ما في|ما بعرف|مش عارف|ما سالت\S*|لسا ما سالت\S*|مش متاكد\S*|nkda|no|yes)(?: |$)|^ما (?:عنده|عندها)$/;
+    if (N.allergyAskedByDoc && !N.allergyAnswered && E.turns - N.allergyAskTurn <= 3 && !hasQ && !/(?:^| )(?:عندك|انت|انتي|معك|بتتحسس\S*)(?: |$)/.test(t)
+      && ((ALLERGY_ANS.test(t) && wordsIn(t) <= 6) || ALLERGY_W.test(t) || (allergen && wordsIn(t) <= 4))) read.allergyReply = true;
+    // Within the same turns, history said in the third person adds to the SBAR the doctor just heard.
+    const histAdd = N.allergyAskedByDoc && !N.allergyAnswered && E.turns - N.allergyAskTurn <= 3 && !hasQ && !read.allergyReply && !read.actions.length && !read.tests.length
+      && HIST_RX.test(t) && /(?:^| )(?:عنده|عندها|هو|هي|المريض\S*)(?: |$)/.test(t);
+    // Read back or given while the doctor still waits for the allergy answer: the drugs he has not ordered yet.
+    const heldIds = N.holdRel ? Object.entries(N.nm.orders).filter(([k, o]) => o.kind === 'act' && !o.reminder && !o.doctorDoes && isDrug(o.id || k) && orderDue(o)).map(([k, o]) => o.id || k) : [];
+    const namesHeld = heldIds.length && (mentioned.some(id => heldIds.includes(id)) || read.actions.some(a => heldIds.includes(a.id)));
+    if (namesHeld && !hasQ && !rbPhrase && read.actions.some(a => heldIds.includes(a.id))) { read.heldGive = read.actions.filter(a => heldIds.includes(a.id)).map(a => a.id); read.actions = read.actions.filter(a => !heldIds.includes(a.id)); }
+    const dxQ = /(?:^| )(?:ال)?تشخيص|diagnos/.test(t) && !read.facts.length && !read.exam.length && !read.actions.length && !read.tests.length;
+    const recWin = X.sbar && !X.sbar.none && E.turns - N.escDoneTurn <= 2 && /(?:^| )(?:تعال|تعالي|بسرعه|شوفها|شوفه|محتاجك|بحتاجك)(?: |$)/.test(t) && !read.actions.length && !read.tests.length;
+    let to;
+    if (read.allergyReply && v.first !== 'sup' && v.first !== 'comp') to = 'nurse';
+    else if (v.first === 'comp') to = 'companion';
+    else if (v.first === 'doc' || v.call || v.help) to = 'nurse';
+    else if (v.first === 'sup') to = 'supervisor';
+    else if (read.to === 'companion') to = 'companion';
+    else if (read.toPat) to = 'patient';
+    else if (X.awaiting) to = 'nurse';
+    else if (N.rbTurns > 0 && X.calledAt !== null && namesOpen && (hasQ || rbPhrase)) to = 'nurse';
+    else if (namesHeld && (hasQ || rbPhrase)) { to = 'nurse'; read.heldAsk = true; }
+    else if (histAdd) { to = 'nurse'; read.facts = []; }
+    else if (recWin) to = 'nurse';
+    else if (dxQ) to = N.present ? 'nurse' : 'supervisor';
+    else if ((read.suggested || read.planOnly) && !read.actions.length && !read.tests.length) to = 'supervisor';
+    else if (read.heldGive && !read.actions.length && !read.tests.length) to = 'self';
+    else if (read.whichDrug) to = 'supervisor';
+    else if (v.gen && !read.actions.length && !read.tests.length) to = 'supervisor';
+    else if (read.actions.length || read.tests.length) to = 'self';
+    else if ((read.airwayAssess || read.draw || read.band || read.allOrders) && !read.facts.length && !read.exam.length) to = 'self';
+    else if ((VITALS_Q.test(t) || NURSE_VITALS.test(t)) && !/(?:عندك|عنده|عندها|بتاخد|بياخد|بتاخذ|بيوخذ|معك)/.test(t)
+      && ((!read.facts.length && !read.exam.length) || /(?:كم|قديش|شو) (?:ال)?(?:ضغط|نبض|اكسجين|ارقام|حراره|تنفس|ساتورشن|spo2|sat|سات)|(?:ال)?(?:ضغط|نبض|اكسجين|ارقام|حراره|تنفس|spo2|sat|سات)\S* (?:كم|قديش)/.test(t))) { read.facts = []; read.exam = []; read.actions = [{ id: 'bp_repeat', agent: '', dose: '' }]; to = 'self'; }
+    else if (online && read.to === 'nurse' && !read.actions.length && !read.tests.length) to = 'nurse';
+    else if (online && read.to === 'supervisor') to = 'supervisor';
+    else to = 'patient';
+    // Re-routed to the relative: telling them what happens next is explaining.
+    if (to === 'companion' && read.to !== 'companion') read.tone.explained = read.tone.explained || /(?:^| )[وف]?(?:رح|راح|عم ن\S*|بنعطي|بنعمل|الوضع|حالتها|حالته|جاي|جايه|بيجي|بتيجي)(?: |$)/.test(t);
+    // Explaining the plan to the relative ("رح نعطيها بخار") asks them nothing.
+    if (to === 'companion' && read.tone.explained && !hasQ) read.facts = [];
+    if (read.suggested && (to === 'patient' || to === 'companion') && !hasQ) { read.tone.explained = true; read.facts = []; }
+    // Messages to the doctor never execute; a read-back is noted; a plain "I'm giving X" with an open order does run.
+    if (to === 'nurse') {
+      read.mentioned = [...new Set([...read.actions.map(a => a.id), ...read.tests.map(x => x.id), ...mentioned])];
+      if (namesOpen && (hasQ || rbPhrase)) read.readBack = true;
+      if (namesOpen && !hasQ && !rbPhrase && !X.awaiting && X.sbar !== null && !v.call && !v.help && !read.allergyReply && (read.actions.length || read.tests.length)) { read.readBack = true; to = 'self'; }
+      else { read.actions = []; read.tests = []; }
+    }
+    if (to === 'nurse' && read.allergyReply) read.facts = [];
+    // A drug named in "I'm giving X" is not a history question; words to the doctor are not asked of the patient.
+    if (to === 'nurse' || (to === 'self' && !hasQ)) { read.facts = []; read.exam = to === 'nurse' ? [] : read.exam; }
+    read.to = to;
+    read.toDoc = to === 'nurse';
+    if (to === 'supervisor') read.kind = 'help'; else if (read.kind === 'help') read.kind = 'other';
+    return read;
+  }
   // The teaching questions come in turn and none twice; after the last, the supervisor lets the trainee work.
   function teachLine() {
     E.teachAt = (E.teachAt || 0);
@@ -748,7 +928,7 @@
   function localReply(read) {
     const c = E.c, t = norm(read.text || '');
     if (E.pending && read.pending_ok !== 'na') return null;
-    if (read.to === 'supervisor') return supervisorLine(read, t);
+    if (read.to === 'supervisor') return NM() ? instructorLine(read, t) : supervisorLine(read, t);
     const held = read.facts.map(id => c.facts.find(x => x.id === id)).filter(Boolean);
     // A question inside an order is still a question: someone answers it.
     if (held.length) {
@@ -765,9 +945,13 @@
       });
       return f.say;
     }
-    if (read.forbids && !read.actions.length) { read.to = 'nurse'; return 'تمام، ما بعطيه.'; }
+    // Nurse mode: a step she did and the room recorded needs no reply from anyone.
+    if (NM() && read.to !== 'companion' && (read.to === 'self' || read.draw || read.airwayAssess || read.band || read.allOrders)) return null;
+    if (read.forbids && !read.actions.length && !NM()) { read.to = 'nurse'; return 'تمام، ما بعطيه.'; }
     // Telling the family the plan names the treatment; it does not order it.
-    if (read.unclear && read.to !== 'companion') { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
+    if (read.unclear && read.to !== 'companion' && !NM()) { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
+    // Nurse mode: the doctor's words come from docLine in apply(), never from here.
+    if (read.to === 'nurse' && NM()) return null;
     if (read.to === 'nurse' && !read.actions.length && !read.tests.length) {
       return nurseLine(read, t);
     }
@@ -787,7 +971,11 @@
     if (read.actions.length || read.tests.length || read.exam.length) return null;
     if (read.kind === 'open') return c.patient.opening;
     if (read.kind === 'smalltalk') return socialReply(read.act, read.text);
+    // The plan told to the patient ("هلا بنعطيكي بخار"): a nod, not confusion.
+    if (NM() && read.suggested && read.to === 'patient') return 'طيب...';
     // An order nobody could place belongs to the nurse, not to the patient.
+    if (read.typedOrder && NM()) { read.to = 'supervisor'; read.noHelp = true; return 'شو الخطوة بالزبط؟'; }
+    if (NM() && read.tone && read.tone.introduced) return 'أهلين.';
     if (read.typedOrder) { read.to = 'nurse'; return 'مش فاهمة عليك دكتور، شو بالزبط بدك؟'; }
     if (/[؟?]/.test(read.text || '')) return c.patient.sex === 'F' ? 'مش فاهمة قصدك يا دكتور... شو بالزبط؟' : 'مش فاهم قصدك يا دكتور... شو بالزبط؟';
     // Nobody in a resus bay leaves a doctor unanswered: the patient says what a patient would.
@@ -800,6 +988,7 @@
     text = (text || '').trim();
     if (!text || !E || E.over) return;
     person('me', text);
+    E.started = true;
     E.typedThisTurn = false;
     const my = E;
     // A message still queued when the case ends goes nowhere and costs nothing.
@@ -807,6 +996,7 @@
   }
 
   async function handle(text) {
+    if (NM()) return handleNurse(text);
     const my = E;
     const dots = typing();
     const pending = E.pending;
@@ -898,14 +1088,15 @@
         }
       });
     }
+    if (NM()) nursePre(read, text, to);
     (read.exam || []).forEach(examine);
     if (line) person(to === 'companion' ? 'c' : to === 'nurse' ? 'n' : to === 'supervisor' ? 'd' : 'p', line);
-    if (to === 'supervisor') E.helps++;
+    if (to === 'supervisor' && !read.noHelp) E.helps++;
     const answered = E.resolved && open ? (open.a ? open.a.id : open.id) : null;
     const swapped = a => open && open.type === 'unsafe' && open.allergic && !allergicTo(a, E.c.care[a.id] || {}, text);
     const once = (x, i, all) => all.findIndex(y => y.id === x.id) === i;
-    (read.actions || []).filter(once).filter(a => a.id !== answered || swapped(a)).forEach(a => order(a, text));
-    (read.tests || []).filter(once).filter(x => x.id !== answered).forEach(x => orderTest(x.id, x.reason, x.reason_ok));
+    (read.actions || []).filter(once).filter(a => a.id !== answered || swapped(a)).forEach(a => (NM() ? nurseAct(a, text) : order(a, text)));
+    (read.tests || []).filter(once).filter(x => x.id !== answered).forEach(x => (NM() ? nurseTest(x.id, x.reason, x.reason_ok) : orderTest(x.id, x.reason, x.reason_ok)));
     flushBack();
     const col = (E.collect || []).filter(x => E.pending === x.p || E.queue.some(([q]) => q === x.p));
     E.collect = null;
@@ -917,12 +1108,13 @@
         E.queue = [[E.pending, first, 'n'], ...E.queue.filter(x => x !== held)];
         E.pending = held[0];
         E.pending.since = E.sim;
-        person(held[2], held[1]);
+        person(NM() && held[2] === 'n' ? 'd' : held[2], held[1]);
       } else if (!E.pending || E.pending.type === 'dose') openDoses(first);
     }
     // The senior is standing in the room: asking him is calling him.
-    if (to === 'supervisor' && read.kind === 'help' && E.c.care.call_senior && !E.done.has('call_senior')) E.done.set('call_senior', { at: E.sim, last: E.sim, n: 1, dose: '', ok: 'good', amt: 0 });
+    if (!NM() && to === 'supervisor' && read.kind === 'help' && E.c.care.call_senior && !E.done.has('call_senior')) E.done.set('call_senior', { at: E.sim, last: E.sim, n: 1, dose: '', ok: 'good', amt: 0 });
     E.resolved = false;
+    if (NM()) nursePost(read, to);
     director(to === 'companion' ? 'addressed' : 'turn');
   }
 
@@ -933,7 +1125,8 @@
     E.exam.add(id);
     const out = E.anaph && !E.anaph.treated && x.sayReact ? x.sayReact : E.stage === 3 && x.sayCritical ? x.sayCritical : x.say;
     say('exam', out);
-    E.chat.push({ r: 'n', t: 'فحص: ' + out });
+    E.chat.push({ r: NM() ? 's' : 'n', t: 'فحص: ' + out });
+    if (NM() && firstTime) E.nurse.examAt[id] = E.sim;
     if (firstTime) log('exam', 'فحصت: ' + out);
   }
 
@@ -952,7 +1145,8 @@
     E.queue = [...items.slice(1), ...E.queue.filter(([q]) => q.type !== 'dose')];
     E.pending = items[0][0];
     E.pending.since = E.sim;
-    nurse(items.length === 1 ? items[0][1] : bundleLine(items.map(i => i[0])));
+    const doseLine = items.length === 1 ? items[0][1] : bundleLine(items.map(i => i[0]));
+    nurse(doseLine, { d: doseLine });
   }
   // A safety challenge goes first, then the proposals together, then the rest.
   function nextQuestion() {
@@ -986,6 +1180,7 @@
     return true;
   }
   function ask(p, line, who = 'n') {
+    if (NM() && who === 'n') who = 'd';
     const same = q => q.type === p.type && (q.a ? q.a.id : q.id) === (p.a ? p.a.id : p.id);
     // The same order again while its question is open: the question comes back, not silence.
     if (E.pending && same(E.pending)) { if ((E.pending.wait || 0) % 2 === 1) person(who, line); return; }
@@ -1051,9 +1246,9 @@
 
   function again(a, meta, def, prev) {
     const r = meta.repeat;
-    if (!r || def.once) { nurse(`${meta.ar}؟ عملناه من شوي.`); return false; }
-    if (prev.n >= r.max) { nurse(`${meta.ar} أخدنا كفاية منه، شو الخطوة الجاية؟`); return false; }
-    if (E.sim - prev.last < r.gap) { nurse(`${meta.ar}؟ لسا معطيينه، خلينا نشوف تأثيره.`); return false; }
+    if (!r || def.once) { nurse(`${meta.ar}؟ عملناه من شوي.`, 'سبق أن نفّذت هذا قبل قليل.'); return false; }
+    if (prev.n >= r.max) { nurse(`${meta.ar} أخدنا كفاية منه، شو الخطوة الجاية؟`, 'بلغ هذا الحد الأقصى المقرر، فلم يُنفَّذ.'); return false; }
+    if (E.sim - prev.last < r.gap) { nurse(`${meta.ar}؟ لسا معطيينه، خلينا نشوف تأثيره.`, 'انتظر أثر ما أعطيته أولاً.'); return false; }
     return true;
   }
 
@@ -1062,7 +1257,644 @@
     if (!cap || !prev) return false;
     if ((prev.amt || 0) + amountOf(a, def, a.said || '') <= cap.hi * SCALE[cap.unit][1]) return false;
     badDose({ ...a, dose: a.dose + ' (فوق المجموع)' }, meta, def);
-    nurse(`دكتور، مجموع ${meta.ar} صار فوق الحد. ما بقدر أزيد.`);
+    nurse(`دكتور، مجموع ${meta.ar} صار فوق الحد. ما بقدر أزيد.`, 'تجاوز ذلك الكمية المقررة، فلم يُنفَّذ.');
+    return true;
+  }
+
+  /* =========================================================
+     NURSE MODE (2026-11-07). The trainee is the ER nurse responsible for the bed. The ER doctor (n) is
+     outside and comes when called; the clinical nurse instructor (d) stands behind the trainee. Scope follows
+     typical ED nursing protocols: assessment, vitals, positioning, oxygen for low SpO2, a cannula, bedside tests,
+     drawing blood and escalation are the nurse's own; drugs, fluids, lab tests and imaging need the doctor's order.
+     The doctor's orders come only from the case file (case.nurseMode, pinned by patch-12); his and the instructor's
+     words are fixed lines, never model-written. Cases and these lines are not physician-reviewed.
+     ========================================================= */
+  const NURSE_OWN = new Set(['sit_up', 'iv_access', 'temp', 'bp_repeat', 'cpr', 'call_senior', 'call_icu']); // oxygen: see nurseAct
+  const NURSE_TESTS = new Set(['ecg', 'glucose', 'peak_flow']); // abg and lactate need an order even though the catalog calls them bedside
+  const DOCTOR_ONLY = new Set(['cath_lab', 'call_surgery', 'shock']); // plus airway support and a urinary catheter: by order only
+  const REASSESS_WIN = 5, ESC_SPOKEN_MIN = 8, O2_OWN = 94;
+  // Basic airway support (opening the airway, bag-valve-mask) is basic life support: the nurse's own.
+  const BLS_AIR = /امبو|ambu|bvm|ambu bag|jaw thrust|chin lift|فتح (?:ال)?مجري|افتح (?:ال)?مجري|شفط|suction|رفع (?:ال)?فك|دفع (?:ال)?فك|رفع (?:ال)?ذقن/;
+  const ADV_AIR = /تنبيب|نبب|intubat|انبوب|cpap|bipap|niv|rsi|بايباب|سيباب|سي باب|ضغط ايجابي/;
+  const OWN_KEYS = ['oxygen', 'iv_access', 'sit_up'];
+  const SCOPE_NOTE = 'الأدوية والسوائل والفحوصات المخبرية والتصوير خارج صلاحية التمريض المستقلة في بروتوكولات الطوارئ المعتادة';
+  const isDrug = id => !!(actOf(id) || {}).dose && id !== 'oxygen';
+  function newNurseState(c) {
+    const nm = c.nurseMode, doc = nm.doctor.name;
+    return {
+      nm, doc, sex: nm.doctor.sex, present: false,
+      esc: { calledAt: null, by: null, awaiting: false, awaitAt: null, asked: null, before: null, buf: '', turns: 0, unans: 0, sbar: null, reNeeded: null, reNeededAt: null, updateAt: null, contacts: [], hello: false, nagged: false },
+      orders: [], ordersAt: null, relTurn: -99, rbTurns: 0, readBack: false,
+      scope: [], scopeSaid: new Set(), notIndicated: [], given: [], interv: [], vchecks: [], stageAt: {}, lowAt: null, drawn: null, airwayAt: null, tempAt: null, allergyAt: null, examAt: {},
+      said: new Set(), teachAt: 0, reassess7: 0, last7: -9, allergyToldDoc: false, allergyAskedByDoc: false, bandNoted: false, docDoing: false, lastShock: -9, alarmAt: null,
+      allergyAskTurn: -99, allergyAnswered: false, allergyGuess: null, holdRel: null, escDoneTurn: -99, helpAt: [], bls: [],
+      acts: D.actions.map(a => (NURSE_KW[a.id] ? { ...a, kw: a.kw.concat(NURSE_KW[a.id]) } : a)),
+      rx: { docv: DOCV(norm(doc)), supv: SUPV_N(norm(c.nurse.name)), compv: compVoc(c) },
+    };
+  }
+  // The relative called by name or by a kinship word, never by a word this patient is also called by.
+  function compVoc(c) {
+    const pat = new Set((c.patient.addr || []).map(w => norm(w).replace(/^يا /, '')));
+    const words = ['حجه', 'حجي', 'خالتي', 'خاله', 'خالتو', 'عمي', 'عمو'].filter(w => !pat.has(w)).concat([norm(c.companion.name)]).join('|');
+    return new RegExp('(?:^| )يا (?:' + words + ')(?= |$)|^(?:' + words + ')(?= |$)');
+  }
+  const comes = () => (E.nurse.sex === 'F' ? 'جاية' : 'جاي');
+  const docW = () => (E.nurse.sex === 'F' ? 'الدكتورة' : 'الدكتور');
+  const docT = () => (E.nurse.sex === 'F' ? 'الطبيبة' : 'الطبيب');
+  const docKnows = () => (E.nurse.sex === 'F' ? 'الطبيبة على علم بالحالة، وهي من تطلب العناية المركزة.' : 'الطبيب على علم بالحالة، وهو من يطلب العناية المركزة.');
+  const docTitle = () => (E.nurse.sex === 'F' ? 'الدكتورة ' : 'الدكتور ') + E.nurse.doc;
+  const reached = () => E.nurse.esc.calledAt !== null || E.nurse.present;
+  // The escalation deadline: a number of minutes, or (STEMI) two minutes after the ECG, ten at most.
+  function escBy() {
+    const b = E.nurse.nm.escBy;
+    if (typeof b === 'number') return b;
+    const t = E.tests[b.after];
+    return t ? Math.min(t.at + b.plus, b.max) : b.max;
+  }
+  // The instructor's fixed lines: each once.
+  function dOnce(key, line) {
+    const N = E.nurse;
+    if (!E || E.over || N.said.has(key)) return false;
+    N.said.add(key); E.hints++; person('d', line);
+    return true;
+  }
+  // Every number in a message, without the 2 of SpO2 or the 12 of 12-lead.
+  const numsIn = raw => (digits(String(raw || '')).replace(/sp ?o2|o2|12[ -]?lead|١٢ ?ليد/gi, ' ').replace(/\d+(?:\.\d+)?\s*(?:ملغ|مغ|ملجم|mg|mcg|ميكرو\S*|ml|مل|cc|لتر|ليتر|l\/min|lpm|units?|وحد\S*|mmol|مليمول|غرام|جرام|g\b|kg|كيلو|سنه|سنة|سنين|عام|ساعه|ساعة|ساعات|دقيق\S*|يوم|ايام)/gi, ' ').match(/\d+(?:\.\d+)?/g) || []).map(Number);
+  const HIST_RX = /(معروف|معروفه|مزمن|مزمنه|تاريخ مرضي|قصه مرضيه|history|امراض|حساسي|تحسس|allerg|nkda|سكري|ربو|بخاخ|انسولين|عمليه|جراحه|حبوب منع|ادويته|ادويتها|(?:بياخد|بتاخد|بياخذ|بتاخذ|بيستعمل|بتستعمل) (?:\S+ )?(?:دوا|ادوي|حبوب|حب|بخاخ|انسولين|علاج|مميع|اسبرين|كورتيزون)|(?:عنده|عندها|مريض|مريضه) (?:ال)?(?:ضغط|سكري|ربو|قلب|كلي|قصور|صرع|جلطه|ذبحه)(?! *\d))/;
+  const HIST_FACTS = new Set(['known', 'meds', 'allergy', 'icu', 'steroids_recent', 'controller', 'reliever', 'pill', 'surgery', 'clot_family', 'ckd', 'nsaid', 'prior', 'insulin', 'lung_hx', 'family', 'family_c', 'pregnant', 'bleeding', 'pde5', 'recent_care', 'sugar_home', 'smoke', 'clinic', 'illness', 'father_stop']);
+  // A message read for SBAR. Two points a part; A only with real readings, checked against the monitor.
+  function gradeSbar(raw) {
+    const t = norm(raw), c = E.c, N = E.nurse;
+    const who = [c.patient.name, ...(c.patient.addr || [])].map(norm).filter(Boolean).some(w => (' ' + t + ' ').includes(' ' + w + ' ') || (w.length >= 4 && t.includes(w)));
+    const s = t.length >= 15 && (who || /(مريض|مريضه|سرير|عمره|عمرها)/.test(t) || /(قلقان|قلقانه|خايف|متخوف|بتسوء|بتتدهور|تعبان|تعبانه|ضيق|وجع|نازل|نازله)/.test(t));
+    // Review fix 2026-11-07: B is history (conditions, medicines, allergy), never a reading («ضغطها 130») or a symptom («عندها ضيق»).
+    const b = HIST_RX.test(t) || c.facts.filter(f => E.facts.has(f.id) && HIST_FACTS.has(f.id)).some(f => hasAny(t, f.kw));
+    const nums = numsIn(raw), v = E.show || live(), bp = (E.bp || []).map(Number);
+    const ref = [[v.spo2, 2], [v.hr, 8], [v.rr, 4], [bp[0], 10], [bp[1], 8], ...(E.tempKnown ? [[c.temp, 0.3]] : [])].filter(([x]) => Number.isFinite(x));
+    const hits = nums.filter(n => ref.some(([x, tol]) => Math.abs(n - x) <= tol)).length;
+    const a = nums.length >= 2 && hits >= 2, aWrong = nums.length >= 2 && hits === 0;
+    const orderIds = Object.entries((N && N.nm.orders) || {}).map(([k, o]) => o.id || k);
+    const goodSuggest = mentionedIds(t).some(id => orderIds.includes(id) && !NURSE_OWN.has(id));
+    const r = /(تيجي|تعال|تعالي|تشوف|تقيم|بحتاج|محتاج|بقترح|اقترح|لازم|ممكن تطلب|اوامر|order|عاجل|فورا|حالا)/.test(t) || goodSuggest;
+    return { s, b, a, r, aWrong, goodSuggest, allergy: ALLERGY_W.test(t), half: {} };
+  }
+
+  /* ---------- nurse mode: one message ---------- */
+  async function handleNurse(text) {
+    const my = E, N = E.nurse;
+    // The doctor is on the line waiting for the SBAR: the message goes to him, with no server call.
+    if (N.esc.awaiting) {
+      const rd = localRead(text), v = nurseVocs(nz(text));
+      // An SBAR names the patient: only a short line, or the instructor called by name, goes elsewhere.
+      const elsewhere = (v.first === 'sup') || ((rd.to === 'patient' || rd.to === 'companion') && wordsIn(text) <= 6 && v.first !== 'doc');
+      if (!elsewhere) { escTurn(text); return; }
+    }
+    const dots = typing();
+    const pending = E.pending;
+    const r = await call({ text, pending: pending ? { ask: pending.ask } : undefined });
+    if (!r && !ACT && !actRetried) { actRetried = true; await loadAct(); }
+    dots.remove();
+    if (E !== my || E.over) return;
+    let read;
+    if (r && r.read) { read = r.read; read.text = text; nurseShape(read, nz(text), text, true); }
+    else { read = localRead(text); read.text = text; }
+    // The server may voice the patient, the relative or the instructor; never the doctor.
+    const voiced = r && !r.voiceFailed && r.reply && r.to === read.to && ['patient', 'companion', 'supervisor'].includes(read.to);
+    const reply = voiced ? r.reply : r && r.held && read.to === 'supervisor' ? instructorLine(read, norm(text)) : localReply(read);
+    apply(read, text, read.to, reply);
+  }
+  function escTurn(text) {
+    E.turns++;
+    E.busyTurn = E.turns;
+    escReply(text);
+    director('turn');
+  }
+  // What apply() commits for a nurse-mode reading, before the actions run.
+  function nursePre(read, text) {
+    const N = E.nurse, X = N.esc, t = nz(text);
+    if (read.readBack && N.orders.length && !N.readBack && E.turns - N.relTurn <= 2) N.readBack = true;
+    if (read.airwayAssess && N.airwayAt === null) { N.airwayAt = E.sim; sys('سُجّل تقييمك للمجرى الهوائي.'); }
+    if (read.draw && N.drawn === null) { N.drawn = E.sim; sys('سُحبت عينات الدم وحُفظت لحين طلب الطبيب.'); }
+    // The allergy band goes on only for an allergy the trainee has asked about.
+    if (read.band || BAND.test(t)) {
+      if (E.facts.has('allergy')) { if (!N.bandNoted) { N.bandNoted = true; sys('سُجّلت الحساسية على الملف ووُضع سوار الحساسية.'); } }
+      else if (read.band) sys('لم تُسأل الحساسية بعد: اسأل المريض أو أهله أولاً.');
+    }
+    if (read.allOrders) {
+      const open = N.orders.filter(o => openOrd(o) && !o.reminder);
+      sys(!N.orders.length ? 'لم يصدر أي أمر من الطبيب بعد.' : open.length ? 'لم يُنفَّذ بعد من أوامر الطبيب: ' + open.map(o => o.ar).join('، و') + '.' : 'نُفِّذت كل أوامر الطبيب.');
+    }
+    if (read.toDoc && reached() && ALLERGY_W.test(t) && !read.allergyReply) N.allergyToldDoc = true;
+    // The doctor's own allergy question, answered.
+    if (read.allergyReply && read.toDoc) { allergyAnswer(t); read.actions = []; read.tests = []; return; }
+    // A drug the doctor will order once he hears about allergies: not given, and no scope gap.
+    if (read.heldGive && read.heldGive.length) sys('لم يُنفَّذ: لم يطلب الطبيب الأدوية بعد، فهو ينتظر جوابك عن الحساسية.');
+    if (read.heldAsk && read.toDoc) { docSay('قلّي أول: في حساسية من أدوية؟'); read.actions = []; read.tests = []; return; }
+    const icu = (read.actions || []).some(a => a.id === 'call_icu');
+    if (read.help) helpCall();
+    if (read.escalate || read.toDoc) {
+      // A call said to the relative or a code call is not the SBAR itself.
+      if (!reached()) { escalate(text, read.to === 'companion' || read.help); if (read.help) later(0.2, doctorArrives); }
+      else if (read.help) { X.contacts.push({ at: E.sim, kind: 'update' }); if (X.reNeeded !== null && X.updateAt === null) X.updateAt = E.sim; if (!N.present) later(0.2, doctorArrives); }
+      else if (icu) sys(docKnows());
+      else if (read.escalate) reEscalate(read, text);
+      else docLine(read, t);
+    }
+    read.actions = (read.actions || []).filter(a => a.id !== 'call_senior' && a.id !== 'call_icu');
+  }
+  // "نادوا فريق الإنعاش": recorded as its own step.
+  function helpCall() {
+    const N = E.nurse;
+    N.helpAt.push({ at: E.sim, stage: E.stage, vt: !!E.vtNow });
+    log('action', 'نداء فريق الإنعاش');
+    sys('سُجّل نداء فريق الإنعاش.');
+  }
+  // The answer to «في حساسية من أدوية؟»; the orders the doctor held for it follow.
+  function allergyAnswer(t) {
+    const N = E.nurse;
+    N.allergyAnswered = true;
+    const unknown = /(ما بعرف|مش عارف|ما سالت|مش متاكد)/.test(t);
+    if (unknown) docSay('اسأل هسا قبل أي دوا.');
+    else {
+      // "No allergy" said before anyone asked the patient or the family is a guess, not a report.
+      const neg = /^(?:لا|لاء|لأ|مافي|ما في|ما عنده|ما عندها)(?: |$)/.test(t) || /(?:ما في|مافي|ما عند\S*) حساسي/.test(t);
+      if (neg && !E.facts.has('allergy')) N.allergyGuess = E.sim;
+      else N.allergyToldDoc = true;
+    }
+    const held = !!N.holdRel;
+    N.holdRel = null;
+    N.relLead = unknown ? 'بدي: ' : 'تمام. بدي: ';
+    const spoke = held && releaseOrders();
+    N.relLead = null;
+    if (!spoke && !unknown) docSay('تمام.');
+  }
+  function nursePost(read, to) {
+    const N = E.nurse, X = N.esc;
+    if (N.rbTurns > 0 && N.relTurn < E.turns) N.rbTurns--;
+    if (X.awaiting && ['patient', 'companion', 'supervisor'].includes(to)) {
+      X.unans++;
+      if (X.unans === 2 && !X.nagged) { X.nagged = true; docSay('ألو؟ شو الوضع عندك؟'); }
+      else if (X.unans >= 4) escGiveUp();
+    }
+  }
+
+  /* ---------- nurse mode: escalation ---------- */
+  function escalate(text, quiet) {
+    const N = E.nurse, X = N.esc;
+    if (X.calledAt === null) X.calledAt = E.sim;
+    X.by = X.by || 'call';
+    X.contacts.push({ at: E.sim, kind: 'call' });
+    if (!E.done.has('call_senior')) E.done.set('call_senior', { at: E.sim, last: E.sim, n: 1, dose: '', ok: 'good', amt: 0 });
+    log('action', 'إبلاغ الطبيب');
+    sys('اتصلتَ ب' + docTitle() + '.');
+    X.awaiting = true; X.awaitAt = E.sim;
+    if (!quiet && wordsIn(text) >= ESC_SPOKEN_MIN) { X.hello = true; escReply(text); return; }
+    // A short call keeps what it said about the patient ("دكتور سامر، المريضة تعبانة كتير"): its S counts.
+    if (!quiet && text) {
+      const rest = nz(text).replace(new RegExp(N.rx.docv.source, 'g'), ' ').replace(new RegExp(CALL_N.source, 'g'), ' ').replace(/(?:^| )يا(?= |$)/g, ' ').replace(/\s+/g, ' ').trim();
+      if (wordsIn(rest) >= 2) X.buf = rest;
+    }
+    later(0.15, () => { if (!E.over && X.awaiting && !X.hello) { X.hello = true; X.awaitAt = E.sim; docSay('أهلين، معك ' + N.doc + '. شو الوضع؟'); } });
+  }
+  function reEscalate(read, text) {
+    const N = E.nurse, X = N.esc;
+    X.contacts.push({ at: E.sim, kind: 'update' });
+    if (X.reNeeded !== null && X.updateAt === null) X.updateAt = E.sim;
+    if (!N.present) { sys('اتصلتَ ب' + docTitle() + ' مرة أخرى.'); docSay('تمام، ' + comes() + '.'); later(0.3, doctorArrives); }
+    else docLine(read, nz(text));
+    releaseOrders();
+  }
+  // The SBAR, collected over one or two messages; one clarifying question at most.
+  function escReply(text) {
+    const N = E.nurse, X = N.esc;
+    X.buf = (X.buf + ' ' + text).trim();
+    X.turns++;
+    X.hello = true;
+    const g = gradeSbar(X.buf);
+    if (!X.asked && (!g.a || !g.b)) {
+      X.before = { s: g.s, b: g.b, a: g.a, r: g.r };
+      X.asked = !g.a ? 'a' : 'b';
+      X.hello = true;
+      docSay(X.asked === 'a' ? 'عطيني الأرقام: الضغط، النبض، التنفس، والـSpO2.' : E.c.patient.sex === 'F' ? 'شو قصتها؟ أمراض مزمنة، أدوية، حساسية؟' : 'شو قصته؟ أمراض مزمنة، أدوية، حساسية؟');
+      return;
+    }
+    // A part supplied only after the doctor asked for it is worth half.
+    if (X.before) g.half = { s: g.s && !X.before.s, b: g.b && !X.before.b, a: g.a && !X.before.a, r: g.r && !X.before.r };
+    escFinish(g);
+  }
+  function escFinish(g) {
+    const N = E.nurse, X = N.esc;
+    X.sbar = g; X.awaiting = false; N.escDoneTurn = E.turns;
+    if (g.allergy) N.allergyToldDoc = true;
+    const drug = Object.entries(N.nm.orders).some(([k, o]) => o.kind === 'act' && o.when === 'phone' && !o.reminder && isDrug(o.id || k));
+    // Review fix 2026-11-07: a prescriber who asks about allergies waits for the answer before the drugs
+    // (a minute at most, and never once the patient is critical).
+    if (drug && !g.allergy) { N.allergyAskedByDoc = true; N.allergyAskTurn = E.turns; N.holdRel = { at: E.sim }; }
+    releaseOrders();
+    if (N.holdRel) docSay(N.orders.length ? 'وقبل الأدوية: في حساسية من أدوية؟' : 'في حساسية من أدوية؟');
+    if (!N.present) later(E.stage >= 2 ? 0.2 : 1.5, doctorArrives);
+  }
+  // Nobody answered the doctor on the phone: he comes to see for himself, with no SBAR to go on.
+  function escGiveUp() {
+    const N = E.nurse, X = N.esc;
+    if (!X.awaiting) return;
+    X.awaiting = false;
+    X.sbar = { s: false, b: false, a: false, r: false, aWrong: false, goodSuggest: false, allergy: false, half: {}, none: true };
+    docSay('طيب، ' + comes() + ' ' + (E.c.patient.sex === 'F' ? 'أشوفها' : 'أشوفه') + ' بنفسي.');
+    releaseOrders();
+    later(0.2, doctorArrives);
+  }
+  function doctorArrives() {
+    if (!E || E.over || !NM() || E.nurse.present) return;
+    const N = E.nurse;
+    N.present = true;
+    nurseChips();
+    sys((N.sex === 'F' ? 'وصلت ' : 'وصل ') + docTitle() + ' إلى السرير.');
+    const icu = E.c.care.call_icu;
+    if (icu && icu.key && !E.done.has('call_icu')) E.done.set('call_icu', { at: E.sim, last: E.sim, n: 1, dose: '', ok: 'good', amt: 0 });
+    releaseOrders();
+  }
+  function nurseStageRise(s) {
+    const N = E.nurse, X = N.esc;
+    if (X.calledAt !== null && X.reNeeded === null) { X.reNeeded = s; X.reNeededAt = E.sim; }
+    if (s >= 2 && !reached()) dOnce('4', 'المريض عم يتدهور. اتصل ب' + docW() + ' هسا، وجهّز الـSBAR.');
+    if ((s === 3 || E.vtNow) && !reached()) {
+      sys(N.sex === 'F' ? 'سمعت الطبيبة إنذار المونيتور وحضرت إلى السرير.' : 'سمع الطبيب إنذار المونيتور وحضر إلى السرير.');
+      X.by = 'alarm'; N.alarmAt = E.sim;
+      doctorArrives();
+    } else if (s >= 2 && X.calledAt !== null && !N.present && !X.awaiting) later(0.2, doctorArrives);
+    releaseOrders();
+  }
+  function nurseTick() {
+    const N = E.nurse, X = N.esc;
+    if (E.over) return;
+    const v = live();
+    // One oxygen threshold for the nurse's own protocol, the instructor's nudge and its words.
+    if (N.lowAt === null && v.spo2 < O2_OWN) N.lowAt = E.sim;
+    if (N.allergyAt === null && E.facts.has('allergy')) N.allergyAt = E.sim;
+    if (E.tempKnown && N.tempAt === null) N.tempAt = E.sim;
+    if (E.sim >= 2 && !N.vchecks.length) dOnce('1', 'العلامات الحيوية كاملة انقاست؟ ابدأ بالـABCDE.');
+    if (N.lowAt !== null && E.sim - N.lowAt >= 1 && v.spo2 < O2_OWN && !E.done.has('oxygen')) dOnce('2', 'الـSpO2 تحت ' + O2_OWN + '. شو بيسمحلك بروتوكول القسم تعمل هسا بدون ما تستنى أمر؟');
+    if (!reached() && E.sim > escBy()) dOnce('3', 'الأرقام هاي شو بتحكيلك؟ مين لازم يعرف فيها هسا؟');
+    if (N.orders.some(o => openOrd(o) && !o.reminder && E.sim - o.at >= 3)) dOnce('8', 'في أوامر من ' + docW() + ' لسا ما تنفّذت. شو أولويتك؟');
+    // The allergy question went unanswered for a minute: the orders come anyway.
+    if (N.holdRel && E.sim - N.holdRel.at >= 1) { N.holdRel = null; releaseOrders(); }
+    // An open order its own stop rule now rules out is cancelled at once, so the panel never offers a stale one.
+    if (N.orders.some(o => openOrd(o) && cancelNow(N.nm.orders[o.key] || {}))) releaseOrders();
+    // The doctor waits on the line, then comes.
+    if (X.awaiting && X.awaitAt !== null) {
+      if (!X.nagged && E.sim - X.awaitAt >= 1.5) { X.nagged = true; docSay('ألو؟ شو الوضع عندك؟'); }
+      else if (E.sim - X.awaitAt >= 3) escGiveUp();
+    }
+  }
+
+  /* ---------- nurse mode: the doctor's orders ---------- */
+  function orderDue(o) {
+    const N = E.nurse, g = o.gate || {};
+    if (o.when === 'phone') return true;
+    if (o.when === 'gated') return (!g.needTest || (E.tests[g.needTest] && E.tests[g.needTest].back)) && (!g.needDone || E.done.has(g.needDone));
+    if (o.when === 'collapse') return N.present && (fell() || untreatedSbp() < 90 || E.stage >= 3) && (!g.needDone || E.done.has(g.needDone));
+    if (o.when === 'vt') return N.present && E.vtNow;
+    if (o.when === 'stage3') return N.present && E.stage >= 3;
+    return false;
+  }
+  // An order's own stop rule (CTPA once the pressure falls, NIV at stage 3).
+  const cancelNow = src => !!((src.cancelSbp && untreatedSbp() < src.cancelSbp) || (src.cancelStage && E.stage >= src.cancelStage));
+  // What the doctor says for one order: the step's name, the case file's own words, and the single dose chosen.
+  const ordItem = o => o.ar + (o.show ? ' ' + o.show : '') + (o.pick ? '، الجرعة: ' + o.pick : '');
+  // Returns true when the doctor said something.
+  function releaseOrders() {
+    if (!E || E.over || !NM()) return false;
+    const N = E.nurse, X = N.esc;
+    if (!reached() || X.awaiting) return false;
+    // Waiting on the answer to «في حساسية من أدوية؟»: the drugs wait, the tests and the rest do not;
+    // and nothing waits once the patient is critical.
+    if (N.holdRel && (E.stage >= 3 || E.vtNow)) N.holdRel = null;
+    const fresh = [], cancelled = [];
+    for (const [key, o] of Object.entries(N.nm.orders)) {
+      const id = o.id || key;
+      if (N.orders.some(x => x.key === key) || !orderDue(o)) continue;
+      if (N.holdRel && o.kind === 'act' && !o.reminder && !o.doctorDoes && isDrug(id)) continue;
+      const care = E.c.care[id];
+      if (o.kind === 'act' && !o.doctorDoes && care && tooEarly(care)) continue;
+      // An order its own stop rule already rules out is never given (no CT ordered and cancelled in one breath).
+      if (cancelNow(o)) continue;
+      const meta = o.kind === 'test' ? testOf(id) : actOf(id);
+      if (!meta) continue;
+      const ord = { key, id, kind: o.kind, ar: meta.ar, show: o.show || '', exec: o.exec || '', pick: o.pick || '', at: E.sim, doneAt: null, cancelled: false, reminder: !!o.reminder, doctorDoes: !!o.doctorDoes, optional: !!o.optional, repeat: !!o.repeat, when: o.when, line: o.line || '' };
+      // A step already done on the nurse's own counts as done.
+      const before = o.kind === 'test' ? (E.tests[id] ? E.tests[id].at : null) : !o.doctorDoes && E.done.has(id) ? E.done.get(id).at : null;
+      if (before !== null) ord.doneAt = before;
+      N.orders.push(ord);
+      fresh.push(ord);
+    }
+    for (const o of N.orders) {
+      const src = N.nm.orders[o.key] || {};
+      if (o.cancelled || o.doneAt != null) continue;
+      if (cancelNow(src)) { o.cancelled = true; o.cancelAt = E.sim; cancelled.push(o); log('order', 'ألغى الطبيب: ' + o.ar); }
+    }
+    const first = fresh.length && N.ordersAt === null;
+    if (fresh.length) { if (first) N.ordersAt = E.sim; N.relTurn = E.turns; N.rbTurns = 2; }
+    let spoke = false;
+    cancelled.forEach(o => { const src = N.nm.orders[o.key]; if (src.cancelLine) { docSay(src.cancelLine); spoke = true; } });
+    const speak = fresh.filter(o => !o.doctorDoes && !o.cancelled);
+    const acts = speak.filter(o => o.kind === 'act' && !o.reminder), tests = speak.filter(o => o.kind === 'test' && !o.reminder), rem = speak.filter(o => o.reminder && o.doneAt == null);
+    // One line for everything released now; each item is only the step's name and the case file's own words.
+    const item = ordItem;
+    if (acts.length || tests.length || rem.length) spoke = true;
+    if (acts.length || tests.length || rem.length) {
+      let lead = first ? (N.present ? 'تمام. بدي: ' : 'تمام، ' + comes() + '. لحد ما أوصل بدي: ') : fresh.some(o => o.when === 'gated') ? 'طلعت النتيجة. هسا بدي: ' : 'هسا بدي: ';
+      if (N.relLead && !first) lead = N.relLead;
+      let line = '';
+      if (acts.length || tests.length) line = lead + acts.map(item).join('، و') + (tests.length ? (acts.length ? '. وبدي ' : '') + tests.map(item).join('، و') : '') + '.';
+      else if (first) line = N.present ? 'تمام.' : 'تمام، ' + comes() + '.';
+      if (rem.length) line += (line ? ' ' : '') + 'ولسا ما انعمل: ' + rem.map(o => o.ar).join('، و') + '.';
+      docSay(line);
+    }
+    fresh.forEach(o => log('order', 'أمر الطبيب: ' + item(o)));
+    fresh.filter(o => o.doctorDoes && o.when !== 'vt').forEach(docDoes);
+    // VT with a pulse: the doctor shocks while it lasts.
+    N.orders.filter(o => o.doctorDoes && o.when === 'vt').forEach(o => { if (E.vtNow && N.present && E.sim - N.lastShock > 0.3) docDoes(o); });
+    buildOrders();
+    return spoke;
+  }
+  // What the doctor does with his own hands: no credit to the nurse.
+  function docDoes(o) {
+    const N = E.nurse, id = o.id, meta = actOf(id), care = E.c.care[id] || {};
+    if (!meta || E.over) return;
+    N.docDoing = true;
+    try {
+      if (id === 'shock') {
+        // As many shocks as the catalog allows; after that the VT is the trainee's failure to escalate in time.
+        const prev = E.done.get('shock');
+        if (!E.vtNow || (prev && prev.n >= ((meta.repeat || {}).max || 6))) return;
+        N.lastShock = E.sim;
+        give({ id, dose: '', agent: '' }, meta, care);
+        sys(N.sex === 'F' ? 'أجرت الطبيبة صدمة كهربائية متزامنة.' : 'أجرى الطبيب صدمة كهربائية متزامنة.');
+      } else if (id === 'airway') {
+        if (!E.done.has('airway')) give({ id, dose: '', agent: '' }, meta, care);
+        else log('action', 'تنبيب على يد ' + docT());
+        N.interv.push({ id, at: E.sim, ar: meta.ar, byDoc: true });
+        if (o.line) docSay(o.line);
+      } else {
+        if (!E.done.has(id)) give({ id, dose: '', agent: '' }, meta, care);
+        if (id === 'cath_lab') docSay('فعّلت القسطرة. جهّزوه للنقل.');
+      }
+      o.doneAt = E.sim;
+    } finally { N.docDoing = false; }
+  }
+  // The trainee's actions, judged against the nurse's scope.
+  function nurseAct(a, text) {
+    if (!E || E.over) return;
+    const N = E.nurse, id = a.id, meta = actOf(id), care = E.c.care[id] || {};
+    if (!meta) return;
+    if (id === 'call_senior' || id === 'call_icu') {
+      if (!reached()) escalate(text);
+      else if (id === 'call_icu') sys(docKnows());
+      return;
+    }
+    const tx = norm(text || '');
+    if (id === 'airway' && BLS_AIR.test(tx) && !ADV_AIR.test(tx)) { basicAirway(); return; }
+    if (id === 'bp_repeat' || id === 'temp') {
+      N.vchecks.push(E.sim);
+      const prev = E.done.get(id);
+      E.done.set(id, prev ? { ...prev, n: prev.n + 1, last: E.sim } : { at: E.sim, last: E.sim, n: 1, dose: '', ok: 'good', amt: 0, top: 0 });
+      log('check', meta.ar);
+      if (id === 'temp') { E.tempKnown = true; if (N.tempAt === null) N.tempAt = E.sim; paint(); sys('الحرارة الآن ' + E.c.temp.toFixed(1) + ' °C.'); }
+      else { E.bpAt = 0; paint(); sys('على المونيتور الآن: ' + spokenVitals() + '.'); }
+      return;
+    }
+    let ord = N.orders.find(o => o.kind === 'act' && o.id === id && openOrd(o));
+    // An order the case file gives in repeated boluses stays open for the next one, within its own limits.
+    if (!ord) ord = N.orders.find(o => o.kind === 'act' && o.id === id && o.repeat && !o.cancelled && o.doneAt != null);
+    if (id === 'oxygen') {
+      if (ord) { nurseExec(ord, a, text); return; }
+      // Already running: saying the device again without a new flow changes nothing.
+      if (E.done.has('oxygen') && !a.dose) { const d = E.done.get('oxygen').dose; sys('الأكسجين يعمل بالفعل' + (d ? ' (' + d + ')' : '') + '.'); return; }
+      if (Math.round(live().spo2) < O2_OWN || E.done.has('oxygen')) { ownOxygen(a, text); return; }
+      const sp = Math.round(live().spo2);
+      if (!N.notIndicated.some(x => x.id === id && E.sim - x.at < 1)) { N.notIndicated.push({ id, at: E.sim, spo2: sp }); log('scope', 'أكسجين والإشباع ضمن الهدف'); }
+      sys('لم يُنفَّذ: الإشباع ' + sp + '% ضمن الهدف، وبروتوكول الأكسجين المستقل يبدأ عند إشباع أقل من ' + O2_OWN + '%.');
+      return;
+    }
+    if (ord) { nurseExec(ord, a, text); return; }
+    if (NURSE_OWN.has(id)) { order(a, text); return; }
+    const allergen = (care.allergyKw && allergicTo(a, care, text)) || (care.harm && care.needFact === 'allergy');
+    scopeGap('act', id, allergen ? 'allergen' : id === 'airway' || DOCTOR_ONLY.has(id) ? 'doctor-step' : '');
+  }
+  // Opening the airway or bagging: recorded, no definitive-airway effect, and the doctor is needed now.
+  function basicAirway() {
+    const N = E.nurse;
+    N.bls.push(E.sim);
+    log('action', 'فتح المجرى الهوائي أو التهوية بالأمبو (إنعاش أساسي)');
+    sys('سُجّل: فتح المجرى الهوائي والتهوية بالأمبو من الإنعاش الأساسي ضمن صلاحيتك. التنبيب والتهوية غير الغازية بقرار الطبيب.');
+    if (!reached() && E.stage >= 3) escalate('', true);
+    else if (!reached()) dOnce('bls', 'وبنفس الوقت بلّغ ' + docW() + ' فوراً.');
+  }
+  function ownOxygen(a, text) {
+    if (!a.dose) {
+      ask({ type: 'dose', a: { ...a }, name: actOf('oxygen').ar, tip: '', sug: undefined, ask: 'The nurse instructor asked which oxygen device and flow the trainee will use. good = a device and a flow in L/min, partial = roughly right, wrong = unsafe, na = not a reply, withdraw = the trainee drops it.' }, 'أكسجين، تمام. أي وسيلة وعلى كم لتر؟', 'd');
+      return;
+    }
+    order(a, text);
+  }
+  // A drug that names a different agent than the order (ceftriaxone for levofloxacin).
+  function agentClash(id, text, exec) {
+    const lim = (((E.c.care[id] || {}).limits) || (actOf(id) || {}).limits || []).filter(l => l.kw);
+    const t = norm(text), x = norm(exec || '');
+    const inT = lim.filter(l => hasAny(t, l.kw)), inX = lim.filter(l => hasAny(x, l.kw));
+    return inT.length > 0 && !inT.some(l => inX.includes(l));
+  }
+  // The dose typed against the dose ordered, in base units (per hour for rates), with a little rounding room.
+  function sameDose(typed, exec) {
+    const a = doseOf(typed), b = doseOf(exec);
+    if (!a || a.unsure || !b) return true;
+    if (a.kind && b.kind && a.kind !== b.kind) return false;
+    if (!!a.perTime !== !!b.perTime && a.kind) return false;
+    const base = d => { const by = d.kind ? d.by : (b.kind ? b.by : 1), k = d.perKg ? (E.c.kg || 1) : 1, per = d.perTime && !d.hour ? 60 : 1; return [d.lo * by * k * per, d.hi * by * k * per]; };
+    const [alo, ahi] = base(a), [blo, bhi] = base(b);
+    return alo >= blo * 0.85 - 1e-9 && ahi <= bhi * 1.15 + 1e-9;
+  }
+  // Giving what the doctor ordered: the right agent, the dose as written, then the room's usual physiology.
+  function nurseExec(ord, a, text) {
+    const id = ord.id, meta = actOf(id), care = E.c.care[id] || {};
+    if (text && ((care.allergyKw && allergicTo({ ...a, agent: a.agent || '' }, care, text)) || agentClash(id, text, ord.exec))) { scopeGap('act', id, 'wrong-agent', ord); return; }
+    if (ord.reminder) {
+      if (id === 'oxygen') { ownOxygen(a.dose ? a : { ...a, dose: ord.exec }, text); return; }
+      order({ ...a, dose: a.dose || ord.exec }, text);
+      return;
+    }
+    let dose = a.dose || '';
+    // "علقتله لتر سلاين": a litre with no number is still one litre.
+    if (!dose && id === 'fluids' && /(?:^| )(?:لتر|ليتر)(?: |$)/.test(norm(text || ''))) dose = '1 L';
+    if (dose && (!sameDose(dose, ord.exec) || doseBad({ id, dose, said: text }, care, text))) {
+      const ref = ord.pick ? ord.pick : ord.show || ord.exec;
+      E.wrongDoses.push({ id, ar: meta.ar, dose, ref });
+      log('dose', 'جرعة مختلفة عن الأمر: ' + meta.ar + ' ' + dose);
+      sys('لم يُعطَ: الجرعة التي كتبتها تختلف عن أمر الطبيب (' + ref + ').');
+      return;
+    }
+    order({ ...a, id, agent: '', dose: ord.exec, _asked: true, _ok: 'good' }, text);
+  }
+  // Called from give() in nurse mode: what was given, for safety and reassessment.
+  function nurseGave(a, meta) {
+    const N = E.nurse;
+    if (meta.dose || a.id === 'airway') {
+      const at = E.sim;
+      if (!N.docDoing || a.id === 'airway') N.interv.push({ id: a.id, at, ar: meta.ar, byDoc: N.docDoing });
+      later(3, () => {
+        if (E.over || N.vchecks.some(x => x > at) || N.reassess7 >= 2 || E.sim - N.last7 < 2) return;
+        N.reassess7++; N.last7 = E.sim; E.hints++;
+        person('d', 'بعد آخر تدخل، شو تغيّر بالأرقام؟');
+      });
+    }
+    if (isDrug(a.id) && !N.docDoing) {
+      N.given.push({ id: a.id, at: E.sim, allergyAsked: E.facts.has('allergy') });
+      if (!E.facts.has('allergy')) later(0.01, () => dOnce('6', 'عطيت الدوا قبل ما تسأل عن الحساسية؟ اسأل هسا وبلّغ ' + docW() + '.'));
+    }
+    const o = N.orders.find(x => x.kind === 'act' && x.id === a.id && openOrd(x));
+    if (o && !N.docDoing) o.doneAt = E.sim;
+    buildOrders();
+  }
+  function nurseTest(id, reason, ok) {
+    if (!E || E.over) return false;
+    releaseOrders(); // a cancellation due now (CTPA in shock) is applied before the request
+    const N = E.nurse, ord = N.orders.find(o => o.kind === 'test' && o.id === id && openOrd(o));
+    if (NURSE_TESTS.has(id) || ord || E.tests[id]) {
+      orderTest(id, reason, ok);
+      const o = N.orders.find(x => x.kind === 'test' && x.id === id && x.doneAt == null && !x.cancelled);
+      if (o && E.tests[id]) o.doneAt = E.tests[id].at;
+      buildOrders();
+      return true;
+    }
+    // A click on an order the doctor cancelled this very moment (CTPA as the pressure fell) is no attempt.
+    if (N.orders.some(o => o.kind === 'test' && o.id === id && o.cancelled && o.cancelAt === E.sim)) { sys('أُلغي هذا الطلب قبل تنفيذه.'); buildOrders(); return false; }
+    scopeGap('test', id);
+    return false;
+  }
+  // Out of the nurse's own scope: nothing is given, nothing changes in the patient; it is recorded.
+  function scopeGap(kind, id, why, ord) {
+    const N = E.nurse, meta = kind === 'test' ? testOf(id) : actOf(id), ar = (meta || {}).ar || id;
+    N.scope.push({ id, kind, at: E.sim, why: why || 'no-order' });
+    log('scope', 'دون أمر طبيب: ' + ar);
+    if (why === 'wrong-agent') {
+      sys('لم يُعطَ: ما كتبته ليس الدواء الذي طلبه الطبيب (' + ((ord && (ord.show || ord.ar)) || ar) + ').');
+      E.hints++; person('d', 'هاد مش الدوا اللي انطلب.');
+      return;
+    }
+    // Airway support beyond basic life support, the cath lab and a shock are the doctor's steps, not drugs.
+    const note = why === 'doctor-step' ? (id === 'airway' ? 'التنبيب والتهوية غير الغازية بقرار الطبيب، أما فتح المجرى والتهوية بالأمبو فضمن صلاحيتك' : 'هذا إجراء يقرره الطبيب ويجريه') : SCOPE_NOTE;
+    if (!N.scopeSaid.has(id)) { N.scopeSaid.add(id); sys('لم يُنفَّذ: ' + ar + ' يحتاج أمراً من الطبيب (' + note + ').'); }
+    else sys('لم يُنفَّذ: يحتاج أمر طبيب.');
+    const F = E.nurse.sex === 'F';
+    if (why === 'allergen' && E.facts.has('allergy')) { dOnce('allergen:' + id, 'استنى! ' + (E.c.patient.sex === 'F' ? 'المريضة عندها' : 'المريض عنده') + ' حساسية من هاد الدوا، وأصلاً الدوا بدو أمر من ' + docW() + '.'); return; }
+    const distinct = [...new Set(N.scope.filter(x => x.why !== 'wrong-agent').map(x => x.id))];
+    if (distinct.length <= 3 && distinct.includes(id)) dOnce('5:' + id, 'هاد بدو أمر من ' + docW() + '. إذا شايفه لازم، بلّغ' + (F ? 'ها' : 'ه') + ' واقترحه.');
+  }
+
+  /* ---------- nurse mode: the doctor's and the instructor's lines (fixed) ---------- */
+  const DX_Q = /(?:شو (?:عنده|عندها|التشخيص)|تشخيص|diagnos)/;
+  function docLine(read, t) {
+    const N = E.nurse, X = N.esc, c = E.c;
+    const ordIds = N.orders.filter(o => !o.cancelled).map(o => o.id);
+    const ment = (read.mentioned || mentionedIds(t)).filter(id => !NURSE_OWN.has(id));
+    let line;
+    // An allergy statement is heard as one, even when it names a drug ("عنده حساسية من البنسلين").
+    if (ALLERGY_W.test(t)) line = 'تمام.';
+    else if (DX_Q.test(t)) {
+      const g = N.nm.dxAfter, dx = fell() && c.collapse && c.collapse.dx ? c.collapse.dx : g.text;
+      line = reached() && (!g.gate || (E.tests[g.gate] && E.tests[g.gate].back)) ? 'الأغلب ' + dx + '.' : 'التشخيص لسا قيد التقييم.';
+    } else if (/(?:^| )(?:تعال|تعالي|بسرعه|شوفها|شوفه|محتاجك|بحتاجك)(?: |$)/.test(t) && !read.readBack && !ment.length) {
+      if (N.present) line = 'أنا هون.';
+      else { line = comes() + '.'; later(0.2, doctorArrives); }
+    } else if (read.readBack || ment.some(id => ordIds.includes(id))) line = 'آه، زي ما حكينا.';
+    else if (ment.length) {
+      const id = ment[0], care = c.care[id], res = c.results[id];
+      const bad = testOf(id) && !actOf(id) ? !res || res.ind === 'no' || res.ind === 'harm' : !care || care.harm || care.off;
+      line = bad ? 'لا، مش مناسب هسا.' : 'خلينا نخلّص الأوامر اللي حكيناها أول.';
+    } else if (/(?:شو (?:بدك|اعمل|نعمل|الخطه|كمان بدك)|في اشي تاني|شو الاوامر|اوامر)/.test(t)) {
+      const open = N.orders.filter(openOrd);
+      line = open.length ? 'لسا بدي: ' + open.map(o => o.ar).join('، و') + '.' : 'تمام، كمّل وراقب.';
+    } else if (/\d/.test(digits(t)) || /(صار|تغير|نزل|طلع|بتسوء|ساء|تدهور|اسوا|احسن|تحسن)/.test(t)) {
+      if (X.reNeeded !== null && X.updateAt === null) X.updateAt = E.sim;
+      line = 'تمام، كمّل وراقب، وخبّرني إذا تغيّر إشي.';
+    } else if (N.allergyAskedByDoc && !N.allergyAnswered && !N.allergyToldDoc) line = 'تمام. وفي حساسية من أدوية؟';
+    else line = 'تمام، شو كمان؟';
+    docSay(line);
+  }
+  function instructorLine(read, t) {
+    const named = [...new Set([...(read.named || []), ...mentionedIds(t)])];
+    const toDoc = E.nurse.sex === 'F' ? 'للدكتورة' : 'للدكتور';
+    if (read.whichDrug) return 'أي دوا بالزبط؟ المفتوح من الأوامر: ' + read.whichDrug.join('، و') + '.';
+    if (read.suggested && read.suggested.length) return reached() ? 'اقتراح منطقي، احكيه ' + toDoc + '.' : 'اقتراح منطقي، احكيه ' + toDoc + ' بالـR تبع الـSBAR.';
+    if (read.planOnly) return 'صح، الأدوية بأمر. شو بتقدر تعمل هسا ضمن صلاحيتك؟';
+    if (DX_Q.test(t)) return 'التشخيص شغلة ' + docW() + '. إنت شو شايف بالأرقام وبالمريض؟';
+    const drug = named.find(id => isDrug(id) || (actOf(id) && DOCTOR_ONLY.has(id)));
+    if (drug) return actOf(drug).ar + ' بدو أمر طبيب. إذا شايفه لازم، اقترحه ' + (E.nurse.sex === 'F' ? 'عالدكتورة' : 'عالدكتور') + ' بالـR تبع الـSBAR.';
+    if (named.some(id => NURSE_OWN.has(id) || id === 'oxygen' || NURSE_TESTS.has(id))) return 'هاد ضمن صلاحيتك. اعمله وراقب الاستجابة.';
+    const T = ['شو أهم رقم على المونيتور هسا، وشو بيعني بالـABCDE؟', 'قبل أي دوا: سألت عن الحساسية والأدوية؟', 'بعد كل تدخل: شو تغيّر بالأرقام؟', 'إذا بدك تبلّغ ' + docW() + ' هسا: شو الـS والـB والـA والـR؟', 'شو بتقدر تعمل لحالك ضمن البروتوكول، وشو بدو أمر؟'];
+    return T[E.nurse.teachAt++ % T.length];
+  }
+
+  /* ---------- nurse mode: the side panel ---------- */
+  function nurseChips() {
+    if (!NM() || typeof document.querySelector !== 'function') return;
+    const n = document.querySelector('.er-p[data-who="n"] b'), d = document.querySelector('.er-p[data-who="d"] b'), np = document.querySelector('.er-p[data-who="n"]');
+    if (n) n.textContent = 'د. ' + E.nurse.doc + (E.nurse.present ? '' : ' (خارج الغرفة)');
+    if (np && np.dataset) { if (E.nurse.present) delete np.dataset.out; else np.dataset.out = '1'; }
+    if (d) d.textContent = 'المشرفة';
+  }
+  const ordTime = t => `<bdi dir="ltr" class="font-num">${clk(t)}</bdi>`;
+  function buildOrders() {
+    if (!E || !NM()) return;
+    const N = E.nurse, box = $('er-ord'), list = $('er-ord-list');
+    const open = N.orders.filter(o => openOrd(o) && !o.reminder).length;
+    const tb = $('er-test');
+    if (tb && tb.dataset) tb.dataset.badge = open ? String(open) : '';
+    if (!box || !list) return;
+    box.hidden = !N.orders.length;
+    const was = REAL && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.ord : '';
+    const rows = [...N.orders].sort((a, b) => (openOrd(b) ? 1 : 0) - (openOrd(a) ? 1 : 0) || a.at - b.at);
+    list.innerHTML = rows.map(o => {
+      const drug = o.kind === 'act' && !!(actOf(o.id) || {}).dose;
+      const state = o.cancelled ? '<span class="er-ord-chip is-x">أُلغي</span>' : o.doneAt != null ? `<span class="er-ord-chip is-done">نُفِّذ عند ${ordTime(o.doneAt)}</span>` : '<span class="er-ord-chip is-wait">بانتظار التنفيذ</span>';
+      const tags = (o.reminder ? '<span class="er-ord-chip is-rem">تذكير</span>' : '') + (o.doctorDoes ? '<span class="er-ord-chip is-doc">يجريه الطبيب</span>' : '');
+      const btn = openOrd(o) ? `<button type="button" data-ord="${o.kind}:${esc(o.id)}">${o.kind === 'test' ? 'اطلب' : drug ? 'أعطِ' : 'نفّذ'}</button>` : '';
+      return `<li class="er-ord-row${openOrd(o) ? ' is-open' : ''}"><p><b>${esc(o.ar)}</b>${o.show ? ` <bdi>${esc(o.show)}</bdi>` : ''}${o.pick ? `، الجرعة: <bdi dir="ltr">${esc(o.pick)}</bdi>` : ''}</p><p class="er-ord-meta"><small>صدر عند ${ordTime(o.at)}</small>${tags}${state}</p>${btn}</li>`;
+    }).join('');
+    if (was) { const b = list.querySelector('[data-ord="' + was + '"]'); if (b && b.focus) b.focus({ preventScroll: true }); }
+  }
+  // A click on an order in the panel: the trainee's line, then the same path as typing it.
+  function execOrder(kind, id) {
+    if (!E || E.over || !NM()) return false;
+    E.started = true;
+    const o = E.nurse.orders.find(x => x.kind === kind && x.id === id && openOrd(x));
+    if (!o) return false;
+    const meta = kind === 'test' ? testOf(id) : actOf(id);
+    person('me', (kind === 'test' ? 'طلبت ' : isDrug(id) || id === 'oxygen' ? 'أعطيت ' : 'نفّذت ') + meta.ar);
+    E.rbBuf = []; E.collect = [];
+    if (kind === 'test') nurseTest(id, '', '');
+    else nurseAct({ id, dose: '', agent: '' }, '');
+    flushBack();
+    const col = (E.collect || []).filter(x => E.pending === x.p || E.queue.some(([q]) => q === x.p));
+    E.collect = null;
+    if (col.length && (!E.pending || E.pending.type === 'dose')) openDoses(col[0].line);
+    buildOrders();
+    return true;
+  }
+  const nurseTag = id => {
+    if (!NM()) return '';
+    const ord = E.nurse.orders.some(o => o.kind === 'test' && o.id === id && !o.cancelled);
+    return NURSE_TESTS.has(id) ? '<em class="er-tag er-tag-own">سريري: ضمن صلاحيتك</em>' : ord ? '<em class="er-tag er-tag-ord">أمر الطبيب</em>' : '<em class="er-tag er-tag-need">يحتاج أمر طبيب</em>';
+  };
+  // The role, chosen before a case starts only.
+  const canSwitch = () => !!E && !E.over && !E.started && E.turns === 0 && E.sim < 0.05;
+  function setRole(v) {
+    const role = v === 'nurse' ? 'nurse' : v === 'doctor' ? 'doctor' : null;
+    if (!role || !canSwitch()) return false;
+    if (role === E.role) return true;
+    roleWanted = role;
+    begin(E.c.id, { role });
     return true;
   }
 
@@ -1070,7 +1902,7 @@
     const meta = actOf(a.id);
     if (!meta) return;
     a.said = a.said || text;
-    if (a.id === 'cpr') { nurse(E.stage === 3 ? 'لسا في نبض ضعيف دكتور، شو بدك قبل ما يوقف؟' : 'في نبض دكتور، مش وقت إنعاش.'); return; }
+    if (a.id === 'cpr') { nurse(E.stage === 3 ? 'لسا في نبض ضعيف دكتور، شو بدك قبل ما يوقف؟' : 'في نبض دكتور، مش وقت إنعاش.', { d: 'في نبض، مش وقت ضغطات. بلّغ الدكتور فوراً.' }); if (NM() && E.stage === 3 && E.nurse.esc.calledAt === null && !E.nurse.present) escalate(''); return; }
     if (a.id === 'sedative' && E.done.has('airway')) { nurse('طبيب التخدير رح يعطي المهدئ مع التنبيب.'); return; }
     const care = E.c.care[a.id], treating = E.anaph && !E.anaph.treated;
     let def = care || (E.anaph && ADJUNCT.includes(a.id) ? {} : offCase(meta));
@@ -1082,11 +1914,11 @@
     if (def.niHarm && E.stage === 3 && /cpap|bipap|niv|بايباب|سي باب|قناع/.test(said) && !/intubat|تنبيب|نبب|(?:^| )rsi(?: |$)|انبوب/.test(said)) def = { ...def, ...def.niHarm };
     if (def.invasiveHarm && E.stage < 3 && /intubat|تنبيب|نبب|(?:^| )rsi(?: |$)|انبوب/.test(said)) def = { ...def, ...def.invasiveHarm };
     // Some orders wait for a number or for an earlier step; the nurse says which.
-    if (!def.harm && def.needTest && !(E.tests[def.needTest] && E.tests[def.needTest].back)) { nurse(def.needLine || `دكتور، قبل ${meta.ar} بدنا نتيجة ${testOf(def.needTest).ar}.`); return; }
-    if (!def.harm && def.needDone && !E.done.has(def.needDone)) { nurse(def.needLine || `دكتور، قبل ${meta.ar} ما عملنا ${actOf(def.needDone).ar}.`); return; }
+    if (!def.harm && def.needTest && !(E.tests[def.needTest] && E.tests[def.needTest].back)) { nurse(def.needLine || `دكتور، قبل ${meta.ar} بدنا نتيجة ${testOf(def.needTest).ar}.`, 'لم يُنفَّذ بعد: يلزم أولاً ' + testOf(def.needTest).ar + '.'); return; }
+    if (!def.harm && def.needDone && !E.done.has(def.needDone)) { nurse(def.needLine || `دكتور، قبل ${meta.ar} ما عملنا ${actOf(def.needDone).ar}.`, 'لم يُنفَّذ بعد: يلزم أولاً ' + actOf(def.needDone).ar + '.'); return; }
     const allergic = allergicTo(a, def, text);
     // An order insisted on too early does not stop the same order once it is right.
-    if (!allergic && E.harmed.has(a.id) && !def.allergyKw && (early || !(care && care.stableHarm))) { nurse(`${meta.ar}؟ عملناه من شوي.`); return; }
+    if (!allergic && E.harmed.has(a.id) && !def.allergyKw && (early || !(care && care.stableHarm))) { nurse(`${meta.ar}؟ عملناه من شوي.`, 'سبق أن نفّذت هذا قبل قليل.'); return; }
     const prev = E.done.get(a.id);
     const rescue = (treating && a.id === 'adrenaline') || (E.vtNow && a.id === 'shock');
     if (!allergic && prev && !rescue && !again(a, meta, def, prev)) return;
@@ -1180,13 +2012,15 @@
 
   // A message with three orders gets one "حاضر، X، وY، وZ." and one "done" line, not six lines.
   const joinSaid = list => list.map(([t, name]) => t.replace(/^حاضر[،.]?\s*/, '').replace(/[.。]\s*$/, '').trim() || name).join('، و');
-  function sayBack(text, name) {
-    if (E.rbBuf) E.rbBuf.push([text, name]);
-    else nurse(text);
+  function sayBack(text, name, dose) {
+    if (NM() && E.nurse.docDoing) return;
+    if (E.rbBuf) E.rbBuf.push([text, name, dose]);
+    else nurse(text, 'نُفِّذ: ' + name + (dose ? ' (' + dose + ')' : '') + '.');
   }
   function flushBack() {
     const list = E.rbBuf || [];
     E.rbBuf = null;
+    if (NM()) { if (list.length) sys('نُفِّذ: ' + list.map(([, n, d]) => n + (d ? ' (' + d + ')' : '')).join('، و') + '.'); return; }
     if (list.length === 1) nurse(list[0][0]);
     else if (list.length > 1) nurse(`حاضر، ${joinSaid(list)}.`);
   }
@@ -1201,12 +2035,13 @@
     E.done.set(a.id, prev ? { ...prev, n: prev.n + 1, last: E.sim, dose: a.dose || prev.dose, amt: (prev.amt || 0) + amt, top: Math.max(prev.top || 0, amt) } : { at: E.sim, last: E.sim, n: 1, dose: a.dose || '', ok: a._ok || 'good', amt, top: amt });
     settle(q => q.type === 'dose' && q.a.id === a.id);
     log('action', meta.ar + (a.dose ? ' (' + a.dose + ')' : ''));
+    if (NM()) nurseGave(a, meta);
     const named = a.agent && a.agent.length <= 24 ? a.agent : meta.ar;
     // The drug's name once: "سلاين 500 مل سلاين" is not how anyone reads an order back.
     const withName = a.dose && norm(a.dose).includes(norm(named)) ? a.dose : `${named} ${a.dose}`;
     // Asked for the numbers, she reads them at once; "حاضر" is for orders, said once for all of a message's orders.
     if (a.id === 'bp_repeat') { E.bpAt = 0; paint(); nurse(`قست الضغط هسا: ${spokenVitals()}.`); }
-    else sayBack(a.sayDose ? `حاضر، ${a.sayDose}.` : a.dose ? `حاضر، ${withName}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'), meta.ar);
+    else sayBack(a.sayDose ? `حاضر، ${a.sayDose}.` : a.dose ? `حاضر، ${withName}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'), meta.ar, a.dose);
     // More of the same adds something; saying the same flow again does not.
     const higher = !prev || !(meta.repeat && meta.repeat.up) || amt > (prev.top || 0);
     const share = prev ? (meta.repeat ? meta.repeat.again : 0) : 1;
@@ -1222,22 +2057,23 @@
     }
     if (a.id === 'adrenaline' && E.anaph && !E.anaph.treated) {
       E.anaph.treated = E.sim;
-      later(0.15, () => { E.risk = clamp(E.risk - 18, 0, 100); E.bpAt = 0; paint(); nurse('الضغط بلش يطلع والصفير خف بعد الأدرينالين.'); });
+      later(0.15, () => { E.risk = clamp(E.risk - 18, 0, 100); E.bpAt = 0; paint(); nurse('الضغط بلش يطلع والصفير خف بعد الأدرينالين.', 'بدأ الضغط يرتفع وخفّ الصفير بعد الأدرينالين.'); });
     }
     if (a.id === 'shock' && E.vtNow) {
       later(0.1, () => {
         E.risk = E.c.risk.critical - 5; E.stage = 2; E.vtNow = false; E.shockedAt = E.sim; E.bpAt = 0;
         stageCheck(); paint();
         log('better', 'رجع النظم بعد الصدمة');
-        nurse('رجع sinus، وفي نبض. بس لسا مش ثابت.');
+        nurse('رجع sinus، وفي نبض. بس لسا مش ثابت.', 'عاد النظم الجيبي وهناك نبض، لكنه غير مستقر بعد.');
       });
     }
     later(0.1, () => {
       if (a.id === 'temp') { E.tempKnown = true; paint(); }
       if (a.id === 'bp_repeat') return;
       if (def.done) sayDone(def.done);
-      if (a.id === 'call_senior' || a.id === 'call_icu') coach('called');
+      if ((a.id === 'call_senior' || a.id === 'call_icu') && !NM()) coach('called');
     });
+    if (NM()) later(0.02, () => releaseOrders());
     // What the relative says about this very step, or else, for a needle or a drug, at most a question about it.
     if (!compOn('onDone', a.id, 0.6) && (meta.dose || ['iv_access', 'fluids', 'foley', 'airway'].includes(a.id))) director('procedure');
   }
@@ -1299,15 +2135,15 @@
       const a = { ...p.a, dose: doseIn(text) || (accepted && p.sug) || '', _asked: true, _ok: grade, said: (p.a.said || '') + ' ' + text };
       if (accepted && p.sug && !doseIn(text)) a.sayDose = p.tip.split(' (أو')[0].split('، ')[0];
       // "Yes" to "which one?" names nothing.
-      if (accepted && !p.sug) { E.pending = p; E.resolved = false; nurse('أي نوع بالزبط، وقديش؟'); return; }
+      if (accepted && !p.sug) { E.pending = p; E.resolved = false; nurse('أي نوع بالزبط، وقديش؟', { d: 'أي وسيلة، وعلى كم بالزبط؟' }); return; }
       if (doseBad({ ...a, dose: '' }, def, text, grade)) {
         badDose({ ...a, dose: a.dose || text.slice(0, 24) }, meta, def);
         if (!p.retried) {
           E.pending = { ...p, retried: true };
-          nurse('دكتور، هاي الجرعة مش مزبوطة، راجعها.');
+          nurse('دكتور، هاي الجرعة مش مزبوطة، راجعها.', 'الكمية غير مناسبة، فلم يُنفَّذ. راجعها.');
           return;
         }
-        nurse('هاي الجرعة ما بقدر أعطيها. اطلبه من جديد بجرعة صحيحة، أو اسأل المشرف.');
+        nurse('هاي الجرعة ما بقدر أعطيها. اطلبه من جديد بجرعة صحيحة، أو اسأل المشرف.', 'لم يُنفَّذ: الكمية غير مناسبة.');
       } else if (!(a.dose && overTotal(a, meta, def))) {
         give(a, meta, def);
         // One "yes" takes every other proposal she made in the same breath.
@@ -1351,7 +2187,7 @@
     const have = E.tests[id];
     if (have) {
       if (have.el && have.el.scrollIntoView) have.el.scrollIntoView({ block: 'center' });
-      if (!quiet) nurse(have.back ? `طلع من شوي، ${resultBrief(id)}` : `نتيجة ${meta.ar} لسا ما طلعت.`);
+      if (!quiet) nurse(have.back ? `طلع من شوي، ${resultBrief(id)}` : `نتيجة ${meta.ar} لسا ما طلعت.`, have.back ? 'النتيجة صدرت من قبل.' : 'النتيجة لم تصدر بعد.');
       return;
     }
     submitTest(id, reason || '', reason ? (ok === 'good' || ok === 'ungraded' ? ok : 'weak') : 'ungraded');
@@ -1400,8 +2236,9 @@
     // A culture drawn is not a result yet: nothing to read for hours.
     const waiting = /incubat/i.test(res.report || '');
     t.el = say('lab', '', labCard(id));
+    if (NM()) later(0.02, () => releaseOrders());
     if (offInd(t) && t.el && t.el.classList) t.el.classList.add('is-off'); // phase8 2026-11-07
-    if (waiting) nurse('سحبت الزراعة من مكانين، والنتيجة بعد يوم أو يومين.');
+    if (waiting) nurse('سحبت الزراعة من مكانين، والنتيجة بعد يوم أو يومين.', 'سُحبت الزراعة، ونتيجتها بعد يوم أو يومين.');
     if (!waiting && res.key && (res.ind === 'indicated' || res.ind === 'acceptable') && E.readAsks < 3) {
       E.readAsks++;
       ask({ type: 'interpret', id, ask: `The supervisor asked the trainee to read the ${testOf(id).en}. Reference reading: ${res.key}. good = matches, partial = incomplete, wrong = contradicts, na = not a reply.` }, pickOf([`شو بتقرأ بالـ${testOf(id).en}؟`, `طيب، الـ${testOf(id).en} شو بيحكيلك؟`]), 'd');
@@ -1438,7 +2275,7 @@
       c.nurseStep = true;
       later(after + 0.5, () => {
         if (E.comp.gen !== gen) { E.comp.nurseStep = false; return; }
-        nurse(E.c.companion.nurse); E.anx = clamp(E.anx - 10, 0, 100); E.comp.lastAt = E.sim;
+        nurse(E.c.companion.nurse, { d: 'أهل المريض خايفين. كلمة وحدة منك بتفرق.' }); if (!NM()) E.anx = clamp(E.anx - 10, 0, 100); E.comp.lastAt = E.sim;
       });
     }
   }
@@ -1509,7 +2346,7 @@
 
   // The supervisor is in the room and speaks when the moment calls for it.
   function coach(why) {
-    if (E.over) return;
+    if (E.over || NM()) return; // nurse mode: the instructor has her own fixed lines
     const missing = keyMissing().map(k => k.label).join('، ');
     if (why === 'called') { person('d', 'أنا هون. شو عندك؟ بجملتين: situation وأهم رقم.'); return; }
     if (why === 'harm') { voice('d', 'supervisor', 'Something the trainee ordered just harmed the patient. Say it calmly, ask what changed and what they do now.', 'وقف. شو تغيّر بعد آخر دوا؟ شو بتعمل هسا؟'); return; }
@@ -1530,13 +2367,14 @@
     E.outcome = 'arrest';
     log('stage', 'توقف قلبي تنفسي');
     alert('توقف: لا يوجد نبض واضح. فريق الإنعاش يستلم المريض.');
-    nurse('كود! كود! بلشنا إنعاش!');
+    nurse('كود! كود! بلشنا إنعاش!', 'توقف القلب. نُودي على فريق الإنعاش.');
     conclude(null);
   }
 
   /* ---------- ending ---------- */
   function openEnd() {
     if (!E || E.over) return;
+    if (NM()) { openEndNurse(); return; }
     const box = $('er-sheet'), my = E, keep = E.draft || {};
     /* phase8 2026-11-07: every out-of-indication test ordered needs a written justification before handover. */
     const offs = Object.values(E.tests).filter(offInd), keepJ = keep.just || {};
@@ -1584,12 +2422,14 @@
     };
     $('er-dx').focus();
   }
+  // "Gave aspirin" about a drug nobody gave is the one lie plain text can show (both handover sheets use it).
+  const claimedIn = s => /(اعطيت|عطيت|اعطيناه|اعطيناها|عطيناه|عطيناها|اخذ|اخد|gave|given|started)/.test(s) && D.actions.some(a => a.limits && !E.done.has(a.id) && hasAny(s, a.kw) && !/(بدي|اقترح|نحتاج|يحتاج|تحتاج|لازم|need|plan)/.test(s));
   function localGrade(end) {
     const d = norm(end.dx), s = norm(end.sbar), c = E.c;
     const close = (c.dx.close || []).some(w => hasAny(d, [w]));
     const right = !close && c.dx.accept.some(w => hasAny(d, [w]));
     // "Gave aspirin" about a drug nobody gave is the one lie plain text can show.
-    const claimed = /(اعطيت|عطيت|اعطيناه|اعطيناها|عطيناه|عطيناها|اخذ|اخد|gave|given|started)/.test(s) && D.actions.some(a => a.limits && !E.done.has(a.id) && hasAny(s, a.kw) && !/(بدي|اقترح|نحتاج|يحتاج|تحتاج|لازم|need|plan)/.test(s));
+    const claimed = claimedIn(s);
     return { dx: right ? 'right' : close ? 'close' : 'wrong', s: s.length > 15, b: /(عنده|عندها|تاريخ|history|قصه)/.test(s), a: /\d/.test(s), r: /(بدي|اقترح|نحتاج|لازم|توصيه|plan)/.test(s), invented: claimed, note: '' };
   }
 
@@ -1636,6 +2476,15 @@
   }
   const DISPO = { icu: 'العناية الحثيثة', hdu: 'مراقبة عالية في الطوارئ', cath: 'القسطرة', ward: 'طابق عادي', home: 'البيت' };
 
+  /* phase8 2026-11-07 (made a helper for the nurse report, 2026-11-07): the tests table rows, in order of time.
+     src adds the nurse report's «المصدر» column; the doctor report passes none and is unchanged. */
+  const justCell = t => {
+    if (!offInd(t)) return '—';
+    if (t.justOk === undefined) return 'لم تكتب تبريراً';
+    return `${t.justify ? esc(t.justify) : 'لم تكتب تبريراً'}<small class="${t.justOk ? 'j-ok' : 'j-no'}">${t.justOk ? 'مقبول' : 'غير مقنع'}</small>`;
+  };
+  const testRows = (reasoned, src) => Object.values(E.tests).sort((a, b) => a.at - b.at).map(t => `<tr${offInd(t) ? ' class="is-off"' : ''}><td><span dir="ltr">${esc(testOf(t.id).en)}</span>${offInd(t) ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}</td><td class="font-num" dir="ltr">${clk(t.at)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${src ? `<td>${src(t)}</td>` : ''}${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${justCell(t)}</td><td>${esc(t.why || '')}</td></tr>`).join('');
+
   function chart() {
     const W = 640, H = 150, pts = E.riskLog, maxT = Math.max(1, pts[pts.length - 1][0]);
     const x = t => 8 + t / maxT * (W - 16), y = r => H - 10 - r / 100 * (H - 20);
@@ -1662,6 +2511,7 @@
     $('view-er').dataset.rhythm = '';
     $('er-input').disabled = true;
     ['er-send', 'er-test', 'er-end'].forEach(id => { $(id).disabled = true; });
+    if (NM()) { concludeNurse(end); return; }
     const c = E.c, s = score(end);
     // A score cannot buy back a harmed patient: these fail the case whatever the number says.
     const fails = [];
@@ -1718,12 +2568,7 @@
     const riskTop = Math.round(Math.max(...E.riskLog.map(p => p[1]))), riskEnd = Math.round(E.risk), anxTop = Math.round(E.anxTop);
     const reasoned = Object.values(E.tests).some(t => t.reason);
     /* phase8 2026-11-07: in order of time, with the time ordered, the justification column and the amber rows. */
-    const justCell = t => {
-      if (!offInd(t)) return '—';
-      if (t.justOk === undefined) return 'لم تكتب تبريراً';
-      return `${t.justify ? esc(t.justify) : 'لم تكتب تبريراً'}<small class="${t.justOk ? 'j-ok' : 'j-no'}">${t.justOk ? 'مقبول' : 'غير مقنع'}</small>`;
-    };
-    const tests = Object.values(E.tests).sort((a, b) => a.at - b.at).map(t => `<tr${offInd(t) ? ' class="is-off"' : ''}><td><span dir="ltr">${esc(testOf(t.id).en)}</span>${offInd(t) ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}</td><td class="font-num" dir="ltr">${clk(t.at)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${justCell(t)}</td><td>${esc(t.why || '')}</td></tr>`).join('');
+    const tests = testRows(reasoned);
     const box = $('er-debrief');
     box.hidden = false;
     box.innerHTML = `<div class="er-report-page">
@@ -1743,8 +2588,285 @@
       <p class="er-small">طلبت مساعدة المشرف ${E.helps} مرة، وبادر هو ${E.hints} مرة. الحالات والدرجات تدريبية ولم يراجعها طبيب بعد.</p>
       <div class="er-pane-f"><button type="button" class="s" id="er-home">الرئيسية</button><button type="button" class="s" id="er-again">أعد الحالة نفسها</button><button type="button" class="p" id="er-next">الحالة التالية</button></div>
     </div>`;
-    $('er-again').onclick = () => begin(c.id);
-    $('er-next').onclick = () => begin();
+    const keepRole = E.role;
+    $('er-again').onclick = () => begin(c.id, { role: keepRole });
+    $('er-next').onclick = () => begin(undefined, { role: keepRole });
+    $('er-home').onclick = () => { if (typeof navigateTo === 'function') navigateTo('home'); };
+    lastReport = E;
+    box.querySelector('.er-score').focus({ preventScroll: true });
+    box.scrollTop = 0;
+    save(s, passed, end);
+  }
+
+  /* ---------- nurse mode: the handover, the score and the report (2026-11-07) ---------- */
+  const SBAR_BOX = [
+    ['s', 'S · الوضع', 'الوضع: من المريض، وأين هو، وما الذي يحدث الآن؟'],
+    ['b', 'B · الخلفية', 'الخلفية: الأمراض المزمنة، الأدوية، الحساسية، وما أُعطي حتى الآن.'],
+    ['a', 'A · التقييم', 'التقييم: آخر علامات حيوية بالأرقام، وما تغيّر بعد التدخلات.'],
+    ['r', 'R · التوصية', 'التوصية: ما يحتاجه المستلم، من المراقبة والأوامر المعلّقة ومتى يُبلَّغ الطبيب.'],
+  ];
+  const orderedTest = id => E.nurse.orders.some(o => o.kind === 'test' && o.id === id && !o.cancelled && !o.reminder);
+  const SEC_N = ['التقييم الأولي (ABCDE)', 'التعرف على التدهور والتصعيد', 'التدخلات ضمن نطاق التمريض', 'سلامة الدواء', 'المتابعة وإعادة التقييم', 'التواصل', 'التسليم (SBAR)'];
+  function openEndNurse() {
+    const box = $('er-sheet'), my = E, keep = E.draft || {};
+    // Only a bedside test the nurse chose herself can be out of indication; an ordered test never is.
+    const offs = Object.values(E.tests).filter(t => offInd(t) && !orderedTest(t.id)), keepJ = keep.just || {};
+    const justBlock = offs.length ? `<div class="er-just" role="group" aria-labelledby="er-just-h">
+        <p class="er-just-h" id="er-just-h">⚠️ تبرير الفحوصات السريرية التي أجريتها خارج الاستطباب الأساسي للحالة:</p>
+        ${offs.map(t => { const m = testOf(t.id) || {}; return `<label>${esc(m.ar)} <bdi dir="ltr">${esc(m.en)}</bdi><textarea id="er-just-${esc(t.id)}" data-just="${esc(t.id)}" rows="2" maxlength="400" placeholder="ما الذي أردت أن تعرفه بهذا الفحص؟"></textarea></label>`; }).join('')}
+        <p class="er-small">اكتب ثلاث كلمات على الأقل لكل فحص.</p>
+      </div>` : '';
+    box.hidden = false;
+    box.innerHTML = `<div class="er-pane er-pane-n" role="dialog" aria-modal="true" aria-labelledby="er-end-h">
+      <h3 id="er-end-h">سلّم الحالة للممرض/ة المستلم/ة (SBAR)</h3>
+      <p class="er-small">التسليم التمريضي بصيغة SBAR فقط: لا يُطلب منك تشخيص ولا وجهة.</p>
+      ${SBAR_BOX.map(([k, l, ph]) => `<label>${l}<textarea id="er-sbar-${k}" rows="2" maxlength="300" placeholder="${ph}"></textarea></label>`).join('')}
+      ${justBlock}
+      <div class="er-pane-f"><button type="button" class="s" id="er-end-x">رجوع للمريض</button><button type="button" class="p" id="er-end-go" disabled>سلّم</button></div>
+    </div>`;
+    SBAR_BOX.forEach(([k]) => { $('er-sbar-' + k).value = (keep.parts || {})[k] || ''; });
+    offs.forEach(t => { const el = $('er-just-' + t.id); if (el) el.value = keepJ[t.id] || ''; });
+    const check = () => {
+      const just = {}, parts = {};
+      offs.forEach(t => { const el = $('er-just-' + t.id); just[t.id] = el ? el.value : ''; });
+      SBAR_BOX.forEach(([k]) => { parts[k] = $('er-sbar-' + k).value; });
+      my.draft = { parts, just };
+      $('er-end-go').disabled = !(SBAR_BOX.every(([k]) => wordsIn(parts[k]) >= 3) && offs.every(t => wordsIn(just[t.id]) >= 3));
+    };
+    SBAR_BOX.forEach(([k]) => $('er-sbar-' + k).addEventListener('input', check));
+    offs.forEach(t => { const el = $('er-just-' + t.id); if (el) el.addEventListener('input', check); });
+    check();
+    $('er-end-x').onclick = () => { box.hidden = true; $('er-input').focus(); };
+    $('er-end-go').onclick = async () => {
+      $('er-end-go').disabled = true;
+      $('er-end-go').textContent = 'لحظة...';
+      const parts = {};
+      SBAR_BOX.forEach(([k]) => { parts[k] = String($('er-sbar-' + k).value || '').trim(); });
+      const sbar = 'S: ' + parts.s + '\nB: ' + parts.b + '\nA: ' + parts.a + '\nR: ' + parts.r;
+      const end = { sbar, parts, nurse: true };
+      offs.forEach(t => { const el = $('er-just-' + t.id), v = String((el && el.value) || '').trim().slice(0, 400); t.justify = v; t.justOk = justGood(v); });
+      const g = await call({ mode: 'grade', role: 'nurse', sbar, harms: E.harms.map(h => h.label) }, 12000);
+      if (E !== my || E.over) return;
+      const local = gradeHandoverNurse(end);
+      // The server reads S, B, A and R; the room still checks what only it can see (an intervention named, a drug claimed).
+      end.grade = g && g.dx ? { ...local, s: !!g.s, b: !!g.b, a: !!g.a, r: !!g.r, invented: !!g.invented || local.invented, note: typeof g.note === 'string' ? g.note.slice(0, 240) : '', graded: true } : local;
+      E.outcome = E.risk < E.c.risk.watch && !nurseKeyMissing().length ? 'stable' : 'unstable';
+      box.hidden = true;
+      conclude(end);
+    };
+    $('er-sbar-s').focus();
+  }
+  // Offline, the four boxes graded by rule; A only with readings that match the monitor at the end.
+  function gradeHandoverNurse(end) {
+    const P = end.parts || {}, all = norm(end.sbar || '');
+    const gs = gradeSbar(P.s || ''), gb = gradeSbar(P.b || ''), ga = gradeSbar((P.a || '') + ' ' + (P.s || '')), gr = gradeSbar(P.r || '');
+    const s = gs.s || norm(P.s || '').length >= 25;
+    const r = gr.r || /(راقب|مراقب|متابع|اعاده|اعيد|بلغ|تبليغ|ينتظر|انتظار|معلق|الاوامر|اتصل)/.test(norm(P.r || ''));
+    const mention = [...E.done.keys()].filter(id => !['bp_repeat', 'temp', 'call_senior', 'call_icu'].includes(id)).some(id => hasAny(all, (E.nurse.acts.find(a => a.id === id) || actOf(id) || {}).kw || []));
+    // «عنده مرض مزمن ما بعرف» is no background: an unknown history counts only beside a named condition or the allergy status.
+    const pb = norm(P.b || ''), unsure = /(ما بعرف|مش عارف|مش متاكد|ما بعرفش)/.test(pb);
+    const b = gb.b && (!unsure || ALLERGY_W.test(pb) || /(سكري|ربو|ضغط(?! *\d)|قلب|كلي|قصور|صرع|جلطه|بخاخ|انسولين)/.test(pb));
+    return { dx: 'wrong', s, b, a: ga.a, aWrong: ga.aWrong, r, mention, allergy: ALLERGY_W.test(all), invented: claimedNurse(end.sbar || ''), note: '' };
+  }
+  // The same lie check, clause by clause, so "allergic to aspirin" beside "gave salbutamol" is not a claim.
+  const claimedNurse = raw => String(raw).split(/[،,.\n؛;]+/).map(norm).some(cl => /(اعطيت|عطيت|اعطيناه|اعطيناها|عطيناه|عطيناها|اخذ|اخد|gave|given|started)/.test(cl) && !ALLERGY_W.test(cl)
+    && D.actions.some(a => a.limits && !E.done.has(a.id) && hasAny(cl, a.kw) && !/(بدي|اقترح|نحتاج|يحتاج|تحتاج|لازم|need|plan)/.test(cl)));
+  const nurseOwnKeys = () => Object.entries(E.c.care).filter(([id, d]) => d.key && d.by && OWN_KEYS.includes(id));
+  const keyOrders = () => E.nurse.orders.filter(o => o.kind === 'act' && !o.reminder && !o.cancelled && !o.doctorDoes && !o.optional && ((E.c.care[o.id] || {}).key || o.when === 'collapse'));
+  const nurseKeyMissing = () => [...nurseOwnKeys().filter(([id]) => !E.done.has(id)).map(([id]) => id), ...keyOrders().filter(o => o.doneAt == null).map(o => o.id)];
+  function scoreNurse(end) {
+    const c = E.c, N = E.nurse, X = N.esc;
+    // 1. ABCDE /15: each part 2 (full by minute 3, half by 6; one of two parts = half), plus red flags 5.
+    const tf = t => (t === null || t === undefined ? 0 : t <= 3 ? 1 : t <= 6 ? 0.5 : 0);
+    const exAt = ids => { const ts = ids.map(id => N.examAt[id]).filter(x => x !== undefined); return ts.length ? Math.min(...ts) : null; };
+    const minOf = list => { const ts = list.filter(x => x !== null && x !== undefined); return ts.length ? Math.min(...ts) : null; };
+    const v1 = N.vchecks.length ? N.vchecks[0] : null, glu = E.tests.glucose ? E.tests.glucose.at : null;
+    const pair = (t1, t2) => (t1 !== null && t2 !== null ? [2 * tf(Math.max(t1, t2)), Math.max(t1, t2)] : t1 !== null || t2 !== null ? [tf(t1 !== null ? t1 : t2), null] : [0, null]);
+    const one = t => [2 * tf(t), t];
+    const circ = ['perfusion', 'hydration', 'volume', 'heart'].filter(id => c.exam.some(f => f.id === id));
+    const parts = {
+      a: one(minOf([N.airwayAt, exAt(['consciousness', 'general', 'work'])])),
+      b: pair(v1, exAt(['chest', 'work'])),
+      c: circ.length ? pair(v1, exAt(circ)) : one(v1),
+      d: pair(exAt(['consciousness', 'general']), glu),
+      e: one(minOf([N.tempAt, exAt(['abdomen', 'legs', 'neuro', 'perfusion', 'hydration'])])),
+    };
+    const reds = [...c.facts, ...c.exam].filter(f => f.red), got = reds.filter(f => E.facts.has(f.id) || E.exam.has(f.id));
+    const assess = clamp(Object.values(parts).reduce((t, [p]) => t + p, 0) + (reds.length ? 5 * got.length / reds.length : 5), 0, 15);
+    const abcdeAt = Object.values(parts).every(([p]) => p === 2) ? Math.max(...Object.values(parts).map(([, t]) => t)) : null;
+    // 2. recognising deterioration and escalating /20
+    const ESC = escBy(), called = X.calledAt, s2 = N.stageAt[2];
+    const timing = X.by === 'alarm' || called === null ? 0 : called <= ESC && (s2 === undefined || called < s2) ? 10 : 5;
+    const sb = X.sbar, half = (sb && sb.half) || {};
+    const sbPart = k => (!sb || sb.none || !sb[k] ? 0 : half[k] ? 1 : 2);
+    const sbarPts = ['s', 'b', 'a', 'r'].reduce((t, k) => t + sbPart(k), 0);
+    const rose = called !== null && Object.values(N.stageAt).some(at => at > called);
+    const follow = called === null ? 0 : !rose || (X.updateAt !== null && X.reNeededAt !== null && X.updateAt - X.reNeededAt <= 2) ? 2 : 0;
+    const escPts = timing + sbarPts + follow;
+    // 3. interventions within nursing scope /20
+    const own = nurseOwnKeys().map(([id, d]) => { const x = E.done.get(id); return { id, d, at: x ? x.at : null, state: !x ? 'missed' : x.at <= d.by ? 'ontime' : 'late' }; });
+    const pk = own.length ? 8 / own.length : 0;
+    const a8 = own.length ? own.reduce((t, k) => t + (k.state === 'ontime' ? pk : k.state === 'late' ? pk / 2 : 0), 0) : 8;
+    const bed = [...NURSE_TESTS].filter(id => (c.results[id] || {}).ind === 'indicated').map(id => { const r = c.results[id], by = r.by || 10, x = E.tests[id]; return { id, by, why: r.why, at: x ? x.at : null, state: !x ? 'missed' : x.at <= by ? 'ontime' : 'late' }; });
+    const pb = bed.length ? 4 / bed.length : 0;
+    const b4 = bed.length ? bed.reduce((t, k) => t + (k.state === 'ontime' ? pb : k.state === 'late' ? pb / 2 : 0), 0) : 4;
+    const ords = N.orders.filter(o => !o.reminder && !o.cancelled && !o.doctorDoes).map(o => ({ o, lag: o.doneAt == null ? null : Math.max(0, o.doneAt - o.at) }));
+    const po = ords.length ? 8 / ords.length : 0;
+    const c8 = ords.reduce((t, r) => t + (r.lag === null ? 0 : r.lag <= 3 ? po : r.lag <= 6 ? po / 2 : 0), 0);
+    const gapIds = [...new Set(N.scope.filter(x => x.why !== 'wrong-agent').map(x => x.id))];
+    const interv = clamp(a8 + b4 + c8 - Math.min(6, gapIds.length * 2) - N.notIndicated.length * 2, 0, 20);
+    // 4. medication safety /15
+    const first = N.given[0] || null;
+    const allergyPts = first ? (first.allergyAsked ? 5 : N.allergyAt !== null ? 2 : 0) : N.allergyAt !== null ? 5 : 0;
+    // Review fixes 2026-11-07: telling the doctor is scored from the doctor's side only; no dose credit with no drug
+    // given or an ordered key drug never given; cultures drawn after the antibiotic cost 2 each.
+    const toldPts = N.allergyToldDoc ? 3 : 0;
+    const drugMissed = keyOrders().some(o => isDrug(o.id) && o.doneAt == null);
+    const dosePts = !N.given.length || drugMissed ? 0 : Math.max(0, 4 - 2 * E.wrongDoses.length);
+    const rbPts = N.ordersAt !== null && N.readBack ? 3 : 0;
+    const med = clamp(allergyPts + toldPts + dosePts + rbPts - 2 * E.lateTests.length, 0, 15);
+    // 5. follow-up and reassessment /10
+    const iv = N.interv, covered = iv.filter(x => N.vchecks.some(t => t > x.at && t <= x.at + REASSESS_WIN));
+    const r7 = iv.length ? 7 * covered.length / iv.length : N.vchecks.some(t => t > 3) ? 7 : 0;
+    let gapMax = 0;
+    if (N.vchecks.length) { const ts = [...N.vchecks, E.sim]; for (let i = 1; i < ts.length; i++) gapMax = Math.max(gapMax, ts[i] - ts[i - 1]); }
+    const cont = !N.vchecks.length ? 0 : gapMax <= 5 ? 3 : gapMax <= 8 ? 1.5 : 0;
+    const reass = r7 + cont;
+    // 6. communication /10: as in the doctor room
+    const m = E.comm;
+    const comm = clamp((m.introduced ? 2 : 0) + (m.explained ? 4 : 0) + (m.empathy ? 2 : 0) + (m.rude ? 0 : 2) - m.jargon, 0, 10);
+    // 7. the SBAR handover /10
+    const g = end && end.grade;
+    const hand = !end ? 0 : clamp((g.s ? 2 : 0) + (g.b ? 2 : 0) + (g.a ? 3 : 0) + (g.r ? 2 : 0) + (g.mention ? 1 : 0) - (g.invented ? 3 : 0), 0, 10);
+    const total = Math.round(assess + escPts + interv + med + reass + comm + hand);
+    // These fail the case whatever the number says.
+    const fails = [];
+    if (E.outcome === 'arrest') fails.push('توقف القلب');
+    if (X.by === 'alarm' || called === null) fails.push('لم تبلّغ الطبيب');
+    if (own.some(k => k.state === 'missed')) fails.push('خطوة أساسية ضمن صلاحيتك لم تحدث');
+    if (keyOrders().some(o => o.doneAt == null)) fails.push('أمر طبيب أساسي لم يُنفّذ');
+    if (E.harms.some(h => h.risk >= 8)) fails.push('أذى وصل إلى المريض');
+    if (!N.vchecks.length) fails.push('لم تُعِد قياس العلامات الحيوية');
+    if (N.given.length && N.allergyAt === null && (c.facts.find(f => f.id === 'allergy') || {}).red) fails.push('أعطيت دواءً دون السؤال عن الحساسية والمريض لديه حساسية مسجّلة');
+    return { total, assess, escPts, interv, med, reass, comm, hand, parts, abcdeAt, reds, got, timing, sbarPts, follow, rose, own, bed, ords, gapIds, first, toldPts, rbPts, iv, covered, gapMax, fails, ESC };
+  }
+  function concludeNurse(end) {
+    const c = E.c, N = E.nurse, X = N.esc, s = scoreNurse(end);
+    const fails = s.fails, passed = s.total >= 70 && !fails.length;
+    const head = E.outcome === 'arrest' ? 'توقف قلب المريض قبل أن تستقر حالته' : E.outcome === 'stable' ? 'سلّمت المريض مستقراً' : 'سلّمت المريض وهو غير مستقر';
+    // Review fix 2026-11-07: «أحسنت» and «ما يجب أن يتغير» are grouped under the seven sections.
+    const good = SEC_N.map(() => []), gaps = SEC_N.map(() => []);
+    let sec = 0;
+    const G = x => good[sec].push(x), P = x => gaps[sec].push(x);
+    // 1. ABCDE
+    sec = 0;
+    if (s.abcdeAt !== null) G(`أكملت التقييم الأولي ABCDE عند الدقيقة ${mm(s.abcdeAt)}.`);
+    else {
+      const PART = { a: 'المجرى الهوائي', b: 'التنفس', c: 'الدوران', d: 'الوعي وسكر الدم', e: 'الحرارة والفحص الكامل' };
+      const miss = Object.entries(s.parts).filter(([, [p]]) => p < 2).map(([k]) => PART[k]);
+      if (miss.length) P(`<b>التقييم الأولي</b>: لم تقيّم ${miss.join('، ')} في الدقائق الأولى.`);
+    }
+    s.reds.filter(f => !s.got.includes(f)).forEach(f => P(`<b>لم تصل إليك هذه المعلومة</b>: «${esc(forNurse(f.say))}»`));
+    // 2. escalation
+    sec = 1;
+    const ecg = E.tests.ecg;
+    if (s.timing === 10) G(`أبلغت الطبيب عند الدقيقة ${mm(X.calledAt)}، قبل أن تتدهور الحالة.`);
+    else if (s.timing === 5) P(`<b>التصعيد</b>: تأخر إبلاغ الطبيب إلى الدقيقة ${mm(X.calledAt)}، ${typeof N.nm.escBy === 'number' ? 'وكانت العلامات الحيوية عند وصول المريض تستدعي إبلاغاً فورياً.' : 'وكان تخطيط القلب يستدعي إبلاغاً فورياً.'}`);
+    else if (X.by === 'alarm') P(`<b>التصعيد</b>: لم تبلّغ ${docT()}، و${N.sex === 'F' ? 'حضرت' : 'حضر'} بسبب إنذار المونيتور عند الدقيقة ${mm(N.alarmAt)}.`);
+    else P('<b>التصعيد</b>: لم تبلّغ الطبيب.');
+    if (X.sbar && X.sbar.none) P('<b>رسالة التصعيد</b>: لم تقدّم للطبيب رسالة SBAR حين سألك عن الوضع.');
+    else if (X.sbar) {
+      const miss = [['s', 'الوضع'], ['b', 'الخلفية'], ['a', 'التقييم بالأرقام'], ['r', 'التوصية']].filter(([k]) => !X.sbar[k]).map(([, v]) => v);
+      if (miss.length) P(`<b>رسالة التصعيد</b>: ناقصها ${miss.join('، ')}.`);
+      if (X.sbar.aWrong) P('<b>رسالة التصعيد</b>: ذكرت أرقاماً لا تطابق المونيتور.');
+      if (X.sbar.goodSuggest) G('اقترحت على الطبيب ما تحتاجه الحالة.');
+    }
+    if (typeof N.nm.escBy !== 'number' && ecg && X.calledAt !== null && X.calledAt >= ecg.at) G(`سجّلت تخطيط القلب عند الدقيقة ${mm(ecg.at)} وأبلغت الطبيب بعده بـ${fix(X.calledAt - ecg.at, 1)} دقيقة.`);
+    if (s.rose && s.follow === 0) P('<b>بعد التدهور</b>: لم تُحدّث الطبيب حين ساءت الأرقام.');
+    const code = N.helpAt.find(h => h.stage >= 2 || h.vt);
+    if (code) G(`ناديت فريق الإنعاش عند الدقيقة ${mm(code.at)} والحالة حرجة.`);
+    // 3. interventions within nursing scope
+    sec = 2;
+    s.own.forEach(k => { if (k.state === 'ontime') G(`${k.d.label}: عند الدقيقة ${mm(k.at)}.`); else P(`<b>${esc(k.d.label)}</b>: ${k.state === 'late' ? 'تأخر إلى الدقيقة ' + mm(k.at) : 'لم يحدث'}. ${esc(k.d.why || '')}`); });
+    s.bed.forEach(k => { const ar = testOf(k.id).ar; if (k.state === 'ontime') G(`${ar}: عند الدقيقة ${mm(k.at)}.`); else P(`<b>${esc(ar)}</b>: ${k.state === 'late' ? 'تأخر إلى الدقيقة ' + mm(k.at) : 'لم يحدث'}. ${esc(k.why || '')}`); });
+    s.ords.forEach(({ o, lag }) => { if (lag === null) P(`<b>أمر الطبيب</b>: ${esc(o.ar)} لم يُنفّذ.`); else G(`نفّذت أمر ${o.ar} بعد ${fix(lag, 1)} دقيقة من صدوره.`); });
+    if (s.gapIds.length) {
+      const ars = s.gapIds.map(id => (actOf(id) || testOf(id) || {}).ar || id);
+      const whys = s.gapIds.map(id => c.care[id]).filter(d => d && d.harm && d.why).map(d => d.why);
+      P(`<b>خارج نطاق التمريض المستقل</b>: حاولت ${esc(ars.join('، '))} دون أمر طبيب، فلم يُنفَّذ. الأدوية والسوائل والفحوصات المخبرية والتصوير تحتاج أمراً من الطبيب في بروتوكولات الطوارئ المعتادة.${whys.length ? ' ومن ملف الحالة: ' + esc(whys.join(' ')) : ''}`);
+    }
+    N.scope.filter(x => x.why === 'wrong-agent').forEach(x => P(`<b>دواء غير الذي طُلب</b>: ${esc((actOf(x.id) || {}).ar || x.id)}، فلم يُعطَ.`));
+    if (N.notIndicated.length) P('<b>الأكسجين</b>: طلبته والإشباع ضمن الهدف.');
+    const ivx = E.done.get('iv_access');
+    if (N.drawn !== null && ivx && Math.abs(N.drawn - ivx.at) <= 1) G('سحبت عينات الدم مبكراً مع الكانيولا.');
+    if (N.bls.length) G(`فتحت المجرى الهوائي أو هوّيت بالأمبو عند الدقيقة ${mm(N.bls[0])} (إنعاش أساسي ضمن صلاحيتك).`);
+    E.harms.forEach(h => P(`<b>${esc(h.label)}</b>: ${esc(h.why)}`));
+    // 4. medication safety
+    sec = 3;
+    if (s.first) {
+      if (s.first.allergyAsked) G('سألت عن الحساسية قبل أول دواء.');
+      else P(`<b>الحساسية</b>: أعطيت ${esc((actOf(s.first.id) || {}).ar || '')} قبل أن تسأل عن الحساسية.`);
+    }
+    if (N.bandNoted && E.facts.has('allergy')) G('سجّلت الحساسية على الملف ووضعت سوار الحساسية.');
+    // Told to the doctor is the doctor's side only; the gap shows only once there was a doctor to tell.
+    if (s.toldPts) G('ذكرت حالة الحساسية للطبيب.');
+    else if (N.allergyGuess !== null) P('<b>الحساسية</b>: أخبرت الطبيب أن لا حساسية قبل أن تسأل المريض أو أهله.');
+    else if (X.calledAt !== null) P('<b>الحساسية</b>: لم تذكر للطبيب حالة الحساسية.');
+    E.wrongDoses.forEach(w => P(`<b>جرعة مختلفة عن الأمر</b>: ${esc(w.ar)} ${esc(w.dose)}. الأمر: ${esc(w.ref || '')}.`));
+    // Cultures drawn after the first antibiotic dose (the case file's own reason).
+    E.lateTests.forEach(x => P(`<b>${esc(x.ar)} بعد المضاد</b>: ${esc(x.why)}`));
+    if (N.ordersAt !== null) { if (s.rbPts) G('أعدت قراءة أوامر الطبيب الشفهية للتأكد منها.'); else P('<b>إعادة قراءة الأمر</b>: لم تُعِد قراءة أوامر الطبيب الشفهية للتأكد منها.'); }
+    // 5. reassessment
+    sec = 4;
+    if (s.iv.length) G(`أعدت قياس العلامات الحيوية بعد ${s.covered.length} من ${s.iv.length} تدخلات.`);
+    s.iv.filter(x => !s.covered.includes(x)).forEach(x => P(`<b>إعادة التقييم</b>: بعد ${esc(x.ar)} عند الدقيقة ${mm(x.at)} لم تُعِد قياس العلامات الحيوية خلال 5 دقائق.`));
+    if (N.vchecks.length && s.gapMax > 5) P(`<b>المراقبة</b>: مرّت ${fix(s.gapMax, 1)} دقائق دون قياس للعلامات الحيوية.`);
+    if (!N.vchecks.length) P('<b>المراقبة</b>: لم تُعِد قياس العلامات الحيوية خلال الحالة.');
+    // 6. communication (as in the doctor room)
+    sec = 5;
+    if (E.comm.introduced) G('عرّفت بنفسك.');
+    if (E.comm.explained) G('شرحت ما يجري بكلام مفهوم.');
+    else P(`<b>التواصل</b>: لم تشرح لـ${esc(c.companion.name)} ما يجري، وتدخلت ${E.comp.count} مرة.`);
+    if (E.comm.rude) P('<b>التواصل</b>: خرج منك كلام جارح تحت الضغط.');
+    // 7. handover
+    sec = 6;
+    if (end) {
+      const miss = [['s', 'الوضع'], ['b', 'الخلفية'], ['a', 'التقييم بالأرقام'], ['r', 'التوصية']].filter(([k]) => !end.grade[k]).map(([, v]) => v);
+      if (miss.length) P(`<b>التسليم</b>: ناقصه ${miss.join('، ')}.`);
+      if (end.grade.invented) P('<b>التسليم</b>: ذكرت ما لم يحدث. التسليم الخاطئ يضلل من يستلم المريض.');
+      if (end.grade.allergy) G('ذكرت حالة الحساسية في التسليم.');
+    }
+    const secs = SEC_N.map((h, i) => (good[i].length || gaps[i].length ? `<section class="er-sec"><h5>${h}</h5>`
+      + (good[i].length ? `<p class="er-sec-k">أحسنت</p><ul class="er-good">${good[i].map(x => `<li>${esc(x)}</li>`).join('')}</ul>` : '')
+      + (gaps[i].length ? `<p class="er-sec-k">ما يجب أن يتغير</p><ul class="er-gaps">${gaps[i].map(x => `<li>${x}</li>`).join('')}</ul>` : '') + '</section>' : '')).join('');
+    const riskTop = Math.round(Math.max(...E.riskLog.map(p => p[1]))), riskEnd = Math.round(E.risk), anxTop = Math.round(E.anxTop);
+    const reasoned = Object.values(E.tests).some(t => t.reason);
+    const src = t => (orderedTest(t.id) ? 'أمر الطبيب' : NURSE_TESTS.has(t.id) ? 'ضمن صلاحيتك' : 'أمر الطبيب');
+    const tried = [...new Map(N.scope.filter(x => x.kind === 'test' && !E.tests[x.id]).map(x => [x.id, x])).values()];
+    const blocked = tried.map(x => `<tr class="is-blocked"><td><span dir="ltr">${esc(testOf(x.id).en)}</span></td><td class="font-num" dir="ltr">${clk(x.at)}</td><td>—</td><td>محاولة دون أمر</td>${reasoned ? '<td>—</td>' : ''}<td>—</td><td>لم يُنفَّذ: يحتاج أمراً من الطبيب.</td></tr>`).join('');
+    const tests = testRows(reasoned, src) + blocked;
+    const box = $('er-debrief');
+    box.hidden = false;
+    box.innerHTML = `<div class="er-report-page er-report-n">
+      <div class="er-score" tabindex="-1"><b class="font-num">${s.total}</b><div><strong>${head}</strong><span>${passed ? 'مجتاز' : fails.length ? 'غير مجتاز: ' + esc(fails.join('، ')) : 'غير مجتاز'} · مدة الحالة ${mm(E.sim)}</span></div></div>
+      <p><b>دورك:</b> ممرض/ة الطوارئ المسؤول/ة عن السرير</p>
+      <ul class="er-parts">
+        <li>التقييم الأولي (ABCDE) <b class="font-num">${Math.round(s.assess)} / 15</b></li><li>التعرف على التدهور والتصعيد <b class="font-num">${Math.round(s.escPts)} / 20</b></li>
+        <li>التدخلات ضمن نطاق التمريض <b class="font-num">${Math.round(s.interv)} / 20</b></li><li>سلامة الدواء <b class="font-num">${Math.round(s.med)} / 15</b></li>
+        <li>المتابعة وإعادة التقييم <b class="font-num">${Math.round(s.reass)} / 10</b></li><li>التواصل <b class="font-num">${Math.round(s.comm)} / 10</b></li>
+        <li>التسليم (SBAR) <b class="font-num">${Math.round(s.hand)} / 10</b></li>
+      </ul>
+      <h4>الخطر خلال الحالة</h4>${chart()}<p class="er-small">أعلى خطر <b class="font-num">${riskTop}%</b> · عند النهاية <b class="font-num">${riskEnd}%</b> · أعلى ضغط من الأهل <b class="font-num">${anxTop}%</b></p>
+      ${secs ? `<h4>الملاحظات حسب الأقسام</h4>${secs}` : ''}
+      <h4>سجل الفحوصات المطلوبة وتوقيت طلبها في الجلسة</h4>${tests ? `<div class="er-scroll"><table class="er-tests"><thead><tr><th>الفحص</th><th>وقت الطلب</th><th>الاستطباب</th><th>المصدر</th>${reasoned ? '<th>تبريرك عند الطلب</th>' : ''}<th>التبرير عند التسليم</th><th>لماذا</th></tr></thead><tbody>${tests}</tbody></table></div>` : '<p>لم تُجرِ أي فحص.</p>'}
+      ${end && end.grade.note ? `<h4>تسليمك</h4><p>${esc(end.grade.note)}</p>` : ''}
+      <p><b>تشخيص الطبيب (للاطلاع، لا يُقيَّم)</b>: ${esc(fell() && c.collapse.dx ? c.collapse.dx : c.dx.ar)}</p>
+      <h4>لماذا كانت الحالة خطرة؟</h4><p>${esc(c.brief)}</p>
+      <p class="er-small">طلبت مساعدة المشرفة ${E.helps} مرة، وبادرت هي ${E.hints} مرة. حُدّد نطاق التمريض هنا وفق بروتوكولات الطوارئ المعتادة، وقد يختلف من مستشفى لآخر. الحالات والدرجات وعبارات الطبيب والمشرفة تدريبية ولم يراجعها طبيب بعد.</p>
+      <div class="er-pane-f"><button type="button" class="s" id="er-home">الرئيسية</button><button type="button" class="s" id="er-again">أعد الحالة نفسها</button><button type="button" class="p" id="er-next">الحالة التالية</button></div>
+    </div>`;
+    $('er-again').onclick = () => begin(c.id, { role: 'nurse' });
+    $('er-next').onclick = () => begin(undefined, { role: 'nurse' });
     $('er-home').onclick = () => { if (typeof navigateTo === 'function') navigateTo('home'); };
     lastReport = E;
     box.querySelector('.er-score').focus({ preventScroll: true });
@@ -1757,8 +2879,10 @@
       const u = typeof authState !== 'undefined' && authState.user;
       if (!u) return;
       u.history = u.history || [];
-      u.history.unshift({ caseTitle: 'غرفة الطوارئ · ' + E.c.dx.ar, mode: 'غرفة الطوارئ', correct: !!(end && end.grade.dx === 'right'), workupCount: Object.keys(E.tests).length,
-        questions: E.facts.size, score: `${s.total}% (${passed ? 'مجتاز' : 'غير مجتاز'})`, caseId: 'er_' + E.c.id, num: s.total, passed, ts: Date.now(), date: new Date().toISOString().slice(0, 10) });
+      // nurse mode 2026-11-07: a nurse run is its own entry (er_<id>_n); avgEr below still counts it (open owner item).
+      const nm = NM();
+      u.history.unshift({ caseTitle: (nm ? 'غرفة الطوارئ (دور التمريض) · ' : 'غرفة الطوارئ · ') + E.c.dx.ar, mode: 'غرفة الطوارئ', correct: nm ? !!passed : !!(end && end.grade.dx === 'right'), workupCount: Object.keys(E.tests).length,
+        questions: E.facts.size, score: `${s.total}% (${passed ? 'مجتاز' : 'غير مجتاز'})`, caseId: 'er_' + E.c.id + (nm ? '_n' : ''), num: s.total, passed, ts: Date.now(), date: new Date().toISOString().slice(0, 10) });
       u.stats = u.stats || {};
       u.stats.completed = u.history.length;
       const mine = u.history.filter(h => /^er_/.test(h.caseId || ''));
@@ -1784,13 +2908,13 @@
     if (recFilter !== 'all' && !CATS.some(([k]) => k === recFilter)) recFilter = 'all';
     f.innerHTML = [['all', 'الكل'], ...CATS].map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === recFilter}">${l}</button>`).join('');
     const q = norm(recQuery);
-    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : was.dataset.go ? `[data-go="${was.dataset.go}"]` : '') : '';
+    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : was.dataset.go ? `[data-go="${was.dataset.go}"]` : was.dataset.ord ? `[data-ord="${was.dataset.ord}"]` : '') : '';
     list.innerHTML = CATS.filter(([k]) => recFilter === 'all' || recFilter === k).map(([k, label]) => {
       const items = D.tests.filter(t => catOf(t) === k && E.c.results[t.id] && (!q || norm(t.ar + ' ' + t.en + ' ' + (t.kw || []).join(' ') + ' ' + label + ' ' + panelName(t.panel)).includes(q)));
       if (!items.length) return '';
       return `<section class="er-rec-sec"><h4>${label}</h4><div>${items.map(t => {
         const x = E.tests[t.id], off = offInd(x);
-        return `<button type="button" class="er-t${x ? ' is-done' : ''}${off ? ' is-off' : ''}" data-t="${t.id}"><span dir="ltr">${esc(t.en)}</span><small>${esc(t.ar)}</small>${x ? `<i aria-label="${off ? 'تم الطلب، خارج الاستطباب المباشر' : 'تم الطلب'}">✓${off ? '<em class="er-off-dot" aria-hidden="true"></em>' : ''}</i>` : ''}</button>`;
+        return `<button type="button" class="er-t${x ? ' is-done' : ''}${off ? ' is-off' : ''}" data-t="${t.id}"><span dir="ltr">${esc(t.en)}</span><small>${esc(t.ar)}</small>${nurseTag(t.id)}${x ? `<i aria-label="${off ? 'تم الطلب، خارج الاستطباب المباشر' : 'تم الطلب'}">✓${off ? '<em class="er-off-dot" aria-hidden="true"></em>' : ''}</i>` : ''}</button>`;
       }).join('')}</div></section>`;
     }).join('') || '<p class="er-small">لا يوجد فحص بهذا الاسم.</p>';
     buildLog();
@@ -1838,6 +2962,9 @@
     if (!E || E.over) return;
     const meta = testOf(id);
     if (!meta) return;
+    E.started = true;
+    // Nurse mode: a click is an attempt, and a lab test or an image without an order is not done.
+    if (NM()) { if (!E.tests[id]) person('me', 'طلبتُ ' + meta.ar); nurseTest(id, '', ''); if (!wide()) toggleRecords(false); return; }
     if (!E.tests[id]) { person('me', `بدي ${meta.en}`); orderTest(id, '', '', true); }
     else orderTest(id, '', '', true);
     if (!wide()) toggleRecords(false);
@@ -1845,8 +2972,9 @@
 
   /* ---------- starting ---------- */
   let soundBack = false, lastReport = null;
-  function begin(id) {
+  function begin(id, opts = {}) {
     if (tickId) cancelAnimationFrame(tickId);
+    const prevNurse = !!E && E.role === 'nurse';
     if (soundBack) { soundBack = false; const b = document.querySelector('.er-mon .nb-mon-sound'); if (b && b.getAttribute('aria-pressed') !== 'true') b.click(); }
     const list = D.cases;
     let c = id ? list.find(x => x.id === id) : null;
@@ -1856,7 +2984,11 @@
       c = pickOf(fresh.length ? fresh : list);
     }
     seen.add(c.id);
+    // nurse mode 2026-11-07: the role draws no random number, so the doctor room's sequence is unchanged.
+    let role = opts.role === 'nurse' || opts.role === 'doctor' ? opts.role : roleWanted || (briefTrack() === 'nursing' ? 'nurse' : 'doctor');
+    if (role === 'nurse' && !c.nurseMode) role = 'doctor';
     E = {
+      role, started: false,
       c, sim: 0, risk: c.risk.start, anx: c.companion.start, stage: 0, done: new Map(), effects: [], jobs: [], tests: {}, facts: new Set(), exam: new Set(),
       chat: [], log: [], riskLog: [[0, c.risk.start]], riskLogAt: 0, paintAt: -1, bpAt: 0, bpTime: 0, bp: ['--', '--'], tempKnown: false, utt: 0, turns: 0,
       comp: { lastTurn: -9, lastAt: -9, count: 0, asked: null, addressed: 0, used: new Set(), extra: 0, angry: false, ignored: 0, procs: 0, unheard: 0, nurseStep: false, heardTurn: 0, gen: 0, outUntil: 0, explainedTurn: -9 }, busyTurn: -9, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
@@ -1865,6 +2997,7 @@
       mods: [], improved: 0, nudged: false, collect: null, resp: null, saidBy: new Set(), holdAsked: false,
       paused: false // phase8 2026-11-07: true while the briefing is open; the clock stands still
     };
+    if (role === 'nurse') { E.readAsks = 3; E.nurse = newNurseState(c); }
     recFilter = 'all'; recQuery = ''; recView = 'order';
     if ($('er-rec-q')) $('er-rec-q').value = '';
     buildRecords();
@@ -1882,14 +3015,24 @@
     document.querySelector('.er-p[data-who="c"] b').textContent = c.companion.rel;
     document.querySelector('.er-p[data-who="n"] b').textContent = c.nurse.name;
     document.querySelector('.er-p[data-who="p"] b').textContent = p.name;
+    if (NM()) nurseChips();
+    else if (prevNurse) { document.querySelector('.er-p[data-who="d"] b').textContent = 'المشرف'; const np = document.querySelector('.er-p[data-who="n"]'); if (np && np.dataset) delete np.dataset.out; }
+    if ($('er-ord')) { $('er-ord').hidden = true; if ($('er-ord-list')) $('er-ord-list').innerHTML = ''; }
+    if ($('er-test') && $('er-test').dataset) $('er-test').dataset.badge = '';
     $('er-v-bp').textContent = '--/--';
     $('view-er').dataset.rhythm = '';
     // phase8 2026-11-07: on a real page the start briefing says this, so the chat does not repeat it.
-    if (!REAL) sys('أنت الطبيب المقيم في الطوارئ. تكلم مع الموجودين، واكتب أوامرك وأدويتك وجرعاتها، واطلب الفحوصات، وسلّم الحالة عندما تنتهي.');
+    if (!REAL) sys(NM() ? 'أنت ممرض/ة الطوارئ المسؤول/ة عن السرير. قيّم المريض، وراقب المونيتور، واتصل بالطبيب عند الحاجة، ونفّذ أوامره، وسلّم الحالة بصيغة SBAR.' : 'أنت الطبيب المقيم في الطوارئ. تكلم مع الموجودين، واكتب أوامرك وأدويتك وجرعاتها، واطلب الفحوصات، وسلّم الحالة عندما تنتهي.');
     if (api === 'off' && location.protocol !== 'file:') { apiNoted = true; sys(OFFLINE_NOTE); }
     sys(p.arrival);
     person('p', p.opening);
     nurse(c.nurse.handoff);
+    if (NM()) {
+      // The instructor triaged the patient: she hands over and stays behind the trainee. The doctor is elsewhere.
+      person('d', c.nurse.handoff);
+      const F = E.nurse.sex === 'F';
+      sys('سلّمتك المشرفة ' + c.nurse.name + ' المريض، وستبقى خلفك تعلّمك. ' + (F ? 'الطبيبة المقيمة ' : 'الطبيب المقيم ') + E.nurse.doc + (F ? ' مشغولة بمريض آخر؛ اتصل بها حين تحتاجها.' : ' مشغول بمريض آخر؛ اتصل به حين تحتاجه.'));
+    }
     if (c.companion.lines.enter) {
       const x = lineOf(pickOf(c.companion.lines.enter));
       person('c', x);
@@ -1912,7 +3055,53 @@
       return u && typeof nbTrackOf === 'function' ? nbTrackOf(u) : null;
     } catch (e) { return null; }
   }
+  // nurse mode 2026-11-07: the role switch, usable only before the session starts.
+  function roleSwitch() {
+    const nurseOn = E.role === 'nurse';
+    if (!canSwitch()) return `<p class="er-role-now"><b>دوري في الغرفة:</b> ${nurseOn ? 'ممرض/ة' : 'طبيب'}. <span class="er-small">يتغيّر الدور قبل بدء الجلسة فقط.</span></p>`;
+    return `<div class="er-role-sw" role="radiogroup" aria-label="دوري في الغرفة"><span class="er-role-l">دوري في الغرفة:</span><button type="button" role="radio" data-role="doctor" aria-checked="${!nurseOn}" tabindex="${nurseOn ? -1 : 0}">طبيب</button><button type="button" role="radio" data-role="nurse" aria-checked="${nurseOn}" tabindex="${nurseOn ? 0 : -1}">ممرض/ة</button><span class="er-small">يتغيّر الدور قبل بدء الجلسة فقط.</span></div>`;
+  }
+  function briefHtmlNurse() {
+    const c = E.c, p = c.patient, comp = c.companion || {}, nurseName = (c.nurse && c.nurse.name) || '', N = E.nurse, F = N.sex === 'F';
+    return `<div class="er-pane er-brief" role="dialog" aria-modal="true" aria-labelledby="er-brief-h" aria-describedby="er-brief-now">
+      <header class="er-brief-top">
+        <h3 id="er-brief-h">حالتك في غرفة الطوارئ</h3>
+        <p class="er-brief-who"><span class="er-brief-bed">${esc(c.bed)}</span><b>${esc(p.name)}</b>، ${esc(p.age)} سنة</p>
+      </header>
+      ${roleSwitch()}
+      <section class="er-brief-now" id="er-brief-now"><h4>ما تعرفه الآن</h4><p>${esc(p.arrival)}</p></section>
+      <section><h4>من معك في الغرفة</h4><ul class="er-brief-people">
+        <li><i data-who="p" aria-hidden="true"></i><span><b>المريض</b>: ${esc(p.name)}</span></li>
+        ${comp.name ? `<li><i data-who="c" aria-hidden="true"></i><span><b>المرافق</b>: ${esc(comp.name)}${comp.rel ? ` (${esc(comp.rel)})` : ''}</span></li>` : ''}
+        <li><i data-who="d" aria-hidden="true"></i><span><b>المشرفة التمريضية ${esc(nurseName)}</b>: استلمت المريض في الفرز وسلّمتك إياه، وتبقى خلفك؛ تسألها إذا احترت، وتعلّمك أولويات التمريض، ولا تعطيك التشخيص.</span></li>
+        <li><i data-who="n" aria-hidden="true"></i><span><b>${F ? 'الطبيبة المقيمة' : 'الطبيب المقيم'} ${esc(N.doc)}</b>: ${F ? 'مشغولة بمريض آخر، وترد على الهاتف أو تحضر حين تتصل بها. هي من تعطي الأوامر الطبية.' : 'مشغول بمريض آخر، ويرد على الهاتف أو يحضر حين تتصل به. هو من يعطي الأوامر الطبية.'}</span></li>
+      </ul></section>
+      <section><h4>دورك</h4><p>أنت ممرض/ة الطوارئ المسؤول/ة عن هذا السرير. تقيّم المريض بطريقة ABCDE، وتراقب المونيتور، وتتعرّف على التدهور، وتبلّغ الطبيب برسالة SBAR واضحة، وتنفّذ أوامره بأمان، ثم تسلّم الحالة.</p></section>
+      <section class="er-brief-scope"><h4>نطاق صلاحياتك <small>(حسب بروتوكولات الطوارئ المعتادة، وقد تختلف بين المستشفيات)</small></h4>
+        <p><b>تستطيع وحدك:</b> التقييم الكامل والقصة ومنها الحساسية والأدوية، قياس العلامات الحيوية وإعادتها، وضعية المريض، الأكسجين عند انخفاض الإشباع وفق البروتوكول، تركيب كانيولا، سحب عينات الدم، تسجيل تخطيط القلب، سكر الدم الشعري، ذروة الجريان، والاتصال بالطبيب أو طلب فريق الإنعاش.</p>
+        <p><b>تحتاج أمر طبيب:</b> الأدوية، السوائل الوريدية، الفحوصات المخبرية، والتصوير. (بعض المستشفيات تعتمد أوامر دائمة لأدوية معيّنة؛ هذه الغرفة تطلب أمراً لكل دواء.)</p>
+      </section>
+      <section><h4>ما المطلوب منك</h4><ol class="er-brief-steps">
+        <li>استلم المريض وقيّمه بطريقة ABCDE، واسأل عن الحساسية والأدوية.</li>
+        <li>قِس العلامات الحيوية وأعد قياسها، وانتبه لأي تدهور.</li>
+        <li>ابدأ ما يسمح به نطاقك دون انتظار.</li>
+        <li>اتصل بالطبيب حين تستدعي الحالة ذلك، وقدّم له رسالة SBAR بالأرقام.</li>
+        <li>نفّذ أوامر الطبيب من قائمة «أوامر الطبيب»، وتحقق من الحساسية قبل كل دواء، وأعد التقييم بعد كل تدخل.</li>
+        <li>حين تنتهي اضغط «سلّم الحالة» واكتب التسليم بصيغة SBAR، ثم اقرأ تقريرك.</li>
+      </ol></section>
+      <section class="er-brief-tips"><h4>نصائح قصيرة</h4><ul>
+        <li>اكتب ما تفعله بصيغة المتكلم: «بقيس الضغط»، «ركّبت كانيولا»، «بتصل بالدكتور».</li>
+        <li>نادِ الشخص باسمه ليعرف أنك تكلمه.</li>
+        <li>تظهر قائمة أوامر الطبيب في لوحة الفحوصات بعد أن يعطيك أوامره.</li>
+        <li>تسير ساعة الحالة مع الوقت الحقيقي، لكن أثر العلاج وتغيّر حالة المريض يظهران أسرع من الواقع.</li>
+        <li>زر «عرض التعليمات» أعلى الغرفة يعيد هذه النافذة متى شئت.</li>
+      </ul></section>
+      <p class="er-small">للتدريب فقط. الحالات لم يراجعها طبيب بعد.</p>
+      <footer class="er-pane-f er-brief-f"><button type="button" class="p" id="er-brief-go">ابدأ الجلسة</button></footer>
+    </div>`;
+  }
   function briefHtml() {
+    if (NM()) return briefHtmlNurse();
     const c = E.c, p = c.patient, comp = c.companion || {}, nurseName = (c.nurse && c.nurse.name) || '';
     const role = briefTrack() === 'nursing'
       ? 'أنت تتولى في هذه الغرفة دور المسؤول عن الحالة (يناديك الفريق «دكتور»)، وتركيزك: التقييم المنهجي ABCDE، قراءة المونيتور والإنذار المبكر، السؤال عن الحساسية والأدوية قبل أي دواء، ومتابعة الاستجابة بعد كل إجراء، ثم تسليم الحالة بصيغة SBAR.'
@@ -1922,6 +3111,7 @@
         <h3 id="er-brief-h">حالتك في غرفة الطوارئ</h3>
         <p class="er-brief-who"><span class="er-brief-bed">${esc(c.bed)}</span><b>${esc(p.name)}</b>، ${esc(p.age)} سنة</p>
       </header>
+      ${roleSwitch()}
       <section class="er-brief-now" id="er-brief-now"><h4>ما تعرفه الآن</h4><p>${esc(p.arrival)}</p></section>
       <section><h4>من معك في الغرفة</h4><ul class="er-brief-people">
         <li><i data-who="p" aria-hidden="true"></i><span><b>المريض</b>: ${esc(p.name)}</span></li>
@@ -1950,8 +3140,23 @@
   }
   function briefKey(e) {
     if (e.key === 'Escape') { e.preventDefault(); closeBrief(); return; }
-    // Focus stays on the one button while the dialog is open.
-    if (e.key === 'Tab') { e.preventDefault(); const b = $('er-brief-go'); if (b) b.focus(); }
+    // Focus stays inside the dialog: Tab cycles over the role switch (while it can be used) and the start button.
+    if (e.key === 'Tab') {
+      e.preventDefault();
+      const w = $('er-brief'), sw = w ? [...w.querySelectorAll('[data-role]')] : [], go = $('er-brief-go');
+      const stops = [...(sw.length ? [sw.find(b => b.getAttribute('aria-checked') === 'true') || sw[0]] : []), go].filter(Boolean);
+      const i = stops.indexOf(document.activeElement);
+      const next = stops[(i + (e.shiftKey ? stops.length - 1 : 1)) % stops.length] || go;
+      if (next) next.focus();
+      return;
+    }
+    // The arrow keys move inside the radio group.
+    if ((e.key === 'ArrowLeft' || e.key === 'ArrowRight') && e.target && e.target.dataset && e.target.dataset.role) {
+      e.preventDefault();
+      setRole(e.target.dataset.role === 'nurse' ? 'doctor' : 'nurse');
+      const b = $('er-brief') && $('er-brief').querySelector('[data-role][aria-checked="true"]');
+      if (b) b.focus();
+    }
   }
   function showBrief() {
     if (!REAL || !E) return false;
@@ -1967,6 +3172,7 @@
     w.hidden = false;
     if (!E.over) E.paused = true;
     $('er-brief-go').onclick = closeBrief;
+    w.querySelectorAll('[data-role]').forEach(b => { b.onclick = () => { const v = b.dataset.role; if (setRole(v)) { const x = $('er-brief').querySelector('[data-role="' + v + '"]'); if (x) x.focus({ preventScroll: true }); } }; });
     const pane = w.querySelector('.er-brief');
     if (pane) pane.scrollTop = 0;
     $('er-brief-go').focus({ preventScroll: true });
@@ -2004,6 +3210,17 @@
         tabs.innerHTML = '<button type="button" role="tab" data-v="order" aria-selected="true">طلب</button><button type="button" role="tab" data-v="log" id="er-rec-logtab" aria-selected="false">السجل (0)</button>';
         head.after(tabs);
       }
+      const list0 = $('er-rec-list');
+      // nurse mode 2026-11-07: the doctor's orders, above the tests; hidden until there are orders.
+      if (list0 && !$('er-ord')) {
+        const sec = document.createElement('section');
+        sec.id = 'er-ord';
+        sec.className = 'er-ord';
+        sec.hidden = true;
+        sec.setAttribute('aria-label', 'أوامر الطبيب');
+        sec.innerHTML = '<h4>أوامر الطبيب</h4><ol id="er-ord-list" class="er-ord-list"></ol>';
+        list0.before(sec);
+      }
       const list = $('er-rec-list');
       if (list && !$('er-rec-log')) {
         const log = document.createElement('div');
@@ -2026,6 +3243,8 @@
     }
     rec.addEventListener('click', e => {
       // phase8 2026-11-07: the view tabs and the log rows.
+      const ord = e.target.closest('[data-ord]');
+      if (ord) { const [k, id] = ord.dataset.ord.split(':'); execOrder(k, id); return; }
       const v = e.target.closest('[data-v]'), go = e.target.closest('[data-go]');
       if (v) { setRecView(v.dataset.v); return; }
       if (go) { goResult(go.dataset.go); return; }
@@ -2045,6 +3264,9 @@
 
   async function open() {
     if (typeof navigateTo === 'function' && navigateTo('er') === false) return;
+    // Review fix 2026-11-07: a role switched in one session's briefing does not carry into the next entry
+    // from home; the track decides again. (The Node harness sets the role itself, so only a real page resets.)
+    if (REAL) roleWanted = null;
     mount();
     // Sound needs the click that brought the student here.
     const Ctx = window.AudioContext || window.webkitAudioContext;
@@ -2073,6 +3295,6 @@
     return true;
   };
   // Test hook for the browser checks.
-  window.__nbER = { begin: id => begin(id), send, orderTest, panelTest, buildRecords, modsNow, live, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; if (v === 'off') loadFind(); }, get api() { return api; }, readFinding, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; },
+  window.__nbER = { begin: id => begin(id), beginAs: (id, o) => begin(id, o), set role(v) { roleWanted = v === 'nurse' ? 'nurse' : v === 'doctor' ? 'doctor' : null; }, get role() { return E && E.role; }, get nurse() { return E && E.nurse; }, setRole, execOrder, gradeSbar, nurseAct, nurseTest, strip: forNurse, releaseOrders, buildOrders, escBy, send, orderTest, panelTest, buildRecords, modsNow, live, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; if (v === 'off') loadFind(); }, get api() { return api; }, readFinding, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; },
     /* phase8 2026-11-07 */ justGood, offInd, showBrief, closeBrief, buildLog, setRecView, get real() { return REAL; } };
 })();

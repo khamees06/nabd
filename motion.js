@@ -232,13 +232,43 @@
   }
 
   let audio = null;
-  function beep(spo2, alarm) {
-    if (!audio) return;
+  // mobile audit 2026-11-07: one sound context for the whole page. er.js plays its alarms on it too, so waking it
+  // after a phone call or a locked screen brings back the pulse tone and the alarms together.
+  const SND_ON = 'الصوت: مفتوح', SND_OFF = 'الصوت: مغلق', SND_WAIT = 'الصوت: اضغط لتفعيله';
+  function soundLabel(btn) {
+    const on = btn.getAttribute('aria-pressed') === 'true';
+    btn.textContent = !on ? SND_OFF : audio && audio.state !== 'running' ? SND_WAIT : SND_ON;
+  }
+  const syncSoundLabels = () => document.querySelectorAll('.nb-mon-sound').forEach(soundLabel);
+  window.nbAudio = () => {
+    if (!audio) {
+      const Ctx = window.AudioContext || window.webkitAudioContext;
+      if (!Ctx) return null;
+      audio = new Ctx();
+      if (audio.addEventListener) audio.addEventListener('statechange', syncSoundLabels);
+    }
+    return audio;
+  };
+  // A phone suspends sound on a call, a locked screen or a page opened without a tap; the next touch wakes it,
+  // as long as the trainee left the sound on. A tap on the sound button itself is left to that button.
+  function wakeAudio(e) {
+    if (!audio || audio.state === 'running' || audio.state === 'closed') return;
+    if (e && e.target && e.target.closest && e.target.closest('.nb-mon-sound')) return;
+    if (!document.querySelector('.nb-mon-sound[aria-pressed="true"]')) return;
+    const p = audio.resume();
+    if (p && p.catch) p.catch(() => {});
+  }
+  ['pointerdown', 'touchend', 'click', 'keydown'].forEach(t => document.addEventListener(t, wakeAudio, true));
+  document.addEventListener('visibilitychange', () => { if (!document.hidden) wakeAudio(); });
+  window.addEventListener('pageshow', () => wakeAudio());
+  function beep(spo2) {
+    if (!audio || audio.state !== 'running') return;
     const t = audio.currentTime;
     const osc = audio.createOscillator();
     const gain = audio.createGain();
-    // Like a bedside oximeter: lower saturation, lower pitch.
-    osc.frequency.value = alarm ? 980 : 520 + Math.max(0, Math.min(20, (spo2 || 98) - 80)) * 14;
+    // Like a bedside oximeter: lower saturation, lower pitch. The heart-rate alarm is the red tile and the
+    // room's own alarm tones, so the pulse tone always follows SpO2 (mobile audit 2026-11-07).
+    osc.frequency.value = 520 + Math.max(0, Math.min(20, (spo2 || 98) - 80)) * 14;
     gain.gain.setValueAtTime(0.0001, t);
     gain.gain.exponentialRampToValueAtTime(0.16, t + 0.01);
     gain.gain.exponentialRampToValueAtTime(0.0001, t + 0.09);
@@ -267,16 +297,23 @@
       + '<button type="button" class="nb-mon-sound" aria-pressed="false">الصوت: مغلق</button>';
     host.after(bar);
     const soundBtn = bar.querySelector('.nb-mon-sound');
-    soundBtn.addEventListener('click', () => {
-      const on = soundBtn.getAttribute('aria-pressed') !== 'true';
-      if (on && !audio) {
-        const Ctx = window.AudioContext || window.webkitAudioContext;
-        if (Ctx) audio = new Ctx();
+    soundBtn.addEventListener('click', e => {
+      const was = soundBtn.getAttribute('aria-pressed') === 'true';
+      // mobile audit 2026-11-07: a tap while the sound is on but asleep («اضغط لتفعيله») wakes it, it does not mute.
+      if (e.isTrusted && was && audio && audio.state !== 'running' && audio.state !== 'closed') {
+        const p = audio.resume();
+        if (p && p.catch) p.catch(() => {});
+        soundLabel(soundBtn);
+        return;
       }
-      if (audio && audio.resume) audio.resume();
+      const on = !was;
+      if (on) window.nbAudio();
+      if (audio && audio.resume) { const p = audio.resume(); if (p && p.catch) p.catch(() => {}); }
       soundBtn.setAttribute('aria-pressed', String(on));
-      soundBtn.textContent = on ? 'الصوت: مفتوح' : 'الصوت: مغلق';
       root.dataset.sound = on ? '1' : '';
+      soundLabel(soundBtn);
+      // Only the trainee's own tap is remembered; the room's automatic on/off is not a choice.
+      if (e.isTrusted) { try { localStorage.setItem('nbSound', on ? '1' : '0'); } catch (x) { /* private mode */ } }
     });
 
     const info = document.createElement('div');
@@ -327,6 +364,10 @@
     let beatT = 0, rr = 0.8, prevRR = 0.8, rDone = false;
     const recent = [];
     let hrEl = null, appWrote = true;
+    // mobile audit 2026-11-07: no pulse tone while the room is paused (the start briefing), and a new case
+    // (data-run, set by er.js) starts the heart at its own rate instead of easing from the last case's.
+    const quiet = () => !!(cfg.quiet && cfg.quiet());
+    let runSeen = root.dataset.run;
     const watch = new MutationObserver(() => { appWrote = true; });
 
     function size() {
@@ -369,6 +410,7 @@
 
     function readVitals() {
       prepTiles();
+      if (root.dataset.run !== runSeen) { runSeen = root.dataset.run; base = NaN; appWrote = true; }
       readBase();
       spo2 = firstNum(cfg.spo2());
       hrAlarm = false;
@@ -424,7 +466,7 @@
       if (v) { v.classList.remove('nb-beat'); void v.offsetWidth; v.classList.add('nb-beat'); }
       const dot = cfg.dot();
       if (dot) { dot.classList.remove('nb-dot-beat'); void dot.offsetWidth; dot.classList.add('nb-dot-beat'); }
-      if (root.dataset.sound) beep(spo2, hrAlarm);
+      if (root.dataset.sound && !quiet()) beep(spo2);
     }
 
     function drawStatic() {
@@ -454,7 +496,14 @@
         readVitals();
         if (reduceMotion && before !== base) drawStatic();
       }
-      if (reduceMotion) return;
+      if (reduceMotion) {
+        // mobile audit 2026-11-07: with Reduce Motion nothing moves, but the pulse tone still follows the heart rate.
+        if (root.dataset.sound && base > 0) {
+          beatT += dt;
+          if (beatT >= 60 / base) { beatT = 0; if (!quiet()) beep(spo2); }
+        }
+        return;
+      }
 
       if (base > 0 && hrNow > 0) hrNow += (base - hrNow) * (1 - Math.exp(-dt / 2.5));
       const pxPerSec = W / 4; // four seconds across the screen
@@ -521,6 +570,7 @@
         spo2: () => document.getElementById('er-v-spo2'),
         dot: () => er.querySelector('.er-mon-dot'),
         vt: () => document.getElementById('view-er').dataset.rhythm === 'vt',
+        quiet: () => { const b = document.getElementById('er-brief'); return !!(b && !b.hidden); },
         warn: (key, raw) => (window.nbErVitals ? window.nbErVitals.warn(key, raw) : ''),
         tiles: () => ids.map(([key, id]) => {
           const v = document.getElementById(id);

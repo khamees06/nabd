@@ -641,3 +641,11 @@ button:active { transform: translateY(1px); }
   .nb-chk-list li { flex-direction: column; align-items: stretch; gap: .45rem; }
   .nb-chk-b button { flex: 1; padding: .5rem .6rem; }
 }
+
+/* mobile audit 2026-11-07: on a phone the room's button sits at the top of home (the one in the room card is screens down);
+   the profile button steps back to an outline there. Desktop is unchanged. */
+#home-quick-er-btn { display: none; }
+@media (max-width: 640px) {
+  #home-quick-er-btn { display: inline-flex; background: var(--signal) !important; color: #fff !important; border: 0 !important; }
+  #home-quick-profile-btn { background: var(--surface) !important; color: var(--ink) !important; border: 1px solid var(--line) !important; }
+}

@@ -4,6 +4,10 @@
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
   <title>نَبْض الأردن | أكاديمية المحاكاة السريرية</title>
+  <!-- mobile audit 2026-11-07: a page icon (no /favicon.ico 404), the phone bar colour and a short description for shared links -->
+  <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%276%27 fill=%27%230F766E%27/%3E%3Cpath d=%27M21 12h-4l-3 7-4-14-3 7H3%27 fill=%27none%27 stroke=%27white%27 stroke-width=%272.2%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
+  <meta name="theme-color" content="#0F766E">
+  <meta name="description" content="غرفة طوارئ تدريبية بالعربية لطلبة التمريض والطب في الأردن: محادثة مع المريض ومرافقه، ومونيتور حي، وتقرير بعد تسليم الحالة.">
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
   <link href="https://fonts.googleapis.com/css2?family=Readex+Pro:wght@160..700&family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
@@ -287,7 +291,7 @@
           <ul class="v7-checks"><li>تعلّم بالمحاكاة</li><li>تقييم بعد التسليم</li><li>باللهجة الأردنية</li></ul>
         </div>
         <figure class="v7-hero-media">
-          <img src="img/hero.jpg" alt="ممرضة تتابع مريضاً في سريره" loading="eager" decoding="async" onerror="nbImgFail(this)">
+          <img src="img/hero.jpg" srcset="img/hero-720.jpg 720w, img/hero-1080.jpg 1080w, img/hero.jpg 1280w" sizes="(max-width: 640px) 92vw, 1280px" alt="ممرضة تتابع مريضاً في سريره" loading="eager" fetchpriority="high" decoding="async" onerror="nbImgFail(this)">
           <figcaption><b>تجربة سريرية متكاملة</b><span>مقابلة · أدلة · قرار · تقييم</span></figcaption>
         </figure>
       </div>
@@ -563,6 +567,8 @@
           <h1 id="home-welcome-name">أهلاً بك</h1>
           <p id="home-welcome-sub">ابدأ بغرفة الطوارئ أو غرفة الطوارئ التنفسية، ثم تدرّب على نقاط ضعفك مع المدرب.</p>
           <div class="v7-welcome-actions">
+            <!-- mobile audit 2026-11-07: on a phone the room is one tap away from the top of home (shown by theme.css on phones only) -->
+            <button id="home-quick-er-btn" class="focus-ring" type="button">ادخل غرفة الطوارئ</button>
             <button id="home-quick-profile-btn" class="focus-ring" type="button">ملفي وتقدّمي</button>
             <button id="home-quick-uni-btn" class="focus-ring" type="button">البوابة الجامعية</button>
           </div>
@@ -1476,7 +1482,7 @@
       <div id="profile-pane-settings" class="hidden bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6 max-w-2xl">
         <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">إعدادات الحساب وتفضيلات المحاكاة</h2>
         <div class="space-y-4 text-sm">
-          <label class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 cursor-pointer">
+          <label id="setting-tts-row" class="flex items-center justify-between p-3.5 rounded-xl bg-slate-50 border border-slate-200/80 cursor-pointer">
             <div>
               <div class="font-bold text-slate-800">النطق الصوتي الآلي لردود المريض</div>
               <div class="text-xs text-slate-500">تشغيل القراءة الصوتية التلقائية عند توفرها في المتصفح</div>

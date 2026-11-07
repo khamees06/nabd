@@ -6061,7 +6061,8 @@
       return { title: [c.bed, who].filter(Boolean).join(' · ') || 'حالة من غرفة الطوارئ', line: p.arrival || '' };
     }
     function nb8AssignDone(u, a) {
-      return ((u && u.history) || []).find(h => h && h.caseId === 'er_' + a.caseId && (h.ts || 0) >= (a.ts || 0)) || null;
+      // mobile audit 2026-11-07: a nurse-role run of the case (er_<id>_n) counts too, so a nursing class can finish it.
+      return ((u && u.history) || []).find(h => h && (h.caseId === 'er_' + a.caseId || h.caseId === 'er_' + a.caseId + '_n') && (h.ts || 0) >= (a.ts || 0)) || null;
     }
 
     // Opens the ER room on the assigned case: er.js open() reads ?case= when it starts a new case.
@@ -6655,6 +6656,7 @@
 
       // Home Quick Buttons & Professor/Student Home Sections
       document.getElementById('home-quick-profile-btn')?.addEventListener('click', () => navigateTo('profile'));
+      document.getElementById('home-quick-er-btn')?.addEventListener('click', launchRandomER); // mobile audit 2026-11-07
       document.getElementById('home-quick-uni-btn')?.addEventListener('click', () => navigateTo('university'));
       document.getElementById('home-student-open-uni-btn')?.addEventListener('click', () => navigateTo('university'));
       document.getElementById('home-prof-open-full-uni-btn')?.addEventListener('click', () => navigateTo('university'));

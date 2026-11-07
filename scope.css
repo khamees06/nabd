@@ -31,17 +31,22 @@
 #home-skip-note, #home-learn, #home-nurse,
 #home-cases-anchor,
 #home-path > .nb-path-card:not(.nb-path-dark), #path-retake, #path-retake-note,
-#home-path .nb-kpis > div:has(#path-k2),
 
 /* Profile, certificate */
-#view-profile div:has(> #profile-stat-spec),
 /* phase8 2026-11-07: the notes card (#path-notes) is shown again for supervisor and advisor notes */
 #path-mistakes [data-fix],
-#printable-certificate-area div:has(> #cert-stat-spec),
 
 /* Controls that lead nowhere while the coach and the old rooms are closed */
 #home-coach-banner, #open-coach-view-btn, #dash-coach-go, [data-foot-app="coach"],
-label.nb-switch:has(#osce-toggle), label:has(> input#setting-tts-default), #coach-api-box {
+#setting-tts-row, #coach-api-box {
+  display: none !important;
+}
+/* mobile audit 2026-11-07: the :has() selectors live in their own rule. A browser without :has() drops a whole
+   rule when one selector is unknown, and that used to bring back every block listed above. */
+#home-path .nb-kpis > div:has(#path-k2),
+#view-profile div:has(> #profile-stat-spec),
+#printable-certificate-area div:has(> #cert-stat-spec),
+label.nb-switch:has(#osce-toggle), label:has(> input#setting-tts-default) {
   display: none !important;
 }
 

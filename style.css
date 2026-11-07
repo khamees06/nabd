@@ -1570,10 +1570,8 @@ button:active { transform: translateY(1px); }
 .nb-auth-link { padding: .15rem .2rem; color: var(--accent-dark); font: inherit; font-weight: 700; text-decoration: underline; text-underline-offset: .18em; }
 .nb-auth-about {
   max-width: 38ch;
-  display: -webkit-box;
-  -webkit-box-orient: vertical;
-  -webkit-line-clamp: 2;
-  overflow: hidden;
+  /* mobile audit 2026-11-07: no line clamp; the whole notice must be readable, including where room speech is sent. */
+  display: block;
   margin: 1.35rem auto 0;
   padding-top: 1rem;
   border-top: 0 solid var(--border-standard);
@@ -2363,3 +2361,13 @@ b, strong, th, .font-bold, .font-semibold, .font-extrabold, .font-black { font-w
   border-color: var(--line) !important;
 }
 #rep-retry-btn:hover, #coach-give-hint-btn:hover, #uni-Explicit-role-switch-btn:hover { background-color: #CFE7EA !important; }
+
+/* mobile audit 2026-11-07: sign-in and sign-up fields at 16px on phones, so iOS Safari does not zoom the page on tap. */
+@media (max-width: 640px) {
+  .nb-field input, .nb-field select, #auth-modal .nb-field input, #auth-modal .nb-field select { font-size: 16px; }
+}
+/* mobile audit 2026-11-07: a phone on its side; the whole side menu scrolls, so every item can be reached. */
+@media (max-height: 520px) {
+  #app-sidebar { overflow-y: auto !important; }
+  #app-sidebar nav { flex: none !important; overflow: visible !important; }
+}

@@ -331,7 +331,7 @@
     }
   }
   // A free check before the case starts, so a blocked network never freezes the first messages.
-  const ping = () => (api === 'off' ? Promise.resolve() : fetch(API + '?ping=1&_=' + Date.now(), { cache: 'no-store', signal: timeout(4500) }).then(r => { if (!r.ok) throw new Error('ping'); }).catch(() => { api = 'off'; apiRetryAt = Date.now() + 15000; loadFind(); }));
+  const ping = () => (api === 'off' ? Promise.resolve() : fetch(API + '?ping=1&_=' + Date.now(), { cache: 'no-store', signal: timeout(4500) }).then(r => { if (r.body && r.body.cancel) r.body.cancel().catch(() => {}); if (!r.ok) throw new Error('ping'); }).catch(() => { api = 'off'; apiRetryAt = Date.now() + 15000; loadFind(); }));
 
   // A line for someone the room has decided should speak; the case's own line is the safety net.
   async function voice(who, speaker, why, fallback) {
@@ -2410,7 +2410,7 @@
     ['er-dx', 'er-dispo', 'er-sbar'].forEach(id => $(id).addEventListener('input', check));
     offs.forEach(t => { const el = $('er-just-' + t.id); if (el) el.addEventListener('input', check); }); // phase8
     check();
-    $('er-end-x').onclick = () => { box.hidden = true; $('er-input').focus(); };
+    $('er-end-x').onclick = () => { box.hidden = true; autoFocus($('er-input')); };
     $('er-end-go').onclick = async () => {
       $('er-end-go').disabled = true;
       $('er-end-go').textContent = 'لحظة...';
@@ -2425,7 +2425,7 @@
       box.hidden = true;
       conclude(end);
     };
-    $('er-dx').focus();
+    autoFocus($('er-dx'));
   }
   // "Gave aspirin" about a drug nobody gave is the one lie plain text can show (both handover sheets use it).
   const claimedIn = s => /(اعطيت|عطيت|اعطيناه|اعطيناها|عطيناه|عطيناها|اخذ|اخد|gave|given|started)/.test(s) && D.actions.some(a => a.limits && !E.done.has(a.id) && hasAny(s, a.kw) && !/(بدي|اقترح|نحتاج|يحتاج|تحتاج|لازم|need|plan)/.test(s));
@@ -2641,7 +2641,7 @@
     SBAR_BOX.forEach(([k]) => $('er-sbar-' + k).addEventListener('input', check));
     offs.forEach(t => { const el = $('er-just-' + t.id); if (el) el.addEventListener('input', check); });
     check();
-    $('er-end-x').onclick = () => { box.hidden = true; $('er-input').focus(); };
+    $('er-end-x').onclick = () => { box.hidden = true; autoFocus($('er-input')); };
     $('er-end-go').onclick = async () => {
       $('er-end-go').disabled = true;
       $('er-end-go').textContent = 'لحظة...';
@@ -2659,7 +2659,7 @@
       box.hidden = true;
       conclude(end);
     };
-    $('er-sbar-s').focus();
+    autoFocus($('er-sbar-s'));
   }
   // Offline, the four boxes graded by rule; A only with readings that match the monitor at the end.
   function gradeHandoverNurse(end) {
@@ -2962,11 +2962,17 @@
     setTimeout(() => t.el.classList.remove('er-flash'), 1800);
   }
   const wide = () => window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
+  // mobile audit 2026-11-07: on a touch phone a focused text box opens the keyboard over the monitor and the sheet,
+  // so the room only moves the focus there by itself on a wide screen or with a mouse. The trainee's own tap still does.
+  const autoFocus = el => { if (el && (wide() || !(window.matchMedia && window.matchMedia('(pointer: coarse)').matches))) el.focus(); };
   function toggleRecords(force) {
     const r = $('er-records');
     if (!r) return;
     if (wide()) { const q = $('er-rec-q'); if (q) q.focus(); return; }
-    r.classList.toggle('is-open', force === undefined ? !r.classList.contains('is-open') : force);
+    const open = force === undefined ? !r.classList.contains('is-open') : force;
+    r.classList.toggle('is-open', open);
+    // mobile audit 2026-11-07: an old search does not stay behind for the next time the sheet opens.
+    if (!open && recQuery) { recQuery = ''; const q = $('er-rec-q'); if (q) q.value = ''; buildRecords(); }
   }
   // Touching a test is ordering it: the trainee's line appears, and the result right after it.
   function panelTest(id) {
@@ -3032,6 +3038,8 @@
     if ($('er-test') && $('er-test').dataset) $('er-test').dataset.badge = '';
     $('er-v-bp').textContent = '--/--';
     $('view-er').dataset.rhythm = '';
+    // mobile audit 2026-11-07: motion.js restarts the pulse at the new case's rate when this number changes.
+    if (REAL) { const mon = document.querySelector('.er-mon'); if (mon) mon.dataset.run = String((+mon.dataset.run || 0) + 1); }
     // phase8 2026-11-07: on a real page the start briefing says this, so the chat does not repeat it.
     if (!REAL) sys(NM() ? 'أنت ممرض/ة الطوارئ المسؤول/ة عن السرير. قيّم المريض، وراقب المونيتور، واتصل بالطبيب عند الحاجة، ونفّذ أوامره، وسلّم الحالة بصيغة SBAR.' : 'أنت الطبيب المقيم في الطوارئ. تكلم مع الموجودين، واكتب أوامرك وأدويتك وجرعاتها، واطلب الفحوصات، وسلّم الحالة عندما تنتهي.');
     if (api === 'off' && location.protocol !== 'file:') { apiNoted = true; sys(OFFLINE_NOTE); }
@@ -3054,7 +3062,7 @@
     // phase8 2026-11-07: while the briefing is open (E.paused) the loop only keeps `last` current, so time does not jump on resume.
     const loop = now => { if (!E || E.over) return; if (E.paused) last = now; else if (!document.hidden && !$('view-er').classList.contains('hidden')) tick(now); else last = now; tickId = requestAnimationFrame(loop); };
     tickId = requestAnimationFrame(loop);
-    if (!showBrief()) $('er-input').focus();
+    if (!showBrief()) autoFocus($('er-input'));
   }
 
   /* ---------- phase8 2026-11-07: the start briefing ---------- */
@@ -3194,7 +3202,7 @@
     if (w) w.hidden = true;
     if (!E) return;
     E.paused = false;
-    if (!E.over && $('er-sheet').hidden) $('er-input').focus();
+    if (!E.over && $('er-sheet').hidden) autoFocus($('er-input'));
   }
   const briefOpen = () => { const w = REAL && $('er-brief'); return !!(w && !w.hidden); };
 
@@ -3267,6 +3275,52 @@
     $('er-rec-q').addEventListener('input', e => { recQuery = e.target.value; buildRecords(); });
     $('er-end').addEventListener('click', openEnd);
     $('er-sheet').addEventListener('keydown', e => { if (e.key === 'Escape') { $('er-sheet').hidden = true; $('er-input').focus(); } });
+    if (REAL) {
+      // mobile audit 2026-11-07: when the keyboard or a rotation resizes the conversation, the newest line stays in view
+      // if the trainee was reading the end; a line scrolled back to stays put.
+      const feed = $('er-feed');
+      if (feed && 'ResizeObserver' in window) {
+        let pinned = true;
+        feed.addEventListener('scroll', () => { pinned = feed.scrollHeight - feed.scrollTop - feed.clientHeight < 90; }, { passive: true });
+        new ResizeObserver(() => { if (pinned) feed.scrollTop = feed.scrollHeight; }).observe(feed);
+      }
+      // Tapping «أرسل» while typing keeps the focus (and the phone keyboard) in the message box.
+      const sendB = $('er-send');
+      if (sendB) sendB.addEventListener('mousedown', e => { if (document.activeElement === $('er-input')) e.preventDefault(); });
+    }
+  }
+
+  /* ---------- mobile audit 2026-11-07: the phone's back button ----------
+     Entering the room adds one history entry. Back then closes the open sheet, or goes home with the case kept
+     (its clock stands still while the room is hidden, and entering again resumes it), instead of leaving the site.
+     A reload or closing the tab mid-case asks first. Real pages only. */
+  let backHooked = false;
+  const keepBack = () => { try { history.pushState({ nbER: 1 }, ''); } catch (e) { /* not allowed here */ } };
+  function guardBack() {
+    if (!window.history || !history.pushState) return;
+    if (!backHooked) {
+      backHooked = true;
+      window.addEventListener('popstate', onBack);
+      window.addEventListener('beforeunload', e => { if (E && E.started && !E.over) { e.preventDefault(); e.returnValue = ''; } });
+    }
+    if (!(history.state && history.state.nbER)) keepBack();
+  }
+  function onBack() {
+    const v = $('view-er');
+    if (!v || v.classList.contains('hidden')) return;
+    const sheet = $('er-sheet'), rec = $('er-records');
+    if (sheet && !sheet.hidden) { sheet.hidden = true; keepBack(); return; }
+    if (rec && rec.classList.contains('is-open')) { toggleRecords(false); keepBack(); return; }
+    if (typeof navigateTo === 'function') navigateTo('home');
+    if (E && !E.over) {
+      const t = document.getElementById('calm-toast'), tt = document.getElementById('calm-toast-text');
+      if (t && tt) {
+        tt.textContent = 'حالتك محفوظة، وساعتها متوقفة حتى تعود. ادخل غرفة الطوارئ لتكملها.';
+        t.classList.remove('hidden');
+        clearTimeout(window._toastTimer);
+        window._toastTimer = setTimeout(() => t.classList.add('hidden'), 4500);
+      }
+    }
   }
 
   // Only the offline path needs the act model, so the room never waits for it.
@@ -3280,17 +3334,22 @@
     if (REAL) roleWanted = null;
     mount();
     // Sound needs the click that brought the student here.
+    // mobile audit 2026-11-07: the alarms share motion.js's context, so waking one wakes both. Sound turns on by
+    // itself only if the trainee has not muted it (motion.js remembers the trainee's own tap in nbSound).
     const Ctx = window.AudioContext || window.webkitAudioContext;
-    if (!ac && Ctx) ac = new Ctx();
+    if (!ac) ac = typeof window.nbAudio === 'function' ? window.nbAudio() : Ctx ? new Ctx() : null;
     if (ac && ac.resume) ac.resume();
     const sound = document.querySelector('.er-mon .nb-mon-sound');
-    if (sound && sound.getAttribute('aria-pressed') !== 'true') sound.click();
+    let soundPref = null;
+    try { soundPref = localStorage.getItem('nbSound'); } catch (e) { /* no storage */ }
+    if (sound && sound.getAttribute('aria-pressed') !== 'true' && soundPref !== '0') sound.click();
+    if (REAL) guardBack();
     try {
       await Promise.all([load(), ping()]);
       if (!ACT) loadAct();
       if (!E || E.over) begin(new URLSearchParams(location.search).get('case') || undefined);
       else if (briefOpen()) $('er-brief-go').focus(); // phase8 2026-11-07
-      else $('er-input').focus();
+      else autoFocus($('er-input'));
     } catch (e) {
       console.error(e);
       $('er-feed').innerHTML = '<div class="er-msg k-sys"><p>تعذّر تحميل الحالات. تحقق من الاتصال ثم أعد المحاولة.</p></div>';

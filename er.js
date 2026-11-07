@@ -149,7 +149,16 @@
     $('view-er').dataset.rhythm = E.vtNow ? 'vt' : '';
     if (s <= E.stage) {
       // Getting better is an event too.
-      if (s < E.stage && E.stage >= 2) { E.stage = s; log('better', 'تحسّن المريض بعد العلاج'); nurse('دكتور، الأرقام عم تتحسن.'); director('better'); }
+      if (s < E.stage && E.stage >= 2) {
+        E.stage = s;
+        log('better', 'تحسّن المريض بعد العلاج');
+        // The nurse says which numbers moved, not just that they did.
+        E.bpAt = 0; paint();
+        const v = live();
+        nurse(`دكتور، الأرقام أحسن: SpO2 ${Math.round(v.spo2)}%، النبض ${Math.round(v.hr)}، الضغط ${E.bp.join('/')}.`);
+        E.anx = clamp(E.anx - 12, 0, 100);
+        director('better');
+      }
       return;
     }
     E.stage = s;
@@ -471,7 +480,7 @@
 
   // A drug word is not an order: "بلاش اسبرين" and "بتاخدي اسبرين؟" must never give the drug.
   const NEGATED = /(?:^| )[وف]?(?:لا|ما|مش|مو|بلاش|بدون|ممنوع|غير|مستحيل|اياك\S*|اوعك|اوعي|حذار|نتجنب|تجنب\S*|نبعد|اوقف\S*|نوقف|وقف\S*|شيل\S*|الغي\S*|avoid|no|not|never|dont|don t|without|stop|hold|لسا ما)(?: \S+){0,2}$|(?:^| )(?:بدل|بدال|instead of)(?: \S+)?$/;
-  const ORDER = /(?:^| )[وف]?(?:[اتنبي]?عط[يو]\S*|اعط\S*|حط\S*|ركب\S*|علق\S*|ابدا\S*|بلش\S*|جيب\S*|جهز\S*|شغل\S*|اطلب\S*|اسحب\S*|قيس\S*|افحص\S*|شيك\S*|عيد\S*|نادي\S*|اتصل\S*|ارفع\S*|اعمل\S*|سوي\S*|بدي|بدنا|لازم|خلينا|يلا|give|start|hang|push|need|order|call|get|put|run|draw|repeat|check)(?: |$)/;
+  const ORDER = /(?:^| )[وف]?(?:[اتنبي]?عط[يو]\S*|اعط\S*|حط\S*|ركب\S*|علق\S*|ابدا\S*|بلش\S*|جيب\S*|جهز\S*|شغل\S*|اطلب\S*|اسحب\S*|قيس\S*|افحص\S*|شيك\S*|عيد\S*|نادي\S*|اتصل\S*|ارفع\S*|اعمل\S*|سوي\S*|فعل|فعلي(?:ه|ها)?|فعلو\S*|بدي|بدنا|لازم|خلينا|يلا|give|start|hang|push|need|order|call|get|put|run|draw|repeat|check|activate)(?: |$)/;
   const HISTORY = /^(?:هل|شو|ليش|كيف|قديش|كم|وين|مين|متي|امتي|لما|بتاخد\S*|بياخد\S*|بتوخذ\S*|بيوخذ\S*|اخذت\S*|اخدت\S*|عملت\S*|عندك|عنده|عندها|في عند\S*|جربت\S*|استعملت\S*|بتستعمل\S*|بيستعمل\S*|بتستخدم\S*|بتتحسس\S*|بيتحسس\S*|صار معك)(?: |$)/;
   const ASKS_ABOUT = /(?:بدي (?:اعرف|اسالك|اتاكد)|لازم اعرف|خلينا نشوف|شو صار|(?:^| )(?:اعطوك|اعطوه|اعطوها|اعطاه|اعطيتي|اخذتي|اخدتي)(?: |$))/;
   // Every mention, from the start of its word, so "ولا تعطيه بنسلين" is seen whichever drug comes first.
@@ -551,11 +560,11 @@
     const tests = said(D.tests).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'ungraded' : 'none' }));
     const toSup = /(يا مشرف|يا استاذ|يا دكتور|شو رايك|ساعدني|مش عارف|محتار|شو اعمل)/.test(t);
     const toNurse = new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي)').test(t);
-    const toComp = /(يا حجه|يا حجي|يا خالتي|يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك|بنتك|ابوك|جوزك|زوجك|مرتك|زوجتك|معك حق|فهمت عليك|ما تخاف|ما تخافي|لا تخاف|لا تخافي|لا تقلق|يا عمو|عمو)/.test(t) || t.includes('يا ' + norm(c.companion.name)) || t.includes(norm(c.companion.name) + ' ');
+    const toComp = /(يا حجه|يا حجي|يا خالتي|يا خاله|يا ست |يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك|بنتك|ابوك|جوزك|زوجك|مرتك|زوجتك|معك حق|فهمت عليك|ما تخاف|ما تخافي|لا تخاف|لا تخافي|لا تقلق|يا عمو|عمو)/.test(t) || t.includes('يا ' + norm(c.companion.name)) || t.includes(norm(c.companion.name) + ' ');
     // Keywords go first: the model only speaks for a message nothing else could read.
     const act = !facts.length && !exam.length && !actions.length && !tests.length ? readAct(text) : null;
     const social = ['greeting', 'wish', 'thanks'].includes(act);
-    const explaining = toComp && /(?:^| )(?:رح|راح|بدنا|هسا|ح) ن\S+/.test(t);
+    const explaining = toComp && /(?:^| )و?(?:رح|راح|بدنا|هسا|ح) ن\S+/.test(t);
     const talkOnly = toComp && (!verb || explaining);
     const to = talkOnly || (toComp && !actions.length) ? 'companion' : toSup && !social ? 'supervisor' : toNurse || actions.length || tests.length ? 'nurse' : 'patient';
     // "Take the adrenaline off" names a drug without ordering it.
@@ -591,12 +600,21 @@
       return f.say;
     }
     if (read.forbids && !read.actions.length) { read.to = 'nurse'; return 'تمام، ما بعطيه.'; }
-    if (read.unclear) { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
+    // Telling the family the plan names the treatment; it does not order it.
+    if (read.unclear && read.to !== 'companion') { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
     if (read.to === 'nurse' && !read.actions.length && !read.tests.length) {
       return /(ضغط|نبض|اكسجين|ارقام|حراره|تنفس|spo2|bp|hr)/.test(t) ? 'الأرقام: ' + vitalsLine() + '.' : 'تمام، شو بدك أعمل؟';
     }
     if (read.to === 'nurse') return null;
-    if (read.to === 'companion') return pickOf(read.tone.explained || read.tone.empathy ? c.companion.lines.calm : c.companion.lines.ignored);
+    // Spoken to, the relative answers what was said; being told what is happening settles them.
+    if (read.to === 'companion') {
+      const L = c.companion.lines, kind = read.tone.explained || read.tone.empathy ? 'heard' : 'answer';
+      const own = fresh(L[kind] || []), other = fresh(L[kind === 'heard' ? 'answer' : 'heard'] || []);
+      // Out of words, a relative just nods: a short reply, never the same speech again.
+      const x = own.length ? pickOf(own).say : other.length ? pickOf(other).say : pickOf(['طيب يا دكتور.', 'ماشي.', 'إن شاء الله خير.', 'طيب.']);
+      E.comp.used.add(x);
+      return x;
+    }
     if (read.actions.length || read.tests.length || read.exam.length) return null;
     if (read.kind === 'open') return c.patient.opening;
     if (read.kind === 'smalltalk') return socialReply(read.act, read.text);
@@ -644,11 +662,13 @@
       if (open.wait >= 2) settle(q => q === open);
       return;
     }
+    // She names the drug she is waiting on: a busy doctor has forgotten which one.
+    const nm = open.name || (open.a && actOf(open.a.id) ? actOf(open.a.id).ar : 'الدوا');
     if (open.wait >= 4) {
-      nurse(open.type === 'unsafe' ? 'ما رح أعطيه قبل ما تأكدلي.' : open.type === 'dose' ? 'ما بعطيه بدون جرعة. احكيلي لما تقرر.' : 'ما بطلبه بدون استطباب. احكيلي لما تقرر.');
+      nurse(open.type === 'unsafe' ? `ما رح أعطي ${nm} قبل ما تأكدلي.` : open.type === 'dose' ? `ما بعطي ${nm} بدون جرعة. احكيلي لما تقرر.` : 'ما بطلبه بدون استطباب. احكيلي لما تقرر.');
       settle(q => q === open);
     } else if (open.wait % 2 === 0) {
-      nurse(open.type === 'unsafe' ? 'دكتور، بعطي الدوا ولا لأ؟' : open.type === 'dose' && open.tip ? `دكتور، ${open.name}: ${open.tip}` : 'دكتور، لسا مستنية جوابك على طلبك.');
+      nurse(open.type === 'unsafe' ? `دكتور، ${nm}: بعطيه ولا لأ؟` : open.type === 'dose' ? (open.tip ? `دكتور، ${nm}: ${open.tip}` : `دكتور، ${nm}: قديش بدك؟`) : 'دكتور، لسا مستنية جوابك على طلبك.');
     }
   }
 
@@ -661,13 +681,19 @@
     if (t.rude) { E.comm.rude++; E.anx = clamp(E.anx + 24, 0, 100); log('comm', 'كلام جارح أو متجاهل للأهل'); }
     if (t.empathy) { E.comm.empathy = true; }
     if (t.jargon && (to === 'companion' || to === 'patient')) { E.comm.jargon++; E.anx = clamp(E.anx + 7, 0, 100); }
+    // Orders, tests, an examination or history from the patient: the doctor is working.
+    const working = (read.actions || []).length || (read.tests || []).length || (read.exam || []).length || (to === 'patient' && (read.facts || []).length);
+    if (working) E.busyTurn = E.turns;
     if (to === 'companion') {
-      E.comp.asked = false;
-      E.comp.addressed++;
-      if (t.explained || t.empathy) { E.comm.explained = true; E.anx = clamp(E.anx - 24, 0, 100); E.comp.last = E.utt + 3; log('comm', 'شرح للأهل فهدأوا'); }
+      const c = E.comp;
+      c.asked = null; c.ignored = 0; c.unheard = 0; c.heardTurn = E.turns;
+      c.addressed++;
+      if (t.explained || t.empathy) { E.comm.explained = true; E.anx = clamp(E.anx - 24, 0, 100); c.lastTurn = E.turns + 1; c.lastAt = E.sim; c.gen++; log('comm', 'شرح للأهل فهدأوا'); }
       else E.anx = clamp(E.anx - 6, 0, 100);
     } else {
-      E.anx = clamp(E.anx + (E.comp.asked ? 8 : 3), 0, 100);
+      // Seeing the team work steadies a relative; a question left hanging does not.
+      const waited = E.comp.asked !== null ? E.turns - E.comp.asked : 0;
+      E.anx = clamp(E.anx + (working ? -1 : waited === 3 ? 6 : waited > 3 ? 2 : 1), 0, 100);
       if (to === 'patient' && t.explained) E.comm.explained = true;
     }
 
@@ -862,9 +888,6 @@
     if (a.id === 'cpr') { nurse(E.stage === 3 ? 'لسا في نبض ضعيف دكتور، شو بدك قبل ما يوقف؟' : 'في نبض دكتور، مش وقت إنعاش.'); return; }
     if (a.id === 'sedative' && E.done.has('airway')) { nurse('طبيب التخدير رح يعطي المهدئ مع التنبيب.'); return; }
     const care = E.c.care[a.id], treating = E.anaph && !E.anaph.treated;
-    // Some relatives react the moment a drug is named.
-    const objection = ((E.c.companion.lines || {}).onOrder || {})[a.id];
-    if (objection && objection.length && !E.comp.used.has(objection[0])) { E.comp.used.add(objection[0]); later(0.05, () => person('c', objection[0])); }
     let def = care || (E.anaph && ADJUNCT.includes(a.id) ? {} : offCase(meta));
     const early = tooEarly(def);
     if (early) def = { ...def, ...def.stableHarm, harm: true, early: true };
@@ -882,6 +905,8 @@
     const prev = E.done.get(a.id);
     const rescue = (treating && a.id === 'adrenaline') || (E.vtNow && a.id === 'shock');
     if (!allergic && prev && !rescue && !again(a, meta, def, prev)) return;
+    // Some relatives react the moment a drug they fear is really going in.
+    if (!prev) compOn('onOrder', a.id, 0.05, true);
     if (def.harm || allergic) { unsafe(a, meta, def, allergic); return; }
     const sg = treating && a.id === 'adrenaline' ? { text: 'أدرينالين 0.5 ملغ عضل بالفخذ', dose: '0.5 mg IM' } : def.suggest || meta.suggest || null;
     const propose = sg ? (sg.dose ? `بقترح ${sg.text}، ماشي؟` : sg.text) : '';
@@ -947,6 +972,8 @@
     if (n('sbp') - b('sbp') >= 5 || (E.c.hyper && b('sbp') - n('sbp') >= 8)) parts.push(`الضغط صار ${n('sbp')}/${n('dbp')}`);
     if (!parts.length) return;
     nurse(`بعد ${names.join(' و')}: ${parts.join('، ')}.`);
+    // The relative sees it too.
+    E.anx = clamp(E.anx - 5, 0, 100);
     if (!E.vtNow && E.stage < 3) {
       const by = E.c.improveBy || {}, own = ids.find(id => by[id] && !E.saidBy.has(id));
       if (own) E.saidBy.add(own);
@@ -994,13 +1021,8 @@
       if (def.done) nurse(def.done);
       if (a.id === 'call_senior' || a.id === 'call_icu') coach('called');
     });
-    const after = ((E.c.companion.lines || {}).onDone || {})[a.id];
-    if (after && after.length && !E.comp.used.has(after[0])) {
-      E.comp.used.add(after[0]);
-      later(0.6, () => { person('c', after[0]); const told = (E.c.companion.tells || {})[after[0]]; if (told) E.facts.add(told); });
-    }
-    E.anx = clamp(E.anx + 2, 0, 100);
-    director('procedure');
+    // What the relative says about this very step, or else, for a needle or a drug, at most a question about it.
+    if (!compOn('onDone', a.id, 0.6) && (meta.dose || ['iv_access', 'fluids', 'foley', 'airway'].includes(a.id))) director('procedure');
   }
 
   function unsafe(a, meta, def, allergic) {
@@ -1039,7 +1061,8 @@
       log('harm', 'أذى: ' + label);
       alert(allergic ? def.allergyEffect : def.effect || 'ساءت حالة المريض بعد الدواء.');
       E.anx = clamp(E.anx + 20, 0, 100);
-      director('alarm');
+      // No alarm sounds below the urgent stage: the relative reacts to what they see.
+      director(E.stage >= 2 ? 'alarm' : 'worse');
       coach('harm');
     });
   }
@@ -1128,7 +1151,9 @@
       E.askedNo++;
       voice('d', 'supervisor', `The trainee ordered ${meta.en}, not needed here: ${res.why} Ask one short question about what it would change, without giving the answer.`, `${meta.en}؟ شو رح يغيّر بالخطة هسا؟`);
     }
-    director('turn');
+    // A test is work being done, from the chat or from the records panel.
+    E.busyTurn = E.turns;
+    if (!compOn('onTest', id, 0.3)) director('turn');
   }
 
   const resultText = id => {
@@ -1152,47 +1177,99 @@
       E.readAsks++;
       ask({ type: 'interpret', id, ask: `The supervisor asked the trainee to read the ${testOf(id).en}. Reference reading: ${res.key}. good = matches, partial = incomplete, wrong = contradicts, na = not a reply.` }, pickOf([`شو بتقرأ بالـ${testOf(id).en}؟`, `طيب، الـ${testOf(id).en} شو بيحكيلك؟`]), 'd');
     }
-    director('result');
   }
 
   /* ---------- who speaks next ---------- */
-  // Runs after anything anyone says or does, never on a timer. The companion breaks in when
-  // something has just happened and worry is high enough, with chance deciding the moment.
-  function director(evt) {
-    if (!E || E.over) return;
-    if (evt === 'addressed') return;
-    const a = E.anx, since = E.utt - E.comp.last;
-    const force = evt === 'alarm' || evt === 'worse';
-    if (since < (force ? 1 : 3)) return;
-    let p = 0;
-    if (force) p = 1;
-    else if (evt === 'procedure') p = clamp(a / 110, 0.2, 0.75);
-    else if (evt === 'result') p = clamp(a / 150, 0.1, 0.5);
-    else if (evt === 'typing') p = clamp((a - 30) / 130, 0, 0.45);
-    else if (evt === 'better') p = 0.4;
-    else p = clamp((a - 22) / 90, 0.08, 0.65);
-    if (Math.random() > p) return;
-    breakIn(evt);
+  // Runs after anything anyone says or does, never on a timer. A relative speaks when something
+  // they can see has just happened, says each thing once, and lets a doctor who is working work.
+  const lineOf = x => (typeof x === 'string' ? x : x && x.say) || '';
+  const compPool = k => (E.c.companion.lines || {})[k] || [];
+  // A line can wait for its moment: {say, stage} only once the patient is that sick,
+  // {say, unless} or {say, fact} only while the trainee has not found that fact,
+  // {say, after} not before that simulated minute (a confession comes late).
+  const fresh = list => list.map(x => (typeof x === 'string' ? { say: x } : x))
+    .filter(x => x.say && !E.comp.used.has(x.say) && !(x.stage && E.stage < x.stage) && !(x.after && E.sim < x.after) && !(x.unless && E.facts.has(x.unless)) && !(x.fact && E.facts.has(x.fact)));
+  const busyNow = () => E.turns - E.busyTurn <= 1;
+  function compSay(x, after = 0) {
+    const c = E.comp;
+    c.used.add(x.say);
+    c.lastTurn = E.turns; c.lastAt = Math.max(c.lastAt, E.sim + after); c.count++;
+    // A question still waiting to be said is dropped once the doctor has explained.
+    const gen = c.gen;
+    later(after, () => {
+      if (E.comp.gen !== gen && /[؟?]/.test(x.say)) { E.comp.count--; return; }
+      person('c', x.say);
+      const told = (E.c.companion.tells || {})[x.say];
+      if (told) E.facts.add(told);
+    });
+    // Twice unheard while the doctor works: the nurse settles the relative and nudges the doctor once.
+    if (++c.unheard >= 2 && !c.nurseStep && E.c.companion.nurse && E.stage < 3) {
+      c.nurseStep = true;
+      later(after + 0.5, () => {
+        if (E.comp.gen !== gen) { E.comp.nurseStep = false; return; }
+        nurse(E.c.companion.nurse); E.anx = clamp(E.anx - 10, 0, 100); E.comp.lastAt = E.sim;
+      });
+    }
+  }
+  // A line tied to what was just done or asked for: the relative sees it happen.
+  function compOn(kind, id, after, always) {
+    const list = fresh(((E.c.companion.lines || {})[kind] || {})[id] || []);
+    if (!list.length) return false;
+    // The first moments belong to the doctor: a remark about this step waits a little,
+    // and two remarks stand a minute apart, or the later one is let go.
+    if (!always) {
+      after = Math.max(after, 1.5 - E.sim);
+      if (E.comp.lastAt > E.sim + after - 1) {
+        const push = E.comp.lastAt + 1 - E.sim;
+        if (push - after > 1.5) return false;
+        after = push;
+      }
+    }
+    compSay(list[0], after);
+    return true;
   }
 
-  function breakIn(evt) {
-    const L = E.c.companion.lines, a = E.anx;
-    let trig = evt === 'alarm' ? 'alarm' : evt === 'worse' ? 'worse' : evt === 'procedure' ? 'procedure' : evt === 'better' ? 'calm' : a >= 78 ? 'angry' : 'ignored';
-    if (!E.comp.extra && L.extra && a >= 45 && Math.random() < 0.35) { trig = 'extra'; E.comp.extra = true; }
-    const pool = L[trig] && L[trig].length ? L[trig] : L.ignored;
-    const unused = pool.filter(x => !E.comp.used.has(x));
-    const line = pickOf(unused.length ? unused : pool);
-    E.comp.used.add(line);
-    const told = (E.c.companion.tells || {})[line];
-    if (told) E.facts.add(told);
-    E.comp.last = E.utt + 1;
-    E.comp.count++;
-    if (trig !== 'calm') E.comp.asked = true;
-    if (trig === 'angry') log('comm', 'غضب المرافق وطلب أخصائياً');
-    const why = { alarm: 'the monitor alarm just went off', worse: 'your relative looks worse', procedure: 'someone is doing something to your relative and nobody told you what', calm: 'things look a bit better', angry: 'nobody is answering you and you want a senior doctor now', ignored: 'nobody has told you what is happening', extra: `you push for this: ${line}` }[trig];
-    // The case's lines are short and real; a fresh line keeps repeats away once they run out.
-    if (!unused.length && api !== 'off') voice('c', 'companion', why, line);
-    else person('c', line);
+  function director(evt) {
+    if (!E || E.over || evt === 'addressed') return;
+    const a = E.anx, turns = E.turns - E.comp.lastTurn, mins = E.sim - E.comp.lastAt;
+    if (evt === 'alarm' || evt === 'worse') { if (mins >= 0.5) breakIn(evt); return; }
+    // The first moments belong to the doctor: the relative said their piece on arrival.
+    if (E.turns < 3 && E.sim < 1.5) return;
+    if (evt === 'better') { if (mins >= 0.5) breakIn('calm'); return; }
+    if (turns < 3 || mins < 1.2) return;
+    const has = k => fresh(compPool(k)).length > 0;
+    if (evt === 'procedure') {
+      if (E.comp.procs < 2 && has('procedure') && Math.random() < clamp(a / 110, 0.2, 0.6)) { E.comp.procs++; breakIn('procedure'); }
+      return;
+    }
+    // A lull. A doctor at work hears only something worth hearing; one who is not
+    // hears the question that went unanswered, and real anger only after real neglect.
+    const waited = E.comp.asked !== null ? E.turns - E.comp.asked : 0;
+    if (busyNow()) { if (has('info') && Math.random() < 0.3) breakIn('info'); return; }
+    if (!E.comp.angry && a >= 85 && E.comp.ignored >= 2 && !E.comm.explained && waited >= 3 && has('angry')) { breakIn('angry'); return; }
+    const unheard = waited >= 3 || E.turns - E.comp.heardTurn >= 5;
+    if (unheard && E.comp.ignored < 2 && a >= 45 && has('ignored') && Math.random() < 0.6) { breakIn('ignored'); return; }
+    const pick = [has('info') && 'info', E.turns >= 4 && E.comp.extra < 2 && has('extra') && 'extra'].filter(Boolean);
+    if (pick.length && Math.random() < 0.55) breakIn(pickOf(pick));
+  }
+
+  function breakIn(trig) {
+    const list = fresh(compPool(trig));
+    if (!list.length) {
+      // Fresh words only for what the relative can see; a demand is said once or not at all.
+      const why = { alarm: 'the monitor alarm just went off and you are scared', worse: 'your relative looks worse than a minute ago: say what you see', calm: 'your relative looks a little better after the treatment: relief, a short thanks, and one practical question about what comes next' }[trig];
+      if (why && api !== 'off') { const c = E.comp; c.lastTurn = E.turns; c.lastAt = E.sim; c.count++; voice('c', 'companion', why, ''); }
+      return;
+    }
+    // The line written for this stage of illness comes first.
+    const now = list.filter(x => x.stage && x.stage <= E.stage);
+    const x = now.length ? now[now.length - 1] : pickOf(list.filter(y => !y.stage).length ? list.filter(y => !y.stage) : list);
+    // Fear comes a beat after the alarm and the nurse, not on top of them.
+    compSay(x, trig === 'alarm' || trig === 'worse' ? 0.25 : 0);
+    if (trig === 'extra') E.comp.extra++;
+    // Only a plain question to the doctor waits for an answer; a cry at the alarm does not.
+    if (trig === 'ignored') { E.comp.ignored++; E.comp.asked = E.turns; }
+    if (trig === 'angry') { E.comp.angry = true; log('comm', 'انزعج المرافق لأن أحداً لم يشرح له ما يجري'); }
   }
 
   // The supervisor is in the room and speaks when the moment calls for it.
@@ -1478,7 +1555,7 @@
     E = {
       c, sim: 0, risk: c.risk.start, anx: c.companion.start, stage: 0, done: new Map(), effects: [], jobs: [], tests: {}, facts: new Set(), exam: new Set(),
       chat: [], log: [], riskLog: [[0, c.risk.start]], riskLogAt: 0, paintAt: -1, bpAt: 0, bpTime: 0, bp: ['--', '--'], tempKnown: false, utt: 0, turns: 0,
-      comp: { last: -9, count: 0, asked: false, addressed: 0, used: new Set(), extra: false }, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
+      comp: { lastTurn: -9, lastAt: -9, count: 0, asked: null, addressed: 0, used: new Set(), extra: 0, angry: false, ignored: 0, procs: 0, unheard: 0, nurseStep: false, heardTurn: 0, gen: 0 }, busyTurn: -9, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
       harms: [], harmed: new Set(), reacted: false, caught: [], pending: null, queue: [], wrongDoses: [], unneeded: [], lateTests: [], askedNo: 0, hint: -1, hints: 0, helps: 0, readAsks: 0, over: false, outcome: null, resolved: false,
       topStage: 0, anxTop: c.companion.start, vtNow: false, vtAt: null, shockedAt: null, anaph: null, draft: null,
       mods: [], improved: 0, nudged: false, collect: null, resp: null, saidBy: new Set(), holdAsked: false
@@ -1507,7 +1584,11 @@
     sys(p.arrival);
     person('p', p.opening);
     nurse(c.nurse.handoff);
-    if (c.companion.lines.enter) { E.comp.last = E.utt + 1; person('c', pickOf(c.companion.lines.enter)); E.comp.asked = true; }
+    if (c.companion.lines.enter) {
+      const x = lineOf(pickOf(c.companion.lines.enter));
+      person('c', x);
+      E.comp.used.add(x); E.comp.lastTurn = 0; E.comp.lastAt = 0;
+    }
     paint();
     last = performance.now();
     const loop = now => { if (!E || E.over) return; if (!document.hidden && !$('view-er').classList.contains('hidden')) tick(now); else last = now; tickId = requestAnimationFrame(loop); };
@@ -1520,8 +1601,6 @@
     if (v.dataset.ready) return;
     v.dataset.ready = '1';
     $('er-form').addEventListener('submit', e => { e.preventDefault(); const i = $('er-input'); send(i.value); i.value = ''; });
-    // Starting to type is an event like any other: a worried relative does not wait for you to finish.
-    $('er-input').addEventListener('input', () => { if (E && !E.typedThisTurn && $('er-input').value.length >= 3) { E.typedThisTurn = true; director('typing'); } });
     $('er-test').addEventListener('click', () => toggleRecords());
     const rec = $('er-records');
     rec.addEventListener('click', e => {

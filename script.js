@@ -1674,7 +1674,8 @@
     const PROTECTED_VIEWS = new Set(['home', 'sim', 'debrief', 'coach', 'profile', 'university', 'observe', 'nurse', 'resp', 'er']);
     // The site now offers the emergency room, the respiratory room and the coach. These views stay in
     // the page (the app still writes into them) but can no longer be opened: they lead home.
-    const REMOVED_VIEWS = new Set(['university', 'observe', 'nurse', 'resp', 'coach', 'sim']);
+    // phase8 2026-11-07: 'university' is open again (academic portal for the professor/advisor and students).
+    const REMOVED_VIEWS = new Set(['observe', 'nurse', 'resp', 'coach', 'sim']);
     const STORAGE_KEYS = {
       ACTIVE_USER_ID: 'nabd_v2_active_user_id',
       ACCOUNTS_MAP: 'nabd_v2_accounts_map',
@@ -1924,21 +1925,23 @@
       const hwSub = document.getElementById('home-welcome-sub');
       if (hwSub) {
         hwSub.textContent = isProf
-          ? 'تابع تقارير الطلبة أو أسند حالة جديدة.'
+          ? 'تابع تقارير طلبة شعبك، وأسند حالة من غرفة الطوارئ، واكتب ملاحظاتك بصفتك مرشداً أكاديمياً.' // phase8 2026-11-07
           : 'غرفة الطوارئ مفتوحة، وباقي الغرف تُفتح لاحقاً.';
       }
 
       // Toggle Role-Specific Home Sections (Professor Dashboard vs Student University Sessions)
+      // phase8 2026-11-07: shown by role instead of always hidden.
       const profHomeSec = document.getElementById('home-professor-section');
-      if (profHomeSec) profHomeSec.classList.add('hidden');
+      if (profHomeSec) profHomeSec.classList.toggle('hidden', !isProf);
 
       const stuHomeUniSec = document.getElementById('home-student-uni-section');
-      if (stuHomeUniSec) stuHomeUniSec.classList.add('hidden');
+      if (stuHomeUniSec) stuHomeUniSec.classList.toggle('hidden', !isStudent);
 
       renderProfileView();
       renderUniversityPortalByRole();
       renderProfessorCohortTables();
       renderHomePath(u);
+      try { nb8RenderAcademic(u); } catch (e) { console.error(e); } // phase8 2026-11-07
     }
 
     /* Protected Navigation Guard */
@@ -1957,6 +1960,8 @@
 
       currentView = viewId;
       showOnlySection(viewId);
+      // phase8 2026-11-07: assignments and notes may have changed since sign-in (same device, other account)
+      if ((viewId === 'university' || viewId === 'home') && authState.user) { try { nb8RenderAcademic(authState.user); } catch (e) { console.error(e); } }
 
       document.querySelectorAll('.app-nav-btn').forEach(btn => {
         const bView = btn.getAttribute('data-app-view');
@@ -2027,7 +2032,8 @@
       syncAuthShellUI();
       closeAuthModal();
       navigateTo(targetView);
-      if (toastText) showToast(toastText);
+      // phase8 2026-11-07: the welcome toast also says what this role does here
+      if (toastText) { let hint = ''; try { hint = nb8RoleHint(stored); } catch (e) {} showToast(hint ? `${toastText} ${hint}` : toastText); }
     }
 
     // Demo entry for judges: signs in a ready account without registration.
@@ -2367,6 +2373,12 @@
       document.querySelectorAll('#reg-rolecards [data-rc]').forEach(b => b.classList.toggle('is-on', b.dataset.rc === r));
       const chip = document.getElementById('reg-track-chip');
       if (chip) chip.innerHTML = r === 'medicine' ? '<b>مسار الطب</b>' : r === 'supervisor' ? '<b>أستاذ جامعي</b>' : '<b>مسار التمريض</b>';
+      // phase8 2026-11-07: card subtitles under the track chip; the section code is for students only
+      if (chip) chip.innerHTML = r === 'medicine' ? '<b>مسار الطب</b><span>طبيب مقيم في غرفة الطوارئ: المقابلة والتشخيص التفريقي والقرار.</span>'
+        : r === 'supervisor' ? '<b>مشرف / أستاذ</b><span>البوابة الأكاديمية: المساقات، إسناد الحالات، تقارير الطلبة، والإرشاد.</span>'
+        : '<b>مسار التمريض</b><span>المسؤول عن الحالة: تقييم منهجي، مراقبة، وسلامة الدواء.</span>';
+      document.querySelectorAll('#reg-rolecards [data-rc]').forEach(b => b.setAttribute('aria-pressed', b.dataset.rc === r ? 'true' : 'false'));
+      document.getElementById('reg-code-wrap')?.classList.toggle('hidden', r === 'supervisor');
     }
 
     function initAuthRoles() {
@@ -2576,6 +2588,8 @@
       el.innerHTML = list.length
         ? list.slice(0, 3).map(n => `<div class="nb-item"><span>${n.text.replace(/[<>]/g, '')}<br><small style="color:#4F6A77">${new Date(n.ts).toLocaleDateString('ar-JO')}</small></span></div>`).join('')
         : '<p style="font-size:.8rem;color:#4F6A77;margin:0">لا ملاحظات من الأستاذ الجامعي حالياً.</p>';
+      // phase8 2026-11-07: the academic advisor's guidance note comes first when there is one
+      try { const adv = nb8AdvisorNoteHtml(u); if (adv) el.innerHTML = adv + (list.length ? el.innerHTML : ''); } catch (e) {}
     }
     function nbLoadComment(stu) {
       const all = safeStorageGet(NB_COMMENTS_KEY, {});
@@ -3988,6 +4002,11 @@
       const nc = document.getElementById('app-nav-cases'); if (nc) nc.textContent = (u && u.role !== 'professor' && isNurse) ? 'حالات التمريض' : 'الحالات والتدريب';
       const ws = document.getElementById('home-welcome-sub');
       if (ws && u && u.role !== 'professor') ws.textContent = 'غرفة الطوارئ مفتوحة، وباقي الغرف تُفتح لاحقاً.';
+      // phase8 2026-11-07: welcome line by track + the "what will you do now?" card
+      if (ws && u && u.role !== 'professor' && track) ws.textContent = isNurse
+        ? 'مسار التمريض: في غرفة الطوارئ تتولى الحالة بتقييم منهجي ومراقبة وسلامة دواء. باقي الغرف تُفتح لاحقاً.'
+        : 'مسار الطب: في غرفة الطوارئ أنت الطبيب المقيم، من المقابلة حتى تسليم الحالة. باقي الغرف تُفتح لاحقاً.';
+      try { nb8RenderGuide(u); } catch (e) { console.error(e); }
       document.getElementById('home-track-chip') && (document.getElementById('home-track-chip').textContent = !track ? '' : (isNurse ? 'مسار التمريض' : 'مسار الطب'));
       return;
       const grid = document.getElementById('nurse-cards'); grid.innerHTML = '';
@@ -5441,6 +5460,13 @@
 
       document.getElementById('uni-student-content')?.classList.toggle('hidden', isProf);
       document.getElementById('uni-doctor-content')?.classList.toggle('hidden', !isProf);
+      // phase8 2026-11-07: wording from the reference build
+      const badge = document.getElementById('uni-portal-badge'), title = document.getElementById('uni-portal-title'), desc = document.getElementById('uni-portal-desc');
+      if (badge) badge.textContent = isProf ? 'قسم المشرف الأكاديمي المباشر' : 'بوابة المساقات الجامعية';
+      if (title) title.textContent = isProf ? 'المساقات والشعب ومتابعة الطلبة' : 'واجباتك ونتائجك المنشورة';
+      if (desc) desc.textContent = isProf
+        ? 'أسند حالات غرفة الطوارئ لشعبك، وراجع تقارير الطلبة وتقدّمهم، واعمل مرشداً أكاديمياً.'
+        : 'الحالات التي أسندها المشرف لشعبتك، ونتائجك بعد اعتمادها، وملاحظات المشرف والمرشد.';
     }
 
     function getProfCohortList() {
@@ -5965,6 +5991,521 @@
     /* =========================================================================
        8. INITIALIZATION & COMPLETE EVENT LISTENERS
        ========================================================================= */
+    /* =========================================================================
+       phase8 2026-11-07: ACADEMIC SECTION
+       Role guidance on the student home, ER case assignment by section, the
+       student side of the portal, student progress and the academic advisor.
+       Built only on data the app already holds (getProfCohortList(),
+       NB_COHORTS, NB_COMMENTS_KEY, data/er-cases.json, the user's own ER
+       history) plus two localStorage keys: 'nabd_v2_assignments' and
+       'nabd_v2_advisor'. Nothing here is shared between devices.
+       Plain function declarations and `var` so nothing hits a TDZ if a render
+       runs early.
+       ========================================================================= */
+    var nb8CasesCache = null, nb8CasesLoading = null;
+    function nb8Keys() { return { assign: 'nabd_v2_assignments', advisor: 'nabd_v2_advisor', tab: 'nb8_prof_tab' }; }
+    function nb8Esc(s) { return String(s == null ? '' : s).replace(/[&<>"']/g, ch => ({ '&': '&amp;', '<': '&lt;', '>': '&gt;', '"': '&quot;', "'": '&#39;' }[ch])); }
+    function nb8IsProf(u) { return !!u && (u.role === 'professor' || u.role === 'doctor'); }
+    function nb8Count(n) { return n === 1 ? 'طالب واحد' : n === 2 ? 'طالبان' : (n >= 3 && n <= 10) ? `${n} طلاب` : `${n} طالباً`; }
+    function nb8FmtDate(iso) {
+      try { const d = new Date(iso + 'T00:00:00'); return isNaN(d) ? String(iso) : d.toLocaleDateString('ar-JO', { day: 'numeric', month: 'long', year: 'numeric' }); } catch (e) { return String(iso); }
+    }
+    // The course codes the page already printed (NUR-402, NUR-405, MED-410), each with one section from NB_COHORTS.
+    function nb8Courses() {
+      return [
+        { course: 'NUR-402', track: 'nursing', section: 'NUR-JU-2026' },
+        { course: 'NUR-405', track: 'nursing', section: 'NUR-MEU-2026' },
+        { course: 'MED-410', track: 'medicine', section: 'MED-JUST-2026' }
+      ];
+    }
+    function nb8StuTrack(stu) { return /الطب/.test((stu && stu.specialty) || '') ? 'medicine' : 'nursing'; }
+    // Demo cohort records carry no section; they sit in the first section of their track.
+    function nb8StuSection(stu) { return (stu && stu.section) || (nb8StuTrack(stu) === 'medicine' ? 'MED-JUST-2026' : 'NUR-JU-2026'); }
+    function nb8UserSection(u) {
+      if (!u) return null;
+      if (u.cohort && NB_COHORTS[u.cohort]) return u.cohort;
+      return ({ rana: 'NUR-JU-2026', med_student: 'MED-JUST-2026' })[u.id] || null; // demo accounts only
+    }
+    function nb8LocalStudents() {
+      const map = safeStorageGet(STORAGE_KEYS.ACCOUNTS_MAP, {}) || {};
+      return Object.values(map).filter(a => a && !a.isDemo && a.role === 'student' && a.cohort);
+    }
+    // phase8 2026-11-07 (review): drop malformed entries so a damaged store never breaks the home page.
+    function nb8GetAssignments() { const a = safeStorageGet(nb8Keys().assign, []); return Array.isArray(a) ? a.filter(x => x && typeof x === 'object' && typeof x.caseId === 'string' && typeof x.section === 'string') : []; }
+    function nb8SaveAssignments(list) { safeStorageSet(nb8Keys().assign, list); }
+    function nb8GetAdvisor() { const a = safeStorageGet(nb8Keys().advisor, {}); return (a && typeof a === 'object' && !Array.isArray(a)) ? a : {}; }
+
+    // ER cases: reuse what er.js already loaded, otherwise fetch the same file once.
+    function nb8LoadErCases() {
+      if (nb8CasesCache) return Promise.resolve(nb8CasesCache);
+      try { const D = window.__nbER && window.__nbER.D; if (D && Array.isArray(D.cases)) { nb8CasesCache = D.cases; return Promise.resolve(nb8CasesCache); } } catch (e) {}
+      if (!nb8CasesLoading) {
+        nb8CasesLoading = fetch('data/er-cases.json')
+          .then(r => { if (!r.ok) throw new Error('cases'); return r.json(); })
+          .then(j => { nb8CasesCache = Array.isArray(j.cases) ? j.cases : []; return nb8CasesCache; })
+          .catch(e => { nb8CasesLoading = null; throw e; });
+      }
+      return nb8CasesLoading;
+    }
+    // Neutral label for students: bed + patient + the arrival line. Never the diagnosis.
+    function nb8CaseLabel(c) {
+      if (!c) return { title: 'حالة من غرفة الطوارئ', line: '' };
+      const p = c.patient || {};
+      const who = p.name ? `${p.name}${p.age ? '، ' + p.age + ' سنة' : ''}` : '';
+      return { title: [c.bed, who].filter(Boolean).join(' · ') || 'حالة من غرفة الطوارئ', line: p.arrival || '' };
+    }
+    function nb8AssignDone(u, a) {
+      return ((u && u.history) || []).find(h => h && h.caseId === 'er_' + a.caseId && (h.ts || 0) >= (a.ts || 0)) || null;
+    }
+
+    // Opens the ER room on the assigned case: er.js open() reads ?case= when it starts a new case.
+    async function nb8OpenAssignedCase(caseId) {
+      if (!authState.isAuthenticated || !authState.user) { openAuthModal('login', 'يرجى تسجيل الدخول أولاً لدخول غرفة الطوارئ.'); return; }
+      if (typeof window.nbOpenER !== 'function') { showToast('غرفة الطوارئ لم تُحمَّل بعد. حاول بعد لحظة.'); return; }
+      const hash = location.hash || '';
+      const setCase = (id) => {
+        try {
+          const q = new URLSearchParams(location.search);
+          if (id) q.set('case', id); else q.delete('case');
+          const qs = q.toString();
+          history.replaceState(history.state, '', location.pathname + (qs ? '?' + qs : '') + hash);
+        } catch (e) {}
+      };
+      setCase(caseId);
+      try { await window.nbOpenER(); } catch (e) { console.error(e); } finally { setCase(null); }
+      try {
+        const E = window.__nbER && window.__nbER.E;
+        if (E && E.c && E.c.id !== caseId && !E.over) showToast('لديك حالة جارية في الغرفة. أنهِها أولاً، ثم افتح الواجب من جديد.');
+      } catch (e) {}
+    }
+
+    /* ---------- role guidance on the student home ---------- */
+    function nb8Icon(name) {
+      const p = {
+        chat: '<path d="M21 15a2 2 0 0 1-2 2H7l-4 4V5a2 2 0 0 1 2-2h14a2 2 0 0 1 2 2z"/>',
+        exam: '<path d="M5 3v6a5 5 0 0 0 10 0V3"/><path d="M10 14v1a5 5 0 0 0 10 0v-3"/><circle cx="20" cy="10" r="2"/>',
+        pill: '<path d="m10.5 20.5 10-10a4.95 4.95 0 1 0-7-7l-10 10a4.95 4.95 0 1 0 7 7Z"/><path d="m8.5 8.5 7 7"/>',
+        pulse: '<path d="M22 12h-4l-3 9L9 3l-3 9H2"/>',
+        sbar: '<rect x="8" y="2" width="8" height="4" rx="1"/><path d="M16 4h2a2 2 0 0 1 2 2v14a2 2 0 0 1-2 2H6a2 2 0 0 1-2-2V6a2 2 0 0 1 2-2h2"/><path d="M9 12h6M9 16h4"/>',
+        abcde: '<path d="m9 11 3 3L22 4"/><path d="M21 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/>',
+        monitor: '<rect x="2" y="3" width="20" height="14" rx="2"/><path d="M8 21h8M12 17v4"/><path d="M6 10h3l2-3 2 6 2-3h3"/>',
+        shield: '<path d="M12 22s8-4 8-10V5l-8-3-8 3v7c0 6 8 10 8 10z"/><path d="m9 12 2 2 4-4"/>',
+        again: '<path d="M21 12a9 9 0 1 1-3-6.7L21 8"/><path d="M21 3v5h-5"/>'
+      }[name] || '';
+      return `<svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">${p}</svg>`;
+    }
+    function nb8RenderGuide(u) {
+      const box = document.getElementById('nb8-guide');
+      if (!box) return;
+      const track = nbTrackOf(u);
+      if (!u || !track || nb8IsProf(u)) { box.classList.add('hidden'); return; }
+      const med = track === 'medicine';
+      const steps = med ? [
+        ['chat', 'المقابلة', 'اسأل المريض والمرافق عن القصة والأعراض والأدوية والحساسية.'],
+        ['exam', 'الفحص وطلب الفحوصات', 'افحص المريض، واطلب الفحوصات التي تحتاجها مع سبب سريري واضح.'],
+        ['pill', 'العلاج', 'اطلب العلاج من الممرضة، واستشر المشرف حين تحتاج إلى ذلك.'],
+        ['pulse', 'متابعة الاستجابة', 'راقب المونيتور وحال المريض بعد كل إجراء، وعدّل خطتك.'],
+        ['sbar', 'التسليم والتقييم', 'سلّم الحالة بصيغة SBAR، ثم اقرأ تقييم أدائك.']
+      ] : [
+        ['abcde', 'التقييم المنهجي ABCDE', 'المجرى الهوائي، فالتنفس، فالدوران، فالوعي، ثم الفحص الكامل بالترتيب.'],
+        ['monitor', 'قراءة المونيتور وعلامات الخطر', 'تابع النبض والأكسجين والتنفس والضغط والحرارة، وانتبه لأي تدهور.'],
+        ['shield', 'التحقق من الحساسية والأدوية قبل أي دواء', 'اسأل عن الحساسية والأدوية الحالية قبل إعطاء أي علاج.'],
+        ['again', 'متابعة الاستجابة بعد كل إجراء', 'أعد التقييم بعد كل خطوة، ولاحظ ما تغيّر.'],
+        ['sbar', 'تسليم الحالة بصيغة SBAR', 'سلّم الحالة بوضوح، ثم اقرأ تقييم أدائك.']
+      ];
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      set('nb8-guide-track', med ? 'مسار الطب' : 'مسار التمريض');
+      set('nb8-guide-intro', med
+        ? 'أنت طبيب مقيم في غرفة طوارئ. ستستقبل مريضاً لا تعرف تشخيصه، ومعك ممرضة تنفّذ طلباتك ومشرف تستشيره ومرافق يعرف قصة المريض. مهمتك: المقابلة، الفحص وطلب الفحوصات، العلاج، متابعة الاستجابة، ثم تسليم الحالة بصيغة SBAR والحصول على تقييم.'
+        : 'ستستقبل مريضاً في غرفة الطوارئ ومعه مرافق يعرف قصته. في الغرفة تتولى دور المسؤول عن الحالة، وتعمل معك ممرضة زميلة ومشرف. ركّز في عملك على ما يلي:');
+      const ol = document.getElementById('nb8-guide-steps');
+      if (ol) ol.innerHTML = steps.map((s, i) => `<li><span class="nb8-step-ic">${nb8Icon(s[0])}</span><span class="nb8-step-n font-num">${i + 1}</span><div><strong>${nb8Esc(s[1])}</strong><small>${nb8Esc(s[2])}</small></div></li>`).join('');
+      box.classList.toggle('nb8-guide-med', med);
+      box.classList.remove('hidden');
+    }
+    function nb8RoleHint(u) {
+      if (!u) return '';
+      if (nb8IsProf(u)) return 'بوابتك الأكاديمية جاهزة: المساقات، إسناد الحالات، تقارير الطلبة، والإرشاد.';
+      const t = nbTrackOf(u);
+      if (t === 'medicine') return 'دورك: طبيب مقيم في غرفة الطوارئ. ابدأ من بطاقة «ماذا ستفعل الآن؟».';
+      if (t === 'nursing') return 'دورك: المسؤول عن الحالة في غرفة الطوارئ بتركيز تمريضي. ابدأ من بطاقة «ماذا ستفعل الآن؟».';
+      return '';
+    }
+
+    /* ---------- student side ---------- */
+    function nb8AdvisorNoteHtml(u) {
+      if (!u) return '';
+      const r = nb8GetAdvisor()[u.name];
+      if (!r || !r.note) return '';
+      return `<div class="nb-item nb8-adv-note"><span><b>ملاحظة المرشد الأكاديمي</b><br>${nb8Esc(r.note)}<br><small style="color:#4F6A77">${new Date(r.ts || Date.now()).toLocaleDateString('ar-JO')}</small></span></div>`;
+    }
+    function nb8StudentNotesHtml(u) {
+      const adv = nb8AdvisorNoteHtml(u);
+      const all = safeStorageGet(NB_COMMENTS_KEY, {}) || {};
+      const list = (all[u.name] || []).slice(0, 3);
+      const prof = list.map(n => `<div class="nb-item"><span><b>ملاحظة المشرف</b><br>${nb8Esc(n.text)}<br><small style="color:#4F6A77">${new Date(n.ts).toLocaleDateString('ar-JO')}</small></span></div>`).join('');
+      return (adv + prof) || '<p class="nb8-empty">لا ملاحظات من المشرف أو المرشد الأكاديمي حالياً.</p>';
+    }
+    function nb8JoinFormHtml() {
+      return `<form class="nb8-join" data-nb8-join novalidate>
+        <p>لم تنضم إلى شعبة بعد. اكتب رمز الشعبة الذي أعطاك إياه المشرف لتظهر لك واجباتها.</p>
+        <div class="nb8-join-row"><input type="text" dir="ltr" autocomplete="off" aria-label="رمز الشعبة" placeholder="مثال: NUR-JU-2026" data-nb8-join-input><button type="submit" class="nb8-go focus-ring">انضمام</button></div>
+        <small data-nb8-join-msg role="status" aria-live="polite"></small>
+      </form>`;
+    }
+    function nb8RenderStudentUni(u) {
+      const homeBox = document.getElementById('nb8-home-stu-uni'), fullBox = document.getElementById('nb8-uni-stu');
+      if (!homeBox && !fullBox) return;
+      if (!u || nb8IsProf(u)) { if (homeBox) homeBox.innerHTML = ''; if (fullBox) fullBox.innerHTML = ''; return; }
+      const sec = nb8UserSection(u);
+      const coh = sec ? NB_COHORTS[sec] : null;
+      const mine = sec ? nb8GetAssignments().filter(a => a.section === sec).sort((a, b) => (b.ts || 0) - (a.ts || 0)) : [];
+      const today = new Date().toISOString().slice(0, 10);
+      const card = (a, c) => {
+        const L = nb8CaseLabel(c);
+        const done = nb8AssignDone(u, a);
+        const late = !done && a.due && a.due < today;
+        return `<article class="nb8-as-card${done ? ' is-done' : ''}">
+          <div class="nb8-as-top"><span class="nb8-chip">واجب</span>${a.due ? `<span class="nb8-due${late ? ' is-late' : ''}">${late ? 'انتهى موعد التسليم: ' : 'التسليم: '}${nb8Esc(nb8FmtDate(a.due))}</span>` : ''}</div>
+          <h3>${nb8Esc(L.title)}</h3>
+          ${L.line ? `<p class="nb8-arrival">${nb8Esc(L.line)}</p>` : ''}
+          ${a.note ? `<p class="nb8-as-note"><b>ملاحظة المشرف:</b> ${nb8Esc(a.note)}</p>` : ''}
+          ${done ? `<p class="nb8-done">أنجزت هذه الحالة بعد إسنادها: <span class="font-num">${nb8Esc(done.score || ((done.num != null ? done.num : '--') + '%'))}</span></p>` : ''}
+          <button type="button" class="nb8-go focus-ring" data-nb8-open-case="${nb8Esc(a.caseId)}">${done ? 'أعد المحاولة في غرفة الطوارئ' : 'ابدأ الواجب في غرفة الطوارئ'} ←</button>
+        </article>`;
+      };
+      const draw = (cases) => {
+        const byId = {}; (cases || []).forEach(c => { byId[c.id] = c; });
+        const secLine = sec
+          ? `<div class="nb8-secline"><span>شعبتك</span><b dir="ltr">${nb8Esc(sec)}</b><small>${nb8Esc(coh ? coh.name : '')}</small>${u.cohort ? '' : '<span class="nb8-demo-tag">بيانات تجريبية للعرض</span>'}</div>`
+          : nb8JoinFormHtml();
+        const cards = mine.length
+          ? `<div class="nb8-as-grid">${mine.map(a => card(a, byId[a.caseId])).join('')}</div>`
+          : (sec ? '<p class="nb8-empty">لا توجد واجبات مسندة لشعبتك حالياً. يمكنك التدرّب في غرفة الطوارئ متى شئت.</p>' : '');
+        if (homeBox) homeBox.innerHTML = secLine + cards;
+        if (fullBox) {
+          const rec = getProfCohortList().find(s => s.name === u.name);
+          let res;
+          if (rec && rec.isPublished) {
+            res = `<article class="nb8-res is-pub"><div class="nb8-as-top"><span class="nb8-chip nb8-chip-ok">نتيجة معتمدة ومنشورة</span><b class="font-num">${nb8Esc(rec.score)}</b></div><h3>${nb8Esc(rec.caseTitle)}</h3><small class="font-num">${nb8Esc(rec.submittedAt)}</small>${rec.profNote ? `<p><b>ملاحظة المشرف:</b> ${nb8Esc(rec.profNote)}</p>` : ''}</article>`;
+          } else if (rec) {
+            res = `<article class="nb8-res"><div class="nb8-as-top"><span class="nb8-chip nb8-chip-wait">قيد المراجعة · غير منشورة</span></div><h3>تُنشر النتيجة بعد اعتماد المشرف</h3><button type="button" class="nb8-locked focus-ring" data-nb8-locked>النتيجة غير منشورة (مقفلة)</button></article>`;
+          } else {
+            res = '<p class="nb8-empty">لا توجد نتائج منشورة لك بعد.</p>';
+          }
+          fullBox.innerHTML = `
+            <div class="nb8-card"><div class="nb8-card-head"><div><h2>شعبتك وواجباتك</h2><p>الحالات التي أسندها المشرف لشعبتك. كل واجب يفتح غرفة الطوارئ على الحالة نفسها.</p></div></div>${secLine}${cards}</div>
+            <div class="nb8-card"><div class="nb8-card-head"><div><h2>نتائجك المنشورة</h2></div></div>${res}
+              <p class="nb8-privacy">لا يُسمح للطالب بالاطلاع على نتائج زملائه أو فتح النتائج غير المنشورة قبل اعتمادها رسمياً.</p></div>
+            <div class="nb8-card"><div class="nb8-card-head"><div><h2>ملاحظات المشرف والمرشد الأكاديمي</h2></div></div><div class="nb8-notes">${nb8StudentNotesHtml(u)}</div></div>`;
+        }
+      };
+      draw(nb8CasesCache);
+      if (mine.length && !nb8CasesCache) nb8LoadErCases().then(draw).catch(() => {});
+    }
+
+    /* ---------- professor side ---------- */
+    function nb8Stats(list) {
+      const n = list.length;
+      const nums = list.map(s => parseInt(s.score, 10)).filter(x => !isNaN(x));
+      const st = { n, avg: null, max: null, min: null, pub: 0, nurse: 0, med: 0, flagged: [], allergyHave: 0, allergyAsked: 0, qAll: 0, qAsked: 0, wAll: 0, wOk: 0, best: null };
+      if (nums.length) { st.avg = Math.round(nums.reduce((a, b) => a + b, 0) / nums.length); st.max = Math.max(...nums); st.min = Math.min(...nums); }
+      list.forEach(s => {
+        if (s.isPublished) st.pub++;
+        if (nb8StuTrack(s) === 'medicine') st.med++; else st.nurse++;
+        if (s.hasUnjustifiedWorkup) st.flagged.push(s);
+        let hasA = false, askedA = false;
+        (s.inquiryLog || []).forEach(q => { st.qAll++; if (q.asked) st.qAsked++; if (/حساسية/.test(q.topic || '')) { hasA = true; if (q.asked) askedA = true; } });
+        if (hasA) { st.allergyHave++; if (askedA) st.allergyAsked++; }
+        (s.workupLog || []).forEach(w => { st.wAll++; if (!w.isUnjustified) st.wOk++; });
+        if (!st.best || (parseInt(s.score, 10) || 0) > (parseInt(st.best.score, 10) || 0)) st.best = s;
+      });
+      return st;
+    }
+    function nb8RenderKpis() {
+      const st = nb8Stats(getProfCohortList());
+      const set = (id, v) => { const el = document.getElementById(id); if (el) el.textContent = v; };
+      const tracks = `تمريض (${st.nurse}) · طب (${st.med})`;
+      const flaggedNames = st.flagged.map(s => s.name).join('، ');
+      set('home-prof-kpi-total', nb8Count(st.n));
+      set('home-prof-kpi-total-sub', tracks);
+      set('home-prof-kpi-submitted', `${st.n} / ${st.n}`);
+      set('home-prof-kpi-submitted-sub', `${st.pub} منشورة · ${st.n - st.pub} بانتظار الاعتماد`);
+      set('home-prof-kpi-avg', st.avg == null ? '--' : `${st.avg}%`);
+      set('home-prof-kpi-avg-sub', st.max == null ? '' : `أعلى درجة: ${st.max}% · أدنى درجة: ${st.min}%`);
+      set('home-prof-kpi-warn', st.flagged.length ? `فحوصات بلا مبرر مقنع (${st.flagged.length} من ${st.n})` : 'لا فحوصات غير مبررة مسجلة');
+      set('home-prof-kpi-warn-sub', flaggedNames);
+      set('home-prof-attempts', `المحاولات: ${st.n}`);
+      set('home-prof-tab-reports-btn', `مراجعة تقارير الطلاب (${st.n})`);
+      set('uni-prof-kpi-count', nb8Count(st.n));
+      set('uni-prof-kpi-count-sub', tracks);
+      set('uni-prof-kpi-sub', `${st.pub} / ${st.n} منشورة`);
+      set('uni-prof-kpi-sub-sub', st.allergyHave ? `سؤال الحساسية: طُرح في ${st.allergyAsked} من ${st.allergyHave} (المحاولات التي تضمّنت هذا البند)` : '');
+      set('uni-prof-kpi-avg', st.avg == null ? '--' : `${st.avg}%`);
+      set('uni-prof-kpi-avg-sub', st.best ? `أعلى أداء: ${st.best.name} (${st.best.score})` : '');
+      set('uni-prof-kpi-warn', st.flagged.length ? `فحوصات بلا مبرر مقنع (${st.flagged.length} من ${st.n})` : 'لا تنبيهات');
+      set('uni-prof-kpi-warn-sub', flaggedNames ? `${flaggedNames} (انظر التفاصيل بالجدول)` : '');
+    }
+    function nb8RenderCourses() {
+      const box = document.getElementById('nb8-courses');
+      if (!box) return;
+      const cohort = getProfCohortList(), locals = nb8LocalStudents(), asg = nb8GetAssignments();
+      box.innerHTML = '<div class="nb8-courses-grid">' + nb8Courses().map(co => {
+        const sec = NB_COHORTS[co.section] || {};
+        const demoN = cohort.filter(s => nb8StuSection(s) === co.section).length;
+        const localN = locals.filter(a => a.cohort === co.section).length;
+        const asN = asg.filter(a => a.section === co.section).length;
+        return `<article class="nb8-course">
+          <div class="nb8-course-head"><b dir="ltr">${nb8Esc(co.course)}</b><span>${co.track === 'medicine' ? 'مسار الطب' : 'مسار التمريض'}</span></div>
+          <div class="nb8-course-sec"><small>الشعبة</small><b dir="ltr">${nb8Esc(co.section)}</b><span>${nb8Esc(sec.name || '')}${sec.uni ? ' · ' + nb8Esc(sec.uni) : ''}</span></div>
+          <ul class="nb8-mini-stats">
+            <li><b class="font-num">${demoN}</b><span>في بيانات العرض</span></li>
+            <li><b class="font-num">${localN}</b><span>مسجّلون على هذا الجهاز</span></li>
+            <li><b class="font-num">${asN}</b><span>واجبات مسندة</span></li>
+          </ul>
+          <div class="nb8-course-actions"><button type="button" class="focus-ring" data-nb8-copy="${nb8Esc(co.section)}">نسخ رمز الشعبة</button><button type="button" class="focus-ring is-main" data-nb8-assign-to="${nb8Esc(co.section)}">أسند حالة لهذه الشعبة</button></div>
+        </article>`;
+      }).join('') + '</div><p class="nb8-muted nb8-courses-foot">يكتب الطالب رمز الشعبة عند إنشاء حسابه، أو يضيفه لاحقاً من بوابة المساقات. أرقام «بيانات العرض» محسوبة من سجلات الطلبة التجريبية في الشعبة.</p>';
+    }
+    function nb8RenderAssignList(cases) {
+      const box = document.getElementById('nb8-as-list');
+      if (!box) return;
+      const byId = {}; (cases || []).forEach(c => { byId[c.id] = c; });
+      const list = nb8GetAssignments().slice().sort((a, b) => (b.ts || 0) - (a.ts || 0));
+      box.innerHTML = list.length ? list.map(a => {
+        const c = byId[a.caseId], L = nb8CaseLabel(c);
+        return `<div class="nb8-as-row">
+          <div class="nb8-as-row-main"><b>${nb8Esc(L.title)}</b><small>التشخيص (للمشرف فقط): ${nb8Esc(c && c.dx ? c.dx.ar : a.caseId)}</small></div>
+          <div class="nb8-as-meta"><span dir="ltr">${nb8Esc(a.section)}</span>${a.due ? `<span>التسليم: ${nb8Esc(nb8FmtDate(a.due))}</span>` : '<span>بلا موعد</span>'}${a.note ? `<span class="nb8-as-meta-note">${nb8Esc(a.note)}</span>` : ''}</div>
+          <button type="button" class="focus-ring" data-nb8-unassign="${nb8Esc(a.id)}">إلغاء الإسناد</button>
+        </div>`;
+      }).join('') : '<p class="nb8-empty">لم تُسند أي حالة بعد.</p>';
+    }
+    function nb8RenderAssignPane() {
+      const secSel = document.getElementById('nb8-as-section');
+      if (secSel && !secSel.options.length) {
+        secSel.innerHTML = nb8Courses().map(co => `<option value="${nb8Esc(co.section)}">${nb8Esc(co.section)} · ${nb8Esc(co.course)} · ${nb8Esc((NB_COHORTS[co.section] || {}).name || '')}</option>`).join('');
+      }
+      const caseSel = document.getElementById('nb8-as-case');
+      const draw = (cases) => {
+        if (caseSel && cases && caseSel.dataset.filled !== '1') {
+          caseSel.innerHTML = '<option value="">اختر حالة…</option>' + cases.map(c => `<option value="${nb8Esc(c.id)}">${nb8Esc(nb8CaseLabel(c).title)} — ${nb8Esc(c.dx && c.dx.ar ? c.dx.ar : '')}</option>`).join('');
+          caseSel.dataset.filled = '1';
+        }
+        nb8RenderAssignList(cases);
+      };
+      draw(nb8CasesCache);
+      if (!nb8CasesCache) nb8LoadErCases().then(draw).catch(() => { if (caseSel && caseSel.dataset.filled !== '1') caseSel.innerHTML = '<option value="">تعذّر تحميل الحالات. تحقق من الاتصال.</option>'; });
+    }
+    function nb8Bar(label, a, b, note) {
+      const pct = b ? Math.round(a * 100 / b) : 0;
+      return `<div class="nb8-bar"><div class="nb8-bar-top"><span>${nb8Esc(label)}</span><b class="font-num">${a} / ${b}</b></div><div class="nb8-bar-track" role="img" aria-label="${nb8Esc(label)}: ${a} من ${b}"><i style="width:${pct}%"></i></div>${note ? `<small>${nb8Esc(note)}</small>` : ''}</div>`;
+    }
+    function nb8RenderProgress() {
+      const box = document.getElementById('nb8-progress');
+      if (!box) return;
+      const list = getProfCohortList(), st = nb8Stats(list);
+      const ul = (arr) => `<ul>${(arr || []).map(x => `<li>${nb8Esc(x)}</li>`).join('')}</ul>`;
+      const rows = list.map(s => {
+        const q = (s.inquiryLog || []), w = (s.workupLog || []);
+        const qa = q.filter(x => x.asked).length, wo = w.filter(x => !x.isUnjustified).length;
+        const sc = parseInt(s.score, 10) || 0;
+        return `<tr>
+          <td><b>${nb8Esc(s.name)}</b><small>${nb8Esc(s.specialty)} · ${nb8Esc(s.yearLabel)}</small></td>
+          <td class="nb8-td-score"><div class="nb8-score-bar"><i style="width:${Math.max(0, Math.min(100, sc))}%"></i></div><b class="font-num">${nb8Esc(s.score)}</b><small>${s.isPublished ? 'منشورة' : 'قيد الاعتماد'}</small></td>
+          <td class="font-num">${qa} / ${q.length}</td>
+          <td class="font-num">${wo} / ${w.length}</td>
+          <td>${ul(s.strengths)}</td>
+          <td>${ul(s.weaknesses)}</td>
+          <td><button type="button" class="nb8-link focus-ring" data-nb8-open-stu="${nb8Esc(s.id)}">التفاصيل</button></td>
+        </tr>`;
+      }).join('');
+      box.innerHTML = `
+        <div class="nb8-bars">
+          ${nb8Bar('أسئلة المقابلة المطروحة', st.qAsked, st.qAll, 'من بنود المقابلة المسجلة في محاولات الشعبة')}
+          ${nb8Bar('سؤال الحساسية الدوائية', st.allergyAsked, st.allergyHave, 'محاولات سُئل فيها عن الحساسية من بين المحاولات التي تضمّنت هذا البند')}
+          ${nb8Bar('فحوصات مبرّرة', st.wOk, st.wAll, 'من مجموع الفحوصات التي طلبها الطلبة')}
+          ${nb8Bar('نتائج منشورة', st.pub, st.n, 'نتائج اعتمدها المشرف من مجموع المحاولات')}
+        </div>
+        <div class="nb8-table-wrap" tabindex="0" role="region" aria-label="تقدّم كل طالب">
+          <table class="nb8-table">
+            <thead><tr><th>الطالب</th><th>الدرجة</th><th>المقابلة</th><th>فحوصات مبرّرة</th><th>نقاط القوة</th><th>نقاط الضعف</th><th></th></tr></thead>
+            <tbody>${rows}</tbody>
+          </table>
+        </div>`;
+    }
+    function nb8Recs(s) {
+      const out = [];
+      (s.inquiryLog || []).filter(q => !q.asked).forEach(q => out.push('مراجعة سؤال: ' + q.topic));
+      (s.workupLog || []).filter(w => w.isUnjustified).forEach(w => out.push('مراجعة مبرر طلب: ' + w.title));
+      if (!s.isPublished) out.push('مراجعة المحاولة واعتماد النتيجة قبل نشرها للطالب.');
+      if (!out.length) out.push('لا ثغرات مسجلة في هذه المحاولة. يمكن إسناد حالة جديدة من غرفة الطوارئ.');
+      return out;
+    }
+    function nb8AdvStatuses() { return [['', 'بلا تحديد'], ['needs', 'يحتاج متابعة'], ['good', 'يتقدم جيداً'], ['contacted', 'تم التواصل']]; }
+    function nb8RenderAdvisorSum() {
+      const sum = document.getElementById('nb8-advisor-sum');
+      if (!sum) return;
+      const adv = nb8GetAdvisor(), list = getProfCohortList();
+      sum.innerHTML = nb8AdvStatuses().slice(1).map(([k, l]) => `<span class="nb8-adv-pill is-${k}">${l}: <b class="font-num">${list.filter(s => (adv[s.name] || {}).status === k).length}</b></span>`).join('');
+    }
+    function nb8RenderAdvisor() {
+      const box = document.getElementById('nb8-advisor');
+      if (!box) return;
+      const adv = nb8GetAdvisor(), list = getProfCohortList();
+      const ul = (arr) => `<ul>${(arr || []).map(x => `<li>${nb8Esc(x)}</li>`).join('')}</ul>`;
+      box.innerHTML = list.map(s => {
+        const r = adv[s.name] || {};
+        const opts = nb8AdvStatuses().map(([k, l]) => `<option value="${k}"${(r.status || '') === k ? ' selected' : ''}>${l}</option>`).join('');
+        return `<article class="nb8-adv${r.status ? ' is-' + nb8Esc(r.status) : ''}" data-nb8-adv="${nb8Esc(s.id)}">
+          <header><div><b>${nb8Esc(s.name)}</b><small>${nb8Esc(s.specialty)} · ${nb8Esc(s.yearLabel)} · <span dir="ltr">${nb8Esc(nb8StuSection(s))}</span></small></div><span class="nb8-score font-num">${nb8Esc(s.score)}</span></header>
+          <div class="nb8-adv-grid">
+            <div><h4>آخر نتيجة</h4><p><b class="font-num">${nb8Esc(s.score)}</b> · ${s.isPublished ? 'منشورة' : 'قيد الاعتماد'}</p><small>${nb8Esc(s.caseTitle)} · <span class="font-num">${nb8Esc(s.submittedAt)}</span></small>${s.profNote ? `<small class="nb8-adv-prof">ملاحظة المشرف: ${nb8Esc(s.profNote)}</small>` : ''}</div>
+            <div><h4>نقاط القوة</h4>${ul(s.strengths)}</div>
+            <div><h4>نقاط الضعف</h4>${ul(s.weaknesses)}</div>
+            <div><h4>التوصيات</h4>${ul(nb8Recs(s))}</div>
+          </div>
+          <div class="nb8-adv-form">
+            <label><span>حالة المتابعة</span><select data-nb8-adv-status>${opts}</select></label>
+            <label class="nb8-adv-wide"><span>ملاحظة إرشادية للطالب</span><textarea data-nb8-adv-note rows="2" maxlength="500" placeholder="تظهر للطالب في ملفه باسم «ملاحظة المرشد الأكاديمي»">${nb8Esc(r.note || '')}</textarea></label>
+            <div class="nb8-adv-foot"><button type="button" class="nb8-go focus-ring" data-nb8-adv-save="${nb8Esc(s.id)}">حفظ المتابعة</button><small data-nb8-adv-msg role="status" aria-live="polite">${r.ts ? 'آخر حفظ: ' + new Date(r.ts).toLocaleDateString('ar-JO') : ''}</small></div>
+          </div>
+        </article>`;
+      }).join('');
+      nb8RenderAdvisorSum();
+    }
+    function nb8RenderProf(u) {
+      if (!nb8IsProf(u)) return;
+      nb8RenderKpis();
+      nb8RenderCourses();
+      nb8RenderAssignPane();
+      nb8RenderProgress();
+      nb8RenderAdvisor();
+    }
+    function nb8RenderAcademic(u) {
+      if (!u) return;
+      if (nb8IsProf(u)) nb8RenderProf(u); else nb8RenderStudentUni(u);
+    }
+    function nb8ProfTabs() { return ['courses', 'assign', 'reports', 'progress', 'advisor']; }
+    function nb8SetProfTab(tab, focus) {
+      const tabs = nb8ProfTabs();
+      if (!tabs.includes(tab)) tab = 'courses';
+      tabs.forEach(t => {
+        const b = document.getElementById('nb8-tab-' + t), p = document.getElementById('nb8-pane-' + t), on = t === tab;
+        if (b) { b.setAttribute('aria-selected', on ? 'true' : 'false'); b.tabIndex = on ? 0 : -1; b.classList.toggle('is-on', on); }
+        if (p) p.hidden = !on;
+      });
+      try { sessionStorage.setItem(nb8Keys().tab, tab); } catch (e) {}
+      const b = document.getElementById('nb8-tab-' + tab);
+      if (b && focus) { b.focus(); try { b.scrollIntoView({ block: 'nearest', inline: 'nearest' }); } catch (e) {} }
+    }
+
+    function nb8Init() {
+      let saved = null; try { saved = sessionStorage.getItem(nb8Keys().tab); } catch (e) {}
+      nb8SetProfTab(saved || 'courses');
+      const tablist = document.querySelector('#uni-doctor-content .nb8-tabs');
+      tablist?.addEventListener('click', (e) => { const b = e.target.closest('[data-nb8-tab]'); if (b) nb8SetProfTab(b.dataset.nb8Tab, true); });
+      tablist?.addEventListener('keydown', (e) => {
+        const tabs = nb8ProfTabs(), cur = tabs.indexOf((e.target.closest('[data-nb8-tab]') || {}).dataset?.nb8Tab);
+        if (cur < 0) return;
+        const rtl = document.documentElement.dir !== 'ltr';
+        let next = null;
+        if (e.key === (rtl ? 'ArrowLeft' : 'ArrowRight')) next = (cur + 1) % tabs.length;
+        else if (e.key === (rtl ? 'ArrowRight' : 'ArrowLeft')) next = (cur - 1 + tabs.length) % tabs.length;
+        else if (e.key === 'Home') next = 0;
+        else if (e.key === 'End') next = tabs.length - 1;
+        if (next === null) return;
+        e.preventDefault();
+        nb8SetProfTab(tabs[next], true);
+      });
+
+      // Assignment form
+      document.getElementById('nb8-as-form')?.addEventListener('submit', (e) => {
+        e.preventDefault();
+        const u = authState.user, status = document.getElementById('nb8-as-status');
+        const say = (t, bad) => { if (status) { status.textContent = t; status.classList.toggle('is-bad', !!bad); } };
+        if (!nb8IsProf(u)) { say('الإسناد متاح لحساب المشرف فقط.', true); return; }
+        const caseId = document.getElementById('nb8-as-case')?.value || '';
+        const section = document.getElementById('nb8-as-section')?.value || '';
+        const due = document.getElementById('nb8-as-due')?.value || '';
+        const noteEl = document.getElementById('nb8-as-note');
+        const note = (noteEl?.value || '').trim().slice(0, 300);
+        if (!caseId || !(nb8CasesCache || []).some(c => c.id === caseId)) { say('اختر حالة أولاً.', true); document.getElementById('nb8-as-case')?.focus(); return; }
+        if (!NB_COHORTS[section]) { say('اختر شعبة.', true); return; }
+        if (due && !/^\d{4}-\d{2}-\d{2}$/.test(due)) { say('تاريخ التسليم غير صالح.', true); return; }
+        const list = nb8GetAssignments();
+        const old = list.find(a => a.caseId === caseId && a.section === section);
+        if (old) { old.due = due; old.note = note; old.ts = Date.now(); old.by = u.name; }
+        else list.push({ id: 'as_' + Date.now().toString(36) + Math.random().toString(36).slice(2, 6), caseId, section, due, note, by: u.name, ts: Date.now() });
+        nb8SaveAssignments(list);
+        if (noteEl) noteEl.value = '';
+        say(old ? 'حُدّث الواجب ✓ يراه طلبة الشعبة على هذا الجهاز.' : 'تم الإسناد ✓ يراه طلبة الشعبة على هذا الجهاز في صفحتهم الرئيسية.');
+        nb8RenderAssignList(nb8CasesCache);
+        nb8RenderCourses();
+        showToast(old ? 'حُدّث الواجب المسند للشعبة.' : `أُسندت الحالة لشعبة ${section}.`);
+      });
+
+      // One delegated handler for the buttons the renders create.
+      document.addEventListener('click', (e) => {
+        const t = e.target.closest('[data-nb8-open-case],[data-nb8-locked],[data-nb8-go],[data-nb8-copy],[data-nb8-assign-to],[data-nb8-unassign],[data-nb8-open-stu],[data-nb8-adv-save]');
+        if (!t) return;
+        if (t.hasAttribute('data-nb8-open-case')) { nb8OpenAssignedCase(t.getAttribute('data-nb8-open-case')); return; }
+        if (t.hasAttribute('data-nb8-locked')) { showToast('هذه النتيجة غير منشورة بعد ولا يمكن للطالب فتحها قبل اعتمادها من الأستاذ الجامعي.'); return; }
+        if (t.hasAttribute('data-nb8-go')) { if (navigateTo('university')) nb8SetProfTab(t.getAttribute('data-nb8-go'), true); return; }
+        if (t.hasAttribute('data-nb8-copy')) {
+          const code = t.getAttribute('data-nb8-copy');
+          try { navigator.clipboard.writeText(code).then(() => showToast('تم نسخ رمز الشعبة: ' + code), () => showToast(code)); } catch (err) { showToast(code); }
+          return;
+        }
+        if (t.hasAttribute('data-nb8-assign-to')) {
+          nb8SetProfTab('assign', true);
+          const s = document.getElementById('nb8-as-section'); if (s) s.value = t.getAttribute('data-nb8-assign-to');
+          document.getElementById('nb8-as-case')?.focus();
+          return;
+        }
+        if (t.hasAttribute('data-nb8-unassign')) {
+          if (!nb8IsProf(authState.user)) return;
+          if (!window.confirm('إلغاء إسناد هذه الحالة؟ لن تظهر بعد ذلك لطلبة الشعبة.')) return;
+          const id = t.getAttribute('data-nb8-unassign');
+          nb8SaveAssignments(nb8GetAssignments().filter(a => a.id !== id));
+          nb8RenderAssignList(nb8CasesCache); nb8RenderCourses();
+          showToast('أُلغي إسناد الحالة.');
+          return;
+        }
+        if (t.hasAttribute('data-nb8-open-stu')) { openStudentAttemptDetailModal(t.getAttribute('data-nb8-open-stu')); return; }
+        if (t.hasAttribute('data-nb8-adv-save')) {
+          if (!nb8IsProf(authState.user)) return;
+          const card = t.closest('[data-nb8-adv]'), stu = getProfCohortList().find(s => s.id === t.getAttribute('data-nb8-adv-save'));
+          if (!card || !stu) return;
+          const all = nb8GetAdvisor();
+          all[stu.name] = { status: card.querySelector('[data-nb8-adv-status]')?.value || '', note: (card.querySelector('[data-nb8-adv-note]')?.value || '').trim().slice(0, 500), ts: Date.now(), by: authState.user.name };
+          safeStorageSet(nb8Keys().advisor, all);
+          nb8AdvStatuses().forEach(([k]) => { if (k) card.classList.toggle('is-' + k, all[stu.name].status === k); });
+          const msg = card.querySelector('[data-nb8-adv-msg]');
+          if (msg) msg.textContent = all[stu.name].note ? 'حُفظ ✓ تظهر الملاحظة للطالب في ملفه.' : 'حُفظت حالة المتابعة ✓';
+          nb8RenderAdvisorSum();
+        }
+      });
+
+      // Students join a section later with its code.
+      document.addEventListener('submit', (e) => {
+        const f = e.target.closest && e.target.closest('[data-nb8-join]');
+        if (!f) return;
+        e.preventDefault();
+        const u = authState.user, msg = f.querySelector('[data-nb8-join-msg]');
+        if (!u || nb8IsProf(u)) return;
+        const coh = nbCohortFor(f.querySelector('[data-nb8-join-input]')?.value);
+        if (!coh) { if (msg) msg.textContent = 'الرمز غير معروف. تأكد منه مع المشرف.'; return; }
+        u.cohort = coh.code; u.cohortName = coh.name;
+        saveAccountToStorage(u);
+        nb8RenderAcademic(u);
+        showToast(`انضممت إلى ${coh.name} (${coh.code}).`);
+      });
+
+      // Publishing a grade changes the KPIs and the progress view.
+      document.getElementById('stu-modal-toggle-pub-btn')?.addEventListener('click', () => setTimeout(() => { if (nb8IsProf(authState.user)) nb8RenderProf(authState.user); }, 0));
+    }
+
     function initNabdApp() {
       if (window.__nabdInitialized) return;
       window.__nabdInitialized = true;
@@ -6379,6 +6920,7 @@
       nbRenderQuiz();
       initAuthRoles();
       initPhase1c();
+      try { nb8Init(); } catch (e) { console.error(e); } // phase8 2026-11-07: academic portal
       initObserve();
       (function(){ const el = document.getElementById('nb-credits'); if (el) el.innerHTML = 'Wikimedia Commons: ' + Object.values(NB_IMG).map(i => `<a href="${i.page}" target="_blank" rel="noopener noreferrer">${i.alt}</a>${i.lic && !/public domain|cc0/i.test(i.lic) ? ` (${i.by}، ${i.lic})` : ''}`).join(' · '); })();
       initNurse();
@@ -6410,6 +6952,7 @@
       document.getElementById('reg-role')?.addEventListener('change', (e) => {
         const isStu = e.target.value === 'student';
         document.getElementById('reg-year-wrap')?.classList.toggle('hidden', !isStu);
+        document.getElementById('reg-code-wrap')?.classList.toggle('hidden', !isStu); // phase8 2026-11-07
       });
 
       // Login accepts only accounts saved through registration on this device.

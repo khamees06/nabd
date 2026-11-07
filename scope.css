@@ -7,6 +7,8 @@
    delete its selector below and its guard in script.js.
    Every rule is !important because the app re-shows some of these blocks on sign-in and
    theme.css forces sidebar items to display:flex !important.
+   phase8 2026-11-07: the university portal (professor, advisor, student assignments) is back;
+   its selectors were removed below and 'university' left REMOVED_VIEWS in script.js.
    ========================================================= */
 
 /* Landing page and its links */
@@ -20,37 +22,37 @@
 #app-sidebar #sidebar-guest-nav .v7-item[href="#sec-level"],
 
 /* Signed-in navigation */
-#app-nav-cases, #app-nav-uni,
+#app-nav-cases,
 #app-sidebar .v7-item[onclick*="app-nav-cases"],
-#app-sidebar .v7-group:has(#side-uni-portal-btn),
+/* phase8 2026-11-07: #app-nav-uni and the sidebar university group are shown again (academic section) */
 
 /* Student home */
-#home-quick-uni-btn, #home-skip-note, #home-learn, #home-nurse, #home-professor-section,
-#home-cases-anchor, #home-student-uni-section,
+/* phase8 2026-11-07: #home-quick-uni-btn, #home-professor-section and #home-student-uni-section are shown again; script.js shows each by role */
+#home-skip-note, #home-learn, #home-nurse,
+#home-cases-anchor,
 #home-path > .nb-path-card:not(.nb-path-dark), #path-retake, #path-retake-note,
 #home-path .nb-kpis > div:has(#path-k2),
 
 /* Profile, certificate */
 #view-profile div:has(> #profile-stat-spec),
-#profile-pane-dash .nb-dc:has(#path-notes),
+/* phase8 2026-11-07: the notes card (#path-notes) is shown again for supervisor and advisor notes */
 #path-mistakes [data-fix],
 #printable-certificate-area div:has(> #cert-stat-spec),
 
 /* Controls that lead nowhere while the coach and the old rooms are closed */
 #home-coach-banner, #open-coach-view-btn, #dash-coach-go, [data-foot-app="coach"],
-label.nb-switch:has(#osce-toggle), label:has(> input#setting-tts-default), #coach-api-box,
-
-/* Sign-in and registration */
-#auth-modal [data-demo-login="doctor"],
-#reg-rolecards [data-rc="supervisor"],
-label.nb-field:has(#reg-code) {
+label.nb-switch:has(#osce-toggle), label:has(> input#setting-tts-default), #coach-api-box {
   display: none !important;
 }
+
+/* Sign-in and registration
+   phase8 2026-11-07: the professor demo button, the supervisor role card and the section code
+   (#reg-code) are shown again, so nothing here is hidden any more. */
 
 /* Close the gaps the hidden cells leave */
 #home-path .nb-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
 @media (min-width: 900px) {
   #home-path { grid-template-columns: 1fr; }
-  #profile-pane-dash .nb-dash:has(#path-notes) { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  /* phase8 2026-11-07: the notes card is back, so this row keeps its three columns */
 }
-@media (min-width: 520px) { #reg-rolecards { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+/* phase8 2026-11-07: three role cards again; academic8.css lays them out */

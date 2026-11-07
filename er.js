@@ -32,6 +32,23 @@
   const pickOf = list => list[Math.floor(Math.random() * list.length)];
   const testOf = id => D.tests.find(t => t.id === id);
   const actOf = id => D.actions.find(a => a.id === id);
+  /* phase8 2026-11-07: a real page has a body; the Node harness's fake document has none, so the start
+     briefing and the injected panel parts never block or pause it. */
+  const REAL = typeof document !== 'undefined' && !!document.body && typeof document.addEventListener === 'function';
+  /* phase8 2026-11-07: a test outside the case's indication ('no') or dangerous now ('harm') is out of indication.
+     It is never blocked: its result shows at once, in amber, and the trainee justifies it at handover. */
+  const offInd = t => !!t && (t.ind === 'no' || t.ind === 'harm');
+  const OFF_BADGE = 'فحص خارج الاستطباب المباشر';
+  const clk = t => String(Math.floor(t)).padStart(2, '0') + ':' + String(Math.floor((t % 1) * 60)).padStart(2, '0');
+  const wordsIn = s => String(s || '').trim().split(/\s+/).filter(Boolean).length;
+  /* phase8 2026-11-07: the same rule as evaluateScientificJustification in script.js, graded here, no paid call. */
+  function justGood(justText) {
+    const t = (justText || '').trim();
+    if (t.length < 10) return false;
+    if (/^(هيك|بس هيك|للتجربة|تجربة|احتياط|فقط|ما بعرف|لا أعلم|عشوائي)$/.test(t)) return false;
+    const scientificKeywords = /(تفريقي|تشخيص|استبعاد|تأكيد|تمييز|أعراض|مضاعفات|إقفار|احتشاء|خثرة|انصمام|التهاب|عدوى|إنتان|كلى|كرياتينين|جفاف|شوارد|أملاح|حموضة|حماض|أكسجة|تهوية|نزيف|فقر دم|حمل|تروية|عصبي|وعائي|قلب|رئة|سوائل|ضغط|سكري|كيتون)/;
+    return scientificKeywords.test(t) || t.split(/\s+/).length >= 5;
+  }
 
   /* ---------- clinical state ---------- */
   function vitalsAt(risk) {
@@ -1324,6 +1341,9 @@
   }
 
   /* ---------- tests ---------- */
+  /* phase8 2026-11-07: a test outside the indication is no longer questioned on the spot; the question
+     moves to the handover sheet (a written justification). The 'harm' response below is unchanged. */
+  const ASK_NO_NOW = false;
   // A test is a click or a sentence away and its result lands in the chat at once.
   function orderTest(id, reason, ok, quiet) {
     const meta = testOf(id);
@@ -1353,7 +1373,7 @@
     if (ind === 'harm') {
       E.risk = clamp(E.risk + 6, 0, 100);
       voice('d', 'supervisor', `The trainee ordered ${meta.en}, which is dangerous right now: ${why} Stop them firmly and ask what it would change.`, `استنى، ليش ${meta.en} هسا؟ شو رح يغيّر بالـmanagement والمريض مش stable؟`);
-    } else if (ind === 'no' && E.askedNo < 2) {
+    } else if (ASK_NO_NOW && ind === 'no' && E.askedNo < 2) {
       E.askedNo++;
       voice('d', 'supervisor', `The trainee ordered ${meta.en}, not needed here: ${res.why} Ask one short question about what it would change, without giving the answer.`, `${meta.en}؟ شو رح يغيّر بالخطة هسا؟`);
     }
@@ -1370,7 +1390,9 @@
     const meta = testOf(id), r = E.c.results[id] || {};
     const table = (r.rows || []).length ? `<table class="er-lab" dir="ltr"><thead><tr><th>Test</th><th>Result</th><th>Reference</th></tr></thead><tbody>${r.rows.map(x =>
       `<tr${x[4] ? ' class="is-flag"' : ''}><td>${esc(x[0])}</td><td><b>${esc(x[1])}</b>${x[2] ? ` <small>${esc(x[2])}</small>` : ''}${x[4] ? ` <i>${esc(x[4])}</i>` : ''}</td><td>${esc(x[3])}</td></tr>`).join('')}</tbody></table>` : '';
-    return `<div class="er-card"><div class="er-card-h"><b>${esc(meta.ar)}</b><bdi dir="ltr">${esc(meta.en)}</bdi></div>${table}${r.report ? `<p class="er-report" dir="ltr">${esc(r.report)}</p>` : ''}</div>`;
+    /* phase8 2026-11-07: an out-of-indication result is shown in full, marked amber with its badge. */
+    const off = offInd(E.tests[id]);
+    return `<div class="er-card${off ? ' is-off' : ''}">${off ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}<div class="er-card-h"><b>${esc(meta.ar)}</b><bdi dir="ltr">${esc(meta.en)}</bdi></div>${table}${r.report ? `<p class="er-report" dir="ltr">${esc(r.report)}</p>` : ''}</div>`;
   }
   function resultBack(id) {
     const t = E.tests[id], res = E.c.results[id] || {};
@@ -1378,6 +1400,7 @@
     // A culture drawn is not a result yet: nothing to read for hours.
     const waiting = /incubat/i.test(res.report || '');
     t.el = say('lab', '', labCard(id));
+    if (offInd(t) && t.el && t.el.classList) t.el.classList.add('is-off'); // phase8 2026-11-07
     if (waiting) nurse('سحبت الزراعة من مكانين، والنتيجة بعد يوم أو يومين.');
     if (!waiting && res.key && (res.ind === 'indicated' || res.ind === 'acceptable') && E.readAsks < 3) {
       E.readAsks++;
@@ -1515,26 +1538,42 @@
   function openEnd() {
     if (!E || E.over) return;
     const box = $('er-sheet'), my = E, keep = E.draft || {};
+    /* phase8 2026-11-07: every out-of-indication test ordered needs a written justification before handover. */
+    const offs = Object.values(E.tests).filter(offInd), keepJ = keep.just || {};
+    const justBlock = offs.length ? `<div class="er-just" role="group" aria-labelledby="er-just-h">
+        <p class="er-just-h" id="er-just-h">⚠️ تبرير الفحوصات/الصور الإضافية التي طلبتها خارج الاستطباب الأساسي للحالة:</p>
+        ${offs.map(t => { const m = testOf(t.id) || {}; return `<label>${esc(m.ar)} <bdi dir="ltr">${esc(m.en)}</bdi><textarea id="er-just-${esc(t.id)}" data-just="${esc(t.id)}" rows="2" maxlength="400" placeholder="ما الذي أردت أن تؤكده أو تستبعده بهذا الفحص؟"></textarea></label>`; }).join('')}
+        <p class="er-small">اكتب ثلاث كلمات على الأقل لكل فحص. يُقبل التبرير إذا ربط الفحص بسؤال سريري واضح.</p>
+      </div>` : '';
     box.hidden = false;
     box.innerHTML = `<div class="er-pane" role="dialog" aria-modal="true" aria-labelledby="er-end-h">
       <h3 id="er-end-h">سلّم الحالة للأخصائي</h3>
       <label>تشخيصك<input id="er-dx" type="text" maxlength="120" autocomplete="off"></label>
       <label>إلى أين يذهب المريض؟<select id="er-dispo"><option value="">اختر</option><option value="icu">العناية الحثيثة</option><option value="hdu">مراقبة عالية في الطوارئ</option><option value="cath">القسطرة</option><option value="ward">طابق عادي</option><option value="home">البيت</option></select></label>
       <label>التسليم (SBAR)<textarea id="er-sbar" rows="5" maxlength="800" placeholder="الوضع، الخلفية، التقييم مع الأرقام، التوصية"></textarea></label>
+      ${justBlock}
       <div class="er-pane-f"><button type="button" class="s" id="er-end-x">رجوع للمريض</button><button type="button" class="p" id="er-end-go" disabled>سلّم</button></div>
     </div>`;
     $('er-dx').value = keep.dx || ''; $('er-dispo').value = keep.dispo || ''; $('er-sbar').value = keep.sbar || '';
+    offs.forEach(t => { const el = $('er-just-' + t.id); if (el) el.value = keepJ[t.id] || ''; }); // phase8
     const check = () => {
-      my.draft = { dx: $('er-dx').value, dispo: $('er-dispo').value, sbar: $('er-sbar').value };
-      $('er-end-go').disabled = !($('er-dx').value.trim() && $('er-dispo').value && $('er-sbar').value.trim());
+      // phase8 2026-11-07: the justifications live in the draft too, so closing the sheet keeps them.
+      const just = {};
+      offs.forEach(t => { const el = $('er-just-' + t.id); just[t.id] = el ? el.value : ''; });
+      my.draft = { dx: $('er-dx').value, dispo: $('er-dispo').value, sbar: $('er-sbar').value, just };
+      const justDone = offs.every(t => wordsIn(just[t.id]) >= 3);
+      $('er-end-go').disabled = !($('er-dx').value.trim() && $('er-dispo').value && $('er-sbar').value.trim() && justDone);
     };
     ['er-dx', 'er-dispo', 'er-sbar'].forEach(id => $(id).addEventListener('input', check));
+    offs.forEach(t => { const el = $('er-just-' + t.id); if (el) el.addEventListener('input', check); }); // phase8
     check();
     $('er-end-x').onclick = () => { box.hidden = true; $('er-input').focus(); };
     $('er-end-go').onclick = async () => {
       $('er-end-go').disabled = true;
       $('er-end-go').textContent = 'لحظة...';
       const end = { dx: $('er-dx').value.trim(), dispo: $('er-dispo').value, sbar: $('er-sbar').value.trim() };
+      // phase8 2026-11-07: each justification is kept on its test and graded locally.
+      offs.forEach(t => { const el = $('er-just-' + t.id), v = String((el && el.value) || '').trim().slice(0, 400); t.justify = v; t.justOk = justGood(v); });
       const g = await call({ mode: 'grade', dxText: end.dx, sbar: end.sbar, harms: E.harms.map(h => h.label) }, 12000);
       // The heart can stop while the handover is being read: that ending stands.
       if (E !== my || E.over) return;
@@ -1573,7 +1612,8 @@
     const dxPts = !end ? 0 : end.grade.dx === 'right' ? 15 : end.grade.dx === 'close' ? 8 : 0;
     const ts = Object.values(E.tests);
     let testPts = 15;
-    ts.forEach(t => { testPts -= t.ind === 'harm' ? 6 : t.ind === 'no' ? 3 : 0; if (!['good', 'ungraded'].includes(t.reasonOk) && t.ind !== 'no' && t.ind !== 'harm') testPts -= 1.5; if (t.read === 'wrong') testPts -= 2; });
+    // phase8 2026-11-07: an accepted written justification takes back the 'no' penalty; 'harm' stays whatever is written.
+    ts.forEach(t => { testPts -= t.ind === 'harm' ? 6 : t.ind === 'no' ? (t.justOk === true ? 0 : 3) : 0; if (!['good', 'ungraded'].includes(t.reasonOk) && t.ind !== 'no' && t.ind !== 'harm') testPts -= 1.5; if (t.read === 'wrong') testPts -= 2; });
     // Staying out of the scanner in shock is the right call, not a missed test.
     const missedTests = Object.entries(c.results).filter(([id, r]) => r.ind === 'indicated' && !E.tests[id] && !(r.whenShock && fell())).map(([id]) => id);
     testPts = clamp(testPts - missedTests.length * 3, 0, 15);
@@ -1667,13 +1707,23 @@
     }
     s.reds.filter(f => !s.got.includes(f)).forEach(f => gaps.push(`<b>لم تصل إليك هذه المعلومة</b>: «${esc(f.say)}»`));
     s.missedTests.forEach(id => gaps.push(`<b>فحص لازم لم تطلبه</b>: ${esc(testOf(id).ar)}. ${esc(c.results[id].why)}`));
+    /* phase8 2026-11-07: the written justifications of out-of-indication tests. A dangerous test stays a gap even when argued well. */
+    Object.values(E.tests).filter(t => offInd(t) && t.justOk === false).forEach(t => gaps.push(`<b>فحص خارج الاستطباب</b>: ${esc(testOf(t.id).ar)}. تبريرك لم يكن مقنعاً. ${esc(t.why || '')}`));
+    Object.values(E.tests).filter(t => t.ind === 'no' && t.justOk === true).forEach(t => good.push(`برّرت طلب ${testOf(t.id).ar} تبريراً مقبولاً.`));
+    Object.values(E.tests).filter(t => t.ind === 'harm' && t.justOk === true).forEach(t => gaps.push(`<b>فحص خارج الاستطباب</b>: ${esc(testOf(t.id).ar)}. تبريرك مقبول، لكن هذا الفحص يعرّض المريض للخطر في وضعه الحالي. ${esc(t.why || '')}`));
     if (E.comm.introduced) good.push('عرّفت بنفسك.');
     if (E.comm.explained) good.push('شرحت ما يجري بكلام مفهوم.');
     else gaps.push(`<b>التواصل</b>: لم تشرح لـ${esc(c.companion.name)} ما يجري، وتدخلت ${E.comp.count} مرة.`);
     if (E.comm.rude) gaps.push('<b>التواصل</b>: خرج منك كلام جارح تحت الضغط.');
     const riskTop = Math.round(Math.max(...E.riskLog.map(p => p[1]))), riskEnd = Math.round(E.risk), anxTop = Math.round(E.anxTop);
     const reasoned = Object.values(E.tests).some(t => t.reason);
-    const tests = Object.values(E.tests).map(t => `<tr><td dir="ltr">${esc(testOf(t.id).en)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${esc(t.why || '')}</td></tr>`).join('');
+    /* phase8 2026-11-07: in order of time, with the time ordered, the justification column and the amber rows. */
+    const justCell = t => {
+      if (!offInd(t)) return '—';
+      if (t.justOk === undefined) return 'لم تكتب تبريراً';
+      return `${t.justify ? esc(t.justify) : 'لم تكتب تبريراً'}<small class="${t.justOk ? 'j-ok' : 'j-no'}">${t.justOk ? 'مقبول' : 'غير مقنع'}</small>`;
+    };
+    const tests = Object.values(E.tests).sort((a, b) => a.at - b.at).map(t => `<tr${offInd(t) ? ' class="is-off"' : ''}><td><span dir="ltr">${esc(testOf(t.id).en)}</span>${offInd(t) ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}</td><td class="font-num" dir="ltr">${clk(t.at)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${justCell(t)}</td><td>${esc(t.why || '')}</td></tr>`).join('');
     const box = $('er-debrief');
     box.hidden = false;
     box.innerHTML = `<div class="er-report-page">
@@ -1687,7 +1737,7 @@
       <h4>الخطر خلال الحالة</h4>${chart()}<p class="er-small">أعلى خطر <b class="font-num">${riskTop}%</b> · عند النهاية <b class="font-num">${riskEnd}%</b> · أعلى ضغط من الأهل <b class="font-num">${anxTop}%</b></p>
       ${good.length ? `<h4>أحسنت</h4><ul class="er-good">${good.map(g => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
       ${gaps.length ? `<h4>ما يجب أن يتغير</h4><ul class="er-gaps">${gaps.map(g => `<li>${g}</li>`).join('')}</ul>` : ''}
-      <h4>الفحوصات</h4>${tests ? `<div class="er-scroll"><table class="er-tests"><thead><tr><th>الفحص</th><th>الاستطباب</th>${reasoned ? '<th>تبريرك</th>' : ''}<th>لماذا</th></tr></thead><tbody>${tests}</tbody></table></div>` : '<p>لم تطلب أي فحص.</p>'}
+      <h4>سجل الفحوصات المطلوبة وتوقيت طلبها في الجلسة</h4>${tests ? `<div class="er-scroll"><table class="er-tests"><thead><tr><th>الفحص</th><th>وقت الطلب</th><th>الاستطباب</th>${reasoned ? '<th>تبريرك عند الطلب</th>' : ''}<th>التبرير عند التسليم</th><th>لماذا</th></tr></thead><tbody>${tests}</tbody></table></div>` : '<p>لم تطلب أي فحص.</p>'}
       ${end && end.grade.note ? `<h4>تسليمك</h4><p>${esc(end.grade.note)}</p>` : ''}
       <h4>الخلاصة</h4><p>${esc(c.brief)}</p>
       <p class="er-small">طلبت مساعدة المشرف ${E.helps} مرة، وبادر هو ${E.hints} مرة. الحالات والدرجات تدريبية ولم يراجعها طبيب بعد.</p>
@@ -1721,18 +1771,60 @@
   /* ---------- the records column ---------- */
   const PANELS = [['heart', 'القلب'], ['blood', 'الدم'], ['chem', 'الكيمياء والغازات'], ['imaging', 'الأشعة'], ['other', 'البول وأخرى']];
   let recFilter = 'all', recQuery = '';
+  /* phase8 2026-11-07: the investigations centre. The chips follow the reference wording; tests are grouped by
+     where they are done (bedside, lab and urine, imaging and tracings), and the 12-lead ECG sits with imaging
+     and tracings as in the reference. Only tests the case has a result for are listed. */
+  const CATS = [['bed', 'سريري'], ['lab', 'مختبر وبول'], ['img', 'أشعة وتخطيط']];
+  const catOf = t => (t.id === 'ecg' ? 'img' : t.group);
+  const panelName = k => (PANELS.find(p => p[0] === k) || ['', ''])[1];
+  let recView = 'order';
   function buildRecords() {
     const f = $('er-rec-f'), list = $('er-rec-list');
     if (!f || !list || !D || !E) return;
-    f.innerHTML = [['all', 'الكل'], ...PANELS].map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === recFilter}">${l}</button>`).join('');
+    if (recFilter !== 'all' && !CATS.some(([k]) => k === recFilter)) recFilter = 'all';
+    f.innerHTML = [['all', 'الكل'], ...CATS].map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === recFilter}">${l}</button>`).join('');
     const q = norm(recQuery);
-    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : '') : '';
-    list.innerHTML = PANELS.filter(([k]) => recFilter === 'all' || recFilter === k).map(([k, label]) => {
-      const items = D.tests.filter(t => t.panel === k && (!q || norm(t.ar + ' ' + t.en + ' ' + (t.kw || []).join(' ') + ' ' + label).includes(q)));
+    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : was.dataset.go ? `[data-go="${was.dataset.go}"]` : '') : '';
+    list.innerHTML = CATS.filter(([k]) => recFilter === 'all' || recFilter === k).map(([k, label]) => {
+      const items = D.tests.filter(t => catOf(t) === k && E.c.results[t.id] && (!q || norm(t.ar + ' ' + t.en + ' ' + (t.kw || []).join(' ') + ' ' + label + ' ' + panelName(t.panel)).includes(q)));
       if (!items.length) return '';
-      return `<section class="er-rec-sec"><h4>${label}</h4><div>${items.map(t => `<button type="button" class="er-t${E.tests[t.id] ? ' is-done' : ''}" data-t="${t.id}"><span dir="ltr">${esc(t.en)}</span><small>${esc(t.ar)}</small>${E.tests[t.id] ? '<i aria-label="تم الطلب">✓</i>' : ''}</button>`).join('')}</div></section>`;
+      return `<section class="er-rec-sec"><h4>${label}</h4><div>${items.map(t => {
+        const x = E.tests[t.id], off = offInd(x);
+        return `<button type="button" class="er-t${x ? ' is-done' : ''}${off ? ' is-off' : ''}" data-t="${t.id}"><span dir="ltr">${esc(t.en)}</span><small>${esc(t.ar)}</small>${x ? `<i aria-label="${off ? 'تم الطلب، خارج الاستطباب المباشر' : 'تم الطلب'}">✓${off ? '<em class="er-off-dot" aria-hidden="true"></em>' : ''}</i>` : ''}</button>`;
+      }).join('')}</div></section>`;
     }).join('') || '<p class="er-small">لا يوجد فحص بهذا الاسم.</p>';
+    buildLog();
     if (keep) { const n = $('er-records').querySelector(keep); if (n && n.focus) n.focus({ preventScroll: true }); }
+  }
+  /* phase8 2026-11-07: the results log, newest first; a row takes the trainee to the result card in the chat. */
+  function buildLog() {
+    const box = $('er-rec-log'), tab = $('er-rec-logtab'), rec = $('er-records');
+    if (!box || !E) return;
+    const rows = Object.values(E.tests).sort((a, b) => b.at - a.at);
+    if (tab) tab.textContent = `السجل (${rows.length})`;
+    if (rec && rec.dataset) rec.dataset.view = recView;
+    if (REAL) document.querySelectorAll('#er-rec-tabs [data-v]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === recView)));
+    box.innerHTML = `<h4 class="er-log-h">سجل الفحوصات</h4>` + (rows.length ? `<ol class="er-log">${rows.map(t => {
+      const m = testOf(t.id) || {}, off = offInd(t), waiting = /incubat/i.test((E.c.results[t.id] || {}).report || '');
+      const state = !t.back ? 'بانتظار النتيجة' : waiting ? 'سُحبت العينة، والنتيجة بعد يوم أو يومين' : 'النتيجة جاهزة';
+      return `<li class="er-log-row${off ? ' is-off' : ''}">${off ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}<button type="button" data-go="${esc(t.id)}"${t.back ? '' : ' disabled'}><b>${esc(m.ar)}</b><bdi dir="ltr">${esc(m.en)}</bdi><span class="er-log-meta"><span class="font-num" dir="ltr">${clk(t.at)}</span> · <span class="${t.back ? 'is-ready' : ''}">${state}</span></span>${t.back ? '<span class="er-log-go">اعرض النتيجة في المحادثة</span>' : ''}</button></li>`;
+    }).join('')}</ol>` : '<p class="er-small">لم تطلب أي فحص بعد. كل فحص تطلبه يظهر هنا مع وقت طلبه.</p>');
+  }
+  function setRecView(v) {
+    recView = v === 'log' ? 'log' : 'order';
+    buildLog();
+  }
+  // phase8 2026-11-07: scroll the chat to a result card and flash it.
+  function goResult(id) {
+    const t = E && E.tests[id];
+    if (!t || !t.el) return;
+    if (!wide()) toggleRecords(false);
+    const calm = window.matchMedia && window.matchMedia('(prefers-reduced-motion: reduce)').matches;
+    if (t.el.scrollIntoView) t.el.scrollIntoView({ block: 'center', behavior: calm ? 'auto' : 'smooth' });
+    t.el.classList.remove('er-flash');
+    void t.el.offsetWidth;
+    t.el.classList.add('er-flash');
+    setTimeout(() => t.el.classList.remove('er-flash'), 1800);
   }
   const wide = () => window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
   function toggleRecords(force) {
@@ -1770,9 +1862,10 @@
       comp: { lastTurn: -9, lastAt: -9, count: 0, asked: null, addressed: 0, used: new Set(), extra: 0, angry: false, ignored: 0, procs: 0, unheard: 0, nurseStep: false, heardTurn: 0, gen: 0, outUntil: 0, explainedTurn: -9 }, busyTurn: -9, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
       harms: [], harmed: new Set(), reacted: false, caught: [], pending: null, queue: [], wrongDoses: [], unneeded: [], lateTests: [], askedNo: 0, hint: -1, hints: 0, helps: 0, readAsks: 0, over: false, outcome: null, resolved: false,
       topStage: 0, anxTop: c.companion.start, vtNow: false, vtAt: null, shockedAt: null, anaph: null, draft: null,
-      mods: [], improved: 0, nudged: false, collect: null, resp: null, saidBy: new Set(), holdAsked: false
+      mods: [], improved: 0, nudged: false, collect: null, resp: null, saidBy: new Set(), holdAsked: false,
+      paused: false // phase8 2026-11-07: true while the briefing is open; the clock stands still
     };
-    recFilter = 'all'; recQuery = '';
+    recFilter = 'all'; recQuery = ''; recView = 'order';
     if ($('er-rec-q')) $('er-rec-q').value = '';
     buildRecords();
     if ($('er-records')) $('er-records').classList.remove('is-open');
@@ -1791,7 +1884,8 @@
     document.querySelector('.er-p[data-who="p"] b').textContent = p.name;
     $('er-v-bp').textContent = '--/--';
     $('view-er').dataset.rhythm = '';
-    sys('أنت الطبيب المقيم في الطوارئ. تكلم مع الموجودين، واكتب أوامرك وأدويتك وجرعاتها، واطلب الفحوصات، وسلّم الحالة عندما تنتهي.');
+    // phase8 2026-11-07: on a real page the start briefing says this, so the chat does not repeat it.
+    if (!REAL) sys('أنت الطبيب المقيم في الطوارئ. تكلم مع الموجودين، واكتب أوامرك وأدويتك وجرعاتها، واطلب الفحوصات، وسلّم الحالة عندما تنتهي.');
     if (api === 'off' && location.protocol !== 'file:') { apiNoted = true; sys(OFFLINE_NOTE); }
     sys(p.arrival);
     person('p', p.opening);
@@ -1803,10 +1897,89 @@
     }
     paint();
     last = performance.now();
-    const loop = now => { if (!E || E.over) return; if (!document.hidden && !$('view-er').classList.contains('hidden')) tick(now); else last = now; tickId = requestAnimationFrame(loop); };
+    // phase8 2026-11-07: while the briefing is open (E.paused) the loop only keeps `last` current, so time does not jump on resume.
+    const loop = now => { if (!E || E.over) return; if (E.paused) last = now; else if (!document.hidden && !$('view-er').classList.contains('hidden')) tick(now); else last = now; tickId = requestAnimationFrame(loop); };
     tickId = requestAnimationFrame(loop);
-    $('er-input').focus();
+    if (!showBrief()) $('er-input').focus();
   }
+
+  /* ---------- phase8 2026-11-07: the start briefing ---------- */
+  // What to do, who is in the room and the trainee's role, from the case file and the track. Never the diagnosis
+  // and never which tests are indicated. Real pages only: the Node harness never sees it.
+  function briefTrack() {
+    try {
+      const u = (typeof authState !== 'undefined' && authState.user) || null;
+      return u && typeof nbTrackOf === 'function' ? nbTrackOf(u) : null;
+    } catch (e) { return null; }
+  }
+  function briefHtml() {
+    const c = E.c, p = c.patient, comp = c.companion || {}, nurseName = (c.nurse && c.nurse.name) || '';
+    const role = briefTrack() === 'nursing'
+      ? 'أنت تتولى في هذه الغرفة دور المسؤول عن الحالة (يناديك الفريق «دكتور»)، وتركيزك: التقييم المنهجي ABCDE، قراءة المونيتور والإنذار المبكر، السؤال عن الحساسية والأدوية قبل أي دواء، ومتابعة الاستجابة بعد كل إجراء، ثم تسليم الحالة بصيغة SBAR.'
+      : 'أنت الطبيب المقيم المناوب، والحالة مسؤوليتك من الاستقبال حتى التسليم.';
+    return `<div class="er-pane er-brief" role="dialog" aria-modal="true" aria-labelledby="er-brief-h" aria-describedby="er-brief-now">
+      <header class="er-brief-top">
+        <h3 id="er-brief-h">حالتك في غرفة الطوارئ</h3>
+        <p class="er-brief-who"><span class="er-brief-bed">${esc(c.bed)}</span><b>${esc(p.name)}</b>، ${esc(p.age)} سنة</p>
+      </header>
+      <section class="er-brief-now" id="er-brief-now"><h4>ما تعرفه الآن</h4><p>${esc(p.arrival)}</p></section>
+      <section><h4>من معك في الغرفة</h4><ul class="er-brief-people">
+        <li><i data-who="p" aria-hidden="true"></i><span><b>المريض</b>: ${esc(p.name)}</span></li>
+        ${comp.name ? `<li><i data-who="c" aria-hidden="true"></i><span><b>المرافق</b>: ${esc(comp.name)}${comp.rel ? ` (${esc(comp.rel)})` : ''}</span></li>` : ''}
+        <li><i data-who="n" aria-hidden="true"></i><span><b>الممرضة${nurseName ? ' ' + esc(nurseName) : ''}</b>: تنفّذ طلباتك وتقرأ لك المونيتور.</span></li>
+        <li><i data-who="d" aria-hidden="true"></i><span><b>المشرف</b>: تسأله إذا احترت، ولا يعطيك التشخيص.</span></li>
+      </ul></section>
+      <section><h4>دورك</h4><p>${esc(role)}</p></section>
+      <section><h4>ما المطلوب منك</h4><ol class="er-brief-steps">
+        <li>اسأل المريض والمرافق عن القصة والأعراض والحساسية والأدوية. اكتب بالعربية أو باللهجة كما تتكلم عادة.</li>
+        <li>افحص المريض، واطلب الفحوصات من لوحة الفحوصات (زر «الفحوصات» على الهاتف) أو بالكتابة في المحادثة.</li>
+        <li>اطلب العلاج من الممرضة باسم الدواء والجرعة والطريق.</li>
+        <li>راقب المونيتور واستجابة المريض بعد كل إجراء.</li>
+        <li>حين تنتهي اضغط «سلّم الحالة» واكتب التشخيص والوجهة والتسليم بصيغة SBAR.</li>
+        <li>اقرأ تقريرك في النهاية لتعرف ما أحسنت فيه وما يجب أن يتغير.</li>
+      </ol></section>
+      <section class="er-brief-tips"><h4>نصائح قصيرة</h4><ul>
+        <li>نادِ الشخص باسمه ليعرف أنك تكلمه.</li>
+        <li>تسير ساعة الحالة مع الوقت الحقيقي، لكن أثر العلاج وتغيّر حالة المريض يظهران أسرع من الواقع.</li>
+        <li>الفحص خارج الاستطباب يظهر بالأصفر، وستُسأل عن تبريره عند التسليم.</li>
+        <li>زر «عرض التعليمات» أعلى الغرفة يعيد هذه النافذة متى شئت.</li>
+      </ul></section>
+      <p class="er-small">للتدريب فقط. الحالات لم يراجعها طبيب بعد.</p>
+      <footer class="er-pane-f er-brief-f"><button type="button" class="p" id="er-brief-go">ابدأ الجلسة</button></footer>
+    </div>`;
+  }
+  function briefKey(e) {
+    if (e.key === 'Escape') { e.preventDefault(); closeBrief(); return; }
+    // Focus stays on the one button while the dialog is open.
+    if (e.key === 'Tab') { e.preventDefault(); const b = $('er-brief-go'); if (b) b.focus(); }
+  }
+  function showBrief() {
+    if (!REAL || !E) return false;
+    let w = $('er-brief');
+    if (!w) {
+      w = document.createElement('div');
+      w.id = 'er-brief';
+      w.className = 'er-sheet er-brief-wrap';
+      (document.querySelector('#view-er .er-room') || $('view-er')).appendChild(w);
+      w.addEventListener('keydown', briefKey);
+    }
+    w.innerHTML = briefHtml();
+    w.hidden = false;
+    if (!E.over) E.paused = true;
+    $('er-brief-go').onclick = closeBrief;
+    const pane = w.querySelector('.er-brief');
+    if (pane) pane.scrollTop = 0;
+    $('er-brief-go').focus({ preventScroll: true });
+    return true;
+  }
+  function closeBrief() {
+    const w = $('er-brief');
+    if (w) w.hidden = true;
+    if (!E) return;
+    E.paused = false;
+    if (!E.over && $('er-sheet').hidden) $('er-input').focus();
+  }
+  const briefOpen = () => { const w = REAL && $('er-brief'); return !!(w && !w.hidden); };
 
   function mount() {
     const v = $('view-er');
@@ -1815,7 +1988,47 @@
     $('er-form').addEventListener('submit', e => { e.preventDefault(); const i = $('er-input'); send(i.value); i.value = ''; });
     $('er-test').addEventListener('click', () => toggleRecords());
     const rec = $('er-records');
+    /* phase8 2026-11-07: the investigations centre's header, its two views (order | log) and the
+       «عرض التعليمات» button beside the clock. Injected here because index.html is not edited by er.js work. */
+    if (REAL) {
+      const hb = rec.querySelector('.er-rec-h b');
+      if (hb) hb.textContent = 'طلب الفحوصات والصور والتخطيط';
+      rec.setAttribute('aria-label', 'طلب الفحوصات والصور والتخطيط');
+      const head = rec.querySelector('.er-rec-h');
+      if (head && !$('er-rec-tabs')) {
+        const tabs = document.createElement('div');
+        tabs.id = 'er-rec-tabs';
+        tabs.className = 'er-rec-tabs';
+        tabs.setAttribute('role', 'tablist');
+        tabs.setAttribute('aria-label', 'طلب الفحوصات أو سجلها');
+        tabs.innerHTML = '<button type="button" role="tab" data-v="order" aria-selected="true">طلب</button><button type="button" role="tab" data-v="log" id="er-rec-logtab" aria-selected="false">السجل (0)</button>';
+        head.after(tabs);
+      }
+      const list = $('er-rec-list');
+      if (list && !$('er-rec-log')) {
+        const log = document.createElement('div');
+        log.id = 'er-rec-log';
+        log.className = 'er-rec-log';
+        list.after(log);
+      }
+      rec.dataset.view = 'order';
+      const top = document.querySelector('#view-er .er-top'), clock = $('er-clock');
+      if (top && !$('er-help')) {
+        const b = document.createElement('button');
+        b.type = 'button';
+        b.id = 'er-help';
+        b.className = 'er-help';
+        b.textContent = 'عرض التعليمات';
+        b.setAttribute('aria-haspopup', 'dialog');
+        if (clock && clock.parentNode === top) clock.after(b); else top.appendChild(b);
+        b.addEventListener('click', () => showBrief());
+      }
+    }
     rec.addEventListener('click', e => {
+      // phase8 2026-11-07: the view tabs and the log rows.
+      const v = e.target.closest('[data-v]'), go = e.target.closest('[data-go]');
+      if (v) { setRecView(v.dataset.v); return; }
+      if (go) { goResult(go.dataset.go); return; }
       const f = e.target.closest('[data-f]'), t = e.target.closest('[data-t]');
       if (f) { recFilter = f.dataset.f; buildRecords(); }
       else if (t) panelTest(t.dataset.t);
@@ -1843,6 +2056,7 @@
       await Promise.all([load(), ping()]);
       if (!ACT) loadAct();
       if (!E || E.over) begin(new URLSearchParams(location.search).get('case') || undefined);
+      else if (briefOpen()) $('er-brief-go').focus(); // phase8 2026-11-07
       else $('er-input').focus();
     } catch (e) {
       console.error(e);
@@ -1859,5 +2073,6 @@
     return true;
   };
   // Test hook for the browser checks.
-  window.__nbER = { begin: id => begin(id), send, orderTest, panelTest, buildRecords, modsNow, live, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; if (v === 'off') loadFind(); }, get api() { return api; }, readFinding, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
+  window.__nbER = { begin: id => begin(id), send, orderTest, panelTest, buildRecords, modsNow, live, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; if (v === 'off') loadFind(); }, get api() { return api; }, readFinding, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; },
+    /* phase8 2026-11-07 */ justGood, offInd, showBrief, closeBrief, buildLog, setRecView, get real() { return REAL; } };
 })();

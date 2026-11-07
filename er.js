@@ -10,12 +10,11 @@
   'use strict';
 
   const API = /\.vercel\.app$/.test(location.hostname) ? '/api/er-chat' : 'https://nabd-smoky-one.vercel.app/api/er-chat';
-  // Simulated seconds per real second: a case runs in minutes, the way a resus bay feels.
-  const PACE = 2;
-  // Once treatment is holding and the room is only waiting for results, time moves on faster.
-  const WAIT_PACE = 8;
+  // Simulated seconds per real second. One to one: the patient has time to answer what the trainee does,
+  // and a case lasts as long as the trainee needs, not ten minutes.
+  const PACE = 1;
   // The cuff cycles faster once the patient is sick, so the tile is never long behind the nurse.
-  const BP_EVERY = 5, BP_SICK = 2;
+  const BP_EVERY = 2, BP_SICK = 1;
   // Even a well-treated patient is still a patient in resus.
   const RISK_FLOOR = 20;
   const OFFLINE_NOTE = 'الاتصال بخدمة الفهم غير متاح الآن. الغرفة تعمل بوضع مبسّط، وقد لا تفهم كل جملة.';
@@ -44,11 +43,23 @@
     return { hr: at('hr'), sbp: at('sbp'), dbp: at('dbp'), rr: at('rr'), spo2: at('spo2') };
   }
 
+  // What the treatments given so far have done to the numbers, ramping in over a few seconds.
+  function modsNow() {
+    const t = { spo2: 0, hr: 0, rr: 0, sbp: 0, dbp: 0 };
+    for (const m of E.mods) {
+      const f = clamp((E.sim - m.from) / (m.ramp || 0.2), 0, 1);
+      for (const k in t) if (m[k]) t[k] += m[k] * f;
+    }
+    return t;
+  }
   function live() {
-    const v = vitalsAt(E.risk);
-    const o = E.c.care.oxygen;
-    if (E.done.has('oxygen') && o && o.spo2 && E.sim >= E.done.get('oxygen').at + 0.5) v.spo2 = Math.min(99, v.spo2 + o.spo2);
-    for (const [id, x] of E.done) { const lift = (E.c.care[id] || {}).hr; if (lift && !E.vtNow && E.sim < x.last + 15) v.hr += lift; }
+    const v = vitalsAt(E.risk), m = modsNow();
+    v.spo2 = Math.min(99, v.spo2 + clamp(m.spo2, -10, 10));
+    // In VT nothing but a shock moves the heart.
+    if (!E.vtNow) v.hr = m.hr < 0 ? Math.max(v.hr + clamp(m.hr, -30, 0), Math.min(v.hr, 60)) : v.hr + clamp(m.hr, 0, 30);
+    v.rr = m.rr < 0 ? Math.max(v.rr + clamp(m.rr, -10, 0), Math.min(v.rr, 14)) : v.rr + m.rr;
+    v.sbp += clamp(m.sbp, -40, 35);
+    v.dbp += clamp(m.dbp, -20, 18);
     return v;
   }
 
@@ -100,8 +111,7 @@
     const dt = Math.min(2, (now - last) / 1000);
     last = now;
     const rate = netRate();
-    // Time only jumps once nothing urgent is left, or sensible labs would make the next step late.
-    const step = dt * (rate <= 0 && E.jobs.length && !keyMissing().length ? WAIT_PACE : PACE) / 60;
+    const step = dt * PACE / 60;
     E.sim += step;
     E.risk = clamp(E.risk + rate * step, RISK_FLOOR, 100);
     E.anxTop = Math.max(E.anxTop, E.anx);
@@ -110,6 +120,22 @@
     if (E.sim - E.paintAt >= 0.12) { paint(); E.paintAt = E.sim; }
     for (const j of E.jobs.filter(x => E.sim >= x.at)) { E.jobs.splice(E.jobs.indexOf(j), 1); j.fn(); }
     stageCheck();
+    // The patient is steady: the supervisor asks whether he is ready to hand over, once.
+    if (!E.nudged && E.risk <= E.c.risk.watch - 6 && netRate() <= 0 && !keyMissing().length && E.done.size >= 3 && E.sim > 2) {
+      E.nudged = true;
+      later(0.2, () => person('d', pickOf(['الأرقام استقرت. بقي إشي بدك تعمله؟ ولا جاهز تسلّم؟', 'تمام، الوضع أحسن. شو الخطة، والوجهة؟'])));
+    }
+    // An order waiting on a dose is not given: the nurse says so rather than let him think it was.
+    const open = E.pending;
+    if (open && open.type === 'dose' && !open.nagged && E.sim - (open.since || 0) > 0.75) {
+      open.nagged = true;
+      nurse(`دكتور، ${open.name} لسا ما أعطيته. ${open.tip}${open.sug ? '، ماشي؟' : ''}`);
+    }
+    const hold = E.c.risk.hold;
+    if (hold && !E.holdAsked && !E.done.has(hold.until) && E.sim > 7 && E.risk <= hold.at + 1) {
+      E.holdAsked = true;
+      person('d', 'الأرقام ثابتة بس مش عم تتحسن. شو المصدر، وشو خطتك؟');
+    }
     alarm(now);
     if (E.risk >= 100) arrest();
   }
@@ -171,13 +197,13 @@
   function say(who, text, extra) {
     const feed = $('er-feed');
     // A result being read stays put; a new line only follows if the reader was already at the end.
-    const atEnd = who === 'me' || feed.scrollHeight - feed.scrollTop - feed.clientHeight < 90;
+    const atEnd = who === 'me' || who === 'lab' || feed.scrollHeight - feed.scrollTop - feed.clientHeight < 90;
     const d = document.createElement('div');
     d.className = 'er-msg k-' + who;
     const label = LABEL()[who];
     d.innerHTML = (label ? `<span class="er-who">${esc(label)}</span>` : '') + (text ? `<p>${bidi(text)}</p>` : '') + (extra || '');
     feed.appendChild(d);
-    if (atEnd) feed.scrollTop = feed.scrollHeight;
+    if (atEnd) feed.scrollTop = who === 'lab' && d.offsetTop ? d.offsetTop - 8 : feed.scrollHeight;
     document.querySelectorAll('.er-p').forEach(p => p.classList.toggle('is-on', p.dataset.who === who));
     return d;
   }
@@ -346,7 +372,7 @@
       });
     };
     const same = d.kind ? pool.filter(l => SCALE[l.unit][0] === d.kind) : pool;
-    if (!same.length) return null;
+    if (!same.length) return a.id === 'oxygen' ? 'wrong' : null;
     return same.some(fits) ? 'ok' : 'wrong';
   }
   // Base units of one dose, for the running total.
@@ -379,6 +405,7 @@
     }
     const social = ['greeting', 'wish', 'thanks'].includes(word) || (word === null && /^(?:مرحب|اهل|هلا|السلام|صباح|مساء|شكر|يعطيك|طيب|لا$|ما بعرف|مش عارف)/.test(t));
     if (p.type === 'dose') {
+      if (p.sug && ACCEPT.test(t)) return 'good';
       if (toSup || toComp || social || word === 'unsure' || /^(?:ما بعرف|مش عارف|مش متذكر|ما بتذكر|مش متاكد)/.test(t)) return 'na';
       if (/(?:^| )(?:لا ت\S*|ما ت\S*|بلاش|don t|hold|skip)(?: |$)/.test(t)) return 'withdraw';
       if (asks || tests.length || actions.some(a => a.id !== p.a.id)) return 'na';
@@ -419,7 +446,7 @@
   // The same word means different things; these are the ones trainees actually type.
   function collisions(t, ids) {
     if (/مضاد (?:صفيحات|تخثر|حموض)/.test(t) && !/مضاد حيوي/.test(t)) ids.delete('antibiotics');
-    if (/قسطره بول|foley|فولي/.test(t)) ids.delete('cath_lab');
+    if (/قسطره بول|foley|فولي/.test(t)) { ids.delete('cath_lab'); ids.delete('urine'); }
     if (/رينجر|ringer/.test(t)) ids.delete('lactate');
     if (/brain|دماغ|(?:^| )(?:ل?ل?راس|الراس)(?: |$)/.test(t)) ids.delete('ctpa');
     if (/septic|cardiogenic|انتاني|تاقي|anaphyl/.test(t)) ids.delete('shock');
@@ -558,12 +585,13 @@
       nurse(open.type === 'unsafe' ? 'ما رح أعطيه قبل ما تأكدلي.' : open.type === 'dose' ? 'ما بعطيه بدون جرعة. احكيلي لما تقرر.' : 'ما بطلبه بدون استطباب. احكيلي لما تقرر.');
       settle(q => q === open);
     } else if (open.wait % 2 === 0) {
-      nurse(open.type === 'unsafe' ? 'دكتور، بعطي الدوا ولا لأ؟' : 'دكتور، لسا مستنية جوابك على طلبك.');
+      nurse(open.type === 'unsafe' ? 'دكتور، بعطي الدوا ولا لأ؟' : open.type === 'dose' && open.tip ? `دكتور، ${open.name}: ${open.tip}` : 'دكتور، لسا مستنية جوابك على طلبك.');
     }
   }
 
   function apply(read, text, to, reply) {
     const t = read.tone || {};
+    E.collect = [];
     E.turns++;
     if (t.introduced) E.comm.introduced = true;
     if (t.consent) E.comm.consent = true;
@@ -580,7 +608,10 @@
       if (to === 'patient' && t.explained) E.comm.explained = true;
     }
 
-    const open = E.pending;
+    let open = E.pending;
+    if (open && open.type === 'dose' && dropNamed(text)) { open = null; read.actions = []; }
+    // A bare yes to the nurse's proposal is an answer whoever reads it, unless the reader heard a refusal.
+    if (open && open.type === 'dose' && open.sug && ACCEPT.test(norm(text)) && !(read.actions || []).length && !['withdraw', 'wrong'].includes(read.pending_ok)) read.pending_ok = 'good';
     if (open && read.pending_ok && read.pending_ok !== 'na') resolve(read.pending_ok, text);
     else if (open && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
     // A patient the nurse calls unresponsive does not recite a history, and nothing unheard counts as asked.
@@ -600,6 +631,19 @@
     const once = (x, i, all) => all.findIndex(y => y.id === x.id) === i;
     (read.actions || []).filter(once).filter(a => a.id !== answered || swapped(a)).forEach(a => order(a, text));
     (read.tests || []).filter(once).filter(x => x.id !== answered).forEach(x => orderTest(x.id, x.reason, x.reason_ok));
+    const col = (E.collect || []).filter(x => E.pending === x.p || E.queue.some(([q]) => q === x.p));
+    E.collect = null;
+    if (col.length) {
+      const first = (col.find(x => x.p === E.pending) || col[0]).line;
+      const held = E.queue.find(([q]) => q.type === 'unsafe');
+      // Safety first: a "yes" must never land on a question the trainee did not mean.
+      if (E.pending && E.pending.type === 'dose' && held) {
+        E.queue = [[E.pending, first, 'n'], ...E.queue.filter(x => x !== held)];
+        E.pending = held[0];
+        E.pending.since = E.sim;
+        person(held[2], held[1]);
+      } else if (!E.pending || E.pending.type === 'dose') openDoses(first);
+    }
     // The senior is standing in the room: asking him is calling him.
     if (to === 'supervisor' && read.kind === 'help' && E.c.care.call_senior && !E.done.has('call_senior')) E.done.set('call_senior', { at: E.sim, last: E.sim, n: 1, dose: '', ok: 'good', amt: 0 });
     E.resolved = false;
@@ -619,6 +663,46 @@
 
   /* ---------- orders ---------- */
   // One open question at a time, the rest wait their turn.
+  // Only a bare yes accepts: "تمام بلاش الكورتيزون" and "اه لحظة" are not a yes.
+  const YES_WORD = 'اه|ايوا|ايوه|نعم|تمام|ماشي|اوكي|اوك|ok|okay|yes|اكيد|طيب|موافق|مزبوط|نمشي|نفذي?|يلا';
+  const ACCEPT = new RegExp('^(?:' + YES_WORD + '|زي ما (?:قلتي|اقترحتي)|علي كلامك)(?: (?:' + YES_WORD + '|دكتوره?|سستر|كلهم|هيك|اعطيهم|عطيهم|ابدئي))*$');
+  const YES_FIRST = new RegExp('^(?:' + YES_WORD + ')(?: |$)');
+  const bundleLine = list => 'حاضر دكتور. بقترح: ' + list.map((p, i) => `${'١٢٣٤٥٦٧٨'[i]}) ${p.name}: ${p.tip || 'أي نوع وكم؟'}`).join(' — ') + ' — موافق؟ أو غيّر أي واحد.';
+  // All open doses are one question, with the ones she has a proposal for first.
+  function openDoses(first) {
+    const items = [...(E.pending ? [[E.pending, first, 'n']] : []), ...E.queue.filter(([q]) => q.type === 'dose')];
+    if (!items.length) return;
+    items.sort((a, b) => (b[0].sug ? 1 : 0) - (a[0].sug ? 1 : 0));
+    E.queue = [...items.slice(1), ...E.queue.filter(([q]) => q.type !== 'dose')];
+    E.pending = items[0][0];
+    E.pending.since = E.sim;
+    nurse(items.length === 1 ? items[0][1] : bundleLine(items.map(i => i[0])));
+  }
+  // A safety challenge goes first, then the proposals together, then the rest.
+  function nextQuestion() {
+    if (E.pending || !E.queue.length) return;
+    const i = E.queue.findIndex(([q]) => q.type === 'unsafe');
+    if (i >= 0) { const [n] = E.queue.splice(i, 1); ask(...n); return; }
+    if (E.queue.some(([q]) => q.type === 'dose')) { openDoses(); return; }
+    ask(...E.queue.shift());
+  }
+  // "بلاش الكورتيزون" while proposals are open takes that one out, and only that one.
+  function dropNamed(text) {
+    const t = norm(text), isDose = q => q && q.type === 'dose';
+    const off = [E.pending, ...E.queue.map(([q]) => q)].filter(isDose).filter(p => { const at = mentionsOf(t, actOf(p.a.id).kw); return at.length && !at.some(i => freeAt(t, i)); });
+    if (!off.length) return false;
+    E.queue = E.queue.filter(([q]) => !off.includes(q));
+    if (off.includes(E.pending)) E.pending = null;
+    nurse(`تمام، شلت ${off.map(p => p.name).join(' و')}.`);
+    if (YES_FIRST.test(t)) {
+      const rest = [E.pending, ...E.queue.map(([q]) => q)].filter(q => isDose(q) && q.sug);
+      E.queue = E.queue.filter(([q]) => !rest.includes(q));
+      if (rest.includes(E.pending)) E.pending = null;
+      rest.forEach(q => order({ ...q.a, dose: q.sug, sayDose: q.tip.split(' (أو')[0], _asked: true }, text));
+    }
+    nextQuestion();
+    return true;
+  }
   function ask(p, line, who = 'n') {
     const same = q => q.type === p.type && (q.a ? q.a.id : q.id) === (p.a ? p.a.id : p.id);
     // The same order again while its question is open: the question comes back, not silence.
@@ -626,8 +710,16 @@
     if (E.queue.some(([q]) => same(q))) return;
     // A teaching question never holds up an order.
     if (E.pending && E.pending.type === 'interpret' && p.type !== 'interpret') E.pending = null;
-    if (E.pending) { E.queue.push([p, line, who]); if (p.type !== 'interpret') nurse('لحظة دكتور، جاوبني أول عالسؤال اللي فوق.'); return; }
+    if (E.pending) {
+      E.queue.push([p, line, who]);
+      // Several doses asked in one message are one proposal, not several questions.
+      if (p.type === 'dose' && E.collect) E.collect.push({ p, line });
+      else if (p.type !== 'interpret' && !E.collect) nurse('لحظة دكتور، جاوبني أول عالسؤال اللي فوق.');
+      return;
+    }
     E.pending = p;
+    p.since = E.sim;
+    if (p.type === 'dose' && E.collect) { E.collect.push({ p, line }); return; }
     person(who, line);
   }
   // "levofloxacin instead of penicillin" names the allergen without ordering it; only the word
@@ -656,12 +748,14 @@
     challenge: `دكتور، ${meta.ar}؟ شو الاستطباب هون؟ متأكد؟`, effect: 'ساءت حالة المريض.',
   });
   // Safe only once the patient is sick enough: by the reading on the monitor when the case gives one.
+  // A pressor holding the number up does not mean the pressure is holding.
+  const untreatedSbp = () => Math.min(vitalsAt(E.risk).sbp, Number(E.bp[0]) || 999);
   const tooEarly = def => {
     const h = def.stableHarm;
     if (!h) return false;
     if (E.anaph && !E.anaph.treated) return false;
     if (h.unlessDone && E.done.has(h.unlessDone)) return false;
-    if (h.sbp) return Math.min(live().sbp, Number(E.bp[0]) || 999) >= h.sbp;
+    if (h.sbp) return untreatedSbp() >= h.sbp;
     if (h.hrAbove) return E.vtNow || live().hr > h.hrAbove;
     return E.stage < (h.stage || 3);
   };
@@ -707,14 +801,16 @@
     const rescue = (treating && a.id === 'adrenaline') || (E.vtNow && a.id === 'shock');
     if (!allergic && prev && !rescue && !again(a, meta, def, prev)) return;
     if (def.harm || allergic) { unsafe(a, meta, def, allergic); return; }
+    const sg = treating && a.id === 'adrenaline' ? { text: 'أدرينالين 0.5 ملغ عضل بالفخذ', dose: '0.5 mg IM' } : def.suggest || meta.suggest || null;
+    const propose = sg ? (sg.dose ? `بقترح ${sg.text}، ماشي؟` : sg.text) : '';
     if (meta.dose && !a.dose && !a._asked) {
-      ask({ type: 'dose', a, ask: `The nurse asked the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}. good = a correct dose or flow, partial = roughly right, wrong = unsafe or wrong, na = not a reply, withdraw = the trainee cancels the order.` }, def.rb || `${meta.ar}، كم الجرعة؟`);
+      ask({ type: 'dose', a, name: meta.ar, tip: sg ? sg.text : '', sug: sg ? sg.dose : undefined, ask: `The nurse asked the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}.${sg ? ` She proposed: ${sg.text}${sg.dose ? ' A plain yes accepting her proposal = "good".' : ''}` : ''} good = a correct dose or flow, partial = roughly right, wrong = unsafe or wrong, na = not a reply, withdraw = the trainee cancels the order.` }, sg ? `${meta.ar}، حاضر. ${propose}` : (def.rb || `${meta.ar}، كم الجرعة؟`));
       return;
     }
     // A number written with the order gets the same check as one given to the nurse.
     if (a.dose && !a._asked && doseBad(a, def, text, a.dose_ok)) {
       badDose(a, meta, def);
-      ask({ type: 'dose', a: { ...a, dose: '' }, retried: true, ask: `The nurse rejected the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}. good = a correct dose, wrong = still wrong, na = not a reply, withdraw = the trainee cancels the order.` }, `دكتور، ${meta.ar} ${a.dose}؟ هاي الجرعة مش مزبوطة، راجعها.`);
+      ask({ type: 'dose', a: { ...a, dose: '' }, retried: true, name: meta.ar, tip: sg ? sg.text : '', sug: sg ? sg.dose : undefined, ask: `The nurse rejected the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}.${sg ? ` She proposed: ${sg.text}${sg.dose ? ' A plain yes accepting it = "good".' : ''}` : ''} good = a correct dose, wrong = still wrong, na = not a reply, withdraw = the trainee cancels the order.` }, `دكتور، ${meta.ar} ${a.dose}؟ هاي الجرعة مش مناسبة. ${propose || 'راجعها.'}`);
       return;
     }
     if (a.dose && overTotal(a, meta, def)) return;
@@ -727,8 +823,44 @@
     E.queue = E.queue.filter(([q]) => !same(q));
     if (!E.pending || !same(E.pending)) return;
     E.pending = null;
-    const next = E.queue.shift();
-    if (next) ask(...next);
+    nextQuestion();
+  }
+
+  // The room answers an order: the numbers move, the nurse says how, and the patient says how he feels.
+  // Treatments given close together are answered together, in one line.
+  function answerLater(meta, before, ramp) {
+    const at = E.sim + ramp + 0.1;
+    if (E.resp) { E.resp.names.push(meta.ar); E.resp.ids.push(meta.id); E.resp.at = Math.max(E.resp.at, at); return; }
+    E.resp = { names: [meta.ar], ids: [meta.id], before, at, risk: E.risk };
+    const fire = () => {
+      if (!E || E.over || !E.resp) return;
+      if (E.sim < E.resp.at - 0.001) { E.jobs.push({ at: E.resp.at, fn: fire }); return; }
+      const x = E.resp;
+      E.resp = null;
+      // A dying patient's numbers can fall on their own: that is no credit to the drug.
+      if (E.stage < 3 && E.risk <= x.risk + 2) respond(x.names, x.ids, x.before);
+    };
+    E.jobs.push({ at, fn: fire });
+  }
+  function respond(names, ids, before) {
+    if (!E || E.over) return;
+    E.bpAt = 0;
+    paint();
+    const v = live(), n = k => Math.round(v[k]), b = k => Math.round(before[k]);
+    const parts = [];
+    if (n('spo2') - b('spo2') >= 2) parts.push(`SpO2 من ${b('spo2')} صارت ${n('spo2')}`);
+    if (b('rr') - n('rr') >= 3) parts.push(`التنفس من ${b('rr')} نزل لـ${n('rr')}`);
+    if (b('hr') - n('hr') >= 5) parts.push(`النبض من ${b('hr')} نزل لـ${n('hr')}`);
+    else if (n('hr') - b('hr') >= 8 && before.hr < 60) parts.push(`النبض من ${b('hr')} طلع لـ${n('hr')}`);
+    if (n('sbp') - b('sbp') >= 5) parts.push(`الضغط صار ${n('sbp')}/${n('dbp')}`);
+    if (!parts.length) return;
+    nurse(`بعد ${names.join(' و')}: ${parts.join('، ')}.`);
+    if (!E.vtNow && E.stage < 3) {
+      const by = E.c.improveBy || {}, own = ids.find(id => by[id] && !E.saidBy.has(id));
+      if (own) E.saidBy.add(own);
+      const line = own ? by[own] : E.improved < (E.c.improve || []).length ? E.c.improve[E.improved++] : '';
+      if (line) later(0.08, () => person('p', line));
+    }
   }
 
   function give(a, meta, def) {
@@ -738,24 +870,33 @@
     settle(q => q.type === 'dose' && q.a.id === a.id);
     log('action', meta.ar + (a.dose ? ' (' + a.dose + ')' : ''));
     const named = a.agent && a.agent.length <= 24 ? a.agent : meta.ar;
-    nurse(a.dose ? `حاضر، ${named} ${a.dose}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'));
+    nurse(a.sayDose ? `حاضر، ${a.sayDose}.` : a.dose ? `حاضر، ${named} ${a.dose}.` : (def.rb && !meta.dose ? def.rb : 'حاضر.'));
     // More of the same adds something; saying the same flow again does not.
     const higher = !prev || !(meta.repeat && meta.repeat.up) || amt > (prev.top || 0);
-    const gain = higher ? (def.slow || 0) * (prev ? (meta.repeat ? meta.repeat.again : 0) : 1) : 0;
+    const share = prev ? (meta.repeat ? meta.repeat.again : 0) : 1;
+    const gain = higher ? (def.slow || 0) * share : 0;
     if (gain) E.effects.push({ id: a.id, from: E.sim + (def.onset || 0), slow: gain });
+    const fx = { ...(meta.fx || {}), ...(def.fx || {}) };
+    if (a.id === 'oxygen' && def.spo2) fx.spo2 = def.spo2;
+    if (higher && share && ['spo2', 'hr', 'rr', 'sbp', 'dbp'].some(k => fx[k])) {
+      const before = { ...live() }, ramp = fx.ramp || 0.2, mod = { id: a.id, from: E.sim + 0.03, ramp };
+      for (const k of ['spo2', 'hr', 'rr', 'sbp', 'dbp']) if (fx[k]) mod[k] = fx[k] * share;
+      E.mods.push(mod);
+      answerLater(meta, before, ramp);
+    }
     if (a.id === 'adrenaline' && E.anaph && !E.anaph.treated) {
       E.anaph.treated = E.sim;
-      later(0.3, () => { E.risk = clamp(E.risk - 18, 0, 100); E.bpAt = 0; paint(); nurse('الضغط بلش يطلع والصفير خف بعد الأدرينالين.'); });
+      later(0.15, () => { E.risk = clamp(E.risk - 18, 0, 100); E.bpAt = 0; paint(); nurse('الضغط بلش يطلع والصفير خف بعد الأدرينالين.'); });
     }
     if (a.id === 'shock' && E.vtNow) {
-      later(0.15, () => {
+      later(0.1, () => {
         E.risk = E.c.risk.critical - 5; E.stage = 2; E.vtNow = false; E.shockedAt = E.sim; E.bpAt = 0;
         stageCheck(); paint();
         log('better', 'رجع النظم بعد الصدمة');
         nurse('رجع sinus، وفي نبض. بس لسا مش ثابت.');
       });
     }
-    later(0.5, () => {
+    later(0.1, () => {
       if (a.id === 'temp') { E.tempKnown = true; paint(); }
       if (a.id === 'bp_repeat') { E.bpAt = 0; paint(); nurse(`الضغط ${E.bp.join('/')}.`); return; }
       if (def.done) nurse(def.done);
@@ -792,7 +933,7 @@
     const label = allergic ? meta.ar + ' رغم الحساسية' : def.label || meta.ar;
     E.harms.push({ at: E.sim, label, why: allergic ? def.allergyEffect : def.why, risk: allergic ? def.allergyRisk || 18 : def.risk || 12 });
     const risk = allergic ? def.allergyRisk || 18 : def.risk || 12;
-    later(0.8, () => {
+    later(0.3, () => {
       // Anaphylaxis leaves time to treat it: that decision is the lesson.
       E.risk = clamp(E.risk + risk, 0, allergic && def.anaphylaxis ? Math.max(E.risk, 88) : 100);
       if (allergic && def.anaphylaxis && !E.anaph) E.anaph = { at: E.sim, treated: null };
@@ -817,7 +958,11 @@
       unsafe({ ...p.a, dose: text.slice(0, 40), _asked: true }, actOf(p.a.id), E.c.care[p.a.id], true);
     } else if (p.type === 'dose') {
       const meta = actOf(p.a.id), def = E.c.care[p.a.id] || {};
-      const a = { ...p.a, dose: doseIn(text), _asked: true, _ok: grade, said: (p.a.said || '') + ' ' + text };
+      const accepted = ACCEPT.test(norm(text));
+      const a = { ...p.a, dose: doseIn(text) || (accepted && p.sug) || '', _asked: true, _ok: grade, said: (p.a.said || '') + ' ' + text };
+      if (accepted && p.sug && !doseIn(text)) a.sayDose = p.tip.split(' (أو')[0];
+      // "Yes" to "which one?" names nothing.
+      if (accepted && !p.sug) { E.pending = p; E.resolved = false; nurse('أي نوع بالزبط، وقديش؟'); return; }
       if (doseBad({ ...a, dose: '' }, def, text, grade)) {
         badDose({ ...a, dose: a.dose || text.slice(0, 24) }, meta, def);
         if (!p.retried) {
@@ -826,7 +971,11 @@
           return;
         }
         nurse('هاي الجرعة ما بقدر أعطيها. اطلبه من جديد بجرعة صحيحة، أو اسأل المشرف.');
-      } else if (!(a.dose && overTotal(a, meta, def))) give(a, meta, def);
+      } else if (!(a.dose && overTotal(a, meta, def))) {
+        give(a, meta, def);
+        // One "yes" takes every other proposal she made in the same breath.
+        if (accepted) for (const item of E.queue.filter(([q]) => q.type === 'dose' && q.sug)) { E.queue.splice(E.queue.indexOf(item), 1); order({ ...item[0].a, dose: item[0].sug, sayDose: item[0].tip.split(' (أو')[0], _asked: true }, text); }
+      }
     } else if (p.type === 'reason') {
       if (grade === 'wrong' && !p.retried) {
         E.pending = { ...p, retried: true };
@@ -845,33 +994,34 @@
       if (grade === 'good') person('d', pickOf(['تمام، هيك القراءة.', 'صح، كمّل.', 'مزبوط، طيب شو الخطوة الجاية؟']));
       else voice('d', 'supervisor', `The trainee misread the ${testOf(p.id).en}. Reference reading: ${E.c.results[p.id].key}. Point to the exact value that does not fit and ask them to look again; explain only that value.`, `ارجع للـ${testOf(p.id).en} مرة ثانية، في إشي مش راكب مع قراءتك.`);
     }
-    const next = E.queue.shift();
-    if (next) ask(...next);
+    nextQuestion();
   }
 
   /* ---------- tests ---------- */
-  function orderTest(id, reason, ok) {
+  // A test is a click or a sentence away and its result lands in the chat at once.
+  function orderTest(id, reason, ok, quiet) {
     const meta = testOf(id);
     if (!meta) return;
-    if (E.tests[id]) { nurse(E.tests[id].back ? `نتيجة ${meta.ar} طلعت، فوق بالمحادثة.` : `${meta.ar} مطلوب، لسا ما طلع.`); return; }
-    if (!reason) {
-      ask({ type: 'reason', id, ask: `The nurse asked why ${meta.en} is needed. Sound reason here: ${(E.c.results[id] || {}).good || 'there is none in this patient'}. good = a sound reason, partial = vague, wrong = a reason that does not fit, na = not a reply, withdraw = the trainee cancels the test.` }, pickOf([`ليش بدك ${meta.ar}؟ لازم أكتب الاستطباب على الطلب.`, `${meta.ar}؟ شو أكتب سبب الطلب؟`]));
+    const have = E.tests[id];
+    if (have) {
+      if (have.el && have.el.scrollIntoView) have.el.scrollIntoView({ block: 'center' });
+      if (!quiet) nurse(`نتيجة ${meta.ar} موجودة فوق بالمحادثة.`);
       return;
     }
-    submitTest(id, reason, ok === 'good' || ok === 'ungraded' ? ok : 'weak');
+    submitTest(id, reason || '', reason ? (ok === 'good' || ok === 'ungraded' ? ok : 'weak') : 'ungraded');
   }
 
   function submitTest(id, reason, reasonOk) {
     settle(q => q.type === 'reason' && q.id === id);
     const meta = testOf(id), res = E.c.results[id] || {};
     // Some tests are fine until the patient crashes.
-    const shocked = res.whenShock && Math.min(live().sbp, Number(E.bp[0]) || 999) < 90;
+    const shocked = res.whenShock && untreatedSbp() < 90;
     const ind = shocked ? res.whenShock : res.ind || 'no', why = shocked ? res.shockWhy : res.why;
     if (res.before && E.done.has(res.before)) E.lateTests.push({ ar: meta.ar, why: res.beforeWhy });
     E.tests[id] = { id, at: E.sim, reason, reasonOk, ind, why, back: false, read: null };
-    log('test', `طلب ${meta.en} (${reason})`);
-    nurse(/incubat/i.test(res.report || '') ? 'بسحبها هسا، والنتيجة بدها يومين.' : `طلبته، النتيجة بعد حوالي ${meta.tat === 1 ? 'دقيقة' : meta.tat === 2 ? 'دقيقتين' : meta.tat <= 10 ? meta.tat + ' دقايق' : meta.tat + ' دقيقة'}.`);
-    later(meta.tat, () => resultBack(id));
+    log('test', `طلب ${meta.en}${reason ? ' (' + reason + ')' : ''}`);
+    resultBack(id);
+    buildRecords();
     if (ind === 'harm') {
       E.risk = clamp(E.risk + 6, 0, 100);
       voice('d', 'supervisor', `The trainee ordered ${meta.en}, which is dangerous right now: ${why} Stop them firmly and ask what it would change.`, `استنى، ليش ${meta.en} هسا؟ شو رح يغيّر بالـmanagement والمريض مش stable؟`);
@@ -897,8 +1047,8 @@
     t.back = true;
     // A culture drawn is not a result yet: nothing to read for hours.
     const waiting = /incubat/i.test(res.report || '');
-    say('lab', '', labCard(id));
-    nurse(waiting ? 'الزراعة بالحاضنة.' : `طلعت نتيجة ${testOf(id).ar}.`);
+    t.el = say('lab', '', labCard(id));
+    if (waiting) nurse('سحبت الزراعة، والنتيجة بعد يومين.');
     if (!waiting && res.key && (res.ind === 'indicated' || res.ind === 'acceptable') && E.readAsks < 3) {
       E.readAsks++;
       ask({ type: 'interpret', id, ask: `The supervisor asked the trainee to read the ${testOf(id).en}. Reference reading: ${res.key}. good = matches, partial = incomplete, wrong = contradicts, na = not a reply.` }, pickOf([`شو بتقرأ بالـ${testOf(id).en}؟`, `طيب، الـ${testOf(id).en} شو بيحكيلك؟`]), 'd');
@@ -1001,7 +1151,7 @@
       // The heart can stop while the handover is being read: that ending stands.
       if (E !== my || E.over) return;
       end.grade = g && g.dx ? { ...g, graded: true } : localGrade(end);
-      E.outcome = E.risk < E.c.risk.watch && netRate() <= 0 && !keyMissing().length ? 'stable' : 'unstable';
+      E.outcome = E.risk < E.c.risk.watch && !keyMissing().length ? 'stable' : 'unstable';
       box.hidden = true;
       conclude(end);
     };
@@ -1077,6 +1227,7 @@
     E.riskLog.push([E.sim, E.risk]);
     cancelAnimationFrame(tickId);
     $('er-sheet').hidden = true;
+    if ($('er-records')) $('er-records').classList.remove('is-open');
     const sound = document.querySelector('.er-mon .nb-mon-sound');
     if (sound && sound.getAttribute('aria-pressed') === 'true') { sound.click(); soundBack = true; }
     $('view-er').dataset.stage = 'calm';
@@ -1133,7 +1284,8 @@
     else gaps.push(`<b>التواصل</b>: لم تشرح لـ${esc(c.companion.name)} ما يجري، وتدخلت ${E.comp.count} مرة.`);
     if (E.comm.rude) gaps.push('<b>التواصل</b>: خرج منك كلام جارح تحت الضغط.');
     const riskTop = Math.round(Math.max(...E.riskLog.map(p => p[1]))), riskEnd = Math.round(E.risk), anxTop = Math.round(E.anxTop);
-    const tests = Object.values(E.tests).map(t => `<tr><td dir="ltr">${esc(testOf(t.id).en)}</td><td class="i-${t.ind}">${IND[t.ind]}</td><td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td><td>${esc(t.why || '')}</td></tr>`).join('');
+    const reasoned = Object.values(E.tests).some(t => t.reason);
+    const tests = Object.values(E.tests).map(t => `<tr><td dir="ltr">${esc(testOf(t.id).en)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${esc(t.why || '')}</td></tr>`).join('');
     const box = $('er-debrief');
     box.hidden = false;
     box.innerHTML = `<div class="er-report-page">
@@ -1147,7 +1299,7 @@
       <h4>الخطر خلال الحالة</h4>${chart()}<p class="er-small">أعلى خطر <b class="font-num">${riskTop}%</b> · عند النهاية <b class="font-num">${riskEnd}%</b> · أعلى ضغط من الأهل <b class="font-num">${anxTop}%</b></p>
       ${good.length ? `<h4>أحسنت</h4><ul class="er-good">${good.map(g => `<li>${esc(g)}</li>`).join('')}</ul>` : ''}
       ${gaps.length ? `<h4>ما يجب أن يتغير</h4><ul class="er-gaps">${gaps.map(g => `<li>${g}</li>`).join('')}</ul>` : ''}
-      <h4>الفحوصات</h4>${tests ? `<div class="er-scroll"><table class="er-tests"><thead><tr><th>الفحص</th><th>الاستطباب</th><th>تبريرك</th><th>لماذا</th></tr></thead><tbody>${tests}</tbody></table></div>` : '<p>لم تطلب أي فحص.</p>'}
+      <h4>الفحوصات</h4>${tests ? `<div class="er-scroll"><table class="er-tests"><thead><tr><th>الفحص</th><th>الاستطباب</th>${reasoned ? '<th>تبريرك</th>' : ''}<th>لماذا</th></tr></thead><tbody>${tests}</tbody></table></div>` : '<p>لم تطلب أي فحص.</p>'}
       ${end && end.grade.note ? `<h4>تسليمك</h4><p>${esc(end.grade.note)}</p>` : ''}
       <h4>الخلاصة</h4><p>${esc(c.brief)}</p>
       <p class="er-small">طلبت مساعدة المشرف ${E.helps} مرة، وبادر هو ${E.hints} مرة. الحالات والدرجات تدريبية ولم يراجعها طبيب بعد.</p>
@@ -1178,36 +1330,37 @@
     } catch (e) { console.error(e); }
   }
 
-  /* ---------- test order sheet ---------- */
-  function openTests() {
+  /* ---------- the records column ---------- */
+  const PANELS = [['heart', 'القلب'], ['blood', 'الدم'], ['chem', 'الكيمياء والغازات'], ['imaging', 'الأشعة'], ['other', 'البول وأخرى']];
+  let recFilter = 'all', recQuery = '';
+  function buildRecords() {
+    const f = $('er-rec-f'), list = $('er-rec-list');
+    if (!f || !list || !D || !E) return;
+    f.innerHTML = [['all', 'الكل'], ...PANELS].map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === recFilter}">${l}</button>`).join('');
+    const q = norm(recQuery);
+    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : '') : '';
+    list.innerHTML = PANELS.filter(([k]) => recFilter === 'all' || recFilter === k).map(([k, label]) => {
+      const items = D.tests.filter(t => t.panel === k && (!q || norm(t.ar + ' ' + t.en + ' ' + (t.kw || []).join(' ') + ' ' + label).includes(q)));
+      if (!items.length) return '';
+      return `<section class="er-rec-sec"><h4>${label}</h4><div>${items.map(t => `<button type="button" class="er-t${E.tests[t.id] ? ' is-done' : ''}" data-t="${t.id}"><span dir="ltr">${esc(t.en)}</span><small>${esc(t.ar)}</small>${E.tests[t.id] ? '<i aria-label="تم الطلب">✓</i>' : ''}</button>`).join('')}</div></section>`;
+    }).join('') || '<p class="er-small">لا يوجد فحص بهذا الاسم.</p>';
+    if (keep) { const n = $('er-records').querySelector(keep); if (n && n.focus) n.focus({ preventScroll: true }); }
+  }
+  const wide = () => window.matchMedia && window.matchMedia('(min-width: 1024px)').matches;
+  function toggleRecords(force) {
+    const r = $('er-records');
+    if (!r) return;
+    if (wide()) { const q = $('er-rec-q'); if (q) q.focus(); return; }
+    r.classList.toggle('is-open', force === undefined ? !r.classList.contains('is-open') : force);
+  }
+  // Touching a test is ordering it: the trainee's line appears, and the result right after it.
+  function panelTest(id) {
     if (!E || E.over) return;
-    const box = $('er-sheet');
-    let pick = null;
-    box.hidden = false;
-    const groups = [['bed', 'بجانب السرير'], ['lab', 'المختبر'], ['img', 'الأشعة']];
-    box.innerHTML = `<div class="er-pane" role="dialog" aria-modal="true" aria-labelledby="er-t-h">
-      <h3 id="er-t-h">طلب فحص</h3>
-      ${groups.map(([g, label]) => `<h4>${label}</h4><div class="er-tlist">${D.tests.filter(t => t.group === g).map(t => `<button type="button" class="er-t" data-t="${t.id}" aria-pressed="false"${E.tests[t.id] ? ' disabled' : ''}>${esc(t.en)}<small>${esc(t.ar)}</small></button>`).join('')}</div>`).join('')}
-      <label>لماذا تطلبه؟ وماذا سيغيّر؟<input id="er-why" type="text" maxlength="140" autocomplete="off"></label>
-      <div class="er-pane-f"><button type="button" class="s" id="er-t-x">رجوع للمريض</button><button type="button" class="p" id="er-t-go" disabled>اطلب</button></div>
-    </div>`;
-    const check = () => { $('er-t-go').disabled = !(pick && $('er-why').value.trim()); };
-    box.querySelectorAll('.er-t').forEach(b => { b.onclick = () => { pick = b.dataset.t; box.querySelectorAll('.er-t').forEach(x => x.setAttribute('aria-pressed', String(x === b))); check(); $('er-why').focus(); }; });
-    $('er-why').addEventListener('input', check);
-    $('er-t-x').onclick = () => { box.hidden = true; $('er-input').focus(); };
-    $('er-t-go').onclick = () => {
-      box.hidden = true;
-      const why = $('er-why').value.trim();
-      person('me', `بدي ${testOf(pick).en}، ${why}`);
-      const id = pick, my = E;
-      chain = chain.then(async () => {
-        if (E !== my || E.over) return;
-        const r = await call({ text: `اطلب ${testOf(id).en} لأن ${why}`, pending: { ask: `Judge this reason for ${testOf(id).en}. Sound reason here: ${(E.c.results[id] || {}).good || 'none in this patient'}. good, partial, wrong.` } });
-        const g = r && r.read ? r.read.pending_ok : 'ungraded';
-        if (E && !E.over) orderTest(id, why, g === 'good' || g === 'ungraded' ? g : 'weak');
-      }).catch(e => console.error(e));
-      $('er-input').focus();
-    };
+    const meta = testOf(id);
+    if (!meta) return;
+    if (!E.tests[id]) { person('me', `بدي ${meta.en}`); orderTest(id, '', '', true); }
+    else orderTest(id, '', '', true);
+    if (!wide()) toggleRecords(false);
   }
 
   /* ---------- starting ---------- */
@@ -1228,8 +1381,13 @@
       chat: [], log: [], riskLog: [[0, c.risk.start]], riskLogAt: 0, paintAt: -1, bpAt: 0, bpTime: 0, bp: ['--', '--'], tempKnown: false, utt: 0, turns: 0,
       comp: { last: -9, count: 0, asked: false, addressed: 0, used: new Set(), extra: false }, comm: { introduced: false, explained: false, empathy: false, consent: false, rude: 0, jargon: 0 },
       harms: [], harmed: new Set(), reacted: false, caught: [], pending: null, queue: [], wrongDoses: [], unneeded: [], lateTests: [], askedNo: 0, hint: -1, hints: 0, helps: 0, readAsks: 0, over: false, outcome: null, resolved: false,
-      topStage: 0, anxTop: c.companion.start, vtNow: false, vtAt: null, shockedAt: null, anaph: null, draft: null
+      topStage: 0, anxTop: c.companion.start, vtNow: false, vtAt: null, shockedAt: null, anaph: null, draft: null,
+      mods: [], improved: 0, nudged: false, collect: null, resp: null, saidBy: new Set(), holdAsked: false
     };
+    recFilter = 'all'; recQuery = '';
+    if ($('er-rec-q')) $('er-rec-q').value = '';
+    buildRecords();
+    if ($('er-records')) $('er-records').classList.remove('is-open');
     chain = Promise.resolve();
     $('er-feed').innerHTML = '';
     $('er-debrief').hidden = true;
@@ -1265,7 +1423,15 @@
     $('er-form').addEventListener('submit', e => { e.preventDefault(); const i = $('er-input'); send(i.value); i.value = ''; });
     // Starting to type is an event like any other: a worried relative does not wait for you to finish.
     $('er-input').addEventListener('input', () => { if (E && !E.typedThisTurn && $('er-input').value.length >= 3) { E.typedThisTurn = true; director('typing'); } });
-    $('er-test').addEventListener('click', openTests);
+    $('er-test').addEventListener('click', () => toggleRecords());
+    const rec = $('er-records');
+    rec.addEventListener('click', e => {
+      const f = e.target.closest('[data-f]'), t = e.target.closest('[data-t]');
+      if (f) { recFilter = f.dataset.f; buildRecords(); }
+      else if (t) panelTest(t.dataset.t);
+      else if (e.target.closest('#er-rec-x')) toggleRecords(false);
+    });
+    $('er-rec-q').addEventListener('input', e => { recQuery = e.target.value; buildRecords(); });
     $('er-end').addEventListener('click', openEnd);
     $('er-sheet').addEventListener('keydown', e => { if (e.key === 'Escape') { $('er-sheet').hidden = true; $('er-input').focus(); } });
   }
@@ -1303,5 +1469,5 @@
     return true;
   };
   // Test hook for the browser checks.
-  window.__nbER = { begin: id => begin(id), send, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; }, get api() { return api; }, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
+  window.__nbER = { begin: id => begin(id), send, orderTest, panelTest, buildRecords, modsNow, live, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; }, get api() { return api; }, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; } };
 })();

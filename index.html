@@ -1739,15 +1739,6 @@
           <p class="er-draft">للتدريب فقط. الحالات لم يراجعها طبيب بعد.</p>
         </header>
         <div class="er-grid">
-          <div class="er-stage">
-            <div class="er-feed" id="er-feed" aria-live="polite"></div>
-            <form class="er-bar" id="er-form" autocomplete="off">
-              <input id="er-input" type="text" maxlength="400" placeholder="تكلم، كلهم معك في الغرفة" aria-label="كلامك في الغرفة">
-              <button type="submit" id="er-send" class="p">أرسل</button>
-              <button type="button" id="er-test" class="s">اطلب فحص</button>
-              <button type="button" id="er-end" class="s">سلّم الحالة</button>
-            </form>
-          </div>
           <aside class="er-mon" aria-label="المونيتور">
             <div class="er-mon-h"><span class="er-mon-dot" aria-hidden="true"></span>المونيتور</div>
             <div class="er-trace"><svg viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 H400" fill="none" stroke="#0F7D44" stroke-width="2"/></svg></div>
@@ -1758,6 +1749,22 @@
               <div class="er-tile"><span>Temp <small dir="ltr">°C</small></span><b id="er-v-temp" class="c-temp">--.-</b></div>
               <div class="er-tile wide"><span>NIBP <small>mmHg</small><em id="er-v-bpt"></em></span><b id="er-v-bp" class="c-bp">--/--</b></div>
             </div>
+          </aside>
+          <div class="er-stage">
+            <div class="er-feed" id="er-feed" aria-live="polite"></div>
+            <form class="er-bar" id="er-form" autocomplete="off">
+              <input id="er-input" type="text" maxlength="400" placeholder="تكلم، كلهم معك في الغرفة" aria-label="كلامك في الغرفة">
+              <button type="submit" id="er-send" class="p">أرسل</button>
+              <button type="button" id="er-test" class="s">الفحوصات</button>
+              <button type="button" id="er-end" class="s">سلّم الحالة</button>
+            </form>
+          </div>
+          <aside class="er-records" id="er-records" aria-label="السجلات والفحوصات">
+            <div class="er-rec-h"><b>السجلات والفحوصات</b><button type="button" id="er-rec-x" aria-label="إغلاق">×</button></div>
+            <p class="er-rec-note">المس أي فحص: نتيجته تظهر في المحادثة فوراً.</p>
+            <div class="er-rec-f" id="er-rec-f"></div>
+            <input id="er-rec-q" type="search" placeholder="ابحث عن فحص" aria-label="ابحث عن فحص" autocomplete="off">
+            <div class="er-rec-list" id="er-rec-list"></div>
           </aside>
         </div>
         <div id="er-sheet" class="er-sheet" hidden></div>

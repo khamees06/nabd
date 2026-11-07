@@ -465,7 +465,9 @@
   // The reply to an open question, offline. Keyword rules cannot truly read free text, so they only ever err towards
   // sparing the patient: a dangerous drug is given on a short, plain yes and nothing else. The model never triggers harm.
   const STOP = /(?:^| )[وف]?(?:لا|ما|مش|مو|ماني|لست|لن|لسا|بلاش|بدون|بدل|غير\S*|ابد|ابدا|ممنوع|مستحيل|لحظه|استن\S*|خلص|رجعي\S*|شكيت|شاكك|شيل\S*|انسي\S*|غلط\S*|وقف\S*|نوقف\S*|الغي\S*|نلغي\S*|la|bala|bla|balash|msh|mish|mesh|wa2f\S*|wa2ef\S*|badal|no|not|don|dont|never|stop|hold|skip|forget|wait|cancel|instead|switch)(?: |$)|معك حق|خليني ات?اكد/;
-  function offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }) {
+  // "اه صح 98. خلص. كيتونات": one sentence of up to three words that is a stop.
+  const shortStop = text => String(text || '').split(/[.!؟?،,\n]+/).map(x => norm(x).trim()).some(x => x && x.split(' ').length <= 3 && STOP.test(x));
+  function offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse, toPat }) {
     const p = E.pending;
     if (!p) return 'na';
     const word = readAct(text);
@@ -474,9 +476,10 @@
       // "Not sure, but give it": the last clause decides.
       const clause = t.split(/ (?:بس|لكن) /).pop();
       if (/(?:^| )ليش لا(?: |$)/.test(clause)) return 'wrong';
-      if (toSup || toComp || asks) return 'na';
+      if (toSup || toComp || toPat || asks) return 'na';
       if (/ما بدي (?:اوقف|اغير|الغي)|علي مسووليتي/.test(clause)) return 'wrong';
-      if (STOP.test(clause) || actions.some(a => a.id !== p.a.id || (p.allergic && !allergicTo(a, E.c.care[a.id] || {}, text)))) return 'good';
+      const aboutIt = clause.split(' ').length <= 5 || mentionsOf(clause, (actOf(p.a.id) || {}).kw || []).length > 0 || shortStop(text);
+      if ((STOP.test(clause) && aboutIt) || actions.some(a => a.id !== p.a.id || (p.allergic && !allergicTo(a, E.c.care[a.id] || {}, text)))) return 'good';
       if (tests.length) return 'na';
       const plain = clause.split(' ').length <= 4 && /^(?:[اتنب]?عطي\S*|كمل\S*|متاكد|اكيد|نعم|ايوا|ايوه|اه|طبعا|yes|sure)(?: |$)/.test(clause);
       return plain ? 'wrong' : word === 'no' || word === 'refuse' ? 'good' : 'na';
@@ -488,7 +491,16 @@
       // "لا تعطيه" withdraws; "ما تتعبي حالك" said to the patient does not.
       if (/(?:^| )(?:(?:لا|ما) ت?(?:عط|حط|ركب|شغل|بلش|علق|كمل)\S*|بلاش|don t|hold|skip)(?: |$)/.test(t)) return 'withdraw';
       // Milligrams do not answer a question about litres of oxygen.
-      if (p.a.id === 'oxygen' && /(?:ملغ|مغ|غرام|mg|mcg)/.test(t)) return 'na';
+      if (p.a.id === 'oxygen' && /(?:ملغ|مغ|غرام|mg|mcg)/.test(t)) {
+        // ...they answer the next proposal in her list: that one becomes the open question, oxygen waits its turn.
+        const i = E.queue.findIndex(([q]) => q.type === 'dose' && q.a.id !== 'oxygen');
+        if (i < 0) return 'na';
+        const [next] = E.queue.splice(i, 1);
+        E.queue.unshift([p, `دكتور، ${p.name}: ${p.tip || 'أي نوع وكم؟'}، ماشي؟`, 'n']);
+        E.pending = next[0];
+        E.pending.since = E.sim;
+        return offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse, toPat });
+      }
       if ((word === 'number' || doseIn(text)) && !tests.length && !actions.some(a => a.id !== p.a.id)) return 'partial';
       if (asks || tests.length || actions.some(a => a.id !== p.a.id)) return 'na';
       if (word === 'number' || doseIn(text) || /(?:لتر|ملغ|مغ|غرام|جرع|حبه|حبتين|نص )/.test(t)) return 'partial';
@@ -649,7 +661,8 @@
     const talkOnly = toComp && (!verb || explaining);
     const to = talkOnly || (toComp && !actions.length) ? 'companion' : toSup && !social ? 'supervisor' : toNurse || actions.length || tests.length ? 'nurse' : 'patient';
     // "Take the adrenaline off" names a drug without ordering it.
-    const stopped = E.pending && E.pending.type === 'unsafe' && STOP.test(t) && !/بدل|badal|instead/.test(t);
+    const stopped = E.pending && E.pending.type === 'unsafe' && STOP.test(t) && !/بدل|badal|instead/.test(t) && !toPat
+      && (t.split(' ').length <= 5 || mentionsOf(t, (actOf(E.pending.a.id) || {}).kw || []).length > 0 || shortStop(text));
     // A reason or a reading that mentions a drug is not an order for it.
     // Naming a drug with a dose over a reading question is an order, not a reading.
     const answering = E.pending && ['reason', 'interpret'].includes(E.pending.type) && !toNurse && !verb && !drugs.some(x => x.dose);
@@ -657,9 +670,9 @@
     const asks = / (شو|وين|قديش|كم|امتي|متي|ليش|هل|ايه|shu)( |$)/.test(' ' + t) && !/شو اخبار/.test(t);
     const small = !asks && (social || (act === null && /^(مرحب|اهلا|هلا|السلام|صباح|مساء)/.test(t)));
     return {
-      act, text, forbids, unclear: unclear ? actOf(unclear.a.id).ar : '', typedOrder: (verb || !!doseIn(text)) && !asking,
+      act, text, forbids, unclear: unclear ? actOf(unclear.a.id).ar : '', toPat, named: D.actions.filter(a => hasAny(t, a.kw)).map(a => a.id), typedOrder: (verb || !!doseIn(text)) && !asking,
       to, facts, exam, actions: talkOnly || stopped || answering ? [] : actions, tests: talkOnly ? [] : tests, kind: toSup && !social ? 'help' : actions.length ? 'order' : opens ? 'open' : small ? 'smalltalk' : facts.length ? 'question' : 'other',
-      pending_ok: offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }),
+      pending_ok: offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse, toPat }),
       tone: {
         introduced: /(انا الدكتور|انا دكتور|انا طالب|اسمي|معك الدكتور)/.test(t), empathy: act === 'wish' || /(بفهم|معك حق|حقك|سلامتها|سلامته|لا تخاف)/.test(t),
         rude: /(اسكت|اخرس|اطلع برا|مش شغلك|مالك دخل|غصب)/.test(t) && !/(لو سمحت|لحظه|شوي|بنشتغل|تفضل)/.test(t), jargon: false,
@@ -667,10 +680,58 @@
       }
     };
   }
+  const VITALS_Q = /(ضغط|نبض|اكسجين|ارقام|الرقم|حراره|تنفس|ساتورشن|ساتوريشن|spo2|sat|bp|hr)/;
+  // The teaching questions come in turn and none twice; after the last, the supervisor lets the trainee work.
+  function teachLine() {
+    E.teachAt = (E.teachAt || 0);
+    const after = ['كمّل، أنا هون إذا احتجتني. احكيلي أهم رقم وشو خطوتك الجاية.', 'شو تغيّر بالأرقام بعد آخر إشي عملته؟', 'لخّصلي الحالة بجملتين: شو عندك، وشو ناقص؟'];
+    if (E.teachAt >= E.c.teach.length) return after[(E.teachAt++ - E.c.teach.length) % after.length];
+    return E.c.teach[E.teachAt++];
+  }
+  // Offline, the supervisor answers the kind of question asked; he never names the diagnosis.
+  function supervisorLine(read, t) {
+    const c = E.c, drug = (read.named || []).map(id => ({ id, care: c.care[id] || {}, meta: actOf(id) })).find(x => x.meta && x.meta.dose);
+    const reasoningQ = /(?:^| )(?:ليش|ليه|لماذا|why|متي|امتي|لو|اذا|وقتها)(?: |$)/.test(t);
+    if (drug && (!reasoningQ || /\d\s*(?:ملغ|مغ|غرام|mg|mcg|ml|مل|وحد|unit)/.test(t))) {
+      const dose = doseIn(read.text || '');
+      if (drug.care.harm || drug.care.off) return `${drug.meta.ar}؟ فكّر منيح قبل ما تعطيه: شو ممكن يعمل بهالمريض بالذات؟`;
+      if (!dose) return `${drug.meta.ar}، ماشي. شو الجرعة والطريق اللي ببالك؟ احكيها وبراجعك.`;
+      const ok = doseCheck({ id: drug.id, dose, said: read.text }, drug.care, read.text);
+      if (ok === 'ok') return `${drug.meta.ar} ${dose} مزبوط، اطلبه من الممرضة.`;
+      if (ok === 'wrong') return `لا، ${drug.meta.ar} ${dose} مش مزبوط. ${drug.care.dose ? 'المعتاد: ' + drug.care.dose : 'راجع الجرعة.'}`;
+      return `${drug.meta.ar} ${dose}: اكتبه للممرضة بالجرعة والطريق، وهي بتراجعك إذا في إشي.`;
+    }
+    if (/(?:ننقل|نحول|نحجز|ندخل|عنايه|icu|طابق|البيت|نروح|اطلع)/.test(t)) return 'الوجهة بتقررها حسب استجابته للعلاج وثبات الأرقام. شو آخر أرقام عندك، وتحسن ولا لأ؟';
+    if (/(?:ممكن (?:انا )?ابدا|من وين ابدا|شو اعمل|مش عارف|محتار|ساعدني)/.test(t)) return 'ابدأ هسا ولا تستنى: ABC أول. شو أهم رقم عالمونيتور، وشو أول order بدك تطلبه؟';
+    if (!reasoningQ && (/(?:صح|مزبوط)$/.test(t) || /(?:صح|مزبوط) /.test(t))) return 'شو الدليل اللي عندك؟ احكيلي أهم نتيجة أو علامة بتدعمه.';
+    return teachLine();
+  }
+  // Offline, the nurse says what she sees and what nurses start with, reads a result's numbers, and asks what is wanted.
+  function nurseLine(read, t) {
+    const v = E.show || live(), c = E.c;
+    const asked = D.tests.filter(x => hasAny(t, x.kw) && E.tests[x.id] && E.tests[x.id].back).map(x => x.id);
+    if (asked.length) return asked.map(id => resultBrief(id)).join(' ');
+    if (/(?:شو (?:ب)?رايك|نبدا|ابدا|شو نعمل|من وين)/.test(t)) {
+      const first = [];
+      if (Math.round(v.spo2) < 94 && !E.done.has('oxygen')) first.push('الأكسجين');
+      if (!E.done.has('iv_access')) first.push('الكانيولا');
+      return `دكتور، الـSpO2 ${Math.round(v.spo2)}% والنبض ${Math.round(v.hr)}.${first.length ? ' عادةً بنبلش ب' + first.join(' و') + '، ' : ' '}شو بتطلب؟`;
+    }
+    if (/(?:حجم|غيج|gauge|g )/.test(t) && /(?:كانيولا|كانولا|كنيولا|cannula)/.test(t)) return 'غيج 18 عالأقل، كبيرة كفاية للسوائل والدم. أركّبها؟';
+    if (VITALS_Q.test(t)) return spokenVitals() + '.';
+    return 'تمام، شو بدك أعمل؟';
+  }
+  // A result said aloud: its name and its first two values.
+  function resultBrief(id) {
+    const r = c0().results[id] || {}, meta = testOf(id);
+    const rows = (r.rows || []).slice(0, 2).map(x => x[0] + ' ' + x[1] + (x[2] ? ' ' + x[2] : ''));
+    return `${meta.ar}: ${rows.length ? rows.join('، ') : (r.report || '').slice(0, 90)}.`;
+  }
+  const c0 = () => E.c;
   function localReply(read) {
     const c = E.c, t = norm(read.text || '');
     if (E.pending && read.pending_ok !== 'na') return null;
-    if (read.to === 'supervisor') return pickOf(c.teach);
+    if (read.to === 'supervisor') return supervisorLine(read, t);
     const held = read.facts.map(id => c.facts.find(x => x.id === id)).filter(Boolean);
     // A question inside an order is still a question: someone answers it.
     if (held.length) {
@@ -691,8 +752,11 @@
     // Telling the family the plan names the treatment; it does not order it.
     if (read.unclear && read.to !== 'companion') { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
     if (read.to === 'nurse' && !read.actions.length && !read.tests.length) {
-      return /(ضغط|نبض|اكسجين|ارقام|الرقم|حراره|تنفس|ساتورشن|ساتوريشن|spo2|sat|bp|hr)/.test(t) ? spokenVitals() + '.' : 'تمام، شو بدك أعمل؟';
+      return nurseLine(read, t);
     }
+    // An order with a question about the numbers: she reads them before she reads the order back.
+    if (read.to === 'nurse' && read.actions.length && !read.actions.some(a => ['bp_repeat', 'temp'].includes(a.id)) && VITALS_Q.test(t) && /(?:كم|قديش|كام|شو)/.test(t)) return spokenVitals() + '.';
+    if (read.to === 'nurse' && read.actions.some(a => a.id === 'iv_access') && /(?:حجم|غيج|gauge)/.test(t)) return 'غيج 18 عالأقل، كبيرة كفاية للسوائل والدم.';
     if (read.to === 'nurse') return null;
     // Spoken to, the relative answers what was said; being told what is happening settles them.
     if (read.to === 'companion') {
@@ -739,7 +803,7 @@
     const spoken = r && !r.voiceFailed;
     if (r && !spoken) read.to = r.to;
     // localReply may hand a line to the companion, so read.to is only final after it.
-    const reply = spoken ? (r.held ? pickOf(E.c.teach) : r.reply) : localReply(read);
+    const reply = spoken ? (r.held ? teachLine() : r.reply) : localReply(read);
     apply(read, text, spoken ? r.to : read.to, reply);
   }
 
@@ -1267,7 +1331,7 @@
     const have = E.tests[id];
     if (have) {
       if (have.el && have.el.scrollIntoView) have.el.scrollIntoView({ block: 'center' });
-      if (!quiet) nurse(`نتيجة ${meta.ar} موجودة فوق بالمحادثة.`);
+      if (!quiet) nurse(have.back ? `طلع من شوي، ${resultBrief(id)}` : `نتيجة ${meta.ar} لسا ما طلعت.`);
       return;
     }
     submitTest(id, reason || '', reason ? (ok === 'good' || ok === 'ungraded' ? ok : 'weak') : 'ungraded');

@@ -359,7 +359,14 @@
     return t.includes('سلام') ? 'وعليكم السلام...' : t.includes('صباح') ? 'صباح النور...' : 'أهلين...';
   }
 
-  const hasAny = (t, kw) => kw.some(k => { const n = norm(k); return n && (' ' + t + ' ').includes(n.length < 4 ? ' ' + n + ' ' : n); });
+  // A short Arabic word also stands with a one-letter prefix (وسكر, بسكر), a short Latin one only whole.
+  const hasAny = (t, kw) => kw.some(k => {
+    const n = norm(k);
+    if (!n) return false;
+    const p = ' ' + t + ' ';
+    if (n.length >= 4) return p.includes(n);
+    return (/^[ء-ي]/.test(n) ? [n, 'و' + n, 'ف' + n, 'ب' + n, 'ل' + n] : [n]).some(f => p.includes(' ' + f + ' '));
+  });
   // A free-standing number, so the 2 in O2 is not a dose, nor the 85 in "ضغطه 85/50".
   const digits = s => String(s).replace(/[٠-٩]/g, d => '٠١٢٣٤٥٦٧٨٩'.indexOf(d)).replace(/٫/g, '.').replace(/(\d)[,،](\d{1,2})(?!\d)/g, '$1.$2').replace(/(\d),(?=\d{3}(?!\d))/g, '$1').replace(/\d+\s*:\s*\d+/g, ' ').replace(/(^|[^\d.])1\s*\/\s*10+(?!\d)/g, '$1 ');
   const DOSE = /(^|[^A-Za-z\d./])(\d+(?:\.\d+)?)(?:\s*[-–]\s*(\d+(?:\.\d+)?))?(?:\s*(mmol|meq|مليمول|ملي مول|ملي مكافئ|mcg|ug|µg|micrograms?|ميكرو[^\s/]*|mgs?|milligrams?|ملغم?|مغ|مج|ملجم|مليغرام|ملي ?غرام|ملي ?جرام|grams?|gm?|gr|غرام|جرام|غم|جم|غ|ml|cc|مل|ملي|سي سي|lpm|lit(?:er|re)s?|l|لتر|ليتر|لترات|iu|units?|u|وحد[هة]|وحدات|miu|mu|million|مليون|mmol|meq|مليمول|ملي مول|ملي مكافئ)(?![A-Za-z\u0621-\u064A]))?/gi;
@@ -477,8 +484,12 @@
     const social = ['greeting', 'wish', 'thanks'].includes(word) || (word === null && /^(?:مرحب|اهل|هلا|السلام|صباح|مساء|شكر|يعطيك|طيب|لا$|ما بعرف|مش عارف)/.test(t));
     if (p.type === 'dose') {
       if (p.sug && ACCEPT.test(t)) return 'good';
-      if (toSup || toComp || social || word === 'unsure' || /^(?:ما بعرف|مش عارف|مش متذكر|ما بتذكر|مش متاكد)/.test(t)) return 'na';
-      if (/(?:^| )(?:لا ت\S*|ما ت\S*|بلاش|don t|hold|skip)(?: |$)/.test(t)) return 'withdraw';
+      if (toSup || toComp || social || (word === 'unsure' && !doseIn(text)) || /^(?:ما بعرف|مش عارف|مش متذكر|ما بتذكر|مش متاكد)/.test(t)) return 'na';
+      // "لا تعطيه" withdraws; "ما تتعبي حالك" said to the patient does not.
+      if (/(?:^| )(?:(?:لا|ما) ت?(?:عط|حط|ركب|شغل|بلش|علق|كمل)\S*|بلاش|don t|hold|skip)(?: |$)/.test(t)) return 'withdraw';
+      // Milligrams do not answer a question about litres of oxygen.
+      if (p.a.id === 'oxygen' && /(?:ملغ|مغ|غرام|mg|mcg)/.test(t)) return 'na';
+      if ((word === 'number' || doseIn(text)) && !tests.length && !actions.some(a => a.id !== p.a.id)) return 'partial';
       if (asks || tests.length || actions.some(a => a.id !== p.a.id)) return 'na';
       if (word === 'number' || doseIn(text) || /(?:لتر|ملغ|مغ|غرام|جرع|حبه|حبتين|نص )/.test(t)) return 'partial';
       if (STOP.test(t)) return 'withdraw';
@@ -497,21 +508,31 @@
     return social || asks || word === 'unsure' || t.length < 2 ? 'na' : 'noted';
   }
 
+  // Orders whose proposal is safe to take as agreed when the trainee says the same order again.
+  const REPEAT_OK = ['oxygen', 'fluids', 'paracetamol'];
   // A drug word is not an order: "بلاش اسبرين" and "بتاخدي اسبرين؟" must never give the drug.
   const NEGATED = /(?:^| )[وف]?(?:لا|ما|مش|مو|بلاش|بدون|ممنوع|غير|مستحيل|اياك\S*|اوعك|اوعي|حذار|نتجنب|تجنب\S*|نبعد|اوقف\S*|نوقف|وقف\S*|شيل\S*|الغي\S*|avoid|no|not|never|dont|don t|without|stop|hold|لسا ما)(?: \S+){0,2}$|(?:^| )(?:بدل|بدال|instead of)(?: \S+)?$/;
   // Asking the relative to step out or wait by the door.
   const STEP_OUT = /(?:^| )(?:برا|بره|عالباب|الباب|اطلع\S*|استن\S*|تستن\S*|ابعد\S*|وسع\S*)(?: |$)/;
-  const ORDER = /(?:^| )[وف]?(?:[اتنبي]?عط[يو]\S*|اعط\S*|حط\S*|ركب\S*|علق\S*|ابدا\S*|بلش\S*|جيب\S*|جهز\S*|شغل\S*|اطلب\S*|اسحب\S*|قيس\S*|افحص\S*|شيك\S*|عيد\S*|نادي\S*|اتصل\S*|ارفع\S*|اعمل\S*|سوي\S*|فعل|فعلي(?:ه|ها)?|فعلو\S*|بدي|بدنا|لازم|خلينا|يلا|give|start|hang|push|need|order|call|get|put|run|draw|repeat|check|activate)(?: |$)/;
+  const ORDER = /(?:^| )[وف]?(?:خد(?:ي|و|وا)|(?:رح |راح )?[اب](?:حط|ركب|سحب|شغل|علق|عطي|رفع|قعد|جهز)\S*|[اتنبي]?عط[يو]\S*|اعط\S*|حط\S*|ركب\S*|علق\S*|ابدا\S*|بلش\S*|جيب\S*|جهز\S*|شغل\S*|اطلب\S*|اسحب\S*|قيس\S*|افحص\S*|شيك\S*|عيد\S*|نادي\S*|اتصل\S*|ارفع\S*|اعمل\S*|سوي\S*|فعل|فعلي(?:ه|ها)?|فعلو\S*|بدي|بدنا|لازم|خلينا|يلا|give|start|hang|push|need|order|call|get|put|run|draw|repeat|check|activate)(?: |$)/;
+  // Words that make a bare drug or procedure name a command ("IV line x2 stat", "فنتولين هلا").
+  const URGENT = /(?:^| )(?:stat|ستات|بسرعه|فورا|حالا|هلا|هسا|الان|now|asap)(?: |$)/;
   const HISTORY = /^(?:هل|شو|ليش|كيف|قديش|كم|وين|مين|متي|امتي|لما|بتاخد\S*|بياخد\S*|بتوخذ\S*|بيوخذ\S*|اخذت\S*|اخدت\S*|عملت\S*|عندك|عنده|عندها|في عند\S*|جربت\S*|استعملت\S*|بتستعمل\S*|بيستعمل\S*|بتستخدم\S*|بتتحسس\S*|بيتحسس\S*|صار معك)(?: |$)/;
-  const ASKS_ABOUT = /(?:بدي (?:اعرف|اسالك|اتاكد)|لازم اعرف|خلينا نشوف|شو صار|(?:^| )(?:اعطوك|اعطوه|اعطوها|اعطاه|اعطيتي|اخذتي|اخدتي)(?: |$))/;
+  const ASKS_ABOUT = /(?:بدي (?:اعرف|اسالك|اتاكد)|لازم اعرف|خلينا نشوف|شو صار|(?:^| )(?:اعطوك|اعطاه|اعطيتي|اخذتي|اخدتي)(?: |$))/;
+  // "اعطوه X" is "give him X" unless it asks about the past ("اعطوه شي قبل ما يجي؟").
+  const ASKS_PAST3 = /(?:^| )(?:اعطوه|اعطوها)(?: |$)/, PAST_WORD = /(?:قبل|بالبيت|بالاسعاف|امبارح|مبارح|الصبح|من شوي|اخر مره)/;
   // Every mention, from the start of its word, so "ولا تعطيه بنسلين" is seen whichever drug comes first.
   const mentionsOf = (t, kw) => {
     const p = ' ' + t + ' ', out = [];
     kw.forEach(k => {
       const n = norm(k);
       if (!n) return;
-      const w = n.length < 4 ? ' ' + n + ' ' : n;
-      for (let i = p.indexOf(w); i >= 0; i = p.indexOf(w, i + 1)) out.push(n.length < 4 ? i + 1 : p.lastIndexOf(' ', i) + 1);
+      if (n.length < 4) {
+        const forms = /^[ء-ي]/.test(n) ? [n, 'و' + n, 'ف' + n, 'ب' + n, 'ل' + n] : [n];
+        for (const form of forms) for (let i = p.indexOf(' ' + form + ' '); i >= 0; i = p.indexOf(' ' + form + ' ', i + 1)) out.push(i + 1);
+        return;
+      }
+      for (let i = p.indexOf(n); i >= 0; i = p.indexOf(n, i + 1)) out.push(p.lastIndexOf(' ', i) + 1);
     });
     return out;
   };
@@ -528,6 +549,9 @@
     if (/brain|دماغ|(?:^| )(?:ل?ل?راس|الراس)(?: |$)/.test(t)) ids.delete('ctpa');
     if (/septic|cardiogenic|انتاني|تاقي|anaphyl/.test(t)) ids.delete('shock');
     if (/nasal|نيزل/.test(t)) ids.delete('iv_access');
+    if (/(?:بينزل|ينزل|خافض) (?:ال)?سكر/.test(t)) ids.delete('glucose');
+    // "هيدروكورتيزون وريد" names a route; a cannula is asked for by its own words.
+    if (ids.has('iv_access') && [...ids].some(id => id !== 'iv_access') && !/(?:كانيولا|كانولا|كنيولا|cannula|canula|iv access|iv line|iv x|(?:بدي|ركب\S*|حط\S*|افتح\S*|جيب\S*|جهز\S*) (?:ال)?iv(?: |$)|خط وريد|افتح\S* وريد|فتح وريد|(?:ركب|حط|جيب)\S* (?:ال)?وريد)/.test(t)) ids.delete('iv_access');
     if (ids.has('noradrenaline')) ids.delete('adrenaline');
     if (ids.has('neb_ipratropium') && !/فنتولين|سالبيوتامول|salbutamol|ventolin/.test(t)) ids.delete('neb_salbutamol');
     if (/ضغط\S* ماسك|ماسك حال/.test(t)) ids.delete('oxygen');
@@ -551,25 +575,55 @@
     return part ? doseIn(part) : '';
   }
 
+  // Latin words glued to Arabic prefixes ("والGTN") are read as the Latin word.
+  const nz = s => norm(s).replace(/(^| )(?:وال|بال|لل|ال|و|ب)(?=[a-z])/g, '$1').replace(/([a-z0-9])([ء-ي])/g, '$1 $2').replace(/([ء-ي])([a-z])/g, '$1 $2');
   function localRead(text) {
-    const t = norm(text).replace(/(^| )(?:وال|بال|لل|ال|و|ب)(?=[a-z])/g, '$1'), c = E.c;
-    let facts = c.facts.filter(f => hasAny(t, f.kw)).map(f => f.id).filter(id => id !== 'allergy' || /حساس|تحسس|allerg/.test(t)).slice(0, 3);
-    // "عنده حساسية من دوا؟" is the allergy question, not the medicines one.
-    if (/حساس|تحسس|allerg/.test(t) && facts.includes('allergy')) facts = ['allergy'];
+    const t = nz(text), c = E.c;
+    // Every question mark ends a question of its own, and each is read alone.
+    const clauseFacts = cl => {
+      let fx = c.facts.filter(f => hasAny(cl, f.kw)).map(f => f.id).filter(id => id !== 'allergy' || /حساس|تحسس|allerg/.test(cl));
+      // "عنده حساسية من دوا؟" is the allergy question, not the medicines one.
+      if (/حساس|تحسس|allerg/.test(cl) && fx.includes('allergy')) fx = ['allergy'];
+      return fx;
+    };
+    const asked = text.split(/[؟?]/).map(x => nz(x).trim()).filter(Boolean);
+    let facts = [...new Set((asked.length > 1 ? asked : [t]).flatMap(clauseFacts))].slice(0, 3);
     let exam = c.exam.filter(f => hasAny(t, f.kw)).map(f => f.id);
     const verb = ORDER.test(t);
-    const asking = /[؟?]/.test(text) ? !/^(?:[اتن]?عط|حط|ركب|علق|ابدا|بلش|جيب|جهز|شغل|قيس|نادي|give|start)/.test(t) || ASKS_ABOUT.test(t) : (HISTORY.test(t) && !verb) || ASKS_ABOUT.test(t);
-    const named = list => { const ids = collisions(t, new Set(list.filter(a => hasAny(t, a.kw)).map(a => a.id))); const keep = FORCED; const out = list.filter(a => ids.has(a.id)); FORCED = keep; return out; };
+    // A message can hold a question and an order: every sentence is judged on its own, so a «؟» in one never cancels the other.
+    const orderish = p => { const pt = nz(p); return ORDER.test(pt) || URGENT.test(pt) || !!doseIn(p); };
+    const parts = (text.match(/[^؟?]+[؟?]?/g) || [text]).map(p => p.trim()).filter(Boolean).flatMap(p => {
+      if (!p.includes('،') || !/[؟?]\s*$/.test(p)) return [p];
+      const cl = p.split('،').map(x => x.trim()).filter(Boolean);
+      return cl.length > 1 && cl.slice(0, -1).some(orderish) ? cl : [p];
+    });
+    const IMPV = /^(?:[اتن]?عط|حط|ركب|علق|ابدا|بلش|جيب|جهز|شغل|قيس|نادي|give|start)/;
+    // "ممكن أعطيها X؟" or "بدي أحط X؟" is a plan said as a question: still an order, but never after "اذا" or "لو".
+    const FPQ = /(?:^| )(?:بدي|بدنا|ب(?:حط|ركب|عطي|زيد|سحب|شغل|علق)|ممكن (?:انا )?ا?(?:ركب|عطي|حط|سحب))\S*/;
+    const asksPart = p => {
+      const pt = nz(p);
+      const past3 = ASKS_PAST3.test(pt) && (/[؟?]/.test(p) || PAST_WORD.test(pt));
+      if (/[؟?]/.test(p)) return (!IMPV.test(pt) && !(FPQ.test(pt) && !/(?:^| )(?:اذا|لو)(?: |$)/.test(pt))) || ASKS_ABOUT.test(pt) || past3;
+      return (HISTORY.test(pt) && !ORDER.test(pt)) || ASKS_ABOUT.test(pt) || past3;
+    };
+    const ordParts = parts.filter(p => !asksPart(p));
+    const asking = !ordParts.length;
+    // What the order-reading below looks at: the sentences that are not questions.
+    const tO = ordParts.length === parts.length ? t : nz(ordParts.join(' '));
+    const named = list => { const ids = collisions(tO, new Set(list.filter(a => hasAny(tO, a.kw)).map(a => a.id))); const keep = FORCED; const out = list.filter(a => ids.has(a.id)); FORCED = keep; return out; };
     const stated = named(D.actions);
-    const forbids = !asking && stated.some(a => { const at = mentionsOf(t, a.kw); return at.length && !at.some(i => freeAt(t, i)); });
-    const said = list => (asking ? [] : named(list).filter(a => FORCED.has(a.id) || mentionsOf(t, a.kw).some(i => freeAt(t, i))));
-    const short = t.split(' ').length <= 3;
-    const found = said(D.actions).map(a => { const dose = clauseDose(text, a.kw, said(D.actions).length > 1); return { a, dose }; });
+    const forbids = !asking && stated.some(a => { const at = mentionsOf(tO, a.kw); return at.length && !at.some(i => freeAt(tO, i)); });
+    const condBefore = i => /(?:^| )(?:لو(?! سمحت)|اذا)(?: |$)/.test((' ' + tO + ' ').slice(0, i));
+    const said = list => (asking ? [] : named(list).filter(a => FORCED.has(a.id) || mentionsOf(tO, a.kw).some(i => freeAt(tO, i) && !condBefore(i))));
+    const short = tO.split(' ').length <= 3;
+    const ordText = ordParts.join(' ');
+    const found = said(D.actions).map(a => { const dose = clauseDose(ordText || text, a.kw, said(D.actions).length > 1); return { a, dose }; });
     // A long sentence with no verb is talk about the drug: the nurse checks instead of acting.
-    const drugs = found.filter(x => verb || x.dose || short);
+    const drugs = found.filter(x => ORDER.test(tO) || URGENT.test(tO) || x.dose || short || (tO.split(' ').length <= 5 && !actOf(x.a.id).dose));
     const unclear = found.find(x => !drugs.includes(x));
-    const strict = a => mentionsOf(t, a.kw).some(i => ORDER.test((' ' + t + ' ').slice(0, i).trim().split(' ').slice(-3).join(' ')));
-    const actions = drugs.map(({ a, dose }) => ({ id: a.id, agent: '', dose, bare: !dose && !strict(a) }));
+    const strict = a => mentionsOf(tO, a.kw).some(i => ORDER.test((' ' + tO + ' ').slice(0, i).trim().split(' ').slice(-3).join(' ')));
+    // A cannula or a vitals check has no dose: "12-lead" beside it is not one.
+    const actions = drugs.map(({ a, dose: d0 }) => { const dose = actOf(a.id).dose ? d0 : ''; return { id: a.id, agent: '', dose, bare: !dose && !strict(a) }; });
     // Keywords missed it: the trained reader looks for a finding this patient's record answers.
     const questionLike = /[؟?]/.test(text) || HISTORY.test(t) || / (?:شو|وين|قديش|كم|متي|امتي|ليش|هل|كيف) /.test(' ' + t + ' ') || /^(?:افحص|اسمع|شوف|بدي اسمع|خليني افحص|بدي افحص)/.test(t);
     if (questionLike && !facts.length && !exam.length && !actions.length) {
@@ -579,10 +633,15 @@
     }
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
     const tests = said(D.tests).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'ungraded' : 'none' }));
-    const SUPV = /(يا مشرف|يا استاذ|يا دكتور|شو (?:ب)?رايك|ساعدني|مش عارف|محتار|شو اعمل)|(?<=^| )(?<!انا |معك |اسمي )(?:دكتور|دكتوره|مشرف|استاذ)(?: |$)/; const NRSV = new RegExp('(?<=^| )(?<!انا )(?:سستر|ستر|ممرضه|نيرس|sister|nurse|' + norm(c.nurse.name) + ')(?: |$)'); const iS = t.search(SUPV), iN = t.search(NRSV); const toSup0 = iS >= 0 && !(iN >= 0 && iN < iS); const nurseVoc = iN >= 0 && !(iS >= 0 && iS < iN); const toSup = toSup0; if (nurseVoc || (toSup0 && /(?:^|(?<!انا |معك |اسمي ))(?:يا )?(?:دكتور|دكتوره|مشرف|استاذ)(?: |$)/.test(t))) { facts = []; exam = []; }
+    // "Why is his breathing fast?" is clinical reasoning, a question for the supervisor, not for the patient.
+    const reasoning = !facts.length && !exam.length && !actions.length && !tests.length && /^(?:ليش|لماذا|شو (?:سبب|يعني|معني))/.test(t) && /(?:نفسه|نبضه|ضغطه|حالته|وعيه|لونه|نفسها|نبضها|ضغطها|حالتها|وعيها)/.test(t) && !/(?:عندك|بتحس|نفسك|وجعك|حالك|معك)/.test(t);
+    const SUPV = /(يا مشرف|يا استاذ|يا دكتور|شو (?:ب)?رايك|ساعدني|مش عارف|محتار|شو اعمل|ممكن (?:انا )?(?:ابدا|اسال)|(?:^| )(?:ننقل|نحول|نحجز|ندخل)\S*)|(?<=^| )(?<!انا |معك |اسمي )(?:دكتور|دكتوره|مشرف|استاذ)(?: |$)/; const NRSV = new RegExp('(?<=^| )(?<!انا )(?:سستر|ستر|ممرضه|نيرس|sister|nurse|' + norm(c.nurse.name) + ')(?: |$)'); const iS = t.search(SUPV), iN = t.search(NRSV); const toSup0 = iS >= 0 && !(iN >= 0 && iN < iS); const nurseVoc = iN >= 0 && !(iS >= 0 && iS < iN); const toSup = toSup0 || (reasoning && !nurseVoc); if (nurseVoc || (toSup0 && /(?:^|(?<!انا |معك |اسمي ))(?:يا )?(?:دكتور|دكتوره|مشرف|استاذ)(?: |$)/.test(t))) { facts = []; exam = []; }
     // "The numbers?" is asked of the nurse, who reads the monitor, never of the patient.
     const toNurse = nurseVoc || new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي|الارقام|ارقامه|ارقامها|علامات حيويه|vitals)').test(t);
-    const toComp = /(يا حجه|يا حجي|يا خالتي|يا خاله|يا ست |يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك|بنتك|ابوك|جوزك|زوجك|مرتك|زوجتك|معك حق|فهمت عليك|ما تخاف|ما تخافي|لا تخاف|لا تخافي|لا تقلق|يا عمو|عمو)/.test(t) || t.includes('يا ' + norm(c.companion.name)) || t.includes(norm(c.companion.name) + ' ');
+    const tP = (' ' + t + ' ').replace(new RegExp(' ' + norm(c.companion.name) + ' ', 'g'), ' ');
+    const toPat = (c.patient.addr || []).some(w => new RegExp('(?:^| )(?:يا )?' + norm(w) + '(?: |$)').test(tP)) && !t.includes(norm(c.companion.name));
+    const toComp0 = /(يا حجه|يا حجي|يا خالتي|يا خاله|يا ست |يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك|بنتك|ابوك|جوزك|زوجك|مرتك|زوجتك|معك حق|فهمت عليك|ما تخاف|ما تخافي|لا تخاف|لا تخافي|لا تقلق|يا عمو|عمو)/.test(t) || t.includes('يا ' + norm(c.companion.name)) || t.includes(norm(c.companion.name) + ' ');
+    const toComp = toComp0 && !toPat;
     // Keywords go first: the model only speaks for a message nothing else could read.
     const act = !facts.length && !exam.length && !actions.length && !tests.length ? readAct(text) : null;
     const social = ['greeting', 'wish', 'thanks'].includes(act);
@@ -617,15 +676,22 @@
     if (held.length) {
       const comp = held.find(x => x.who && x.who !== 'patient'), pat = held.find(x => x.who !== 'companion');
       const f = read.to === 'companion' ? comp || pat : pat || comp;
+      const askedTo = read.to;
       read.to = f === pat && !(read.to === 'companion' && f.who === 'both') ? 'patient' : 'companion';
       read.saidFact = f.id;
+      // A message with several questions gets every answer, each from whoever holds it, one line after another.
+      held.filter(x => x !== f).forEach((x, k) => {
+        const compHas = x.who && x.who !== 'patient', patHas = x.who !== 'companion';
+        const who = askedTo === 'companion' ? (compHas ? 'c' : 'p') : (patHas ? 'p' : 'c');
+        later(0.3 * (k + 1), () => { if (who === 'p' && E.stage === 3) return; person(who, x.say); E.facts.add(x.id); });
+      });
       return f.say;
     }
     if (read.forbids && !read.actions.length) { read.to = 'nurse'; return 'تمام، ما بعطيه.'; }
     // Telling the family the plan names the treatment; it does not order it.
     if (read.unclear && read.to !== 'companion') { read.to = 'nurse'; return `${read.unclear}؟ بدك إياه؟`; }
     if (read.to === 'nurse' && !read.actions.length && !read.tests.length) {
-      return /(ضغط|نبض|اكسجين|ارقام|حراره|تنفس|spo2|bp|hr)/.test(t) ? spokenVitals() + '.' : 'تمام، شو بدك أعمل؟';
+      return /(ضغط|نبض|اكسجين|ارقام|الرقم|حراره|تنفس|ساتورشن|ساتوريشن|spo2|sat|bp|hr)/.test(t) ? spokenVitals() + '.' : 'تمام، شو بدك أعمل؟';
     }
     if (read.to === 'nurse') return null;
     // Spoken to, the relative answers what was said; being told what is happening settles them.
@@ -694,7 +760,7 @@
       nurse(open.type === 'unsafe' ? `ما رح أعطي ${nm} قبل ما تأكدلي.` : open.type === 'dose' ? `ما بعطي ${nm} بدون جرعة. احكيلي لما تقرر.` : 'ما بطلبه بدون استطباب. احكيلي لما تقرر.');
       settle(q => q === open);
     } else if (open.wait % 2 === 0) {
-      nurse(open.type === 'unsafe' ? `دكتور، ${nm}: بعطيه ولا لأ؟` : open.type === 'dose' ? (open.tip ? `دكتور، ${nm}: ${open.tip}` : `دكتور، ${nm}: قديش بدك؟`) : 'دكتور، لسا مستنية جوابك على طلبك.');
+      nurse(open.type === 'unsafe' ? `دكتور، ${nm}: بعطيه ولا لأ؟` : open.type === 'dose' ? (open.tip ? `دكتور، ${nm}: ${open.tip}${open.sug ? '، ماشي؟' : ''}` : `دكتور، ${nm}: قديش بدك؟`) : 'دكتور، لسا مستنية جوابك على طلبك.');
     }
   }
 
@@ -737,7 +803,7 @@
     // What a "yes" gave is read back before the nurse's next question.
     if (open && read.pending_ok && read.pending_ok !== 'na') { resolve(read.pending_ok, text); flushBack(); E.rbBuf = []; }
     // Talking to the relative does not use up the supervisor's question.
-    else if (open && !(open.type === 'interpret' && to === 'companion') && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
+    else if (open && !(open.type === 'interpret' && to === 'companion') && !((open.type === 'dose' || open.type === 'reason') && (to === 'patient' || to === 'companion') && !(read.actions || []).length && !(read.tests || []).length) && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
     // A patient the nurse calls unresponsive does not recite a history, and nothing unheard counts as asked.
     const mute = E.stage === 3 && (to === 'patient' || to === 'room');
     const line = mute ? pickOf((E.c.stageLines.critical || {}).patient || ['...']) : reply;
@@ -949,6 +1015,13 @@
     const sg = treating && a.id === 'adrenaline' ? { text: 'أدرينالين 0.5 ملغ عضل بالفخذ', dose: '0.5 mg IM' } : def.suggest || meta.suggest || null;
     const propose = sg ? (sg.dose ? `بقترح ${sg.text}، ماشي؟` : sg.text) : '';
     if (meta.dose && !a.dose && !a._asked) {
+      // The same safe order said again is "yes, as you proposed": nobody waits on a proposal for oxygen.
+      const open = E.pending && E.pending.type === 'dose' && E.pending.a.id === a.id ? E.pending : E.queue.map(x => x[0]).find(q => q.type === 'dose' && q.a.id === a.id);
+      if (open && open.sug && REPEAT_OK.includes(a.id)) {
+        if (open !== E.pending) E.queue = E.queue.filter(([q]) => q !== open);
+        order({ ...open.a, dose: open.sug, sayDose: open.tip.split(' (أو')[0].split('، ')[0], _asked: true, _ok: 'good' }, text);
+        return;
+      }
       ask({ type: 'dose', a, name: meta.ar, tip: sg ? sg.text : '', sug: sg ? sg.dose : undefined, ask: `The nurse asked the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}.${sg ? ` She proposed: ${sg.text}${sg.dose ? ' A plain yes accepting her proposal = "good".' : ''}` : ''} good = a correct dose or flow, partial = roughly right, wrong = unsafe or wrong, na = not a reply, withdraw = the trainee cancels the order.` }, sg ? `${meta.ar}، حاضر. ${propose}` : (def.rb || `${meta.ar}، كم الجرعة؟`));
       return;
     }

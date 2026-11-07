@@ -77,7 +77,7 @@
       E.bpTime = E.sim;
       $('er-v-bp').textContent = E.bp.join('/');
     }
-    $('er-v-bpt').textContent = 'قبل ' + Math.floor(E.sim - E.bpTime) + ' د';
+    $('er-v-bpt').textContent = 'قبل ' + Math.max(0, Math.floor(E.sim - E.bpTime)) + ' د';
     $('er-v-temp').textContent = E.tempKnown ? E.c.temp.toFixed(1) : '--.-';
   }
   const vitalsLine = () => { const v = E.show || live(); return `HR ${Math.round(v.hr)}, BP ${E.bp.join('/')}, RR ${Math.round(v.rr)}, SpO2 ${Math.round(v.spo2)}%`; };
@@ -110,7 +110,7 @@
 
   function tick(now) {
     if (!E || E.over) return;
-    const dt = Math.min(2, (now - last) / 1000);
+    const dt = Math.max(0, Math.min(2, (now - last) / 1000));
     last = now;
     const rate = netRate();
     const step = dt * PACE / 60;
@@ -221,7 +221,7 @@
   /* ---------- the stream ---------- */
   const LABEL = () => ({ p: E.c.patient.name, c: E.c.companion.name, n: 'الممرضة ' + E.c.nurse.name, d: 'المشرف', me: 'أنت' });
   // Latin runs keep their own order inside Arabic: "12-lead ECG", "5 mg".
-  const bidi = s => String(s == null ? '' : s).split(/([A-Za-z0-9][A-Za-z0-9 .,-/%+]*[A-Za-z0-9%]|[A-Za-z0-9])/).map((x, i) => (i % 2 ? `<bdi dir="ltr">${esc(x)}</bdi>` : esc(x))).join('');
+  const bidi = s => String(s == null ? '' : s).split(/([A-Za-z0-9](?:[A-Za-z0-9 .,\-/%+]|\([A-Za-z0-9 .,\-/%+]*\))*(?<![ .,\-/+])|[A-Za-z0-9])/).map((x, i) => (i % 2 ? `<bdi dir="ltr">${esc(x)}</bdi>` : esc(x))).join('');
   function say(who, text, extra) {
     const feed = $('er-feed');
     // A result being read stays put; a new line only follows if the reader was already at the end.
@@ -293,7 +293,7 @@
     }
   }
   // A free check before the case starts, so a blocked network never freezes the first messages.
-  const ping = () => (api === 'off' ? Promise.resolve() : fetch(API + '?ping=1', { signal: timeout(2500) }).then(r => { if (!r.ok) throw new Error('ping'); }).catch(() => { api = 'off'; apiRetryAt = Date.now() + 60000; loadFind(); }));
+  const ping = () => (api === 'off' ? Promise.resolve() : fetch(API + '?ping=1&_=' + Date.now(), { cache: 'no-store', signal: timeout(4500) }).then(r => { if (!r.ok) throw new Error('ping'); }).catch(() => { api = 'off'; apiRetryAt = Date.now() + 15000; loadFind(); }));
 
   // A line for someone the room has decided should speak; the case's own line is the safety net.
   async function voice(who, speaker, why, fallback) {
@@ -579,9 +579,9 @@
     }
     const why = text.match(/(عشان|لان|لأن|بسبب|لاستبعاد|لنفي|rule out|r\/o).*/i);
     const tests = said(D.tests).map(x => ({ id: x.id, reason: why ? why[0] : '', reason_ok: why ? 'ungraded' : 'none' }));
-    const toSup = /(يا مشرف|يا استاذ|يا دكتور|شو رايك|ساعدني|مش عارف|محتار|شو اعمل)/.test(t);
+    const SUPV = /(يا مشرف|يا استاذ|يا دكتور|شو (?:ب)?رايك|ساعدني|مش عارف|محتار|شو اعمل)|(?<=^| )(?<!انا |معك |اسمي )(?:دكتور|دكتوره|مشرف|استاذ)(?: |$)/; const NRSV = new RegExp('(?<=^| )(?<!انا )(?:سستر|ستر|ممرضه|نيرس|sister|nurse|' + norm(c.nurse.name) + ')(?: |$)'); const iS = t.search(SUPV), iN = t.search(NRSV); const toSup0 = iS >= 0 && !(iN >= 0 && iN < iS); const nurseVoc = iN >= 0 && !(iS >= 0 && iS < iN); const toSup = toSup0; if (nurseVoc || (toSup0 && /(?:^|(?<!انا |معك |اسمي ))(?:يا )?(?:دكتور|دكتوره|مشرف|استاذ)(?: |$)/.test(t))) { facts = []; exam = []; }
     // "The numbers?" is asked of the nurse, who reads the monitor, never of the patient.
-    const toNurse = new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي|الارقام|ارقامه|ارقامها|علامات حيويه|vitals)').test(t);
+    const toNurse = nurseVoc || new RegExp('(يا ممرض|يا سستر|يا ' + norm(c.nurse.name) + '|اعطي|ركبي|حطي|قيسي|جهزي|الارقام|ارقامه|ارقامها|علامات حيويه|vitals)').test(t);
     const toComp = /(يا حجه|يا حجي|يا خالتي|يا خاله|يا ست |يا عمي|اطمني|اطمن|هدي حال|ولا يهمك|لازم اشتغل|بعد اذنك|بنتك|ابوك|جوزك|زوجك|مرتك|زوجتك|معك حق|فهمت عليك|ما تخاف|ما تخافي|لا تخاف|لا تخافي|لا تقلق|يا عمو|عمو)/.test(t) || t.includes('يا ' + norm(c.companion.name)) || t.includes(norm(c.companion.name) + ' ');
     // Keywords go first: the model only speaks for a message nothing else could read.
     const act = !facts.length && !exam.length && !actions.length && !tests.length ? readAct(text) : null;
@@ -603,8 +603,8 @@
       pending_ok: offlineAnswer(text, t, { actions, tests, why, toSup, toComp, toNurse }),
       tone: {
         introduced: /(انا الدكتور|انا دكتور|انا طالب|اسمي|معك الدكتور)/.test(t), empathy: act === 'wish' || /(بفهم|معك حق|حقك|سلامتها|سلامته|لا تخاف)/.test(t),
-        rude: /(اسكت|اخرس|اطلع برا|مش شغلك|مالك دخل|غصب)/.test(t), jargon: false,
-        explained: toComp && /(رح|عم ن|بنعطي|بنعمل|الوضع|حالتها|حالته)/.test(t), consent: /(بعد اذنك|ممكن اسمع|ممكن افحص|بتسمح)/.test(t),
+        rude: /(اسكت|اخرس|اطلع برا|مش شغلك|مالك دخل|غصب)/.test(t) && !/(لو سمحت|لحظه|شوي|بنشتغل|تفضل)/.test(t), jargon: false,
+        explained: toComp && /(?:^| )[وف]?(?:رح|راح|عم ن\S*|بنعطي|بنعمل|الوضع|حالتها|حالته)(?: |$)/.test(t), consent: /(بعد اذنك|ممكن اسمع|ممكن افحص|بتسمح)/.test(t),
       }
     };
   }

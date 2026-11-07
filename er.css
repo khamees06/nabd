@@ -137,7 +137,11 @@
 .er-parts { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(auto-fit, minmax(13rem, 1fr)); gap: .3rem; }
 .er-parts li { display: flex; justify-content: space-between; background: var(--surface); border-radius: 10px; padding: .3rem .7rem; font-size: .84rem; }
 .er-parts b { font-weight: 500; direction: ltr; }
-.er-chart { width: 100%; height: auto; background: var(--surface); border-radius: 12px; }
+.er-chart { width: 100%; height: auto; background: var(--surface); border-radius: 12px; direction: ltr; }
+/* The site-wide [role=dialog] overlay colour must not turn the white handover pane into glass. */
+#view-er .er-pane[role="dialog"] { background-color: var(--surface) !important; }
+/* The phone rule turns every table into a scroll box; a result card needs a real table. */
+.er-lab { display: table; }
 .er-chart polyline { fill: none; stroke: var(--signal); stroke-width: 2.2; }
 .er-chart .t { font-size: 16px; fill: var(--ink-3); }
 .er-chart .g-crit { stroke: var(--danger, #C62828); stroke-dasharray: 4 4; } .er-chart .g-urg { stroke: #E39A3B; stroke-dasharray: 4 4; }
@@ -179,11 +183,11 @@
   .er-mon { order: -1; padding: .4rem .5rem; gap: .3rem; flex-direction: column; }
   .er-mon-h { display: none; }
   .er-top { gap: .35rem .7rem; }
-  .er-draft { margin: 0; font-size: .72rem; }
+  .er-draft { margin: 0; font-size: .78rem; }
   .er-trace { height: 54px; }
   .er-mon .nb-mon-bar { padding: 0; min-height: 0; }
   .er-mon .nb-mon-bar > span { display: none; }
-  .er-mon .nb-mon-sound { font-size: .68rem; padding: .05rem .4rem; margin-inline-start: auto; }
+  .er-mon .nb-mon-sound { font-size: .72rem; padding: .3rem .65rem; min-height: 2rem; margin-inline-start: auto; }
   .er-tiles { grid-template-columns: repeat(5, 1fr); gap: .25rem; }
   .er-tile, .er-tile.wide { grid-column: auto; padding: .2rem .3rem; }
   .er-tile b { font-size: 1.05rem; text-align: center; }
@@ -200,7 +204,10 @@
 @media (max-width: 1023px) and (max-height: 520px) {
   .er-draft, .er-people, .er-trace, .er-mon .nb-mon-bar { display: none; }
   .er-mon { padding: .2rem .4rem; }
+  .er-records { height: 92dvh; }
+}
+/* A phone on its side has the width for one row; a portrait phone with the keyboard open does not. */
+@media (max-width: 1023px) and (max-height: 520px) and (min-width: 600px) {
   .er-bar { flex-wrap: nowrap; }
   #view-er .er-bar input { flex-basis: auto; }
-  .er-records { height: 92dvh; }
 }

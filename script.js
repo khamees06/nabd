@@ -6318,7 +6318,7 @@
         switchProfileSubTab('certificate');
       });
       document.getElementById('print-certificate-btn')?.addEventListener('click', () => {
-        showToast('جارٍ فتح نافذة الطباعة الرسمية لوثيقة إثبات الإنجاز...');
+        showToast('جارٍ فتح نافذة طباعة ملخص جلساتك التدريبية...');
         setTimeout(() => {
           try { window.print(); } catch (e) {}
         }, 150);

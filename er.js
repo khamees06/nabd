@@ -1752,7 +1752,10 @@
     }
     if (isDrug(a.id) && !N.docDoing) {
       N.given.push({ id: a.id, at: E.sim, allergyAsked: E.facts.has('allergy') });
-      if (!E.facts.has('allergy')) later(0.01, () => dOnce('6', 'عطيت الدوا قبل ما تسأل عن الحساسية؟ اسأل هسا وبلّغ ' + docW() + '.'));
+      // Live check 2026-11-07: after a guessed "no allergy" to the doctor, say plainly that it was a guess.
+      if (!E.facts.has('allergy')) later(0.01, () => dOnce('6', N.allergyGuess !== null
+        ? 'حكيت لل' + docW().slice(2) + ' ما في حساسية، بس ما سألت المريض ولا أهله. اسأل هسا قبل الجرعة الجاية.'
+        : 'عطيت الدوا قبل ما تسأل عن الحساسية؟ اسأل هسا وبلّغ ' + docW() + '.'));
     }
     const o = N.orders.find(x => x.kind === 'act' && x.id === a.id && openOrd(x));
     if (o && !N.docDoing) o.doneAt = E.sim;

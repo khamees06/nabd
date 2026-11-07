@@ -1072,6 +1072,8 @@
     // Acting is not reading: an order sent over a teaching question is no misread result.
     if (open && open.type === 'interpret' && ((read.actions || []).length || (read.tests || []).length)) read.pending_ok = 'na';
     // What a "yes" gave is read back before the nurse's next question.
+    // Nurse mode: a call to the doctor (an SBAR full of numbers, "الاكسجين 89") answers nobody's open dose question.
+    if (open && open.type === 'dose' && NM() && read.escalate) read.pending_ok = 'na';
     if (open && read.pending_ok && read.pending_ok !== 'na') { resolve(read.pending_ok, text); flushBack(); E.rbBuf = []; }
     // Talking to the relative does not use up the supervisor's question.
     else if (open && !(open.type === 'interpret' && to === 'companion') && !((open.type === 'dose' || open.type === 'reason') && (to === 'patient' || to === 'companion') && !(read.actions || []).length && !(read.tests || []).length) && (open.type === 'unsafe' || ![...(read.actions || []), ...(read.tests || [])].some(x => x.id === (open.a ? open.a.id : open.id) && (x.dose || x.reason)))) remind(open);
@@ -1603,7 +1605,7 @@
     const item = ordItem;
     if (acts.length || tests.length || rem.length) spoke = true;
     if (acts.length || tests.length || rem.length) {
-      let lead = first ? (N.present ? 'تمام. بدي: ' : 'تمام، ' + comes() + '. لحد ما أوصل بدي: ') : fresh.some(o => o.when === 'gated') ? 'طلعت النتيجة. هسا بدي: ' : 'هسا بدي: ';
+      let lead = first ? (N.present ? 'تمام. بدي: ' : 'تمام، ' + comes() + '. لحد ما أوصل بدي: ') : fresh.some(o => o.when === 'gated' && ((N.nm.orders[o.key] || {}).gate || {}).needTest) ? 'طلعت النتيجة. هسا بدي: ' : fresh.some(o => o.when === 'gated') ? 'تمام. هسا بدي: ' : 'هسا بدي: ';
       if (N.relLead && !first) lead = N.relLead;
       let line = '';
       if (acts.length || tests.length) line = lead + acts.map(item).join('، و') + (tests.length ? (acts.length ? '. وبدي ' : '') + tests.map(item).join('، و') : '') + '.';
@@ -2879,14 +2881,20 @@
       const u = typeof authState !== 'undefined' && authState.user;
       if (!u) return;
       u.history = u.history || [];
-      // nurse mode 2026-11-07: a nurse run is its own entry (er_<id>_n); avgEr below still counts it (open owner item).
+      // nurse mode 2026-11-07: a nurse run is its own entry (er_<id>_n). Averages are kept per role (owner's choice):
+      // avgErDoctor / avgErNurse, and avgEr (shown on home, profile, certificate) is the user's own track's role.
       const nm = NM();
       u.history.unshift({ caseTitle: (nm ? 'غرفة الطوارئ (دور التمريض) · ' : 'غرفة الطوارئ · ') + E.c.dx.ar, mode: 'غرفة الطوارئ', correct: nm ? !!passed : !!(end && end.grade.dx === 'right'), workupCount: Object.keys(E.tests).length,
         questions: E.facts.size, score: `${s.total}% (${passed ? 'مجتاز' : 'غير مجتاز'})`, caseId: 'er_' + E.c.id + (nm ? '_n' : ''), num: s.total, passed, ts: Date.now(), date: new Date().toISOString().slice(0, 10) });
       u.stats = u.stats || {};
       u.stats.completed = u.history.length;
-      const mine = u.history.filter(h => /^er_/.test(h.caseId || ''));
-      u.stats.avgEr = Math.round(mine.reduce((a, h) => a + (h.num || 0), 0) / mine.length) + '%';
+      const avgOf = runs => runs.length ? Math.round(runs.reduce((a, h) => a + (h.num || 0), 0) / runs.length) + '%' : '';
+      const erRuns = u.history.filter(h => /^er_/.test(h.caseId || ''));
+      const docAvg = avgOf(erRuns.filter(h => !/_n$/.test(h.caseId))), nurAvg = avgOf(erRuns.filter(h => /_n$/.test(h.caseId)));
+      if (docAvg) u.stats.avgErDoctor = docAvg; else delete u.stats.avgErDoctor;
+      if (nurAvg) u.stats.avgErNurse = nurAvg; else delete u.stats.avgErNurse;
+      const nursingTrack = typeof nbTrackOf === 'function' && nbTrackOf(u) === 'nursing';
+      u.stats.avgEr = (nursingTrack ? nurAvg || docAvg : docAvg || nurAvg) || avgOf(erRuns);
       if (typeof saveAccountToStorage === 'function') saveAccountToStorage(u);
       if (typeof renderHomePath === 'function') renderHomePath(u);
     } catch (e) { console.error(e); }

@@ -5312,6 +5312,12 @@
       document.getElementById('profile-stat-sessions').textContent = String(u.stats.completed);
       document.getElementById('profile-stat-spec').textContent = u.stats.avgSpec;
       document.getElementById('profile-stat-er').textContent = u.stats.avgEr;
+      // nurse mode 2026-11-07: doctor and nurse ER averages are kept apart; say which one is shown, or both.
+      const erLbl = document.getElementById('profile-stat-er').nextElementSibling;
+      if (erLbl) {
+        const dAvg = u.stats.avgErDoctor, nAvg = u.stats.avgErNurse;
+        erLbl.textContent = dAvg && nAvg ? `معدل الطوارئ · طبيب ${dAvg} · تمريض ${nAvg}` : nAvg ? 'معدل الطوارئ (دور التمريض)' : 'معدل الطوارئ';
+      }
 
       const fillList = (elId, arr) => {
         const ul = document.getElementById(elId);

@@ -153,3 +153,11 @@ v9/sp-cardio.jpg
 v9/sp-resp.jpg
   https://commons.wikimedia.org/wiki/File:X-ray_of_healthy_lungs_taken_at_the_Institute_of_Tropical_Medicine_in_Antwerp,_on_9_December_2016_(1).tif
   N.a. Radiology by Dr. Johan Verbeken. Scan and image editing by Vincent Mia Edie — Public domain
+
+v9 (2026-11-08, second pass): v9/hero2.jpg is ANDY6413 03.jpg above; v9/vision2.jpg is the Shixart1985 doctor photo above.
+v9/jordan.jpg
+  https://commons.wikimedia.org/wiki/File:Jordan_University_Hospital_building.jpg
+  Jordan University Hospital — CC BY-SA 4.0
+v9/aud-uni.jpg
+  https://commons.wikimedia.org/wiki/File:Jordan_University_of_Science_and_Technology_tour_2025_(7).jpg
+  Aroobhj — CC0

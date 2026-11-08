@@ -161,3 +161,8 @@ v9/jordan.jpg
 v9/aud-uni.jpg
   https://commons.wikimedia.org/wiki/File:Jordan_University_of_Science_and_Technology_tour_2025_(7).jpg
   Aroobhj — CC0
+
+v9 (2026-11-08, third pass, owner): v9/hero.jpg and v9/login.jpg (ANDY6413 02.jpg) were removed. v9/login2.jpg is "The impact on human life" above.
+v9/solution2.jpg
+  https://commons.wikimedia.org/wiki/File:Progressive_Skills_Training_at_LRMC_(9659121).jpg
+  Travis Jones — Public domain

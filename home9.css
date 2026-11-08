@@ -56,7 +56,7 @@ html #auth-modal .nb-auth-title { font-size: 1.6rem; }
   html #auth-modal .nb-auth-simple.nb8-auth { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important; }
   html #auth-modal .nb8-auth-side {
     padding: clamp(2rem, 4vw, 3.5rem) !important; justify-content: space-between !important;
-    background: linear-gradient(180deg, rgba(18, 48, 60, .15) 0%, rgba(18, 48, 60, .55) 45%, rgba(15, 106, 112, .94) 100%), url("img/v9/login.jpg") center / cover no-repeat !important;
+    background: linear-gradient(180deg, rgba(18, 48, 60, .15) 0%, rgba(18, 48, 60, .55) 45%, rgba(15, 106, 112, .94) 100%), url("img/v9/login2.jpg") center / cover no-repeat !important;
   }
   html #auth-modal .nb8-side-copy p { display: none; }
   html #auth-modal .nb8-auth-side h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem) !important; line-height: 1.5 !important; }
@@ -65,7 +65,7 @@ html #auth-modal .nb-auth-title { font-size: 1.6rem; }
 }
 /* On a phone the page opens with the photo as a short band above the form. */
 @media (max-width: 859.98px) {
-  html #auth-modal .nb8-auth .nb-auth-main::before { content: ''; display: block; flex: none; height: 9rem; max-width: none !important; width: calc(100% + 2 * clamp(1.25rem, 6vw, 6rem)); margin: 0 calc(-1 * clamp(1.25rem, 6vw, 6rem)) 1rem; background: linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, .9)), url("img/v9/hero.jpg") center 30% / cover no-repeat; }
+  html #auth-modal .nb8-auth .nb-auth-main::before { content: ''; display: block; flex: none; height: 9rem; max-width: none !important; width: calc(100% + 2 * clamp(1.25rem, 6vw, 6rem)); margin: 0 calc(-1 * clamp(1.25rem, 6vw, 6rem)) 1rem; background: linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, .9)), url("img/v9/login2.jpg") center 25% / cover no-repeat; }
 }
 
 /* v2: the section explanation and a lock on the cards that open later */

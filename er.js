@@ -317,6 +317,9 @@
   const stateNow = () => ({
     minute: E.sim, vitals: vitalsLine(), done: [...E.done.keys(), ...E.harmed].map(k => actOf(k)?.en || k),
     results: Object.values(E.tests).filter(t => t.back).map(t => testOf(t.id).en + ': ' + resultText(t.id)),
+    // (live check 2026-11-08) Doctor room: the tests sent and not back yet, so the server never says results are pending
+    // when none were sent. Nurse mode sends nothing new (its STATE stays as it was).
+    ordered: NM() ? undefined : Object.values(E.tests).filter(t => !t.back).map(t => testOf(t.id).en),
   });
   const timeout = ms => { if (AbortSignal.timeout) return AbortSignal.timeout(ms); const c = new AbortController(); setTimeout(() => c.abort(), ms); return c.signal; };
   // Out of reach is rarely for good, so the room says so and keeps knocking once a minute.
@@ -1269,7 +1272,7 @@
     return 'تمام، شو بدك أعمل؟';
   }
   // An order the reader could not place: a drug is asked by name and dose, anything else by its name.
-  const unplacedOrder = t => (doseIn(t) ? 'دكتور، شو اسم الدوا بالزبط؟ ما لقطت الاسم.' : /(?:^| )[وف]?(?:[اتنب]?عط|حط|علق|ضيف|جيب|جهز|ابدا|بلش)\S*/.test(t) ? 'أي دوا بالزبط دكتور؟ احكيلي اسمه وجرعته.' : 'دكتور، احكيلي اسم الإجراء أو الفحص بالزبط، وبعمله هسا.');
+  const unplacedOrder = t => (doseIn(t) ? 'دكتور، شو اسم الدوا بالزبط؟ ما لقطت الاسم.' : /(?:^| )[وف]?(?:[اتنب]?عط|حط|علق|ضيف|جيب|جهز|ابدا|بلش)\S*/.test(t) ? 'أي دوا بالزبط دكتور؟ احكيلي اسمه وجرعته.' : NM() ? 'دكتور، احكيلي اسم الإجراء أو الفحص بالزبط، وبعمله هسا.' : 'ما لقطت الطلب يا دكتور، شو اسمه بالزبط؟');
   // What the nurse says to an order-like message she cannot act on: never a promise she will not keep.
   function unplacedReply(read, t) {
     // «لو لسا واطي… جهزي نورأدرينالين»: a plan for later, held until the doctor says so.
@@ -1282,6 +1285,8 @@
       if (risky) return riskLine(risky);
       const nd = (read.named || []).find(id => (actOf(id) || {}).dose);
       if (nd) return `${actOf(nd).ar}؟ إذا بدك ${fem(actOf(nd).ar) ? 'إياها' : 'إياه'} احكيلي الجرعة، وإذا مش متأكد اسأل المشرف.`;
+      // (live check 2026-11-08) How he is, asked in words the reader missed: the monitor, never «سؤال للمشرف».
+      if (/(?:^| )(?:وضعه|وضعها|حالته|حالتها|كيفه|كيفها|كيفو|طمنيني|طمنوني|طمني|تحسن|تحسنت|اتحسن|اتحسنت|اسوا|(?:هو|هي) (?:منيح|منيحه|احسن))(?: |$)/.test(t)) { read.to = 'nurse'; return howLine(); }
       return 'هاد سؤال للمشرف يا دكتور. إذا بدك إشي أعمله، احكيلي اسمه.';
     }
     if (/(?:^| )[وف]?(?:[اتنب]?عط|حط|علق|ضيف|ركب|جيب|جهز|اسحب|ابعت|اطلب|قيس|شغل|ابدا|بلش|اعمل|بدي)\S*/.test(t) || /[a-z]{2,}/.test(t)) return unplacedOrder(t);
@@ -1411,6 +1416,8 @@
     return id === 'oxygen' ? `ما علي${hisHer()} أكسجين، والـSpO2 ${Math.round(v.spo2)}%. أحطل${hisHer()}؟` : `${sp(id)} ما بلّشناه لسا. بدك ${fem(sp(id)) ? 'إياها' : 'إياه'} هسا؟`;
   }
   // (chat check 2026-11-08) The same judgement for the nurse's «طمنيني عنه», so she never contradicts the patient.
+  // «طمنيني عنه» / «شو وضعه؟»: the numbers on the monitor and which way he is going.
+  const howLine = () => { const came = E.c.patient.sex === 'F' ? 'وصلت' : 'وصل', tr = trendNow(); return `${spokenVitals()}. ${tr === 'better' ? 'أحسن شوي من لما ' + came : tr === 'worse' ? 'أسوأ من لما ' + came + '، لازم نتحرك' : 'لسا زي ما ' + came + ' تقريباً'}.`; };
   const trendNow = () => { const c = E.c; if (E.stage >= 2) return 'worse'; if (E.betterTurn != null || E.saidBy.size > 0 || E.improved > 0 || E.risk <= c.risk.start - 8) return 'better'; return E.stage === 1 || E.risk >= c.risk.start + 6 ? 'worse' : 'same'; };
   // How the patient feels now, from what the room has done: worse, better, or the same.
   function feelNow() {
@@ -1446,7 +1453,7 @@
       if (read.allergenRef === 'unknown') { read.to = 'nurse'; return 'ما سألنا عن الحساسية لسا، ولا حدا حكالي عنها. أي دوا قصدك بالزبط؟'; }
       if (read.unknownDrug) { read.to = 'nurse'; return `${read.unknownDrug}؟ ما بعرف دوا بهالاسم يا دكتور. شو قصدك؟`; }
       if (read.helpTeam) { read.to = 'nurse'; const v = E.show || live(), first = []; if (Math.round(v.spo2) < 94 && !E.done.has('oxygen')) first.push('الأكسجين'); if (!E.done.has('iv_access')) first.push('الكانيولا'); return `أنا معك دكتور. الـSpO2 ${Math.round(v.spo2)}% والنبض ${Math.round(v.hr)}.${first.length ? ' عادةً بنبلش ب' + first.join(' و') + '. اطلب وبعمله فوراً.' : ' اطلب وبعمله فوراً.'}`; }
-      if (read.howIs) { read.to = 'nurse'; const came = E.c.patient.sex === 'F' ? 'وصلت' : 'وصل', tr = trendNow(); return `${spokenVitals()}. ${tr === 'better' ? 'أحسن شوي من لما ' + came : tr === 'worse' ? 'أسوأ من لما ' + came + '، لازم نتحرك' : 'لسا زي ما ' + came + ' تقريباً'}.`; }
+      if (read.howIs) { read.to = 'nurse'; return howLine(); }
       if (read.resultsAll) { read.to = 'nurse'; return resultsLine(); }
       if (read.monitorAsk) { read.to = 'nurse'; return `المونيتر مركّب من أول ما ${E.c.patient.sex === 'F' ? 'وصلت' : 'وصل'}: ${spokenVitals()}.`; }
       if (read.roomQ) { read.to = 'nurse'; read.clarify = true; const p = E.pending; return `أنا هون دكتور. ${spokenVitals()}.${p && p.type === 'dose' ? ' ' + shortAsk(p).replace(/^و/, 'وبستناك: ') : ''}`; }
@@ -1550,6 +1557,8 @@
 
   /* ---------- a message from the student ---------- */
   let chain = Promise.resolve();
+  // (live check 2026-11-08) A message that is only the room's own question to the nurse (see handle()).
+  const ROOM_ONLY = /^(?:(?:يا )?(?:سستر|سيستر) )?(?:(?:طمنيني|طمنوني|طمني|طمنينا|طمنونا)(?: (?:عنه|عليه|عنها|عليها))?|(?:شو|كيف) (?:وضعه|وضعها|حالته|حالتها|حاله المريض|وضع المريض|وضع المريضه)|(?:شو|وين) (?:صار|وصلت|طلعت|طلع) (?:ب|في )?(?:ال)?(?:فحوصات|فحوص|نتايج|نتائج|تحاليل)|(?:ركبوله|ركبولها|ركبيله|ركبيلها|ركبوا|ركبي) (?:ال)?(?:مونيتر|مونيتور|monitor))(?: (?:هسا|هلا|هلق|الحين|يا سستر|سستر))?$/;
   function send(text) {
     text = (text || '').trim();
     if (!text || !E || E.over) return;
@@ -1566,9 +1575,27 @@
   async function handle(text) {
     if (NM()) return handleNurse(text);
     const my = E;
+    /* (live check 2026-11-08, paid) The room's own questions to the nurse («طمنيني عنه», «شو وضعه هسا؟», «شو صار
+       بالفحوصات؟», «ركبوله مونيتر») are answered from the monitor and the ordered tests, online exactly as offline,
+       with no server call: online they went to the relative, to «سؤال للمشرف», or to invented pending results.
+       Only when the whole message is that question, and never while a reading is asked: «تمام، وشو صار بالفحوصات؟»,
+       «ركبوله مونيتر واسحبوا دم» or «يا لين طمنيني عنك» still go to the server. */
+    // A late yes to oxygen she had said was not needed, the turn after it was closed in silence, still gives it.
+    if (E.cavClosed) { const cc = E.cavClosed; E.cavClosed = null; if (!E.pending && cc.turn === E.turns && !E.done.has(cc.p.a.id) && ACCEPT.test(norm(text))) E.pending = cc.p; }
+    if (ROOM_ONLY.test(norm(text)) && !(E.pending && E.pending.type === 'interpret')) {
+      const lr = localRead(text);
+      if ((lr.howIs || lr.resultsAll || lr.monitorAsk) && !lr.actions.length && !lr.tests.length) {
+        lr.text = text;
+        const own = localReply(lr);
+        if (own) { apply(lr, text, lr.to, own); return; }
+      }
+    }
     const dots = typing();
     const pending = E.pending;
-    const r = await call({ text, pending: pending ? { ask: pending.ask } : undefined });
+    // (live check 2026-11-08) A «which drug?» left behind two messages ago is not the server's open question any more:
+    // sent on, the model asked «بالعضل ولا بالوريد؟» about an injection nobody named.
+    const sendPending = pending && !(pending.type === 'which' && E.turns - (pending.turnAt || 0) >= 2);
+    const r = await call({ text, pending: sendPending ? { ask: pending.ask } : undefined });
     if (!r && !ACT && !actRetried) { actRetried = true; await loadAct(); }
     dots.remove();
     if (E !== my || E.over) return;
@@ -1633,8 +1660,11 @@
   const shortTip = p => (p.tip || '').split(' (أو')[0].split('، ')[0];
   const nameOf = p => p.name || (p.a && actOf(p.a.id) ? actOf(p.a.id).ar : 'الدوا');
   const spk = p => (p.a && SPOKEN[p.a.id]) || nameOf(p);
-  const named = p => { const t = shortTip(p); if (!t) return spk(p); return norm(t).includes(norm(nameOf(p)).split(' ')[0]) ? t : spk(p) + ': ' + t; };
-  const shortAsk = p => p.type === 'unsafe' ? 'و' + spk(p) + '؟ بعطيه ولا لأ؟' : p.type === 'dose' ? (p.sug ? 'و' + named(p) + '، ماشي؟' : 'و' + spk(p) + (!NM() && p.a && p.a.sayName ? ': قديش الجرعة؟' : ': أي نوع وقديش؟')) : '';
+  // (live check 2026-11-08) Doctor room: a proposal is named in speech, never as a note («والأكسجين: nasal 2 لتر»):
+  // inside a sentence «والأكسجين nasal 2 لتر», asked on its own «والأكسجين، بقترح nasal 2 لتر، ماشي؟».
+  const named = p => { const t = shortTip(p); if (!t) return spk(p); return norm(t).includes(norm(nameOf(p)).split(' ')[0]) ? t : spk(p) + (NM() ? ': ' : ' ') + t; };
+  const namedAsk = p => { const t = shortTip(p); return NM() || !t || norm(t).includes(norm(nameOf(p)).split(' ')[0]) ? named(p) : spk(p) + '، بقترح ' + t; };
+  const shortAsk = p => p.type === 'unsafe' ? 'و' + spk(p) + '؟ بعطيه ولا لأ؟' : p.type === 'dose' ? (p.sug ? 'و' + namedAsk(p) + '، ماشي؟' : 'و' + spk(p) + (!NM() && p.a && p.a.sayName ? ': قديش الجرعة؟' : ': أي نوع وقديش؟')) : '';
   // (chat fix 2 2026-11-08) Doctor room: a drug held for an allergy is refused with its reason and an alternative asked.
   const parkLine = (list, tail) => { const d = list.filter(q => q.type === 'dose'), u = list.filter(q => q.type === 'unsafe'); const out = [d.length ? 'ما أعطيت ' + d.map(spk).join(' و') + ' لسا، بستنى كلمتك.' : '', ...u.map(q => (!NM() && q.allergic ? 'ما رح أعطي ' + spk(q) + '، عند' + hisHer() + ' حساسية منه. بدك بديل؟' : 'ما رح أعطي ' + spk(q) + ' قبل ما تأكدلي.'))].filter(Boolean).join(' '); return tail ? 'و' + out : out; };
   // The nurse asks which drug and how much; she never names one, so the order stays the trainee's.
@@ -1672,6 +1702,8 @@
       E.pending = null;
       nextQuestion();
     } else {
+      // (live check 2026-11-08) Doctor room: oxygen she said was not needed («مش واطي») is not asked again: closed in silence.
+      if (!NM() && tl.p.caveat) { E.queue = E.queue.filter(([q]) => q !== tl.p); if (E.pending === tl.p) E.pending = null; E.cavClosed = { p: tl.p, turn: E.turns }; nextQuestion(); return; }
       list.forEach(q => { q.asks = (q.asks || 1) + 1; });
       // (chat fix 2 2026-11-08) Doctor room: a drug with no proposal is asked by name and dose, never «والمضاد، ماشي؟».
       const sg = list.filter(q => q.sug), ns = list.filter(q => !q.sug);
@@ -1689,7 +1721,9 @@
     if (t.empathy) { E.comm.empathy = true; }
     if (t.jargon && (to === 'companion' || to === 'patient')) { E.comm.jargon++; E.anx = clamp(E.anx + 7, 0, 100); }
     // Orders, tests, an examination or history from the patient: the doctor is working.
-    const working = (read.actions || []).length || (read.tests || []).length || (read.exam || []).length || (to === 'patient' && (read.facts || []).length);
+    const working = (read.actions || []).length || (read.tests || []).length || (read.exam || []).length || (to === 'patient' && (read.facts || []).length)
+      // (live check 2026-11-08) Doctor room: a «ماشي» that accepts her proposal is an order too.
+      || (!NM() && E.pending && E.pending.type === 'dose' && ['good', 'partial'].includes(read.pending_ok));
     if (working) E.busyTurn = E.turns;
     if (to === 'companion') {
       const c = E.comp;
@@ -1833,7 +1867,7 @@
         if (q) {
           q.reopened = true; E.parked = E.parked.filter(x => x !== q);
           E.pending = q; q.since = E.sim; q.turnAt = E.turns; q.asks = 1; E.askedThisTurn = true;
-          person('n', (q.a.id === 'oxygen' ? `والـSpO2 ${Math.round(v.spo2)}%: ` : 'و') + named(q) + '، ماشي؟');
+          person('n', (q.a.id === 'oxygen' ? `والـSpO2 ${Math.round(v.spo2)}%: ` : 'و') + namedAsk(q) + '، ماشي؟');
         }
       }
       E.tail = null; E.merging = false;
@@ -1863,7 +1897,8 @@
   // Only a bare yes accepts: "تمام بلاش الكورتيزون" and "اه لحظة" are not a yes.
   // (chat fix 2 2026-11-08) «اعطيه»، «حطيه»، «اطلبي» answer her proposal as a yes does.
   const YES_WORD = 'اه|ايوا|ايوه|نعم|تمام|ماشي|اوكي|اوك|ok|okay|yes|اكيد|طيب|موافق|مزبوط|نمشي|نفذي?|يلا|اعطيه|اعطيها|اعطيهم|عطيه|عطيها|اعطوه|اعطوها|عطوه|عطوها|حطيه|حطيها|حطوه|حطوها|حطيله|حطيلها|علقيه|علقيها|علقوه|ركبيه|ركبوه|نفذو|كملي|كملو|اطلبي|اطلبيه|اطلبيها|اطلبوه|اطلبه|بلشي|بلشو|ابدئي';
-  const ACCEPT = new RegExp('^(?:' + YES_WORD + '|زي ما (?:قلتي|اقترحتي)|علي كلامك)(?: (?:' + YES_WORD + '|دكتوره?|سستر|كلهم|هيك|اعطيهم|عطيهم|ابدئي))*$');
+  // (live check 2026-11-08) She asks «ماشي عالاتنين؟» / «ماشي عالكل؟»: «ماشي عالاتنين»، «آه الاتنين»، «ماشي على الكل» are that yes.
+  const ACCEPT = new RegExp('^(?:' + YES_WORD + '|زي ما (?:قلتي|اقترحتي)|علي كلامك)(?: (?:' + YES_WORD + '|دكتوره?|سستر|كلهم|كله|هيك|اعطيهم|عطيهم|ابدئي|(?:علي )?(?:عال|ع|ال)?(?:اتنين|تنين|ثنين|كل)))*$');
   const YES_FIRST = new RegExp('^(?:' + YES_WORD + ')(?: |$)');
   const bundleLine = list => 'حاضر دكتور. بقترح: ' + list.map((p, i) => `${'١٢٣٤٥٦٧٨'[i]}) ${p.name}: ${p.tip || 'أي نوع وكم؟'}`).join(' — ') + ' — موافق؟ أو غيّر أي واحد.';
   // All open doses are one question, with the ones she has a proposal for first.
@@ -2797,7 +2832,7 @@
         return;
       }
       if (ownAgent) { ask({ type: 'dose', a, name: a.sayName, tip: '', sug: undefined, ask: `The nurse asked the dose of ${a.sayName} (${meta.en}). Reference: ${def.dose || 'standard dose'}. good = a correct dose, partial = roughly right, wrong = unsafe or wrong, na = not a reply, withdraw = the trainee cancels the order.` }, `${a.sayName}، حاضر. قديش الجرعة؟`); return; }
-      ask({ type: 'dose', a, name: meta.ar, tip: sg ? sg.text : '', sug: sg ? sg.dose : undefined, caveat, ask: `The nurse asked the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}.${sg ? ` She proposed: ${sg.text}${sg.dose ? ' A plain yes accepting her proposal = "good".' : ''}` : ''} good = a correct dose or flow, partial = roughly right, wrong = unsafe or wrong, na = not a reply, withdraw = the trainee cancels the order.` }, sg ? (caveat ? `${meta.ar}؟ ${propose}` : `${meta.ar}، حاضر. ${propose}`) : (def.rb || `${meta.ar}، كم الجرعة؟`));
+      ask({ type: 'dose', a, name: meta.ar, tip: sg ? sg.text : '', sug: sg ? sg.dose : undefined, caveat, ask: `The nurse asked the dose of ${meta.en}. Reference: ${def.dose || 'standard dose'}.${sg ? ` She proposed: ${sg.text}${sg.dose ? ' A plain yes accepting her proposal = "good".' : ''}` : ''} good = a correct dose or flow, partial = roughly right, wrong = unsafe or wrong, na = not a reply, withdraw = the trainee cancels the order.` }, sg ? (caveat || !NM() ? (!NM() ? (norm(sg.text).includes(norm(meta.ar).split(' ')[0]) && !caveat ? '' : `${meta.ar}؟ `) + propose.replace(/\s*\(أو\s*([^()]*)\)/g, '، أو $1') : `${meta.ar}؟ ${propose}`) : `${meta.ar}، حاضر. ${propose}`) : (def.rb || `${meta.ar}، كم الجرعة؟`));
       return;
     }
     // A number written with the order gets the same check as one given to the nurse.

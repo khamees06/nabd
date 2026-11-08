@@ -1559,6 +1559,34 @@ button:active { transform: translateY(1px); }
   color: var(--text-secondary);
 }
 .nb-auth-close:hover { background: var(--surface-muted); }
+/* 2026-11-08 (owner: the X on the sign-up box "sticks"): the brand row with the ✕ stays at the top of the box
+   while the form scrolls, the ✕ is a full finger-size target that answers the first tap, and the page behind
+   the box does not scroll with it. */
+#auth-modal .nb-auth-brand {
+  position: sticky; top: 0; z-index: 3;
+  background: #FFFFFF;
+  padding-block: .55rem; margin-top: -.55rem;
+}
+#auth-modal .nb-auth-close {
+  width: 44px; height: 44px;
+  background: var(--surface-muted, #EEF3F5);
+  color: var(--text-primary, #12303C);
+  font-size: 1.15rem; line-height: 1; font-weight: 700;
+  cursor: pointer; touch-action: manipulation; -webkit-tap-highlight-color: transparent;
+  z-index: 1;
+}
+#auth-modal .nb-auth-close:active { background: var(--border-standard, #D6E0E4); }
+#auth-modal .nb-auth-simple, #auth-modal .nb-auth-main { overscroll-behavior: contain; scroll-padding-top: 4.5rem; }
+/* Wide screens: .nb-auth-main is the scroller and its top padding would leave a gap above the stuck row, so the row
+   carries that padding itself. */
+@media (min-width: 860px) {
+  #auth-modal .nb8-auth .nb-auth-main { padding-top: 0; }
+  #auth-modal .nb8-auth .nb-auth-brand { margin-top: 0; padding-top: 1.8rem; }
+  #auth-modal .nb8-auth .nb-auth-close { top: calc(50% + .625rem); } /* centred on the logo, not on the padding */
+}
+#auth-modal #auth-modal-title:focus { outline: none; }
+/* Touch screens only (set in openAuthModal): the page behind the box does not scroll with it. */
+html.nb-auth-open, html.nb-auth-open body { overflow: hidden !important; }
 .nb-auth-title { margin: 0 0 1.25rem; color: var(--text-primary); font-size: 1.4rem; line-height: 1.4; font-weight: 700; }
 #auth-modal .nb-auth-form, #auth-modal #auth-pane-register { margin-top: 0 !important; text-align: right; }
 #auth-modal .nb-field { margin-bottom: .95rem; }

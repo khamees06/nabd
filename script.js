@@ -2089,11 +2089,22 @@
       switchAuthModalTab(defaultTab);
       modal.classList.remove('hidden');
       modal.classList.add('flex');
+      // 2026-11-08 (owner: the X "sticks" on phones): the box opens at its top with the page behind it still,
+      // and a text field is focused only with a mouse. On a phone the keyboard used to open at once, so the first
+      // tap on ✕ only closed the keyboard, the box jumped, and the tap missed.
+      const card = modal.querySelector('.nb-auth-simple'), main = modal.querySelector('.nb-auth-main');
+      if (card) card.scrollTop = 0;
+      if (main) main.scrollTop = 0;
+      const finePointer = window.matchMedia && window.matchMedia('(hover: hover) and (pointer: fine)').matches;
+      // The page lock is for touch screens (the page scrolled under the finger); on a desktop it would only make the
+      // scrollbar jump.
+      if (!finePointer) document.documentElement.classList.add('nb-auth-open');
       window.setTimeout(() => {
         // A focusSelector (e.g. the demo accounts) avoids focusing a text field,
-        // so phones do not open the keyboard over the options.
+        // so phones do not open the keyboard over the options. On touch, focus goes to the box's title (no keyboard).
         const target = focusSelector
           ? document.querySelector(focusSelector)
+          : !finePointer ? document.getElementById('auth-modal-title')
           : defaultTab === 'register' ? document.getElementById('reg-name') : document.getElementById('login-email');
         target?.focus({ preventScroll: !focusSelector });
       }, 0);
@@ -2102,8 +2113,10 @@
     function closeAuthModal() {
       const modal = document.getElementById('auth-modal');
       if (!modal) return;
+      if (modal.contains(document.activeElement)) document.activeElement.blur();
       modal.classList.add('hidden');
       modal.classList.remove('flex');
+      document.documentElement.classList.remove('nb-auth-open');
     }
 
 
@@ -6935,6 +6948,16 @@
       initNurse();
       nbCoachApiInit();
       document.getElementById('close-auth-modal-btn')?.addEventListener('click', closeAuthModal);
+      // A tap on the dimmed area outside the box closes it too (only when the press also started there,
+      // so selecting text in a field and releasing outside does not close the form).
+      (() => {
+        const modal = document.getElementById('auth-modal');
+        if (!modal) return;
+        let downOnBackdrop = false, upOnBackdrop = false;
+        modal.addEventListener('pointerdown', e => { downOnBackdrop = e.target === modal; });
+        modal.addEventListener('pointerup', e => { upOnBackdrop = e.target === modal; });
+        modal.addEventListener('click', e => { if (e.target === modal && downOnBackdrop && upOnBackdrop) closeAuthModal(); downOnBackdrop = upOnBackdrop = false; });
+      })();
       document.getElementById('auth-tab-login')?.addEventListener('click', () => switchAuthModalTab('login'));
       document.getElementById('auth-tab-register')?.addEventListener('click', () => switchAuthModalTab('register'));
 

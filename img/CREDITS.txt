@@ -108,3 +108,48 @@ or/checklist.jpg
 or/pacu.jpg
   https://commons.wikimedia.org/wiki/File:US_Navy_100727-N-6410J-022_Medical_personnel_aboard_the_Military_Sealift_Command_hospital_ship_USNS_Mercy_(T-AH_19)_care_for_an_Indonesian_surgical_patient_in_the_post_anesthesia_care_unit_during_Pacific_Partnership_2010.jpg
   U.S. Navy photo by Mass Communication Specialist 3rd Class Matthew Jackson — Public domain
+
+
+v9 (2026-11-08): landing, student home and sign-in photos, from Wikimedia Commons, cropped and resized.
+v9/hero.jpg, v9/login.jpg
+  https://commons.wikimedia.org/wiki/File:ANDY6413_02.jpg
+  Andrey Chernogorodov — CC BY 4.0
+v9/solution.jpg, v9/aud-students.jpg
+  https://commons.wikimedia.org/wiki/File:ANDY6413_03.jpg
+  Andrey Chernogorodov — CC BY 4.0
+v9/sp-sepsis.jpg
+  https://commons.wikimedia.org/wiki/File:Hospital_patient_on_floor.jpg
+  Downtowngal — CC BY-SA 4.0
+v9/sp-er.jpg
+  https://commons.wikimedia.org/wiki/File:Patient_lying_in_bed_in_intensive_care_unit_of_hospital_with_apparatuses_and_hemodialysis_machine.jpg
+  Pittigrilli — CC BY-SA 4.0
+v9/sp-peds.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_080716-N-6387D-005_Chae_Kim,_a_University_of_California-San_Diego_Pre-Dental_Society_sophomore_student,_shares_a_moment_with_a_young_Timorese_patient_in_the_pediatrics_ward_aboard_the_Military_Sealift_Command_hospital_s.jpg
+  U.S. Navy photo by Mass Communication Specialist 1st Class A. Nick De La Cruz — Public domain
+v9/aud-nurses.jpg, v9/sp-nursing.jpg
+  https://commons.wikimedia.org/wiki/File:Emergency_Response_Training_at_USNH_Naples_(6496291).jpg
+  Christina Clarke — Public domain
+v9/aud-uni.jpg
+  https://commons.wikimedia.org/wiki/File:Close_up_of_a_female_doctor_in_a_blue_suit_with_a_Stethoscope_at_home.jpg
+  Shixart1985 — CC BY 2.0
+v9/sp-obgyn.jpg
+  https://commons.wikimedia.org/wiki/File:Close-up_of_a_doctor_listening_to_a_baby_with_stethoscope.jpg
+  Shixart1985 — CC BY 2.0
+v9/problem.jpg
+  https://commons.wikimedia.org/wiki/File:US_Navy_060702-N-9076B-060_U.S._Navy_Lt.j.g._Cathrine_Soteras_of_Long_Beach,_Calif.,_helps_Operation_Smile_nurse_Jhen_Valdez_with_a_small_child_in_a_recovery_room_on_board_the_U.S._Naval_hospital_ship_USNS_Mercy_(T-AH_19).jpg
+  U.S. Navy photo by Chief Mass Communication Specialist Don Bray — Public domain
+v9/sp-surgery.jpg
+  https://commons.wikimedia.org/wiki/File:2016_30_Cleft_Lip_Surgery-15_(30072215853).jpg
+  AMISOM Public Information — CC0
+v9/vision.jpg, v9/welcome.jpg
+  https://commons.wikimedia.org/wiki/File:The_impact_on_human_life_(8266126).jpg
+  U.S. Air Force photo by Staff Sgt. Madeline Herzog — Public domain
+v9/sp-diabetes.jpg
+  https://commons.wikimedia.org/wiki/File:Capteur_de_glyc%C3%A9mie_pour_personnes_diab%C3%A9tiques.jpg
+  Celeda — CC BY-SA 4.0
+v9/sp-cardio.jpg
+  https://commons.wikimedia.org/wiki/File:18_years_old_boy_normal_ECG.jpg
+  Mahdi2ha — CC BY-SA 4.0
+v9/sp-resp.jpg
+  https://commons.wikimedia.org/wiki/File:X-ray_of_healthy_lungs_taken_at_the_Institute_of_Tropical_Medicine_in_Antwerp,_on_9_December_2016_(1).tif
+  N.a. Radiology by Dr. Johan Verbeken. Scan and image editing by Vincent Mia Edie — Public domain

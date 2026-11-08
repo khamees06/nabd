@@ -21,8 +21,10 @@
   <link rel="stylesheet" href="resp.css">
   <link rel="stylesheet" href="er.css">
   <link rel="stylesheet" href="scope.css">
+  <link rel="stylesheet" href="home9.css">
   <!-- phase8 2026-11-07: landing sections (about, audience, problems, journey, roadmap) -->
   <link rel="stylesheet" href="landing8.css">
+  <link rel="stylesheet" href="landing9.css">
   <!-- phase8 2026-11-07: sign-in panel, role guidance, academic portal (professor + advisor) -->
   <link rel="stylesheet" href="academic8.css">
   <script>/* until script.js loads, a missing photo just hides */ window.nbImgFail = window.nbImgFail || function (el) { el.style.visibility = "hidden"; };</script>
@@ -51,15 +53,12 @@
     </div>
 
     <nav class="hidden md:flex items-center gap-1" aria-label="التنقل في الصفحة الرئيسية">
-      <!-- phase8 2026-11-07: anchors for the new landing sections -->
+      <!-- 2026-11-08: anchors for the rebuilt landing sections -->
       <a href="#sec-about8" class="nav-link-item" data-pub-anchor="sec-about8">عن نَبْض</a>
-      <a href="#sec-problems8" class="nav-link-item" data-pub-anchor="sec-problems8">المشكلة والحل</a>
-      <a href="#sec-how" class="nav-link-item" data-pub-anchor="sec-how">رحلة التدريب</a>
-      <a href="#sec-resp" class="nav-link-item" data-pub-anchor="sec-resp">غرفة الطوارئ</a>
-      <a href="#sec-roadmap8" class="nav-link-item" data-pub-anchor="sec-roadmap8">قريباً</a>
-      <a href="#sec-specs" class="nav-link-item" data-pub-anchor="sec-specs">التخصصات</a>
-      <a href="#sec-level" class="nav-link-item" data-pub-anchor="sec-level">اختبر مستواك</a>
-      <a href="#sec-universities" class="nav-link-item" data-pub-anchor="sec-universities">التدريب الجامعي</a>
+      <a href="#sec-problems8" class="nav-link-item" data-pub-anchor="sec-problems8">المشكلة</a>
+      <a href="#sec-how" class="nav-link-item" data-pub-anchor="sec-how">الحل</a>
+      <a href="#sec-fields" class="nav-link-item" data-pub-anchor="sec-fields">التخصصات</a>
+      <a href="#sec-audience8" class="nav-link-item" data-pub-anchor="sec-audience8">لمن نَبْض؟</a>
     </nav>
     <!-- Left: Clear Login & Create Account Buttons + 3-Line Sidebar Button on Far Left -->
     <div class="flex items-center gap-2.5 shrink-0">
@@ -201,16 +200,12 @@
     <!-- guest links -->
     <nav id="sidebar-guest-nav" class="overflow-y-auto flex-1" aria-label="روابط الصفحة">
       <div class="v7-group">
-        <!-- phase8 2026-11-07: links to the new landing sections; the journey link keeps #sec-how -->
+        <!-- 2026-11-08: links to the rebuilt landing sections -->
         <a href="#sec-about8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>عن نَبْض</span></a>
-        <a href="#sec-problems8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>المشكلة والحل</span></a>
-        <a href="#sec-how" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M4 12h3l2-5 3 10 2-5h6"/></svg><span>رحلة التدريب</span></a>
-        <a href="#sec-resp" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>غرفة الطوارئ</span></a>
-        <a href="#sec-roadmap8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 7v5l3 2"/></svg><span>قريباً</span></a>
-        <a href="#sec-roles" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/></svg><span>المسارات</span></a>
-        <a href="#sec-specs" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>التخصصات</span></a>
-        <a href="#sec-level" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg><span>اختبر مستواك</span></a>
-        <a href="#sec-universities" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>التدريب الجامعي</span></a>
+        <a href="#sec-problems8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>المشكلة</span></a>
+        <a href="#sec-how" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>الحل</span></a>
+        <a href="#sec-fields" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>التخصصات</span></a>
+        <a href="#sec-audience8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21.5 19"/></svg><span>لمن نَبْض؟</span></a>
       </div>
     </nav>
 
@@ -272,271 +267,118 @@
          VIEW 0: PUBLIC LANDING PAGE (INDEX)
          Calm medical aesthetic, honest copy, clear hierarchy
          ======================================================= -->
-    <section id="view-index" class="nb-index">
+    <section id="view-index" class="nb-index l9">
+      <!-- 2026-11-08 (owner): the landing page rebuilt for the committee: short sections with real photos
+           (img/v9, credits in img/CREDITS.txt): vision and goal, the problem, the solution, the fields, who it is for. -->
 
       <!-- Hero -->
-      <div class="nb-hero">
+      <div class="nb-hero l9-hero">
         <div class="nb-hero-copy">
-          <span class="v7-eyebrow">منصة للمحاكاة والتعليم السريري</span>
-          <h1><span>تدرّب على الحالة.</span> <span>اجمع الأدلة.</span> <span class="em">اتخذ قرارك بثقة.</span></h1>
-          <p>مريض ومرافق وممرضة ومشرف في غرفة طوارئ واحدة، تحاورهم بالعربية، ثم تقييم يوضّح لك ما أصبت فيه وما فاتك.</p>
+          <span class="v7-eyebrow">منصة تدريب سريري بالمحاكاة</span>
+          <h1><span>تدرّب على المريض</span> <span class="em">قبل أن تقابله.</span></h1>
+          <p>غرفة طوارئ واقعية: تحاور المريض والفريق، تقرّر، وترى أثر قرارك.</p>
           <div class="nb-cta" aria-label="ابدأ من هنا">
             <button id="index-register-cta" class="p focus-ring" type="button">ابدأ التدريب</button>
-            <button id="index-demo-cta" class="d focus-ring" type="button">جرّب غرفة الطوارئ</button>
+            <button id="index-demo-cta" class="d focus-ring" type="button">جرّب حالة ER</button>
           </div>
           <div class="v7-hero-links">
             <button id="index-login-cta" class="focus-ring" type="button">لديك حساب؟ تسجيل الدخول</button>
-            <a href="#sec-level" id="index-level-cta" class="focus-ring">اختبر مستواك</a>
           </div>
-          <ul class="v7-checks"><li>تعلّم بالمحاكاة</li><li>تقييم بعد التسليم</li><li>باللهجة الأردنية</li></ul>
         </div>
-        <figure class="v7-hero-media">
-          <img src="img/hero.jpg" srcset="img/hero-720.jpg 720w, img/hero-1080.jpg 1080w, img/hero.jpg 1280w" sizes="(max-width: 640px) 92vw, 1280px" alt="ممرضة تتابع مريضاً في سريره" loading="eager" fetchpriority="high" decoding="async" onerror="nbImgFail(this)">
-          <figcaption><b>تجربة سريرية متكاملة</b><span>مقابلة · أدلة · قرار · تقييم</span></figcaption>
+        <figure class="l9-hero-media">
+          <img src="img/v9/hero.jpg" alt="طالبان يتدربان على دمية محاكاة في مختبر سريري" loading="eager" fetchpriority="high" decoding="async" onerror="nbImgFail(this)">
+          <figcaption class="l9-float l9-float-a"><b>آمن</b><span>لا مريض يتضرر</span></figcaption>
+          <figcaption class="l9-float l9-float-b"><b>واقعي</b><span>باللهجة الأردنية</span></figcaption>
         </figure>
       </div>
 
-      <!-- phase8 2026-11-07: about Nabd; trimmed 2026-11-08 (owner: «خفف الفلسفة»), one short paragraph -->
-      <div id="sec-about8" class="scroll-mt-20 l8-about">
-        <div class="l8-about-head">
+      <!-- Vision and goal, one section -->
+      <div id="sec-about8" class="scroll-mt-20 l9-sec l9-vg">
+        <figure class="l9-photo"><img src="img/v9/vision.jpg" alt="ممرضة تبتسم مع مريض في غرفته" loading="lazy" decoding="async" onerror="nbImgFail(this)"></figure>
+        <div class="l9-vg-copy">
           <span class="v7-eyebrow">عن نَبْض</span>
-          <h2>القرار السريري يُتعلَّم بالممارسة.</h2>
-          <ul class="l8-values" aria-label="مبادئ المنصة">
-            <li>سلامة المريض قبل أي درجة</li>
-            <li>التكرار الآمن</li>
-            <li>القرار للمتدرب</li>
+          <h2>رؤيتنا وهدفنا</h2>
+          <div class="l9-vg-cards">
+            <article><span class="l9-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 12s3.5-7 10-7 10 7 10 7-3.5 7-10 7S2 12 2 12z"/><circle cx="12" cy="12" r="3"/></svg></span><h3>رؤيتنا</h3><p>كل طالب طب وتمريض يصل إلى المريض وهو متدرّب على القرار.</p></article>
+            <article><span class="l9-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><circle cx="12" cy="12" r="5"/><circle cx="12" cy="12" r="1.5"/></svg></span><h3>هدفنا</h3><p>فرصة تدريب حقيقية وآمنة لكل طالب، يكرّرها حتى يتقنها.</p></article>
+          </div>
+        </div>
+      </div>
+
+      <!-- The problem -->
+      <div id="sec-problems8" class="scroll-mt-20 l9-sec l9-split">
+        <div class="l9-copy">
+          <span class="v7-eyebrow">المشكلة</span>
+          <h2>كثير من الطلبة لا يحظون بفرصة تدريب حقيقية.</h2>
+          <ul class="l9-points">
+            <li><b>المريض يرفض</b><span>نسبة كبيرة من المرضى لا يقبلون أن يعالجهم متدرّب.</span></li>
+            <li><b>الطالب يشاهد فقط</b><span>وإن حضر التدريب، يقف مشاهداً لا ممارساً.</span></li>
+            <li><b>الفرص لا تكفي</b><span>أسرّة المستشفيات أقل من أعداد الطلبة.</span></li>
           </ul>
+          <p class="l9-stat"><b class="font-num" dir="ltr">~85%</b><span>من المرضى لا يفضّلون متدرّباً وحده <small>(تقدير المشروع)</small></span></p>
         </div>
-        <div class="l8-about-body">
-          <p>الأردن في صدارة الصحة بالشرق الأوسط، وهذه الصدارة تبدأ من قاعة التدريب. نَبْض غرفة طوارئ فيها ست حالات: تحاور المريض ومرافقه والممرضة والمشرف باللهجة الأردنية، وتتغير العلامات الحيوية بحسب قرارك، ثم تسلّم الحالة وتقرأ تقييمك.</p>
-        </div>
+        <figure class="l9-photo"><img src="img/v9/problem.jpg" alt="فريق طبي حول سرير مريض في جناح مستشفى" loading="lazy" decoding="async" onerror="nbImgFail(this)"></figure>
       </div>
 
-      <!-- phase8 2026-11-07: target groups -->
-      <div id="sec-audience8" class="scroll-mt-20 v7-section">
-        <div class="v7-head">
-          <span class="v7-eyebrow">لمن صُممت نَبْض؟</span>
-          <h2>ممارسة أكثر قبل المريض الحقيقي.</h2>
-        </div>
-        <ul class="l8-cards l8-cards-3">
-          <li class="l8-card">
-            <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M2 5h6a4 4 0 0 1 4 4v11a3 3 0 0 0-3-3H2z"/><path d="M22 5h-6a4 4 0 0 0-4 4v11a3 3 0 0 1 3-3h7z"/></svg></span>
-            <h3>طلبة الطب والتمريض</h3>
-            <p>تدرّب على المقابلة والقرار وتسليم الحالة قبل التدريب في المستشفى.</p>
-          </li>
-          <li class="l8-card">
-            <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M5 3v6a5 5 0 0 0 10 0V3"/><path d="M10 14v2a5 5 0 0 0 10 0v-3"/><circle cx="20" cy="11" r="2"/></svg></span>
-            <h3>الأطباء والممرضون المتدربون</h3>
-            <p>كرّر حالات الطوارئ الحرجة بلا خطر على أي مريض.</p>
-          </li>
-          <li class="l8-card">
-            <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg></span>
-            <h3>الجامعات والمشرفون</h3>
-            <p>مساحة تجريبية لإسناد الحالات ومتابعة تقارير الطلبة.</p>
-          </li>
-        </ul>
-      </div>
-
-      <!-- phase8 2026-11-07: the problem and how Nabd addresses it -->
-      <div id="sec-problems8" class="scroll-mt-20 v7-section">
-        <div class="v7-head">
-          <span class="v7-eyebrow">المشكلة والحل</span>
-          <h2>فجوة بين قاعة الدرس وسرير المريض.</h2>
-        </div>
-        <ul class="l8-cards l8-cards-3">
-          <li class="l8-card l8-prob l8-prob-stat">
-            <div class="l8-stat"><span>نحو</span><b class="font-num" dir="ltr">85%</b><small>وفق تقدير المشروع</small></div>
-            <h3>المتدرب يكتفي بالمشاهدة</h3>
-            <p>نحو 85% من المرضى لا يفضّلون أن يعالجهم متدرب وحده، فيبقى المتدرب مشاهداً.</p>
-          </li>
-          <li class="l8-card l8-prob">
-            <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 6v13M3 14h18v5M21 14a3 3 0 0 0-3-3h-7v3"/><circle cx="7" cy="11" r="2"/></svg></span>
-            <h3>أسرّة وفرص محدودة</h3>
-            <p>الأسرّة وفرص التدريب لا تكفي أعداد الطلبة.</p>
-          </li>
-          <li class="l8-card l8-prob">
-            <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M12 21s-7-6.2-7-11a7 7 0 0 1 14 0c0 4.8-7 11-7 11z"/><circle cx="12" cy="10" r="2.5"/></svg></span>
-            <h3>فرص غير متكافئة</h3>
-            <p>طلبة كثيرون في مستشفيات قليلة بالعاصمة، فيطول الانتظار والمشاهدة.</p>
-          </li>
-        </ul>
-        <div class="l8-solve">
-          <h3>كيف تعالجها نَبْض</h3>
-          <ul>
-            <li><span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span><div><b>المحاكاة السريرية</b><span>مريض يتحدث، وعلامات حيوية تتغير.</span></div></li>
-            <li><span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 11l3 3 8-8"/><path d="M20 12v7a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2V5a2 2 0 0 1 2-2h11"/></svg></span><div><b>التدريب التفاعلي</b><span>تقرر بنفسك، وترى أثر قرارك.</span></div></li>
-            <li><span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 12a9 9 0 1 0 3-6.7L3 8"/><path d="M3 3v5h5"/></svg></span><div><b>التكرار الآمن</b><span>أعد الحالة دون أن يتضرر أحد.</span></div></li>
-            <li><span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span><div><b>التقييم</b><span>تقرير بعد التسليم يشرح ما أصبت وما فاتك.</span></div></li>
+      <!-- The solution (id sec-how kept for existing links) -->
+      <div id="sec-how" class="scroll-mt-20 l9-sec l9-split l9-split-rev l9-solution">
+        <figure class="l9-photo"><img src="img/v9/solution.jpg" alt="طالبة تتدرب على دمية محاكاة أمام شاشات مراقبة" loading="lazy" decoding="async" onerror="nbImgFail(this)"></figure>
+        <div class="l9-copy">
+          <span class="v7-eyebrow">الحل</span>
+          <h2>منصة تدريب بمحاكاة واقعية.</h2>
+          <p>يمارس الطالب الحالة كاملة بنفسه، بلا خطر على أي مريض.</p>
+          <ul class="l9-feats">
+            <li><span class="l9-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/></svg></span>مريض يتكلم باللهجة الأردنية</li>
+            <li><span class="l9-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg></span>علامات حيوية تتغير أمامك</li>
+            <li><span class="l9-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span>قرارك يغيّر حالة المريض</li>
+            <li><span class="l9-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg></span>تقرير بعد كل حالة</li>
           </ul>
+          <button class="v7-btn-outline focus-ring" type="button" onclick="document.getElementById('index-demo-cta').click()">جرّب الآن</button>
         </div>
       </div>
 
-      <!-- Learning journey (phase8 2026-11-07: six-step timeline; id sec-how kept for existing links) -->
-      <div id="sec-how" class="scroll-mt-20 v7-band">
-        <div class="v7-head">
-          <span class="v7-eyebrow">رحلة التدريب</span>
-          <h2>ست خطوات من دخول الغرفة إلى قراءة التقييم.</h2>
+      <!-- The fields: the ER is open, the rest are coming -->
+      <div id="sec-fields" class="scroll-mt-20 l9-sec">
+        <div class="l9-head">
+          <span class="v7-eyebrow">التخصصات</span>
+          <h2>تخصص متاح اليوم، وتخصصات قادمة.</h2>
         </div>
-        <ol class="l8-journey">
-          <li><span class="l8-node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="6" cy="19" r="2.5"/><circle cx="18" cy="5" r="2.5"/><path d="M8.5 19H16a3.5 3.5 0 0 0 0-7H8a3.5 3.5 0 0 1 0-7h7.5"/></svg></span><div><b class="font-num">01</b><h3>اختيار المسار</h3><p>اختر مسار الطب أو التمريض، ثم ادخل غرفة الطوارئ.</p></div></li>
-          <li><span class="l8-node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M21 12a8 8 0 0 1-11.6 7.1L4 20l1-4.6A8 8 0 1 1 21 12z"/><path d="M8.5 12h.01M12 12h.01M15.5 12h.01"/></svg></span><div><b class="font-num">02</b><h3>مقابلة المريض</h3><p>اسأل المريض ومرافقه بالعربية واستمع إلى إجاباتهم.</p></div></li>
-          <li><span class="l8-node" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M9 3h6M10 3v6l-5.5 9.5A2 2 0 0 0 6.2 21.5h11.6a2 2 0 0 0 1.7-3L14 9V3"/><path d="M7 15h10"/></svg></span><div><b class="font-num">03</b><h3>التقييم والفحوصات</h3><p>افحص المريض واطلب الفحوصات مع تبرير كل طلب.</p></div></li>
-          <li><span class="l8-node" aria-hidden="true"><svg viewBox="0 0 24 24"><circle cx="12" cy="12" r="9"/><path d="M8 12l3 3 5-6"/></svg></span><div><b class="font-num">04</b><h3>اتخاذ القرار</h3><p>اختر العلاج وأعطِ أوامرك للفريق بنفسك.</p></div></li>
-          <li><span class="l8-node" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="2" y="4" width="20" height="14" rx="2"/><path d="M5 11h3l2-3 3 6 2-3h4"/><path d="M8 21h8"/></svg></span><div><b class="font-num">05</b><h3>متابعة الاستجابة</h3><p>راقب العلامات الحيوية وهي تتغير بعد كل قرار.</p></div></li>
-          <li><span class="l8-node" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="5" y="4" width="14" height="17" rx="2"/><path d="M9 4V3h6v1"/><path d="M9 11h6M9 15h4"/></svg></span><div><b class="font-num">06</b><h3>تسليم الحالة والتقييم</h3><p>سلّم بصيغة SBAR، واقرأ ما أصبت فيه وما فاتك.</p></div></li>
-        </ol>
-      </div>
-
-      <!-- Two tracks -->
-      <div id="sec-roles" class="scroll-mt-20 v7-section">
-        <div class="v7-head">
-          <span class="v7-eyebrow">مساران</span>
-          <h2>اختر مسارك</h2>
-        </div>
-        <div class="nb-roles2">
-          <article class="nb-track-card">
-            <div class="nb-tc-img"><img src="img/nc/bp.jpg" alt="ممرضة تقيس ضغط الدم لمريض" loading="lazy" decoding="async" onerror="nbImgFail(this)"></div>
-            <div class="nb-tc-body">
-              <span class="nb-pill">مسار التمريض</span>
-              <h3>قيّم الحالة وتصرّف بأمان</h3>
-              <p>قِس العلامات الحيوية، بلّغ الطبيب، ونفّذ أوامره ثم سلّم الحالة.</p>
-            </div>
-          </article>
-          <article class="nb-track-card">
-            <div class="nb-tc-img"><img src="img/cases/resp.jpg" alt="طبيب يفحص مريضاً بالسماعة" loading="lazy" decoding="async" onerror="nbImgFail(this)"></div>
-            <div class="nb-tc-body">
-              <span class="nb-pill">مسار الطب</span>
-              <h3>افحص وشخّص واختر العلاج</h3>
-              <p>خذ القصة، اطلب الفحوصات المبررة، واكتب خطة واضحة للفريق.</p>
-            </div>
-          </article>
-        </div>
-      </div>
-
-      <!-- Specialties -->
-      <div id="sec-specs" class="scroll-mt-20 v7-section">
-        <div class="v7-head">
-          <span class="v7-eyebrow">مجالات متعددة</span>
-          <h2>اختر التخصص الذي يناسبك</h2>
-        </div>
-        <ul class="v7-specs">
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M20.8 4.6a5.5 5.5 0 0 0-7.8 0L12 5.7l-1-1.1a5.5 5.5 0 0 0-7.8 7.8L12 21l8.8-8.6a5.5 5.5 0 0 0 0-7.8z"/><path d="M3.5 12h4l1.5-3 3 6 1.5-3h4"/></svg>القلب وألم الصدر</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M12 12c-1 1.2-2.4 2-4 2"/><path d="M12 12c1 1.2 2.4 2 4 2"/><path d="M8.5 6.5C5.5 7 3 11 3 15.5 3 18.5 4.5 20 6.5 20c2.2 0 3.5-1.6 3.5-4.5V8"/><path d="M15.5 6.5C18.5 7 21 11 21 15.5c0 3-1.5 4.5-3.5 4.5-2.2 0-3.5-1.6-3.5-4.5V8"/></svg>الجهاز التنفسي</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M7 18v-6a5 5 0 0 1 10 0v6"/><path d="M5 18h14v3H5z"/><path d="M12 2v2"/><path d="M4.2 5.2l1.4 1.4"/><path d="M19.8 5.2l-1.4 1.4"/></svg>الطوارئ</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3s-6 6.5-6 11a6 6 0 0 0 12 0c0-4.5-6-11-6-11z"/><path d="M9.5 14.5h5"/></svg>الأمراض المزمنة</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M10.5 20.5l10-10a4.95 4.95 0 0 0-7-7l-10 10a4.95 4.95 0 0 0 7 7z"/><path d="M8.5 8.5l7 7"/></svg>سلامة الأدوية</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M18.4 5.6a4 4 0 0 0-5.7 0L5.6 12.7a4 4 0 0 0 5.7 5.7l7.1-7.1a4 4 0 0 0 0-5.7z"/><path d="M10 12h.01"/><path d="M12 10h.01"/><path d="M14 12h.01"/><path d="M12 14h.01"/></svg>الجروح والنزيف</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 4a8 8 0 1 0 0 16 8 8 0 0 0 0-16z"/><path d="M9 11h.01"/><path d="M15 11h.01"/><path d="M9.5 15a3.5 3.5 0 0 0 5 0"/></svg>الأطفال</li>
-          <li><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3a5 5 0 1 0 0 10 5 5 0 0 0 0-10z"/><path d="M12 13v8"/><path d="M9 18h6"/></svg>النسائية والتوليد</li>
-          <li class="is-new"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 21l7.5-7.5"/><path d="M10.5 13.5l8.2-8.2a2.1 2.1 0 0 1 3 3L13.5 16.5z"/><path d="M14.5 9.5l1 1"/></svg>العمليات الجراحية<span class="v7-new">جديد</span></li>
+        <ul class="l9-fields">
+          <li class="is-open"><img src="img/v9/sp-er.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Emergency</b><span>ست حالات حرجة</span></div><em class="l9-tag l9-tag-open">متاحة</em></li>
+          <li><img src="img/v9/sp-cardio.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Cardiology</b><span>الجلطات وتصلّب الشرايين</span></div><em class="l9-tag">قريباً</em></li>
+          <li><img src="img/v9/sp-resp.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Respiratory</b><span>Asthma وCOPD</span></div><em class="l9-tag">قريباً</em></li>
+          <li><img src="img/v9/sp-diabetes.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Endocrine</b><span>DKA وHypoglycemia</span></div><em class="l9-tag">قريباً</em></li>
+          <li><img src="img/v9/sp-sepsis.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Infectious diseases</b><span>Sepsis والحمّى</span></div><em class="l9-tag">قريباً</em></li>
+          <li><img src="img/v9/sp-surgery.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Surgery</b><span>قبل العملية وبعدها</span></div><em class="l9-tag">قريباً</em></li>
+          <li><img src="img/v9/sp-obgyn.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>OB/GYN</b><span>متابعة الحامل والولادة</span></div><em class="l9-tag">قريباً</em></li>
+          <li><img src="img/v9/sp-peds.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Pediatrics</b><span>الطفل المريض وأهله</span></div><em class="l9-tag">قريباً</em></li>
         </ul>
       </div>
 
-      <!-- Operating room section -->
-      <div id="sec-or" class="scroll-mt-20 v7-split">
-        <div class="v7-split-copy">
-          <span class="v7-eyebrow">جديد</span>
-          <h2>قسم العمليات الجراحية</h2>
-          <p>ثلاث حالات تمريضية تتبع المريض من التجهيز إلى غرفة العمليات ثم الإفاقة، مع قائمة التحقق الجراحية لمنظمة الصحة العالمية.</p>
-          <ol class="v7-or-steps"><li><b>1</b>قبل العملية</li><li><b>2</b>داخل غرفة العمليات</li><li><b>3</b>غرفة الإفاقة</li></ol>
-          <button class="v7-btn-outline focus-ring" type="button" onclick="nbDemoLogin('rana'); setTimeout(() => document.getElementById('home-or')?.scrollIntoView({ behavior: 'smooth', block: 'start' }), 400)">جرّب القسم</button>
+      <!-- Who it is for -->
+      <div id="sec-audience8" class="scroll-mt-20 l9-sec">
+        <div class="l9-head">
+          <span class="v7-eyebrow">الفئة المستهدفة</span>
+          <h2>لمن صُمّمت نَبْض؟</h2>
         </div>
-        <div class="v7-quote v7-uni">
-          <img src="img/or/banner.jpg" alt="فريق جراحي أثناء عملية" loading="lazy" decoding="async" onerror="nbImgFail(this)">
-          <div><b>توقّف، تحقّق، ثم ابدأ</b><span>كل بند في القائمة يحمي المريض من خطأ لا يُصلَح.</span></div>
-        </div>
-      </div>
-
-      <!-- The one open room -->
-      <div id="sec-resp" class="scroll-mt-20 rs-band">
-        <div class="rs-band-copy">
-          <span class="v7-eyebrow">التدريب</span>
-          <h2>غرفة طوارئ واحدة، والكل معك فيها</h2>
-          <p>المريض والمرافق والممرضة والمشرف في الغرفة نفسها. تكلّمهم كما في الواقع، وكل قرار يغيّر حالة المريض أمامك.</p>
-          <button class="v7-btn-outline focus-ring" type="button" onclick="nbDemoLogin('med_student'); setTimeout(() => nbOpenER(), 400)">جرّب الغرفة</button>
-        </div>
-        <ul class="rs-stats">
-          <li><b class="font-num">6</b><span>حالات طوارئ: ربو، إنتان، انصمام رئوي، احتشاء قلب، حماض كيتوني سكري، أزمة ضغط</span></li>
-          <li><b class="font-num">4</b><span>أشخاص معك في الغرفة</span></li>
-          <li><b class="font-num">6</b><span>محاور في التقرير بعد كل حالة</span></li>
+        <ul class="l9-aud">
+          <li><img src="img/v9/aud-students.jpg" alt="طالبة طب في مختبر محاكاة" loading="lazy" decoding="async" onerror="nbImgFail(this)"><h3>طلبة الطب والتمريض</h3><p>تدرّب قبل أن تقف أمام مريض حقيقي.</p></li>
+          <li><img src="img/v9/aud-nurses.jpg" alt="ممرضة تقيس ضغط مريضة" loading="lazy" decoding="async" onerror="nbImgFail(this)"><h3>الأطباء والممرضون الجدد</h3><p>كرّر الحالات الحرجة حتى تثق بقرارك.</p></li>
+          <li><img src="img/v9/aud-uni.jpg" alt="طبيبة بزيّ طبي وسماعة" loading="lazy" decoding="async" onerror="nbImgFail(this)"><h3>الجامعات والكليات</h3><p>تدريب إضافي لطلبتها خارج المستشفى.</p></li>
         </ul>
-        <p class="rs-band-note">نموذج أولي للتدريب فقط. الحالات لم يراجعها طبيب بعد، ولا يُستخدم لتشخيص مرضى حقيقيين. ما تكتبه في الغرفة يُرسل إلى خدمة ذكاء اصطناعي لفهمه، فلا تكتب بيانات مرضى حقيقيين. ويصوغ الذكاء الاصطناعي ردود الشخصيات ويساعد في التقييم، ودون اتصال تعمل الغرفة بفهم أقل.</p>
-      </div>
-
-      <!-- Level placement quiz -->
-      <div id="sec-level" class="scroll-mt-20 nb-quiz">
-        <aside class="nb-quiz-aside">
-          <span class="v7-eyebrow">قبل أن تبدأ</span>
-          <h2>ابدأ من مستواك</h2>
-          <p>٨ أسئلة قصيرة نقترح بعدها مستوى وغرفاً مناسبة لك.</p>
-          <p class="v7-note">النتيجة إرشادية ولا تدخل في درجاتك.</p>
-        </aside>
-        <div class="nb-quiz-main" id="nb-quiz-main"></div>
-      </div>
-
-      <!-- Evidence workspace -->
-      <div class="v7-split">
-        <div class="v7-quote">
-          <p>«ما السؤال الذي طرحته؟ ما الدليل الذي جمعته؟ وكيف أثّر اختيارك على النتيجة؟»</p>
-          <span>تقرير التقييم يجيب عن الثلاثة بعد كل حالة.</span>
-        </div>
-        <div class="v7-split-copy">
-          <span class="v7-eyebrow">أثر كل محادثة</span>
-          <h2>مساحة عمل تُظهر كيف وصلت إلى قرارك</h2>
-          <p>المحادثة والعلامات الحيوية والفحوصات في شاشة واحدة، وبعد التسليم تقرأ تقريراً بما أحسنت فيه وما يجب أن يتغير.</p>
-          <button type="button" class="v7-btn-outline focus-ring" onclick="document.getElementById('index-demo-cta').click()">جرّب حالة الآن</button>
-        </div>
-      </div>
-
-      <!-- Universities -->
-      <div id="sec-universities" class="scroll-mt-20 v7-split">
-        <div class="v7-quote v7-uni">
-          <img src="img/univ.jpg" alt="أستاذ جامعي يدرّس طلبة التمريض" loading="lazy" decoding="async" onerror="nbImgFail(this)">
-          <div><b>تجربة جامعية واضحة</b><span>الأستاذ الجامعي يسند الحالات ويتابع تقارير الطلبة.</span></div>
-        </div>
-        <div class="v7-split-copy">
-          <span class="v7-eyebrow">للجامعات وأعضاء هيئة التدريس</span>
-          <h2>أنشئ جلسة، شارك الدعوة، تابع التقدّم.</h2>
-          <p>واجبات الطلبة ونتائجهم في مكان واحد.</p>
-          <button id="index-uni-demo-btn" class="v7-btn-outline focus-ring" type="button">البوابة الجامعية</button>
-        </div>
-      </div>
-
-      <!-- phase8 2026-11-07: roadmap, visibly not available yet -->
-      <div id="sec-roadmap8" class="scroll-mt-20 v7-section l8-roadmap">
-        <div class="v7-head">
-          <span class="v7-eyebrow">قريباً</span>
-          <h2>ما نعمل عليه بعد غرفة الطوارئ.</h2>
-        </div>
-        <div class="l8-soon-list">
-          <article class="l8-soon" aria-label="محاكي العمليات الجراحية، قيد التطوير">
-            <div class="l8-soon-top">
-              <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><path d="M3 21l7.5-7.5"/><path d="M10.5 13.5l8.2-8.2a2.1 2.1 0 0 1 3 3L13.5 16.5z"/><path d="M14.5 9.5l1 1"/></svg></span>
-              <h3>محاكي العمليات الجراحية</h3>
-              <span class="l8-dev">قيد التطوير</span>
-            </div>
-            <p>حالات جراحية من التحضير للعملية إلى المتابعة بعدها.</p>
-          </article>
-          <article class="l8-soon" aria-label="العيادة الرقمية والتدريب السريري الواقعي، رؤية مستقبلية مشروطة بالموافقات">
-            <div class="l8-soon-top">
-              <span class="l8-ic" aria-hidden="true"><svg viewBox="0 0 24 24"><rect x="3" y="4" width="18" height="12" rx="2"/><path d="M12 7v6M9 10h6"/><path d="M8 20h8M12 16v4"/></svg></span>
-              <h3>العيادة الرقمية والتدريب السريري الواقعي</h3>
-              <span class="l8-dev">رؤية مستقبلية</span>
-            </div>
-            <p>أطباء مرخّصون يقدّمون خدمة حقيقية، والمتدرب يشاهد ثم يشارك تدريجياً تحت إشرافهم.</p>
-            <p class="l8-soon-note">ليست خدمة متاحة حالياً، وتحتاج موافقات قانونية وتنظيمية وموافقة المرضى.</p>
-          </article>
-        </div>
       </div>
 
       <!-- Closing call to action -->
-      <div class="v7-final">
+      <div class="v7-final l9-final">
         <div>
-          <h2>الممارسة تسبق التقييم.</h2>
-          <p>ابدأ حالتك الأولى، وتعلّم من كل قرار.</p>
+          <h2>ابدأ حالتك الأولى الآن.</h2>
+          <p>نموذج أولي للتدريب فقط، والحالات لم يراجعها طبيب بعد.</p>
         </div>
         <button type="button" class="focus-ring" onclick="document.getElementById('index-demo-cta').click()">ابدأ الآن</button>
       </div>
+
+      <!-- The level quiz is closed (scope.css); script.js still writes into this box. -->
+      <div id="nb-quiz-main" hidden></div>
     </section>
 
     <!-- =======================================================
@@ -836,6 +678,24 @@
             </button>
           </div>
         </div>
+      </div>
+
+      <!-- 2026-11-08 (owner): the specialty sections as light photo cards; the ER is open, the rest are locked for now. -->
+      <div id="home-fields9" class="h9-fields-box" aria-labelledby="h9-fields-title">
+        <div class="h9-fields-head">
+          <h2 id="h9-fields-title">أقسام التدريب</h2>
+          <span>قسم متاح الآن، والبقية تُفتح تباعاً</span>
+        </div>
+        <ul class="h9-fields">
+          <li class="is-open"><button type="button" class="h9-open focus-ring" onclick="document.getElementById('launch-er-random-btn').click()" aria-label="ادخل غرفة الطوارئ"></button><img src="img/v9/sp-er.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Emergency</b><span>ست حالات حرجة: ربو، إنتان، جلطة رئوية، احتشاء، حماض سكري، أزمة ضغط</span><small>طب · تمريض</small></div><em class="h9-tag h9-tag-open">ادخل ←</em></li>
+          <li><img src="img/v9/sp-cardio.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Cardiology</b><span>الجلطات وتصلّب الشرايين واضطراب النظم</span><small>طب · تمريض</small></div><em class="h9-tag">مقفل</em></li>
+          <li><img src="img/v9/sp-resp.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Respiratory</b><span>Asthma وCOPD وضيق النفس</span><small>طب · تمريض</small></div><em class="h9-tag">مقفل</em></li>
+          <li><img src="img/v9/sp-diabetes.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Endocrine</b><span>DKA وهبوط السكر</span><small>طب · تمريض</small></div><em class="h9-tag">مقفل</em></li>
+          <li><img src="img/v9/sp-sepsis.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Infectious diseases</b><span>Sepsis والحمّى</span><small>طب · تمريض</small></div><em class="h9-tag">مقفل</em></li>
+          <li><img src="img/v9/sp-surgery.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Surgery</b><span>التحضير للعملية والإفاقة</span><small>تمريض · طب</small></div><em class="h9-tag">مقفل</em></li>
+          <li><img src="img/v9/sp-obgyn.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>OB/GYN</b><span>متابعة الحامل والولادة</span><small>طب · تمريض</small></div><em class="h9-tag">مقفل</em></li>
+          <li><img src="img/v9/sp-peds.jpg" alt="" loading="lazy" decoding="async" onerror="nbImgFail(this)"><div><b>Pediatrics</b><span>الطفل المريض وأهله</span><small>طب · تمريض</small></div><em class="h9-tag">مقفل</em></li>
+        </ul>
       </div>
 
       <div class="er-rooms" aria-label="غرف مقفلة">

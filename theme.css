@@ -139,13 +139,6 @@ button:active { transform: translateY(1px); }
 #account-dropdown-menu .dropdown-item-btn:hover { background: var(--tint) !important; }
 #app-header #account-dropdown-menu .dropdown-item-btn:hover, #app-header #account-dropdown-menu .dropdown-item-btn:hover * { color: var(--signal-strong) !important; }
 #app-header #account-dropdown-menu .dropdown-item-btn:hover .text-slate-400 { color: var(--signal-strong) !important; }
-.nb-terms > span { color: var(--ink-2) !important; }
-.nb-terms { background: var(--tint-2); border: 1px solid var(--line); border-radius: 999px; padding: .2rem; gap: .15rem !important; }
-.nb-terms button { background: transparent !important; color: var(--ink-2) !important; border-radius: 999px !important; min-width: 2.1rem; padding: .3rem .55rem !important; }
-.nb-terms button + button { margin-inline-start: 0 !important; }
-.nb-terms button:hover { color: var(--ink) !important; }
-.nb-terms button[aria-pressed="true"] { background: var(--signal) !important; color: #fff !important; }
-.nb-terms > span { padding-inline: .5rem .2rem; }
 .nb-progress { background: var(--signal) !important; }
 .nb-sweep { background: var(--signal-light) !important; }
 

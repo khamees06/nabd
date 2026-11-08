@@ -253,6 +253,344 @@
     else [0, 0.3, 0.6].forEach(d => tone(620, t + d, 0.22));
   }
 
+/*CHAT-EN-START*/
+  /* ---------- 2026-11-08 (owner): the ward's English terms in the chat ----------
+     What the staff and the room say (the nurse, the doctor, the supervisor, the room's notes, the examination and the
+     alarms) shows its clinical terms in English, the way they are said on a Jordanian ward: «الـBP 90 على 60»,
+     «اعطيته aspirin 300 mg». The patient and the relative keep their own words, and so does the trainee.
+     This changes only what is shown on the page: the room's memory, the scoring and what is sent to the server keep the
+     original Arabic, so the room behaves exactly as before. The rules run in order; phrases come before their words. */
+  // If a browser cannot build one of these patterns, the chat keeps its Arabic instead of the room failing to start.
+  const chatEn = (() => { try {
+    const L ='\\u0621-\\u064A\\u0671-\\u06D3';            // an Arabic letter (the tatweel is one too)
+    const NOT_L = '(^|[^' + L + '])';
+    const END = '(?![' + L + '])';
+    const MARKS = '[\\u064B-\\u0652\\u0640]*';            // harakat and tatweel may sit between letters
+    const ALT = { 'ا': '[اأإآ]', 'أ': '[اأإآ]', 'إ': '[اأإآ]', 'آ': '[اأإآ]', 'ة': '[ةه]', 'ي': '[يى]', 'ى': '[يى]' };
+    const esc = c => c.replace(/[.*+?^${}()|[\]\\]/g, '\\$&');
+    // A spelling-tolerant pattern for an Arabic word or phrase («الأكسجين» also matches «الاكسجين»).
+    const pat = w => [...w].map(ch => (ch === ' ' ? '\\s+' : (ALT[ch] || esc(ch)) + MARKS)).join('');
+    const any = ws => ws.slice().sort((a, b) => b.length - a.length).map(pat).join('|');
+    // A leading «و/ف» joins an English word directly; «ب/ل/ك/ع» take a tatweel: «لـtachycardia».
+    const lead = (p, art) => (p || '') + (art === 'لل' ? 'للـ' : art ? 'الـ' : p && /[بلكع]$/.test(p) ? 'ـ' : '');
+    const PRE = '([وف]?[بلكع]?)';
+    const rules = [];
+    const raw = (re, fn) => rules.push([re, fn]);
+    // A word or phrase said as one English term. Without «bare» it may carry «ال/لل»: «بالأكسجين» → «بالـO2».
+    // «not» is a lookahead the match must fail (a phrase that means something else), «notBefore» a lookbehind.
+    const EMIT = new Set(); // every English term this list writes (the gloss tidy-up touches only these)
+    const term = (words, en, opt = {}) => {
+      EMIT.add(en);
+      const art = opt.bare ? '()' : '(ال|لل)?';
+      raw(new RegExp((opt.notBefore ? '(?<!' + opt.notBefore + ')' : '') + NOT_L + PRE + art + '(?:' + any(words) + ')' + END + (opt.not ? '(?!' + opt.not + ')' : ''), 'g'),
+        (m, a, p, ar) => a + lead(p, ar) + en);
+    };
+    const tail = s => (s === 'ها' || s === 'تها' ? 'تبعها' : 'تبعه');
+    // A two-word phrase whose both words carry the article («الوذمة الرئوية»): a leading «ب/ل/و...» keeps the article
+    // on the English word («بالـpulmonary edema», «للـICU»), never «بـالـ...».
+    const def = (pairs, en) => {
+      EMIT.add(en);
+      for (const [a1, a2] of pairs) {
+        raw(new RegExp(NOT_L + PRE + '(ال|لل)' + pat(a1) + '\\s+' + pat('ال' + a2) + END, 'g'), (m, a, p, ar) => a + lead(p, ar) + en);
+        raw(new RegExp(NOT_L + PRE + '()' + pat(a1) + '\\s+' + pat(a2) + END, 'g'), (m, a, p) => a + lead(p, '') + en);
+      }
+    };
+
+    /* 1. Phrases that hold «ضغط» or «حرارة» but are not a reading, and the saturation by name. */
+    term(['نسبة الأكسجين', 'تشبع الأكسجين', 'نسبة الأوكسجين', 'تشبع الأوكسجين', 'الإشباع', 'التشبع', 'الساتوريشن', 'ساتوريشن'], 'SpO2', { bare: true });
+    term(['التنفس بالضغط الإيجابي', 'الضغط الإيجابي', 'ضغط إيجابي'], 'positive pressure', { bare: true });
+    term(['رافع ضغط', 'رافعات الضغط', 'رافع الضغط', 'رافعات ضغط', 'مقبض أوعية', 'مقبض الأوعية', 'مقبضات الأوعية', 'مقبضات أوعية'], 'vasopressor');
+    term(['خافض ضغط وريدي', 'خافض للضغط وريدي'], 'IV antihypertensive');
+    term(['خافض ضغط', 'خافض للضغط', 'خافضات الضغط'], 'antihypertensive');
+    term(['خافض حرارة', 'خافض للحرارة', 'خافض الحرارة'], 'antipyretic');
+    term(['ارتفاع ضغط الدم'], 'HTN', { bare: true });
+    term(['السكر الوريدي', 'سكر وريدي', 'سكر بالوريد'], 'IV dextrose', { bare: true });
+    // «تحت ضغط 90» is a BP under 90.
+    raw(new RegExp(NOT_L + pat('تحت') + '\\s+(?:ال)?' + pat('ضغط') + END + '\\s*(?=\\d)', 'g'), (m, a) => a + 'BP تحت ');
+    // The pulse that is felt (or is there at all) is «pulse»; a rate is HR (below).
+    term(['النبض المحيطي', 'نبض محيطي', 'نبض الأطراف'], 'peripheral pulse', { bare: true });
+    raw(new RegExp(NOT_L + '([وف]?(?:' + any(['في', 'فيه', 'بدون', 'بلا', 'ما في', 'مافي', 'له', 'إله', 'لها', 'إلها']) + '))\\s+(?:ال)?' + pat('نبض') + END, 'g'), (m, a, w) => a + w + ' pulse');
+
+    /* 2. A vital sign followed by its number reads as the monitor label: «النبض 125» → «الـHR 125».
+          Oxygen with a number is a saturation only with «%»; «أكسجين 6 لتر» is a flow. */
+    const PCT = '\\d+(?:\\.\\d+)?\\s*%';
+    for (const [ar, en, need] of [['نبض', 'HR', ''], ['ضغط', 'BP', ''], ['تنفس', 'RR', ''], ['حرارة', 'Temp', ''], ['أكسجين', 'SpO2', PCT], ['أوكسجين', 'SpO2', PCT], ['سكر', 'glucose', '']]) {
+      raw(new RegExp(NOT_L + '([وف]?)(?:ال)?(?:(?:معدل|سرعة|نسبة|قراءة)\\s+(?:ال)?)?' + pat(ar) + '(?:ه|ها|و)?' + END + '(\\s*[:=]?\\s*)(?=' + (need || '\\d') + ')', 'g'), (m, a, w, sp) => a + w + 'الـ' + en + (sp || ' '));
+    }
+    /* 3. A reading that moves or is judged. «النبض طالع» is the rate (HR), unless the pulse's feel is meant
+          («سريع وضعيف»); breathing is a rate only when a number moves («التنفس نزل من 29»); «الأكسجين تمام» is the saturation. */
+    const SOFT = '(?:\\s+(?:' + any(['لسا', 'كمان', 'برضه', 'عم', 'شوي']) + '))?';
+    const FEEL = '(?![^.،؟!]{0,25}' + '(?:' + any(['ضعيف', 'ضعيفة', 'قوي', 'قوية', 'خيطي', 'متساوي', 'بينحس', 'مش محسوس']) + '))';
+    const MOVED = '(?=\\s+(?:' + any(['نزل', 'طلع', 'زاد', 'هبط', 'ارتفع', 'صار']) + ')\\s+(?:من\\s+|ل\\u0640?\\s*)?\\d)';
+    const SAT = '(?=' + SOFT + '\\s+(?:' + any(['طالع', 'طالعة', 'نازل', 'نازلة', 'عالي', 'عالية', 'واطي', 'واطية', 'نزل', 'نزلت', 'طلع', 'طلعت', 'هبط', 'تمام', 'منيح', 'منيحة', 'طبيعي', 'طبيعية', 'ماسك', 'ماسكة', 'ماسكين']) + ')' + END + ')';
+    // «النبض» is the rate (HR) unless its feel follows; «تنفس» and «أكسجين» need their context.
+    for (const [ar, en, after] of [['نبض', 'HR', FEEL], ['تنفس', 'RR', MOVED], ['أكسجين', 'SpO2', SAT], ['أوكسجين', 'SpO2', SAT]]) {
+      raw(new RegExp(NOT_L + PRE + '(ال|لل)' + pat(ar) + END + after, 'g'), (m, a, p, ar2) => a + lead(p, ar2) + en);
+      raw(new RegExp(NOT_L + '([وف]?)' + pat(ar) + '(ه|ها|و)' + END + after, 'g'), (m, a, w, s) => a + w + 'الـ' + en + ' ' + tail(s));
+    }
+    // «زاد النبض»، «نزل الضغط»: the verb first.
+    raw(new RegExp(NOT_L + '(' + any(['زاد', 'نزل', 'طلع', 'هبط', 'ارتفع', 'بطأ', 'بطّأ', 'تسارع']) + ')\\s+(?:ال)' + pat('نبض') + END, 'g'), (m, a, v) => a + v + ' الـHR');
+
+    /* 4. History: «ضغط وسكري» is hypertension and diabetes, not a reading. DKA before diabetes. */
+    term(['الحماض الكيتوني السكري', 'حماض كيتوني سكري', 'الحماض الكيتوني', 'حماض كيتوني'], 'DKA', { bare: true });
+    raw(new RegExp(NOT_L + '(?:ال)?' + pat('ضغط') + '\\s*و\\s*(?:ال)?' + pat('سكري') + END, 'g'), (m, a) => a + 'HTN وDM');
+    raw(new RegExp(NOT_L + '(?:ال)?' + pat('سكري') + '\\s*و\\s*(?:ال)?' + pat('ضغط') + END, 'g'), (m, a) => a + 'DM وHTN');
+    // «عنده ضغط على صدره» is pressure on the chest, not hypertension.
+    const ON_BODY = '(?!\\s*(?:' + any(['على', 'عال', 'ع', 'في', 'ب', 'بال']) + ')?\\s*(?:ال)?(?:' + any(['صدر', 'صدره', 'صدرها', 'راس', 'راسه', 'راسها', 'بطن', 'بطنه', 'بطنها', 'قلب', 'قلبه', 'قلبها']) + ')' + END + ')';
+    raw(new RegExp(NOT_L + '(' + any(['عنده', 'عندها', 'عندو', 'مريض', 'مريضة', 'مرضى']) + ')\\s+' + pat('ضغط') + END + ON_BODY, 'g'), (m, a, w) => a + w + ' HTN');
+    raw(new RegExp(NOT_L + '(' + any(['عنده', 'عندها', 'عندو']) + ')\\s+(?:ال)?(?:' + any(['سكر', 'سكري']) + ')' + END, 'g'), (m, a, w) => a + w + ' DM');
+    // «مراقبة لصيقة للسكر» watches the glucose; otherwise «للسكر» is what a drug is for («حبوب للسكر»، «جليكلازيد للسكر»).
+    raw(new RegExp(NOT_L + '(' + any(['لصيقة', 'مراقبة', 'متابعة', 'قياس', 'قيس', 'قيسي', 'قيسيله', 'قيسيلها', 'قيسوا', 'فحص', 'تحليل', 'ضبط']) + ')\\s+' + 'لل' + pat('سكر') + END, 'g'), (m, a, w) => a + w + ' للـglucose');
+    raw(new RegExp(NOT_L + '([وف]?)' + 'لل' + pat('سكر') + END, 'g'), (m, a, w) => a + w + 'للـDM');
+    term(['هبوط السكر', 'هبوط سكر', 'نقص السكر', 'نقص سكر'], 'hypoglycemia', { bare: true });
+    // «مريض سكري» is a diabetic patient; otherwise «سكري» names the disease.
+    raw(new RegExp(NOT_L + '(' + any(['مريض', 'مريضة', 'مرضى']) + ')\\s+' + pat('سكري') + END, 'g'), (m, a, w) => a + w + ' diabetic');
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('سكري') + END + '(?=\\s+(?:' + any(['متعرق', 'متعرقة', 'عرقان', 'عرقانة', 'كبير', 'كبيرة', 'مسن', 'مسنة', 'قديم', 'يسمي', 'بيسمي', 'يحكي', 'بيحكي', 'بيقول', 'يقول']) + ')' + END + ')', 'g'), (m, a, w) => a + w + 'diabetic');
+    term(['السكري'], 'DM', { bare: true });
+    term(['سكري', 'سكّري'], 'DM', { bare: true });
+    term(['سكر الدم'], 'blood glucose');
+
+    /* 5. Drugs, by their ward names; the «مضاد ...» phrases before «مضاد» alone. */
+    term(['مضاد صفيحات ثان', 'مضاد صفيحات ثاني', 'مضاد صفيحات تاني', 'مضاد الصفيحات الثاني'], 'second antiplatelet');
+    term(['مضاد صفيحات', 'مضادات الصفيحات', 'مضاد الصفيحات', 'مضادات صفيحات'], 'antiplatelet');
+    term(['مضاد استفراغ', 'مضاد للاستفراغ', 'مضاد الاستفراغ', 'مضاد إقياء', 'مضاد للإقياء', 'مضادات الاستفراغ'], 'antiemetic');
+    term(['مضاد حموضة', 'مضاد للحموضة', 'مضاد الحموضة', 'دواء معدة', 'دوا معدة', 'دواء للمعدة', 'دوا للمعدة'], 'antacid');
+    term(['مضاد للفيروس', 'مضاد فيروسات', 'مضاد الفيروسات', 'مضادات الفيروسات', 'مضاد فيروسي'], 'antiviral');
+    term(['مضادات التخثر', 'مضادات تخثر'], 'anticoagulants');
+    term(['مضاد تخثر', 'مضاد للتخثر', 'مضاد التخثر', 'مضاد تجلط', 'مضاد للتجلط'], 'anticoagulant');
+    term(['مضاد غثيان', 'مضاد للغثيان', 'مضاد ترجيع', 'مضاد للترجيع'], 'antiemetic');
+    term(['مضاد حساسية', 'مضاد للحساسية', 'مضاد هيستامين', 'مضادات الهيستامين', 'مضاد الهيستامين'], 'antihistamine');
+    term(['مضادات حيوية', 'المضادات الحيوية'], 'antibiotics', { bare: true });
+    term(['مضاد حيوي وريدي', 'مضاد حيوي', 'مضاد الحيوي'], 'antibiotic');
+    // «مضاد» alone is the antibiotic only when no word naming another family follows it («مضاد اكتئاب» stays).
+    term(['مضاد'], 'antibiotic', { not: '\\s+(?:ل|ال|لل|' + any(['اكتئاب', 'تشنج', 'تشنجات', 'اختلاج', 'صرع', 'التهاب', 'فطري', 'فطريات', 'فيروس', 'ذهان', 'قلق', 'إسهال', 'سعال', 'كحة', 'نزف', 'تخثر', 'هيستامين', 'حساسية', 'غثيان', 'ترجيع']) + ')' });
+    term(['مسكن أفيوني', 'مسكنات أفيونية', 'مسكن مخدر'], 'opioid');
+    term(['مسكن NSAID'], 'NSAID', { bare: true });
+    term(['مسكن بسيط'], 'simple analgesia');
+    term(['مسكنات'], 'analgesics');
+    term(['مسكن', 'مسكّن'], 'analgesic');
+    term(['مميع دم', 'مميع الدم', 'مميعات الدم', 'مميع'], 'anticoagulant');
+    term(['مذيب خثرة', 'مذيب الخثرة', 'مذيب جلطة', 'مذيب الجلطة', 'مذيبات الخثرة', 'مذيب'], 'thrombolytic');
+    term(['مدر بول', 'مدر للبول', 'مدرات البول'], 'diuretic');
+    term(['بيتا بلوكر'], 'beta blocker');
+    term(['مهدئ', 'مهدّئ'], 'sedative');
+    // The neb phrases before the drug names, or «بخار سالبيوتامول» would read «neb salbutamol».
+    term(['بخار سالبيوتامول', 'سالبيوتامول بخار'], 'salbutamol neb');
+    term(['بخار فنتولين', 'فنتولين بخار'], 'Ventolin neb');
+    term(['بخار إبراتروبيوم', 'إبراتروبيوم بخار', 'بخار أتروفنت', 'أتروفنت بخار'], 'ipratropium neb');
+    const DRUGS = [
+      [['أسبرين', 'اسبيرين'], 'aspirin'], [['فنتولين'], 'Ventolin'], [['سالبيوتامول', 'سالبوتامول'], 'salbutamol'],
+      [['إبراتروبيوم', 'ابراتروبيم', 'أتروفنت'], 'ipratropium'], [['هيدروكورتيزون'], 'hydrocortisone'], [['بريدنيزولون'], 'prednisolone'],
+      [['ستيرويد', 'ستيرويدات', 'كورتيزون'], 'steroid'], [['مغنيسيوم', 'مغنيزيوم', 'ماغنيسيوم'], 'magnesium'],
+      [['نورأدرينالين', 'نورادرينالين', 'نوربينفرين'], 'noradrenaline'], [['أدرينالين', 'ادرنالين', 'ابينفرين'], 'adrenaline'],
+      [['أتروبين'], 'atropine'], [['أميودارون', 'كوردارون'], 'amiodarone'], [['أمينوفيلين'], 'aminophylline'],
+      [['سيفترياكسون'], 'ceftriaxone'], [['تازوسين'], 'Tazocin'], [['بنسلين', 'بنسيلين', 'بنيسيلين'], 'penicillin'],
+      [['باراسيتامول'], 'paracetamol'], [['بنادول'], 'Panadol'], [['بروفين'], 'Brufen'], [['فولتارين'], 'Voltaren'], [['إيبوبروفين'], 'ibuprofen'],
+      [['مورفين', 'مورفينا'], 'morphine'], [['فنتانيل', 'فنتانل'], 'fentanyl'], [['هيبارين'], 'heparin'], [['إينوكسابارين', 'كليكسان'], 'enoxaparin'],
+      [['نترات', 'نيتروجليسرين', 'نيترو'], 'nitrates'], [['إنسولين'], 'insulin'], [['اكترابيد'], 'Actrapid'], [['دكستروز'], 'dextrose'],
+      [['فوروسيمايد', 'فيوروسيمايد', 'لازكس', 'لازيكس'], 'furosemide'], [['بيكربونات', 'بيكاربونات'], 'bicarbonate'],
+      [['بوتاسيوم'], 'potassium'], [['صوديوم'], 'sodium'], [['كلوبيدوغريل', 'كلوبيدوجريل', 'بلافيكس'], 'clopidogrel'], [['تيكاغريلور', 'تيكاجريلور'], 'ticagrelor'],
+      [['ميتوبرولول'], 'metoprolol'], [['لابيتالول'], 'labetalol'], [['نيكارديبين'], 'nicardipine'], [['هيدرالازين'], 'hydralazine'],
+      [['أوندانسيترون', 'زوفران'], 'ondansetron'], [['ميتوكلوبراميد'], 'metoclopramide'], [['ديازيبام'], 'diazepam'], [['ميدازولام'], 'midazolam'],
+      [['ثيوفيلين'], 'theophylline'], [['ليفوفيد'], 'Levophed'], [['أوميبرازول'], 'omeprazole'], [['جافيسكون'], 'Gaviscon'],
+      [['ليفوفلوكساسين'], 'levofloxacin'], [['سيبروفلوكساسين'], 'ciprofloxacin'], [['أزيثرومايسين'], 'azithromycin'], [['فانكومايسين'], 'vancomycin'],
+      [['ميروبينيم'], 'meropenem'], [['بيبراسيلين'], 'piperacillin'], [['أمبيسيلين'], 'ampicillin'], [['أموكسيسيلين'], 'amoxicillin'],
+      [['فلوكلوكساسيلين'], 'flucloxacillin'], [['كلوكساسيلين'], 'cloxacillin'], [['ميترونيدازول'], 'metronidazole']
+    ];
+    for (const [ws, en] of DRUGS) term(ws, en);
+
+    /* 6. Fluids, routes, devices and procedures. */
+    term(['سوائل وريدية', 'سوايل وريدية'], 'IV fluids');
+    term(['سوائل', 'سوايل'], 'fluids');
+    term(['نورمال سلاين', 'نورمل سلاين', 'سلاين', 'محلول ملحي'], 'normal saline');
+    term(['رينجر لاكتات', 'رينجر'], 'Ringer');
+    raw(new RegExp(NOT_L + '(و?)(?:' + any(['بالوريد', 'عالوريد', 'وريدياً', 'وريديا']) + ')' + END, 'g'), (m, a, w) => a + w + 'IV');
+    raw(new RegExp(NOT_L + '(و?)(?:' + any(['بالعضل', 'عالعضل', 'عضلياً', 'عضليا']) + ')' + END, 'g'), (m, a, w) => a + w + 'IM');
+    raw(new RegExp(NOT_L + '(و?)(?:' + any(['تحت الجلد']) + ')' + END, 'g'), (m, a, w) => a + w + 'SC');
+    raw(new RegExp(NOT_L + '(و?)(?:' + any(['عن طريق الفم', 'فموي', 'فموياً']) + ')' + END, 'g'), (m, a, w) => a + w + 'PO');
+    term(['خط وريدي', 'خط وريد', 'كانيولا', 'كانولا', 'كنيولا', 'كانيولات'], 'cannula');
+    term(['وريدي', 'وريدية'], 'IV', { bare: true });
+    term(['قسطرة بولية', 'قسطرة بول', 'قسطرة للبول', 'فولي'], 'Foley catheter');
+    // «تفعيل القسطرة» keeps its verb: «تفعيل الـcath lab». «القسطرة» alone is left as it is (a Foley or the cath lab).
+    raw(new RegExp(NOT_L + '([وف]?[بل]?)(' + any(['تفعيل', 'فريق', 'غرفة', 'مختبر', 'مركز']) + ')\\s+' + pat('القسطرة') + END, 'g'), (m, a, p, w) => a + (p || '') + w + ' الـcath lab');
+    term(['كاث لاب'], 'cath lab');
+    term(['نيبولايزر', 'نبولايزر', 'بخار', 'جلسة بخار', 'جلسة تبخير'], 'neb');
+    term(['بخاخ'], 'inhaler');
+    // «ماسك» alone is also «holding» («ماسك صدره»), so only the oxygen phrases change.
+    term(['ماسك بكيس', 'ماسك مع كيس', 'ماسك الكيس', 'ماسك ريزيرفوار', 'ماسك بخزان'], 'non-rebreather mask');
+    term(['ماسك فنتوري', 'ماسك فينتوري'], 'Venturi mask');
+    term(['ماسك أكسجين', 'ماسك الأكسجين', 'قناع أكسجين', 'قناع الأكسجين'], 'O2 mask');
+    term(['قناع وجه', 'قناع الوجه'], 'face mask');
+    term(['قناع'], 'mask');
+    term(['أكسجين', 'أوكسجين'], 'O2');
+    term(['مونيتر', 'مونيتور'], 'monitor');
+    term(['تنبيب', 'التنبيب الرغامي', 'أنبوب تنفس'], 'intubation');
+    term(['الإنعاش الأساسي'], 'BLS', { bare: true });
+    term(['الإنعاش المتقدم'], 'ALS', { bare: true });
+    term(['إنعاش قلبي رئوي', 'إنعاش قلبي', 'ضغطات صدر', 'ضغطات الصدر', 'تدليك قلب'], 'CPR');
+    def([['صدمة', 'كهربائية']], 'DC shock');
+    term(['صدمة كهربا'], 'DC shock');
+    term(['ديفيب', 'ديفب', 'مزيل الرجفان', 'جهاز الصدمات'], 'defib');
+    def([['عناية', 'حثيثة'], ['عناية', 'مركزة']], 'ICU');
+    // «العناية» with its article is the unit («دخل العناية»، «للعناية»); «بعناية» (carefully), «العناية بالمريض»,
+    // «العناية التمريضية» and «خطة العناية» are care, not the unit.
+    raw(new RegExp(NOT_L + '(?<!' + pat('خطة') + '\\s+)' + PRE + '(ال|لل)' + pat('عناية') + END + '(?!\\s+(?:' + any(['بالمريض', 'بالمريضة', 'بالمرضى', 'به', 'بها', 'بهم', 'بالجرح', 'بالفم', 'بالجلد', 'التمريضية', 'الطبية', 'الصحية', 'اللازمة', 'الكاملة', 'الجيدة', 'اليومية']) + ')' + END + ')', 'g'), (m, a, p, ar) => a + lead(p, ar) + 'ICU');
+    term(['الإنعاش'], 'resus', { bare: true });
+    // «تأمين مجرى الهواء» keeps its verb: «تأمين الـairway».
+    raw(new RegExp(NOT_L + PRE + '(?:' + any(['مجرى الهواء', 'مجرى التنفس']) + ')' + END, 'g'), (m, a, p) => a + (p ? (/ل$/.test(p) ? p.slice(0, -1) + 'للـ' : p + 'الـ') : 'الـ') + 'airway');
+    raw(new RegExp(NOT_L + '([وف]?[بل]?)(' + any(['طبيب', 'دكتور']) + ')\\s+' + pat('التخدير') + END, 'g'), (m, a, p, w) => a + (p || '') + w + ' الـanesthesia');
+
+    /* 7. Tests and places. */
+    term(['تخطيط قلب', 'تخطيط القلب', 'تخطيط للقلب', 'تخطيط'], 'ECG');
+    term(['صورة صدر', 'صورة الصدر', 'صورة للصدر', 'أشعة صدر', 'أشعة الصدر', 'أشعة للصدر'], 'chest X-ray');
+    term(['طبقي شرايين الرئة', 'طبقي للرئة', 'طبقي رئة'], 'CTPA');
+    term(['طبقي دماغ', 'طبقي للدماغ', 'طبقي راس', 'طبقي للراس'], 'CT head');
+    term(['طبقي بطن', 'طبقي للبطن'], 'CT abdomen');
+    term(['طبقي'], 'CT');
+    term(['إيكو بجانب السرير', 'ألتراساوند بجانب السرير'], 'POCUS');
+    term(['إيكو'], 'echo');
+    term(['ألتراساوند', 'التراساوند', 'سونار'], 'ultrasound', { bare: true });
+    // The radiology department is a place («النقل إلى الأشعة»); otherwise «الأشعة» is imaging.
+    raw(new RegExp(NOT_L + '(' + any(['إلى', 'على', 'عن']) + ')\\s+' + pat('الأشعة') + END, 'g'), (m, a, w) => a + w + ' الـradiology');
+    term(['أشعة'], 'imaging');
+    term(['غازات الدم الشرياني', 'غازات الدم', 'غازات دم', 'غازات'], 'ABG');
+    term(['تعداد دم', 'تعداد الدم', 'صورة دم كاملة'], 'CBC');
+    term(['وظائف الكلى', 'وظائف كلى'], 'KFT');
+    term(['وظائف الكبد', 'وظائف كبد'], 'LFT');
+    term(['أملاح'], 'electrolytes');
+    term(['زراعة بول', 'زراعة البول', 'زراعة للبول'], 'urine culture');
+    term(['زراعة بلغم', 'زراعة البلغم', 'زراعة القشع'], 'sputum culture');
+    term(['زراعة دم', 'زراعة الدم', 'زراعات دم'], 'blood culture');
+    // «الزراعة» alone in this room is the blood culture (the only culture the cases hold).
+    term(['زراعة'], 'blood culture', { not: '\\s+(?:' + any(['بول', 'البول', 'بلغم', 'البلغم', 'جرح', 'الجرح']) + ')' });
+    term(['مؤشرات الالتهاب', 'مؤشرات التهاب'], 'inflammatory markers');
+    term(['تخثر الدم', 'وظائف التخثر', 'فحص التخثر'], 'coag');
+    term(['فحص بول', 'فحص البول', 'تحليل بول', 'تحليل البول'], 'urinalysis');
+    term(['مسحة فيروسات', 'مسحة الفيروسات'], 'viral PCR');
+    term(['ذروة الجريان', 'قياس ذروة الجريان'], 'peak flow');
+    term(['كيتونات الدم', 'كيتونات بالدم'], 'serum ketones');
+    term(['كيتونات'], 'ketones');
+    term(['تروبونين'], 'troponin');
+    term(['لاكتات'], 'lactate');
+    term(['دي دايمر', 'دي-دايمر'], 'D-dimer');
+    term(['كرياتينين'], 'creatinine');
+    def([['فحوصات', 'مخبرية'], ['فحوص', 'مخبرية']], 'labs');
+    term(['تحاليل'], 'labs');
+    term(['فحوصات', 'فحوص'], 'investigations');
+    def([['علامات', 'حيوية']], 'vitals');
+    term(['مختبر'], 'lab');
+    term(['طوارئ', 'طوارىء'], 'ER');
+    term(['تشخيص تفريقي'], 'DDx');
+    term(['تشخيص'], 'diagnosis');
+    term(['جرعة'], 'dose');
+
+    /* 8. Diagnoses and findings. */
+    term(['احتشاء رئوي', 'الاحتشاء الرئوي'], 'pulmonary infarction', { bare: true });
+    term(['احتشاء عضلة القلب', 'احتشاء عضلة قلبية', 'احتشاء قلبي', 'احتشاء بالقلب', 'جلطة قلبية', 'جلطة بالقلب'], 'MI');
+    term(['انصمام رئوي', 'الانصمام الرئوي', 'جلطة رئوية', 'جلطة بالرئة', 'انصمام'], 'PE');
+    term(['تجلط الأوردة العميقة', 'جلطة بالساق', 'جلطة الساق'], 'DVT');
+    term(['صدمة إنتانية'], 'septic shock');
+    term(['صدمة قلبية'], 'cardiogenic shock');
+    term(['صدمة نزفية'], 'hemorrhagic shock');
+    term(['صدمة تحسسية', 'صدمة حساسية', 'صدمة الحساسية'], 'anaphylactic shock');
+    term(['إنتان', 'تسمم دم', 'تسمم بالدم'], 'sepsis');
+    // In this room «صدمة» is mostly the electric one («يحتاج صدمة فورية»، «بعد الصدمة»); after «أو/عند/في/علامات»
+    // or as «بصدمة» («دخل بصدمة») it is the state.
+    raw(new RegExp(NOT_L + '(' + any(['أو', 'عند', 'في', 'حالة', 'بحالة', 'علامات', 'علامة', 'وعلامات']) + ')\\s+(ال)?' + pat('صدمة') + END, 'g'), (m, a, w, ar) => a + w + ' ' + (ar ? 'الـ' : '') + 'shock');
+    raw(new RegExp(NOT_L + '([وف]?)ب' + pat('صدمة') + END, 'g'), (m, a, w) => a + w + 'بـshock');
+    term(['صدمة'], 'DC shock');
+    term(['ربو'], 'asthma');
+    term(['التهاب رئوي', 'ذات الرئة', 'التهاب بالرئة'], 'pneumonia');
+    term(['استرواح الصدر', 'استرواح صدر', 'استرواح صدري', 'استرواح'], 'pneumothorax');
+    term(['وذمة رئة قلبية', 'وذمة رئوية قلبية'], 'cardiogenic pulmonary edema');
+    term(['وذمة رئة حادة', 'وذمة رئوية حادة'], 'acute pulmonary edema');
+    def([['وذمة', 'رئوية']], 'pulmonary edema');
+    term(['وذمة رئة', 'وذمة الرئة', 'وذمة بالرئة'], 'pulmonary edema');
+    term(['وذمة'], 'edema');
+    term(['خراخر', 'كراكر'], 'crackles', { bare: true });
+    term(['تنفس قصبي'], 'bronchial breathing', { bare: true });
+    term(['احتكاك جنبي'], 'pleural rub', { bare: true });
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('أوردة الرقبة') + '\\s+(?:' + any(['منتفخة', 'مرفوعة', 'ممتلئة', 'بارزة', 'متوسعة']) + ')' + END, 'g'), (m, a, w) => a + w + 'الـJVP مرفوع');
+    term(['أوردة الرقبة'], 'neck veins', { bare: true });
+    term(['تورم pitting', 'وذمة pitting'], 'pitting edema', { bare: true });
+    term(['تيبس رقبة', 'تيبس بالرقبة', 'تيبس الرقبة'], 'neck stiffness', { bare: true });
+    term(['ضعف طرف', 'ضعف بالأطراف', 'ضعف بطرف'], 'limb weakness', { bare: true });
+    term(['صفير زفيري'], 'expiratory wheeze');
+    term(['صفير'], 'wheeze');
+    term(['ضيق التنفس', 'ضيق النفس', 'ضيق نفس', 'ضيق بالنفس', 'ضيقة نفس', 'صعوبة التنفس', 'صعوبة بالتنفس'], 'SOB', { bare: true });
+    term(['تسرع القلب', 'تسرع قلب', 'تسرع بالقلب'], 'tachycardia', { bare: true });
+    term(['بطء القلب', 'بطء قلب', 'بطء بالقلب'], 'bradycardia', { bare: true });
+    term(['رجفان أذيني'], 'AF', { bare: true });
+    term(['جفاف'], 'dehydration');
+    term(['قصور كلوي', 'القصور الكلوي', 'ضعف الكلى', 'ضعف كلوي'], 'renal impairment', { bare: true });
+    term(['فشل كلوي', 'الفشل الكلوي', 'فشل الكلى'], 'renal failure', { bare: true });
+    // «حساسية الفحص» is a test's sensitivity, not an allergy.
+    term(['حساسية', 'تحسس'], 'allergy', { not: '\\s+(?:' + any(['الفحص', 'الاختبار', 'فحص', 'عالية', 'منخفضة', 'قليلة']) + ')' });
+    term(['نزيف', 'نزف'], 'bleeding');
+    term(['ألم صدري قلبي', 'وجع صدر قلبي'], 'cardiac chest pain', { bare: true });
+    term(['وجع صدر', 'وجع بالصدر', 'وجع الصدر', 'ألم صدري', 'ألم بالصدر', 'ألم الصدر', 'ألم في الصدر', 'الألم الصدري'], 'chest pain', { bare: true });
+    term(['وجع بطن', 'وجع بالبطن', 'وجع البطن', 'ألم بطني', 'ألم بالبطن', 'ألم البطن'], 'abdominal pain', { bare: true });
+    term(['استفراغ', 'ترجيع', 'إقياء'], 'vomiting');
+    term(['غثيان', 'لعيان نفس'], 'nausea');
+    term(['صداع'], 'headache');
+    term(['إسهال'], 'diarrhea');
+
+    /* 9. The remaining vital signs, without a number. «الضغط» is not a reading in «تحت الضغط» (stress),
+          «الضغط على الربلة» (pressing on) or «تنفسي بالضغط» (ventilation); those stay Arabic. */
+    const NOT_BP_AFTER = '\\s*(?:' + any(['على', 'عن', 'ع']) + ')' + END;
+    raw(new RegExp(NOT_L + '(?<!(?:' + any(['تحت', 'من', 'عند', 'تنفسي', 'يخفف', 'يخفف أيضاً']) + ')\\s+)' + PRE + '(ال|لل)' + pat('ضغط') + END + '(?!' + NOT_BP_AFTER + ')', 'g'), (m, a, p, ar) => a + lead(p, ar) + 'BP');
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('ضغط') + '(ه|ها|و)' + END, 'g'), (m, a, w, s) => a + w + 'الـBP ' + tail(s));
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('ضغط') + '\\s+(' + any(['مرتفع', 'عالي', 'واطي', 'منخفض', 'نازل', 'طالع']) + ')' + END, 'g'), (m, a, w, x) => a + w + 'BP ' + x);
+    raw(new RegExp(NOT_L + PRE + '(ال|لل)' + pat('نبض') + END, 'g'), (m, a, p, ar) => a + lead(p, ar) + 'pulse');
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('نبض') + '(ه|ها|و)' + END, 'g'), (m, a, w, s) => a + w + 'الـpulse ' + tail(s));
+    // «للحرارة» (a drug for it) is the fever; «الحرارة» is the temperature.
+    raw(new RegExp(NOT_L + '([وف]?)' + 'لل' + pat('حرارة') + END, 'g'), (m, a, w) => a + w + 'للـfever');
+    raw(new RegExp(NOT_L + PRE + '(ال|لل)' + pat('حرارة') + END, 'g'), (m, a, p, ar) => a + lead(p, ar) + 'temp');
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('حرار') + '(ته|تها|تو)' + END, 'g'), (m, a, w, s) => a + w + 'الـtemp ' + tail(s));
+    raw(new RegExp(NOT_L + '(و?)(?:' + any(['حرارة', 'سخونة']) + ')' + END, 'g'), (m, a, w) => a + w + 'fever');
+    raw(new RegExp(NOT_L + PRE + '(ال)' + pat('سكر') + END, 'g'), (m, a, p, ar) => a + lead(p, ar) + 'glucose');
+    raw(new RegExp(NOT_L + '([وف]?)' + pat('سكر') + '(ه|ها|و)' + END, 'g'), (m, a, w, s) => a + w + 'الـglucose ' + tail(s));
+    term(['معدل التنفس', 'سرعة التنفس'], 'RR', { bare: true });
+
+    /* 10. Units after a number, then compound units («units/كغ/ساعة» → «units/kg/h»). */
+    const UNIT = (ws, en) => raw(new RegExp('(\\d)\\s*(?:' + any(ws) + ')' + END, 'g'), (m, d) => d + ' ' + en);
+    UNIT(['لتر بالدقيقة', 'لتر في الدقيقة', 'لتر/دقيقة', 'ليتر بالدقيقة', 'لتر بالدقيقه'], 'L/min');
+    UNIT(['ميكروغرام/دقيقة', 'ميكروغرام بالدقيقة', 'ميكرو غرام بالدقيقة', 'مكغ/دقيقة'], 'mcg/min');
+    UNIT(['ملي غرام', 'ملغم', 'ملغ', 'مغ', 'ملجم', 'ملليغرام'], 'mg');
+    UNIT(['ميكروغرام', 'ميكرو غرام', 'مكغ'], 'mcg');
+    UNIT(['ملي مول', 'مليمول', 'ملمول'], 'mmol');
+    UNIT(['ملي', 'مل', 'سي سي'], 'ml');
+    UNIT(['لتر', 'ليتر', 'لترات'], 'L');
+    UNIT(['وحدات', 'وحدة'], 'units');
+    UNIT(['جرام', 'غرام', 'غم', 'غ'], 'g');
+    UNIT(['كيلو', 'كغ', 'كيلوغرام'], 'kg');
+    raw(new RegExp('([A-Za-z])\\s*/\\s*(?:' + any(['كغ', 'كيلو']) + ')' + END, 'g'), (m, x) => x + '/kg');
+    raw(new RegExp('([A-Za-z])\\s*/\\s*(?:' + any(['ساعة', 'ساعه']) + ')' + END, 'g'), (m, x) => x + '/h');
+    raw(new RegExp('([A-Za-z])\\s*/\\s*(?:' + any(['دقيقة', 'دقيقه']) + ')' + END, 'g'), (m, x) => x + '/min');
+
+    /* 11. Tidy up, only around the drug words this list writes (English already in the line is left alone):
+          «allergy الـaspirin» → «aspirin allergy», «dose antibiotic» → «dose من الـantibiotic», and an English
+          gloss that now repeats itself («sepsis (sepsis)»). */
+    const DRUG_EN = DRUGS.map(d => d[1]).concat(['NSAID', 'antibiotic', 'antibiotics', 'second antiplatelet', 'antiplatelet', 'antiemetic', 'antacid', 'antiviral', 'antihistamine', 'opioid', 'analgesic', 'analgesics', 'anticoagulant', 'thrombolytic', 'diuretic', 'sedative', 'IV antihypertensive', 'antihypertensive', 'vasopressor', 'antipyretic', 'IV fluids', 'fluids', 'normal saline']);
+    const DRUG_RE = '(?:' + DRUG_EN.slice().sort((a, b) => b.length - a.length).map(esc).join('|') + ')(?![A-Za-z])';
+    raw(new RegExp('(?<![A-Za-z])allergy\\s+(?:الـ)?(' + DRUG_RE + ')', 'g'), (m, d) => d + ' allergy');
+    raw(new RegExp('(?<![A-Za-z])dose\\s+(?=' + DRUG_RE + ')', 'g'), () => 'dose من الـ');
+    // In a list of readings «التنفس» is the rate: «الـBP، الـHR، التنفس» → «… الـRR».
+    raw(new RegExp('(الـ(?:BP|HR|pulse)\\s*،\\s*)(و?)' + pat('التنفس') + END, 'g'), (m, x, w) => x + w + 'الـRR');
+    const EMIT_RE = [...EMIT].filter(x => /^[A-Za-z]/.test(x)).sort((a, b) => b.length - a.length).map(esc).join('|');
+    raw(new RegExp('(?<![A-Za-z0-9])(' + EMIT_RE + ')((?:\\s+[' + L + ']+){0,2})\\s*\\(\\s*\\1\\s*\\)', 'gi'), (m, x, between) => x + between);
+    return text => {
+      let s = String(text == null ? '' : text);
+      if (!/[؀-ۿ]/.test(s)) return s;
+      for (const [re, fn] of rules) { re.lastIndex = 0; s = s.replace(re, fn); }
+      return s;
+    };
+  } catch (e) { return text => String(text == null ? '' : text); } })();
+/*CHAT-EN-END*/
+  // Who speaks the ward's English terms on the page (the patient, the relative and the trainee keep their words).
+  const EN_WHO = new Set(['n', 'd', 'sys', 'exam', 'alarm']);
+  const shown = (who, text) => (REAL && EN_WHO.has(who) ? chatEn(text) : text);
+
   /* ---------- the stream ---------- */
   const LABEL = () => (NM() ? { p: E.c.patient.name, c: E.c.companion.name, n: 'د. ' + E.nurse.doc, d: 'المشرفة ' + E.c.nurse.name, me: 'أنت' } : { p: E.c.patient.name, c: E.c.companion.name, n: 'الممرضة ' + E.c.nurse.name, d: 'المشرف', me: 'أنت' });
   // Latin runs keep their own order inside Arabic: "12-lead ECG", "5 mg".
@@ -264,7 +602,7 @@
     const d = document.createElement('div');
     d.className = 'er-msg k-' + who;
     const label = LABEL()[who];
-    d.innerHTML = (label ? `<span class="er-who">${esc(label)}</span>` : '') + (text ? `<p>${bidi(text)}</p>` : '') + (extra || '');
+    d.innerHTML = (label ? `<span class="er-who">${esc(label)}</span>` : '') + (text ? `<p>${bidi(shown(who, text))}</p>` : '') + (extra || '');
     feed.appendChild(d);
     if (atEnd) feed.scrollTop = who === 'lab' && d.offsetTop ? d.offsetTop - 8 : feed.scrollHeight;
     document.querySelectorAll('.er-p').forEach(p => p.classList.toggle('is-on', p.dataset.who === who));
@@ -282,7 +620,7 @@
         if (/^حاضر/.test(E.lastN.text) && /^حاضر[،.]?\s*/.test(text)) text = text.replace(/^حاضر[،.]?\s*/, '');
         if (!text) return;
         E.lastN.text += ' ' + text;
-        lastEl.innerHTML = `<span class="er-who">${esc(LABEL().n)}</span><p>${bidi(E.lastN.text)}</p>`;
+        lastEl.innerHTML = `<span class="er-who">${esc(LABEL().n)}</span><p>${bidi(shown('n', E.lastN.text))}</p>`;
         const lastChat = E.chat[E.chat.length - 1];
         if (lastChat && lastChat.r === 'n') lastChat.t = E.lastN.text;
         return;
@@ -2709,8 +3047,10 @@
     if (!E || !NM()) return;
     const N = E.nurse, box = $('er-ord'), list = $('er-ord-list');
     const open = N.orders.filter(o => openOrd(o) && !o.reminder).length;
-    const tb = $('er-test');
+    const tb = $('er-test'), lt = $('er-tab-labs');
     if (tb && tb.dataset) tb.dataset.badge = open ? String(open) : '';
+    // 2026-11-08: on a wide screen the same count sits on the «Labs» button, so new orders are seen from the monitor too.
+    if (lt && lt.dataset) lt.dataset.badge = open ? String(open) : '';
     if (!box || !list) return;
     box.hidden = !N.orders.length;
     const was = REAL && document.activeElement && document.activeElement.dataset ? document.activeElement.dataset.ord : '';
@@ -3172,7 +3512,8 @@
     log('test', `طلب ${meta.en}${reason ? ' (' + reason + ')' : ''}`);
     // Blood is drawn through the cannula: ordered in the same breath, the results come after it is in.
     const iv = E.done.get('iv_access');
-    if (iv && E.sim - iv.at < 0.05) later(0.12, () => { resultBack(id); buildRecords(); });
+    // 2026-11-08: the card shows «بانتظار النتيجة» and the «Labs» count grows at once, before a delayed result.
+    if (iv && E.sim - iv.at < 0.05) { buildRecords(); later(0.12, () => { resultBack(id); buildRecords(); }); }
     else { resultBack(id); buildRecords(); }
     if (ind === 'harm') {
       E.risk = clamp(E.risk + 6, 0, 100);
@@ -3194,9 +3535,10 @@
     const meta = testOf(id), r = E.c.results[id] || {};
     const table = (r.rows || []).length ? `<table class="er-lab" dir="ltr"><thead><tr><th>Test</th><th>Result</th><th>Reference</th></tr></thead><tbody>${r.rows.map(x =>
       `<tr${x[4] ? ' class="is-flag"' : ''}><td>${esc(x[0])}</td><td><b>${esc(x[1])}</b>${x[2] ? ` <small>${esc(x[2])}</small>` : ''}${x[4] ? ` <i>${esc(x[4])}</i>` : ''}</td><td>${esc(x[3])}</td></tr>`).join('')}</tbody></table>` : '';
-    /* phase8 2026-11-07: an out-of-indication result is shown in full, marked amber with its badge. */
+    /* phase8 2026-11-07: an out-of-indication result is shown in full, marked amber with its badge.
+       2026-11-08 (owner): on the page the card is titled with the test's English name only. */
     const off = offInd(E.tests[id]);
-    return `<div class="er-card${off ? ' is-off' : ''}">${off ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}<div class="er-card-h"><b>${esc(meta.ar)}</b><bdi dir="ltr">${esc(meta.en)}</bdi></div>${table}${r.report ? `<p class="er-report" dir="ltr">${esc(r.report)}</p>` : ''}</div>`;
+    return `<div class="er-card${off ? ' is-off' : ''}">${off ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}<div class="er-card-h">${REAL ? `<b dir="ltr">${esc(meta.en)}</b>` : `<b>${esc(meta.ar)}</b><bdi dir="ltr">${esc(meta.en)}</bdi>`}</div>${table}${r.report ? `<p class="er-report" dir="ltr">${esc(r.report)}</p>` : ''}</div>`;
   }
   function resultBack(id) {
     const t = E.tests[id], res = E.c.results[id] || {};
@@ -3483,14 +3825,17 @@
   }
   const DISPO = { icu: 'العناية الحثيثة', hdu: 'مراقبة عالية في الطوارئ', cath: 'القسطرة', ward: 'طابق عادي', home: 'البيت' };
 
+  // 2026-11-08: a missed fact is quoted in the patient's or the relative's own words, so the page's English terms leave
+  // it alone; a missed examination finding is the room's clinical line and reads like the chat.
+  const quoteOf = (f, said) => (E.c.exam.includes(f) ? esc(said) : `<span data-no-terms>${esc(said)}</span>`);
   /* phase8 2026-11-07 (made a helper for the nurse report, 2026-11-07): the tests table rows, in order of time.
      src adds the nurse report's «المصدر» column; the doctor report passes none and is unchanged. */
   const justCell = t => {
     if (!offInd(t)) return '—';
     if (t.justOk === undefined) return 'لم تكتب تبريراً';
-    return `${t.justify ? esc(t.justify) : 'لم تكتب تبريراً'}<small class="${t.justOk ? 'j-ok' : 'j-no'}">${t.justOk ? 'مقبول' : 'غير مقنع'}</small>`;
+    return `${t.justify ? `<span data-no-terms>${esc(t.justify)}</span>` : 'لم تكتب تبريراً'}<small class="${t.justOk ? 'j-ok' : 'j-no'}">${t.justOk ? 'مقبول' : 'غير مقنع'}</small>`;
   };
-  const testRows = (reasoned, src) => Object.values(E.tests).sort((a, b) => a.at - b.at).map(t => `<tr${offInd(t) ? ' class="is-off"' : ''}><td><span dir="ltr">${esc(testOf(t.id).en)}</span>${offInd(t) ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}</td><td class="font-num" dir="ltr">${clk(t.at)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${src ? `<td>${src(t)}</td>` : ''}${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${justCell(t)}</td><td>${esc(t.why || '')}</td></tr>`).join('');
+  const testRows = (reasoned, src) => Object.values(E.tests).sort((a, b) => a.at - b.at).map(t => `<tr${offInd(t) ? ' class="is-off"' : ''}><td><span dir="ltr">${esc(testOf(t.id).en)}</span>${offInd(t) ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}</td><td class="font-num" dir="ltr">${clk(t.at)}</td><td class="i-${t.ind}">${IND[t.ind]}</td>${src ? `<td>${src(t)}</td>` : ''}${reasoned ? `<td>${RSN[t.reasonOk] || ''}${t.reason ? `<small data-no-terms>${esc(t.reason)}</small>` : ''}</td>` : ''}<td>${justCell(t)}</td><td>${esc(t.why || '')}</td></tr>`).join('');
 
   function chart() {
     const W = 640, H = 150, pts = E.riskLog, maxT = Math.max(1, pts[pts.length - 1][0]);
@@ -3564,7 +3909,7 @@
       if (miss.length) gaps.push(`<b>التسليم</b>: ناقصه ${miss.join('، ')}.`);
       if (end.grade.invented) gaps.push('<b>التسليم</b>: ذكرت ما لم يحدث. التسليم الخاطئ يضلل من يستلم المريض.');
     }
-    s.reds.filter(f => !s.got.includes(f)).forEach(f => gaps.push(`<b>لم تصل إليك هذه المعلومة</b>: «${esc(f.say)}»`));
+    s.reds.filter(f => !s.got.includes(f)).forEach(f => gaps.push(`<b>لم تصل إليك هذه المعلومة</b>: «${quoteOf(f, f.say)}»`));
     s.missedTests.forEach(id => gaps.push(`<b>فحص لازم لم تطلبه</b>: ${esc(testOf(id).ar)}. ${esc(c.results[id].why)}`));
     /* phase8 2026-11-07: the written justifications of out-of-indication tests. A dangerous test stays a gap even when argued well. */
     Object.values(E.tests).filter(t => offInd(t) && t.justOk === false).forEach(t => gaps.push(`<b>فحص خارج الاستطباب</b>: ${esc(testOf(t.id).ar)}. تبريرك لم يكن مقنعاً. ${esc(t.why || '')}`));
@@ -3582,7 +3927,7 @@
     box.hidden = false;
     box.innerHTML = `<div class="er-report-page">
       <div class="er-score" tabindex="-1"><b class="font-num">${s.total}</b><div><strong>${head}</strong><span>${passed ? 'مجتاز' : fails.length ? 'غير مجتاز: ' + esc(fails.join('، ')) : 'غير مجتاز'} · مدة الحالة ${mm(E.sim)}</span></div></div>
-      <p><b>التشخيص الصحيح:</b> ${esc(fell() && c.collapse.dx ? c.collapse.dx : c.dx.ar)}${end ? ` · <b>كتبت:</b> ${esc(end.dx)}` : ''}</p>
+      <p><b>التشخيص الصحيح:</b> ${esc(fell() && c.collapse.dx ? c.collapse.dx : c.dx.ar)}${end ? ` · <b>كتبت:</b> <span data-no-terms>${esc(end.dx)}</span>` : ''}</p>
       <ul class="er-parts">
         <li>سلامة المريض <b class="font-num">${Math.round(s.safe)} / 40</b></li><li>التشخيص <b class="font-num">${s.dxPts} / 15</b></li>
         <li>الفحوصات <b class="font-num">${Math.round(s.testPts)} / 15</b></li><li>القصة وعلامات الخطر <b class="font-num">${Math.round(s.hist)} / 10</b></li>
@@ -3775,7 +4120,7 @@
       const miss = Object.entries(s.parts).filter(([, [p]]) => p < 2).map(([k]) => PART[k]);
       if (miss.length) P(`<b>التقييم الأولي</b>: لم تقيّم ${miss.join('، ')} في الدقائق الأولى.`);
     }
-    s.reds.filter(f => !s.got.includes(f)).forEach(f => P(`<b>لم تصل إليك هذه المعلومة</b>: «${esc(forNurse(f.say))}»`));
+    s.reds.filter(f => !s.got.includes(f)).forEach(f => P(`<b>لم تصل إليك هذه المعلومة</b>: «${quoteOf(f, forNurse(f.say))}»`));
     // 2. escalation
     sec = 1;
     const ecg = E.tests.ecg;
@@ -3910,48 +4255,39 @@
   /* ---------- the records column ---------- */
   const PANELS = [['heart', 'القلب'], ['blood', 'الدم'], ['chem', 'الكيمياء والغازات'], ['imaging', 'الأشعة'], ['other', 'البول وأخرى']];
   let recFilter = 'all', recQuery = '';
-  /* phase8 2026-11-07: the investigations centre. The chips follow the reference wording; tests are grouped by
-     where they are done (bedside, lab and urine, imaging and tracings), and the 12-lead ECG sits with imaging
-     and tracings as in the reference. Only tests the case has a result for are listed. */
-  const CATS = [['bed', 'سريري'], ['lab', 'مختبر وبول'], ['img', 'أشعة وتخطيط']];
+  /* phase8 2026-11-07: the investigations centre; tests are grouped by where they are done (bedside, lab and urine,
+     imaging and tracings), and the 12-lead ECG sits with imaging and tracings. Only tests the case has a result for are listed.
+     2026-11-08 (owner): the names are in English, as on the ward, and the list is one column of cards: the test's name
+     (its Arabic name on hover, and the search still finds it in Arabic) and «طلب ←», or the state of the result, on the left.
+     The order log is folded into the cards. */
+  const CATS = [['bed', 'Bedside', 'سريري'], ['lab', 'Lab', 'مختبر وبول'], ['img', 'Imaging & ECG', 'أشعة وتخطيط']];
   const catOf = t => (t.id === 'ecg' ? 'img' : t.group);
   const panelName = k => (PANELS.find(p => p[0] === k) || ['', ''])[1];
-  let recView = 'order';
   function buildRecords() {
     const f = $('er-rec-f'), list = $('er-rec-list');
     if (!f || !list || !D || !E) return;
     if (recFilter !== 'all' && !CATS.some(([k]) => k === recFilter)) recFilter = 'all';
     f.innerHTML = [['all', 'الكل'], ...CATS].map(([k, l]) => `<button type="button" data-f="${k}" aria-pressed="${k === recFilter}">${l}</button>`).join('');
     const q = norm(recQuery);
-    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : was.dataset.go ? `[data-go="${was.dataset.go}"]` : was.dataset.ord ? `[data-ord="${was.dataset.ord}"]` : '') : '';
-    list.innerHTML = CATS.filter(([k]) => recFilter === 'all' || recFilter === k).map(([k, label]) => {
-      const items = D.tests.filter(t => catOf(t) === k && E.c.results[t.id] && (!q || norm(t.ar + ' ' + t.en + ' ' + (t.kw || []).join(' ') + ' ' + label + ' ' + panelName(t.panel)).includes(q)));
+    const was = document.activeElement, keep = was && was.dataset ? (was.dataset.t ? `[data-t="${was.dataset.t}"]` : was.dataset.f ? `[data-f="${was.dataset.f}"]` : was.dataset.ord ? `[data-ord="${was.dataset.ord}"]` : '') : '';
+    list.innerHTML = CATS.filter(([k]) => recFilter === 'all' || recFilter === k).map(([k, label, arLabel]) => {
+      const items = D.tests.filter(t => catOf(t) === k && E.c.results[t.id] && (!q || norm(t.ar + ' ' + t.en + ' ' + (t.kw || []).join(' ') + ' ' + label + ' ' + arLabel + ' ' + panelName(t.panel)).includes(q)));
       if (!items.length) return '';
       return `<section class="er-rec-sec"><h4>${label}</h4><div>${items.map(t => {
         const x = E.tests[t.id], off = offInd(x);
-        return `<button type="button" class="er-t${x ? ' is-done' : ''}${off ? ' is-off' : ''}" data-t="${t.id}"><span dir="ltr">${esc(t.en)}</span><small>${esc(t.ar)}</small>${nurseTag(t.id)}${x ? `<i aria-label="${off ? 'تم الطلب، خارج الاستطباب المباشر' : 'تم الطلب'}">✓${off ? '<em class="er-off-dot" aria-hidden="true"></em>' : ''}</i>` : ''}</button>`;
+        // A culture drawn is not a result yet: its card says when the result comes, as the old log did.
+        const incubating = x && x.back && /incubat/i.test((E.c.results[t.id] || {}).report || '');
+        const state = !x ? '<span class="er-tc-go">طلب ←</span>' : incubating ? '<span class="er-tc-wait">سُحبت العينة · النتيجة بعد يوم أو يومين</span>' : x.back ? '<span class="er-tc-go">النتيجة ←</span>' : '<span class="er-tc-wait">بانتظار النتيجة</span>';
+        return `<button type="button" class="er-tc${x ? ' is-done' : ''}${off ? ' is-off' : ''}" data-t="${t.id}" title="${esc(t.ar)}"><span class="er-tc-main"><span class="er-tc-en"><bdi dir="ltr">${esc(t.en)}</bdi></span>${nurseTag(t.id)}</span>${x ? `<i aria-label="${off ? 'تم الطلب، خارج الاستطباب المباشر' : 'تم الطلب'}">✓${off ? '<em class="er-off-dot" aria-hidden="true"></em>' : ''}</i>` : ''}${state}</button>`;
       }).join('')}</div></section>`;
     }).join('') || '<p class="er-small">لا يوجد فحص بهذا الاسم.</p>';
     buildLog();
     if (keep) { const n = $('er-records').querySelector(keep); if (n && n.focus) n.focus({ preventScroll: true }); }
   }
-  /* phase8 2026-11-07: the results log, newest first; a row takes the trainee to the result card in the chat. */
+  /* 2026-11-08 (owner): the separate order log is gone (each card carries its test's state); the «Labs» tab counts the tests. */
   function buildLog() {
-    const box = $('er-rec-log'), tab = $('er-rec-logtab'), rec = $('er-records');
-    if (!box || !E) return;
-    const rows = Object.values(E.tests).sort((a, b) => b.at - a.at);
-    if (tab) tab.textContent = `السجل (${rows.length})`;
-    if (rec && rec.dataset) rec.dataset.view = recView;
-    if (REAL) document.querySelectorAll('#er-rec-tabs [data-v]').forEach(b => b.setAttribute('aria-selected', String(b.dataset.v === recView)));
-    box.innerHTML = `<h4 class="er-log-h">سجل الفحوصات</h4>` + (rows.length ? `<ol class="er-log">${rows.map(t => {
-      const m = testOf(t.id) || {}, off = offInd(t), waiting = /incubat/i.test((E.c.results[t.id] || {}).report || '');
-      const state = !t.back ? 'بانتظار النتيجة' : waiting ? 'سُحبت العينة، والنتيجة بعد يوم أو يومين' : 'النتيجة جاهزة';
-      return `<li class="er-log-row${off ? ' is-off' : ''}">${off ? `<span class="er-off-badge">${OFF_BADGE}</span>` : ''}<button type="button" data-go="${esc(t.id)}"${t.back ? '' : ' disabled'}><b>${esc(m.ar)}</b><bdi dir="ltr">${esc(m.en)}</bdi><span class="er-log-meta"><span class="font-num" dir="ltr">${clk(t.at)}</span> · <span class="${t.back ? 'is-ready' : ''}">${state}</span></span>${t.back ? '<span class="er-log-go">اعرض النتيجة في المحادثة</span>' : ''}</button></li>`;
-    }).join('')}</ol>` : '<p class="er-small">لم تطلب أي فحص بعد. كل فحص تطلبه يظهر هنا مع وقت طلبه.</p>');
-  }
-  function setRecView(v) {
-    recView = v === 'log' ? 'log' : 'order';
-    buildLog();
+    const n = $('er-labs-n');
+    if (n && E) n.textContent = `(${Object.keys(E.tests).length})`;
   }
   // phase8 2026-11-07: scroll the chat to a result card and flash it.
   function goResult(id) {
@@ -3969,10 +4305,20 @@
   // mobile audit 2026-11-07: on a touch phone a focused text box opens the keyboard over the monitor and the sheet,
   // so the room only moves the focus there by itself on a wide screen or with a mouse. The trainee's own tap still does.
   const autoFocus = el => { if (el && (wide() || !(window.matchMedia && window.matchMedia('(pointer: coarse)').matches))) el.focus(); };
+  /* 2026-11-08 (owner): on a wide screen the chat takes the room and one panel sits on its left: «Vitals» shows the monitor,
+     «Labs» the tests. The panel not shown only turns invisible (er.css), so the monitor's trace, its pulse tone and its
+     alarms keep running while the trainee orders tests. On a phone the buttons are hidden and nothing here changes. */
+  function setSide(v) {
+    const g = $('er-grid');
+    if (!g || !g.dataset) return;
+    const side = v === 'labs' ? 'labs' : 'mon';
+    g.dataset.side = side;
+    ['mon', 'labs'].forEach(k => { const b = $(k === 'mon' ? 'er-tab-mon' : 'er-tab-labs'); if (b && b.setAttribute) b.setAttribute('aria-pressed', String(k === side)); });
+  }
   function toggleRecords(force) {
     const r = $('er-records');
     if (!r) return;
-    if (wide()) { const q = $('er-rec-q'); if (q) q.focus(); return; }
+    if (wide()) { if (force !== false) { setSide('labs'); const q = $('er-rec-q'); if (q) q.focus(); } return; }
     const open = force === undefined ? !r.classList.contains('is-open') : force;
     r.classList.toggle('is-open', open);
     // mobile audit 2026-11-07: an old search does not stay behind for the next time the sheet opens.
@@ -3985,8 +4331,10 @@
     if (!meta) return;
     E.started = true;
     // Nurse mode: a click is an attempt, and a lab test or an image without an order is not done.
-    if (NM()) { if (!E.tests[id]) person('me', 'طلبتُ ' + meta.ar); nurseTest(id, '', ''); if (!wide()) toggleRecords(false); return; }
+    if (NM()) { if (!E.tests[id]) person('me', 'طلبتُ ' + (REAL ? meta.en : meta.ar)); nurseTest(id, '', ''); if (!wide()) toggleRecords(false); return; }
     if (!E.tests[id]) { person('me', `بدي ${meta.en}`); orderTest(id, '', '', true); }
+    // 2026-11-08: a card whose result is back takes the trainee to that result in the chat (it was the log's job).
+    else if (REAL && E.tests[id].back && E.tests[id].el) goResult(id);
     else orderTest(id, '', '', true);
     if (!wide()) toggleRecords(false);
   }
@@ -4019,7 +4367,8 @@
       paused: false // phase8 2026-11-07: true while the briefing is open; the clock stands still
     };
     if (role === 'nurse') { E.readAsks = 3; E.nurse = newNurseState(c); }
-    recFilter = 'all'; recQuery = ''; recView = 'order';
+    recFilter = 'all'; recQuery = '';
+    setSide('mon');
     if ($('er-rec-q')) $('er-rec-q').value = '';
     buildRecords();
     if ($('er-records')) $('er-records').classList.remove('is-open');
@@ -4040,6 +4389,7 @@
     else if (prevNurse) { document.querySelector('.er-p[data-who="d"] b').textContent = 'المشرف'; const np = document.querySelector('.er-p[data-who="n"]'); if (np && np.dataset) delete np.dataset.out; }
     if ($('er-ord')) { $('er-ord').hidden = true; if ($('er-ord-list')) $('er-ord-list').innerHTML = ''; }
     if ($('er-test') && $('er-test').dataset) $('er-test').dataset.badge = '';
+    if ($('er-tab-labs') && $('er-tab-labs').dataset) $('er-tab-labs').dataset.badge = '';
     $('er-v-bp').textContent = '--/--';
     $('view-er').dataset.rhythm = '';
     // mobile audit 2026-11-07: motion.js restarts the pulse at the new case's rate when this number changes.
@@ -4113,9 +4463,9 @@
         <li>حين تنتهي اضغط «سلّم الحالة» واكتب التسليم بصيغة SBAR، ثم اقرأ تقريرك.</li>
       </ol></section>
       <section class="er-brief-tips"><h4>نصائح قصيرة</h4><ul>
-        <li>اكتب ما تفعله بصيغة المتكلم: «بقيس الضغط»، «ركّبت كانيولا»، «بتصل بالدكتور».</li>
+        <li>اكتب ما تفعله بصيغة المتكلم: <span data-no-terms>«بقيس الضغط»، «ركّبت كانيولا»، «بتصل بالدكتور»</span>.</li>
         <li>نادِ الشخص باسمه ليعرف أنك تكلمه.</li>
-        <li>تظهر قائمة أوامر الطبيب في لوحة الفحوصات بعد أن يعطيك أوامره.</li>
+        <li>تظهر قائمة أوامر الطبيب في «Labs» يسار المحادثة بعد أن يعطيك أوامره، وعددها على الزر.</li>
         <li>تسير ساعة الحالة مع الوقت الحقيقي، لكن أثر العلاج وتغيّر حالة المريض يظهران أسرع من الواقع.</li>
         <li>زر «عرض التعليمات» أعلى الغرفة يعيد هذه النافذة متى شئت.</li>
       </ul></section>
@@ -4145,9 +4495,9 @@
       <section><h4>دورك</h4><p>${esc(role)}</p></section>
       <section><h4>ما المطلوب منك</h4><ol class="er-brief-steps">
         <li>اسأل المريض والمرافق عن القصة والأعراض والحساسية والأدوية. اكتب بالعربية أو باللهجة كما تتكلم عادة.</li>
-        <li>افحص المريض، واطلب الفحوصات من لوحة الفحوصات (زر «الفحوصات» على الهاتف) أو بالكتابة في المحادثة.</li>
+        <li>افحص المريض، واطلب الفحوصات من «Labs» يسار المحادثة (زر «Labs» على الهاتف) أو بالكتابة في المحادثة.</li>
         <li>اطلب العلاج من الممرضة باسم الدواء والجرعة والطريق.</li>
-        <li>راقب المونيتور واستجابة المريض بعد كل إجراء.</li>
+        <li>راقب المونيتور («Vitals» يسار المحادثة) واستجابة المريض بعد كل إجراء.</li>
         <li>حين تنتهي اضغط «سلّم الحالة» واكتب التشخيص والوجهة والتسليم بصيغة SBAR.</li>
         <li>اقرأ تقريرك في النهاية لتعرف ما أحسنت فيه وما يجب أن يتغير.</li>
       </ol></section>
@@ -4217,22 +4567,12 @@
     $('er-form').addEventListener('submit', e => { e.preventDefault(); const i = $('er-input'); send(i.value); i.value = ''; });
     $('er-test').addEventListener('click', () => toggleRecords());
     const rec = $('er-records');
-    /* phase8 2026-11-07: the investigations centre's header, its two views (order | log) and the
-       «عرض التعليمات» button beside the clock. Injected here because index.html is not edited by er.js work. */
+    /* phase8 2026-11-07: the doctor's orders box (nurse mode) and the «عرض التعليمات» button beside the clock.
+       Injected here because index.html is not edited by er.js work. 2026-11-08: the tests header and the panel
+       buttons («Vitals» | «Labs») are in index.html; the order | log views are gone. */
     if (REAL) {
-      const hb = rec.querySelector('.er-rec-h b');
-      if (hb) hb.textContent = 'طلب الفحوصات والصور والتخطيط';
-      rec.setAttribute('aria-label', 'طلب الفحوصات والصور والتخطيط');
-      const head = rec.querySelector('.er-rec-h');
-      if (head && !$('er-rec-tabs')) {
-        const tabs = document.createElement('div');
-        tabs.id = 'er-rec-tabs';
-        tabs.className = 'er-rec-tabs';
-        tabs.setAttribute('role', 'tablist');
-        tabs.setAttribute('aria-label', 'طلب الفحوصات أو سجلها');
-        tabs.innerHTML = '<button type="button" role="tab" data-v="order" aria-selected="true">طلب</button><button type="button" role="tab" data-v="log" id="er-rec-logtab" aria-selected="false">السجل (0)</button>';
-        head.after(tabs);
-      }
+      const side = $('er-side-tabs');
+      if (side) side.addEventListener('click', e => { const b = e.target.closest('[data-side]'); if (b) setSide(b.dataset.side); });
       const list0 = $('er-rec-list');
       // nurse mode 2026-11-07: the doctor's orders, above the tests; hidden until there are orders.
       if (list0 && !$('er-ord')) {
@@ -4244,14 +4584,6 @@
         sec.innerHTML = '<h4>أوامر الطبيب</h4><ol id="er-ord-list" class="er-ord-list"></ol>';
         list0.before(sec);
       }
-      const list = $('er-rec-list');
-      if (list && !$('er-rec-log')) {
-        const log = document.createElement('div');
-        log.id = 'er-rec-log';
-        log.className = 'er-rec-log';
-        list.after(log);
-      }
-      rec.dataset.view = 'order';
       const top = document.querySelector('#view-er .er-top'), clock = $('er-clock');
       if (top && !$('er-help')) {
         const b = document.createElement('button');
@@ -4265,12 +4597,9 @@
       }
     }
     rec.addEventListener('click', e => {
-      // phase8 2026-11-07: the view tabs and the log rows.
+      // nurse mode: a row of the doctor's orders.
       const ord = e.target.closest('[data-ord]');
       if (ord) { const [k, id] = ord.dataset.ord.split(':'); execOrder(k, id); return; }
-      const v = e.target.closest('[data-v]'), go = e.target.closest('[data-go]');
-      if (v) { setRecView(v.dataset.v); return; }
-      if (go) { goResult(go.dataset.go); return; }
       const f = e.target.closest('[data-f]'), t = e.target.closest('[data-t]');
       if (f) { recFilter = f.dataset.f; buildRecords(); }
       else if (t) panelTest(t.dataset.t);
@@ -4373,5 +4702,5 @@
   };
   // Test hook for the browser checks.
   window.__nbER = { begin: id => begin(id), beginAs: (id, o) => begin(id, o), set role(v) { roleWanted = v === 'nurse' ? 'nurse' : v === 'doctor' ? 'doctor' : null; }, get role() { return E && E.role; }, get nurse() { return E && E.nurse; }, setRole, execOrder, gradeSbar, nurseAct, nurseTest, strip: forNurse, releaseOrders, buildOrders, escBy, send, orderTest, panelTest, buildRecords, modsNow, live, allergicTo, readAct, get E() { return E; }, get D() { return D; }, set api(v) { api = v; apiRetryAt = v === 'off' ? Infinity : 0; if (v === 'off') loadFind(); }, get api() { return api; }, readFinding, doseCheck, doseOf, doseIn, doseBad, jump(min) { if (E) E.sim += min; }, localRead, end: conclude, score, setRisk(r) { E.risk = r; },
-    /* phase8 2026-11-07 */ justGood, offInd, showBrief, closeBrief, buildLog, setRecView, get real() { return REAL; } };
+    /* phase8 2026-11-07 */ justGood, offInd, showBrief, closeBrief, buildLog, setSide, chatEn, get real() { return REAL; } };
 })();

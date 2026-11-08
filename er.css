@@ -11,7 +11,6 @@
 .er-rec-h { display: flex; align-items: center; justify-content: space-between; font-size: .95rem; color: var(--ink); }
 .er-rec-h b { font-weight: 500; }
 #view-er .er-rec-h button { display: none; border: 0 !important; background: var(--tint) !important; border-radius: 10px !important; width: 2rem; height: 2rem; font-size: 1.2rem; line-height: 1; color: var(--ink) !important; cursor: pointer; }
-.er-rec-note { margin: 0; font-size: .76rem; color: var(--ink-2); line-height: 1.5; }
 .er-rec-f { display: flex; flex-wrap: wrap; gap: .3rem; }
 #view-er .er-rec-f button { border: 1px solid var(--line) !important; background: var(--surface) !important; color: var(--ink) !important; border-radius: 999px !important; padding: .18rem .6rem !important; font-size: .76rem; cursor: pointer; }
 #view-er .er-rec-f button[aria-pressed="true"] { background: var(--tint) !important; border-color: var(--signal) !important; }
@@ -19,10 +18,6 @@
 .er-rec-list { overflow-y: auto; display: grid; gap: .5rem; align-content: start; min-height: 0; }
 .er-rec-sec h4 { margin: 0 0 .25rem; font-size: .8rem; font-weight: 500; color: var(--ink-2); }
 .er-rec-sec > div { display: grid; grid-template-columns: repeat(2, minmax(0, 1fr)); gap: .3rem; }
-#view-er .er-rec-sec .er-t { position: relative; text-align: start; padding: .4rem .5rem; min-height: 2.6rem; }
-#view-er .er-rec-sec .er-t span { display: block; font-size: .8rem; }
-#view-er .er-rec-sec .er-t.is-done { border-color: var(--signal); background: var(--tint); }
-#view-er .er-rec-sec .er-t i { position: absolute; inset-block-start: .25rem; inset-inline-end: .35rem; font-style: normal; color: var(--signal-strong); font-size: .8rem; }
 .er-draft { flex-basis: 100%; margin: -.35rem 0 0; font-size: .75rem; line-height: 1.5; color: var(--ink-2); }
 .er-top .er-id { display: flex; align-items: baseline; gap: .6rem; }
 .er-top .er-id b { color: var(--ink); font-weight: 500; font-size: 1.02rem; }
@@ -35,8 +30,8 @@
 .er-p.is-on { border-color: var(--c); color: var(--ink); }
 .er-p[data-who="p"] { --c: #7A8B94; } .er-p[data-who="c"] { --c: #C77700; } .er-p[data-who="n"] { --c: #16838A; } .er-p[data-who="d"] { --c: #5B4BB5; }
 
-/* Right to left: the monitor on the right, the room in the middle, the records on the left. */
-.er-grid { display: grid; grid-template-columns: minmax(230px, 280px) minmax(0, 1fr) minmax(250px, 300px); gap: .75rem; min-height: 0; }
+/* Right to left: the chat on the right; on its left one panel, the monitor or the tests (2026-11-08, see the end of this file). */
+.er-grid { display: grid; grid-template-columns: minmax(0, 1fr) minmax(260px, 300px); gap: .75rem; min-height: 0; }
 .er-stage { display: grid; grid-template-rows: minmax(0, 1fr) auto; min-height: 0; background: var(--surface); border: 1px solid var(--line-2); border-radius: var(--r-lg); overflow: hidden; transition: border-color .4s; }
 #view-er[data-stage="urgent"] .er-stage { border-color: #E39A3B; }
 #view-er[data-stage="critical"] .er-stage { border-color: var(--danger, #C62828); box-shadow: 0 0 0 2px var(--danger, #C62828); }
@@ -169,14 +164,13 @@
 @media (min-width: 1024px) {
   #er-test { display: none; }
 }
-@media (max-width: 1023px) {
+@media (max-width: 1023.98px) {
   #view-er { height: calc(100dvh - 3.8rem); padding: .4rem; }
   .er-grid { grid-template-columns: 1fr; grid-template-rows: auto minmax(0, 1fr); gap: .4rem; }
   /* The records open from the bottom, over the room, when the trainee asks for a test. */
   .er-records { display: none; position: absolute; inset-inline: 0; inset-block-end: 0; z-index: 35; height: 56dvh; border-radius: 18px 18px 0 0; box-shadow: 0 -8px 30px rgba(14, 31, 39, .25); }
   .er-records.is-open { display: flex; }
   #view-er .er-rec-h button { display: inline-grid; place-items: center; width: 2.6rem; height: 2.6rem; }
-  #view-er .er-rec-sec .er-t { min-height: 2.8rem; }
   #view-er .er-rec-f button { min-height: 2.5rem; padding: .3rem .75rem !important; }
   #view-er #er-rec-q { min-height: 2.6rem; font-size: 16px; }
   #view-er .er-pane-f button { min-height: 2.6rem; }
@@ -204,14 +198,14 @@
   #view-er .er-bar button { flex: 1 1 auto; }
 }
 /* A phone on its side: the room needs the height, so the monitor becomes one short row. */
-@media (max-width: 1023px) and (max-height: 520px) {
+@media (max-width: 1023.98px) and (max-height: 520px) {
   .er-draft, .er-people, .er-trace, .er-mon .nb-mon-bar { display: none; }
   .er-mon { padding: .2rem .4rem; }
   /* mobile audit 2026-11-07: the sheet fills the room, not the screen, so it never slides under the app header (its × stays tappable). */
   .er-records { height: auto; inset-block-start: 0; }
 }
 /* A phone on its side has the width for one row; a portrait phone with the keyboard open does not. */
-@media (max-width: 1023px) and (max-height: 520px) and (min-width: 600px) {
+@media (max-width: 1023.98px) and (max-height: 520px) and (min-width: 600px) {
   .er-bar { flex-wrap: nowrap; }
   #view-er .er-bar input { flex-basis: auto; }
 }
@@ -236,29 +230,6 @@
   @keyframes er-glow { 0%, 45% { outline-color: var(--signal); } 100% { outline-color: transparent; } }
 }
 
-/* phase8 2026-11-07: the investigations centre's two views */
-.er-rec-tabs { display: grid; grid-template-columns: 1fr 1fr; gap: .25rem; background: var(--tint); border-radius: 12px; padding: .2rem; }
-#view-er .er-rec-tabs button { border: 0 !important; background: transparent !important; color: var(--ink-2) !important; border-radius: 10px !important; padding: .35rem .5rem !important; font: inherit; font-size: .82rem; cursor: pointer; }
-#view-er .er-rec-tabs button[aria-selected="true"] { background: var(--surface) !important; color: var(--ink) !important; font-weight: 500; box-shadow: 0 1px 2px rgba(14, 31, 39, .08); }
-#view-er .er-rec-tabs button:focus-visible { outline: 2px solid var(--signal); outline-offset: 1px; }
-#er-records[data-view="log"] .er-rec-note, #er-records[data-view="log"] .er-rec-f, #er-records[data-view="log"] #er-rec-q, #er-records[data-view="log"] .er-rec-list { display: none; }
-#er-records:not([data-view="log"]) .er-rec-log { display: none; }
-.er-rec-log { overflow-y: auto; min-height: 0; display: grid; gap: .4rem; align-content: start; }
-#view-er .er-rec-log .er-log-h { margin: 0; font-size: .8rem; font-weight: 500; color: var(--ink-2); }
-.er-log { list-style: none; margin: 0; padding: 0; display: grid; gap: .35rem; }
-.er-log-row { border: 1px solid var(--line); border-radius: 12px; background: var(--surface); overflow: hidden; }
-.er-log-row.is-off { background: #FFF8E1; border-color: #E8B65A; }
-.er-log-row > .er-off-badge { margin: .4rem .55rem 0; }
-#view-er .er-log-row button { display: grid; gap: .1rem; width: 100%; text-align: start; border: 0 !important; border-radius: 0 !important; background: transparent !important; color: var(--ink) !important; padding: .45rem .6rem !important; font: inherit; cursor: pointer; }
-#view-er .er-log-row button:disabled { cursor: default; opacity: .8; }
-#view-er .er-log-row button:not(:disabled):hover { background: var(--tint-2) !important; }
-#view-er .er-log-row.is-off button:not(:disabled):hover { background: #FCEBC0 !important; }
-.er-log-row b { font-weight: 500; font-size: .84rem; }
-.er-log-row bdi { font-size: .74rem; color: var(--ink-3); }
-.er-log-meta { font-size: .74rem; color: var(--ink-2); }
-.er-log-meta .is-ready { color: var(--signal-strong); font-weight: 500; }
-.er-log-go { font-size: .74rem; color: var(--signal-strong); text-decoration: underline; text-underline-offset: 3px; }
-.er-log-row.is-off bdi, .er-log-row.is-off .er-log-meta { color: #5C3D00; }
 
 /* phase8 2026-11-07: «عرض التعليمات» beside the clock */
 #view-er .er-help { border: 1px solid var(--line) !important; background: var(--surface) !important; color: var(--signal-strong) !important; border-radius: 999px !important; padding: .2rem .75rem !important; font: inherit; font-size: .76rem; cursor: pointer; white-space: nowrap; }
@@ -304,9 +275,8 @@
 .er-tests .j-ok { color: var(--signal-strong); font-weight: 500; }
 .er-tests .j-no { color: #9A5B00; font-weight: 500; }
 
-@media (max-width: 1023px) {
+@media (max-width: 1023.98px) {
   #view-er .er-help { min-height: 2.2rem; }
-  #view-er .er-rec-tabs button { min-height: 2.5rem; }
 }
 @media (max-width: 480px) {
   #view-er .er-brief { padding: .9rem .85rem 0; }
@@ -356,7 +326,7 @@
 .er-tag-ord { color: #5B4BB5; }
 .er-tag-need { color: #7A4A00; }
 .er-tests tr.is-blocked td { color: var(--ink-3); }
-@media (max-width: 1023px) {
+@media (max-width: 1023.98px) {
   #view-er .er-ord-row button { min-height: 2.5rem; }
 }
 
@@ -368,15 +338,15 @@
 /* =========================================================
    mobile audit 2026-11-07: phone fixes. Nothing here changes how the monitor looks.
    ========================================================= */
-@media (max-width: 1023px) {
+@media (max-width: 1023.98px) {
   /* The tests sheet scrolls as one piece, so the doctor's orders can never squeeze the tests list to nothing.
      Its header (title and ×) stays at the top while the rest scrolls. */
   .er-records { overflow-y: auto; overscroll-behavior: contain; max-height: 100%; padding-top: 0; }
   .er-records > * { flex: none; }
-  .er-rec-list, .er-rec-log, .er-ord-list { overflow: visible; max-height: none; min-height: auto; }
+  .er-rec-list, .er-ord-list { overflow: visible; max-height: none; min-height: auto; }
   .er-rec-h { position: sticky; top: 0; z-index: 2; background: var(--surface); padding: .6rem 0 .3rem; }
   /* The doctor's orders (nurse mode) come first, then the filters and the search, so search results appear right under the box. */
-  .er-rec-h, .er-rec-tabs { order: -2; }
+  .er-rec-h { order: -2; }
   .er-ord { order: -1; }
   /* The people chips stay on one line each; the row scrolls sideways instead of growing taller. */
   .er-p { white-space: nowrap; flex: none; }
@@ -388,3 +358,75 @@
 }
 /* No pull-to-refresh while the room is open: a reload would end the case. */
 html:has(#view-er:not(.hidden)), html:has(#view-er:not(.hidden)) body { overscroll-behavior-y: none; }
+
+/* =========================================================
+   2026-11-08 (owner): on a wide screen the room is two columns: the chat, and one panel on its left that switches
+   between the monitor («Vitals») and the tests («Labs»). The monitor itself is unchanged; it only moved into that
+   panel, at the same width as before. The hidden panel is only made invisible, so the monitor keeps drawing, beeping
+   and alarming while the trainee orders tests. On a phone (under 1024px) none of this applies: the monitor stays a
+   strip above the chat and the tests open as a sheet, as before.
+   ========================================================= */
+.er-side-tabs { display: none; }
+@media (min-width: 1024px) {
+  .er-grid { grid-template-columns: minmax(0, 1fr) minmax(260px, 300px); grid-template-rows: auto minmax(0, 1fr); }
+  .er-stage { grid-column: 1; grid-row: 1 / span 2; }
+  .er-side-tabs { grid-column: 2; grid-row: 1; display: grid; grid-template-columns: 1fr 1fr; gap: .25rem; background: var(--tint); border-radius: 14px; padding: .25rem; }
+  .er-mon, .er-records { grid-column: 2; grid-row: 2; min-height: 0; }
+  .er-grid[data-side="labs"] .er-mon, .er-grid:not([data-side="labs"]) .er-records { visibility: hidden; pointer-events: none; }
+  #view-er .er-side-tabs button { border: 0 !important; background: transparent !important; color: var(--ink-2) !important; border-radius: 11px !important; padding: .45rem .5rem !important; min-height: 2.4rem; font: inherit; font-size: .86rem; cursor: pointer; white-space: nowrap; }
+  #view-er .er-side-tabs button[aria-pressed="true"] { background: var(--surface) !important; color: var(--ink) !important; font-weight: 500; box-shadow: 0 1px 3px rgba(14, 31, 39, .1); }
+  #view-er .er-side-tabs button:hover { color: var(--ink) !important; }
+  #view-er .er-side-tabs button:focus-visible { outline: 2px solid var(--signal); outline-offset: 1px; }
+  /* nurse mode: the open orders are counted on «Labs» too */
+  #er-tab-labs[data-badge]:not([data-badge=""])::after { content: attr(data-badge); display: inline-block; margin-inline-start: .35rem; min-width: 1.2rem; border-radius: 999px; background: #E39A3B; color: #fff; font-size: .7rem; line-height: 1.2rem; text-align: center; }
+  /* While the tests are shown, «Vitals» carries a dot when the patient is getting worse (amber, from the first
+     warning) or critical (red), because the monitor itself is out of sight. */
+  #view-er[data-stage="watch"] .er-grid[data-side="labs"] #er-tab-mon::after,
+  #view-er[data-stage="urgent"] .er-grid[data-side="labs"] #er-tab-mon::after,
+  #view-er[data-stage="critical"] .er-grid[data-side="labs"] #er-tab-mon::after { content: ''; display: inline-block; width: .55rem; height: .55rem; border-radius: 50%; margin-inline-start: .4rem; vertical-align: middle; background: #E39A3B; }
+  #view-er[data-stage="critical"] .er-grid[data-side="labs"] #er-tab-mon::after { background: var(--danger, #C62828); }
+  #view-er[data-stage="critical"] .er-grid[data-side="labs"] #er-tab-mon { color: var(--danger, #C62828) !important; }
+}
+@media (min-width: 1024px) and (prefers-reduced-motion: no-preference) {
+  #view-er[data-stage="critical"] .er-grid[data-side="labs"] #er-tab-mon::after { animation: er-flash .9s ease-in-out infinite; }
+}
+
+/* 2026-11-08 (owner): the tests as one column of cards, as in the owner's reference. */
+.er-rec-h { gap: .5rem; }
+.er-rec-hint { margin-inline-start: auto; font-size: .74rem; color: var(--signal-strong); }
+#view-er .er-rec-f button { background: var(--tint-2) !important; border-color: var(--line-2) !important; color: var(--ink) !important; white-space: nowrap; }
+/* The four chips fit one row of the 300px panel. */
+@media (min-width: 1024px) {
+  .er-rec-f { gap: .25rem; }
+  #view-er .er-rec-f button { padding: .25rem .55rem !important; font-size: .78rem; }
+}
+#view-er .er-rec-f button[aria-pressed="true"] { background: var(--signal) !important; border-color: var(--signal) !important; color: #fff !important; }
+.er-rec-sec + .er-rec-sec { margin-top: .2rem; }
+.er-rec-sec > div { grid-template-columns: minmax(0, 1fr); gap: .4rem; }
+#view-er .er-tc { display: flex; align-items: center; gap: .55rem; width: 100%; text-align: start; font: inherit; color: var(--ink) !important; background: var(--surface) !important; border: 1px solid var(--line) !important; border-radius: 14px !important; padding: .55rem .7rem !important; cursor: pointer; transition: border-color .15s, background-color .15s; }
+#view-er .er-tc:hover { border-color: var(--signal) !important; }
+#view-er .er-tc:focus-visible { outline: 2px solid var(--signal); outline-offset: -2px; }
+.er-tc-main { flex: 1 1 auto; min-width: 0; display: grid; gap: .1rem; }
+.er-tc-en { font-weight: 600; font-size: .88rem; line-height: 1.45; color: var(--ink); }
+.er-tc-main small { font-size: .74rem; line-height: 1.5; color: var(--ink-2); }
+.er-tc-go { flex: none; font-size: .8rem; font-weight: 500; color: var(--signal-strong); white-space: nowrap; }
+.er-tc-wait { flex: none; font-size: .72rem; color: #7A4A00; white-space: nowrap; }
+.er-tc > i { flex: none; font-style: normal; font-size: .85rem; color: var(--signal-strong); }
+#view-er .er-tc.is-done { background: var(--tint-2) !important; border-color: var(--signal) !important; }
+#view-er .er-tc.is-off { background: #FFF8E1 !important; border-color: #E8B65A !important; }
+.er-tc.is-off .er-tc-go { color: #7A4A00; }
+@media (max-width: 1023.98px) {
+  #view-er .er-tc { min-height: 3rem; }
+}
+
+/* 2026-11-08 review fixes. On a wide screen the monitor's numbers never shrink; on a short window only the trace
+   gives up height, and never below the wave itself (70px), so it is never cut; below that the monitor scrolls.
+   In nurse mode, when the doctor's orders are showing, the tests panel scrolls as one piece so the orders never push
+   the tests list to nothing. */
+@media (min-width: 1024px) {
+  .er-mon > *:not(.er-trace) { flex: none; }
+  .er-mon > .er-trace { min-height: 70px; }
+  #er-records:has(> #er-ord:not([hidden])) { overflow-y: auto; }
+  #er-records:has(> #er-ord:not([hidden])) > * { flex: none; }
+  #er-records:has(> #er-ord:not([hidden])) .er-rec-list { overflow: visible; min-height: auto; }
+}

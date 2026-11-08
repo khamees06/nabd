@@ -6158,7 +6158,7 @@
       if (!u) return '';
       const r = nb8GetAdvisor()[u.name];
       if (!r || !r.note) return '';
-      return `<div class="nb-item nb8-adv-note"><span><b>ملاحظة المرشد الأكاديمي</b><br>${nb8Esc(r.note)}<br><small style="color:#4F6A77">${new Date(r.ts || Date.now()).toLocaleDateString('ar-JO')}</small></span></div>`;
+      return `<div class="nb-item nb8-adv-note"><span><b>ملاحظة المرشد الأكاديمي</b><br><span data-no-terms>${nb8Esc(r.note)}</span><br><small style="color:#4F6A77">${new Date(r.ts || Date.now()).toLocaleDateString('ar-JO')}</small></span></div>`;
     }
     function nb8StudentNotesHtml(u) {
       const adv = nb8AdvisorNoteHtml(u);
@@ -6190,7 +6190,7 @@
           <div class="nb8-as-top"><span class="nb8-chip">واجب</span>${a.due ? `<span class="nb8-due${late ? ' is-late' : ''}">${late ? 'انتهى موعد التسليم: ' : 'التسليم: '}${nb8Esc(nb8FmtDate(a.due))}</span>` : ''}</div>
           <h3>${nb8Esc(L.title)}</h3>
           ${L.line ? `<p class="nb8-arrival">${nb8Esc(L.line)}</p>` : ''}
-          ${a.note ? `<p class="nb8-as-note"><b>ملاحظة المشرف:</b> ${nb8Esc(a.note)}</p>` : ''}
+          ${a.note ? `<p class="nb8-as-note"><b>ملاحظة المشرف:</b> <span data-no-terms>${nb8Esc(a.note)}</span></p>` : ''}
           ${done ? `<p class="nb8-done">أنجزت هذه الحالة بعد إسنادها: <span class="font-num">${nb8Esc(done.score || ((done.num != null ? done.num : '--') + '%'))}</span></p>` : ''}
           <button type="button" class="nb8-go focus-ring" data-nb8-open-case="${nb8Esc(a.caseId)}">${done ? 'أعد المحاولة في غرفة الطوارئ' : 'ابدأ الواجب في غرفة الطوارئ'} ←</button>
         </article>`;
@@ -6297,7 +6297,7 @@
         const c = byId[a.caseId], L = nb8CaseLabel(c);
         return `<div class="nb8-as-row">
           <div class="nb8-as-row-main"><b>${nb8Esc(L.title)}</b><small>التشخيص (للمشرف فقط): ${nb8Esc(c && c.dx ? c.dx.ar : a.caseId)}</small></div>
-          <div class="nb8-as-meta"><span dir="ltr">${nb8Esc(a.section)}</span>${a.due ? `<span>التسليم: ${nb8Esc(nb8FmtDate(a.due))}</span>` : '<span>بلا موعد</span>'}${a.note ? `<span class="nb8-as-meta-note">${nb8Esc(a.note)}</span>` : ''}</div>
+          <div class="nb8-as-meta"><span dir="ltr">${nb8Esc(a.section)}</span>${a.due ? `<span>التسليم: ${nb8Esc(nb8FmtDate(a.due))}</span>` : '<span>بلا موعد</span>'}${a.note ? `<span class="nb8-as-meta-note" data-no-terms>${nb8Esc(a.note)}</span>` : ''}</div>
           <button type="button" class="focus-ring" data-nb8-unassign="${nb8Esc(a.id)}">إلغاء الإسناد</button>
         </div>`;
       }).join('') : '<p class="nb8-empty">لم تُسند أي حالة بعد.</p>';

@@ -1964,7 +1964,13 @@
           </div>
           <p class="er-draft">للتدريب فقط. الحالات لم يراجعها طبيب بعد.</p>
         </header>
-        <div class="er-grid">
+        <div class="er-grid" id="er-grid" data-side="mon">
+          <!-- 2026-11-08 (owner): on a wide screen the chat takes the room and one panel sits on the left;
+               these two buttons switch that panel between the monitor and the tests. Hidden on a phone. -->
+          <div class="er-side-tabs" id="er-side-tabs" role="group" aria-label="اللوحة الجانبية">
+            <button type="button" id="er-tab-mon" data-side="mon" aria-pressed="true">Vitals</button>
+            <button type="button" id="er-tab-labs" data-side="labs" aria-pressed="false">Labs <span id="er-labs-n" class="font-num">(0)</span></button>
+          </div>
           <aside class="er-mon" aria-label="المونيتور">
             <div class="er-mon-h"><span class="er-mon-dot" aria-hidden="true"></span>المونيتور</div>
             <div class="er-trace"><svg viewBox="0 0 400 40" preserveAspectRatio="none" aria-hidden="true"><path d="M0 22 H400" fill="none" stroke="#0F7D44" stroke-width="2"/></svg></div>
@@ -1976,22 +1982,22 @@
               <div class="er-tile wide"><span>NIBP <small>mmHg</small><em id="er-v-bpt"></em></span><b id="er-v-bp" class="c-bp">--/--</b></div>
             </div>
           </aside>
+          <!-- The tests come right after the monitor so a keyboard reaches them straight from «Labs»; where they show is set in er.css. -->
+          <aside class="er-records" id="er-records" aria-label="طلب الفحوصات">
+            <div class="er-rec-h"><b>اطلب الفحص</b><span class="er-rec-hint">النتيجة توصل للشات</span><button type="button" id="er-rec-x" aria-label="إغلاق">×</button></div>
+            <div class="er-rec-f" id="er-rec-f"></div>
+            <input id="er-rec-q" type="search" placeholder="ابحث عن فحص" aria-label="ابحث عن فحص" autocomplete="off">
+            <div class="er-rec-list" id="er-rec-list"></div>
+          </aside>
           <div class="er-stage">
             <div class="er-feed" id="er-feed" aria-live="polite"></div>
             <form class="er-bar" id="er-form" autocomplete="off">
               <input id="er-input" type="text" maxlength="400" placeholder="تكلم، كلهم معك في الغرفة" aria-label="كلامك في الغرفة">
               <button type="submit" id="er-send" class="p">أرسل</button>
-              <button type="button" id="er-test" class="s">الفحوصات</button>
+              <button type="button" id="er-test" class="s">Labs</button>
               <button type="button" id="er-end" class="s">سلّم الحالة</button>
             </form>
           </div>
-          <aside class="er-records" id="er-records" aria-label="السجلات والفحوصات">
-            <div class="er-rec-h"><b>السجلات والفحوصات</b><button type="button" id="er-rec-x" aria-label="إغلاق">×</button></div>
-            <p class="er-rec-note">المس أي فحص: نتيجته تظهر في المحادثة فوراً.</p>
-            <div class="er-rec-f" id="er-rec-f"></div>
-            <input id="er-rec-q" type="search" placeholder="ابحث عن فحص" aria-label="ابحث عن فحص" autocomplete="off">
-            <div class="er-rec-list" id="er-rec-list"></div>
-          </aside>
         </div>
         <div id="er-sheet" class="er-sheet" hidden></div>
         <div id="er-debrief" hidden></div>

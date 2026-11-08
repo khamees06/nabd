@@ -1,14 +1,13 @@
 /* =========================================================================
-   NABD — medical terminology switch (عربي / EN)
-   In EN mode, clinical terms in the interface read the way they are said on
-   the ward (Vitals, ECG, ABG, Handover...). Patient speech and the student's
-   own messages stay untouched. Switching back restores the exact original
-   text. Loaded after script.js and motion.js.
+   NABD — medical terminology in English
+   2026-11-08 (owner): there is no switch any more. Clinical terms in the
+   interface always read the way they are said on the ward (Vitals, ECG,
+   ABG, Handover...). Patient speech and the student's own messages stay
+   untouched; the ER room's chat has its own wording (er.js, chatTerms).
+   Loaded after script.js and motion.js.
    ========================================================================= */
 (function () {
   'use strict';
-
-  const KEY = 'nabd_terms_lang';
 
   // Arabic term -> how it is said on the ward. "الـ X" keeps the Arabic article.
   const TERMS = [
@@ -61,24 +60,16 @@
     '#sim-chat-messages > .flex-col', '.nb-b.patient', '.nb-b.nurse', '.coach-message.is-student',
     // respiratory room: the patient's replies, the student's questions and the question list
     '.rs-msg.pt', '.rs-msg.me', '.rs-chips', '#rs-qlist', '.rs-missed',
-    // emergency room: everyone speaks as written, and so does the trainee
-    '.er-msg', '#er-input',
-    'script', 'style', 'textarea', 'noscript', '[data-no-terms]', '.nb-terms'
+    // emergency room: the chat converts its own lines (er.js); the trainee's box is never rewritten; the monitor
+    // (.er-mon, its labels and its range notes) stays exactly as it was: the owner's rule is that it does not change
+    '.er-msg', '#er-input', '.er-mon',
+    'script', 'style', 'textarea', 'noscript', '[data-no-terms]'
   ].join(',');
 
+  const ROOM_KEEP = new Set(['القسطرة', 'قسطرة']);
   const done = new WeakMap(); // text node -> { orig, out }
-  let mode = 'ar';
-  try { mode = localStorage.getItem(KEY) === 'en' ? 'en' : 'ar'; } catch (e) { /* storage blocked: default */ }
 
-  function flash(el) {
-    if (!el || !el.classList) return;
-    el.classList.remove('nb-term-flash');
-    void el.offsetWidth;
-    el.classList.add('nb-term-flash');
-    setTimeout(() => el.classList.remove('nb-term-flash'), 800);
-  }
-
-  function translate(node, animate) {
+  function translate(node) {
     const text = node.data;
     if (!text || !HAS_AR.test(text)) return;
     const rec = done.get(node);
@@ -86,78 +77,47 @@
     const parent = node.parentElement;
     if (!parent || parent.closest(SKIP)) return;
     const glosses = [];
+    // 2026-11-08: inside the ER room (its briefing, sheets and report; the chat does this itself) the ward's English
+    // terms come first, from the same list the chat uses (er.js chatEn), then this list.
+    const room = parent.closest('#view-er') && window.__nbER && window.__nbER.chatEn;
+    const src = room ? window.__nbER.chatEn(text) : text;
     RE.lastIndex = 0;
-    const out = text.replace(RE, (m, pre, term) => {
+    const out = src.replace(RE, (m, pre, term, at, whole) => {
+      // «القسطرة» in the room is a Foley or the cath lab; the room's own list decides, so it is not «Catheter» here.
+      if (room && ROOM_KEEP.has(term)) return m;
+      // An assignment's «التسليم» is its submission date («موعد التسليم»، «التسليم: 12/11»), not a handover.
+      if (term === 'التسليم' && (/(?:موعد|تاريخ|وقت)\s*$/.test(whole.slice(0, at + pre.length)) || /^\s*:/.test(whole.slice(at + m.length)))) return m;
       const en = lookup.get(term);
       glosses.push(en.replace(/^الـ /, '') + ' — ' + term);
-      return pre + en;
+      // In the room the article joins the English word, as the chat writes it («الـHandover»).
+      return pre + (room ? en.replace(/^الـ /, 'الـ') : en);
     });
     if (out === text) return;
     done.set(node, { orig: text, out });
     node.data = out;
     if (!('termsTitle' in parent.dataset)) parent.dataset.termsTitle = parent.getAttribute('title') || '';
     parent.title = [...new Set(glosses)].join('\n');
-    if (animate) flash(parent);
   }
 
-  function restore(node, animate) {
-    const rec = done.get(node);
-    if (!rec) return;
-    done.delete(node);
-    if (node.data !== rec.out) return; // the app rewrote it meanwhile: keep the app's text
-    node.data = rec.orig;
-    const parent = node.parentElement;
-    if (parent && 'termsTitle' in parent.dataset) {
-      if (parent.dataset.termsTitle) parent.title = parent.dataset.termsTitle; else parent.removeAttribute('title');
-      delete parent.dataset.termsTitle;
-    }
-    if (animate) flash(parent);
-  }
-
-  function walk(root, fn, animate) {
+  function walk(root) {
     if (!root) return;
-    if (root.nodeType === 3) { fn(root, animate); return; }
+    if (root.nodeType === 3) { translate(root); return; }
     const it = document.createTreeWalker(root, NodeFilter.SHOW_TEXT);
     const nodes = [];
     for (let n = it.nextNode(); n; n = it.nextNode()) nodes.push(n);
-    nodes.forEach(n => fn(n, animate));
-  }
-
-  function setMode(next, animate) {
-    mode = next;
-    try { localStorage.setItem(KEY, mode); } catch (e) { /* storage blocked */ }
-    document.documentElement.dataset.terms = mode;
-    walk(document.body, mode === 'en' ? translate : restore, animate);
-    document.querySelectorAll('.nb-terms button').forEach(b => b.setAttribute('aria-pressed', String(b.dataset.lang === mode)));
-  }
-
-  function buildSwitch() {
-    const menu = document.getElementById('user-menu-btn');
-    const slot = menu && menu.parentElement && menu.parentElement.parentElement;
-    if (!slot || slot.querySelector('.nb-terms')) return;
-    const group = document.createElement('div');
-    group.className = 'nb-terms';
-    group.setAttribute('role', 'group');
-    group.setAttribute('aria-label', 'لغة المصطلحات الطبية');
-    group.innerHTML = '<span>المصطلحات</span>'
-      + '<button type="button" data-lang="ar" title="المصطلحات الطبية بالعربية">ع</button>'
-      + '<button type="button" data-lang="en" title="Medical terms in English, as used on the ward">EN</button>';
-    group.addEventListener('click', e => {
-      const b = e.target.closest('button[data-lang]');
-      if (b && b.dataset.lang !== mode) setMode(b.dataset.lang, true);
-    });
-    slot.insertBefore(group, slot.firstChild);
+    nodes.forEach(translate);
   }
 
   function boot() {
-    buildSwitch();
-    setMode(mode, false);
+    // The old switch saved a choice; English is the only mode now, so the saved key is dropped.
+    try { localStorage.removeItem('nabd_terms_lang'); } catch (e) { /* storage blocked */ }
+    document.documentElement.dataset.terms = 'en';
+    walk(document.body);
     // Views and rooms are rendered on the fly: translate new text as it appears.
     new MutationObserver(list => {
-      if (mode !== 'en') return;
       list.forEach(m => {
-        if (m.type === 'characterData') { translate(m.target, false); return; }
-        m.addedNodes.forEach(n => { if (n.nodeType === 1 || n.nodeType === 3) walk(n, translate, false); });
+        if (m.type === 'characterData') { translate(m.target); return; }
+        m.addedNodes.forEach(n => { if (n.nodeType === 1 || n.nodeType === 3) walk(n); });
       });
     }).observe(document.body, { subtree: true, childList: true, characterData: true });
   }

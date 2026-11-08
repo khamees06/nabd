@@ -2353,29 +2353,10 @@ b, strong, th, .font-bold, .font-semibold, .font-extrabold, .font-black { font-w
 #side-pane-vitals .nb-mon-tile.nb-alarm > :last-child { color: var(--danger-light) !important; }
 [id$="sim-tools-btn-quick"] { color: #4CC283 !important; }
 
-/* ---------- medical terms switch (عربي / EN) in the app header ---------- */
-.nb-terms { display: inline-flex; align-items: center; gap: .4rem; }
-.nb-terms > span { font-size: .72rem; color: rgba(244, 248, 250, .6); }
-.nb-terms button {
-  min-width: 2.3rem;
-  padding: .4rem .55rem;
-  font-family: var(--font-mono);
-  font-size: .78rem;
-  background: rgba(244, 248, 250, .08) !important;
-  color: rgba(244, 248, 250, .72) !important;
-  transition: background-color .3s var(--ease-out), color .3s var(--ease-out);
-}
-.nb-terms button + button { margin-inline-start: -.4rem; }
-.nb-terms button:hover { color: var(--paper) !important; }
-.nb-terms button[aria-pressed="true"] { background: var(--paper) !important; color: var(--ink) !important; }
+/* 2026-11-08: the medical-terms switch is gone (terms are always English). On a phone the brand still keeps its name only. */
 @media (max-width: 640px) {
-  .nb-terms > span { display: none; }
-  /* room for the switch: the brand keeps its name, drops the subtitle */
   #app-brand-btn .text-xs { display: none !important; }
 }
-/* a short turquoise wash on every term that just switched language */
-.nb-term-flash { animation: nb-term-flash .8s var(--ease-out); }
-@keyframes nb-term-flash { from { background-color: rgba(22, 131, 138, .28); } to { background-color: transparent; } }
 
 /* =====================================================================
    Medical palette: turquoise for action, navy for type, red only for danger

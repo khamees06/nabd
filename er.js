@@ -1416,6 +1416,7 @@
     return id === 'oxygen' ? `ما علي${hisHer()} أكسجين، والـSpO2 ${Math.round(v.spo2)}%. أحطل${hisHer()}؟` : `${sp(id)} ما بلّشناه لسا. بدك ${fem(sp(id)) ? 'إياها' : 'إياه'} هسا؟`;
   }
   // (chat check 2026-11-08) The same judgement for the nurse's «طمنيني عنه», so she never contradicts the patient.
+  const monitorLine = () => `المونيتر مركّب من أول ما ${E.c.patient.sex === 'F' ? 'وصلت' : 'وصل'}: ${spokenVitals()}.`;
   // «طمنيني عنه» / «شو وضعه؟»: the numbers on the monitor and which way he is going.
   const howLine = () => { const came = E.c.patient.sex === 'F' ? 'وصلت' : 'وصل', tr = trendNow(); return `${spokenVitals()}. ${tr === 'better' ? 'أحسن شوي من لما ' + came : tr === 'worse' ? 'أسوأ من لما ' + came + '، لازم نتحرك' : 'لسا زي ما ' + came + ' تقريباً'}.`; };
   const trendNow = () => { const c = E.c; if (E.stage >= 2) return 'worse'; if (E.betterTurn != null || E.saidBy.size > 0 || E.improved > 0 || E.risk <= c.risk.start - 8) return 'better'; return E.stage === 1 || E.risk >= c.risk.start + 6 ? 'worse' : 'same'; };
@@ -1455,7 +1456,7 @@
       if (read.helpTeam) { read.to = 'nurse'; const v = E.show || live(), first = []; if (Math.round(v.spo2) < 94 && !E.done.has('oxygen')) first.push('الأكسجين'); if (!E.done.has('iv_access')) first.push('الكانيولا'); return `أنا معك دكتور. الـSpO2 ${Math.round(v.spo2)}% والنبض ${Math.round(v.hr)}.${first.length ? ' عادةً بنبلش ب' + first.join(' و') + '. اطلب وبعمله فوراً.' : ' اطلب وبعمله فوراً.'}`; }
       if (read.howIs) { read.to = 'nurse'; return howLine(); }
       if (read.resultsAll) { read.to = 'nurse'; return resultsLine(); }
-      if (read.monitorAsk) { read.to = 'nurse'; return `المونيتر مركّب من أول ما ${E.c.patient.sex === 'F' ? 'وصلت' : 'وصل'}: ${spokenVitals()}.`; }
+      if (read.monitorAsk) { read.to = 'nurse'; return monitorLine(); }
       if (read.roomQ) { read.to = 'nurse'; read.clarify = true; const p = E.pending; return `أنا هون دكتور. ${spokenVitals()}.${p && p.type === 'dose' ? ' ' + shortAsk(p).replace(/^و/, 'وبستناك: ') : ''}`; }
       if (read.planLater) { read.to = 'nurse'; const m = testOf(read.planLater.id); return `تمام، كتبتها عالملف: ${m ? m.ar : 'الفحص'} ${read.planLater.when}.`; }
       if (read.patQ && read.to === 'patient') return patLine(read.patQ);
@@ -1616,10 +1617,19 @@
         const own = localReply(read);
         if (own) { apply(read, text, read.to, own); return; }
       }
-      if (r.unplaced && !nA && !nT) { read.to = 'nurse'; apply(read, text, 'nurse', unplacedOrder(t)); return; }
+      // (live check 2 2026-11-08) «ماشي عالاتنين» answers her open question: never «ما لقطت الطلب» after the read-back.
+      const answered = pending && ['good', 'partial', 'wrong', 'withdraw'].includes(read.pending_ok);
+      if (r.unplaced && !nA && !nT && !answered) { read.to = 'nurse'; apply(read, text, 'nurse', unplacedOrder(t)); return; }
     }
     // localReply may hand a line to the companion, so read.to is only final after it.
-    const reply = spoken ? (r.held ? teachLine() : r.reply) : localReply(read);
+    let reply = spoken ? (r.held ? teachLine() : r.reply) : localReply(read);
+    // (live check 2 2026-11-08) Doctor room: «تمام، وشو صار بالفحوصات؟» — the yes goes through and the room question
+    // beside it is answered too, from the monitor and the tests, in the same bubble as the read-back.
+    if (!NM() && spoken && !reply && r.read && pending && ['good', 'partial'].includes(read.pending_ok) && !(read.facts || []).length && !(read.tests || []).length) {
+      const lr = localRead(text);
+      const extra = lr.resultsAll ? resultsLine() : lr.howIs ? howLine() : lr.monitorAsk ? monitorLine() : '';
+      if (extra) reply = extra;
+    }
     apply(read, text, spoken ? r.to : read.to, reply);
   }
 

@@ -1,0 +1,9 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- The clinical and simulation domain. No project or package references: it depends on nothing. -->
+  <PropertyGroup>
+    <RootNamespace>Nabd.Domain</RootNamespace>
+    <Description>Entities, value objects and domain services of the Nabd clinical simulation.</Description>
+  </PropertyGroup>
+
+</Project>

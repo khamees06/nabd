@@ -1,0 +1,19 @@
+# Build output
+bin/
+obj/
+artifacts/
+TestResults/
+*.user
+*.suo
+.vs/
+.idea/
+*.swp
+
+# Local working files (cut lists, probes, screenshots in progress)
+.work/
+
+# Secrets never belong in the repository
+appsettings.*.local.json
+*.env
+.env*
+secrets.json

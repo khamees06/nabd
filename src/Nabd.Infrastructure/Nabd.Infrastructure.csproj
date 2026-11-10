@@ -1,0 +1,21 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Adapters for everything outside the application: legacy JSON data, external AI services, storage. -->
+  <PropertyGroup>
+    <RootNamespace>Nabd.Infrastructure</RootNamespace>
+    <Description>Infrastructure adapters of the Nabd clinical simulation: legacy data, external services.</Description>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\Nabd.Application\Nabd.Application.csproj" />
+    <ProjectReference Include="..\Nabd.Domain\Nabd.Domain.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <PackageReference Include="Microsoft.Extensions.Http" />
+    <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />
+    <PackageReference Include="Microsoft.Extensions.Options.ConfigurationExtensions" />
+    <PackageReference Include="Microsoft.Extensions.Options.DataAnnotations" />
+  </ItemGroup>
+
+</Project>

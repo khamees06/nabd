@@ -1,0 +1,30 @@
+<Project Sdk="Microsoft.NET.Sdk">
+
+  <!-- Unit, integration, architecture and golden-master tests. A test project, not an application layer. -->
+  <PropertyGroup>
+    <RootNamespace>Nabd.Tests</RootNamespace>
+    <IsPackable>false</IsPackable>
+    <IsTestProject>true</IsTestProject>
+    <GenerateDocumentationFile>false</GenerateDocumentationFile>
+  </PropertyGroup>
+
+  <ItemGroup>
+    <PackageReference Include="coverlet.collector" />
+    <PackageReference Include="Microsoft.AspNetCore.Mvc.Testing" />
+    <PackageReference Include="Microsoft.NET.Test.Sdk" />
+    <PackageReference Include="xunit" />
+    <PackageReference Include="xunit.runner.visualstudio" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <ProjectReference Include="..\..\src\Nabd.Domain\Nabd.Domain.csproj" />
+    <ProjectReference Include="..\..\src\Nabd.Application\Nabd.Application.csproj" />
+    <ProjectReference Include="..\..\src\Nabd.Infrastructure\Nabd.Infrastructure.csproj" />
+    <ProjectReference Include="..\..\src\Nabd.Web\Nabd.Web.csproj" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Using Include="Xunit" />
+  </ItemGroup>
+
+</Project>

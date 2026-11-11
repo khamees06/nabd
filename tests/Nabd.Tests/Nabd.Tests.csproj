@@ -27,4 +27,11 @@
     <Using Include="Xunit" />
   </ItemGroup>
 
+  <!-- Golden masters recorded from the legacy code, and the frozen legacy site: test inputs, copied as they are. -->
+  <ItemGroup>
+    <None Include="GoldenMasters\**\*.json" CopyToOutputDirectory="PreserveNewest" />
+    <None Include="LegacyBaseline\**\*" CopyToOutputDirectory="PreserveNewest" />
+    <Compile Remove="LegacyBaseline\**" />
+  </ItemGroup>
+
 </Project>

@@ -11,6 +11,15 @@
     <ProjectReference Include="..\Nabd.Domain\Nabd.Domain.csproj" />
   </ItemGroup>
 
+  <!-- The legacy JSON data ships next to the binaries, unchanged. Only this project reads it. -->
+  <ItemGroup>
+    <Content Include="LegacyData\Files\*.json" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nabd.Tests" />
+  </ItemGroup>
+
   <ItemGroup>
     <PackageReference Include="Microsoft.Extensions.Http" />
     <PackageReference Include="Microsoft.Extensions.Logging.Abstractions" />

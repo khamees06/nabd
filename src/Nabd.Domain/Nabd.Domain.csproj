@@ -6,4 +6,9 @@
     <Description>Entities, value objects and domain services of the Nabd clinical simulation.</Description>
   </PropertyGroup>
 
+  <!-- The golden-master replay drives a tick in its three parts, exactly where the legacy code handled inputs. -->
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nabd.Tests" />
+  </ItemGroup>
+
 </Project>

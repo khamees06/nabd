@@ -1,0 +1,23 @@
+root = true
+
+[*]
+charset = utf-8
+indent_style = space
+trim_trailing_whitespace = false
+
+[*.cs]
+indent_size = 4
+insert_final_newline = true
+
+[*.{csproj,props,json}]
+indent_size = 2
+
+# A Razor view of the legacy page is a range of legacy lines. A final line feed would add a blank line to the
+# page and fail the baseline test (docs/decisions/0003).
+[src/Nabd.Web/Views/**.cshtml]
+insert_final_newline = false
+
+# The client fragments are the legacy code, cut but not reformatted.
+[src/Nabd.Web/ClientScripts/**]
+indent_size = unset
+insert_final_newline = true

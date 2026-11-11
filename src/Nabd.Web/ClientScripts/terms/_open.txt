@@ -1,0 +1,9 @@
+/* =========================================================================
+   NABD — medical terminology in English
+   2026-11-08 (owner): there is no switch any more. Clinical terms in the
+   interface always read the way they are said on the ward (Vitals, ECG,
+   ABG, Handover...). Patient speech and the student's own messages stay
+   untouched; the ER room's chat has its own wording (er.js, chatTerms).
+   Loaded after script.js and motion.js.
+   ========================================================================= */
+(function () {

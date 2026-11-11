@@ -1,0 +1,14 @@
+    <!-- =======================================================
+         VIEW 2: CLINICAL SIMULATION SESSION
+         Clean, spacious chat-first layout:
+         - Ultra-slim top action bar
+         - Patient identity card inside scrollable chat stream
+         - Collapsible suggested questions drawer (toggled via button)
+         ======================================================= -->
+    <section id="view-observe" class="hidden max-w-5xl mx-auto px-4 sm:px-8 py-6 space-y-4">
+      <div class="nb-vhead"><div><span id="obs-badge" class="nb-pill"></span><h1 id="obs-title" style="margin:.4rem 0 .2rem"></h1><p id="obs-sub" style="margin:0;font-size:.85rem;color:#425D69"></p></div><button id="obs-exit" type="button" class="nb-btn-ghost">خروج</button></div>
+      <div class="nb-obs"><div id="obs-stream" class="nb-stream"></div>
+        <aside class="nb-why"><h3 style="margin:0 0 .4rem">لماذا فعل الخبير ذلك؟</h3><div id="obs-why" style="font-size:.84rem;line-height:1.95;color:#1F3D4A"></div></aside></div>
+      <div class="nb-obs-ctl"><div id="obs-prog" class="nb-q-prog" style="flex:1;margin:0"></div><button id="obs-auto" type="button" class="nb-btn-ghost">تشغيل تلقائي</button><button id="obs-next" type="button" class="nb-btn" style="width:auto;padding:.7rem 1.4rem">التالي</button></div>
+      <div id="obs-check" class="hidden nb-box"></div>
+    </section>

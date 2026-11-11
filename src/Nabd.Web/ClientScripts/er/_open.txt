@@ -1,0 +1,11 @@
+/* =========================================================
+   NABD — the emergency room (er.js)
+   One room, one conversation. The patient, the companion, the nurse, the supervisor and the
+   monitor all share the same stream; the student never picks who to talk to.
+   This file is the source of truth: the clinical clock, the risk, the vitals, the results and who
+   speaks next. api/er-chat.js only understands the student and words the lines. Without it the
+   room still runs, on the case file's own lines.
+   ========================================================= */
+(() => {
+  'use strict';
+

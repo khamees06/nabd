@@ -1,0 +1,127 @@
+  <!-- =========================================================
+       MODAL 4: PROFESSOR'S COMPREHENSIVE STUDENT ATTEMPT MODAL
+       Shows every single detail of a student's attempt:
+       - Deduced diagnosis, final score, publication status
+       - Full clinical inquiry log (what was asked & answered)
+       - Full workups & images ordered + student's own analysis + justification for extra tests
+       - Nurse scratchpad notes + complete SBAR handover vs reference
+       - Strengths, weaknesses, and supervisor's grading note
+       ========================================================= -->
+  <div id="student-attempt-detail-modal" role="dialog" aria-modal="true" aria-labelledby="stu-modal-title" class="fixed inset-0 z-85 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-6" style="z-index: 85;">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-5xl w-full p-5 sm:p-7 shadow-2xl space-y-5 max-h-[92vh] overflow-y-auto">
+      <div class="flex items-start justify-between gap-4 border-b border-slate-100 pb-4">
+        <div class="space-y-1">
+          <div class="flex items-center gap-2 flex-wrap">
+            <span id="stu-modal-role-badge" class="px-3 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-xs font-bold">--</span>
+            <span id="stu-modal-pub-badge" class="px-2.5 py-0.5 rounded-full bg-emerald-50 text-emerald-800 border border-emerald-200 text-xs font-bold">--</span>
+          </div>
+          <h2 id="stu-modal-title" class="text-lg sm:text-xl font-bold text-slate-900">--</h2>
+          <p id="stu-modal-subtitle" class="text-xs sm:text-sm text-slate-600">--</p>
+          <div id="stu-comment-box"><label for="stu-comment-input" style="font-size:.76rem;font-weight:700;color:#193B4A">ملاحظة الأستاذ الجامعي للطالب</label><textarea id="stu-comment-input" placeholder="اكتب ملاحظة تظهر للطالب في لوحته"></textarea><div style="display:flex;gap:.6rem;align-items:center;margin-top:.4rem"><button type="button" id="stu-comment-save" class="nb-btn" style="width:auto;padding:.45rem 1rem;font-size:.78rem">إرسال الملاحظة</button><span id="stu-comment-status" style="font-size:.72rem;color:#0A562F"></span></div><div id="stu-comment-last" style="font-size:.74rem;color:#425D69;margin-top:.4rem;line-height:1.8"></div></div>
+        </div>
+        <button type="button" id="close-stu-modal-btn" class="w-9 h-9 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 font-bold text-sm flex items-center justify-center shrink-0">✕</button>
+      </div>
+
+      <!-- Summary Strip: Student's Diagnosis, Vitals, Workup Count, Final Score -->
+      <div class="grid grid-cols-1 sm:grid-cols-4 gap-3">
+        <div class="p-3.5 rounded-2xl bg-teal-50/60 border border-teal-200/80 sm:col-span-2">
+          <div class="text-xs text-teal-800 font-bold">التشخيص السريري الذي استنتجه الطالب:</div>
+          <div id="stu-modal-diagnosis" class="text-sm font-bold text-slate-900 mt-1">--</div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center">
+          <div class="text-xs text-slate-500">العلامات الحيوية والفحوصات</div>
+          <div id="stu-modal-workup-summary" class="text-sm font-bold text-slate-900 mt-1">--</div>
+        </div>
+        <div class="p-3.5 rounded-2xl bg-slate-50 border border-slate-200/80 text-center">
+          <div class="text-xs text-slate-500">الدرجة النهائية المستحقة</div>
+          <div id="stu-modal-score" class="text-xl font-bold text-teal-700 font-num mt-0.5">--</div>
+        </div>
+      </div>
+
+      <!-- Section 1: What the Student Asked & Answered (Clinical Inquiry Verification) -->
+      <div class="border border-slate-200/90 rounded-2xl overflow-hidden">
+        <div class="px-4 py-3 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-bold text-slate-900">أولاً: سجل استجواب الطالب للمريض (ماذا سأل الطالب وكيف تعامل مع المعطيات الحرجة؟)</h3>
+          <span id="stu-modal-inq-count" class="text-xs font-semibold text-teal-800">--</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-50/60 border-b border-slate-100 text-slate-600 font-bold">
+              <tr>
+                <th class="px-4 py-2.5">المحور السريري المطلوب</th>
+                <th class="px-4 py-2.5">حالة سؤال الطالب والتوقيت</th>
+                <th class="px-4 py-2.5">سؤال الطالب الفعلي وجواب المريض المستخرج</th>
+                <th class="px-4 py-2.5">تقييم الاستجواب</th>
+              </tr>
+            </thead>
+            <tbody id="stu-modal-inquiry-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 2: Ordered Lab Workups, Diagnostic Images, Student's Analysis & Justification for Unrelated Tests -->
+      <div class="border border-slate-200/90 rounded-2xl overflow-hidden">
+        <div class="px-4 py-3 bg-slate-50 border-b border-slate-200/80 flex items-center justify-between">
+          <h3 class="text-xs sm:text-sm font-bold text-slate-900">ثانياً: الفحوصات والصور التشخيصية التي طلبها الطالب + تحليله للنتيجة + تبريره للفحوصات الإضافية</h3>
+          <span class="text-xs text-slate-500">اضغط على أي صورة مرفقة لتكبيرها</span>
+        </div>
+        <div class="overflow-x-auto">
+          <table class="w-full text-right text-xs">
+            <thead class="bg-slate-50/60 border-b border-slate-100 text-slate-600 font-bold">
+              <tr>
+                <th class="px-4 py-2.5">الفحص / الصورة التشخيصية</th>
+                <th class="px-4 py-2.5">النتيجة الخام / مرفق الصورة</th>
+                <th class="px-4 py-2.5">تحليل واستنتاج الطالب للنتيجة</th>
+                <th class="px-4 py-2.5">صلة الفحص بالحالة وتبرير الطالب (إن كان إضافياً)</th>
+              </tr>
+            </thead>
+            <tbody id="stu-modal-workup-tbody" class="divide-y divide-slate-100"></tbody>
+          </table>
+        </div>
+      </div>
+
+      <!-- Section 3: Student's Scratchpad Notes & SBAR Handover Submission -->
+      <div class="grid grid-cols-1 lg:grid-cols-3 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-2">
+          <div class="font-bold text-slate-900 border-b border-slate-200 pb-1.5">ثالثاً: ملاحظات مفكرة الطالب أثناء الجلسة</div>
+          <p id="stu-modal-scratchpad" class="text-slate-700 leading-relaxed whitespace-pre-line">--</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-teal-50/40 border border-teal-200/80 space-y-2">
+          <div class="font-bold text-teal-900 border-b border-teal-200/70 pb-1.5">رابعاً: تسليم SBAR المقدم من الطالب (S & B)</div>
+          <p id="stu-modal-sbar-sb" class="text-slate-800 leading-relaxed">--</p>
+        </div>
+        <div class="p-4 rounded-2xl bg-teal-50/40 border border-teal-200/80 space-y-2">
+          <div class="font-bold text-teal-900 border-b border-teal-200/70 pb-1.5">تسليم SBAR المقدم من الطالب (A & R)</div>
+          <p id="stu-modal-sbar-ar" class="text-slate-800 leading-relaxed">--</p>
+        </div>
+      </div>
+
+      <!-- Section 4: Strengths, Weaknesses (including Unjustified Tests), & Supervisor Action -->
+      <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-xs">
+        <div class="p-4 rounded-2xl bg-emerald-50/50 border border-emerald-200 space-y-1.5">
+          <div class="font-bold text-emerald-900">✓ نقاط القوة المرصودة في أداء الطالب:</div>
+          <ul id="stu-modal-strengths" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+        </div>
+        <div class="p-4 rounded-2xl bg-amber-50/60 border border-amber-200 space-y-1.5">
+          <div class="font-bold text-amber-900">نقاط الضعف / الفحوصات غير المبررة / الثغرات:</div>
+          <ul id="stu-modal-weaknesses" class="list-disc list-inside text-slate-700 space-y-1"></ul>
+        </div>
+      </div>
+
+      <!-- Supervisor Feedback Note & Publish Toggle -->
+      <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/90 flex flex-col sm:flex-row sm:items-center justify-between gap-3">
+        <div class="flex-1 space-y-1">
+          <label for="stu-modal-prof-note" class="text-xs font-bold text-slate-800 block">ملاحظة الأستاذ الجامعي الموجهة للطالب (تظهر في بوابة الطالب):</label>
+          <input id="stu-modal-prof-note" type="text" class="w-full px-3.5 py-2 rounded-xl bg-white border border-slate-200 text-xs sm:text-sm" />
+        </div>
+        <div class="flex items-center gap-2 shrink-0 pt-2 sm:pt-0">
+          <button type="button" id="stu-modal-toggle-pub-btn" class="px-4 py-2.5 rounded-xl bg-emerald-600 hover:bg-emerald-700 text-white text-xs font-bold transition-colors">
+            اعتماد ونشر الدرجة للطالب ✓
+          </button>
+          <button type="button" id="stu-modal-close-bottom-btn" class="px-4 py-2.5 rounded-xl bg-slate-200 hover:bg-slate-300 text-slate-800 text-xs font-bold transition-colors">
+            إغلاق
+          </button>
+        </div>
+      </div>
+    </div>
+  </div>

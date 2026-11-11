@@ -1,0 +1,24 @@
+    <!-- =======================================================
+         VIEW 1: SIGNED-IN HOME PAGE
+         Strict Order:
+         1. Personal Welcome
+         2. Emergency Room Entry (Calm Medical Blue/Teal, No Red Glow)
+         3. Specialized Cases Intro + Centered Solid Dept Filter
+         4. Case Cards (Preserving design & images, refined spacing)
+         5. Single Wide Clinical Coach Card
+         ======================================================= -->
+    <section id="view-home" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-9">
+
+@await Html.PartialAsync("~/Views/Home/Dashboard/_Welcome.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_LearnPath.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_TrainingPath.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_NurseEntry.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_ProfessorHome.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_Guide.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_ErCard.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_StudentUniversity.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_Fields.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_LockedRooms.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_Cases.cshtml")
+@await Html.PartialAsync("~/Views/Home/Dashboard/_CoachBanner.cshtml")
+    </section>

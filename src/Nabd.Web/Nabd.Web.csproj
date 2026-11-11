@@ -11,4 +11,19 @@
     <ProjectReference Include="..\Nabd.Infrastructure\Nabd.Infrastructure.csproj" />
   </ItemGroup>
 
+  <!--
+    The client scripts are source files joined at run time by ClientBundleProvider (never served one by one),
+    so they ship next to the binaries instead of under wwwroot.
+  -->
+  <ItemGroup>
+    <Content Remove="ClientScripts\**" />
+    <None Remove="ClientScripts\**" />
+    <Content Include="ClientScripts\bundles.json;ClientScripts\**\*.js;ClientScripts\**\*.txt" CopyToOutputDirectory="PreserveNewest" CopyToPublishDirectory="PreserveNewest" />
+    <None Include="ClientScripts\**\*.md" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <InternalsVisibleTo Include="Nabd.Tests" />
+  </ItemGroup>
+
 </Project>

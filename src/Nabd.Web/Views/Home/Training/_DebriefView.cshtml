@@ -1,0 +1,161 @@
+    <!-- =======================================================
+         VIEW 3: DEBRIEF & STRUCTURED REPORT
+         Includes Empty State when no session has been completed yet!
+         ======================================================= -->
+    <section id="view-debrief" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+
+      <!-- Empty State (Shown if user opens Report before completing any session) -->
+      <div id="debrief-empty-state" class="bg-white border border-slate-200/90 rounded-3xl p-8 sm:p-12 text-center max-w-xl mx-auto space-y-4 shadow-xs my-6">
+        <div class="w-14 h-14 rounded-2xl bg-teal-50 text-teal-700 border border-teal-200/70 flex items-center justify-center mx-auto">
+          <svg class="w-7 h-7" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><polyline points="14 2 14 8 20 8"/><line x1="16" y1="13" x2="8" y2="13"/><line x1="16" y1="17" x2="8" y2="17"/></svg>
+        </div>
+        <h2 class="text-xl font-bold text-slate-900">لا يوجد تقرير جلسة مكتمل حالياً</h2>
+        <p class="text-sm text-slate-600 leading-relaxed">
+          لا يُنشأ تقرير التقييم والنتيجة إلا بعد إتمام جلسة محاكاة سريرية وتسليم ملخص الحالة. ابدأ حالة من غرفة الطوارئ العشوائية لعرض تقريرك التفصيلي.
+        </p>
+        <div class="flex flex-wrap items-center justify-center gap-3 pt-2">
+          <button id="empty-debrief-go-home" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors focus-ring">
+            العودة إلى الرئيسية
+          </button>
+          <button id="empty-debrief-go-er" class="px-5 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold transition-colors focus-ring">
+            بدء حالة طوارئ عشوائية
+          </button>
+        </div>
+      </div>
+
+      <!-- Completed Report Content -->
+      <div id="debrief-report-content" class="hidden space-y-6">
+
+        <!-- Disclaimer Banner: Educational Reference Comparison -->
+        <div class="bg-teal-50/80 border border-teal-200 rounded-2xl px-4 py-3 text-xs text-teal-900 flex items-center justify-between gap-3 flex-wrap">
+          <span><strong>ملاحظة:</strong> يقارن التقرير خطواتك بسيناريو تعليمي مرجعي، ولا يُعدّ حكماً طبياً.</span>
+        </div>
+
+        <!-- Top Executive Summary -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs flex flex-col lg:flex-row lg:items-center justify-between gap-6">
+          <div class="space-y-2">
+            <span id="rep-eval-type-badge" class="inline-block text-xs font-semibold px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200/70">
+              تقرير المراجعة السريرية
+            </span>
+            <h1 id="rep-main-title" class="text-xl sm:text-2xl font-bold text-slate-900">--</h1>
+            <p id="rep-case-subtitle" class="text-sm text-slate-600">--</p>
+          </div>
+
+          <div class="grid grid-cols-3 gap-3 shrink-0">
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">الدرجة المستحقة</div>
+              <div id="rep-total-score" class="text-2xl font-bold text-teal-700 font-num mt-0.5">0%</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">حالة المحاولة</div>
+              <div id="rep-pass-status" class="text-sm sm:text-base font-bold text-slate-900 mt-1">--</div>
+            </div>
+            <div class="bg-slate-50 border border-slate-200/80 rounded-2xl px-4 py-3 text-center">
+              <div class="text-xs text-slate-500">المحاور المستقصاة</div>
+              <div id="rep-discovered-count" class="text-2xl font-bold text-teal-700 font-num mt-0.5">0/0</div>
+            </div>
+          </div>
+        </div>
+
+        <!-- TABLE 1: Clinical Competency Breakdown -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">تفصيل الدرجة</h2>
+            <p class="text-xs text-slate-500 mt-0.5">مقارنة خطواتك المسجلة في الجلسة مع معايير السيناريو المرجعي</p>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5">المحور التدريبي</th>
+                  <th class="px-5 py-3.5">الوزن النسبي</th>
+                  <th class="px-5 py-3.5">الدليل الموثق من سجل المحاولة</th>
+                  <th class="px-5 py-3.5">الدرجة التقديرية</th>
+                  <th class="px-5 py-3.5">الملاحظة التوجيهية</th>
+                </tr>
+              </thead>
+              <tbody id="rep-competency-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 2: Inquiry & Safety Audit -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">ثانياً: مراجعة أسئلة الاستجواب والتحقق من سلامة المريض</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5">محور الاستجواب / التحقق</th>
+                  <th class="px-5 py-3.5">الحالة في الحوار</th>
+                  <th class="px-5 py-3.5">الدليل والتوقيت في السجل</th>
+                  <th class="px-5 py-3.5">الأهمية السريرية في السيناريو</th>
+                </tr>
+              </thead>
+              <tbody id="rep-inquiry-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 3: Workup & Timestamps Log -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">ثالثاً: سجل الفحوصات المطلوبة وتوقيت طلبها في الجلسة</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5">الفحص / الإجراء</th>
+                  <th class="px-5 py-3.5">حالة الطلب وتوقيته</th>
+                  <th class="px-5 py-3.5">صلة الفحص بالحالة وملاحظة السلامة</th>
+                </tr>
+              </thead>
+              <tbody id="rep-workup-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- TABLE 4: Handover Comparison -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100">
+            <h2 class="text-base font-bold text-slate-900">رابعاً: مقارنة تسليم SBAR المقدم مع الإجابة النموذجية المرجعية</h2>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="w-full text-right text-xs sm:text-sm">
+              <thead class="bg-slate-50 border-b border-slate-200/80 text-slate-700 font-bold">
+                <tr>
+                  <th class="px-5 py-3.5 w-48">البند</th>
+                  <th class="px-5 py-3.5">ما كتبته عند تسليم الحالة</th>
+                  <th class="px-5 py-3.5">النموذج السريري المرجعي المقترح</th>
+                </tr>
+              </thead>
+              <tbody id="rep-handover-tbody" class="divide-y divide-slate-100">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <div id="rep-compare" class="hidden nb-box" style="font-size:.84rem;line-height:1.9"></div>
+
+        <div class="flex flex-wrap justify-end gap-3 pt-2">
+          <button id="rep-retry-btn" class="px-5 py-3 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-sm font-semibold transition-colors focus-ring">حاول نفس الحالة مرة أخرى</button>
+          <button id="rep-go-profile-btn" class="px-5 py-3 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-sm font-semibold transition-colors focus-ring">
+            عرض ملفي الشخصي وسجل الجلسات
+          </button>
+          <button id="rep-back-home-btn" class="px-6 py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors shadow-xs focus-ring">
+            العودة إلى الرئيسية
+          </button>
+        </div>
+
+      </div>
+    </section>

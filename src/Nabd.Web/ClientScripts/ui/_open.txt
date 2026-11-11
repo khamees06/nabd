@@ -1,0 +1,6 @@
+/* =========================================================================
+   NABD v7 — small UI glue for the redesigned drawer.
+   The drawer shows who is signed in and which page is open. It reads what
+   script.js already writes into the header, so no app logic changes here.
+   ========================================================================= */
+(function () {

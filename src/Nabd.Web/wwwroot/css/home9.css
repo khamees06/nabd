@@ -1,0 +1,75 @@
+/* =========================================================================
+   NABD — student home and sign-in page, v9 (2026-11-08, owner)
+   Home: welcome → the ER entry → the training sections as photo cards (ER open, the rest locked)
+   → assignments → progress → the steps. Sign-in: a full page instead of a pop-up (script.js adds
+   html.nb9-auth-page while it is open). Loaded last.
+   ========================================================================= */
+
+/* ---------- home order ---------- */
+#view-home:not(.hidden) { display: flex !important; flex-direction: column; gap: clamp(1.4rem, 3vw, 2.2rem); }
+#view-home:not(.hidden) > * { margin-top: 0 !important; margin-bottom: 0 !important; }
+#view-home > .v7-welcome { order: 1; }
+#view-home > #home-professor-section { order: 2; }
+#view-home > #home-er-card { order: 3; }
+#view-home > #home-fields9 { order: 4; }
+#view-home > #home-student-uni-section { order: 5; }
+#view-home > #home-path { order: 6; }
+#view-home > #nb8-guide { order: 7; }
+#view-home > * { order: 9; }
+/* the old locked-rooms strip and the respiratory card: the photo cards replace them */
+#view-home .er-rooms, #view-home #home-resp-card { display: none !important; }
+/* the steps keep their cards, without the long paragraph above them */
+#view-home #nb8-guide-intro { display: none !important; }
+
+/* ---------- training sections ---------- */
+.h9-fields-head { display: flex; align-items: baseline; justify-content: space-between; gap: .8rem; flex-wrap: wrap; margin-bottom: .9rem; }
+#view-home .h9-fields-head h2 { margin: 0 !important; font-size: clamp(1.15rem, 2vw, 1.4rem) !important; font-weight: 600 !important; color: var(--ink) !important; }
+.h9-fields-head span { font-size: .85rem; color: var(--ink-2); }
+.h9-fields { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .9rem; }
+.h9-fields li { position: relative; display: flex; flex-direction: column; border-radius: 18px; overflow: hidden; background: var(--surface); border: 1px solid var(--line-2); box-shadow: var(--sh-1); transition: transform .25s ease, box-shadow .25s ease; }
+.h9-fields li.is-open { border-color: var(--signal); box-shadow: 0 14px 30px -18px rgba(22, 131, 138, .6); }
+.h9-fields li.is-open:hover { transform: translateY(-3px); }
+.h9-fields img { width: 100%; aspect-ratio: 16 / 10; object-fit: cover; display: block; }
+.h9-fields li:not(.is-open) img { filter: grayscale(.45); opacity: .78; }
+.h9-fields li > div { display: grid; gap: .2rem; padding: .7rem .85rem .85rem; }
+.h9-fields b { color: var(--ink); font-weight: 600; font-size: 1rem; }
+.h9-fields li > div > span { color: var(--ink-2); font-size: .82rem; line-height: 1.6; }
+.h9-fields small { justify-self: start; margin-top: .25rem; font-size: .7rem; color: var(--signal-strong); background: var(--tint); border-radius: 999px; padding: .05rem .55rem; }
+.h9-tag { position: absolute; inset-block-start: .6rem; inset-inline-start: .6rem; font-style: normal; font-size: .72rem; font-weight: 600; padding: .15rem .6rem; border-radius: 999px; background: rgba(25, 59, 74, .78); color: #fff; }
+.h9-tag-open { background: var(--signal); }
+.h9-open { position: absolute; inset: 0; z-index: 2; background: transparent; border: 0; cursor: pointer; border-radius: 18px; }
+.h9-open:focus-visible { outline: 3px solid var(--signal); outline-offset: -3px; }
+@media (max-width: 900px) { .h9-fields { grid-template-columns: repeat(2, minmax(0, 1fr)); } }
+@media (max-width: 480px) { .h9-fields { gap: .6rem; } .h9-fields li > div > span { display: none; } }
+
+/* ---------- sign-in as a full page (2026-11-08, owner: «ما بدي شاشة منبثقة، بدي صفحة كاملة») ----------
+   The same form and logic (openAuthModal / closeAuthModal); only its frame changes: it fills the screen like a page.
+   On a wide screen: the photo and a short welcome on one side, the form centred on the other. */
+html #auth-modal { padding: 0 !important; background: var(--bg, #F4F8FA) !important; -webkit-backdrop-filter: none !important; backdrop-filter: none !important; }
+html #auth-modal:not(.hidden) { align-items: stretch !important; justify-content: stretch !important; }
+html #auth-modal .nb-auth.nb8-auth { width: 100vw !important; max-width: none !important; height: 100dvh !important; max-height: none !important; border-radius: 0 !important; box-shadow: none !important; overflow: hidden !important; }
+html #auth-modal .nb8-auth .nb-auth-main { height: 100dvh; max-height: none !important; overflow-y: auto !important; padding-inline: clamp(1.25rem, 6vw, 6rem) !important; display: flex; flex-direction: column; justify-content: safe center; }
+html #auth-modal .nb8-auth .nb-auth-main > * { width: 100%; max-width: 27rem; margin-inline: auto; }
+html #auth-modal .nb-auth-brand { background: #FFFFFF !important; }
+html #auth-modal .nb-auth-title { font-size: 1.6rem; }
+@media (min-width: 860px) {
+  html #auth-modal .nb-auth-simple.nb8-auth { grid-template-columns: minmax(0, 1.1fr) minmax(0, 1fr) !important; }
+  html #auth-modal .nb8-auth-side {
+    padding: clamp(2rem, 4vw, 3.5rem) !important; justify-content: space-between !important;
+    background: linear-gradient(180deg, rgba(18, 48, 60, .15) 0%, rgba(18, 48, 60, .55) 45%, rgba(15, 106, 112, .94) 100%), url("../img/v9/login2.jpg") center / cover no-repeat !important;
+  }
+  html #auth-modal .nb8-side-copy p { display: none; }
+  html #auth-modal .nb8-auth-side h3 { font-size: clamp(1.6rem, 2.6vw, 2.2rem) !important; line-height: 1.5 !important; }
+  html #auth-modal .nb8-auth-side ul { background: rgba(255, 255, 255, .1); border-radius: 18px; padding: 1rem 1.1rem; -webkit-backdrop-filter: blur(6px); backdrop-filter: blur(6px); }
+  html #auth-modal .nb8-side-ecg { display: none; }
+}
+/* On a phone the page opens with the photo as a short band above the form. */
+@media (max-width: 859.98px) {
+  html #auth-modal .nb8-auth .nb-auth-main::before { content: ''; display: block; flex: none; height: 9rem; max-width: none !important; width: calc(100% + 2 * clamp(1.25rem, 6vw, 6rem)); margin: 0 calc(-1 * clamp(1.25rem, 6vw, 6rem)) 1rem; background: linear-gradient(180deg, transparent 40%, rgba(255, 255, 255, .9)), url("../img/v9/login2.jpg") center 25% / cover no-repeat; }
+}
+
+/* v2: the section explanation and a lock on the cards that open later */
+#view-home .h9-fields-head { display: grid; gap: .25rem; justify-content: stretch; }
+#view-home .h9-fields-head p { margin: 0; font-size: .9rem; color: var(--ink-2); line-height: 1.8; }
+.h9-tag:not(.h9-tag-open)::before { content: ''; display: inline-block; width: .55rem; height: .7rem; margin-inline-end: .3rem; vertical-align: -1px; background: currentColor; -webkit-mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center / contain no-repeat; mask: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='black' stroke-width='3'%3E%3Crect x='4' y='11' width='16' height='10' rx='2'/%3E%3Cpath d='M8 11V7a4 4 0 0 1 8 0v4'/%3E%3C/svg%3E") center / contain no-repeat; }
+.h9-fields li:not(.is-open) { cursor: default; }

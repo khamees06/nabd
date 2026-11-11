@@ -1,0 +1,6 @@
+/* =========================================================================
+   NABD — motion layer + live vitals monitor
+   Loaded after script.js. Presentation only: it reads what the app renders
+   and never changes clinical values, scores or session state.
+   ========================================================================= */
+(function () {

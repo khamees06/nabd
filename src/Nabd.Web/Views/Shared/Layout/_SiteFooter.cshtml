@@ -1,0 +1,52 @@
+  <!-- =========================================================
+       FOOTER (Public Links Only for Guests; App Links Protected)
+       ========================================================= -->
+  <footer id="site-footer" class="bg-white border-t border-slate-200/80 mt-auto">
+    <div class="max-w-6xl mx-auto px-4 sm:px-8 py-8 grid grid-cols-1 md:grid-cols-4 gap-6 text-xs sm:text-sm">
+      <div class="space-y-2 md:col-span-2">
+        <div class="flex items-center gap-2.5">
+          <div class="w-7 h-7 rounded-lg bg-teal-700 text-white flex items-center justify-center font-bold text-xs">ن</div>
+          <span class="font-bold text-sm text-slate-900">نَبْض الأردن — أكاديمية المحاكاة السريرية</span>
+        </div>
+        
+      </div>
+
+            <!-- Guest Footer Links (Public Only) -->
+      <div id="footer-guest-links" class="space-y-2">
+        <div class="font-bold text-slate-900 text-xs">روابط سريعة</div>
+        <ul class="space-y-1.5 text-xs text-slate-600">
+          <!-- phase8 2026-11-07: links to the new landing sections -->
+          <li><a href="#sec-about8" class="hover:text-teal-700">عن نَبْض</a></li>
+          <li><a href="#sec-problems8" class="hover:text-teal-700">المشكلة والحل</a></li>
+          <li><a href="#sec-how" class="hover:text-teal-700">رحلة التدريب</a></li>
+          <li><a href="#sec-resp" class="hover:text-teal-700">غرفة الطوارئ</a></li>
+          <li><a href="#sec-roadmap8" class="hover:text-teal-700">قريباً</a></li>
+        </ul>
+      </div>
+<!-- Signed-in Footer Links (Hidden for Guests) -->
+      <div id="footer-app-links" class="hidden space-y-2">
+        <div class="font-bold text-slate-900 text-xs">مساحة التدريب</div>
+        <ul class="space-y-1.5 text-xs text-slate-600">
+          <li><button data-foot-app="home" class="foot-app-link hover:text-teal-700">الرئيسية</button></li>
+          <li><button id="foot-er-btn" class="hover:text-teal-700">غرفة الطوارئ العشوائية</button></li>
+          <li><button type="button" class="hover:text-teal-700" onclick="nbOpenER()">غرفة الطوارئ</button></li>
+          <li><button data-foot-app="coach" class="foot-app-link hover:text-teal-700">المدرب السريري</button></li>
+          <li><button data-foot-app="profile" class="foot-app-link hover:text-teal-700">ملفي الشخصي</button></li>
+        </ul>
+      </div>
+
+      <div class="space-y-2">
+        <div class="font-bold text-slate-900 text-xs">طبيعة النموذج</div>
+        <ul class="space-y-1.5 text-xs text-slate-500">
+          <li>نموذج أولي تعليمي وتوضيحي</li>
+          <li>لطلبة الطب والتمريض</li>
+          <li>لا يُغني عن البروتوكولات السريرية المعتمدة</li>
+        </ul>
+      </div>
+    </div>
+    <div class="border-t border-slate-100 py-3.5 px-4 sm:px-8 text-center text-xs text-slate-400">
+      جميع الحقوق محفوظة © 2026 منصة نَبْض للمحاكاة السريرية (نسخة تدريبية توضيحية)
+      <details class="v7-credits"><summary>مصادر الصور</summary><div class="nb-credit" id="nb-credits" style="margin-top:.4rem"></div></details>
+      <details class="v7-credits"><summary>مصادر البيانات</summary><div class="nb-credit" style="margin-top:.4rem">غرفة الطوارئ التنفسية: <a href="https://figshare.com/articles/dataset/DDXPlus_Dataset/20043374" target="_blank" rel="noopener">DDXPlus Dataset</a>، Arsene Fansi Tchango وRishab Goel وZhi Wen وJulien Martel وJoumana Ghosn، منشورة على Figshare برخصة <a href="https://creativecommons.org/licenses/by/4.0/" target="_blank" rel="noopener">CC BY 4.0</a>. التعديلات: ترجم نبض الأسئلة والأجوبة إلى العربية، واختار المرضى التنفسيين من مجموعة الاختبار، وحذف القيم الافتراضية من السجلات، ودرّب عليها نموذجاً.</div></details>
+    </div>
+  </footer>

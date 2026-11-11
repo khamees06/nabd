@@ -8,3 +8,6 @@
 *.ico binary
 # Frozen legacy baselines are compared byte for byte in tests: never convert their line endings.
 tests/Nabd.Tests/LegacyBaseline/** -text
+
+# The legacy data files are served to the browser byte for byte: no line-ending conversion.
+src/Nabd.Infrastructure/LegacyData/Files/** -text

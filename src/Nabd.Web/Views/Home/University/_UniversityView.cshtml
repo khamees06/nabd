@@ -1,0 +1,253 @@
+    <!-- =======================================================
+         VIEW 6: ACADEMIC UNIVERSITY PORTAL (#view-university)
+         Organized strictly by active user role (Student vs Supervisor)
+         ======================================================= -->
+    <section id="view-university" class="hidden max-w-6xl mx-auto px-4 sm:px-8 py-6 sm:py-8 space-y-6">
+
+      <!-- Top Banner -->
+      <div class="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs flex flex-col sm:flex-row sm:items-center justify-between gap-4">
+        <div class="space-y-1">
+          <span id="uni-portal-badge" class="inline-block text-xs font-semibold text-teal-800 bg-teal-50 px-3 py-1 rounded-full border border-teal-200/60">
+            القسم الأكاديمي الجامعي
+          </span>
+          <h1 id="uni-portal-title" class="text-xl font-bold text-slate-900">بوابة الشعب والواجبات السريرية</h1>
+          <p id="uni-portal-desc" class="text-sm text-slate-600">الحالات المسندة ونتائجها.</p>
+        </div>
+
+        <div class="flex items-center gap-2.5 flex-wrap">
+          <button id="uni-Explicit-role-switch-btn" class="px-4 py-2.5 rounded-xl bg-amber-50 hover:bg-amber-100 text-amber-900 border border-amber-200 text-xs font-bold transition-colors focus-ring">
+            تسجيل الدخول بحساب آخر
+          </button>
+          <button id="uni-back-home-btn" class="px-4 py-2.5 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold transition-colors focus-ring">
+            العودة للرئيسية
+          </button>
+        </div>
+      </div>
+
+      <!-- STUDENT ROLE CONTENT -->
+      <div id="uni-student-content" class="space-y-5">
+        <!-- phase8 2026-11-07: student side of the portal: section, assignments, published results, supervisor and advisor notes -->
+        <div id="nb8-uni-stu" class="nb8-stu nb8-stu-full"></div>
+        <!-- phase8 2026-11-07: legacy static cards (they opened the closed specialty room); kept, hidden by academic8.css -->
+        <div class="nb8-legacy bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs space-y-4">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <h2 class="text-base font-bold text-slate-900">الحالات والواجبات السريرية المسندة لك من الأستاذ الجامعي</h2>
+          </div>
+          <div class="grid grid-cols-1 md:grid-cols-2 gap-4 text-sm">
+            <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+              <div class="space-y-1.5">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">مساق NUR-402 · د. عبدالرحمن المجالي</span>
+                <h3 class="text-base font-bold text-slate-900 pt-1">واجب تقييم: حالة قلب وأوعية دموية مترافقة مع السكري</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">المطلوب: استجواب المريض، قياس العلامات، طلب تخطيط القلب وفحص السكر، وتسليم ملخص الحالة.</p>
+              </div>
+              <button data-uni-start="case_cardio_dm" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+                بدء حل الواجب السريري
+              </button>
+            </div>
+
+            <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+              <div class="space-y-1.5">
+                <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-teal-50 text-teal-800 border border-teal-200">مساق NUR-405 · د. سمر الحسن</span>
+                <h3 class="text-base font-bold text-slate-900 pt-1">واجب تقييم: حالة جهاز تنفسي حادة مترافقة مع قصور كلوي</h3>
+                <p class="text-xs sm:text-sm text-slate-600 leading-relaxed">المطلوب: تقييم نقص الأكسجة والانتباه لموانع الصبغة الوريدية لدى مريض الكلى.</p>
+              </div>
+              <button data-uni-start="case_resp_renal" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+                بدء حل الواجب السريري
+              </button>
+            </div>
+            <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4 md:col-span-2">
+              <div class="flex items-center justify-between flex-wrap gap-2">
+                <div class="space-y-1">
+                  <span class="text-xs font-semibold px-2.5 py-0.5 rounded-full bg-amber-50 text-amber-800 border border-amber-200">تقييم فصلي قيد المراجعة · غير منشور</span>
+                  <h3 class="text-base font-bold text-slate-900 pt-1">نتيجة الاختبار السريري النصفي (تُنشر بعد اعتماد الأستاذ الجامعي)</h3>
+                </div>
+                <button id="try-open-unpublished-btn" type="button" class="px-4 py-2 rounded-xl bg-slate-200 text-slate-600 text-xs font-bold">
+                  النتيجة غير منشورة (مقفلة)
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+      </div>
+
+      <!-- SUPERVISOR / DOCTOR ROLE CONTENT (Full Academic Dashboard with Detailed Student Attempt Inspection) -->
+      <div id="uni-doctor-content" class="hidden space-y-6">
+
+        <!-- phase8 2026-11-07: portal tabs. The professor account also acts as the academic advisor. -->
+        <div class="nb8-portal-note">
+          <span class="nb8-demo-tag">بيانات تجريبية للعرض</span>
+          <span>يستطيع المشرف الأكاديمي أن يعمل مرشداً أكاديمياً أيضاً. تُحفظ الواجبات والملاحظات على هذا الجهاز فقط.</span>
+        </div>
+        <div class="nb8-tabs" role="tablist" aria-label="أقسام البوابة الأكاديمية">
+          <button type="button" role="tab" id="nb8-tab-courses" data-nb8-tab="courses" aria-controls="nb8-pane-courses" aria-selected="true" class="focus-ring">المساقات والشعب</button>
+          <button type="button" role="tab" id="nb8-tab-assign" data-nb8-tab="assign" aria-controls="nb8-pane-assign" aria-selected="false" tabindex="-1" class="focus-ring">إسناد الحالات</button>
+          <button type="button" role="tab" id="nb8-tab-reports" data-nb8-tab="reports" aria-controls="nb8-pane-reports" aria-selected="false" tabindex="-1" class="focus-ring">تقارير الطلبة</button>
+          <button type="button" role="tab" id="nb8-tab-progress" data-nb8-tab="progress" aria-controls="nb8-pane-progress" aria-selected="false" tabindex="-1" class="focus-ring">تقدّم الطلبة</button>
+          <button type="button" role="tab" id="nb8-tab-advisor" data-nb8-tab="advisor" aria-controls="nb8-pane-advisor" aria-selected="false" tabindex="-1" class="focus-ring">المرشد الأكاديمي</button>
+        </div>
+
+        <!-- phase8 pane 1: courses and sections -->
+        <div id="nb8-pane-courses" class="nb8-pane" role="tabpanel" aria-labelledby="nb8-tab-courses">
+          <div class="nb8-card">
+            <div class="nb8-card-head">
+              <div><h2>المساقات والشعب</h2><p>كل مساق وشعبه، وعدد الطلبة في كل شعبة محسوب من بيانات الشعبة المحفوظة.</p></div>
+            </div>
+            <div id="nb8-courses" class="nb8-courses"></div>
+          </div>
+        </div>
+
+        <!-- phase8 pane 2: case assignment (ER cases) -->
+        <div id="nb8-pane-assign" class="nb8-pane" role="tabpanel" aria-labelledby="nb8-tab-assign" hidden>
+          <div class="nb8-card">
+            <div class="nb8-card-head">
+              <div><h2>إسناد حالة من غرفة الطوارئ</h2><p>اختر حالة وشعبة. يرى طلبة الشعبة الواجب في صفحتهم الرئيسية، ويفتح زرّه غرفة الطوارئ على الحالة نفسها.</p></div>
+            </div>
+            <form id="nb8-as-form" class="nb8-form" novalidate>
+              <label class="nb8-f nb8-f-wide"><span>الحالة</span>
+                <select id="nb8-as-case" required><option value="">جارٍ تحميل الحالات…</option></select>
+                <small>التشخيص في القائمة للمشرف فقط. يرى الطالب السرير واسم المريض ووصف وصوله، ولا يرى التشخيص.</small>
+              </label>
+              <label class="nb8-f"><span>الشعبة</span><select id="nb8-as-section" required></select></label>
+              <label class="nb8-f"><span>موعد التسليم (اختياري)</span><input id="nb8-as-due" type="date" /></label>
+              <label class="nb8-f nb8-f-wide"><span>ملاحظة للطلبة (اختياري)</span><textarea id="nb8-as-note" rows="2" maxlength="300" placeholder="مثال: ركّزوا على سؤال الحساسية قبل أي دواء."></textarea></label>
+              <div class="nb8-f-wide nb8-form-foot">
+                <span id="nb8-as-status" role="status" aria-live="polite"></span>
+                <button id="nb8-as-save" type="submit" class="nb-btn focus-ring">إسناد الحالة للشعبة</button>
+              </div>
+            </form>
+          </div>
+          <div class="nb8-card">
+            <div class="nb8-card-head"><div><h2>الواجبات المسندة</h2><p>تظهر هنا بالأحدث أولاً.</p></div></div>
+            <div id="nb8-as-list" class="nb8-as-list"></div>
+          </div>
+          <details class="nb8-details" id="nb8-legacy-builder">
+            <summary>إضافة حالة مخصصة (تجريبي)</summary>
+            <p class="nb8-muted">أداة قديمة تُنشئ حالة نصية على هذا الجهاز للغرف التخصصية، وهذه الغرف مغلقة حالياً، لذلك لا تظهر الحالة المخصصة للطلبة بعد.</p>
+
+        <!-- Supervisor Case Builder -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl p-6 shadow-xs space-y-4">
+          <h2 class="text-base font-bold text-slate-900 border-b border-slate-100 pb-3">إضافة حالة سريرية تدريبية جديدة (خاص بالأستاذ الجامعي)</h2>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-case-title">عنوان الحالة السريرية والأمراض المرافقة:</label>
+              <input id="doc-case-title" type="text" value="حالة باطنية مترافقة مع ارتفاع ضغط الدم والسكري" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-case-dept">القسم السريري:</label>
+              <select id="doc-case-dept" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600">
+                <option value="cardio">القلب والأوعية الدموية</option>
+                <option value="resp">الأمراض الصدرية والتنفسية</option>
+                <option value="ortho">العظام والكسور</option>
+                <option value="gi">الباطنية والجهاز الهضمي</option>
+              </select>
+            </div>
+          </div>
+
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-4 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-patient-name">اسم المريض الافتراضي والعمر:</label>
+              <input id="doc-patient-name" type="text" value="سامي النجار (54 سنة)" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="doc-patient-allergy">المعلومة الحرجة / الحساسية التي يجب أن يسأل الطالب عنها:</label>
+              <input id="doc-patient-allergy" type="text" value="حساسية من مضادات الالتهاب غير الستيرويدية (NSAIDs)" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+            </div>
+          </div>
+
+          <div class="text-xs sm:text-sm">
+            <label class="font-semibold text-slate-700 block mb-1" for="doc-patient-complaint">شكوى المريض عند بدء الحوار:</label>
+            <input id="doc-patient-complaint" type="text" value="أشعر بصداع شديد في مؤخرة الرأس مع دوخة وزغللة بالعيون منذ الصباح، ونسيت أخذ دواء الضغط أمس." class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+          </div>
+
+          <button id="doc-save-case-btn" class="px-6 py-3 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-sm font-bold transition-colors shadow-xs focus-ring">
+            حفظ الحالة وإضافتها لبطاقات الصفحة الرئيسية
+          </button>
+        </div>
+          </details>
+        </div>
+
+        <!-- phase8 pane 3: student reports (KPI strip computed from the cohort data + the existing cohort table) -->
+        <div id="nb8-pane-reports" class="nb8-pane space-y-6" role="tabpanel" aria-labelledby="nb8-tab-reports" hidden>
+        <!-- KPI Dashboard Strip -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-4 gap-4">
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-semibold text-slate-500">الشعبة السريرية المسجلة</span>
+            <div class="text-2xl font-bold text-slate-900 font-num" id="uni-prof-kpi-count">--</div>
+            <span class="text-xs text-teal-700 font-medium block" id="uni-prof-kpi-count-sub"></span>
+          </div>
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-semibold text-slate-500">النتائج المنشورة وسؤال الحساسية</span>
+            <div class="text-2xl font-bold text-emerald-700 font-num" id="uni-prof-kpi-sub">--</div>
+            <span class="text-xs text-slate-600 block" id="uni-prof-kpi-sub-sub"></span>
+          </div>
+          <div class="bg-white border border-slate-200/90 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-semibold text-slate-500">متوسط درجات الشعبة</span>
+            <div class="text-2xl font-bold text-teal-700 font-num" id="uni-prof-kpi-avg">--</div>
+            <span class="text-xs text-slate-600 block" id="uni-prof-kpi-avg-sub"></span>
+          </div>
+          <div class="bg-amber-50/70 border border-amber-200 rounded-2xl p-5 shadow-xs space-y-1">
+            <span class="text-xs font-bold text-amber-900">تنبيهات الفحوصات غير المبررة</span>
+            <div class="text-base font-bold text-amber-800" id="uni-prof-kpi-warn">--</div>
+            <span class="text-xs text-amber-700 block" id="uni-prof-kpi-warn-sub"></span>
+          </div>
+        </div>
+
+        <!-- Organized Cohort Table Card -->
+        <div class="bg-white border border-slate-200/90 rounded-3xl shadow-xs overflow-hidden">
+          <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between flex-wrap gap-3">
+            <div>
+              <h2 class="text-base font-bold text-slate-900">تقارير طلبة الشعبة (NUR-402 / MED-410)</h2>
+              <p class="text-xs text-slate-500">اضغط «عرض الإجابات» لفتح ملف الطالب.</p>
+            </div>
+            <div class="flex items-center gap-2 flex-wrap">
+              <select id="prof-cohort-filter" class="px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs font-semibold text-slate-700">
+                <option value="all">جميع التخصصات والسنوات (7)</option>
+                <option value="التمريض">طلاب التمريض</option>
+                <option value="الطب">طلاب الطب البشري</option>
+                <option value="weakness">طلاب لديهم فحوصات غير مبررة / ثغرات</option>
+              </select>
+              <button id="doc-export-csv-btn" class="px-4 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold transition-colors focus-ring">
+                تصدير السجل الكامل (CSV)
+              </button>
+            </div>
+          </div>
+          <div class="overflow-x-auto">
+            <table class="prof-structured-table">
+              <thead>
+                <tr>
+                  <th>الطالب</th>
+                  <th>التخصص والسنة</th>
+                  <th>الحالة السريرية المختبرة</th>
+                  <th>التشخيص المستنتج من الطالب</th>
+                  <th>الفحوصات وتبرير الإضافي</th>
+                  <th class="text-center">الدرجة والنشر</th>
+                  <th class="text-center">إجراء المعلم</th>
+                </tr>
+              </thead>
+              <tbody id="uni-prof-cohort-tbody">
+                <!-- Populated dynamically by renderProfessorCohortTables() -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+        </div>
+
+        <!-- phase8 pane 4: student progress (aggregated from the cohort data only) -->
+        <div id="nb8-pane-progress" class="nb8-pane" role="tabpanel" aria-labelledby="nb8-tab-progress" hidden>
+          <div class="nb8-card">
+            <div class="nb8-card-head"><div><h2>تقدّم الطلبة</h2><p>ملخص المهارات محسوب من سجلات المحاولات المحفوظة فقط: الأسئلة التي طُرحت، وسؤال الحساسية، والفحوصات المبرّرة.</p></div></div>
+            <div id="nb8-progress"></div>
+          </div>
+        </div>
+
+        <!-- phase8 pane 5: academic advisor (the professor account acts as advisor) -->
+        <div id="nb8-pane-advisor" class="nb8-pane" role="tabpanel" aria-labelledby="nb8-tab-advisor" hidden>
+          <div class="nb8-card">
+            <div class="nb8-card-head"><div><h2>المرشد الأكاديمي</h2><p>يستطيع المشرف الأكاديمي أن يعمل مرشداً أكاديمياً: تابع كل طالب، وحدّد حالة المتابعة، واكتب ملاحظة إرشادية تظهر للطالب في ملفه باسم «ملاحظة المرشد الأكاديمي».</p></div></div>
+            <div id="nb8-advisor-sum" class="nb8-adv-sum"></div>
+            <div id="nb8-advisor" class="nb8-adv-list"></div>
+          </div>
+        </div>
+      </div>
+
+    </section>

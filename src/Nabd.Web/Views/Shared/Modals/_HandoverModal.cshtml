@@ -1,0 +1,63 @@
+  <!-- =========================================================
+       MODAL 1: STRUCTURED SBAR HANDOVER (Scrollable Body + Pinned Header/Footer)
+       ========================================================= -->
+  <div id="handover-modal" role="dialog" aria-modal="true" aria-labelledby="handover-modal-title" class="fixed inset-0 z-85 bg-slate-900/50 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-4" style="z-index: 85;">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-xl w-full max-h-[90vh] flex flex-col shadow-2xl overflow-hidden">
+      <!-- Fixed Modal Header -->
+      <div class="px-6 py-4 border-b border-slate-100 flex items-center justify-between shrink-0 bg-white">
+        <div>
+          <span class="text-xs font-semibold text-teal-700">قبل عرض الدرجة</span>
+          <h2 id="handover-modal-title" class="text-base sm:text-lg font-bold text-slate-900">تسليم الحالة (SBAR)</h2>
+        </div>
+        <button id="close-handover-modal-btn" class="w-8 h-8 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-600 font-bold text-xs focus-ring" aria-label="إغلاق">✕</button>
+      </div>
+
+      <!-- Scrollable Modal Body -->
+      <div id="handover-modal-body" class="p-6 overflow-y-auto flex-1 min-h-0 space-y-4">
+
+        <div class="space-y-3.5 text-xs sm:text-sm">
+          <div class="flex items-center justify-between flex-wrap gap-2">
+            <label class="font-bold text-slate-800" for="handover-recipient">١. جهة الاستلام:</label>
+            <button id="copy-scratchpad-to-sbar-btn" type="button" class="text-xs font-semibold text-teal-700 bg-teal-50 hover:bg-teal-100 px-3 py-1 rounded-lg border border-teal-200/70 focus-ring">
+              استيراد ملاحظات مفكرتي الشخصية
+            </button>
+          </div>
+          <select id="handover-recipient" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600">
+            <option value="doctor">تسليم وتصعيد للطبيب المناوب</option>
+            <option value="next_nurse">تسليم للممرض / الممارس المستلم في المناوبة التالية</option>
+          </select>
+
+          <div>
+            <label class="font-bold text-slate-800 block mb-1" for="handover-diagnosis-input">٢. التشخيص المبدئي:</label>
+            <input id="handover-diagnosis-input" type="text" placeholder="اكتب تشخيصك المبدئي" class="w-full p-2.5 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600" />
+          </div>
+
+          <div id="handover-extra-workups-box" class="hidden p-3.5 rounded-2xl bg-amber-50/80 border border-amber-200 space-y-2">
+            <div class="text-xs font-bold text-amber-900">تبرير الفحوصات/الصور الإضافية التي طلبتها خارج الاستطباب الأساسي للحالة:</div>
+            <p class="text-xs text-amber-800">برّر كل فحص إضافي؛ التبرير غير المقنع يخصم 5 نقاط.</p>
+            <div id="handover-extra-workups-list" class="space-y-2"></div>
+          </div>
+
+          <div>
+            <label class="font-bold text-slate-800 block mb-1" for="handover-summary-input">٣. الوضع والخلفية <bdi dir="ltr">(S &amp; B)</bdi>:</label>
+            <textarea id="handover-summary-input" rows="3" placeholder="اكتب الوضع الحالي للمريض (Situation) والخلفية المرضية والحساسية (Background) التي وثقتها..." class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600 resize-none leading-relaxed"></textarea>
+          </div>
+
+          <div>
+            <label class="font-bold text-slate-800 block mb-1" for="handover-action-input">٤. التقييم والتوصية <bdi dir="ltr">(A &amp; R)</bdi>:</label>
+            <textarea id="handover-action-input" rows="3" placeholder="اكتب قراءات التقييم ونتائج الفحوصات التي طلبتها (Assessment) والتوصية للمناوب التالي (Recommendation)..." class="w-full p-3 rounded-xl bg-slate-50 border border-slate-200 focus:outline-none focus:bg-white focus:border-teal-600 resize-none leading-relaxed"></textarea>
+          </div>
+        </div>
+      </div>
+
+      <!-- Fixed Modal Footer -->
+      <div class="px-6 py-4 border-t border-slate-100 bg-slate-50/80 flex items-center justify-end gap-2.5 shrink-0">
+        <button id="cancel-handover-btn" type="button" class="px-4 py-2.5 rounded-xl bg-white hover:bg-slate-100 text-slate-700 border border-slate-200 text-xs sm:text-sm font-semibold focus-ring">
+          العودة لاستكمال الجلسة
+        </button>
+        <button id="confirm-handover-submit-btn" type="button" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold shadow-xs focus-ring">
+          سلّم واعرض التقرير
+        </button>
+      </div>
+    </div>
+  </div>

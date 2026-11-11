@@ -1,0 +1,37 @@
+      <!-- 3. Student cases: choose a specialty, then narrow by level or status -->
+      <div id="home-cases-anchor" class="space-y-6 pt-2">
+        <div class="home-cases-heading space-y-1.5">
+          <h2 class="text-xl sm:text-2xl font-bold text-slate-900">الحالات حسب التخصص</h2>
+          <p class="text-sm text-slate-600 leading-relaxed">اختر التخصص، ثم ابدأ الحالة.</p>
+        </div>
+
+        <!-- Specialty filter -->
+        <div class="home-cases-filter flex flex-col items-start gap-2">
+          <div id="dept-filter-bar" role="tablist" aria-label="فلتر الأقسام السريرية" class="inline-flex items-center justify-start gap-1.5 flex-wrap bg-white p-2 rounded-2xl border border-slate-200 shadow-2xs max-w-full">
+            <!-- Populated by JS -->
+          </div>
+          <div id="filtered-cases-count" class="text-xs font-semibold text-slate-500" aria-live="polite">
+            عرض 6 حالات تدريبية
+          </div>
+        </div>
+
+        <div class="home-level-filter flex items-center gap-2 flex-wrap">
+          <span class="text-xs font-semibold text-slate-500">المستوى والإنجاز</span>
+          <div id="case-filter2" class="nb-filter2"></div>
+        </div>
+        <!-- 4. Case Cards Grid + Empty State -->
+        <div id="cases-cards-grid" class="grid grid-cols-1 md:grid-cols-2 lg:grid-cols-3 gap-6">
+          <!-- Populated by JS -->
+        </div>
+
+        <div id="cases-empty-state" class="hidden bg-white border border-slate-200 rounded-2xl p-10 text-center max-w-lg mx-auto space-y-3">
+          <div class="w-12 h-12 rounded-2xl bg-slate-100 text-slate-500 flex items-center justify-center mx-auto font-bold text-lg">؟</div>
+          <h3 class="text-base font-bold text-slate-900">لا توجد حالات متاحة في هذا القسم حالياً</h3>
+          <p class="text-sm text-slate-600 leading-relaxed">جرّب تخصصاً آخر أو ابدأ حالة طوارئ عشوائية.</p>
+          <div class="pt-1">
+            <button id="reset-dept-filter-btn" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+              عرض جميع الأقسام
+            </button>
+          </div>
+        </div>
+      </div>

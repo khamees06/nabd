@@ -4,7 +4,10 @@
 // Usage:
 //   node tools/legacy/browser-probe.mjs --url http://127.0.0.1:5180/ --width 1440 --height 900
 //        [--js "return document.title"] [--js-file steps.js] [--shot out.png] [--full] [--wait 3000]
-//        [--reduced-motion] [--mobile]
+//        [--reduced-motion] [--mobile] [--init-js "code run before the page's own scripts"] [--errors]
+// --errors adds the page's uncaught exceptions and console errors to the printed JSON: { value, errors }.
+// --block "*fonts.googleapis.com*,*fonts.gstatic.com*" makes requests to matching URLs fail at once, so a run
+// does not depend on other hosts (a slow font host otherwise keeps the page from starting).
 // The script given with --js / --js-file is the body of an async function; its return value is printed as JSON.
 // Chrome is started with a throwaway profile and closed at the end.
 import fs from 'node:fs';
@@ -30,6 +33,7 @@ const chrome = spawn(chromePath, ['--headless=new', `--remote-debugging-port=${p
 const sleep = ms => new Promise(r => setTimeout(r, ms));
 
 let ws, nextId = 0;
+const pageErrors = [];
 const pending = new Map();
 const send = (method, params = {}) => new Promise((resolve, reject) => {
   const id = ++nextId;
@@ -54,6 +58,8 @@ try {
   await new Promise(r => ws.addEventListener('open', r));
   ws.addEventListener('message', m => {
     const d = JSON.parse(m.data);
+    if (d.method === 'Runtime.exceptionThrown') pageErrors.push('exception: ' + ((d.params.exceptionDetails.exception && d.params.exceptionDetails.exception.description) || d.params.exceptionDetails.text));
+    if (d.method === 'Runtime.consoleAPICalled' && d.params.type === 'error') pageErrors.push('console.error: ' + d.params.args.map(a => a.value || a.description || '').join(' '));
     const p = d.id && pending.get(d.id);
     if (!p) return;
     pending.delete(d.id);
@@ -63,9 +69,12 @@ try {
   await send('Runtime.enable');
   await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: flag('mobile') || width < 600 });
   if (flag('reduced-motion')) await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
+  if (opt('block')) { await send('Network.enable'); await send('Network.setBlockedURLs', { urls: opt('block').split(',') }); }
+  if (opt('init-js')) await send('Page.addScriptToEvaluateOnNewDocument', { source: opt('init-js') });
   await send('Page.navigate', { url });
   await sleep(wait);
-  if (js) console.log(JSON.stringify(await evaluate(js)));
+  if (js) { const value = await evaluate(js); console.log(JSON.stringify(flag('errors') ? { value, errors: pageErrors } : value)); }
+  else if (flag('errors')) console.log(JSON.stringify({ errors: pageErrors }));
   if (shot) {
     if (flag('full')) {
       await evaluate(`for (let y = 0; y < document.body.scrollHeight; y += 500) { window.scrollTo(0, y); await new Promise(r => setTimeout(r, 120)); } window.scrollTo(0, 0); await new Promise(r => setTimeout(r, 500)); return 1;`);

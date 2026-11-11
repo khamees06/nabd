@@ -1,0 +1,18 @@
+      <!-- 1A. Training path (level, stats, recommended rooms) -->
+      <div id="home-path" class="nb-path">
+        <div class="nb-path-card nb-path-dark">
+          <div style="display:flex;gap:1rem;align-items:center">
+            <svg class="nb-donut" viewBox="0 0 120 120" aria-hidden="true"><circle cx="60" cy="60" r="50" fill="none" stroke="rgba(255, 255, 255, 0.16)" stroke-width="10"/><circle id="path-donut" cx="60" cy="60" r="50" fill="none" stroke="#6CC9CE" stroke-width="10" stroke-linecap="round" stroke-dasharray="314" stroke-dashoffset="314" transform="rotate(-90 60 60)"/><text id="path-donut-txt" x="60" y="67" text-anchor="middle" fill="#FFFFFF" font-size="24" font-weight="700">--</text></svg>
+            <div><div style="font-size:.74rem;color:#A3B3BA">مستواك الحالي</div><div id="path-level" style="font-size:1.25rem;font-weight:700;color:#FFFFFF">--</div><div id="path-level-src" style="font-size:.7rem;color:#A3B3BA;line-height:1.6"></div></div>
+          </div>
+          <div class="nb-hist" id="path-hist" aria-hidden="true"></div>
+          <div class="nb-kpis"><div><b id="path-k1" class="font-num">0</b><small>جلسات مكتملة</small></div><div><b id="path-k2" class="font-num">--</b><small>معدل التخصصات</small></div><div><b id="path-k3" class="font-num">--</b><small>معدل الطوارئ</small></div></div>
+          <button type="button" id="path-retake" class="nb-ghost-btn">أعد اختبار المستوى</button>
+          <label class="nb-switch"><input type="checkbox" id="osce-toggle"> وضع الامتحان الموقوت (OSCE): مؤقت وبدون تلميحات</label>
+          <div id="path-retake-note" style="font-size:.7rem;color:#A3B3BA;margin-top:.4rem"></div>
+        </div>
+        <div class="nb-path-card">
+          <div style="display:flex;justify-content:space-between;align-items:center;gap:.6rem;flex-wrap:wrap;margin-bottom:.7rem"><h2 style="margin:0;font-size:1.02rem" class="text-slate-900">غرف مقترحة لك الآن</h2><span id="path-tip" style="font-size:.76rem;color:#193B4A;background:#E6F2F4;border:1px solid #DCE7EB;border-radius:99px;padding:.15rem .7rem"></span></div>
+          <div id="path-rooms"></div>
+        </div>
+      </div>

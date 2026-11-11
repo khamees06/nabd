@@ -1,0 +1,70 @@
+      <!-- phase8 2026-11-07: moved here from below the specialty cases so assignments sit next to the ER card -->
+      <!-- 4B. UNIVERSITY STUDENT SESSIONS SECTION (Placed directly BEFORE Clinical Coach for University Students) -->
+      <div id="home-student-uni-section" class="hidden bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-5">
+        <div class="flex flex-col sm:flex-row sm:items-center justify-between gap-3 border-b border-slate-100 pb-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200/80 text-xs font-bold">بوابة المساقات الجامعية</span>
+              <span id="home-student-uni-badge" class="text-xs text-slate-500">مساقات التدريب السريري</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">واجباتك الجامعية</h2>
+            <p class="text-xs sm:text-sm text-slate-600">حالات أسندها المشرف لشعبتك، تفتح غرفة الطوارئ على الحالة نفسها.</p>
+          </div>
+          <button type="button" id="home-student-open-uni-btn" class="self-start sm:self-center px-4 py-2.5 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-bold transition-colors focus-ring">
+            بوابة المساقات ←
+          </button>
+        </div>
+
+        <!-- phase8 2026-11-07: live assignments for the student's section (nb8RenderStudentUni) -->
+        <div id="nb8-home-stu-uni" class="nb8-stu"></div>
+
+        <!-- phase8 2026-11-07: the static cards below opened the closed specialty room; kept in the page, hidden by academic8.css -->
+        <div class="nb8-legacy grid grid-cols-1 md:grid-cols-3 gap-4 text-xs sm:text-sm">
+          <!-- Assigned Case 1 -->
+          <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900">واجب نشط</span>
+                <span class="text-xs text-amber-800 font-semibold">التسليم: غداً</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">حالة قلب وأوعية دموية مترافقة مع السكري</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">د. عبدالرحمن المجالي · تخطيط القلب والتروبونين.</p>
+            </div>
+            <button type="button" data-uni-start="case_cardio_dm" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors focus-ring">
+              بدء الجلسة الجامعية ←
+            </button>
+          </div>
+
+          <!-- Assigned Case 2 -->
+          <div class="p-5 rounded-2xl border border-slate-200/90 bg-slate-50/70 flex flex-col justify-between space-y-4">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-teal-100 text-teal-900">واجب نشط</span>
+                <span class="text-xs text-slate-500 font-semibold">التسليم: بعد يومين</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">حالة جهاز تنفسي حادة مترافقة مع قصور كلوي</h3>
+              <p class="text-xs text-slate-600 leading-relaxed">د. عبدالرحمن المجالي · غازات الدم ووظائف الكلى.</p>
+            </div>
+            <button type="button" data-uni-start="case_resp_renal" class="uni-start-case-btn w-full py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold transition-colors focus-ring">
+              بدء الجلسة الجامعية ←
+            </button>
+          </div>
+
+          <!-- Graded & Published Feedback Card -->
+          <div class="p-5 rounded-2xl border border-emerald-200/90 bg-emerald-50/40 flex flex-col justify-between space-y-3">
+            <div class="space-y-2">
+              <div class="flex items-center justify-between gap-2">
+                <span class="text-xs font-bold px-2.5 py-0.5 rounded-full bg-emerald-100 text-emerald-900">تقييم معتمد ومنشور ✓</span>
+                <span class="text-sm font-bold text-emerald-800 font-num">91%</span>
+              </div>
+              <h3 class="text-sm sm:text-base font-bold text-slate-900">حالة باطنية وجهاز هضمي (سارة العلي)</h3>
+              <p class="text-xs text-slate-700 leading-relaxed">
+                <strong>ملاحظة د. عبدالرحمن المجالي:</strong> «تحليل ممتاز لنتيجة فحص البول وتعداد الكريات البيض، وانتباه سليم لاستبعاد الأشعة بسبب الحمل المبكر.»
+              </p>
+            </div>
+            <button type="button" data-uni-start="case_gi_allergy" class="uni-start-case-btn w-full py-2 rounded-xl bg-white hover:bg-emerald-50 text-emerald-900 border border-emerald-200 text-xs font-bold transition-colors focus-ring">
+              إعادة استعراض الحالة
+            </button>
+          </div>
+        </div>
+      </div>

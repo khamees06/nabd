@@ -1,0 +1,31 @@
+<!DOCTYPE html>
+<html lang="ar" dir="rtl">
+@await Html.PartialAsync("~/Views/Shared/Layout/_Head.cshtml")
+<body class="min-h-screen flex flex-col bg-[#F6F4EF] text-slate-900 selection:bg-teal-700 selection:text-white">
+
+@await Html.PartialAsync("~/Views/Shared/Layout/_PublicHeader.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Layout/_AppHeader.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Layout/_SidebarDrawer.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Layout/_Toast.cshtml")
+  <!-- =========================================================
+       MAIN VIEWPORT CONTAINER
+       ========================================================= -->
+  <main id="main-container" class="flex-1 w-full">
+
+@RenderBody()
+  </main>
+
+@await Html.PartialAsync("~/Views/Shared/Modals/_HandoverModal.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Modals/_LevelModal.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Modals/_AuthModal.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Modals/_ImageLightbox.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Modals/_StudentAttemptModal.cshtml")
+@await Html.PartialAsync("~/Views/Shared/Layout/_SiteFooter.cshtml")
+  <script src="js/script.js" defer></script>
+  <script src="js/motion.js" defer></script>
+  <script src="js/terms.js" defer></script>
+  <script src="js/ui.js" defer></script>
+  <script src="js/resp.js" defer></script>
+  <script src="js/er.js" defer></script>
+</body>
+</html>

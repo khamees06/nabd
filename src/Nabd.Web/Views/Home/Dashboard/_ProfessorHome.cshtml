@@ -1,0 +1,126 @@
+      <!-- 1B. PROFESSOR EXCLUSIVE HOME DASHBOARD (Shown directly on Home when Professor is logged in) -->
+      <div id="home-professor-section" class="hidden bg-white border border-slate-200/90 rounded-3xl p-6 sm:p-8 shadow-xs space-y-6">
+        <div class="flex flex-col md:flex-row md:items-center justify-between gap-4 border-b border-slate-100 pb-4">
+          <div class="space-y-1">
+            <div class="inline-flex items-center gap-2">
+              <span class="px-3 py-1 rounded-full bg-teal-50 text-teal-800 border border-teal-200 text-xs font-bold">قسم المشرف الأكاديمي المباشر</span>
+              <span class="text-xs text-slate-500 font-num">مساق NUR-402 / MED-410</span>
+              <span id="prof-invite">رمز دعوة شعبتك: <b id="prof-invite-code">--</b> <button type="button" id="prof-invite-copy" style="color:#1A3643;font-weight:700">نسخ</button></span>
+              <span class="nb8-demo-tag">بيانات تجريبية للعرض</span>
+            </div>
+            <h2 class="text-lg sm:text-xl font-bold text-slate-900">إدارة الجلسات السريرية ومراجعة تقارير وإجابات الطلاب</h2>
+            <p class="text-xs sm:text-sm text-slate-600">راجع إجابات كل طالب، وأسند حالة من غرفة الطوارئ لشعبة كاملة، وتابع الطلبة بصفتك مرشداً أكاديمياً.</p>
+          </div>
+          <div class="flex items-center gap-2 shrink-0 flex-wrap">
+            <button type="button" id="home-prof-tab-reports-btn" class="px-4 py-2 rounded-xl bg-teal-700 text-white text-xs font-bold transition-colors focus-ring">
+              مراجعة تقارير الطلاب (7)
+            </button>
+            <button type="button" id="home-prof-tab-create-btn" class="px-4 py-2 rounded-xl bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold transition-colors focus-ring">
+              + إنشاء وإسناد جلسة جديدة
+            </button>
+            <button type="button" id="home-prof-open-full-uni-btn" class="px-3.5 py-2 rounded-xl bg-teal-50 hover:bg-teal-100 text-teal-800 border border-teal-200 text-xs font-semibold transition-colors focus-ring">
+              الداشبورد الكاملة ←
+            </button>
+          </div>
+        </div>
+
+        <!-- phase8 2026-11-07: quick links into the academic portal tabs -->
+        <nav class="nb8-quick" aria-label="أقسام البوابة الأكاديمية">
+          <button type="button" class="focus-ring" data-nb8-go="courses">المساقات والشعب</button>
+          <button type="button" class="focus-ring" data-nb8-go="assign">إسناد الحالات</button>
+          <button type="button" class="focus-ring" data-nb8-go="reports">تقارير الطلبة</button>
+          <button type="button" class="focus-ring" data-nb8-go="progress">تقدّم الطلبة</button>
+          <button type="button" class="focus-ring" data-nb8-go="advisor">المرشد الأكاديمي</button>
+        </nav>
+
+        <!-- Professor KPI Summary Strip (phase8 2026-11-07: values are computed from the cohort data in script.js) -->
+        <div class="grid grid-cols-2 md:grid-cols-4 gap-3.5">
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+            <div class="text-xs text-slate-500 font-medium">الطلبة المسجلون بالشعبة</div>
+            <div class="text-xl font-bold text-slate-900 font-num" id="home-prof-kpi-total">7 طلاب نشطين</div>
+            <div class="text-xs text-teal-700 font-semibold" id="home-prof-kpi-total-sub">تمريض سريري + طب بشري</div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+            <div class="text-xs text-slate-500 font-medium">التسليمات المكتملة</div>
+            <div class="text-xl font-bold text-emerald-700 font-num" id="home-prof-kpi-submitted">--</div>
+            <div class="text-xs text-slate-600" id="home-prof-kpi-submitted-sub"></div>
+          </div>
+          <div class="p-4 rounded-2xl bg-slate-50 border border-slate-200/80 space-y-1">
+            <div class="text-xs text-slate-500 font-medium">متوسط درجات الشعبة</div>
+            <div class="text-xl font-bold text-teal-700 font-num" id="home-prof-kpi-avg">--</div>
+            <div class="text-xs text-slate-600" id="home-prof-kpi-avg-sub"></div>
+          </div>
+          <div class="p-4 rounded-2xl bg-amber-50/70 border border-amber-200 space-y-1">
+            <div class="text-xs text-amber-900 font-bold">أبرز نقاط الضعف المرصودة</div>
+            <div class="text-xs font-bold text-amber-800 leading-snug" id="home-prof-kpi-warn">--</div>
+            <div class="text-xs text-amber-700" id="home-prof-kpi-warn-sub"></div>
+          </div>
+        </div>
+
+        <!-- Sub-pane 1: Quick Student Reports Table on Home -->
+        <div id="home-prof-reports-pane" class="space-y-3.5">
+          <div class="flex items-center justify-between flex-wrap gap-2 bg-teal-50/60 border border-teal-200/80 px-4 py-2.5 rounded-xl">
+            <span class="text-xs sm:text-sm font-bold text-slate-800">اضغط «عرض الإجابات» لفتح ملف الطالب.</span>
+            <span class="text-xs text-teal-800 bg-white px-2.5 py-1 rounded-lg border border-teal-200 font-bold" id="home-prof-attempts">7 محاولات</span>
+          </div>
+          <div class="overflow-x-auto border border-slate-200 rounded-2xl shadow-2xs bg-white">
+            <table class="prof-structured-table">
+              <thead>
+                <tr>
+                  <th>الطالب وزر التفاصيل</th>
+                  <th>الحالة السريرية المختبرة</th>
+                  <th>التشخيص السريري المستنتج</th>
+                  <th>الفحوصات وتبرير الإضافي</th>
+                  <th class="text-center">الدرجة</th>
+                  <th class="text-center">إجراء المعلم</th>
+                </tr>
+              </thead>
+              <tbody id="home-prof-cohort-tbody">
+                <!-- Populated by JS -->
+              </tbody>
+            </table>
+          </div>
+        </div>
+
+        <!-- Sub-pane 2: Quick Session Creator on Home -->
+        <div id="home-prof-create-pane" class="hidden p-5 rounded-2xl bg-slate-50 border border-slate-200/90 space-y-4">
+          <div class="flex items-center justify-between">
+            <h3 class="text-sm font-bold text-slate-900">جلسة جديدة للشعبة</h3>
+            <span class="text-xs text-teal-700 font-semibold">تظهر للطلبة فوراً</span>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-3 gap-3 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-case-title">عنوان الجلسة السريرية:</label>
+              <input id="home-doc-case-title" type="text" value="حالة ألم صدري حاد مع ارتفاع ضغط الدم" class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-case-dept">القسم السريري:</label>
+              <select id="home-doc-case-dept" class="w-full p-2.5 rounded-xl bg-white border border-slate-200">
+                <option value="cardio">القلب والأوعية الدموية</option>
+                <option value="resp">الأمراض الصدرية والتنفسية</option>
+                <option value="ortho">العظام والكسور</option>
+                <option value="gi">الباطنية والجهاز الهضمي</option>
+              </select>
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-patient-name">اسم المريض والعمر:</label>
+              <input id="home-doc-patient-name" type="text" value="محمود السعدي (56 سنة)" class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+          </div>
+          <div class="grid grid-cols-1 sm:grid-cols-2 gap-3 text-xs sm:text-sm">
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-patient-allergy">المعلومة الحرجة / الحساسية:</label>
+              <input id="home-doc-patient-allergy" type="text" value="حساسية من البنسلين + تاريخ قرحة معدية" class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+            <div>
+              <label class="font-semibold text-slate-700 block mb-1" for="home-doc-patient-complaint">الشكوى الأولية عند بدء الجلسة:</label>
+              <input id="home-doc-patient-complaint" type="text" value="أشعر بألم عاصر في الصدر مع خفقان ودوخة منذ الصباح." class="w-full p-2.5 rounded-xl bg-white border border-slate-200" />
+            </div>
+          </div>
+          <div class="flex justify-end">
+            <button type="button" id="home-doc-save-case-btn" class="px-5 py-2.5 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors focus-ring">
+              حفظ الجلسة وإسنادها للطلاب الآن
+            </button>
+          </div>
+        </div>
+      </div>

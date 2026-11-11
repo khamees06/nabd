@@ -1,0 +1,48 @@
+  <!-- =========================================================
+       1A. PUBLIC HEADER (Shown ONLY in Guest Mode on Index Page)
+       ========================================================= -->
+  <header id="public-header" class="sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+    <!-- Right: Brand Identity -->
+    <div class="flex items-center gap-3">
+      <button id="public-brand-btn" class="flex items-center gap-3 text-right group focus-ring rounded-xl p-1" aria-label="العودة لأعلى صفحة نبض التعريفية">
+        <div class="nb-logo">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="nb-display font-bold text-base text-slate-900 block leading-none">نَبْض الأردن</span>
+          
+          
+        </div>
+      </button>
+    </div>
+
+    <nav class="hidden md:flex items-center gap-1" aria-label="التنقل في الصفحة الرئيسية">
+      <!-- 2026-11-08: anchors for the rebuilt landing sections -->
+      <a href="#sec-about8" class="nav-link-item" data-pub-anchor="sec-about8">عن نَبْض</a>
+      <a href="#sec-problems8" class="nav-link-item" data-pub-anchor="sec-problems8">المشكلة</a>
+      <a href="#sec-how" class="nav-link-item" data-pub-anchor="sec-how">الحل</a>
+      <a href="#sec-fields" class="nav-link-item" data-pub-anchor="sec-fields">التخصصات</a>
+      <a href="#sec-audience8" class="nav-link-item" data-pub-anchor="sec-audience8">لمن نَبْض؟</a>
+    </nav>
+    <!-- Left: Clear Login & Create Account Buttons + 3-Line Sidebar Button on Far Left -->
+    <div class="flex items-center gap-2.5 shrink-0">
+      
+      <button id="public-login-btn" class="px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white text-xs sm:text-sm font-bold transition-colors shadow-xs focus-ring">
+        تسجيل الدخول
+      </button>
+      <button id="public-register-btn" class="hidden sm:inline-flex px-4 py-2 rounded-xl bg-white hover:bg-slate-50 text-teal-800 border border-slate-200 text-xs sm:text-sm font-semibold transition-colors focus-ring">
+        إنشاء حساب
+      </button>
+
+      <!-- 3-Line Hamburger Icon on the Far Left -->
+      <button id="public-open-sidebar-btn" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition-colors border border-slate-200/80 focus-ring" aria-label="فتح القائمة الجانبية العامة" title="فتح القائمة الجانبية">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>

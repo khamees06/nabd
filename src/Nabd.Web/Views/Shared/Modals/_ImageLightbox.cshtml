@@ -1,0 +1,38 @@
+  <!-- =========================================================
+       MODAL 3: INTERACTIVE MEDICAL IMAGE ZOOM & PAN LIGHTBOX
+       Allows the student or professor to zoom in (100% - 300%),
+       pan across regions of the X-Ray / CT / ECG / Ultrasound,
+       and record their own clinical reading.
+       ========================================================= -->
+  <div id="medical-image-lightbox" role="dialog" aria-modal="true" aria-labelledby="lightbox-title" class="fixed inset-0 z-90 bg-slate-900/80 backdrop-blur-xs hidden items-center justify-center p-3 sm:p-6" style="z-index: 90;">
+    <div class="bg-white border border-slate-200 rounded-3xl max-w-4xl w-full p-4 sm:p-6 shadow-2xl space-y-3 max-h-[92vh] flex flex-col">
+      <div class="flex items-center justify-between gap-3 border-b border-slate-100 pb-3 shrink-0 flex-wrap">
+        <div>
+          <span class="text-xs font-bold text-teal-700">عارض الصور التشخيصية والتخطيط السريري (قابلة للتكبير والفحص الدقيق)</span>
+          <h2 id="lightbox-title" class="text-sm sm:text-base font-bold text-slate-900">--</h2>
+        </div>
+        <div class="flex items-center gap-1.5 flex-wrap">
+          <button type="button" id="zoom-out-btn" class="px-3 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-800 text-xs font-bold">تصغير −</button>
+          <span id="zoom-level-badge" class="px-2.5 py-1 rounded-lg bg-teal-50 text-teal-900 border border-teal-200 text-xs font-bold font-num">100%</span>
+          <button type="button" id="zoom-in-btn" class="px-3 py-1.5 rounded-lg bg-teal-700 hover:bg-teal-800 text-white text-xs font-bold">تكبير +</button>
+          <button type="button" id="zoom-200-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-num">200%</button>
+          <button type="button" id="zoom-300-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold font-num">300%</button>
+          <button type="button" id="zoom-reset-btn" class="px-2.5 py-1.5 rounded-lg bg-slate-100 hover:bg-slate-200 text-slate-700 text-xs font-semibold">إعادة الضبط</button>
+          <button type="button" id="close-lightbox-btn" class="w-8 h-8 rounded-lg bg-rose-50 hover:bg-rose-100 text-rose-800 font-bold text-xs flex items-center justify-center">✕</button>
+        </div>
+      </div>
+
+      <!-- Zoomable & Pannable Image Viewport -->
+      <div id="lightbox-stage" class="img-zoom-stage flex-1 min-h-0">
+        <img id="lightbox-img" src="" alt="صورة تشخيصية للتكبير والفحص" class="max-w-full rounded-lg cursor-zoom-in select-none" />
+      </div>
+
+      <div class="pt-2 border-t border-slate-100 flex flex-col sm:flex-row sm:items-center justify-between gap-2.5 shrink-0 text-xs">
+        <span id="lightbox-tech-meta" class="text-slate-500">اضغط على الصورة أو أزرار التكبير أعلاه ومرّر داخل النافذة لفحص أدق تفاصيل الأشعة أو التخطيط واستنتاج النتيجة بنفسك.</span>
+        <div class="flex items-center gap-2 w-full sm:w-auto">
+          <input id="lightbox-quick-note" type="text" placeholder="دوّن استنتاجك من الصورة هنا ليُحفظ في بطاقة الفحص والمفكرة..." class="flex-1 sm:w-80 px-3 py-2 rounded-xl bg-slate-50 border border-slate-200 text-xs focus:outline-none focus:bg-white focus:border-teal-600" />
+          <button type="button" id="lightbox-save-note-btn" class="px-4 py-2 rounded-xl bg-teal-700 hover:bg-teal-800 text-white font-bold shrink-0">حفظ استنتاجي ✓</button>
+        </div>
+      </div>
+    </div>
+  </div>

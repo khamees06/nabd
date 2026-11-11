@@ -1,0 +1,1680 @@
+{
+ "note": "How the legacy files were cut into source fragments (scripts) and Razor views (markup). Line numbers refer to the frozen legacy files in tests/Nabd.Tests/LegacyBaseline/site. The cut for the scripts was proposed by the legacy audit (docs/legacy-audit).",
+ "scripts": {
+  "script": {
+   "source": "script.js",
+   "audit": "docs/legacy-audit/01..12",
+   "fragments": [
+    {
+     "name": "case-card-images.js",
+     "from": 1,
+     "to": 10,
+     "layer": "infrastructure",
+     "responsibility": "CASE_IMAGES embedded JPEG data"
+    },
+    {
+     "name": "diagnostic-images.js",
+     "from": 11,
+     "to": 12,
+     "layer": "infrastructure",
+     "responsibility": "DIAG_IMAGES catalog (4 inline SVG, 2 file paths)"
+    },
+    {
+     "name": "department-and-workup-catalog.js",
+     "from": 13,
+     "to": 213,
+     "layer": "domain",
+     "responsibility": "DEPARTMENTS and GENERAL_WORKUP_CATALOG reference data"
+    },
+    {
+     "name": "clinical-cases-catalog.js",
+     "from": 214,
+     "to": 687,
+     "layer": "domain",
+     "responsibility": "CASES_DB seven cases"
+    },
+    {
+     "name": "case-workup-overrides-patch.js",
+     "from": 688,
+     "to": 964,
+     "layer": "domain",
+     "responsibility": "Load-time replacement of expectedWorkupIds and workupOverrides for six CASES_DB cases"
+    },
+    {
+     "name": "coach-modules-default.js",
+     "from": 965,
+     "to": 1031,
+     "layer": "domain",
+     "responsibility": "COACH_MODULES_DEFAULT data literal (teaching content)"
+    },
+    {
+     "name": "demo-accounts.js",
+     "from": 1032,
+     "to": 1206,
+     "layer": "infrastructure",
+     "responsibility": "DEMO_ACCOUNTS seed data literal"
+    },
+    {
+     "name": "professor-cohort-default-data.js",
+     "from": 1207,
+     "to": 1673,
+     "layer": "infrastructure",
+     "responsibility": "Seed literal PROFESSOR_COHORT_DEFAULT: seven demo student attempt records used as the default professor cohort (single array literal; no cut point exists between 1207 and 1674; check-fragment prints ok)"
+    },
+    {
+     "name": "session-state.js",
+     "from": 1674,
+     "to": 1719,
+     "layer": "domain + application",
+     "responsibility": "view sets, storage keys, authState, simState"
+    },
+    {
+     "name": "local-storage-store.js",
+     "from": 1720,
+     "to": 1793,
+     "layer": "infrastructure",
+     "responsibility": "localStorage + window.name store, case/account persistence"
+    },
+    {
+     "name": "password-hashing.js",
+     "from": 1794,
+     "to": 1808,
+     "layer": "browser",
+     "responsibility": "salt and PBKDF2 digest"
+    },
+    {
+     "name": "session-utilities.js",
+     "from": 1809,
+     "to": 1850,
+     "layer": "application",
+     "responsibility": "scratchpad, timestamp, toast, role label"
+    },
+    {
+     "name": "auth-shell-ui.js",
+     "from": 1851,
+     "to": 1946,
+     "layer": "presentation",
+     "responsibility": "apply auth state to shell UI"
+    },
+    {
+     "name": "view-navigation.js",
+     "from": 1947,
+     "to": 2019,
+     "layer": "application",
+     "responsibility": "navigateTo guard and section switching"
+    },
+    {
+     "name": "auth-session-modal.js",
+     "from": 2020,
+     "to": 2122,
+     "layer": "application",
+     "responsibility": "login, demo login, logout, auth modal"
+    },
+    {
+     "name": "level-quiz-data.js",
+     "from": 2123,
+     "to": 2192,
+     "layer": "domain",
+     "responsibility": "hints, levels, tips, question banks, placement keys"
+    },
+    {
+     "name": "landing-showcase.js",
+     "from": 2193,
+     "to": 2222,
+     "layer": "browser",
+     "responsibility": "landing carousel"
+    },
+    {
+     "name": "level-quiz-view.js",
+     "from": 2223,
+     "to": 2261,
+     "layer": "presentation",
+     "responsibility": "quiz render and start"
+    },
+    {
+     "name": "room-recommendation.js",
+     "from": 2262,
+     "to": 2314,
+     "layer": "domain",
+     "responsibility": "room picking and recommendations"
+    },
+    {
+     "name": "room-lists-and-filters.js",
+     "from": 2315,
+     "to": 2343,
+     "layer": "presentation",
+     "responsibility": "reco/room HTML, filters, open room"
+    },
+    {
+     "name": "level-quiz-result.js",
+     "from": 2344,
+     "to": 2379,
+     "layer": "domain + presentation",
+     "responsibility": "scoring, placement storage, result render"
+    },
+    {
+     "name": "registration-role-cards.js",
+     "from": 2380,
+     "to": 2400,
+     "layer": "presentation",
+     "responsibility": "registration role cards"
+    },
+    {
+     "name": "home-training-path.js",
+     "from": 2401,
+     "to": 2460,
+     "layer": "presentation",
+     "responsibility": "derived level, home path panel, sim hint"
+    },
+    {
+     "name": "tiers-and-cohorts.js",
+     "from": 2461,
+     "to": 2496,
+     "layer": "domain",
+     "responsibility": "cohorts, quiz host state, tier and lock rules"
+    },
+    {
+     "name": "osce-timer.js",
+     "from": 2497,
+     "to": 2528,
+     "layer": "browser",
+     "responsibility": "OSCE countdown"
+    },
+    {
+     "name": "report-history-hook.js",
+     "from": 2529,
+     "to": 2555,
+     "layer": "application",
+     "responsibility": "post-report history, compare, retry"
+    },
+    {
+     "name": "level-modal.js",
+     "from": 2556,
+     "to": 2576,
+     "layer": "presentation",
+     "responsibility": "level modal open/close"
+    },
+    {
+     "name": "mistakes-and-notes.js",
+     "from": 2577,
+     "to": 2615,
+     "layer": "presentation",
+     "responsibility": "mistake and note panels"
+    },
+    {
+     "name": "phase1c-bindings.js",
+     "from": 2616,
+     "to": 2648,
+     "layer": "presentation",
+     "responsibility": "event bindings for modal, OSCE, comments, invite"
+    },
+    {
+     "name": "tracks-guided-case-id.js",
+     "from": 2649,
+     "to": 2653,
+     "layer": "domain",
+     "responsibility": "Phase 1D banner comment and the id of the guided medicine case"
+    },
+    {
+     "name": "news2-score.js",
+     "from": 2654,
+     "to": 2666,
+     "layer": "domain",
+     "responsibility": "NEWS2 aggregate score from a vitals object"
+    },
+    {
+     "name": "isbar-item-builder.js",
+     "from": 2667,
+     "to": 2669,
+     "layer": "domain",
+     "responsibility": "Factory for one ISBAR handoff choice item"
+    },
+    {
+     "name": "expert-demos-data.js",
+     "from": 2670,
+     "to": 2891,
+     "layer": "domain",
+     "responsibility": "NB_DEMOS data literal (11 expert demonstrations)"
+    },
+    {
+     "name": "nursing-content-helpers-and-common-acts.js",
+     "from": 2892,
+     "to": 2901,
+     "layer": "domain",
+     "responsibility": "NQ, NA factories, NB_COMMON_ACTS, nbHandoffNote"
+    },
+    {
+     "name": "nursing-cases-data.js",
+     "from": 2902,
+     "to": 3439,
+     "layer": "domain",
+     "responsibility": "NB_NURSE_CASES literal with 13 cases"
+    },
+    {
+     "name": "nursing-image-catalogue.js",
+     "from": 3440,
+     "to": 3440,
+     "layer": "infrastructure",
+     "responsibility": "NB_IMG data literal"
+    },
+    {
+     "name": "nursing-image-helpers.js",
+     "from": 3441,
+     "to": 3445,
+     "layer": "presentation",
+     "responsibility": "nbImg, nbImgFail, case photo maps"
+    },
+    {
+     "name": "nursing-lab-doctor-views.js",
+     "from": 3446,
+     "to": 3455,
+     "layer": "presentation",
+     "responsibility": "lab factory, lab table, doctor card HTML"
+    },
+    {
+     "name": "track-and-learning-rules.js",
+     "from": 3456,
+     "to": 3472,
+     "layer": "domain",
+     "responsibility": "case lookup, track rule, learning rules"
+    },
+    {
+     "name": "observe-expert-view.js",
+     "from": 3473,
+     "to": 3552,
+     "layer": "presentation",
+     "responsibility": "observe session and rendering"
+    },
+    {
+     "name": "nurse-room-state-and-render.js",
+     "from": 3553,
+     "to": 3614,
+     "layer": "application",
+     "responsibility": "ns state, clock, bubbles, warn, monitor"
+    },
+    {
+     "name": "nurse-room-dock-and-actions.js",
+     "from": 3615,
+     "to": 3687,
+     "layer": "application",
+     "responsibility": "dock, ask matching, action dispatch/apply"
+    },
+    {
+     "name": "nurse-room-overlays.js",
+     "from": 3688,
+     "to": 3764,
+     "layer": "presentation",
+     "responsibility": "seq/calc/checklist overlays"
+    },
+    {
+     "name": "nurse-room-beat-flow.js",
+     "from": 3765,
+     "to": 3885,
+     "layer": "application",
+     "responsibility": "beats, orders, SBAR, handoff, prompts, hints"
+    },
+    {
+     "name": "nurse-room-start.js",
+     "from": 3886,
+     "to": 3943,
+     "layer": "application",
+     "responsibility": "nurseStart session and DOM"
+    },
+    {
+     "name": "nurse-room-finish.js",
+     "from": 3944,
+     "to": 3987,
+     "layer": "domain",
+     "responsibility": "nrFinish scoring/report, initNurse"
+    },
+    {
+     "name": "home-learning-and-track.js",
+     "from": 3988,
+     "to": 4043,
+     "layer": "presentation",
+     "responsibility": "learning path card, track home"
+    },
+    {
+     "name": "operating-room-cards.js",
+     "from": 4044,
+     "to": 4062,
+     "layer": "presentation",
+     "responsibility": "periop card list"
+    },
+    {
+     "name": "onboarding-level-prompt.js",
+     "from": 4063,
+     "to": 4072,
+     "layer": "application",
+     "responsibility": "nbMaybeOnboard"
+    },
+    {
+     "name": "auth-modal-steps.js",
+     "from": 4073,
+     "to": 4091,
+     "layer": "presentation",
+     "responsibility": "registration step, auth tab switch"
+    },
+    {
+     "name": "sidebar-and-account-menu.js",
+     "from": 4092,
+     "to": 4130,
+     "layer": "browser",
+     "responsibility": "sidebar and account dropdown"
+    },
+    {
+     "name": "home-dept-filter-bar.js",
+     "from": 4131,
+     "to": 4160,
+     "layer": "presentation",
+     "responsibility": "department tab bar rendering"
+    },
+    {
+     "name": "home-case-cards.js",
+     "from": 4161,
+     "to": 4226,
+     "layer": "presentation",
+     "responsibility": "count label and case card grid rendering with lock handling"
+    },
+    {
+     "name": "sim-progress-indicators.js",
+     "from": 4227,
+     "to": 4264,
+     "layer": "presentation",
+     "responsibility": "evidence counter, beginner steps bar, banner hide"
+    },
+    {
+     "name": "sim-session-start.js",
+     "from": 4265,
+     "to": 4380,
+     "layer": "application",
+     "responsibility": "start/restore simulation session and initial state"
+    },
+    {
+     "name": "sim-avatar-and-suggested-questions.js",
+     "from": 4381,
+     "to": 4424,
+     "layer": "presentation",
+     "responsibility": "avatar and suggested question chips"
+    },
+    {
+     "name": "sim-chat-turn-rules.js",
+     "from": 4425,
+     "to": 4530,
+     "layer": "domain",
+     "responsibility": "justification rule, question matching, chat turn with medication check"
+    },
+    {
+     "name": "sim-bidi-text-helpers.js",
+     "from": 4531,
+     "to": 4547,
+     "layer": "browser",
+     "responsibility": "Latin isolate/glue helpers and copy clean-up"
+    },
+    {
+     "name": "sim-chat-bubbles.js",
+     "from": 4548,
+     "to": 4583,
+     "layer": "presentation",
+     "responsibility": "chat bubble rendering"
+    },
+    {
+     "name": "sim-workup-catalog-ui.js",
+     "from": 4584,
+     "to": 4640,
+     "layer": "presentation",
+     "responsibility": "side tabs and workup catalog buttons"
+    },
+    {
+     "name": "sim-workup-result-card.js",
+     "from": 4641,
+     "to": 4800,
+     "layer": "presentation",
+     "responsibility": "workup result card with lab table, image, interpretation and justification forms"
+    },
+    {
+     "name": "sim-workup-request-rules.js",
+     "from": 4801,
+     "to": 4968,
+     "layer": "domain",
+     "responsibility": "workup request safety rules and requested-workup log"
+    },
+    {
+     "name": "medical-image-lightbox.js",
+     "from": 4969,
+     "to": 5004,
+     "layer": "presentation",
+     "responsibility": "Lightbox state (zoom, workup reference), zoom clamp, open and close"
+    },
+    {
+     "name": "sbar-handover-modal.js",
+     "from": 5005,
+     "to": 5046,
+     "layer": "presentation",
+     "responsibility": "Open the SBAR modal with the extra-workup justification inputs, close it"
+    },
+    {
+     "name": "session-finalize-and-report.js",
+     "from": 5047,
+     "to": 5305,
+     "layer": "application",
+     "responsibility": "Submit the session: read the form, classify, score, update and persist the account, render the report"
+    },
+    {
+     "name": "profile-view-render.js",
+     "from": 5306,
+     "to": 5423,
+     "layer": "presentation",
+     "responsibility": "renderProfileView"
+    },
+    {
+     "name": "profile-dashboard.js",
+     "from": 5424,
+     "to": 5467,
+     "layer": "presentation",
+     "responsibility": "nbDateOf, renderProfileDash, switchProfileSubTab"
+    },
+    {
+     "name": "university-portal-header.js",
+     "from": 5468,
+     "to": 5490,
+     "layer": "presentation",
+     "responsibility": "renderUniversityPortalByRole"
+    },
+    {
+     "name": "professor-cohort-store-and-tables.js",
+     "from": 5491,
+     "to": 5592,
+     "layer": "infrastructure + presentation",
+     "responsibility": "cohort storage and table rendering"
+    },
+    {
+     "name": "student-attempt-modal.js",
+     "from": 5593,
+     "to": 5681,
+     "layer": "presentation",
+     "responsibility": "attempt modal open/close and inspected id"
+    },
+    {
+     "name": "coach-mastery-store.js",
+     "from": 5682,
+     "to": 5702,
+     "layer": "infrastructure",
+     "responsibility": "coachRuntime and mastered-set storage"
+    },
+    {
+     "name": "coach-view-render.js",
+     "from": 5703,
+     "to": 5780,
+     "layer": "presentation",
+     "responsibility": "sidebar toggle and coach view render"
+    },
+    {
+     "name": "coach-chat-and-drill.js",
+     "from": 5781,
+     "to": 5863,
+     "layer": "presentation",
+     "responsibility": "chat bubbles and drill start"
+    },
+    {
+     "name": "coach-api-bridge.js",
+     "from": 5864,
+     "to": 5896,
+     "layer": "infrastructure",
+     "responsibility": "optional external API config and request"
+    },
+    {
+     "name": "coach-answer-evaluation.js",
+     "from": 5897,
+     "to": 5944,
+     "layer": "application + domain",
+     "responsibility": "submit handler and local keyword scoring"
+    },
+    {
+     "name": "supervisor-case-creation.js",
+     "from": 5945,
+     "to": 6009,
+     "layer": "application",
+     "responsibility": "create and persist custom case"
+    },
+    {
+     "name": "academic-foundation.js",
+     "from": 6010,
+     "to": 6101,
+     "layer": "domain",
+     "responsibility": "banner, storage access, section/course rules, ER case loader, case label"
+    },
+    {
+     "name": "academic-role-guide.js",
+     "from": 6102,
+     "to": 6155,
+     "layer": "presentation",
+     "responsibility": "open assigned case, role guide and hint"
+    },
+    {
+     "name": "academic-student-view.js",
+     "from": 6156,
+     "to": 6227,
+     "layer": "presentation",
+     "responsibility": "student assignments, results, notes, join form"
+    },
+    {
+     "name": "academic-professor-dashboard.js",
+     "from": 6228,
+     "to": 6357,
+     "layer": "presentation",
+     "responsibility": "stats, KPIs, courses, assignment list, progress"
+    },
+    {
+     "name": "academic-advisor-and-tabs.js",
+     "from": 6358,
+     "to": 6422,
+     "layer": "presentation",
+     "responsibility": "recommendations, advisor, render dispatch, tabs"
+    },
+    {
+     "name": "academic-event-wiring.js",
+     "from": 6423,
+     "to": 6529,
+     "layer": "presentation",
+     "responsibility": "nb8Init event wiring"
+    },
+    {
+     "name": "app-init-and-listeners.js",
+     "from": 6530,
+     "to": 7118,
+     "layer": "application",
+     "responsibility": "initNabdApp: session restore, section inits, all listeners including auth submit handlers"
+    },
+    {
+     "name": "app-bootstrap.js",
+     "from": 7119,
+     "to": 7124,
+     "layer": "browser",
+     "responsibility": "Run initNabdApp on DOMContentLoaded or immediately"
+    }
+   ]
+  },
+  "er": {
+   "source": "er.js",
+   "open": [
+    1,
+    11
+   ],
+   "close": [
+    4706,
+    4706
+   ],
+   "fragments": [
+    {
+     "name": "config-state.js",
+     "from": 12,
+     "to": 33,
+     "layer": "infrastructure + application state",
+     "responsibility": "First fragment (lines 1-11 are the bundle prefix). Endpoint and tuning constants, module state (D, E, api*, tickId, seen, roleWanted), role helpers NM and forNurse"
+    },
+    {
+     "name": "helpers.js",
+     "from": 34,
+     "to": 60,
+     "layer": "domain + presentation helpers",
+     "responsibility": "Shared helpers: $, esc, norm, clamp, pickOf, testOf, actOf, REAL, offInd, OFF_BADGE, clk, wordsIn, justGood"
+    },
+    {
+     "name": "vitals-model.js",
+     "from": 61,
+     "to": 90,
+     "layer": "domain",
+     "responsibility": "vitalsAt, modsNow, live: vitals from risk plus treatment modifiers"
+    },
+    {
+     "name": "monitor-paint.js",
+     "from": 91,
+     "to": 123,
+     "layer": "presentation",
+     "responsibility": "fix, wobble, paint (tiles and cuff cycle), vitalsLine, spokenVitals, window.nbErVitals limits"
+    },
+    {
+     "name": "risk-tick.js",
+     "from": 124,
+     "to": 171,
+     "layer": "domain + application",
+     "responsibility": "netRate and the per-frame tick orchestration"
+    },
+    {
+     "name": "stages-scheduler.js",
+     "from": 172,
+     "to": 233,
+     "layer": "domain + application",
+     "responsibility": "STAGES, stageCheck, nurseStage, worst, job scheduler later/soon"
+    },
+    {
+     "name": "alarm-tones.js",
+     "from": 234,
+     "to": 255,
+     "layer": "browser",
+     "responsibility": "Web Audio alarm tones (tone, alarm)"
+    },
+    {
+     "name": "chat-english-terms.js",
+     "from": 256,
+     "to": 593,
+     "layer": "presentation",
+     "responsibility": "chatEn rule list with both CHAT-EN markers, EN_WHO, shown"
+    },
+    {
+     "name": "feed-stream.js",
+     "from": 594,
+     "to": 653,
+     "layer": "presentation",
+     "responsibility": "Chat feed: bubbles, speaker wrappers, transcript and log append, typing dots"
+    },
+    {
+     "name": "server-client.js",
+     "from": 654,
+     "to": 706,
+     "layer": "infrastructure",
+     "responsibility": "Request state, timeouts, online/offline switching, call, ping, voice"
+    },
+    {
+     "name": "offline-models.js",
+     "from": 707,
+     "to": 762,
+     "layer": "infrastructure",
+     "responsibility": "Act and finding models: features, scoring, loading; fixed social replies"
+    },
+    {
+     "name": "dose-reading.js",
+     "from": 763,
+     "to": 881,
+     "layer": "domain",
+     "responsibility": "Keyword match, dose parsing, unit tables, dose-limit check, totals"
+    },
+    {
+     "name": "offline-answer.js",
+     "from": 882,
+     "to": 974,
+     "layer": "application",
+     "responsibility": "Verdict on the room's open question without the server"
+    },
+    {
+     "name": "order-lexicon.js",
+     "from": 975,
+     "to": 1067,
+     "layer": "domain",
+     "responsibility": "Order/negation/history vocabularies, mention positions, drug/test collision rules"
+    },
+    {
+     "name": "local-read.js",
+     "from": 1068,
+     "to": 1369,
+     "layer": "application",
+     "responsibility": "Reader normalisation helpers and localRead (full offline read of a message)"
+    },
+    {
+     "name": "nurse-read-patterns.js",
+     "from": 1370,
+     "to": 1397,
+     "layer": "domain",
+     "responsibility": "Nurse-mode phrase patterns, keyword and alias tables, firstP"
+    },
+    {
+     "name": "nurse-read-shape.js",
+     "from": 1398,
+     "to": 1523,
+     "layer": "application",
+     "responsibility": "nurseVocs, mentionedIds, openOrd, nurseShape: who a nurse message is for"
+    },
+    {
+     "name": "offline-supervisor-lines.js",
+     "from": 1524,
+     "to": 1592,
+     "layer": "application",
+     "responsibility": "Teaching-line rotation and offline supervisor reply"
+    },
+    {
+     "name": "offline-nurse-lines.js",
+     "from": 1593,
+     "to": 1642,
+     "layer": "application",
+     "responsibility": "Offline bedside-nurse reply, unplaced orders, risky-drug challenge, unknown drug name"
+    },
+    {
+     "name": "offline-result-status-lines.js",
+     "from": 1643,
+     "to": 1715,
+     "layer": "application",
+     "responsibility": "Result and status questions: analyte table, detection, spoken results"
+    },
+    {
+     "name": "offline-patient-lines.js",
+     "from": 1716,
+     "to": 1781,
+     "layer": "application",
+     "responsibility": "Plain-no topics, status/monitor/trend lines, patient feeling and identity lines"
+    },
+    {
+     "name": "offline-local-reply.js",
+     "from": 1782,
+     "to": 1896,
+     "layer": "application",
+     "responsibility": "localReply: offline reply selection for one reading"
+    },
+    {
+     "name": "message-intake.js",
+     "from": 1897,
+     "to": 1973,
+     "layer": "application",
+     "responsibility": "Message queue, send, handle: obtain the read and choose the reply source"
+    },
+    {
+     "name": "question-remind.js",
+     "from": 1974,
+     "to": 2005,
+     "layer": "domain",
+     "responsibility": "remind: policy for an unanswered open question"
+    },
+    {
+     "name": "question-wording-parking.js",
+     "from": 2006,
+     "to": 2060,
+     "layer": "domain + presentation",
+     "responsibility": "Proposal wording helpers, vague-order lines, drug families, hold/park/tail of older questions"
+    },
+    {
+     "name": "apply-read.js",
+     "from": 2061,
+     "to": 2242,
+     "layer": "application",
+     "responsibility": "apply (one read into state and output) and examine"
+    },
+    {
+     "name": "order-questions.js",
+     "from": 2243,
+     "to": 2316,
+     "layer": "domain",
+     "responsibility": "Acceptance words, openDoses, nextQuestion, dropNamed"
+    },
+    {
+     "name": "order-ask.js",
+     "from": 2317,
+     "to": 2384,
+     "layer": "domain",
+     "responsibility": "ask: open or queue one question with precedence rules"
+    },
+    {
+     "name": "order-safety-rules.js",
+     "from": 2385,
+     "to": 2458,
+     "layer": "domain",
+     "responsibility": "Allergy, off-case, too-early, route, repeat and cumulative-total rules"
+    },
+    {
+     "name": "nurse-scope-state-sbar.js",
+     "from": 2459,
+     "to": 2536,
+     "layer": "domain + application",
+     "responsibility": "Nurse mode: scope sets, thresholds, state factory, doctor wording, escalation deadline, SBAR grader"
+    },
+    {
+     "name": "nurse-message.js",
+     "from": 2537,
+     "to": 2635,
+     "layer": "application",
+     "responsibility": "One nurse-mode message: routing (handleNurse, escTurn) and apply's pre/post hooks (nursePre, helpCall, allergyAnswer, nursePost)"
+    },
+    {
+     "name": "nurse-escalation.js",
+     "from": 2636,
+     "to": 2711,
+     "layer": "domain",
+     "responsibility": "Escalation state machine: call, re-call, SBAR collection, finish, give-up, doctor's arrival"
+    },
+    {
+     "name": "nurse-clock-hooks.js",
+     "from": 2712,
+     "to": 2745,
+     "layer": "domain",
+     "responsibility": "Stage-rise and per-tick nurse rules (nurseStageRise, nurseTick)"
+    },
+    {
+     "name": "nurse-orders-release.js",
+     "from": 2746,
+     "to": 2840,
+     "layer": "domain",
+     "responsibility": "Doctor's orders: due/cancel rules, release with spoken line, the doctor's own steps"
+    },
+    {
+     "name": "nurse-scope-actions.js",
+     "from": 2841,
+     "to": 2895,
+     "layer": "domain",
+     "responsibility": "Judging a trainee action against nurse scope (nurseAct, basicAirway, ownOxygen)"
+    },
+    {
+     "name": "nurse-order-execution.js",
+     "from": 2896,
+     "to": 2933,
+     "layer": "domain",
+     "responsibility": "Executing an order as written: agentClash, sameDose, nurseExec"
+    },
+    {
+     "name": "nurse-given-tests-scope-gap.js",
+     "from": 2934,
+     "to": 2992,
+     "layer": "domain",
+     "responsibility": "Recording outcomes: nurseGave, nurseTest, scopeGap"
+    },
+    {
+     "name": "nurse-fixed-lines.js",
+     "from": 2993,
+     "to": 3036,
+     "layer": "presentation",
+     "responsibility": "Fixed doctor and instructor lines (DX_Q, docLine, instructorLine)"
+    },
+    {
+     "name": "nurse-orders-panel.js",
+     "from": 3037,
+     "to": 3100,
+     "layer": "presentation + application",
+     "responsibility": "Nurse mode chips, orders list rendering, click-to-execute, test tags, role switch"
+    },
+    {
+     "name": "order-intake.js",
+     "from": 3101,
+     "to": 3219,
+     "layer": "domain + application",
+     "responsibility": "order: checks on a treatment order before it is given; badDose; settle"
+    },
+    {
+     "name": "treatment-feedback.js",
+     "from": 3220,
+     "to": 3282,
+     "layer": "presentation",
+     "responsibility": "Delayed treatment response line, SPOKEN names, read-back and done-line batching"
+    },
+    {
+     "name": "give-treatment.js",
+     "from": 3283,
+     "to": 3348,
+     "layer": "domain",
+     "responsibility": "give: apply a treatment to the simulation state"
+    },
+    {
+     "name": "unsafe-and-harm.js",
+     "from": 3349,
+     "to": 3397,
+     "layer": "domain",
+     "responsibility": "Challenge of an unsafe order and the harm path"
+    },
+    {
+     "name": "resolve-pending.js",
+     "from": 3398,
+     "to": 3486,
+     "layer": "application",
+     "responsibility": "resolve: handle the answer to the open question"
+    },
+    {
+     "name": "tests.js",
+     "from": 3487,
+     "to": 3557,
+     "layer": "domain + application + presentation",
+     "responsibility": "Test ordering, indication, result card, read question"
+    },
+    {
+     "name": "companion-lines.js",
+     "from": 3558,
+     "to": 3619,
+     "layer": "application",
+     "responsibility": "Companion line gating and saying a line (lineOf, compPool, fresh, busyNow, compSay, compOn)"
+    },
+    {
+     "name": "director.js",
+     "from": 3620,
+     "to": 3690,
+     "layer": "application",
+     "responsibility": "Who speaks next: director and breakIn"
+    },
+    {
+     "name": "supervisor-and-arrest.js",
+     "from": 3691,
+     "to": 3722,
+     "layer": "application",
+     "responsibility": "Supervisor coach, key-step helpers (doneAs, keyMissing), arrest"
+    },
+    {
+     "name": "handover-sheet.js",
+     "from": 3723,
+     "to": 3773,
+     "layer": "presentation",
+     "responsibility": "Doctor handover sheet openEnd"
+    },
+    {
+     "name": "scoring.js",
+     "from": 3774,
+     "to": 3827,
+     "layer": "domain",
+     "responsibility": "Local grading, score, disposition rules and labels"
+    },
+    {
+     "name": "report-parts.js",
+     "from": 3828,
+     "to": 3852,
+     "layer": "presentation",
+     "responsibility": "Report building blocks: test rows, risk chart, time format, labels"
+    },
+    {
+     "name": "conclude-report.js",
+     "from": 3853,
+     "to": 3954,
+     "layer": "application",
+     "responsibility": "conclude: end of run, fail rules, debrief report"
+    },
+    {
+     "name": "nurse-handover-constants.js",
+     "from": 3955,
+     "to": 3963,
+     "layer": "presentation",
+     "responsibility": "SBAR box definitions, report section titles, orderedTest predicate"
+    },
+    {
+     "name": "nurse-handover-form.js",
+     "from": 3964,
+     "to": 4012,
+     "layer": "presentation",
+     "responsibility": "Handover dialog: render, validate, draft, submit and grade merge"
+    },
+    {
+     "name": "nurse-handover-grade.js",
+     "from": 4013,
+     "to": 4030,
+     "layer": "domain",
+     "responsibility": "Offline handover grade, false-claim check, key-step and key-order selectors"
+    },
+    {
+     "name": "nurse-score.js",
+     "from": 4031,
+     "to": 4106,
+     "layer": "domain",
+     "responsibility": "Seven-section nurse score and hard fails"
+    },
+    {
+     "name": "nurse-report.js",
+     "from": 4107,
+     "to": 4230,
+     "layer": "presentation",
+     "responsibility": "Nurse debrief report rendering and its buttons"
+    },
+    {
+     "name": "run-save.js",
+     "from": 4231,
+     "to": 4254,
+     "layer": "application",
+     "responsibility": "Save finished run (both roles) to user history and stats"
+    },
+    {
+     "name": "records-list.js",
+     "from": 4255,
+     "to": 4303,
+     "layer": "presentation",
+     "responsibility": "Investigations column: groups, filter/search state, card rendering, counter, go-to-result"
+    },
+    {
+     "name": "records-panel.js",
+     "from": 4304,
+     "to": 4341,
+     "layer": "presentation + application",
+     "responsibility": "Screen-width helpers, side panel switch, records sheet toggle, card click to order"
+    },
+    {
+     "name": "case-begin.js",
+     "from": 4342,
+     "to": 4421,
+     "layer": "application",
+     "responsibility": "begin: case choice, role, E creation, room reset, opening lines, clock loop"
+    },
+    {
+     "name": "brief-content.js",
+     "from": 4422,
+     "to": 4513,
+     "layer": "presentation",
+     "responsibility": "Briefing content: track lookup, role switch HTML, nurse and doctor briefing HTML"
+    },
+    {
+     "name": "brief-dialog.js",
+     "from": 4514,
+     "to": 4562,
+     "layer": "presentation + browser",
+     "responsibility": "Briefing dialog behaviour: keyboard, show (pause), close (resume), open test"
+    },
+    {
+     "name": "mount.js",
+     "from": 4563,
+     "to": 4625,
+     "layer": "presentation",
+     "responsibility": "One-time listener wiring and injected DOM parts"
+    },
+    {
+     "name": "back-button.js",
+     "from": 4626,
+     "to": 4658,
+     "layer": "browser",
+     "responsibility": "History entry, back-button handling, leave-page warning"
+    },
+    {
+     "name": "open.js",
+     "from": 4659,
+     "to": 4694,
+     "layer": "infrastructure + application",
+     "responsibility": "Loading cases and act model; open use case"
+    },
+    {
+     "name": "public-api.js",
+     "from": 4695,
+     "to": 4705,
+     "layer": "infrastructure",
+     "responsibility": "window.nbOpenER, window.nbErReport, window.__nbER; ends at 4705, line 4706 is the bundle suffix closing the wrapper"
+    }
+   ]
+  },
+  "resp": {
+   "source": "resp.js",
+   "open": [
+    1,
+    10
+   ],
+   "close": [
+    895,
+    895
+   ],
+   "fragments": [
+    {
+     "name": "config-state.js",
+     "from": 11,
+     "to": 33,
+     "layer": "application",
+     "responsibility": "Constants, cache variables, session state, small helpers"
+    },
+    {
+     "name": "data-loader.js",
+     "from": 34,
+     "to": 65,
+     "layer": "infrastructure",
+     "responsibility": "Fetch and decode data files, build indexes, pool filter"
+    },
+    {
+     "name": "network.js",
+     "from": 66,
+     "to": 106,
+     "layer": "infrastructure",
+     "responsibility": "Feature encoding and forward pass"
+    },
+    {
+     "name": "patient.js",
+     "from": 107,
+     "to": 210,
+     "layer": "domain",
+     "responsibility": "Patient selection, facts list, offline answers"
+    },
+    {
+     "name": "vitals.js",
+     "from": 211,
+     "to": 270,
+     "layer": "domain",
+     "responsibility": "Seeded PRNG, vitals generation, normal ranges, nbRespVitals"
+    },
+    {
+     "name": "vitals-tests-panel.js",
+     "from": 271,
+     "to": 297,
+     "layer": "presentation",
+     "responsibility": "Monitor tiles, measure action, test buttons"
+    },
+    {
+     "name": "lab-results.js",
+     "from": 298,
+     "to": 344,
+     "layer": "domain",
+     "responsibility": "Reference parsing and lab result generation"
+    },
+    {
+     "name": "lab-order.js",
+     "from": 345,
+     "to": 364,
+     "layer": "presentation",
+     "responsibility": "Result card and ordering a test"
+    },
+    {
+     "name": "order-cues.js",
+     "from": 365,
+     "to": 385,
+     "layer": "domain",
+     "responsibility": "Typed test and vitals order detection"
+    },
+    {
+     "name": "question-matcher.js",
+     "from": 386,
+     "to": 448,
+     "layer": "domain",
+     "responsibility": "Arabic normalisation and local question matching"
+    },
+    {
+     "name": "chat-api.js",
+     "from": 449,
+     "to": 477,
+     "layer": "infrastructure",
+     "responsibility": "Chat endpoint call and circuit state"
+    },
+    {
+     "name": "body-map-data.js",
+     "from": 478,
+     "to": 514,
+     "layer": "presentation",
+     "responsibility": "Body location table, mark kinds, figure outline"
+    },
+    {
+     "name": "body-map.js",
+     "from": 515,
+     "to": 539,
+     "layer": "presentation",
+     "responsibility": "Body map rendering"
+    },
+    {
+     "name": "chat-screen.js",
+     "from": 540,
+     "to": 596,
+     "layer": "presentation",
+     "responsibility": "Chat feed, typing dots, step recording, bars, counter"
+    },
+    {
+     "name": "ask-flow.js",
+     "from": 597,
+     "to": 664,
+     "layer": "application",
+     "responsibility": "Routing of a typed or picked question, question list"
+    },
+    {
+     "name": "submit-dialog.js",
+     "from": 665,
+     "to": 706,
+     "layer": "presentation",
+     "responsibility": "Diagnosis submit dialog"
+    },
+    {
+     "name": "scoring.js",
+     "from": 707,
+     "to": 737,
+     "layer": "domain",
+     "responsibility": "Missed questions, sparkline, triage rule, question points"
+    },
+    {
+     "name": "finish.js",
+     "from": 738,
+     "to": 801,
+     "layer": "application",
+     "responsibility": "Result card and history write"
+    },
+    {
+     "name": "begin.js",
+     "from": 802,
+     "to": 825,
+     "layer": "application",
+     "responsibility": "Start or restart a case"
+    },
+    {
+     "name": "mount.js",
+     "from": 826,
+     "to": 864,
+     "layer": "presentation",
+     "responsibility": "One-time event wiring"
+    },
+    {
+     "name": "open-exports.js",
+     "from": 865,
+     "to": 894,
+     "layer": "application",
+     "responsibility": "Entry point, error view, global exports and test hook"
+    }
+   ]
+  },
+  "ui": {
+   "source": "ui.js",
+   "open": [
+    1,
+    6
+   ],
+   "close": [
+    54,
+    54
+   ],
+   "fragments": [
+    {
+     "name": "drawer-sync.js",
+     "from": 7,
+     "to": 53,
+     "layer": "presentation",
+     "responsibility": "whole ui.js: drawer user card and current-view mark"
+    }
+   ]
+  },
+  "motion": {
+   "source": "motion.js",
+   "open": [
+    1,
+    6
+   ],
+   "close": [
+    651,
+    651
+   ],
+   "fragments": [
+    {
+     "name": "prefs-reveal-count.js",
+     "from": 7,
+     "to": 128,
+     "layer": "presentation",
+     "responsibility": "media queries, hero split, scroll reveals, count-up"
+    },
+    {
+     "name": "view-chrome.js",
+     "from": 129,
+     "to": 193,
+     "layer": "presentation",
+     "responsibility": "progress bar, sweep, view change, nursing chat fit, parallax"
+    },
+    {
+     "name": "ecg-model.js",
+     "from": 194,
+     "to": 233,
+     "layer": "domain",
+     "responsibility": "RANGES, helpers, ecgBeat, plethBeat, gauss"
+    },
+    {
+     "name": "audio.js",
+     "from": 234,
+     "to": 279,
+     "layer": "browser",
+     "responsibility": "shared AudioContext, wake-up, beep"
+    },
+    {
+     "name": "monitor.js",
+     "from": 280,
+     "to": 550,
+     "layer": "application",
+     "responsibility": "makeMonitor: canvas loop, HR rewrite, alarms, tile help"
+    },
+    {
+     "name": "monitor-adapters.js",
+     "from": 551,
+     "to": 610,
+     "layer": "application",
+     "responsibility": "enhanceMonitors adapters for four rooms"
+    },
+    {
+     "name": "boot.js",
+     "from": 611,
+     "to": 650,
+     "layer": "presentation",
+     "responsibility": "boot and main MutationObserver"
+    }
+   ]
+  },
+  "terms": {
+   "source": "terms.js",
+   "open": [
+    1,
+    9
+   ],
+   "close": [
+    127,
+    127
+   ],
+   "fragments": [
+    {
+     "name": "vocabulary.js",
+     "from": 10,
+     "to": 49,
+     "layer": "domain",
+     "responsibility": "TERMS table"
+    },
+    {
+     "name": "translate.js",
+     "from": 50,
+     "to": 110,
+     "layer": "presentation",
+     "responsibility": "regex, skip list, translate, walk"
+    },
+    {
+     "name": "boot.js",
+     "from": 111,
+     "to": 126,
+     "layer": "browser",
+     "responsibility": "boot and body observer"
+    }
+   ]
+  }
+ },
+ "html": {
+  "source": "index.html",
+  "layout": {
+   "file": "Views/Shared/_Layout.cshtml",
+   "parts": [
+    {
+     "literal": true,
+     "from": 1,
+     "to": 2
+    },
+    {
+     "partial": "Views/Shared/Layout/_Head.cshtml",
+     "from": 3,
+     "to": 32,
+     "holds": "Document head: meta tags, fonts, the nine stylesheets, the image-fallback script"
+    },
+    {
+     "literal": true,
+     "from": 33,
+     "to": 34
+    },
+    {
+     "partial": "Views/Shared/Layout/_PublicHeader.cshtml",
+     "from": 35,
+     "to": 83,
+     "holds": "Header shown to a visitor who is not signed in"
+    },
+    {
+     "partial": "Views/Shared/Layout/_AppHeader.cshtml",
+     "from": 84,
+     "to": 185,
+     "holds": "Header shown after sign-in"
+    },
+    {
+     "partial": "Views/Shared/Layout/_SidebarDrawer.cshtml",
+     "from": 186,
+     "to": 252,
+     "holds": "Side navigation drawer"
+    },
+    {
+     "partial": "Views/Shared/Layout/_Toast.cshtml",
+     "from": 253,
+     "to": 260,
+     "holds": "Toast message container"
+    },
+    {
+     "literal": true,
+     "from": 261,
+     "to": 265
+    },
+    {
+     "body": true
+    },
+    {
+     "literal": true,
+     "from": 1888,
+     "to": 1889
+    },
+    {
+     "partial": "Views/Shared/Modals/_HandoverModal.cshtml",
+     "from": 1890,
+     "to": 1953,
+     "holds": "SBAR handover modal of the specialty simulation"
+    },
+    {
+     "partial": "Views/Shared/Modals/_LevelModal.cshtml",
+     "from": 1954,
+     "to": 1966,
+     "holds": "Level (placement) modal"
+    },
+    {
+     "partial": "Views/Shared/Modals/_AuthModal.cshtml",
+     "from": 1967,
+     "to": 2090,
+     "holds": "Sign-in and registration page"
+    },
+    {
+     "partial": "Views/Shared/Modals/_ImageLightbox.cshtml",
+     "from": 2091,
+     "to": 2129,
+     "holds": "Medical image lightbox"
+    },
+    {
+     "partial": "Views/Shared/Modals/_StudentAttemptModal.cshtml",
+     "from": 2130,
+     "to": 2257,
+     "holds": "Professor view of one student attempt"
+    },
+    {
+     "partial": "Views/Shared/Layout/_SiteFooter.cshtml",
+     "from": 2258,
+     "to": 2310,
+     "holds": "Site footer"
+    },
+    {
+     "literal": true,
+     "from": 2311,
+     "to": 2318
+    }
+   ]
+  },
+  "view": {
+   "file": "Views/Home/Index.cshtml",
+   "parts": [
+    {
+     "partial": "Views/Home/Landing/_LandingView.cshtml",
+     "from": 266,
+     "to": 404,
+     "holds": "Public landing page",
+     "parts": [
+      {
+       "literal": true,
+       "from": 266,
+       "to": 274
+      },
+      {
+       "partial": "Views/Home/Landing/_Hero.cshtml",
+       "from": 275,
+       "to": 294,
+       "holds": "Hero"
+      },
+      {
+       "partial": "Views/Home/Landing/_Jordan.cshtml",
+       "from": 295,
+       "to": 306,
+       "holds": "Jordan band of the hero"
+      },
+      {
+       "partial": "Views/Home/Landing/_Facts.cshtml",
+       "from": 307,
+       "to": 314,
+       "holds": "Facts strip"
+      },
+      {
+       "partial": "Views/Home/Landing/_About.cshtml",
+       "from": 315,
+       "to": 328,
+       "holds": "Vision, mission and goal"
+      },
+      {
+       "partial": "Views/Home/Landing/_Problem.cshtml",
+       "from": 329,
+       "to": 343,
+       "holds": "The problem"
+      },
+      {
+       "partial": "Views/Home/Landing/_Solution.cshtml",
+       "from": 344,
+       "to": 360,
+       "holds": "The solution"
+      },
+      {
+       "partial": "Views/Home/Landing/_Fields.cshtml",
+       "from": 361,
+       "to": 378,
+       "holds": "Training fields"
+      },
+      {
+       "partial": "Views/Home/Landing/_Audience.cshtml",
+       "from": 379,
+       "to": 391,
+       "holds": "Who it is for"
+      },
+      {
+       "partial": "Views/Home/Landing/_Closing.cshtml",
+       "from": 392,
+       "to": 400,
+       "holds": "Closing call to action"
+      },
+      {
+       "literal": true,
+       "from": 401,
+       "to": 404
+      }
+     ]
+    },
+    {
+     "partial": "Views/Home/Dashboard/_HomeView.cshtml",
+     "from": 405,
+     "to": 785,
+     "holds": "Signed-in home page",
+     "parts": [
+      {
+       "literal": true,
+       "from": 405,
+       "to": 415
+      },
+      {
+       "partial": "Views/Home/Dashboard/_Welcome.cshtml",
+       "from": 416,
+       "to": 434,
+       "holds": "Personal welcome card"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_LearnPath.cshtml",
+       "from": 435,
+       "to": 442,
+       "holds": "Learning path box"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_TrainingPath.cshtml",
+       "from": 443,
+       "to": 461,
+       "holds": "Training path panel"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_NurseEntry.cshtml",
+       "from": 462,
+       "to": 475,
+       "holds": "Nursing entry block"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_ProfessorHome.cshtml",
+       "from": 476,
+       "to": 602,
+       "holds": "Professor home: cohort table and tools"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_Guide.cshtml",
+       "from": 603,
+       "to": 612,
+       "holds": "Role guide"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_ErCard.cshtml",
+       "from": 613,
+       "to": 632,
+       "holds": "Emergency room entry card"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_StudentUniversity.cshtml",
+       "from": 633,
+       "to": 703,
+       "holds": "Student university block"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_Fields.cshtml",
+       "from": 704,
+       "to": 721,
+       "holds": "Specialty fields (locked cards)"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_LockedRooms.cshtml",
+       "from": 722,
+       "to": 736,
+       "holds": "Locked rooms"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_Cases.cshtml",
+       "from": 737,
+       "to": 774,
+       "holds": "Specialty cases with the department filter"
+      },
+      {
+       "partial": "Views/Home/Dashboard/_CoachBanner.cshtml",
+       "from": 775,
+       "to": 783,
+       "holds": "Clinical coach card"
+      },
+      {
+       "literal": true,
+       "from": 784,
+       "to": 785
+      }
+     ]
+    },
+    {
+     "partial": "Views/Home/Training/_ObserveView.cshtml",
+     "from": 786,
+     "to": 800,
+     "holds": "Observe-an-expert view"
+    },
+    {
+     "partial": "Views/Home/Training/_NurseView.cshtml",
+     "from": 801,
+     "to": 805,
+     "holds": "Nursing room view"
+    },
+    {
+     "partial": "Views/Home/Training/_SimulationView.cshtml",
+     "from": 806,
+     "to": 948,
+     "holds": "Specialty simulation view"
+    },
+    {
+     "partial": "Views/Home/Training/_DebriefView.cshtml",
+     "from": 949,
+     "to": 1110,
+     "holds": "Debrief (report) view"
+    },
+    {
+     "partial": "Views/Home/Coach/_CoachView.cshtml",
+     "from": 1111,
+     "to": 1219,
+     "holds": "Clinical coach view"
+    },
+    {
+     "partial": "Views/Home/Profile/_ProfileView.cshtml",
+     "from": 1220,
+     "to": 1508,
+     "holds": "Profile view"
+    },
+    {
+     "partial": "Views/Home/University/_UniversityView.cshtml",
+     "from": 1509,
+     "to": 1762,
+     "holds": "University (academic portal) view"
+    },
+    {
+     "partial": "Views/Home/Rooms/_RespiratoryRoomView.cshtml",
+     "from": 1763,
+     "to": 1831,
+     "holds": "Respiratory emergency room view"
+    },
+    {
+     "partial": "Views/Home/Rooms/_ErRoomView.cshtml",
+     "from": 1832,
+     "to": 1887,
+     "holds": "Emergency room view"
+    }
+   ]
+  }
+ }
+}

@@ -1,0 +1,10 @@
+/* =========================================================
+   NABD — respiratory emergency room
+   A network trained on DDXPlus (1,025,602 synthetic patients) ranks 49 conditions from the
+   answers the student has collected so far. Patients come from the DDXPlus test split, which
+   the network never saw. The patient speaks through Claude (api/resp-chat.js) in Jordanian Arabic,
+   from the facts of its record only; when Claude is out of reach, it answers from a fixed table.
+   ========================================================= */
+(() => {
+  'use strict';
+

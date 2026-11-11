@@ -1,0 +1,21 @@
+    <!-- =======================================================
+         VIEW 0: PUBLIC LANDING PAGE (INDEX)
+         Calm medical aesthetic, honest copy, clear hierarchy
+         ======================================================= -->
+    <section id="view-index" class="nb-index l9">
+      <!-- 2026-11-08 (owner): the landing page rebuilt for the committee: short sections with real photos
+           (img/v9, credits in img/CREDITS.txt): vision and goal, the problem, the solution, the fields, who it is for. -->
+
+      <!-- Hero (2026-11-08 v2, owner: a more professional hero, with Jordan's place in the region) -->
+@await Html.PartialAsync("~/Views/Home/Landing/_Hero.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Jordan.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Facts.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_About.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Problem.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Solution.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Fields.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Audience.cshtml")
+@await Html.PartialAsync("~/Views/Home/Landing/_Closing.cshtml")
+      <!-- The level quiz is closed (scope.css); script.js still writes into this box. -->
+      <div id="nb-quiz-main" hidden></div>
+    </section>

@@ -1,0 +1,101 @@
+  <!-- =========================================================
+       1B. APPLICATION HEADER (Shown ONLY When Signed In)
+       ========================================================= -->
+  <header id="app-header" class="hidden sticky top-0 z-40 bg-white/95 backdrop-blur-md border-b border-slate-200/80 px-4 sm:px-8 h-16 flex items-center justify-between gap-4">
+    <!-- Right: Brand Identity -->
+    <div class="flex items-center gap-3">
+      <button id="app-brand-btn" class="flex items-center gap-3 text-right group focus-ring rounded-xl p-1" aria-label="الذهاب إلى الصفحة الرئيسية للتدريب">
+        <div class="w-10 h-10 rounded-xl bg-teal-700 text-white flex items-center justify-center shadow-xs group-hover:bg-teal-800 transition-colors">
+          <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+            <path d="M22 12h-4l-3 9L9 3l-3 9H2"/>
+          </svg>
+        </div>
+        <div>
+          <span class="font-bold text-base text-slate-900 tracking-tight block leading-none">نَبْض الأردن</span>
+          <span class="text-xs text-slate-500 mt-1 block">مساحة التدريب السريري</span>
+        </div>
+      </button>
+    </div>
+
+    <!-- Center: Clean Training Workspace Navigation Links (Not a gray pill-filter box) -->
+    <nav class="hidden md:flex items-center gap-3" aria-label="التنقل في مساحة التدريب">
+      <button id="app-nav-home" data-app-view="home" class="app-nav-btn nav-link-item active">
+        الرئيسية
+      </button>
+      <button id="app-nav-er" class="nav-link-item text-sky-800 hover:text-sky-900 flex items-center gap-1.5">
+        <span class="w-2 h-2 rounded-full bg-teal-600"></span>
+        <span>غرفة الطوارئ</span>
+      </button>
+      <button id="app-nav-cases" data-app-view="cases-scroll" class="app-nav-btn nav-link-item">
+        الحالات والتدريب
+      </button>
+      <button id="app-nav-uni" data-app-view="university" class="app-nav-btn nav-link-item text-teal-800">
+        الجلسات الجامعية
+      </button>
+      <button id="app-nav-coach" class="nav-link-item er-locked" tabindex="-1" aria-disabled="true">
+        المدرب السريري
+      </button>
+    </nav>
+
+    <!-- Left: User Account Avatar Circle + Dropdown Menu + 3-Line Sidebar Button on Far Left -->
+    <div class="flex items-center gap-2.5 shrink-0 relative">
+      
+      <!-- User Avatar Button -->
+      <div class="relative">
+        <button id="user-menu-btn" aria-expanded="false" aria-haspopup="true" class="flex items-center gap-2.5 pl-2.5 pr-1.5 py-1 rounded-full bg-slate-100 hover:bg-slate-200/80 border border-slate-200/80 transition-colors focus-ring" title="قائمة الحساب والملف الشخصي">
+          <div id="header-avatar-circle" class="w-8 h-8 rounded-full bg-teal-700 text-white font-bold text-xs flex items-center justify-center overflow-hidden shrink-0">
+            <span id="user-avatar-fallback">ر م</span>
+          </div>
+          <span id="header-user-short-name" class="hidden sm:inline text-xs font-bold text-slate-800">حسابي</span>
+          <svg class="w-3.5 h-3.5 text-slate-500" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2"><path d="m6 9 6 6 6-6"/></svg>
+        </button>
+
+        <!-- Account Dropdown Menu -->
+        <div id="account-dropdown-menu" role="menu" class="hidden absolute left-0 mt-2 w-64 bg-white border border-slate-200 rounded-2xl shadow-xl py-2 z-50 text-right">
+          <div class="px-4 py-2.5 border-b border-slate-100">
+            <div id="dropdown-user-name" class="text-sm font-bold text-slate-900">رنا المحاسنة</div>
+            <div id="dropdown-user-role" class="text-xs text-teal-700 font-medium mt-0.5">طالبة تمريض · السنة الرابعة</div>
+            <span id="dropdown-demo-badge" class="inline-block mt-1 px-2 py-0.5 rounded-md bg-amber-50 text-amber-800 border border-amber-200 text-xs font-semibold">وضع العرض التجريبي</span>
+          </div>
+
+          <div class="py-1">
+            <button data-drop-view="profile" data-profile-tab="overview" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+              <span>ملفي الشخصي</span>
+              <span class="text-slate-400">←</span>
+            </button>
+            <button data-drop-view="profile" data-profile-tab="history" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+              <span>سجل الجلسات</span>
+              <span class="text-slate-400">←</span>
+            </button>
+            <button data-drop-view="profile" data-profile-tab="certificate" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-bold text-teal-800 hover:bg-teal-50/70 flex items-center justify-between">
+              <span>سجل التدريب (للطباعة)</span>
+              <span class="text-teal-700">←</span>
+            </button>
+            <button data-drop-view="profile" data-profile-tab="settings" class="dropdown-item-btn w-full text-right px-4 py-2 text-xs sm:text-sm font-medium text-slate-700 hover:bg-slate-50 flex items-center justify-between">
+              <span>الإعدادات</span>
+              <span class="text-slate-400">←</span>
+            </button>
+          </div>
+
+          <div class="border-t border-slate-100 py-1">
+            <button id="dropdown-switch-demo-btn" class="w-full text-right px-4 py-2 text-xs sm:text-sm font-semibold text-teal-800 hover:bg-teal-50/70 flex items-center justify-between">
+              <span>تسجيل الدخول بحساب آخر</span>
+            </button>
+            <button id="dropdown-logout-btn" class="w-full text-right px-4 py-2 text-xs sm:text-sm font-semibold text-rose-700 hover:bg-rose-50/70 flex items-center justify-between">
+              <span>تسجيل الخروج</span>
+              <span>←</span>
+            </button>
+          </div>
+        </div>
+      </div>
+
+      <!-- 3-Line Hamburger Icon on the Far Left -->
+      <button id="app-open-sidebar-btn" class="w-10 h-10 rounded-xl bg-slate-100 hover:bg-slate-200/80 text-slate-700 flex items-center justify-center transition-colors border border-slate-200/80 focus-ring" aria-label="فتح القائمة الجانبية للتطبيق" title="فتح القائمة الجانبية">
+        <svg class="w-5 h-5" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" aria-hidden="true">
+          <line x1="4" y1="6" x2="20" y2="6"></line>
+          <line x1="4" y1="12" x2="20" y2="12"></line>
+          <line x1="4" y1="18" x2="20" y2="18"></line>
+        </svg>
+      </button>
+    </div>
+  </header>

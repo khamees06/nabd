@@ -1,0 +1,66 @@
+  <!-- =========================================================
+       COLLAPSIBLE SIDEBAR DRAWER (Dual Mode: Guest vs Signed-In)
+       ========================================================= -->
+  <div id="sidebar-backdrop" class="fixed inset-0 z-70 bg-slate-900/40 backdrop-blur-xs hidden" style="z-index: 70;"></div>
+  <aside id="app-sidebar" aria-label="القائمة الجانبية" aria-hidden="true" class="sidebar-floating-drawer fixed top-0 left-0 z-75 h-full max-w-[88vw] bg-white transform -translate-x-full transition-transform duration-300 flex flex-col" style="z-index: 75;">
+    <div class="v7-drawer-head">
+      <span>حسابك في نبض</span>
+      <button id="close-sidebar-btn" class="focus-ring" aria-label="إغلاق القائمة الجانبية" title="إغلاق القائمة (Esc)">✕</button>
+    </div>
+    <div class="v7-user">
+      <span class="v7-av" id="side-user-av" aria-hidden="true">ن</span>
+      <div><b id="side-user-name">نَبْض الأردن</b><small id="sidebar-subtitle">تصفح التعريف بالمنصة</small></div>
+    </div>
+
+    <!-- guest links -->
+    <nav id="sidebar-guest-nav" class="overflow-y-auto flex-1" aria-label="روابط الصفحة">
+      <div class="v7-group">
+        <!-- 2026-11-08: links to the rebuilt landing sections -->
+        <a href="#sec-about8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="9"/><path d="M12 11v6M12 7.5v.5"/></svg><span>عن نَبْض</span></a>
+        <a href="#sec-problems8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 9v4M12 17h.01"/><path d="M10.3 3.9 1.8 18a2 2 0 0 0 1.7 3h17a2 2 0 0 0 1.7-3L13.7 3.9a2 2 0 0 0-3.4 0z"/></svg><span>المشكلة</span></a>
+        <a href="#sec-how" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>الحل</span></a>
+        <a href="#sec-fields" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1"/><rect x="14" y="3" width="7" height="7" rx="1"/><rect x="3" y="14" width="7" height="7" rx="1"/><rect x="14" y="14" width="7" height="7" rx="1"/></svg><span>التخصصات</span></a>
+        <a href="#sec-audience8" class="guest-side-link v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="9" cy="8" r="3.5"/><path d="M2.5 20a6.5 6.5 0 0 1 13 0"/><circle cx="17" cy="9" r="2.5"/><path d="M15.5 14.2A5 5 0 0 1 21.5 19"/></svg><span>لمن نَبْض؟</span></a>
+      </div>
+    </nav>
+
+    <!-- signed-in links -->
+    <nav id="sidebar-app-nav" class="hidden overflow-y-auto flex-1" aria-label="التنقل في مساحة التدريب">
+      <div class="v7-group">
+        <button type="button" data-side-app="home" data-v7-view="view-home" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M3 10.5 12 3l9 7.5V20a1 1 0 0 1-1 1h-5v-6H9v6H4a1 1 0 0 1-1-1z"/></svg><span>الرئيسية</span></button>
+      </div>
+      <div class="v7-group">
+        <p>التدريب السريري</p>
+        <button type="button" id="side-er-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 12h-4l-3 9L9 3l-3 9H2"/></svg><span>غرفة الطوارئ</span></button>
+        <button type="button" class="v7-item er-locked" tabindex="-1" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M12 3v9"/><path d="M8.5 6.5C5.5 7 3 11 3 15.5 3 18.5 4.5 20 6.5 20c2.2 0 3.5-1.6 3.5-4.5V8"/><path d="M15.5 6.5C18.5 7 21 11 21 15.5c0 3-1.5 4.5-3.5 4.5-2.2 0-3.5-1.6-3.5-4.5V8"/></svg><span>الطوارئ التنفسية</span><span class="v7-tag">جديد</span></button>
+        <button type="button" class="v7-item er-locked" tabindex="-1" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><rect x="3" y="3" width="7" height="7" rx="1.5"/><rect x="14" y="3" width="7" height="7" rx="1.5"/><rect x="3" y="14" width="7" height="7" rx="1.5"/><rect x="14" y="14" width="7" height="7" rx="1.5"/></svg><span>الحالات التخصصية</span></button>
+        <button type="button" class="v7-item er-locked" tabindex="-1" aria-disabled="true"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M9 18h6M10 22h4M12 2a7 7 0 0 0-4 12.7V17h8v-2.3A7 7 0 0 0 12 2z"/></svg><span>المدرب السريري</span></button>
+      </div>
+      <div class="v7-group">
+        <p>سجلي</p>
+        <button type="button" data-side-app="debrief" data-v7-view="view-debrief" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"/><path d="M14 2v6h6M8 13h8M8 17h5"/></svg><span>تقرير آخر جلسة</span></button>
+        <button type="button" data-side-app="profile" data-v7-view="view-profile" class="side-app-item v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="8" r="4"/><path d="M4 21a8 8 0 0 1 16 0"/></svg><span>الملف الشخصي</span></button>
+        <button type="button" id="side-cert-btn" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="9" r="6"/><path d="M8.5 14 7 22l5-3 5 3-1.5-8"/></svg><span>سجل التدريب</span><span class="v7-tag">PDF</span></button>
+      </div>
+      <div class="v7-group">
+        <p>المسار الجامعي</p>
+        <button type="button" id="side-uni-portal-btn" data-v7-view="view-university" class="v7-item"><svg viewBox="0 0 24 24" aria-hidden="true"><path d="M22 10 12 5 2 10l10 5 10-5z"/><path d="M6 12v5c3 2 9 2 12 0v-5"/></svg><span>الجلسات الجامعية</span></button>
+      </div>
+      <div class="v7-group">
+        <p>إعدادات الحساب</p>
+        <button type="button" class="dropdown-item-btn v7-item" data-drop-view="profile" data-profile-tab="settings"><svg viewBox="0 0 24 24" aria-hidden="true"><circle cx="12" cy="12" r="3"/><path d="M12 2v3M12 19v3M4.2 4.2l2.1 2.1M17.7 17.7l2.1 2.1M2 12h3M19 12h3M4.2 19.8l2.1-2.1M17.7 6.3l2.1-2.1"/></svg><span>الإعدادات</span></button>
+      </div>
+    </nav>
+
+    <div class="v7-foot">
+      <div id="sidebar-guest-footer" class="grid gap-2">
+        <button type="button" id="side-guest-login-btn">تسجيل الدخول</button>
+        <button type="button" id="side-guest-register-btn">إنشاء حساب جديد</button>
+      </div>
+      <div id="sidebar-app-footer" class="hidden grid gap-2">
+        <button type="button" id="side-switch-demo-btn">تسجيل الدخول بحساب آخر</button>
+        <button type="button" id="side-logout-btn">تسجيل الخروج</button>
+      </div>
+      <small>تجربة تعليمية · حسابك على هذا الجهاز، وكلامك في الغرفة يُرسل لخدمة ذكاء اصطناعي</small>
+    </div>
+  </aside>

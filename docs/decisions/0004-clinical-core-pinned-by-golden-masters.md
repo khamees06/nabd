@@ -29,7 +29,7 @@ the system whose silent change would matter most, and nobody can review them by 
 | Ported and pinned | Not ported in this phase (still in the browser) |
 |---|---|
 | `vitalsAt`, `modsNow`, `live`, `netRate`, `tick`, `stageCheck`, the cuff cycle | Reading the trainee's text; dose parsing and dose checks |
-| `give`, `harm`, `submitTest`, the delayed effects (adrenaline in anaphylaxis, shock in VT, harm) | Deciding that an order is unsafe (`unsafe`, `tooEarly`, `allergicTo`, `offCase`) |
+| `give`, `harm`, `submitTest`, the delayed effects (adrenaline in anaphylaxis, shock in VT, harm), the nurse's reading after a treatment (`answerLater`) | Deciding that an order is unsafe (`unsafe`, `tooEarly`, `allergicTo`, `offCase`) |
 | `score`, `dispoCheck`, `fell`, the failure list of `conclude` (doctor role) | The nurse role's handover grade and score |
 | | The conversation: who speaks next, what they say |
 

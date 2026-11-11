@@ -22,6 +22,7 @@ public sealed class ClientDataController : Controller
 
     /// <summary>One document, byte for byte as stored.</summary>
     [HttpGet("/data/{name}.json")]
+    [HttpHead("/data/{name}.json")]
     public async Task<IActionResult> Get(string name, CancellationToken cancellationToken)
     {
         var document = await _documents.FindAsync(name, cancellationToken);

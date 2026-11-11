@@ -39,6 +39,7 @@ variables (`Section__Key`).
 | `UnderstandingServices:RespiratoryRoom:*` | as above | The same, for the respiratory room |
 | `RateLimits:UnderstandingPerMinute` | `40` | Requests per minute, per caller address, to `/api/er-chat` and `/api/resp-chat` |
 | `RateLimits:SimulationPerMinute` | `240` | The same, for the session API |
+| `RateLimits:SimulationStartsPerMinute` | `6` | Sessions one caller address may start per minute |
 | `Simulation:Sessions:MaximumSessions` | `500` | Sessions kept in memory at once |
 | `Simulation:Sessions:IdleMinutes` | `120` | Minutes after which an untouched session is dropped |
 | `Simulation:ServerSessionsApi:Enabled` | `false`; **`true` in Development** | Whether `/api/simulation/sessions` exists |
@@ -93,7 +94,8 @@ This phase did not deploy anything, and the legacy site was not touched: it stil
   from working, because the static `index.html` is no longer at the repository root.
 - Behind a reverse proxy, configure forwarded headers so that the same-origin check sees the real host and the
   per-caller rate limit sees the real client address (the same-origin check compares host and port, not the scheme).
-  ASP.NET Core turns its forwarded-headers handling on with the environment variable
-  `ASPNETCORE_FORWARDEDHEADERS_ENABLED=true`; this was not exercised in this phase.
+  The application does not configure this itself: the forwarded-headers middleware has to be set up for the actual
+  proxy (which proxies are trusted, and the forwarded address, scheme and host). Until it is, every user behind the
+  proxy counts as one caller. None of this was exercised in this phase.
 - Before real users, close the stop-gap described in decision 0006.
 - `dotnet publish` was not exercised in this phase.

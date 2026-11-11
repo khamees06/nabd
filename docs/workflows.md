@@ -405,7 +405,7 @@ The blood pressure is not continuous. `Cuff` holds the last reading.
 | First reading | Taken when the session starts |
 | Normal cycle | Due every 2 minutes (`CuffEveryMinutes`) |
 | Cycle once the stage is urgent or worse | Due every 1 minute (`CuffWhenSickMinutes`) |
-| Taken at once, outside the cycle | When the stage worsens to urgent or worse; when a worsening stage's cue names measured signs; when the stage improves from urgent or worse; when a repeat pressure is ordered; after a harm takes effect; after adrenaline takes effect in anaphylaxis |
+| Taken at once, outside the cycle | When the stage worsens to urgent or worse; when a worsening stage's cue names measured signs; when the stage improves from urgent or worse; when a repeat pressure is ordered; after a harm takes effect; after adrenaline takes effect in anaphylaxis; once a treatment that moves the vital signs has had time to work (its ramp plus 0.1 minute; treatments given close together share one reading; none is taken if the patient is critical or the risk has risen by more than 2 since the order) |
 | When the cycle is checked | Only at the monitor refresh (every 0.12 minute), so a reading can be up to that late |
 
 ### Delayed effects
@@ -433,7 +433,7 @@ All commands run from the repository root.
 
 1. `dotnet restore Nabd.sln`
 2. `dotnet build Nabd.sln` (warnings are errors; public members need XML documentation).
-3. `dotnet test Nabd.sln` (144 tests at the time of writing, about ten seconds; no Node.js, browser or network).
+3. `dotnet test Nabd.sln` (164 tests at the time of writing, about ten seconds; no Node.js, browser or network).
 4. `dotnet run --project src/Nabd.Web`, then open <http://localhost:5054>. `GET /healthz` answers `ok`.
 
 ### Record and check the golden masters

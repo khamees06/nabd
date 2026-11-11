@@ -125,7 +125,8 @@ public class ErClinicalTraceTests
                 session.NoteTemperatureMeasured();
                 break;
             case "cuff":
-                session.TakeCuffReading();
+                // The nurse's reading after a treatment. The model takes it by itself; the recorded input is not
+                // replayed, so the state comparison after this step proves the model took it at the same moment.
                 break;
             case "wrongDose":
                 session.RecordWrongDose();

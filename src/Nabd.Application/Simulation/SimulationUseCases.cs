@@ -71,8 +71,11 @@ public sealed class AdvanceSimulation(ISimulationSessionStore sessions)
         if (entry is null) return Result<SessionSnapshot>.Failure(ErrorKind.NotFound, "Unknown session.");
         lock (entry.Gate)
         {
-            // Rounded, not truncated: 0.3 / 0.1 is a hair under 3 in floating point and must still be three steps.
-            var steps = (int)Math.Round(command.ElapsedSeconds / StepSeconds, MidpointRounding.AwayFromZero);
+            // Whole steps only; the rest is kept for the next call. (The small allowance is for floating point:
+            // 0.3 / 0.1 is a hair under 3 and must still be three steps.)
+            var total = entry.UnusedSeconds + command.ElapsedSeconds;
+            var steps = (int)Math.Floor(total / StepSeconds + 1e-9);
+            entry.UnusedSeconds = Math.Max(0, total - steps * StepSeconds);
             for (var i = 0; i < steps && !entry.Session.IsOver; i++) entry.Session.Tick(StepSeconds);
             return Result<SessionSnapshot>.Success(SessionSnapshot.Of(entry.Session));
         }
@@ -106,15 +109,16 @@ public sealed class ExecuteIntervention(ISimulationSessionStore sessions)
             var session = entry.Session;
             if (session.IsOver) return Result<SessionSnapshot>.Failure(ErrorKind.Conflict, "The session has ended.");
             if (session.Catalog.Intervention(command.ActionId) is null) return Result<SessionSnapshot>.Failure(ErrorKind.Invalid, "Unknown intervention.");
-            if (double.IsNaN(command.Amount) || command.Amount < 0) return Result<SessionSnapshot>.Failure(ErrorKind.Invalid, "The amount cannot be negative.");
+            if (!double.IsFinite(command.Amount) || command.Amount is < 0 or > 1_000_000) return Result<SessionSnapshot>.Failure(ErrorKind.Invalid, "The amount is not valid.");
             var step = session.Case.CareFor(command.ActionId);
             var effect = step is null ? CareEffect.None : new CareEffect(step.RiskSlowing, step.OnsetMinutes, step.OxygenSaturationGain, step.Effect);
-            session.ApplyIntervention(new InterventionOrder(command.ActionId, Limit(command.Dose), "good", command.Amount, command.Titration), effect);
+            session.ApplyIntervention(new InterventionOrder(command.ActionId, Text.Limit(command.Dose, 60), "good", command.Amount, command.Titration), effect);
+            // Measuring the temperature makes it known. (The legacy room says so a moment later, as part of the
+            // nurse's answer; here the measurement and its result are one step.)
+            if (command.ActionId == "temp") session.NoteTemperatureMeasured();
             return Result<SessionSnapshot>.Success(SessionSnapshot.Of(session));
         }
     }
-
-    private static string Limit(string? dose) => dose is null ? "" : dose.Length <= 60 ? dose : dose[..60];
 }
 
 /// <summary>Reports an order that was judged harmful and given anyway.</summary>
@@ -139,15 +143,21 @@ public sealed class ReportHarmfulOrder(ISimulationSessionStore sessions)
             var session = entry.Session;
             if (session.IsOver) return Result<SessionSnapshot>.Failure(ErrorKind.Conflict, "The session has ended.");
             if (session.Catalog.Intervention(command.ActionId) is null) return Result<SessionSnapshot>.Failure(ErrorKind.Invalid, "Unknown intervention.");
-            if (command.Harm is null || command.Harm.Risk is < 0 or > 100 || command.Harm.AllergyRisk is < 0 or > 100)
+            var harm = command.Harm;
+            if (harm is null
+                || !InRange(harm.Risk, 0, 100) || !InRange(harm.AllergyRisk, 0, 100)
+                || !InRange(harm.RiskSlowing, 0, 20) || !InRange(harm.OnsetMinutes, 0, 60))
             {
                 return Result<SessionSnapshot>.Failure(ErrorKind.Invalid, "The harm is not valid.");
             }
 
-            session.ApplyHarm(command.ActionId, command.Dose ?? "", command.Harm, command.Allergic);
+            session.ApplyHarm(command.ActionId, Text.Limit(command.Dose, 60), harm with { Label = harm.Label is null ? null : Text.Limit(harm.Label, 120) }, command.Allergic);
             return Result<SessionSnapshot>.Success(SessionSnapshot.Of(session));
         }
     }
+
+    /// <summary>A finite number within the limits; "not a number" and infinity are never accepted.</summary>
+    private static bool InRange(double value, double low, double high) => double.IsFinite(value) && value >= low && value <= high;
 }
 
 /// <summary>Orders a test.</summary>
@@ -191,12 +201,22 @@ public sealed class RequestMedicalTest(ISimulationSessionStore sessions)
 /// <param name="Communication">How the trainee communicated.</param>
 /// <param name="HistoryObtained">History facts the trainee obtained, by finding id.</param>
 /// <param name="ExaminationsDone">Examinations the trainee did, by finding id.</param>
+/// <param name="RejectedDoses">How many doses the nurse had to reject.</param>
+/// <param name="TestNotes">What happened to ordered tests afterwards: a result misread, a written justification accepted.</param>
 public sealed record CompleteSimulationCommand(
     string SessionId,
     HandoverAssessment? Handover,
     CommunicationRecord Communication,
     IReadOnlyList<string>? HistoryObtained = null,
-    IReadOnlyList<string>? ExaminationsDone = null);
+    IReadOnlyList<string>? ExaminationsDone = null,
+    int RejectedDoses = 0,
+    IReadOnlyList<TestNote>? TestNotes = null);
+
+/// <summary>What happened to an ordered test after it was ordered.</summary>
+/// <param name="TestId">The test.</param>
+/// <param name="ReadWrongly">True when the trainee misread the result.</param>
+/// <param name="JustificationAccepted">True when a written justification for a test outside the indication was accepted.</param>
+public sealed record TestNote(string TestId, bool ReadWrongly = false, bool JustificationAccepted = false);
 
 /// <summary>Use case: complete a simulation.</summary>
 public sealed class CompleteSimulation(ISimulationSessionStore sessions, ILogger<CompleteSimulation> logger)
@@ -211,14 +231,25 @@ public sealed class CompleteSimulation(ISimulationSessionStore sessions, ILogger
         if (entry is null) return Result<SessionReport>.Failure(ErrorKind.NotFound, "Unknown session.");
         if (command.Communication is null) return Result<SessionReport>.Failure(ErrorKind.Invalid, "The communication record is required.");
         if (command.Handover is not null && !Destinations.Contains(command.Handover.Destination)) return Result<SessionReport>.Failure(ErrorKind.Invalid, "Unknown destination.");
+        if (command.RejectedDoses is < 0 or > 100) return Result<SessionReport>.Failure(ErrorKind.Invalid, "The number of rejected doses is not valid.");
+        if ((command.HistoryObtained?.Count ?? 0) > 200 || (command.ExaminationsDone?.Count ?? 0) > 200 || (command.TestNotes?.Count ?? 0) > 100)
+        {
+            return Result<SessionReport>.Failure(ErrorKind.Invalid, "Too many items.");
+        }
+
         lock (entry.Gate)
         {
             var session = entry.Session;
             if (session.Role != TraineeRole.Doctor) return Result<SessionReport>.Failure(ErrorKind.Invalid, "Only the doctor's room is scored on the server in this phase.");
             if (entry.Communication is not null) return Result<SessionReport>.Failure(ErrorKind.Conflict, "The session was already completed.");
             if (!session.IsOver && command.Handover is null) return Result<SessionReport>.Failure(ErrorKind.Invalid, "A handover is required while the patient is alive.");
-            foreach (var id in command.HistoryObtained ?? []) session.RecordHistory(id);
-            foreach (var id in command.ExaminationsDone ?? []) session.RecordExamination(id);
+            if ((command.TestNotes ?? []).Any(n => n is null || session.TestOf(n.TestId) is null)) return Result<SessionReport>.Failure(ErrorKind.Invalid, "A note names a test that was not ordered.");
+            // Only findings the case has are kept: an id is never stored just because a caller sent it.
+            var known = session.Case.Findings.Select(f => f.Id).ToHashSet(StringComparer.Ordinal);
+            foreach (var id in (command.HistoryObtained ?? []).Where(known.Contains)) session.RecordHistory(id);
+            foreach (var id in (command.ExaminationsDone ?? []).Where(known.Contains)) session.RecordExamination(id);
+            for (var i = 0; i < command.RejectedDoses; i++) session.RecordWrongDose();
+            foreach (var note in command.TestNotes ?? []) session.AnnotateTest(note.TestId, note.ReadWrongly, note.JustificationAccepted);
             // An arrest ended the session before any handover: the handover written afterwards does not count.
             var handover = session.IsOver ? null : command.Handover;
             session.HandOver();
@@ -250,6 +281,12 @@ public sealed class GenerateSessionReport(ISimulationSessionStore sessions)
             return Result<SessionReport>.Success(SessionReport.Of(entry.Session, entry.Handover, entry.Communication));
         }
     }
+}
+
+/// <summary>Limits on what a caller may send.</summary>
+internal static class Text
+{
+    public static string Limit(string? text, int length) => text is null ? "" : text.Length <= length ? text : text[..length];
 }
 
 /// <summary>Shared lookup: a session by the id the client sent.</summary>

@@ -18,7 +18,7 @@ Every claim below names the test or the tool that backs it. Where something was 
 
 ## Layers of tests
 
-All of these run with `dotnet test` (144 tests, about ten seconds). None needs Node.js, a browser or a network.
+All of these run with `dotnet test` (164 tests, about ten seconds). None needs Node.js, a browser or a network.
 
 | Layer | Test class | What it proves |
 |---|---|---|
@@ -29,6 +29,7 @@ All of these run with `dotnet test` (144 tests, about ten seconds). None needs N
 | Legacy data mapping | `Infrastructure/ErCaseFileMapperTests` (5) | Every field the clinical core uses is mapped as the file has it, in file order; the "not reviewed by a physician" flag is exposed; only the shipped files can be read |
 | External-service adapter | `Infrastructure/HttpUnderstandingServiceGatewayTests` (9) | Against a fake transport: body, endpoint, origin header; off, missing, non-HTTPS, unreachable, slow and oversized cases all read as "unavailable" |
 | HTTP endpoints | `Web/UnderstandingEndpointTests` (14), `Web/SimulationSessionsApiTests` (3) | The relay is byte-exact and status-exact; refused before relaying: unknown case, non-object, non-JSON, oversized, cross-site, over the rate limit; the session API from start to report; the API is absent when switched off; a response never carries the risk or a test's indication; errors are problem documents without stack traces |
+| Defects found by the independent review | `Web/ReviewFindingsTests` (20) | One test per confirmed defect that was fixed; see "Independent review" below |
 | Architecture | `Architecture/LayeringTests` (9), `SolutionSmokeTests` (1) | The dependency rule on the compiled assemblies; exactly five projects; controllers do not take infrastructure types; use cases are sealed; nothing implements the multi-agent contracts |
 
 ## Golden masters: how they are recorded
@@ -86,13 +87,35 @@ It is a manual check, not part of `dotnet test`: it needs Chrome and two running
 | Check | Result |
 |---|---|
 | `dotnet build Nabd.sln` | 0 warnings, 0 errors (warnings are errors) |
-| `dotnet test Nabd.sln` | 144 passed, 0 failed, 0 skipped |
+| `dotnet test Nabd.sln` | 164 passed, 0 failed, 0 skipped |
 | Clinical traces re-recorded against the `er.js` the application serves | 45 of 45 identical |
 | Conversation golden master against the `er.js` the application serves | 12 of 12 rooms identical |
 | Browser comparison, live DOM | identical in 22 of 22 state × viewport pairs |
 | Browser comparison, screenshots | identical in 20 of 22 in the full run. The two that differed (signed-in home) have identical DOM, and an earlier full run differed on two other signed-in pairs instead: The legacy site compared with itself (`--current http://127.0.0.1:5180`, signed-in home of the medical student, four runs at two viewports) differed in 2 of 8 screenshots with identical DOM, so the difference is not between the hosts; its cause was not determined. See `docs/visual-baseline/README.md` |
 | Browser comparison, page errors | none on either host |
 | Mutation check of the golden masters | Done by hand when the tests were written: one changed model constant failed 33 traces; one changed scoring weight failed 12. The constant: the delay before a treatment starts to move the vital signs, `SimulatedMinutes + 0.03` in `SimulationSession.ApplyIntervention`, changed to `0.04`. The weight: `UnneededOrders.Count * 2` in `SessionScorer.Score`, changed to `* 3`. Both were restored and the run is not automated |
+
+## Independent review
+
+After the code was written, three reviewers read it with one lens each (fidelity of the domain port to the legacy
+JavaScript; security of the web and infrastructure layers; concurrency, lifetimes and API behaviour), and each
+finding was then checked by a second reader told to refute it. 19 findings were reported and all 19 were
+confirmed: one of medium severity, 18 low.
+
+The medium one mattered: the legacy room has the nurse read the blood pressure again once a treatment has had time
+to work, and the first version of the domain model did not. The golden masters had not caught it, because the
+recorder treated that reading as an input and the test replayed it. The model now takes the reading itself, the
+test no longer replays it, and the 45 traces pin it (51 such readings; changing the delay of that reading from 0.1
+to 0.2 simulated minutes, as a check, failed 23 tests).
+
+| Outcome | Findings |
+|---|---|
+| Fixed, with a test in `ReviewFindingsTests` or pinned by the golden masters | The nurse's reading after a treatment; measuring the temperature did not make it known on the server path; rejected doses, misread results and accepted justifications could not reach the server score; the session clock lost or gained part of a step on every call; a failed read of the case file, of a data document or of the script sources was remembered until restart; a harm with a number out of range (infinity) broke the session; a harm label of any length was stored; the switched-off session API read and validated the body before answering 404; validation errors named internal types; error responses lacked the protective headers; HEAD requests were answered 405; every address of one IPv6 network had its own rate allowance; one caller could fill the session store in about two minutes (starting a session is now limited separately) |
+| Corrected in the documents | The reverse-proxy note: forwarded headers must be configured for the actual proxy; nothing about it was exercised |
+| Not fixed, low severity, stated here | (1) The rate limit is charged before the same-origin check runs, and the health-check GET carries no Origin, so another website can use up a visitor's allowance for the understanding service (it cannot read answers or spend more than that allowance). (2) In the session store, refreshing a session's idle time and dropping idle sessions are not one atomic step, and the cap of 500 can be overshot by concurrent starts. (3) The application has no overall ceiling on relayed requests across all callers; the ER function has its own per-instance ceiling |
+
+The review was of the code as it stood before these fixes; the fixes themselves were tested but not reviewed a
+second time.
 
 ## What is not covered
 

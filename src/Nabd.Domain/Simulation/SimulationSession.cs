@@ -50,6 +50,7 @@ public sealed class SimulationSession
     private double _riskLoggedAt;
     private double _monitorRefreshedAt = -1;
     private double _cuffDueAt;
+    private (double At, double RiskAtOrder)? _responseDue;
 
     private SimulationSession(SessionId id, ClinicalCase clinicalCase, ClinicalCatalog catalog, TraineeRole role)
     {
@@ -333,6 +334,37 @@ public sealed class SimulationSession
         _cuffDueAt = SimulatedMinutes + (Stage >= ClinicalStage.Urgent ? CuffWhenSickMinutes : CuffEveryMinutes);
     }
 
+    /// <summary>
+    /// Once a treatment has had time to work, the nurse reads the numbers again. Treatments given close together
+    /// are answered together: one reading, after the last of them has ramped in.
+    /// </summary>
+    private void ExpectResponseTo(double rampMinutes)
+    {
+        var at = SimulatedMinutes + rampMinutes + 0.1;
+        if (_responseDue is { } open)
+        {
+            _responseDue = open with { At = Math.Max(open.At, at) };
+            return;
+        }
+
+        _responseDue = (at, Risk);
+        _pending.Add((at, ReadAfterTreatment));
+    }
+
+    private void ReadAfterTreatment()
+    {
+        if (IsOver || _responseDue is not { } due) return;
+        if (SimulatedMinutes < due.At - 0.001)
+        {
+            _pending.Add((due.At, ReadAfterTreatment));
+            return;
+        }
+
+        _responseDue = null;
+        // A dying patient's numbers can fall on their own: that is no credit to the treatment, and nobody reads them out.
+        if (Stage < ClinicalStage.Critical && Risk <= due.RiskAtOrder + 2) TakeCuffReading();
+    }
+
     /// <summary>The cuff measures now, whatever its cycle: someone at the bedside asked for the pressure.</summary>
     public void TakeCuffReading()
     {
@@ -401,6 +433,7 @@ public sealed class SimulationSession
                 Scaled(fx.RespiratoryRate, share),
                 Scaled(fx.SystolicPressure, share),
                 Scaled(fx.DiastolicPressure, share)));
+            ExpectResponseTo(ramp);
         }
 
         if (id == "adrenaline" && Anaphylaxis is { IsTreated: false } reaction)

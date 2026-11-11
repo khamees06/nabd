@@ -47,9 +47,10 @@ public sealed class ClientBundleProvider : IClientBundleProvider
     {
         ArgumentNullException.ThrowIfNull(environment);
         var files = environment.ContentRootFileProvider;
-        var all = new Lazy<List<ClientBundle>>(() => Build(files));
-        _bundles = new Lazy<FrozenDictionary<string, ClientBundle>>(() => all.Value.ToFrozenDictionary(b => b.FileName, StringComparer.Ordinal));
-        _fileNames = new Lazy<IReadOnlyList<string>>(() => [.. all.Value.Select(b => b.FileName)]);
+        // PublicationOnly: a build that failed is not remembered, so the next request tries again.
+        var all = new Lazy<List<ClientBundle>>(() => Build(files), LazyThreadSafetyMode.PublicationOnly);
+        _bundles = new Lazy<FrozenDictionary<string, ClientBundle>>(() => all.Value.ToFrozenDictionary(b => b.FileName, StringComparer.Ordinal), LazyThreadSafetyMode.PublicationOnly);
+        _fileNames = new Lazy<IReadOnlyList<string>>(() => [.. all.Value.Select(b => b.FileName)], LazyThreadSafetyMode.PublicationOnly);
     }
 
     /// <inheritdoc />

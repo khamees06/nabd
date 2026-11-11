@@ -15,6 +15,12 @@ public sealed class SessionEntry
     /// <summary>One use case at a time works on a session; the domain model is not thread-safe by itself.</summary>
     public Lock Gate { get; } = new();
 
+    /// <summary>
+    /// Real seconds received but not yet turned into clock steps. The clock moves in fixed steps; what is left
+    /// over from one call is carried to the next, so no time is lost or gained however often the caller calls.
+    /// </summary>
+    public double UnusedSeconds { get; set; }
+
     /// <summary>The graded handover, once the trainee has handed over.</summary>
     public HandoverAssessment? Handover { get; set; }
 

@@ -1,4 +1,5 @@
 using Microsoft.AspNetCore.Mvc;
+using Microsoft.AspNetCore.Mvc.Filters;
 using Microsoft.AspNetCore.RateLimiting;
 using Microsoft.Extensions.Options;
 using Nabd.Application.Common;
@@ -23,6 +24,30 @@ public sealed class ServerSessionsApiOptions
 }
 
 /// <summary>
+/// Answers 404 while the session API is switched off, before the request body is read or anything else runs:
+/// a switched-off API must look as if it did not exist, whatever is sent to it.
+/// </summary>
+[AttributeUsage(AttributeTargets.Class)]
+public sealed class ServerSessionsApiGateAttribute : Attribute, IResourceFilter, IOrderedFilter
+{
+    /// <summary>Runs before every other filter of the controller.</summary>
+    public int Order => int.MinValue;
+
+    /// <inheritdoc />
+    public void OnResourceExecuting(ResourceExecutingContext context)
+    {
+        ArgumentNullException.ThrowIfNull(context);
+        var options = context.HttpContext.RequestServices.GetRequiredService<IOptions<ServerSessionsApiOptions>>();
+        if (!options.Value.Enabled) context.Result = new NotFoundResult();
+    }
+
+    /// <inheritdoc />
+    public void OnResourceExecuted(ResourceExecutedContext context)
+    {
+    }
+}
+
+/// <summary>
 /// The server-side simulation session, over HTTP: start a session, let time pass, give treatments, order tests,
 /// hand over, read the report. Each action delegates to one use case of the application layer.
 /// </summary>
@@ -32,10 +57,11 @@ public sealed class ServerSessionsApiOptions
 /// </remarks>
 [ApiController]
 [Route("api/simulation/sessions")]
+[ServerSessionsApiGate]
 [SameOriginOnly]
 [RequestSizeLimit(16 * 1024)]
 [EnableRateLimiting(RateLimitPolicies.Simulation)]
-public sealed class SimulationSessionsController(IOptions<ServerSessionsApiOptions> options) : ControllerBase
+public sealed class SimulationSessionsController : ControllerBase
 {
     /// <summary>Body of the request that starts a session.</summary>
     public sealed record StartRequest(string CaseId, TraineeRole Role = TraineeRole.Doctor);
@@ -57,44 +83,45 @@ public sealed class SimulationSessionsController(IOptions<ServerSessionsApiOptio
         HandoverAssessment? Handover,
         CommunicationRecord Communication,
         IReadOnlyList<string>? HistoryObtained = null,
-        IReadOnlyList<string>? ExaminationsDone = null);
+        IReadOnlyList<string>? ExaminationsDone = null,
+        int RejectedDoses = 0,
+        IReadOnlyList<TestNote>? TestNotes = null);
 
-    /// <summary>Starts a session.</summary>
+    /// <summary>Starts a session. Starting is limited more tightly than the rest: the store holds a fixed number of sessions.</summary>
     [HttpPost("")]
+    [EnableRateLimiting(RateLimitPolicies.SimulationStart)]
     public async Task<IActionResult> Start([FromBody] StartRequest request, [FromServices] StartSimulationSession useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new StartSimulationSessionCommand(request.CaseId, request.Role), cancellationToken), StatusCodes.Status201Created);
+        ToResponse(await useCase.HandleAsync(new StartSimulationSessionCommand(request.CaseId, request.Role), cancellationToken), StatusCodes.Status201Created);
 
     /// <summary>Lets simulated time pass.</summary>
     [HttpPost("{id}/advance")]
     public async Task<IActionResult> Advance(string id, [FromBody] AdvanceRequest request, [FromServices] AdvanceSimulation useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new AdvanceSimulationCommand(id, request.ElapsedSeconds), cancellationToken));
+        ToResponse(await useCase.HandleAsync(new AdvanceSimulationCommand(id, request.ElapsedSeconds), cancellationToken));
 
     /// <summary>Carries out an intervention.</summary>
     [HttpPost("{id}/interventions")]
     public async Task<IActionResult> Intervene(string id, [FromBody] InterventionRequest request, [FromServices] ExecuteIntervention useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new ExecuteInterventionCommand(id, request.ActionId, request.Dose ?? "", request.Amount, request.Titration), cancellationToken));
+        ToResponse(await useCase.HandleAsync(new ExecuteInterventionCommand(id, request.ActionId, request.Dose ?? "", request.Amount, request.Titration), cancellationToken));
 
     /// <summary>Reports an order that was judged harmful and given anyway.</summary>
     [HttpPost("{id}/harmful-orders")]
     public async Task<IActionResult> Harm(string id, [FromBody] HarmfulOrderRequest request, [FromServices] ReportHarmfulOrder useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new ReportHarmfulOrderCommand(id, request.ActionId, request.Dose ?? "", request.Harm, request.Allergic), cancellationToken));
+        ToResponse(await useCase.HandleAsync(new ReportHarmfulOrderCommand(id, request.ActionId, request.Dose ?? "", request.Harm, request.Allergic), cancellationToken));
 
     /// <summary>Orders a test.</summary>
     [HttpPost("{id}/tests")]
     public async Task<IActionResult> OrderTest(string id, [FromBody] TestRequest request, [FromServices] RequestMedicalTest useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new RequestMedicalTestCommand(id, request.TestId, request.ReasonGrade), cancellationToken));
+        ToResponse(await useCase.HandleAsync(new RequestMedicalTestCommand(id, request.TestId, request.ReasonGrade), cancellationToken));
 
     /// <summary>Hands the patient over and returns the report.</summary>
     [HttpPost("{id}/completion")]
     public async Task<IActionResult> Complete(string id, [FromBody] CompletionRequest request, [FromServices] CompleteSimulation useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new CompleteSimulationCommand(id, request.Handover, request.Communication, request.HistoryObtained, request.ExaminationsDone), cancellationToken));
+        ToResponse(await useCase.HandleAsync(new CompleteSimulationCommand(id, request.Handover, request.Communication, request.HistoryObtained, request.ExaminationsDone, request.RejectedDoses, request.TestNotes), cancellationToken));
 
     /// <summary>The report of a completed session.</summary>
     [HttpGet("{id}/report")]
     public async Task<IActionResult> Report(string id, [FromServices] GenerateSessionReport useCase, CancellationToken cancellationToken) =>
-        Guarded() ?? ToResponse(await useCase.HandleAsync(new GenerateSessionReportQuery(id), cancellationToken));
-
-    private IActionResult? Guarded() => options.Value.Enabled ? null : NotFound();
+        ToResponse(await useCase.HandleAsync(new GenerateSessionReportQuery(id), cancellationToken));
 
     private IActionResult ToResponse<T>(Result<T> result, int successStatus = StatusCodes.Status200OK)
     {

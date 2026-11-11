@@ -19,9 +19,11 @@ still runs its own engine and does not call the server for it.
 - A response carries only what a trainee may see: the monitor, the cuff, the stage, what was done. The risk, the
   indication of a test and the scoring rules stay on the server until the report. A test asserts the absence of
   those fields.
-- Two inputs are transitional, because the rules behind them are still in the legacy client:
+- Some inputs are transitional, because the rules behind them are still in the legacy client:
   `harmful-orders` takes the harm as the client judged it, and `completion` takes a handover that was already
-  graded. When the order-safety rules and the handover grading move to the server, these inputs go away.
+  graded, the number of doses the nurse rejected, and notes on tests (a result misread, a written justification
+  accepted). When the order-safety rules, the reading of results and the handover grading move to the server,
+  these inputs go away. Until then the server checks their form and range, not their truth.
 
 ## Consequences
 

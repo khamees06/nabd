@@ -10,6 +10,7 @@ public sealed class HomeController : Controller
     /// view at a time, as it did on the static site.
     /// </summary>
     [HttpGet("/")]
+    [HttpHead("/")]
     [ResponseCache(NoStore = true, Location = ResponseCacheLocation.None)]
     public IActionResult Index() => View();
 }

@@ -14,6 +14,7 @@ public sealed class ClientScriptsController : Controller
 
     /// <summary>One bundle, for example <c>/js/er.js</c>. The browser revalidates it with its entity tag.</summary>
     [HttpGet("/js/{fileName}")]
+    [HttpHead("/js/{fileName}")]
     public IActionResult Get(string fileName)
     {
         var bundle = _bundles.Find(fileName);

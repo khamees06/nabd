@@ -66,7 +66,7 @@ for (const [bundle, spec] of Object.entries(plan.scripts)) {
     `The browser receives these files joined in the order below as \`/js/${spec.source}\`` +
     (spec.open ? `, between \`_open.txt\` (the file header and the opening of the wrapper function) and \`_close.txt\` (its closing line)` : '') +
     `.\nThe code is the legacy \`${spec.source}\`, cut at statement boundaries and otherwise unchanged; ` +
-    `\`ClientBundleBaselineTests\` fails if the joined text differs from the legacy file by anything not listed in \`tests/Nabd.Tests/LegacyBaseline/seams.json\`.\n\n` +
+    `\`LegacySiteBaselineTests\` fails if the joined text differs from the legacy file by anything not listed in \`tests/Nabd.Tests/LegacyBaseline/seams.json\`.\n\n` +
     `The "layer" column says where each responsibility belongs in the layered design; it is the map for moving code out of the browser, one fragment at a time.\n\n` +
     `| file | legacy lines | layer | responsibility |\n|---|---|---|---|\n${rows.join('\n')}\n`);
   console.log(`${spec.source}: ${spec.fragments.length} fragments, lines ${first}-${last}`);

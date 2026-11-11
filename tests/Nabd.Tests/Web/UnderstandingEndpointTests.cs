@@ -138,9 +138,20 @@ public class UnderstandingEndpointTests : IClassFixture<WebApplicationFactory<Pr
         Assert.Equal(HttpStatusCode.Forbidden, response.StatusCode);
         Assert.Empty(gateway.Requests);
 
-        var own = new HttpRequestMessage(HttpMethod.Post, "/api/er-chat") { Content = Json("{\"case\":\"asthma\",\"text\":\"x\"}") };
-        own.Headers.Add("Origin", "http://localhost");
-        Assert.Equal(HttpStatusCode.OK, (await client.SendAsync(own)).StatusCode);
+        // The application's own pages are accepted, also when a proxy in front ends TLS (https outside, http inside).
+        foreach (var origin in new[] { "http://localhost", "https://localhost" })
+        {
+            var own = new HttpRequestMessage(HttpMethod.Post, "/api/er-chat") { Content = Json("{\"case\":\"asthma\",\"text\":\"x\"}") };
+            own.Headers.Add("Origin", origin);
+            Assert.Equal(HttpStatusCode.OK, (await client.SendAsync(own)).StatusCode);
+        }
+
+        foreach (var origin in new[] { "null", "http://localhost.evil.example", "http://localhost:8080" })
+        {
+            var other = new HttpRequestMessage(HttpMethod.Post, "/api/er-chat") { Content = Json("{\"case\":\"asthma\",\"text\":\"x\"}") };
+            other.Headers.Add("Origin", origin);
+            Assert.Equal(HttpStatusCode.Forbidden, (await client.SendAsync(other)).StatusCode);
+        }
     }
 
     [Fact]

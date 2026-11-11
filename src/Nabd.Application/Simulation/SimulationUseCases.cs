@@ -71,7 +71,8 @@ public sealed class AdvanceSimulation(ISimulationSessionStore sessions)
         if (entry is null) return Result<SessionSnapshot>.Failure(ErrorKind.NotFound, "Unknown session.");
         lock (entry.Gate)
         {
-            var steps = (int)Math.Floor(command.ElapsedSeconds / StepSeconds);
+            // Rounded, not truncated: 0.3 / 0.1 is a hair under 3 in floating point and must still be three steps.
+            var steps = (int)Math.Round(command.ElapsedSeconds / StepSeconds, MidpointRounding.AwayFromZero);
             for (var i = 0; i < steps && !entry.Session.IsOver; i++) entry.Session.Tick(StepSeconds);
             return Result<SessionSnapshot>.Success(SessionSnapshot.Of(entry.Session));
         }

@@ -25,15 +25,16 @@ integration sit behind application contracts.
 ## The stop-gap
 
 The functions were written for browsers. They accept a request only when its `Origin` header is their own host or
-on their allow-list, and they limit requests per caller address. A server-side caller has no origin, so the
+on their allow-list, and the ER function also limits requests per caller address (the respiratory function has
+no limit). A server-side caller has no origin, so the
 gateway sends a configured one (`UnderstandingServices:<room>:Origin`), by default the function's own host.
 
 Two things follow, and both need a change **in the functions**, which this phase was not allowed to touch:
 
 1. The functions should recognise the application by a shared secret (kept in the application's secret store and
    the function's environment) instead of by an origin header.
-2. The functions see every user of the application as one caller address. Their per-address limit (150 requests
-   per warm instance) would then apply to all users together. Either the limit moves to the application (it
+2. The functions see every user of the application as one caller address. The ER function's per-address limit
+   (150 requests per minute, counted per warm instance) would then apply to all users together. Either the limit moves to the application (it
    already limits per caller) or the function trusts a caller address forwarded by the authenticated application.
 
 Until both are done, the application should not be put in front of real users with the services switched on.

@@ -54,7 +54,7 @@ References the domain, plus the dependency-injection and logging abstractions.
 | Folder | Holds |
 |---|---|
 | `Simulation/` | Use cases `StartSimulationSession`, `AdvanceSimulation`, `ExecuteIntervention`, `ReportHarmfulOrder`, `RequestMedicalTest`, `CompleteSimulation`, `GenerateSessionReport`; the views a trainee may see (`SessionSnapshot`, `SessionReport`) |
-| `Dialogue/` | Use case `ProcessPatientMessage`: checks a room's request and relays it to the understanding service |
+| `Dialogue/` | Use case `ProcessPatientMessage`: checks a room's request and relays it to the understanding service (the external serverless function that reads what the trainee wrote and voices the people in the room) |
 | `Abstractions/Data/` | `IClinicalCaseRepository`, `IClientDataDocumentSource` |
 | `Abstractions/Simulation/` | `ISimulationSessionStore` |
 | `Abstractions/Ai/` | `IUnderstandingServiceGateway` |
@@ -86,7 +86,8 @@ domain to do the work, and returns a view. No clinical rule lives in this layer,
 | `wwwroot/css`, `wwwroot/img` | Stylesheets and images |
 | `Program.cs` | The composition root |
 
-Controllers are thin: each action calls one use case or one application port and maps the result to HTTP.
+Controllers are thin: each action calls one use case or one application port and maps the result to HTTP
+(`HomeController` only renders the page; `ClientScriptsController` asks the web layer's own `ClientBundleProvider`).
 
 ## How the page reaches the browser
 
@@ -105,8 +106,8 @@ The user interface is **frozen**: the page, the styles and the client behaviour 
 
 `tests/Nabd.Tests/Baseline/LegacySiteBaselineTests.cs` starts the application in memory and compares every one of
 these assets with the frozen legacy site. The only differences allowed are the 18 entries of
-`tests/Nabd.Tests/LegacyBaseline/seams.json` (where stylesheets and scripts are served from, and the two lines
-that told the rooms where the understanding service is).
+`tests/Nabd.Tests/LegacyBaseline/seams.json` (where stylesheets and scripts are served from, one image path
+inside a stylesheet that moved with it, and the two lines that told the rooms where the understanding service is).
 
 ## Where the logic runs today
 

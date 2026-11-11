@@ -5,8 +5,9 @@ Status: accepted · 2026-11-11
 ## Context
 
 The legacy site has no server. Accounts, roles, progress, professor notes and published grades live in the
-visitor's browser (`localStorage`, mirrored into `window.name`); three demo accounts are built into the script, and
-anyone can sign in as the professor. The audit rates this as the most serious weakness of the legacy site.
+visitor's browser (`localStorage`, mirrored into `window.name`); five demo accounts are built into the script (the
+sign-in page offers three), and anyone can sign in as the professor. The audit lists this among its high-severity
+problems (H1 to H3 in `docs/legacy-audit.md`).
 The brief for this phase is an architectural refactoring with a frozen interface and zero regression.
 
 ## Decision

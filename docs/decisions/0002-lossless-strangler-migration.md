@@ -4,7 +4,7 @@ Status: accepted · 2026-11-11
 
 ## Context
 
-The brief asks for zero regression and a frozen user interface. The legacy client is about 14,000 lines of
+The brief asks for zero regression and a frozen user interface. The legacy client is about 13,600 lines of
 JavaScript whose behaviour is known only from itself: the ER room alone holds roughly 3,300 lines of Arabic
 dialect reading and conversation rules, tuned against paid live checks. Rewriting that on the server in one step
 could not be shown to preserve behaviour, and a room whose engine runs in the browser needs its case data there.

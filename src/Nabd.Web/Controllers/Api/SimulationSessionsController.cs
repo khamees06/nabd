@@ -33,6 +33,7 @@ public sealed class ServerSessionsApiOptions
 [ApiController]
 [Route("api/simulation/sessions")]
 [SameOriginOnly]
+[RequestSizeLimit(16 * 1024)]
 [EnableRateLimiting(RateLimitPolicies.Simulation)]
 public sealed class SimulationSessionsController(IOptions<ServerSessionsApiOptions> options) : ControllerBase
 {

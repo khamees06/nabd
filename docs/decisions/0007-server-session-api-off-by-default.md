@@ -10,8 +10,8 @@ still runs its own engine and does not call the server for it.
 
 ## Decision
 
-- The use cases are implemented in `Nabd.Application` and exposed by `SimulationSessionsController` under
-  `/api/simulation/sessions`.
+- The session use cases are implemented in `Nabd.Application` and exposed by `SimulationSessionsController` under
+  `/api/simulation/sessions`. (Processing a message is the relay of decision 0006, not part of this API.)
 - The API answers 404 unless `Simulation:ServerSessionsApi:Enabled` is true. It is true in `Development` and in
   tests, false otherwise: an endpoint nothing uses should not be reachable in production.
 - Sessions are kept in memory (`InMemorySimulationSessionStore`), at most 500 at once, dropped after 120 idle

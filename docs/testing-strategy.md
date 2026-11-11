@@ -69,12 +69,13 @@ Two golden masters exist:
 `tools/legacy/compare-hosts.mjs` opens the legacy site and the application side by side in headless Chrome, with
 the same seeded random numbers, animations off and other hosts blocked, drives both through the same steps, and
 compares the live DOM, the screenshot (the PNG bytes) and the page's errors. States: landing, sign-in, register,
-home for each of the three demo roles, the academic portal, the profile, the coach, and the ER briefing in both
-roles; each at 1440×900 and 390×844.
+home for each of the three demo roles, the academic portal, the profile, a navigation to the coach (which the
+legacy client refuses, so that state shows the home view), and the ER briefing in both roles; each at 1440×900
+and 390×844.
 
 ```
 node tools/legacy/serve-static.mjs <a checkout of main> 5180
-dotnet run --project src/Nabd.Web --no-launch-profile --urls http://127.0.0.1:5199      # Development settings
+ASPNETCORE_ENVIRONMENT=Development dotnet run --project src/Nabd.Web --no-launch-profile --urls http://127.0.0.1:5199   # bash syntax; the variable matters: without it the services are on
 node tools/legacy/compare-hosts.mjs
 ```
 
@@ -89,9 +90,9 @@ It is a manual check, not part of `dotnet test`: it needs Chrome and two running
 | Clinical traces re-recorded against the `er.js` the application serves | 45 of 45 identical |
 | Conversation golden master against the `er.js` the application serves | 12 of 12 rooms identical |
 | Browser comparison, live DOM | identical in 22 of 22 state × viewport pairs |
-| Browser comparison, screenshots | identical in 20 of 22 in the full run. The two that differed (signed-in home) have identical DOM, compare identical in other runs, and differ just as often when the legacy site is compared with itself: render timing, not a difference between the hosts |
+| Browser comparison, screenshots | identical in 20 of 22 in the full run. The two that differed (signed-in home) have identical DOM, and an earlier full run differed on two other signed-in pairs instead: The legacy site compared with itself (`--current http://127.0.0.1:5180`, signed-in home of the medical student, four runs at two viewports) differed in 2 of 8 screenshots with identical DOM, so the difference is not between the hosts; its cause was not determined. See `docs/visual-baseline/README.md` |
 | Browser comparison, page errors | none on either host |
-| Mutation check of the golden masters | one changed model constant failed 33 traces; one changed scoring weight failed 12 |
+| Mutation check of the golden masters | Done by hand when the tests were written: one changed model constant failed 33 traces; one changed scoring weight failed 12. The constant: the delay before a treatment starts to move the vital signs, `SimulatedMinutes + 0.03` in `SimulationSession.ApplyIntervention`, changed to `0.04`. The weight: `UnneededOrders.Count * 2` in `SessionScorer.Score`, changed to `* 3`. Both were restored and the run is not automated |
 
 ## What is not covered
 
@@ -102,8 +103,9 @@ Stated plainly, so that nobody reads more into the green run than it holds:
   browser comparison: the running room's clock and monitor depend on frame timing and cannot be compared pixel
   by pixel.
 - **The respiratory room, the specialty simulation, the nursing rooms, the professor portal and the coach** have no
-  behavioural golden master. Their code reaches the browser unchanged (the bundle tests prove that), and the views
-  listed above were compared in the browser, but their internal rules are not pinned by recorded behaviour.
+  behavioural golden master. Their code reaches the browser unchanged (the bundle tests prove that), and of them
+  only the academic (professor) portal was among the states compared in the browser (the coach is closed in the
+  legacy UI), but their internal rules are not pinned by recorded behaviour.
 - **The nurse role's score** is not ported; its clinical dynamics are (six traces).
 - **Order safety** (dose checks, allergy, "too early") is not ported; the traces cover what happens after the
   legacy client has decided.

@@ -38,8 +38,10 @@ the system whose silent change would matter most, and nobody can review them by 
 - A change to a clinical number fails the test run and names the step and the field. Changing a rule on purpose
   means re-recording the golden masters from a legacy script that has the same change, or accepting a reviewed
   difference in the test.
-- A mutation check was run when the tests were written: changing one constant of the model failed 33 of the 45
-  traces; changing one scoring weight failed 12.
+- A mutation check was run by hand when the tests were written: changing one constant of the model failed 33 of
+  the 45 traces; changing one scoring weight failed 12. The constant was the delay before a treatment
+  starts to move the vital signs (0.03 simulated minutes, changed to 0.04); the weight was the cost of an unneeded
+  order (2 points, changed to 3). Both were restored; the check is not automated.
 - The recorder needs Node.js; the tests themselves do not (the traces are committed).
 - The traces pin the model to the legacy behaviour, including anything in it that a physician might later correct.
   They say nothing about clinical correctness.

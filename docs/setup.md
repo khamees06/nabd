@@ -23,7 +23,7 @@ dotnet run --project src/Nabd.Web
 
 `dotnet run` uses the `http` launch profile: the page is at <http://localhost:5054>. `GET /healthz` answers `ok`.
 
-Warnings are errors, and public members need XML documentation, in every project except the tests.
+Warnings are errors in every project. Public members need XML documentation in every project except the tests.
 
 ## Configuration
 
@@ -62,8 +62,8 @@ never be copied into this repository, its settings or its logs.
   each with a `README.md` listing its fragments. The application joins them on first request, so restart it after
   editing a fragment. While the client is frozen, an edit fails the baseline tests until it is registered in
   `tests/Nabd.Tests/LegacyBaseline/seams.json`.
-- **Views.** The views under `src/Nabd.Web/Views/` are the legacy page cut into partial views. They must not end
-  with a line feed (`.editorconfig` says so); see decision 0003.
+- **Views.** The views under `src/Nabd.Web/Views/` are the legacy page cut into partial views. Do not add or
+  remove a line feed at the end of a view file (`.editorconfig` tells editors not to); see decision 0003.
 - **Data.** The legacy JSON files are under `src/Nabd.Infrastructure/LegacyData/Files/` and are not to be edited:
   a test compares them with the legacy hashes.
 - **Line endings.** Text is stored with line feeds in Git. On Windows the working copy has CRLF; the bundler and
@@ -91,7 +91,9 @@ This phase did not deploy anything, and the legacy site was not touched: it stil
 - The application is an ordinary ASP.NET Core process. It needs a host that runs .NET; **static hosting such as
   GitHub Pages cannot run it.** Merging this branch into `main` would therefore stop the Pages copy of the site
   from working, because the static `index.html` is no longer at the repository root.
-- Behind a reverse proxy, configure forwarded headers so that the same-origin check and the per-caller rate limit
-  see the real scheme, host and client address.
+- Behind a reverse proxy, configure forwarded headers so that the same-origin check sees the real host and the
+  per-caller rate limit sees the real client address (the same-origin check compares host and port, not the scheme).
+  ASP.NET Core turns its forwarded-headers handling on with the environment variable
+  `ASPNETCORE_FORWARDEDHEADERS_ENABLED=true`; this was not exercised in this phase.
 - Before real users, close the stop-gap described in decision 0006.
 - `dotnet publish` was not exercised in this phase.

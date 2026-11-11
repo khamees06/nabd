@@ -16,8 +16,10 @@ solution: exactly five projects (`Nabd.Domain`, `Nabd.Application`, `Nabd.Infras
 - The domain has no package references at all.
 - A use case is one sealed class with one `HandleAsync` method, registered directly with the container. There is
   no mediator library: with eight use cases it would add indirection and a dependency without removing any code.
-- A use case reports an expected failure as a `Result<T>` with an `ErrorKind`; the controller maps the kind to a
-  status code. Exceptions are for broken invariants (`DomainException`) and programming errors.
+- A simulation use case reports an expected failure as a `Result<T>` with an `ErrorKind`; the controller maps the
+  kind to a status code. (`ProcessPatientMessage` is the exception: it returns the status and body to send back to
+  the room, and has a second method for the service's health check.) Exceptions are for broken invariants
+  (`DomainException`) and programming errors.
 - The rule is enforced by tests on the compiled assemblies (`LayeringTests`), not by convention.
 
 ## Consequences

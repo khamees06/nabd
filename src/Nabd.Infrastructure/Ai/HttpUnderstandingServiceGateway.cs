@@ -48,7 +48,7 @@ public sealed class UnderstandingServicesOptions
 /// <remarks>
 /// <para>
 /// The functions were written to be called by a browser: they accept a request only when its Origin header is
-/// their own host or a site on their allow-list, and they limit requests per caller address. A server-side
+/// their own host or a site on their allow-list, and the emergency room's function limits requests per caller address. A server-side
 /// caller has no origin of its own, so this adapter sends the configured <see cref="UnderstandingEndpointOptions.Origin"/>,
 /// by default the function's own. That is a stop-gap of this phase, recorded in docs/decisions/0006: before the
 /// application serves real users, the functions should recognise it by a shared secret instead, and should not

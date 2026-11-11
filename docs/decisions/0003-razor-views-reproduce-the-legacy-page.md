@@ -14,16 +14,19 @@ receives must not change.
   `Views/Home/Index.cshtml` holds the views. Both are composed of partial views, 43 in all, grouped by feature
   (`Landing/`, `Dashboard/`, `Training/`, `Coach/`, `Profile/`, `University/`, `Rooms/`, `Layout/`, `Modals/`).
 - A partial view is a contiguous range of legacy lines, cut at element boundaries. A composing file holds legacy
-  lines and one `@await Html.PartialAsync(...)` per line. **No view file ends with a line feed**: the line feed
+  lines and one `@await Html.PartialAsync(...)` per line. **No line feed is added after the last legacy line of a view file** (a file ends with a line feed only where its
+  range ends on a blank legacy line, which is the case for most of them): the line feed
   after each call is the one the legacy text had at that place, so the composed output equals the legacy text.
-- No tag helpers are imported and no Razor expressions are used inside the legacy markup. The four `@` characters
-  of the legacy page sit between word characters (e-mail addresses, a font URL), which Razor leaves alone.
+- No tag helpers are imported and no Razor expressions are used inside the legacy markup. The five `@` characters
+  of the legacy page sit between word characters (three e-mail addresses, two in a font URL), which Razor leaves
+  alone.
 - The split is recorded in `tools/migration/split-plan.json` and was performed by `tools/migration/split-legacy.mjs`.
 
 ## Consequences
 
 - `The_page_is_the_legacy_page` compares the rendered page with the legacy file character for character.
-- An editor that adds a final line feed to a partial view adds a blank line to the page and fails that test.
+- An editor that adds or removes a line feed at the end of a view file adds or removes a blank line of the page and
+  fails that test.
   `.editorconfig` tells editors not to.
 - Views carry no logic yet. When a view starts to take data from the server, it becomes a registered difference
   like any other.

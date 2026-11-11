@@ -28,7 +28,16 @@ public sealed class FileClientDataDocumentSource : IClientDataDocumentSource
     {
         if (!LegacyDataFiles.IsKnown(name)) return null;
         var lazy = _documents.GetOrAdd(name, n => new Lazy<Task<ClientDataDocument>>(() => LoadAsync(n)));
-        return await lazy.Value.WaitAsync(cancellationToken).ConfigureAwait(false);
+        try
+        {
+            return await lazy.Value.WaitAsync(cancellationToken).ConfigureAwait(false);
+        }
+        catch (IOException)
+        {
+            // A read that failed is not remembered: the next request tries the file again.
+            _documents.TryRemove(new KeyValuePair<string, Lazy<Task<ClientDataDocument>>>(name, lazy));
+            throw;
+        }
     }
 
     private async Task<ClientDataDocument> LoadAsync(string name)

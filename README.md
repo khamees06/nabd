@@ -14,7 +14,7 @@ without changing what the user sees or what the simulation computes. The legacy 
 
 | | |
 |---|---|
-| The page, styles, scripts, data and images the browser receives | Identical to the legacy site, except 18 registered differences (where assets are served from, and where the rooms find the understanding service). Proved by tests |
+| The page, styles, scripts, data and images the browser receives | Identical to the legacy site, except 18 registered differences (where assets are served from, and where the rooms find the understanding service: the external function that reads what the trainee wrote and voices the people in the room). Proved by tests |
 | The clinical core of the ER room (risk, vital signs, stages, treatments, harms, tests, score) | Ported to C# and proved equal to the legacy code, bit for bit, on 45 recorded scenarios |
 | Use cases, repositories, service gateway, session API | Implemented and tested. The session API is off by default |
 | The room in the browser | Still runs the legacy client engine. Moving it onto the server is the next phase |

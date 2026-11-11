@@ -6,14 +6,14 @@
    "count": 1,
    "legacy": "const API = /\\.vercel\\.app$/.test(location.hostname) ? '/api/er-chat' : 'https://nabd-smoky-one.vercel.app/api/er-chat';",
    "current": "const API = '/api/er-chat';",
-   "reason": "The ER room talks to the application's own gateway (Nabd.Web ErChatController), which forwards to the understanding service. The browser no longer needs to know where that service is hosted."
+   "reason": "The ER room talks to the application's own gateway (Nabd.Web UnderstandingController), which forwards to the understanding service. The browser no longer needs to know where that service is hosted."
   },
   {
    "file": "resp.js",
    "count": 1,
    "legacy": "const API = /\\.vercel\\.app$/.test(location.hostname) ? '/api/resp-chat' : 'https://nabd-smoky-one.vercel.app/api/resp-chat';",
    "current": "const API = '/api/resp-chat';",
-   "reason": "Same as er.js, for the respiratory room (Nabd.Web RespChatController)."
+   "reason": "Same as er.js, for the respiratory room (Nabd.Web UnderstandingController)."
   },
   {
    "file": "home9.css",

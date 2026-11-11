@@ -22,8 +22,10 @@ public sealed class SameOriginOnlyAttribute : Attribute, IResourceFilter
         var request = context.HttpContext.Request;
         var origin = request.Headers.Origin.ToString();
         if (origin.Length == 0) return;
-        var own = $"{request.Scheme}://{request.Host}";
-        if (string.Equals(origin, own, StringComparison.OrdinalIgnoreCase)) return;
+        // Host and port decide. The scheme is left out on purpose: behind a proxy that ends TLS the application
+        // sees http while the browser's origin says https, and another site never shares this host.
+        if (Uri.TryCreate(origin, UriKind.Absolute, out var from)
+            && string.Equals(from.Authority, request.Host.Value, StringComparison.OrdinalIgnoreCase)) return;
         context.Result = new ContentResult { StatusCode = StatusCodes.Status403Forbidden, ContentType = "application/json", Content = "{\"error\":\"origin\"}" };
     }
 

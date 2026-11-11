@@ -1,0 +1,177 @@
+/* =========================================================================
+   phase8 2026-11-07: landing additions
+   About (two paragraphs), target groups, problem and solution, six-step
+   training journey (#sec-how), and the "coming soon" roadmap.
+   Loaded after theme.css and scope.css. Every rule is scoped under
+   #view-index except the compact header nav at the end. Uses the theme.css
+   tokens only (--signal, --navy, --ink, --tint, --line, --r, --r-lg, --r-xl).
+   The site has no dark theme (style.css: color-scheme: light), so there is
+   no dark variant here.
+   ========================================================================= */
+
+/* ---------- shared bits ---------- */
+#view-index .l8-ic {
+  display: inline-grid; place-items: center; flex: none;
+  width: 2.6rem; height: 2.6rem; border-radius: 12px;
+  background: var(--tint); color: var(--signal-strong);
+}
+#view-index .l8-ic svg,
+#view-index .l8-node svg {
+  width: 1.35rem; height: 1.35rem; fill: none; stroke: currentColor;
+  stroke-width: 1.8; stroke-linecap: round; stroke-linejoin: round;
+}
+#view-index .l8-card, #view-index .l8-soon, #view-index .l8-about { min-width: 0; overflow-wrap: break-word; }
+
+/* ---------- 1. about ---------- */
+#view-index .l8-about {
+  position: relative; overflow: hidden;
+  display: grid; grid-template-columns: minmax(0, .85fr) minmax(0, 1.15fr);
+  gap: clamp(1.5rem, 4vw, 3.5rem); align-items: start;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-xl);
+  padding: clamp(1.5rem, 4vw, 2.75rem);
+}
+#view-index .l8-about::before {
+  content: ""; position: absolute; inset-block: 0; inset-inline-start: 0; width: 4px; background: var(--signal);
+}
+#view-index .l8-about-head h2 {
+  font-size: clamp(1.5rem, 3vw, 2.1rem) !important; line-height: 1.35 !important; color: var(--ink) !important; margin: 0 !important;
+}
+#view-index .l8-values { list-style: none; margin: 1.4rem 0 0; padding: 0; display: flex; flex-wrap: wrap; gap: .5rem; }
+#view-index .l8-values li {
+  background: var(--tint-2); border: 1px solid var(--line); border-radius: 999px;
+  padding: .3rem .85rem; font-size: .8rem; font-weight: 500; color: var(--signal-strong);
+}
+#view-index .l8-about-body p { margin: 0; color: var(--ink-2); font-size: clamp(.95rem, 1.3vw, 1.02rem); line-height: 2; }
+#view-index .l8-about-body p:first-child { color: var(--ink); }
+#view-index .l8-about-body p + p { margin-top: 1.1rem; padding-top: 1.1rem; border-top: 1px solid var(--line-2); }
+
+/* ---------- cards (audience, problems) ---------- */
+#view-index .l8-cards { list-style: none; margin: 0; padding: 0; display: grid; gap: 1rem; }
+#view-index .l8-cards-3 { grid-template-columns: repeat(3, minmax(0, 1fr)); }
+#view-index .l8-card {
+  display: flex; flex-direction: column; gap: .7rem;
+  background: var(--surface); border: 1px solid var(--line); border-radius: var(--r-lg);
+  padding: 1.4rem 1.4rem 1.5rem; transition: border-color .25s, translate .25s;
+}
+#view-index .l8-card:hover { border-color: var(--signal-light); translate: 0 -2px; }
+#view-index .l8-card h3 { margin: 0 !important; font-size: 1.08rem !important; line-height: 1.55 !important; color: var(--ink); }
+#view-index .l8-card p { margin: 0; color: var(--ink-2); font-size: .92rem; line-height: 1.9; }
+
+/* the 85% card: navy like the other emphasis blocks, label kept on the same line as the figure */
+#view-index .l8-prob-stat { background: var(--navy); border-color: var(--navy); }
+#view-index .l8-prob-stat:hover { border-color: var(--signal); }
+#view-index .l8-prob-stat h3 { color: #fff !important; }
+#view-index .l8-prob-stat p { color: rgba(255, 255, 255, .8); }
+#view-index .l8-stat { display: flex; flex-wrap: wrap; align-items: center; gap: .35rem .6rem; }
+#view-index .l8-stat > span { font-size: 1rem; color: rgba(255, 255, 255, .8); }
+#view-index .l8-stat b { font-size: clamp(2.6rem, 6vw, 3.3rem); line-height: 1; color: var(--signal-light); font-weight: 500 !important; }
+#view-index .l8-stat small {
+  display: inline-block; border: 1px solid rgba(255, 255, 255, .35); border-radius: 999px;
+  padding: .2rem .7rem; font-size: .76rem; font-weight: 500; color: #fff; white-space: nowrap;
+}
+
+/* how Nabd addresses it */
+#view-index .l8-solve { margin-top: 1.25rem; background: var(--tint); border-radius: var(--r-lg); padding: clamp(1.25rem, 3vw, 1.75rem); }
+#view-index .l8-solve h3 { margin: 0 0 1rem !important; font-size: 1.15rem !important; line-height: 1.5 !important; color: var(--ink); }
+#view-index .l8-solve ul { list-style: none; margin: 0; padding: 0; display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .85rem; }
+#view-index .l8-solve li { display: flex; align-items: flex-start; gap: .75rem; min-width: 0; background: var(--surface); border-radius: var(--r); padding: 1rem; }
+#view-index .l8-solve li .l8-ic { width: 2.3rem; height: 2.3rem; }
+#view-index .l8-solve li .l8-ic svg { width: 1.2rem; height: 1.2rem; }
+#view-index .l8-solve li b { display: block; color: var(--ink); font-size: .95rem; margin-bottom: .15rem; }
+#view-index .l8-solve li div > span { display: block; color: var(--ink-2); font-size: .85rem; line-height: 1.75; }
+
+/* ---------- 4. training journey (#sec-how) ---------- */
+#view-index .l8-journey {
+  list-style: none; margin: 0; padding: 0; position: relative;
+  display: grid; grid-template-columns: repeat(6, minmax(0, 1fr)); gap: 1rem;
+}
+/* the connecting line runs from the first node to the last */
+#view-index .l8-journey::before {
+  content: ""; position: absolute; top: calc(1.6rem - 1px); height: 2px;
+  inset-inline: calc(100% / 12);
+  background: linear-gradient(to left, var(--signal-light), var(--signal));
+}
+#view-index .l8-journey li { position: relative; min-width: 0; display: flex; flex-direction: column; align-items: center; gap: .8rem; text-align: center; }
+#view-index .l8-node {
+  position: relative; z-index: 1; display: grid; place-items: center; flex: none;
+  width: 3.2rem; height: 3.2rem; border-radius: 50%;
+  background: var(--surface); border: 2px solid var(--signal); color: var(--signal-strong);
+  box-shadow: 0 0 0 6px var(--surface);
+}
+#view-index .l8-journey b { display: block; font-family: var(--font-mono); font-size: .8rem; font-weight: 300 !important; color: var(--signal); margin-bottom: .15rem; }
+#view-index .l8-journey h3 { margin: 0 0 .3rem !important; font-size: 1rem !important; line-height: 1.5 !important; color: var(--ink); }
+#view-index .l8-journey p { margin: 0; font-size: .84rem; color: var(--ink-2); line-height: 1.75; }
+
+/* ---------- 6. roadmap: visibly not available yet ---------- */
+#view-index .l8-soon-list { display: grid; gap: 1rem; }
+#view-index .l8-soon {
+  background: transparent; border: 2px dashed #B9CBD2; border-radius: var(--r-lg);
+  padding: clamp(1.25rem, 3vw, 1.75rem);
+}
+#view-index .l8-soon-top { display: flex; flex-wrap: wrap; align-items: center; gap: .6rem .8rem; margin-bottom: .85rem; }
+#view-index .l8-soon .l8-ic { background: transparent; border: 1.5px dashed #9FB4BD; color: var(--ink-3); }
+#view-index .l8-soon h3 { flex: 1 1 12rem; margin: 0 !important; font-size: 1.1rem !important; line-height: 1.5 !important; color: rgba(25, 59, 74, .72) !important; }
+#view-index .l8-dev {
+  display: inline-flex; align-items: center; gap: .4rem; flex: none;
+  background: var(--surface); border: 1px dashed var(--ink-3); border-radius: 999px;
+  padding: .2rem .75rem; font-size: .76rem; font-weight: 500; color: var(--ink-3);
+}
+#view-index .l8-dev::before { content: ""; width: .45rem; height: .45rem; border-radius: 50%; border: 1.5px solid var(--ink-3); }
+#view-index .l8-soon > p { margin: 0 0 1rem; color: rgba(25, 59, 74, .7); font-size: .92rem; line-height: 1.95; }
+#view-index .l8-stages {
+  list-style: none; margin: 0 0 1rem; padding: 0;
+  display: grid; grid-template-columns: repeat(4, minmax(0, 1fr)); gap: .75rem;
+}
+#view-index .l8-stages li {
+  display: flex; flex-direction: column; gap: .55rem; min-width: 0;
+  border: 1.5px dashed #CFDCE1; border-radius: var(--r); padding: 1rem;
+  color: rgba(25, 59, 74, .7); font-size: .86rem; line-height: 1.8;
+}
+#view-index .l8-stages b {
+  display: grid; place-items: center; width: 1.9rem; height: 1.9rem; border-radius: 50%;
+  border: 1.5px dashed #9FB4BD; color: var(--ink-3); font-size: .85rem; font-weight: 500 !important;
+}
+/* the legal note stays fully readable */
+#view-index .l8-soon > p.l8-soon-note {
+  margin: 0; padding: .75rem 1rem; border-radius: var(--r);
+  background: var(--tint-2); border-inline-start: 3px solid var(--ink-3);
+  color: var(--ink-2); font-size: .85rem; font-weight: 500; line-height: 1.85;
+}
+
+/* ---------- public header: room for the five anchors ---------- */
+@media (min-width: 1101px) and (max-width: 1320px) {
+  #public-header nav .nav-link-item { padding: .45rem .5rem !important; font-size: .84rem; }
+}
+
+/* ---------- tablets and phones ---------- */
+@media (max-width: 1024px) {
+  #view-index .l8-solve ul { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+  #view-index .l8-stages { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 900px) {
+  #view-index .l8-about { grid-template-columns: 1fr; }
+  /* the journey turns vertical, the line runs down the node column */
+  #view-index .l8-journey { grid-template-columns: 1fr; gap: 0; }
+  #view-index .l8-journey::before {
+    top: 1.6rem; bottom: 1.6rem; height: auto; width: 2px;
+    inset-inline-start: calc(1.6rem - 1px); inset-inline-end: auto;
+    background: linear-gradient(to bottom, var(--signal), var(--signal-light));
+  }
+  #view-index .l8-journey li { flex-direction: row; align-items: flex-start; gap: 1rem; text-align: start; padding-bottom: 1.3rem; }
+  #view-index .l8-journey li:last-child { padding-bottom: 0; }
+  #view-index .l8-journey li > div { padding-top: .2rem; }
+}
+@media (max-width: 768px) {
+  #view-index .l8-cards-3 { grid-template-columns: 1fr; }
+}
+@media (max-width: 520px) {
+  #view-index .l8-solve ul, #view-index .l8-stages { grid-template-columns: 1fr; }
+  #view-index .l8-card { padding: 1.15rem; }
+  #view-index .l8-about { padding: 1.25rem; }
+  #view-index .l8-node { width: 2.8rem; height: 2.8rem; }
+  #view-index .l8-journey::before { inset-inline-start: calc(1.4rem - 1px); top: 1.4rem; bottom: 1.4rem; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #view-index .l8-card { transition: none; }
+  #view-index .l8-card:hover { translate: none; }
+}

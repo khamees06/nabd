@@ -1,0 +1,346 @@
+{
+ "commit": "5f431d5",
+ "note": "SHA-256 of every file of the legacy site as stored in Git (text files with LF line endings).",
+ "files": {
+  ".nojekyll": {
+   "bytes": 0,
+   "sha256": "e3b0c44298fc1c149afbf4c8996fb92427ae41e4649b934ca495991b7852b855"
+  },
+  "academic8.css": {
+   "bytes": 22936,
+   "sha256": "33f5faa49b51c71c81378bf3ed870f5cbb802171b66699671061c9dbde9f2799"
+  },
+  "data/er-act.json": {
+   "bytes": 410682,
+   "sha256": "5891145b9b5b39c80ffc339f5fa09d29576a1257771d01d79fc5025152f3ce66"
+  },
+  "data/er-cases.json": {
+   "bytes": 259214,
+   "sha256": "4c76ccf2fb6c478deb17db926e0bb3339941fd13b7f186bdd2aac38323739865"
+  },
+  "data/er-find.json": {
+   "bytes": 737985,
+   "sha256": "eb4fedc9e3f1e4d234c66b2fd126e5bd1d0c9bcb191f1b8383f2552c6ada9367"
+  },
+  "data/er-lang.json": {
+   "bytes": 7983,
+   "sha256": "dc03422a26eea76ff0686f0f9f4b8c9e5e85a73954bcb581445d4fbbfb32da1b"
+  },
+  "data/resp-ar.json": {
+   "bytes": 360470,
+   "sha256": "972abb1fab81b448b2327229383f3affbd567055022958c1266f858ef5727ed5"
+  },
+  "data/resp-clinical.json": {
+   "bytes": 111272,
+   "sha256": "c698cc23fe1faee28e02983331bb49607448daf612d475b49064e4e3ccbf0a58"
+  },
+  "data/resp-model.json": {
+   "bytes": 522631,
+   "sha256": "10a2f7d8fdd67735fb62ff8b3f9bb6b85f45efcd6885f8b20811349160286584"
+  },
+  "data/resp-patients.json": {
+   "bytes": 260612,
+   "sha256": "985400524500ea1af4134761537d6f4c52a8e36f9421761b6e38b472c16afb64"
+  },
+  "er.css": {
+   "bytes": 34863,
+   "sha256": "03b5f056098883f5a96e75efe220200791d077f91be27409229c3bc88dd5aa38"
+  },
+  "er.js": {
+   "bytes": 420473,
+   "sha256": "062c1ff238454f911578ca50ca34d4af3ccf479f89a381f03f9d86d57f37a638"
+  },
+  "home9.css": {
+   "bytes": 7328,
+   "sha256": "2ca3a1eb39201711c02ddbec1d60a9d6d424f3a289f239fef523285f9649b61a"
+  },
+  "img/CREDITS.txt": {
+   "bytes": 10213,
+   "sha256": "15d7681d7e95aedb78998733261eef598a1b8f8de6f23524840b3f01b62cb680"
+  },
+  "img/cases/abdomen.jpg": {
+   "bytes": 128915,
+   "sha256": "9734670dd72feb5f4e14e5d22dca92e776455dd092b33aaf2116aff4bfb5af6a"
+  },
+  "img/cases/cardio.jpg": {
+   "bytes": 125687,
+   "sha256": "c6d90adc5c9a259c84381cda85889a4e4abf646a841da7c255c0c07353cf7248"
+  },
+  "img/cases/gi.jpg": {
+   "bytes": 144934,
+   "sha256": "436ade4d85a94401c21750e207d3b9d856195ffca21732afdb5613ddc9d8a6e6"
+  },
+  "img/cases/obgyn.jpg": {
+   "bytes": 153374,
+   "sha256": "59d438572c36e030cdf96f65934a1d92319a9671f1b5ef03a5b45ad6c0c0efff"
+  },
+  "img/cases/ortho.jpg": {
+   "bytes": 83253,
+   "sha256": "53438c7a8805a212b8754e682bbcdb8b4c888797e58d7ab698cb91b4be5ccc2e"
+  },
+  "img/cases/peds.jpg": {
+   "bytes": 82084,
+   "sha256": "52a483f79a728881031cf43c06576a49d427fe9e7ef8e329a5115712deee7d62"
+  },
+  "img/cases/resp.jpg": {
+   "bytes": 66729,
+   "sha256": "56114221efe02bd462d14f85033ae8b0cfcea8e13ea378e45bce9060419ec24d"
+  },
+  "img/hero-1080.jpg": {
+   "bytes": 121140,
+   "sha256": "a604c4afdfc6c8fa6e2b12a5807be2e19b8b6a52588ca4ce2293a4764cc09078"
+  },
+  "img/hero-720.jpg": {
+   "bytes": 61767,
+   "sha256": "c88706b8dd8737a84168cc92688938bc21ee888f50941372f5434d8b04eb0051"
+  },
+  "img/hero.jpg": {
+   "bytes": 242051,
+   "sha256": "375beeb18ac04265a0dd2d7e7fa2b4678d1692fa23e9f0e8d95e29411c5abd33"
+  },
+  "img/nb/amman.jpg": {
+   "bytes": 250953,
+   "sha256": "4ffd7762a16c63355e965b00afedc39203aac18a6e0ce89cd12fe859be788cee"
+  },
+  "img/nb/ankle_fx.jpg": {
+   "bytes": 38501,
+   "sha256": "4251b06eb79d78c21d32a90f48c687c93ffc8b61333ec1e93beb0dffba3041ee"
+  },
+  "img/nb/bandage.jpg": {
+   "bytes": 281313,
+   "sha256": "7cb91e719592ce361ef4a7146589b7e1e928d141146abd91fa3f4ea468138ad0"
+  },
+  "img/nb/bp.jpg": {
+   "bytes": 301774,
+   "sha256": "17938deb3ee006604d7f741ba9457b5cb73c3cbfdba91f4d3f4570a3b6b2003d"
+  },
+  "img/nb/bp2.jpg": {
+   "bytes": 128164,
+   "sha256": "a1eec58e9cd74e4ada18445157637b3b883e0132bd77ac275c8c017402e92c23"
+  },
+  "img/nb/cxr_normal.png": {
+   "bytes": 279649,
+   "sha256": "2d46a53b532e87d84d488f7d93a07ad9d29f89c7d6308b404267d9590e3e0cc1"
+  },
+  "img/nb/cxr_pneu.jpg": {
+   "bytes": 62295,
+   "sha256": "a977feb23e2f00010573c80c521a5cf315c91d54a59ce578dd5166a497c4da28"
+  },
+  "img/nb/ecg.jpg": {
+   "bytes": 306200,
+   "sha256": "7c25b735b663a93a6de5be3df8d4fd2d77677310e9664624813e9ab26e7a3319"
+  },
+  "img/nb/hands.jpg": {
+   "bytes": 70301,
+   "sha256": "270db9d8df014ef02768f1d38189692d46e0dcb8a97c72bcffffc16c442f57ed"
+  },
+  "img/nb/iv.jpg": {
+   "bytes": 316724,
+   "sha256": "92a2fdec09d21bfa6a066ecf9aca4ab787f321b152ad6ceca854e606c7d51829"
+  },
+  "img/nb/steth.jpg": {
+   "bytes": 74295,
+   "sha256": "12d4f0150d5fbf6c199c533e28290b3dbdea5ac1b7e5e946bd6839550dbdc73d"
+  },
+  "img/nb/thermo.jpg": {
+   "bytes": 46522,
+   "sha256": "9867f7aaf050644e458442775649322328df862ca3d15dc97a3072a5ab6b772b"
+  },
+  "img/nc/bleed.jpg": {
+   "bytes": 81473,
+   "sha256": "b1f0eea2e94ba10441fdc3a690d12c29ac6c593d62001bc9984b59176c95fd22"
+  },
+  "img/nc/bp.jpg": {
+   "bytes": 136348,
+   "sha256": "5ec5b33e712b49cf13a9f2473a2a48ecbdb4d2c4fe102652fe75640f8c91f2d6"
+  },
+  "img/nc/chest.jpg": {
+   "bytes": 144128,
+   "sha256": "2160fd6471168a50de37b9d8bef6351f9183e9676289ec479696fa78299ba4e0"
+  },
+  "img/nc/fever.jpg": {
+   "bytes": 56560,
+   "sha256": "414b540b14f810b784422a25b63eb1385f970abc968d01200c9863f92bbbed75"
+  },
+  "img/nc/hypo.jpg": {
+   "bytes": 150072,
+   "sha256": "4811ada1aaa88a29f28e589acd20e7867be4aba62f8d5d0babea042793f762a1"
+  },
+  "img/nc/iv.jpg": {
+   "bytes": 119492,
+   "sha256": "44161dd453d9837b0114b79217ce632db15df75275ee5f0dff1ce209b5bd5d8b"
+  },
+  "img/nc/sepsis.jpg": {
+   "bytes": 127346,
+   "sha256": "c5f4b9478f109692c41baccabfa7c08a72b6110bd1ee08f3e5bcae05e902dd35"
+  },
+  "img/nc/sugar.jpg": {
+   "bytes": 112796,
+   "sha256": "c235e8a5c73753b543485f318cd6ae31afcf4f905d04e97d32e8f48e3f18d340"
+  },
+  "img/nc/vitals.jpg": {
+   "bytes": 106416,
+   "sha256": "233c690fc9777f75d49ff52bd755e602418baac709ed1f8c394ccbd270df8664"
+  },
+  "img/nc/wound.jpg": {
+   "bytes": 131228,
+   "sha256": "68a5f051822bba16fc6ac8acda2d588966cfc4c261b215c5a4a3c12d5089ae40"
+  },
+  "img/or/banner.jpg": {
+   "bytes": 222481,
+   "sha256": "fdd94bb1ea959487b08ad531ece5c74f9fad32069f50c807984a4cf7d8e036be"
+  },
+  "img/or/checklist.jpg": {
+   "bytes": 123881,
+   "sha256": "247df39ab127e816fba8bd6fbefbf576b0de1e0131162adfdbfdb3835d621dac"
+  },
+  "img/or/pacu.jpg": {
+   "bytes": 211975,
+   "sha256": "d97f9ec4ec433bfa1f104172c71efbe14049daaa6d5e3b51ffeee8eebda2f370"
+  },
+  "img/or/preop.jpg": {
+   "bytes": 154575,
+   "sha256": "16829d0a3dc073fdfbeac7217b235f8a2631f97a91534617001b728be08db203"
+  },
+  "img/univ.jpg": {
+   "bytes": 155299,
+   "sha256": "fb964bf6a41f3f34529067d3e47f94f445b5357da255700387f632ef48126a76"
+  },
+  "img/v9/aud-nurses.jpg": {
+   "bytes": 42598,
+   "sha256": "94b257b2023dc0478e5f1c98bd315f7f9a58f5049631dd2e01f50851c063c61a"
+  },
+  "img/v9/aud-students.jpg": {
+   "bytes": 34200,
+   "sha256": "f59e0f063ce6ed8cc02b4e8c1d8e5492ff2db4facf99e067ffd214d73542d94d"
+  },
+  "img/v9/aud-uni.jpg": {
+   "bytes": 35621,
+   "sha256": "9c81db7f15d5d1f51939ab682125b0d286b0bcd43b130c608da7d2aedab29848"
+  },
+  "img/v9/hero2.jpg": {
+   "bytes": 117055,
+   "sha256": "2d6bc38d8cd50fc3d20d1297f229e258a6a7d0a4f92c86cf68fc2fd492b50c4b"
+  },
+  "img/v9/jordan.jpg": {
+   "bytes": 194468,
+   "sha256": "0a330cbd6b71fe129fa822afb461213e7b4c01b4c484a330b5ff799fb26d2fe4"
+  },
+  "img/v9/login2.jpg": {
+   "bytes": 121851,
+   "sha256": "111b9539cdb655aa5b4f274427a1039bf96f8fc606f1408eb4f824fe581213f9"
+  },
+  "img/v9/problem.jpg": {
+   "bytes": 116773,
+   "sha256": "7dd68df0f1b2e06ce2bca257d64b40d0123ee1d8116011efa7b6a8a460b20623"
+  },
+  "img/v9/solution.jpg": {
+   "bytes": 68126,
+   "sha256": "ec1f5f844437dfe26e2ed420b694b52e57fc0b1bb99dce06b93d3d9486503109"
+  },
+  "img/v9/solution2.jpg": {
+   "bytes": 100061,
+   "sha256": "ee01e48b14c808930d5c12be61dd72cb21e4d16d0ae6dee3a80155793237b43a"
+  },
+  "img/v9/sp-cardio.jpg": {
+   "bytes": 45347,
+   "sha256": "d80ef87ab7f12e1a4b88ac84f493cfdd9dbc01441a45252fa9c5301138860d55"
+  },
+  "img/v9/sp-diabetes.jpg": {
+   "bytes": 74821,
+   "sha256": "4708a28f73d51e43a1ffaef5a0f5dbb276c55f03d5a288cdc6a87d621a17cecc"
+  },
+  "img/v9/sp-er.jpg": {
+   "bytes": 57799,
+   "sha256": "c94824fa4d9f5dcb68aea11639dcb2a17da600e0987c2969bf738e9af4edaa1c"
+  },
+  "img/v9/sp-nursing.jpg": {
+   "bytes": 42598,
+   "sha256": "94b257b2023dc0478e5f1c98bd315f7f9a58f5049631dd2e01f50851c063c61a"
+  },
+  "img/v9/sp-obgyn.jpg": {
+   "bytes": 21526,
+   "sha256": "242298152916be47df9814005d3dc905288e316734bf3fae364ab6339afb45fe"
+  },
+  "img/v9/sp-peds.jpg": {
+   "bytes": 42812,
+   "sha256": "ad7f7fc255d3df4805e7776d8ea88146911e0c7539bbd6c9f25df9519dfe906c"
+  },
+  "img/v9/sp-resp.jpg": {
+   "bytes": 25543,
+   "sha256": "cc3cc6912fa7bde0577d1a4e8814e4662a7c997393ef1b687be7e86fc89bec15"
+  },
+  "img/v9/sp-sepsis.jpg": {
+   "bytes": 46586,
+   "sha256": "bd8f8c4cbdc88bd01243bfd8cf61c3ae8b6d9a1ed8be9ad8e6251e557eebdd3c"
+  },
+  "img/v9/sp-surgery.jpg": {
+   "bytes": 55024,
+   "sha256": "139a06cdd9c81c097eb7f91df57b2a52cee962427c3b89833b05c18b4865fc70"
+  },
+  "img/v9/vision.jpg": {
+   "bytes": 79823,
+   "sha256": "b0eeb46a22b611ae2620f4d559873baddfe3b2d45f061757cfc031516ee03ea8"
+  },
+  "img/v9/vision2.jpg": {
+   "bytes": 63437,
+   "sha256": "b5c4e29e36ab243136d7af225b8ac251644219b40b070575c36046f730bddfa2"
+  },
+  "img/v9/welcome.jpg": {
+   "bytes": 71752,
+   "sha256": "b9b392e44d1255f7cf92ad2e49c6ef8be3d26606e013182b60a397c12aa6605e"
+  },
+  "img/welcome.jpg": {
+   "bytes": 120837,
+   "sha256": "246914d1890fa9ef684a7ad2a963477274755aa91dd3f4b8989dd5b23206da1a"
+  },
+  "index.html": {
+   "bytes": 178399,
+   "sha256": "d428721255f7b91bff23b665fd8a9f395d9540d3f5c42d7948c1ec8646e9ea4b"
+  },
+  "landing8.css": {
+   "bytes": 10387,
+   "sha256": "3b74f16462d4db051fa17303f7d6fe5ef98f856ef2db4c69ac45f7f32b8df1ad"
+  },
+  "landing9.css": {
+   "bytes": 13003,
+   "sha256": "7cc6eedd44c1169aa1212f13ec9332f1d286b8bef2ede34f724c65f79c800604"
+  },
+  "motion.js": {
+   "bytes": 29009,
+   "sha256": "f29f8d3cfc496b0f6ed1872c5eb64d5c080ee6730063caa91754e99993149548"
+  },
+  "resp.css": {
+   "bytes": 21523,
+   "sha256": "17f96e8d427b996caaada299940f020d04a2d7eb98c3e6170eeac35108a29c82"
+  },
+  "resp.js": {
+   "bytes": 53425,
+   "sha256": "b367d79e24c4b43ec08cb4295b042290aadea8e05f8296efb790e819d78ed31c"
+  },
+  "scope.css": {
+   "bytes": 3339,
+   "sha256": "35a5561f262afa5c5a2a8c373ddb26c5fc007c16d0508c15dbd3a24c4724e0b8"
+  },
+  "script.js": {
+   "bytes": 767886,
+   "sha256": "58d61b3213131c47aee678a1e89d26e2df82ed7b14ff1115fdb53520b52f050a"
+  },
+  "style.css": {
+   "bytes": 136853,
+   "sha256": "540a690a1dfaa453b9f7ba750f4ab6b5e4e67cd734be359bc1339210a5720a19"
+  },
+  "terms.js": {
+   "bytes": 8486,
+   "sha256": "f96785a5206832cb7f4366aabc2883c0c9840d90b9d92a8627987deaa03b6a52"
+  },
+  "theme.css": {
+   "bytes": 53451,
+   "sha256": "d8bb18f3c93c663b241226935ec4b2bd9844db37fe6437297a8bc42f07f49200"
+  },
+  "ui.js": {
+   "bytes": 2320,
+   "sha256": "558e5e1f82e669821f4558a041c00be6654f98b6fdff115e8bae68d57ee57434"
+  }
+ }
+}

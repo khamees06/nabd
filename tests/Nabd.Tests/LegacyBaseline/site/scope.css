@@ -1,0 +1,63 @@
+/* =========================================================
+   NABD — what the site offers (2026-10-30)
+   The emergency room, the respiratory room and the clinical coach stay, with the profile.
+   The university portal, specialty training, nursing cases, the learning path and the level
+   quiz are hidden here and closed in script.js (REMOVED_VIEWS and the start guards). Their
+   markup stays in the page because the app still writes into it; to bring a part back,
+   delete its selector below and its guard in script.js.
+   Every rule is !important because the app re-shows some of these blocks on sign-in and
+   theme.css forces sidebar items to display:flex !important.
+   phase8 2026-11-07: the university portal (professor, advisor, student assignments) is back;
+   its selectors were removed below and 'university' left REMOVED_VIEWS in script.js.
+   ========================================================= */
+
+/* Landing page and its links */
+#sec-roles, #sec-specs, #sec-or, #sec-universities, #sec-level, #index-level-cta,
+#public-header a[data-pub-anchor="sec-specs"],
+#public-header a[data-pub-anchor="sec-universities"],
+#public-header a[data-pub-anchor="sec-level"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-roles"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-specs"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-universities"],
+#app-sidebar #sidebar-guest-nav .v7-item[href="#sec-level"],
+
+/* Signed-in navigation */
+#app-nav-cases,
+#app-sidebar .v7-item[onclick*="app-nav-cases"],
+/* phase8 2026-11-07: #app-nav-uni and the sidebar university group are shown again (academic section) */
+
+/* Student home */
+/* phase8 2026-11-07: #home-quick-uni-btn, #home-professor-section and #home-student-uni-section are shown again; script.js shows each by role */
+#home-skip-note, #home-learn, #home-nurse,
+#home-cases-anchor,
+#home-path > .nb-path-card:not(.nb-path-dark), #path-retake, #path-retake-note,
+
+/* Profile, certificate */
+/* phase8 2026-11-07: the notes card (#path-notes) is shown again for supervisor and advisor notes */
+#path-mistakes [data-fix],
+
+/* Controls that lead nowhere while the coach and the old rooms are closed */
+#home-coach-banner, #open-coach-view-btn, #dash-coach-go, [data-foot-app="coach"],
+#setting-tts-row, #coach-api-box {
+  display: none !important;
+}
+/* mobile audit 2026-11-07: the :has() selectors live in their own rule. A browser without :has() drops a whole
+   rule when one selector is unknown, and that used to bring back every block listed above. */
+#home-path .nb-kpis > div:has(#path-k2),
+#view-profile div:has(> #profile-stat-spec),
+#printable-certificate-area div:has(> #cert-stat-spec),
+label.nb-switch:has(#osce-toggle), label:has(> input#setting-tts-default) {
+  display: none !important;
+}
+
+/* Sign-in and registration
+   phase8 2026-11-07: the professor demo button, the supervisor role card and the section code
+   (#reg-code) are shown again, so nothing here is hidden any more. */
+
+/* Close the gaps the hidden cells leave */
+#home-path .nb-kpis { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+@media (min-width: 900px) {
+  #home-path { grid-template-columns: 1fr; }
+  /* phase8 2026-11-07: the notes card is back, so this row keeps its three columns */
+}
+/* phase8 2026-11-07: three role cards again; academic8.css lays them out */

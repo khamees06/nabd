@@ -1,0 +1,41 @@
+{
+ "note": "Every intentional difference between the frozen legacy site (site/) and what the ASP.NET Core host serves. The baseline tests undo these replacements on the served text and then require it to equal the legacy file exactly, so any other difference fails a test. Each 'legacy' text occurs exactly 'count' times in its legacy file.",
+ "seams": [
+  {
+   "file": "er.js",
+   "count": 1,
+   "legacy": "const API = /\\.vercel\\.app$/.test(location.hostname) ? '/api/er-chat' : 'https://nabd-smoky-one.vercel.app/api/er-chat';",
+   "current": "const API = '/api/er-chat';",
+   "reason": "The ER room talks to the application's own gateway (Nabd.Web ErChatController), which forwards to the understanding service. The browser no longer needs to know where that service is hosted."
+  },
+  {
+   "file": "resp.js",
+   "count": 1,
+   "legacy": "const API = /\\.vercel\\.app$/.test(location.hostname) ? '/api/resp-chat' : 'https://nabd-smoky-one.vercel.app/api/resp-chat';",
+   "current": "const API = '/api/resp-chat';",
+   "reason": "Same as er.js, for the respiratory room (Nabd.Web RespChatController)."
+  },
+  {
+   "file": "home9.css",
+   "count": 2,
+   "legacy": "url(\"img/v9/login2.jpg\")",
+   "current": "url(\"../img/v9/login2.jpg\")",
+   "reason": "Stylesheets moved from the site root to wwwroot/css, so a path relative to the stylesheet gains one level."
+  },
+  { "file": "index.html", "count": 1, "legacy": "href=\"style.css\"", "current": "href=\"css/style.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"theme.css\"", "current": "href=\"css/theme.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"resp.css\"", "current": "href=\"css/resp.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"er.css\"", "current": "href=\"css/er.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"scope.css\"", "current": "href=\"css/scope.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"home9.css\"", "current": "href=\"css/home9.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"landing8.css\"", "current": "href=\"css/landing8.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"landing9.css\"", "current": "href=\"css/landing9.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "href=\"academic8.css\"", "current": "href=\"css/academic8.css\"", "reason": "Stylesheets are served from /css." },
+  { "file": "index.html", "count": 1, "legacy": "src=\"script.js\"", "current": "src=\"js/script.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
+  { "file": "index.html", "count": 1, "legacy": "src=\"motion.js\"", "current": "src=\"js/motion.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
+  { "file": "index.html", "count": 1, "legacy": "src=\"terms.js\"", "current": "src=\"js/terms.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
+  { "file": "index.html", "count": 1, "legacy": "src=\"ui.js\"", "current": "src=\"js/ui.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
+  { "file": "index.html", "count": 1, "legacy": "src=\"resp.js\"", "current": "src=\"js/resp.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
+  { "file": "index.html", "count": 1, "legacy": "src=\"er.js\"", "current": "src=\"js/er.js\"", "reason": "Script bundles are served from /js by the client-script bundler." }
+ ]
+}

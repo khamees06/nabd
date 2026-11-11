@@ -58,6 +58,7 @@ docs/
 
 | Document | Content |
 |---|---|
+| [docs/final-report.md](docs/final-report.md) ([العربية](docs/final-report.ar.md)) | What was done, proved, not done, and what the owner must decide |
 | [docs/architecture.md](docs/architecture.md) | The layers, the request paths, where logic runs today, security posture |
 | [docs/requirements.md](docs/requirements.md) | What the system must do and keep, with the evidence for each |
 | [docs/workflows.md](docs/workflows.md) | User journeys and system flows |

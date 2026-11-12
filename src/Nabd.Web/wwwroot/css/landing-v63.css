@@ -2,8 +2,8 @@
    Nabd public landing, V6.3 visual refinement (2026-11-12). Hand-written; loaded after landing-v6.css
    (the generated V6.2 base) and landing-v6-shell.css. Read docs/ui-design-system.md first.
 
-   What it changes, and only this: the simulation showcase (a smaller laptop showing a real screen of the
-   ER room), «كيف تعمل نبض؟» (steps with real screens and right-to-left arrows), the «عن نبض» section,
+   What it changes, and only this: the simulation showcase (its frame and copy; the laptop and its four points
+   moved to landing-v64.css in V6.4), «كيف تعمل نبض؟» (steps with real screens and right-to-left arrows), the «عن نبض» section,
    the partnership section (a Jordanian university photo) and «لماذا صممنا نبض؟». The hero, the
    specialties, the final call to action, the header and the footer are untouched.
 
@@ -34,182 +34,13 @@
 #view-index.nl-index-view .nl-showcase-text { padding: 0; }
 #view-index.nl-index-view .nl-showcase-text .nl-premium-pill { width: fit-content; }
 #view-index.nl-index-view .nl-showcase-text .nl-premium-experience-intro { margin-bottom: 18px; }
-/* The cards beside the laptop keep their V6.2 look, a little more compact. */
-#view-index.nl-index-view .nl-showcase-text .nl-premium-check-list { gap: 11px; }
-#view-index.nl-index-view .nl-showcase-text .nl-premium-check-row { min-height: 0; padding: 13px 13px 12px; }
 #view-index.nl-index-view .nl-showcase-text .nl-premium-disclaimer { margin-top: 14px; color: var(--copy); }
 /* Contrast: the V6.2 greys of these texts are below 4.5:1 (measured in the V6.3 review); --copy is 5.8:1. */
 #view-index.nl-index-view .nl-showcase-text .nl-premium-experience-intro,
 #view-index.nl-index-view .nl-premium-method-section .nl-premium-section-intro p,
 #view-index.nl-index-view .nl-partner-copy p,
 #view-index.nl-index-view .nl-why .nl-premium-audience-heading p { color: var(--copy); }
-#view-index.nl-index-view .nl-showcase-text .nl-premium-check-row small { color: #5d7079; }
 #view-index.nl-index-view .nl-premium-method-section .nl-premium-section-intro .nl-eyebrow { color: #8d5c45; }
-
-/* The laptop: a thin dark lid around a real screenshot, and an aluminium base seen slightly from above. */
-#view-index.nl-index-view .nl-device {
-  position: relative;
-  width: 100%;
-  max-width: 440px;
-  margin: 0;
-  justify-self: center;
-}
-#view-index.nl-index-view .nl-device-lid {
-  position: relative;
-  z-index: 1;
-  padding: 2.4% 2.4% 2.9%;
-  border-radius: 16px 16px 5px 5px;
-  background: linear-gradient(180deg, #23313a 0%, #121c22 100%);
-  box-shadow:
-    inset 0 0 0 1px rgba(255, 255, 255, .07),
-    inset 0 1px 0 rgba(255, 255, 255, .14),
-    0 18px 34px rgba(5, 39, 52, .16);
-}
-#view-index.nl-index-view .nl-device-camera {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 5px;
-  height: 5px;
-  margin: 1.15% 0 0 -2.5px;
-  border-radius: 50%;
-  background: #34444d;
-  box-shadow: 0 0 0 1px rgba(255, 255, 255, .05);
-}
-#view-index.nl-index-view .nl-device-screen {
-  position: relative;
-  overflow: hidden;
-  aspect-ratio: 16 / 10;
-  border-radius: 3px;
-  background: #f1f6f8;
-}
-#view-index.nl-index-view .nl-device-screen img {
-  display: block;
-  width: 100%;
-  height: 100%;
-  max-width: none;
-  object-fit: cover;
-}
-/* A faint reflection on the glass. */
-#view-index.nl-index-view .nl-device-screen::after {
-  content: "";
-  position: absolute;
-  inset: 0;
-  pointer-events: none;
-  background: linear-gradient(118deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, 0) 34%);
-}
-#view-index.nl-index-view .nl-device-base {
-  position: relative;
-  width: 114%;
-  margin: -1px -7% 0;
-  aspect-ratio: 1 / .14;
-}
-/* The deck: a trapezoid, wider at the front edge. */
-#view-index.nl-index-view .nl-device-deck {
-  position: absolute;
-  inset: 0 0 17% 0;
-  clip-path: polygon(6.15% 0, 93.85% 0, 100% 100%, 0 100%);
-  background: linear-gradient(180deg, #b6c2c8 0%, #dfe6e9 14%, #d3dbdf 62%, #c4ced3 100%);
-}
-#view-index.nl-index-view .nl-device-keys {
-  position: absolute;
-  top: 9%;
-  bottom: 37%;
-  left: 15%;
-  right: 15%;
-  display: grid;
-  grid-template-rows: repeat(5, 1fr);
-  gap: 9%;
-  transform: perspective(300px) rotateX(26deg);
-  transform-origin: 50% 100%;
-}
-#view-index.nl-index-view .nl-device-row { display: flex; gap: .9%; }
-#view-index.nl-index-view .nl-device-row span {
-  flex: 1 1 0;
-  min-width: 0;
-  border-radius: 1.5px;
-  background: linear-gradient(180deg, #3d4c55 0%, #26333b 100%);
-  box-shadow: 0 1px 0 rgba(10, 24, 31, .35);
-}
-#view-index.nl-index-view .nl-device-row .nl-key-wide { flex-grow: 1.5; }
-#view-index.nl-index-view .nl-device-row .nl-key-wider { flex-grow: 1.85; }
-#view-index.nl-index-view .nl-device-row .nl-key-widest { flex-grow: 2.4; }
-#view-index.nl-index-view .nl-device-row .nl-key-space { flex-grow: 5.6; }
-#view-index.nl-index-view .nl-device-pad {
-  position: absolute;
-  bottom: 7%;
-  left: 39%;
-  right: 39%;
-  height: 20%;
-  clip-path: polygon(3% 0, 97% 0, 100% 100%, 0 100%);
-  border-radius: 2px;
-  background: linear-gradient(180deg, #c6cfd4, #d9e0e3);
-  box-shadow: inset 0 0 0 1px rgba(98, 116, 125, .35);
-}
-/* The front edge, with the opening notch. */
-#view-index.nl-index-view .nl-device-lip {
-  position: absolute;
-  left: 0;
-  right: 0;
-  bottom: 0;
-  height: 18%;
-  border-radius: 0 0 45% 45% / 0 0 100% 100%;
-  background: linear-gradient(180deg, #aeb9bf 0%, #8c999f 100%);
-  box-shadow: 0 10px 18px rgba(8, 43, 55, .16);
-}
-#view-index.nl-index-view .nl-device-lip i {
-  position: absolute;
-  top: 0;
-  left: 50%;
-  width: 14%;
-  height: 46%;
-  margin-left: -7%;
-  border-radius: 0 0 8px 8px;
-  background: linear-gradient(180deg, #7d8a91, #95a2a8);
-}
-#view-index.nl-index-view .nl-device-caption {
-  margin: 20px 0 0;
-  color: var(--copy);
-  font-size: 12.5px;
-  line-height: 1.7;
-  text-align: center;
-}
-/* Two messages of the screenshot, enlarged so that the exchange can be read. They sit side by side across the
-   lower edge of the screen and the keyboard, where they cover neither their originals nor the vital signs, and
-   copy the look of the room's own bubbles: the trainee's in teal on the left, the patient's in white on the
-   right. The trainee's comes first in the markup (reading order) and is drawn on the left (row-reverse). */
-#view-index.nl-index-view .nl-device-thread {
-  position: absolute;
-  z-index: 3;
-  inset-inline: -4%;
-  bottom: -15%;
-  display: flex;
-  flex-direction: row-reverse;
-  align-items: flex-end;
-  justify-content: space-between;
-  gap: 10px;
-}
-#view-index.nl-index-view .nl-device-callout {
-  flex: 0 1 auto;
-  max-width: 50%;
-  margin: 0;
-  padding: 9px 13px 10px;
-  border-radius: 12px;
-  box-shadow: 0 12px 26px rgba(8, 47, 61, .2);
-  font-size: 13.5px;
-  line-height: 1.6;
-}
-#view-index.nl-index-view .nl-device-callout b { display: block; margin-bottom: 2px; font-size: 11.5px; }
-#view-index.nl-index-view .nl-device-callout-trainee {
-  margin-bottom: 30px;
-  color: #fff;
-  background: #13737a;
-}
-#view-index.nl-index-view .nl-device-callout-patient {
-  color: var(--ink);
-  background: #fff;
-  border: 1px solid #d6e2e6;
-}
 
 /* ---------- 2. «كيف تعمل نبض؟»: four steps, read from right to left ---------- */
 #view-index.nl-index-view .nl-flow {
@@ -554,7 +385,6 @@
   #view-index.nl-index-view .nl-showcase { grid-template-columns: 1fr; }
   /* Text first, then the laptop (the V6.2 base gives the text column order 1 at this width). */
   #view-index.nl-index-view .nl-showcase-text { order: 0; }
-  #view-index.nl-index-view .nl-device { order: 1; max-width: 460px; }
   /* Two steps a row: 1 → 2 on the first row, 3 → 4 on the second. */
   #view-index.nl-index-view .nl-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 28px; }
   #view-index.nl-index-view .nl-flow-arrow { inset-inline-end: -31px; }
@@ -574,7 +404,6 @@
 
 @media (max-width: 640px) {
   #view-index.nl-index-view .nl-showcase { padding: 18px; border-radius: 18px; }
-  #view-index.nl-index-view .nl-device-caption { margin-top: 14px; font-size: 11.5px; }
   /* One step a row, its screen at full width so that it stays readable; the arrow points down to the next step. */
   #view-index.nl-index-view .nl-flow { grid-template-columns: 1fr; gap: 40px; max-width: 460px; margin-inline: auto; }
   #view-index.nl-index-view .nl-flow-body { padding: 14px 16px 18px; }
@@ -599,12 +428,6 @@
   #view-index.nl-index-view .nl-partner-points li { font-size: 13.6px; }
   #view-index.nl-index-view .nl-partner-visual { border-radius: 16px; }
   #view-index.nl-index-view .nl-partner-visual figcaption { inset-inline: 16px; top: 14px; }
-  /* The base is 114% of the lid: keep it inside the card's rounded border. */
-  #view-index.nl-index-view .nl-device { max-width: calc((100% - 8px) / 1.14); }
-  #view-index.nl-index-view .nl-device-thread { inset-inline: -2%; bottom: -19%; gap: 8px; }
-  #view-index.nl-index-view .nl-device-callout { padding: 7px 10px 8px; border-radius: 10px; font-size: 12px; line-height: 1.55; }
-  #view-index.nl-index-view .nl-device-callout b { font-size: 10.5px; }
-  #view-index.nl-index-view .nl-device-callout-trainee { margin-bottom: 22px; }
   #view-index.nl-index-view .nl-why-card { flex-direction: column; }
   #view-index.nl-index-view .nl-why-media { flex: 0 0 auto; aspect-ratio: 16 / 9; min-height: 0; }
   #view-index.nl-index-view .nl-why-media img { position: static; }

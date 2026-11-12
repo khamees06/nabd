@@ -1,7 +1,7 @@
 <head>
   <meta charset="UTF-8" />
   <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>نَبْض الأردن | أكاديمية المحاكاة السريرية</title>
+  <title>@(ViewData["Title"] as string ?? "نَبْض الأردن | أكاديمية المحاكاة السريرية")</title>
   <!-- mobile audit 2026-11-07: a page icon (no /favicon.ico 404), the phone bar colour and a short description for shared links -->
   <link rel="icon" href="data:image/svg+xml,%3Csvg xmlns=%27http://www.w3.org/2000/svg%27 viewBox=%270 0 24 24%27%3E%3Crect width=%2724%27 height=%2724%27 rx=%276%27 fill=%27%230F766E%27/%3E%3Cpath d=%27M21 12h-4l-3 7-4-14-3 7H3%27 fill=%27none%27 stroke=%27white%27 stroke-width=%272.2%27 stroke-linecap=%27round%27 stroke-linejoin=%27round%27/%3E%3C/svg%3E">
   <meta name="theme-color" content="#0F766E">
@@ -30,9 +30,10 @@
   <link rel="preload" href="fonts/noto-sans-arabic/NotoSansArabic-Bold.woff2" as="font" type="font/woff2" crossorigin>
   <link rel="stylesheet" href="css/landing-v6.css">
   <link rel="stylesheet" href="css/landing-v6-shell.css">
-  <!-- 2026-11-12: V6.3 visual refinement of the landing, and of sign-in / registration (CSS only) -->
+  <!-- 2026-11-12: V6.3 visual refinement of the landing; 2026-11-13: V6.4 (the laptop, the cards) and the sign-in pages -->
   <link rel="stylesheet" href="css/landing-v63.css">
-  <link rel="stylesheet" href="css/auth-v63.css">
+  <link rel="stylesheet" href="css/landing-v64.css">
+  <link rel="stylesheet" href="css/auth.css">
   <script>/* until script.js loads, a missing photo just hides */ window.nbImgFail = window.nbImgFail || function (el) { el.style.visibility = "hidden"; };</script>
   
 </head>

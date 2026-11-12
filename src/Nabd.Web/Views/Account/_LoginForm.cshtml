@@ -1,0 +1,20 @@
+@model bool
+@* The sign-in form. Model: true when the page opens on registration (this form then starts hidden).
+   Ids read by the legacy client: auth-pane-login (its submit), login-email, login-pass, login-error-msg,
+   submit-login-btn, auth-tab-register, nb-demo-title and the data-demo-login buttons. *@
+<form id="auth-pane-login" class="nl-auth-form@(Model ? " hidden" : "")">
+<p class="nl-auth-subtitle">سجّل الدخول لمتابعة تدريبك ومراجعة تقارير أدائك في نبض.</p>
+<div class="nl-auth-field">
+<label class="nl-auth-label" for="login-email">البريد الإلكتروني</label>
+<input id="login-email" class="nl-auth-input" type="email" dir="ltr" inputmode="email" placeholder="name@university.edu.jo" autocomplete="username" required />
+</div>
+<div class="nl-auth-field">
+<label class="nl-auth-label" for="login-pass">كلمة المرور</label>
+<div class="nl-auth-input-wrap"><input id="login-pass" class="nl-auth-input nl-has-toggle" type="password" placeholder="أدخل كلمة المرور" autocomplete="current-password" required /><button type="button" class="nl-auth-reveal" data-auth-reveal="login-pass" aria-label="إظهار كلمة المرور" aria-pressed="false"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div>
+</div>
+<div id="login-error-msg" role="alert" class="nl-auth-alert hidden"></div>
+<button id="submit-login-btn" type="submit" class="nl-auth-submit">تسجيل الدخول</button>
+@await Html.PartialAsync("~/Views/Account/_ExternalSignIn.cshtml", "login")
+<p class="nl-auth-switch">ليس لديك حساب؟ <button id="auth-tab-register" type="button">إنشاء حساب جديد</button></p>
+@await Html.PartialAsync("~/Views/Account/_DemoAccounts.cshtml")
+</form>

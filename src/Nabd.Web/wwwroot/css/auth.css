@@ -1,0 +1,546 @@
+/* =========================================================================
+   Sign-in and registration pages (/login, /register) and the same screen opened from inside the application:
+   #auth-modal, markup in Views/Account (ADR 0012). Design after the owner's V6.2 prototype ("auth-app"): the
+   form on the right with a small brand bar, an eyebrow, a large title and calm fields; a navy panel on the
+   left with the brand, a statement and three points. Hand-written; read docs/ui-design-system.md first.
+
+   The legacy stylesheets reach this screen through generic rules ([role="dialog"], [role="dialog"] > div,
+   html #auth-modal, fonts of buttons and headings), several with !important. So that none of them has to be
+   edited, the declarations are !important inside @layer nl-refine, which landing-v6.css places first in its
+   layer order: an important declaration in a layer wins over every unlayered one. Two consequences:
+   - "display" of anything that can carry the class hidden (the screen, the two forms, the error boxes, the
+     fields the registration hides) is set outside the layer, below, as an ordinary declaration, so that the
+     legacy ".hidden { display: none !important }" keeps winning; the registration steps keep the legacy
+     .nb-step / .is-on display rules;
+   - every selector starts from #auth-modal, so nothing here reaches another part of the application.
+   ========================================================================= */
+
+/* ---------- display of elements that .hidden may hide (outside the layer on purpose) ---------- */
+#auth-modal .nl-auth-form { display: grid; gap: 16px; }
+#auth-modal .nl-auth-field { display: grid; gap: 7px; min-width: 0; }
+#auth-modal .nl-auth-alert { display: block; }
+
+@layer nl-refine {
+  #auth-modal {
+    --nl-a-navy: #082f3d;
+    --nl-a-navy-2: #0b3a49;
+    --nl-a-ink: #102f40;
+    --nl-a-copy: #536875;
+    --nl-a-muted: #5d7079;
+    --nl-a-line: #d3dfe4;
+    --nl-a-field: #82969f;      /* 3:1 against white: the outline of a field or a button */
+    --nl-a-teal: #176a72;
+    --nl-a-teal-soft: #f0f6f6;
+    --nl-a-copper: #c98768;
+    --nl-a-copper-light: #e5ad8e;
+    --nl-a-copper-text: #9b6247; /* 4.9:1 against white */
+    --nl-a-font: "Noto Sans Arabic", "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
+    position: fixed !important;
+    inset: 0 !important;
+    align-items: stretch !important;
+    justify-content: stretch !important;
+    padding: 0 !important;
+    overflow-x: hidden !important;
+    overflow-y: auto !important;
+    overscroll-behavior: contain !important;
+    color: var(--nl-a-ink) !important;
+    background: #f4f7f8 !important;
+    -webkit-backdrop-filter: none !important;
+    backdrop-filter: none !important;
+  }
+  #auth-modal,
+  #auth-modal * {
+    font-family: var(--nl-a-font) !important;
+    letter-spacing: 0 !important;
+  }
+  /* opaque copper, 4.9:1 against the white form (a focus ring needs 3:1) */
+  #auth-modal :focus-visible { outline: 3px solid var(--nl-a-copper-text) !important; outline-offset: 2px !important; }
+  #auth-modal #auth-modal-title:focus { outline: none !important; }
+
+  /* ---------- the two columns ---------- */
+  #auth-modal .nl-auth-shell {
+    display: grid !important;
+    grid-template-columns: minmax(0, 1.06fr) minmax(360px, .94fr) !important;
+    flex: 1 1 auto !important;
+    align-self: flex-start !important;
+    width: 100% !important;
+    max-width: none !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    max-height: none !important;
+    margin: 0 !important;
+    overflow: visible !important;
+    border-radius: 0 !important;
+    background: transparent !important;
+    box-shadow: none !important;
+  }
+  #auth-modal .nl-auth-form-pane {
+    display: flex !important;
+    flex-direction: column !important;
+    min-width: 0 !important;
+    max-height: none !important;
+    overflow: visible !important;
+    padding: 24px clamp(24px, 5vw, 78px) 30px !important;
+    text-align: start !important;
+    background: linear-gradient(180deg, #fff 0%, #fbfcfc 100%) !important;
+  }
+
+  /* ---------- brand bar ---------- */
+  #auth-modal .nl-auth-topbar {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    gap: 16px !important;
+    width: 100% !important;
+    max-width: 680px !important;
+    margin: 0 auto !important;
+  }
+  #auth-modal .nl-auth-mini-brand { display: inline-flex !important; align-items: center !important; gap: 9px !important; color: var(--nl-a-navy) !important; text-decoration: none !important; border-radius: 8px !important; }
+  #auth-modal .nl-auth-mini-brand svg { width: 38px !important; height: 30px !important; color: var(--nl-a-copper) !important; flex: 0 0 auto !important; }
+  #auth-modal .nl-auth-mini-brand strong { display: block !important; color: var(--nl-a-navy) !important; font-size: 19px !important; font-weight: 850 !important; line-height: 1.2 !important; }
+  #auth-modal .nl-auth-mini-brand small { display: block !important; margin-top: 3px !important; color: var(--nl-a-muted) !important; font-size: 10.5px !important; font-weight: 500 !important; }
+  #auth-modal .nl-auth-back {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 7px !important;
+    width: auto !important;
+    height: auto !important;
+    min-height: 40px !important;
+    padding: 8px 12px !important;
+    color: var(--nl-a-copy) !important;
+    background: transparent !important;
+    border: 1px solid transparent !important;
+    border-radius: 8px !important;
+    box-shadow: none !important;
+    font-size: 13px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+  }
+  #auth-modal .nl-auth-back:hover { color: var(--nl-a-navy) !important; background: #eef4f6 !important; }
+  #auth-modal .nl-auth-back svg { width: 17px !important; height: 17px !important; }
+
+  /* ---------- heading ---------- */
+  #auth-modal .nl-auth-content { width: min(100%, 520px) !important; margin: auto !important; padding: 36px 0 26px !important; }
+  #auth-modal .nl-auth-eyebrow {
+    display: inline-flex !important;
+    align-items: center !important;
+    gap: 8px !important;
+    margin-bottom: 12px !important;
+    color: var(--nl-a-copper-text) !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+  }
+  #auth-modal .nl-auth-eyebrow::before { content: "" !important; width: 22px !important; height: 2px !important; background: var(--nl-a-copper) !important; }
+  #auth-modal[data-auth-tab="register"] .nl-auth-for-login,
+  #auth-modal:not([data-auth-tab="register"]) .nl-auth-for-register { display: none !important; }
+  #auth-modal .nl-auth-title {
+    margin: 0 !important;
+    text-align: start !important;
+    color: var(--nl-a-navy) !important;
+    font-size: clamp(29px, 3vw, 38px) !important;
+    font-weight: 850 !important;
+    line-height: 1.35 !important;
+  }
+  #auth-modal .nl-auth-subtitle { max-width: 460px !important; margin: 6px 0 8px !important; color: var(--nl-a-copy) !important; font-size: 14.5px !important; line-height: 1.9 !important; }
+
+  /* ---------- fields ---------- */
+  #auth-modal .nl-auth-label { color: var(--nl-a-ink) !important; font-size: 13px !important; font-weight: 750 !important; }
+  #auth-modal .nl-auth-optional { color: var(--nl-a-muted) !important; font-weight: 500 !important; }
+  #auth-modal .nl-auth-input-wrap { position: relative !important; }
+  #auth-modal .nl-auth-input {
+    width: 100% !important;
+    min-height: 50px !important;
+    margin: 0 !important;
+    padding: 12px 14px !important;
+    color: var(--nl-a-ink) !important;
+    background: #fff !important;
+    border: 1px solid var(--nl-a-field) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    outline: none !important;
+    font-size: 15px !important;
+    line-height: 1.5 !important;
+    transition: border-color .18s ease, box-shadow .18s ease !important;
+  }
+  #auth-modal .nl-auth-input::placeholder { color: #62757c !important; opacity: 1 !important; }
+  #auth-modal .nl-auth-input:hover { border-color: #5f7882 !important; }
+  #auth-modal .nl-auth-input:focus { border-color: var(--nl-a-teal) !important; box-shadow: 0 0 0 3px rgba(23, 106, 114, .16) !important; }
+  /* A field reached by keyboard gets a ring too (the rule above has outline: none): solid teal, 6.2:1 on white. */
+  #auth-modal .nl-auth-input:focus-visible { outline: 2px solid var(--nl-a-teal) !important; outline-offset: 1px !important; }
+  #auth-modal .nl-auth-input.nl-has-toggle { padding-inline-end: 50px !important; }
+  /* The two password fields: the value stays left to right, as typed (a revealed «Pass1234!» must read the same),
+     the Arabic placeholder starts at the right, and the eye button sits at the left end without covering either. */
+  #auth-modal #login-pass,
+  #auth-modal #reg-pass { direction: ltr !important; text-align: left !important; padding-left: 50px !important; padding-right: 14px !important; }
+  #auth-modal #login-pass:placeholder-shown,
+  #auth-modal #reg-pass:placeholder-shown { direction: rtl !important; text-align: right !important; }
+  #auth-modal .nl-auth-reveal {
+    position: absolute !important;
+    inset-inline-end: 7px !important;
+    top: 50% !important;
+    display: grid !important;
+    place-items: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    padding: 0 !important;
+    transform: translateY(-50%) !important;
+    color: var(--nl-a-muted) !important;
+    background: transparent !important;
+    border: 0 !important;
+    border-radius: 7px !important;
+    cursor: pointer !important;
+  }
+  #auth-modal .nl-auth-reveal:hover,
+  #auth-modal .nl-auth-reveal[aria-pressed="true"] { color: var(--nl-a-navy) !important; background: #edf3f5 !important; }
+  #auth-modal .nl-auth-reveal svg { width: 19px !important; height: 19px !important; }
+  #auth-modal .nl-auth-hint { color: var(--nl-a-muted) !important; font-size: 11.5px !important; line-height: 1.7 !important; }
+  #auth-modal .nl-auth-alert {
+    margin: 0 !important;
+    padding: 11px 13px !important;
+    color: #7f1d2a !important;
+    background: #fdf1f2 !important;
+    border: 1px solid #f0c8cd !important;
+    border-inline-start: 3px solid #c2414f !important;
+    border-radius: 8px !important;
+    font-size: 13px !important;
+    line-height: 1.8 !important;
+  }
+
+  /* ---------- buttons ---------- */
+  #auth-modal .nl-auth-submit {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    width: 100% !important;
+    min-height: 52px !important;
+    margin: 2px 0 0 !important;
+    padding: 0 18px !important;
+    color: #fff !important;
+    background: linear-gradient(110deg, var(--nl-a-navy-2), var(--nl-a-navy)) !important;
+    border: 1px solid var(--nl-a-navy) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 8px 18px rgba(8, 47, 61, .16) !important;
+    font-size: 15px !important;
+    font-weight: 800 !important;
+    cursor: pointer !important;
+    transition: background .18s ease, transform .18s ease !important;
+  }
+  #auth-modal .nl-auth-submit:hover { background: #164b5b !important; transform: translateY(-1px) !important; }
+  #auth-modal .nl-auth-secondary {
+    display: inline-flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    min-height: 52px !important;
+    padding: 0 22px !important;
+    color: var(--nl-a-navy) !important;
+    background: #fff !important;
+    border: 1px solid var(--nl-a-field) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    font-size: 14.5px !important;
+    font-weight: 750 !important;
+    cursor: pointer !important;
+  }
+  #auth-modal .nl-auth-secondary:hover { background: #f2f6f7 !important; }
+  #auth-modal .nl-auth-actions { display: flex !important; gap: 10px !important; }
+  #auth-modal .nl-auth-actions .nl-auth-submit { flex: 1 1 auto !important; width: auto !important; margin: 0 !important; }
+  #auth-modal .nl-auth-switch { margin: 6px 0 0 !important; color: var(--nl-a-copy) !important; text-align: center !important; font-size: 13.5px !important; }
+  #auth-modal .nl-auth-switch button {
+    padding: 0 !important;
+    color: var(--nl-a-copper-text) !important;
+    background: transparent !important;
+    border: 0 !important;
+    font-size: 13.5px !important;
+    font-weight: 850 !important;
+    text-decoration: underline !important;
+    text-decoration-color: rgba(155, 98, 71, .35) !important;
+    text-underline-offset: 4px !important;
+    cursor: pointer !important;
+  }
+  #auth-modal .nl-auth-switch button:hover { color: var(--nl-a-navy) !important; text-decoration-color: currentColor !important; }
+
+  /* ---------- Microsoft and Google (not connected yet) ---------- */
+  #auth-modal .nl-auth-sso { margin: 0 !important; }
+  #auth-modal .nl-auth-divider {
+    display: flex !important;
+    align-items: center !important;
+    gap: 12px !important;
+    margin: 4px 0 12px !important;
+    color: var(--nl-a-muted) !important;
+    font-size: 12.5px !important;
+    font-weight: 600 !important;
+  }
+  #auth-modal .nl-auth-divider::before,
+  #auth-modal .nl-auth-divider::after { content: "" !important; flex: 1 1 auto !important; height: 1px !important; background: var(--nl-a-line) !important; }
+  #auth-modal .nl-auth-sso-grid { display: grid !important; grid-template-columns: repeat(2, minmax(0, 1fr)) !important; gap: 10px !important; }
+  #auth-modal .nl-auth-sso-btn {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: center !important;
+    gap: 9px !important;
+    min-height: 48px !important;
+    padding: 6px 12px !important;
+    color: var(--nl-a-navy) !important;
+    background: #fff !important;
+    border: 1px solid var(--nl-a-field) !important;
+    border-radius: 10px !important;
+    box-shadow: 0 1px 2px rgba(8, 47, 61, .05) !important;
+    font-size: 13.5px !important;
+    font-weight: 700 !important;
+    cursor: pointer !important;
+  }
+  #auth-modal .nl-auth-sso-btn:hover { background: #f7fafb !important; }
+  #auth-modal .nl-auth-sso-btn svg { width: 18px !important; height: 18px !important; flex: 0 0 auto !important; }
+  #auth-modal .nl-auth-soon {
+    padding: 1px 7px !important;
+    color: #8d5c45 !important;
+    background: #f7ebe4 !important;
+    border-radius: 999px !important;
+    font-size: 10.5px !important;
+    font-weight: 750 !important;
+    line-height: 1.6 !important;
+  }
+  #auth-modal .nl-auth-sso-note {
+    display: none !important;
+    margin: 10px 0 0 !important;
+    padding: 9px 12px !important;
+    color: #5a4234 !important;
+    background: #faf2ed !important;
+    border: 1px solid #ecd8cc !important;
+    border-inline-start: 3px solid var(--nl-a-copper) !important;
+    border-radius: 8px !important;
+    font-size: 12.5px !important;
+    line-height: 1.8 !important;
+  }
+  #auth-modal .nl-auth-sso-note.is-visible { display: block !important; }
+
+  /* ---------- demo accounts ---------- */
+  #auth-modal .nl-auth-demo { margin-top: 8px !important; padding-top: 18px !important; border-top: 1px dashed var(--nl-a-line) !important; }
+  #auth-modal .nl-auth-demo-head { display: flex !important; align-items: center !important; justify-content: space-between !important; flex-wrap: wrap !important; gap: 6px 10px !important; margin-bottom: 10px !important; }
+  #auth-modal .nl-auth-demo-head span {
+    padding: 3px 11px !important;
+    color: #7c4e39 !important;
+    background: #f7ebe4 !important;
+    border-radius: 999px !important;
+    font-size: 12.5px !important;
+    font-weight: 800 !important;
+  }
+  #auth-modal .nl-auth-demo-head small { color: var(--nl-a-muted) !important; font-size: 12px !important; }
+  #auth-modal .nl-auth-demo-grid { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; }
+  #auth-modal .nl-auth-demo-grid button {
+    display: block !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 11px 12px !important;
+    text-align: start !important;
+    background: #f8fafb !important;
+    border: 1px solid var(--nl-a-line) !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    transition: border-color .18s ease, background .18s ease !important;
+  }
+  #auth-modal .nl-auth-demo-grid button::before,
+  #auth-modal .nl-auth-demo-grid button::after { content: none !important; }
+  #auth-modal .nl-auth-demo-grid button:hover { background: var(--nl-a-teal-soft) !important; border-color: var(--nl-a-teal) !important; }
+  #auth-modal .nl-auth-demo-grid b { display: block !important; color: var(--nl-a-navy) !important; font-size: 13.5px !important; font-weight: 800 !important; line-height: 1.5 !important; }
+  #auth-modal .nl-auth-demo-grid span { display: block !important; margin-top: 2px !important; color: var(--nl-a-muted) !important; font-size: 11.5px !important; line-height: 1.6 !important; }
+
+  /* ---------- registration: steps, account type, track ---------- */
+  #auth-modal .nl-auth-steps { display: flex !important; align-items: center !important; gap: 8px !important; margin: 2px 0 6px !important; }
+  #auth-modal .nl-auth-dot {
+    display: grid !important;
+    place-items: center !important;
+    width: 26px !important;
+    height: 26px !important;
+    flex: 0 0 auto !important;
+    color: var(--nl-a-copy) !important; /* 4.96:1 on the pale disc */
+    background: #e6eef1 !important;
+    border-radius: 50% !important;
+    font-size: 12px !important;
+    font-weight: 800 !important;
+  }
+  #auth-modal .nl-auth-dot.on { color: #fff !important; background: var(--nl-a-navy) !important; }
+  #auth-modal .nl-auth-step-name { color: var(--nl-a-copy) !important; font-size: 12.5px !important; font-weight: 700 !important; white-space: nowrap !important; }
+  #auth-modal .nl-auth-bar { flex: 1 1 auto !important; min-width: 18px !important; height: 2px !important; background: var(--nl-a-line) !important; border-radius: 2px !important; }
+  #auth-modal .nl-auth-bar.on { background: var(--nl-a-teal) !important; }
+  #auth-modal .nl-auth-step > * + * { margin-top: 15px !important; }
+  #auth-modal .nl-auth-roles { display: grid !important; grid-template-columns: repeat(3, minmax(0, 1fr)) !important; gap: 8px !important; margin: 0 !important; }
+  #auth-modal .nl-auth-roles button {
+    display: flex !important;
+    flex-direction: column !important;
+    align-items: center !important;
+    justify-content: flex-start !important;
+    gap: 5px !important;
+    min-height: 0 !important;
+    margin: 0 !important;
+    padding: 13px 8px 12px !important;
+    text-align: center !important;
+    background: #fff !important;
+    border: 1px solid #c7d4d9 !important;
+    border-radius: 10px !important;
+    box-shadow: none !important;
+    cursor: pointer !important;
+    transition: border-color .18s ease, background .18s ease !important;
+  }
+  #auth-modal .nl-auth-roles button::before,
+  #auth-modal .nl-auth-roles button::after { content: none !important; display: none !important; }
+  #auth-modal .nl-auth-roles button:hover { border-color: #82969f !important; background: #fbfdfd !important; }
+  #auth-modal .nl-auth-roles button.is-on { background: var(--nl-a-teal-soft) !important; border-color: var(--nl-a-teal) !important; box-shadow: inset 0 0 0 1px var(--nl-a-teal) !important; }
+  #auth-modal .nl-auth-role-icon {
+    display: grid !important;
+    place-items: center !important;
+    width: 36px !important;
+    height: 36px !important;
+    margin-bottom: 2px !important;
+    color: var(--nl-a-teal) !important;
+    background: #eef4f6 !important;
+    border-radius: 50% !important;
+  }
+  #auth-modal .nl-auth-roles button.is-on .nl-auth-role-icon { color: #fff !important; background: var(--nl-a-teal) !important; }
+  #auth-modal .nl-auth-role-icon svg { width: 19px !important; height: 19px !important; }
+  #auth-modal .nl-auth-roles strong { color: var(--nl-a-navy) !important; font-size: 13px !important; font-weight: 800 !important; line-height: 1.4 !important; }
+  #auth-modal .nl-auth-roles small { color: var(--nl-a-muted) !important; font-size: 11px !important; line-height: 1.55 !important; }
+  #auth-modal .nl-auth-trackchip {
+    display: grid !important;
+    gap: 3px !important;
+    padding: 12px 14px !important;
+    background: var(--nl-a-teal-soft) !important;
+    border: 1px solid #cfe0e3 !important;
+    border-inline-start: 3px solid var(--nl-a-teal) !important;
+    border-radius: 10px !important;
+  }
+  #auth-modal .nl-auth-trackchip b { color: var(--nl-a-navy) !important; font-size: 14.5px !important; font-weight: 800 !important; }
+  #auth-modal .nl-auth-trackchip span { color: var(--nl-a-copy) !important; font-size: 12.5px !important; line-height: 1.7 !important; }
+
+  /* ---------- privacy note and footer ---------- */
+  #auth-modal .nl-auth-security-note {
+    display: flex !important;
+    align-items: flex-start !important;
+    gap: 9px !important;
+    margin-top: 22px !important;
+    padding: 11px 13px !important;
+    color: var(--nl-a-muted) !important;
+    background: #f2f6f7 !important;
+    border: 1px solid #e0e8eb !important;
+    border-radius: 8px !important;
+  }
+  #auth-modal .nl-auth-security-note svg { width: 17px !important; height: 17px !important; flex: 0 0 auto !important; margin-top: 3px !important; color: var(--nl-a-teal) !important; }
+  #auth-modal .nl-auth-security-note p { max-width: none !important; margin: 0 !important; padding: 0 !important; border: 0 !important; color: var(--nl-a-muted) !important; font-size: 12px !important; line-height: 1.8 !important; text-align: start !important; }
+  #auth-modal .nl-auth-footer { margin: auto 0 0 !important; padding-top: 16px !important; color: var(--nl-a-muted) !important; text-align: center !important; font-size: 11.5px !important; }
+
+  /* ---------- the navy panel ---------- */
+  #auth-modal .nl-auth-visual {
+    position: sticky !important;
+    top: 0 !important;
+    align-self: start !important;
+    min-height: 100vh !important;
+    min-height: 100dvh !important;
+    display: flex !important;
+    flex-direction: column !important;
+    justify-content: space-between !important;
+    min-width: 0 !important;
+    overflow: hidden !important;
+    padding: clamp(30px, 4.6vw, 66px) !important;
+    color: #fff !important;
+    background:
+      radial-gradient(circle at 12% 88%, rgba(201, 135, 104, .2), transparent 42%),
+      radial-gradient(circle at 88% 8%, rgba(23, 106, 114, .42), transparent 46%),
+      linear-gradient(145deg, #05232e 0%, #082f3d 52%, #0b3a49 100%) !important;
+  }
+  #auth-modal .nl-auth-visual::before,
+  #auth-modal .nl-auth-visual::after {
+    content: "" !important;
+    position: absolute !important;
+    border-radius: 50% !important;
+    pointer-events: none !important;
+  }
+  #auth-modal .nl-auth-visual::before { width: 900px !important; height: 900px !important; inset-inline-end: -520px !important; bottom: -560px !important; border: 1px solid rgba(229, 173, 142, .2) !important; }
+  #auth-modal .nl-auth-visual::after { width: 640px !important; height: 640px !important; inset-inline-end: -390px !important; bottom: -420px !important; border: 1px solid rgba(255, 255, 255, .08) !important; }
+  #auth-modal .nl-auth-visual-ecg { position: absolute !important; inset-inline: 0 !important; bottom: 12% !important; width: 100% !important; height: 120px !important; color: rgba(229, 173, 142, .14) !important; pointer-events: none !important; }
+  #auth-modal .nl-auth-visual-top,
+  #auth-modal .nl-auth-visual-main,
+  #auth-modal .nl-auth-visual-bottom { position: relative !important; z-index: 1 !important; }
+  #auth-modal .nl-auth-visual-top { display: flex !important; align-items: center !important; justify-content: space-between !important; gap: 16px !important; }
+  #auth-modal .nl-auth-visual-brand { display: inline-flex !important; align-items: center !important; gap: 10px !important; color: #fff !important; }
+  #auth-modal .nl-auth-visual-brand svg { width: 48px !important; height: 34px !important; color: var(--nl-a-copper-light) !important; }
+  #auth-modal .nl-auth-visual-brand strong { display: block !important; color: #fff !important; font-size: 20px !important; font-weight: 850 !important; line-height: 1.2 !important; }
+  #auth-modal .nl-auth-visual-brand small { display: block !important; margin-top: 4px !important; color: rgba(255, 255, 255, .74) !important; font-size: 11px !important; }
+  #auth-modal .nl-auth-visual-tag { padding: 7px 11px !important; color: #f1c7b0 !important; border: 1px solid rgba(229, 173, 142, .45) !important; border-radius: 6px !important; font-size: 11px !important; font-weight: 750 !important; }
+  #auth-modal .nl-auth-visual-main { max-width: 540px !important; margin-block: auto !important; padding-block: 56px !important; }
+  #auth-modal .nl-auth-visual-kicker { display: inline-flex !important; align-items: center !important; gap: 8px !important; margin-bottom: 16px !important; color: #f0bd9f !important; font-size: 13px !important; font-weight: 750 !important; }
+  #auth-modal .nl-auth-visual-kicker::before { content: "" !important; width: 23px !important; height: 2px !important; background: var(--nl-a-copper-light) !important; }
+  #auth-modal .nl-auth-visual-title { max-width: 520px !important; margin: 0 !important; color: #fff !important; font-size: clamp(30px, 3.2vw, 46px) !important; font-weight: 850 !important; line-height: 1.45 !important; }
+  #auth-modal .nl-auth-visual-text { max-width: 480px !important; margin: 16px 0 28px !important; color: rgba(255, 255, 255, .82) !important; font-size: 15px !important; line-height: 2 !important; }
+  #auth-modal .nl-auth-benefits { display: grid !important; gap: 13px !important; max-width: 440px !important; margin: 0 !important; padding: 0 !important; list-style: none !important; }
+  #auth-modal .nl-auth-benefits li { display: flex !important; align-items: center !important; gap: 12px !important; color: rgba(255, 255, 255, .93) !important; font-size: 14px !important; font-weight: 650 !important; }
+  #auth-modal .nl-auth-benefit-icon {
+    display: grid !important;
+    place-items: center !important;
+    width: 38px !important;
+    height: 38px !important;
+    flex: 0 0 auto !important;
+    color: #efb99b !important;
+    background: rgba(255, 255, 255, .07) !important;
+    border: 1px solid rgba(229, 173, 142, .34) !important;
+    border-radius: 9px !important;
+  }
+  #auth-modal .nl-auth-benefit-icon svg { width: 18px !important; height: 18px !important; }
+  #auth-modal .nl-auth-visual-bottom {
+    display: flex !important;
+    align-items: center !important;
+    justify-content: space-between !important;
+    flex-wrap: wrap !important;
+    gap: 8px 18px !important;
+    padding-top: 18px !important;
+    border-top: 1px solid rgba(255, 255, 255, .2) !important;
+    color: rgba(255, 255, 255, .7) !important;
+    font-size: 11.5px !important;
+  }
+  #auth-modal .nl-auth-visual-bottom b { color: rgba(255, 255, 255, .92) !important; font-size: 12px !important; font-weight: 750 !important; }
+
+  /* ---------- narrower screens ---------- */
+  /* Short windows (a 1366 x 768 laptop): a tighter panel, so the training-only line at its foot stays in view. */
+  @media (max-height: 760px) {
+    #auth-modal .nl-auth-visual { padding-block: 26px !important; }
+    #auth-modal .nl-auth-visual-main { padding-block: 22px !important; }
+    #auth-modal .nl-auth-visual-title { font-size: clamp(26px, 2.6vw, 36px) !important; }
+    #auth-modal .nl-auth-visual-text { margin: 10px 0 18px !important; font-size: 14px !important; line-height: 1.85 !important; }
+    #auth-modal .nl-auth-benefits { gap: 9px !important; }
+    #auth-modal .nl-auth-benefit-icon { width: 34px !important; height: 34px !important; }
+  }
+  @media (max-width: 1100px) {
+    #auth-modal .nl-auth-shell { grid-template-columns: minmax(0, 1fr) minmax(300px, .78fr) !important; }
+    #auth-modal .nl-auth-form-pane { padding-inline: 28px !important; }
+    #auth-modal .nl-auth-visual { padding: 34px !important; }
+    #auth-modal .nl-auth-visual-title { font-size: 32px !important; }
+    #auth-modal .nl-auth-demo-grid { grid-template-columns: 1fr !important; }
+  }
+  @media (max-width: 900px) {
+    #auth-modal .nl-auth-shell { grid-template-columns: minmax(0, 1fr) !important; }
+    #auth-modal .nl-auth-visual { display: none !important; }
+    #auth-modal .nl-auth-form-pane { min-height: 100vh !important; min-height: 100dvh !important; padding: 18px 20px 26px !important; }
+    #auth-modal .nl-auth-content { padding: 30px 0 20px !important; }
+  }
+  @media (max-width: 520px) {
+    #auth-modal .nl-auth-mini-brand small { display: none !important; }
+    #auth-modal .nl-auth-back { padding: 8px 9px !important; font-size: 12.5px !important; }
+    #auth-modal .nl-auth-content { padding-top: 22px !important; }
+    #auth-modal .nl-auth-title { font-size: 28px !important; }
+    #auth-modal .nl-auth-subtitle { font-size: 14px !important; }
+    /* 16 px text in the fields: phones do not zoom into them */
+    #auth-modal .nl-auth-input { font-size: 16px !important; }
+    #auth-modal .nl-auth-sso-grid { grid-template-columns: 1fr !important; }
+    #auth-modal .nl-auth-roles { gap: 6px !important; }
+    #auth-modal .nl-auth-roles button { padding: 11px 4px 10px !important; }
+    #auth-modal .nl-auth-roles small { display: none !important; }
+    #auth-modal .nl-auth-step-name { font-size: 11.5px !important; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    #auth-modal .nl-auth-submit,
+    #auth-modal .nl-auth-input,
+    #auth-modal .nl-auth-roles button,
+    #auth-modal .nl-auth-demo-grid button { transition: none !important; }
+    #auth-modal .nl-auth-submit:hover { transform: none !important; }
+  }
+}

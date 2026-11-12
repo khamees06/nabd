@@ -1,6 +1,5 @@
 // Builds the images added by the V6.3 refinement of the landing (src/Nabd.Web/wwwroot/img/landing/v63/), from
 //   - screenshots of a real session of the ER room, taken with capture-er-session.js (see its header):
-//       laptop-chat-tall.png  1280x864 at scale 2, __STOP='chat' (the room's 800 px below the 64 px app bar)
 //       m-briefing.png, m-talk.png, m-workup.png, m-report.png  390x844 at scale 2, __STOP=<moment>
 //   - photos the application already ships, with their licences in wwwroot/img/CREDITS.txt.
 // Crops are fixed here so that the result can be rebuilt and reviewed. Credits: img/landing/v63/CREDITS.md.
@@ -23,8 +22,7 @@ const out = path.join(img, 'landing', 'v63');
 fs.mkdirSync(out, { recursive: true });
 
 const JOBS = [
-  // The laptop screen: the room at 1280x800 mid-session, without the application's top bar.
-  { name: 'showcase-er-room.webp', from: path.join(shots, 'laptop-chat-tall.png'), crop: [0, 128, 2560, 1600], resize: [1280, 800] },
+  // (The V6.3 laptop screen, showcase-er-room.webp, was replaced in V6.4: see build-v64-images.mjs.)
   // The four steps of «كيف تعمل نبض؟», 4:3, from the phone captures (2x pixels).
   { name: 'step-1-briefing.webp', from: path.join(shots, 'm-briefing.png'), crop: [26, 150, 728, 546], resize: [640, 480] },
   { name: 'step-2-talk.webp', from: path.join(shots, 'm-talk.png'), crop: [0, 880, 780, 585], resize: [640, 480] },

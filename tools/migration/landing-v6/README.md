@@ -24,4 +24,9 @@ node tools/legacy/landing-visual-compare.mjs --proto <prototype.html> --app http
 
 The stylesheets the page loads, in order: the nine legacy stylesheets (frozen), `landing-v6.css` (generated),
 `landing-v6-shell.css` (hand-written integration rules; every selector starts from a landing root), then the V6.3
-refinements `landing-v63.css` (from `#view-index.nl-index-view`) and `auth-v63.css` (from `#auth-modal`).
+refinements `landing-v63.css` and `landing-v64.css` (from `#view-index.nl-index-view`) and the sign-in pages'
+`auth.css` (from `#auth-modal`).
+
+V6.4 tools: `build-laptop.mjs` draws `img/landing/v64/laptop.svg` (the laptop of the showcase, keyboard and
+trackpad in perspective) and prints the box of its screen, which `landing-v64.css` uses; `build-v64-images.mjs`
+crops the laptop's screen from a `capture-er-session.js` run at 1024 × 704 (see the file's header).

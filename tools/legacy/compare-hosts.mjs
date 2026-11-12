@@ -11,8 +11,10 @@
 // design, compared elsewhere: with the owner's prototype (landing-visual-compare.mjs, landing-style-diff.mjs) and
 // with their approved snapshots (LandingV6Tests, LegacySiteBaselineTests). Here they are taken out of both pages:
 // each is replaced by a placeholder in the DOM and hidden before the screenshot, together with the landing's own
-// stylesheets, fonts and script. What is compared is everything else: the sign-in modal, every signed-in view,
-// the ER room. Comments and the whitespace between tags are left out of the DOM comparison (the text of the page,
+// stylesheets, fonts and script. Since V6.4 (ADR 0012) the sign-in screen (#auth-modal) is a new design too and is
+// taken out the same way; the two things it changes outside itself while it is open, the class nb-auth-open on
+// <html> and the page title, are put back to one value on both sides. What is compared is everything else: every
+// signed-in view, the ER room, and the rest of the page while the sign-in screen is open. Comments and the whitespace between tags are left out of the DOM comparison (the text of the page,
 // comments included, is compared exactly by the baseline tests).
 //
 // usage: node tools/legacy/compare-hosts.mjs --legacy http://127.0.0.1:5180 --current http://127.0.0.1:5199 [--out folder] [--only state]
@@ -41,11 +43,10 @@ const pause = ms => `await new Promise(r => setTimeout(r, ${ms}));`;
 // Nothing is done before the page has finished loading and its own start-up has run.
 const ready = `for (const t0 = Date.now(); Date.now() - t0 < 20000 && (document.readyState !== 'complete' || !document.documentElement.dataset.terms || typeof nbDemoLogin !== 'function');) ${pause(100)}`;
 const settle = pause(1200);
-// The parts the V6.2 landing redesigned, and the files it adds (see the note at the top).
-const REGIONS = ['#public-header', '#view-index', '#site-footer'];
-// landing-v6*.css also matches landing-v63.css; auth-v63.css is the V6.3 restyle of the sign-in modal (CSS only,
-// so its DOM is still compared; its screenshots differ on purpose, see docs/visual-baseline/README.md).
-const LANDING_FILES = 'link[href*="landing-v6"], link[href*="auth-v63"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
+// The parts the V6.2 landing and the V6.4 sign-in pages redesigned, and the files they add (see the note at the top).
+const REGIONS = ['#public-header', '#view-index', '#auth-modal', '#site-footer'];
+// landing-v6*.css also matches landing-v63.css and landing-v64.css; auth.css is the sign-in screen's stylesheet.
+const LANDING_FILES = 'link[href*="landing-v6"], link[href$="css/auth.css"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
 // A snapshot is taken only once the page is quiet: fonts in, every image loaded or failed.
 const snapshot = `document.querySelectorAll('img').forEach(i => i.loading = 'eager'); await document.fonts.ready;
   for (const t0 = Date.now(); Date.now() - t0 < 12000 && [...document.images].some(i => !i.complete);) ${pause(100)}
@@ -55,6 +56,9 @@ const snapshot = `document.querySelectorAll('img').forEach(i => i.loading = 'eag
     document.querySelector(sel)?.style.setProperty('display', 'none', 'important');
   }
   doc.querySelectorAll(${JSON.stringify(LANDING_FILES)}).forEach(e => e.remove());
+  doc.classList.remove('nb-auth-open');
+  if (!doc.getAttribute('class')) doc.removeAttribute('class');
+  doc.querySelector('title').textContent = 'title';
   const comments = [];
   for (const w = document.createTreeWalker(doc, NodeFilter.SHOW_COMMENT); w.nextNode();) comments.push(w.currentNode);
   comments.forEach(c => c.remove());

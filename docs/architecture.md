@@ -78,10 +78,11 @@ domain to do the work, and returns a view. No clinical rule lives in this layer,
 
 | Folder | Holds |
 |---|---|
-| `Controllers/` | `HomeController` (the page), `ClientScriptsController` (`/js/*.js`), `ClientDataController` (`/data/*.json`) |
+| `Controllers/` | `HomeController` (the page), `AccountController` (`/login`, `/register`: the page opened on the sign-in screen), `ClientScriptsController` (`/js/*.js`), `ClientDataController` (`/data/*.json`) |
+| `Models/` | `AuthPage`: which sign-in screen a request opens (none, sign-in, registration) |
 | `Controllers/Api/` | `UnderstandingController` (`/api/er-chat`, `/api/resp-chat`), `SimulationSessionsController` (`/api/simulation/sessions`) |
-| `Views/` | `Shared/_Layout.cshtml`, `Home/Index.cshtml` and 43 partial views that together reproduce the legacy page |
-| `ClientScripts/` | The browser-side client: 183 source fragments in six bundles, `bundles.json`, and `ClientBundleProvider` that joins them |
+| `Views/` | `Shared/_Layout.cshtml`, `Home/Index.cshtml` and the partial views that together reproduce the legacy page; `Account/` holds the sign-in pages and the sign-in screen's partials |
+| `ClientScripts/` | The browser-side client: 185 source fragments in seven bundles (the six legacy ones and `landing.js`), `bundles.json`, and `ClientBundleProvider` that joins them |
 | `Http/` | Rate-limit policies, the same-origin filter, the cached-content result |
 | `wwwroot/css`, `wwwroot/img` | Stylesheets and images |
 | `Program.cs` | The composition root |
@@ -98,7 +99,9 @@ design ([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserv
 its stylesheets cannot reach the rest of the application.
 
 1. `GET /` → `HomeController.Index` → the layout and views render the same HTML the static `index.html` had,
-   except the three landing regions.
+   except the three landing regions and the sign-in screen. `GET /login` and `GET /register` →
+   `AccountController` → the same page with the sign-in screen open on its form and its own title
+   ([decision 0012](decisions/0012-sign-in-and-registration-pages.md)).
 2. `GET /css/*.css`, `GET /img/**` → static files.
 3. `GET /js/script.js` (and `er.js`, `resp.js`, `ui.js`, `motion.js`, `terms.js`) → `ClientScriptsController` →
    `ClientBundleProvider` joins the bundle's fragments in the order of `ClientScripts/bundles.json`. Joining is plain

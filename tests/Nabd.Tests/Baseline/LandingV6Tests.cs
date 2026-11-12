@@ -7,17 +7,17 @@ using Nabd.Tests.Support;
 namespace Nabd.Tests.Baseline;
 
 /// <summary>
-/// The public landing (V6.2, ADR 0010; refined in V6.3, ADR 0011) as the browser receives it: the order of its
-/// sections, the IDs the legacy client binds, honest actions (no forms, sign-in through the existing modal), its
+/// The public landing (V6.2, ADR 0010; refined in V6.3 and V6.4, ADR 0011) as the browser receives it: the order of
+/// its sections, the IDs the legacy client binds, honest actions (no forms, sign-in through the existing screen), its
 /// images and fonts, its script bundle, its Arabic-first copy, and the isolation of its stylesheets (and of the
-/// V6.3 sign-in stylesheet) from the rest of the application.
+/// sign-in pages' stylesheet, ADR 0012) from the rest of the application.
 /// </summary>
 public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Program>>
 {
     // Stylesheet -> the fewest selectors it must hold (a guard against a parser that silently reads nothing).
     private static readonly Dictionary<string, int> Stylesheets = new()
     {
-        ["landing-v6.css"] = 1000, ["landing-v6-shell.css"] = 30, ["landing-v63.css"] = 100, ["auth-v63.css"] = 80,
+        ["landing-v6.css"] = 1000, ["landing-v6-shell.css"] = 30, ["landing-v63.css"] = 80, ["landing-v64.css"] = 30, ["auth.css"] = 120,
     };
     private readonly HttpClient _client;
 
@@ -70,6 +70,7 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     {
         var page = await Page();
         var regions = string.Concat(LandingRegions.All.Select(r => LandingRegions.Extract(page, r.Name)));
+        Assert.Contains("nabd:region auth", regions); // the sign-in screen's links are checked too
         var targets = Regex.Matches(regions, "href=\"#([^\"]+)\"").Select(m => m.Groups[1].Value).Distinct().ToList();
         Assert.NotEmpty(targets);
         foreach (var t in targets) Assert.True(Regex.IsMatch(page, $"\\bid=\"{Regex.Escape(t)}\""), $"link to #{t} has no target");
@@ -79,7 +80,7 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     public async Task The_landing_has_no_forms_and_signs_in_only_through_the_existing_modal()
     {
         var page = await Page();
-        var regions = string.Concat(LandingRegions.All.Select(r => LandingRegions.Extract(page, r.Name)));
+        var regions = string.Concat(LandingRegions.All.Where(r => r.Name != "auth").Select(r => LandingRegions.Extract(page, r.Name)));
         Assert.DoesNotContain("<form", regions, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("<input", regions, StringComparison.OrdinalIgnoreCase);
         Assert.DoesNotContain("type=\"password\"", regions, StringComparison.OrdinalIgnoreCase);
@@ -112,8 +113,22 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     {
         var page = await Page();
         var landing = LandingRegions.Extract(page, "landing");
-        var images = Regex.Matches(landing, "<img [^>]*>").Select(m => m.Value).ToList();
-        // Hero, four specialties, the laptop screen, four steps, the campus photo, three «لماذا» cards.
+        var all = Regex.Matches(landing, "<img [^>]*>").Select(m => m.Value).ToList();
+        // One drawing, the laptop around the screen: decorative (empty alt), an SVG of the size it declares.
+        var drawings = all.Where(i => Attr(i, "src").EndsWith(".svg", StringComparison.Ordinal)).ToList();
+        var frame = Assert.Single(drawings);
+        Assert.Equal("img/landing/v64/laptop.svg", Attr(frame, "src"));
+        Assert.Contains("alt=\"\"", frame);
+        var svg = await _client.GetAsync("/img/landing/v64/laptop.svg");
+        svg.EnsureSuccessStatusCode();
+        Assert.Equal("image/svg+xml", svg.Content.Headers.ContentType?.MediaType);
+        var viewBox = Regex.Match(await svg.Content.ReadAsStringAsync(), "viewBox=\"0 0 (\\d+) (\\d+)\"");
+        Assert.Equal(Attr(frame, "width"), viewBox.Groups[1].Value);
+        Assert.Equal(Attr(frame, "height"), viewBox.Groups[2].Value);
+        Assert.Equal("lazy", Attr(frame, "loading"));
+
+        // Photos and screens: hero, four specialties, the laptop's screen, four steps, the campus photo, three «لماذا» cards.
+        var images = all.Except(drawings).ToList();
         Assert.Equal(14, images.Count);
         foreach (var img in images)
         {
@@ -137,17 +152,19 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task The_landing_images_are_credited()
     {
-        foreach (var folder in new[] { Path.Combine(WebRoot(), "img", "landing"), Path.Combine(WebRoot(), "img", "landing", "v63") })
+        foreach (var version in new[] { "", "v63", "v64" })
         {
+            var folder = Path.Combine(WebRoot(), "img", "landing", version);
             var credits = File.ReadAllText(Path.Combine(folder, "CREDITS.md"));
-            var files = Directory.GetFiles(folder, "*.webp");
+            var files = Directory.GetFiles(folder, "*.webp").Concat(Directory.GetFiles(folder, "*.svg")).ToList();
             Assert.NotEmpty(files);
             foreach (var file in files) Assert.Contains(Path.GetFileName(file), credits);
         }
 
         // Every image file of the landing is used by the page; a replaced one is removed, not left behind.
         var landing = LandingRegions.Extract(await Page(), "landing");
-        foreach (var file in Directory.GetFiles(Path.Combine(WebRoot(), "img", "landing"), "*.webp", SearchOption.AllDirectories))
+        var root = Path.Combine(WebRoot(), "img", "landing");
+        foreach (var file in Directory.GetFiles(root, "*.webp", SearchOption.AllDirectories).Concat(Directory.GetFiles(root, "*.svg", SearchOption.AllDirectories)))
             Assert.Contains(Path.GetRelativePath(WebRoot(), file).Replace('\\', '/'), landing);
         Assert.Contains("SIL Open Font License", File.ReadAllText(Path.Combine(WebRoot(), "fonts", "noto-sans-arabic", "LICENSE.md")));
         Assert.Contains("مصادر الصور", LandingRegions.Extract(await Page(), "site-footer"));
@@ -184,11 +201,30 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public async Task The_sign_in_stylesheet_never_shows_or_hides_what_the_legacy_script_toggles()
     {
-        // auth-v63.css is !important inside a layer, so a display rule there would beat .hidden and the script.
-        var css = StripComments(await Text("/css/auth-v63.css"));
-        var display = Regex.Matches(css, "([^{}]+)\\{[^{}]*\\bdisplay\\s*:", RegexOptions.Singleline).Select(m => m.Groups[1].Value.Trim()).ToList();
-        Assert.Equal(["#auth-modal .nb8-side-en"], display);
-        Assert.DoesNotContain("z-index", css);
+        // auth.css is !important inside a layer, so a display rule there would beat .hidden and the script. The
+        // elements that .hidden (or .nb-step / .is-on) shows and hides get their display outside the layer, as
+        // ordinary declarations, and only there.
+        var css = StripComments(await Text("/css/auth.css"));
+        var layer = css.IndexOf("@layer nl-refine", StringComparison.Ordinal);
+        Assert.True(layer > 0, "auth.css has no @layer nl-refine block");
+        var toggled = new Regex(@"(#auth-modal$|\.(nl-auth-form|nl-auth-field|nl-auth-alert|nl-auth-step|nb-step)(?![\w-])|#auth-pane-|#reg-(role|year-wrap|code-wrap|step-)|#login-error-msg|#reg-error-msg|#reg-submit-error)");
+        var displayRules = Regex.Matches(css, "([^{};]+)\\{[^{}]*\\bdisplay\\s*:[^;}]*", RegexOptions.Singleline)
+            .Select(m => (At: m.Index, Selectors: SplitSelectorList(m.Groups[1].Value.Trim()).ToList(), Important: m.Value.Contains("!important"))).ToList();
+        foreach (var rule in displayRules.Where(r => r.At > layer))
+            Assert.False(rule.Selectors.Any(toggled.IsMatch), "display set inside the layer on a toggled element: " + string.Join(", ", rule.Selectors));
+        var outside = displayRules.Where(r => r.At < layer).ToList();
+        Assert.Equal(["#auth-modal .nl-auth-form", "#auth-modal .nl-auth-field", "#auth-modal .nl-auth-alert"], outside.SelectMany(r => r.Selectors));
+        Assert.All(outside, r => Assert.False(r.Important, "a display outside the layer must stay an ordinary declaration"));
+        // The screen's own stacking is the legacy one (z-index 85 on the element): the file never changes it.
+        Assert.DoesNotMatch("#auth-modal\\s*\\{[^}]*z-index", css);
+    }
+
+    [Fact]
+    public async Task The_sign_in_screen_shows_no_English_except_the_names_Microsoft_and_Google()
+    {
+        var text = Visible(LandingRegions.Extract(await Page(), "auth"));
+        var english = Regex.Matches(text, "[A-Za-z][A-Za-z0-9]*").Select(m => m.Value).Where(w => w is not ("Microsoft" or "Google")).Distinct().ToList();
+        Assert.True(english.Count == 0, "English words on the sign-in screen: " + string.Join(", ", english));
     }
 
     /* ---------- fonts and script ---------- */
@@ -210,8 +246,11 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     public async Task The_landing_script_is_the_bundle_of_its_fragment()
     {
         var served = await Text("/js/landing.js");
-        var fragment = File.ReadAllText(Path.Combine(WebProject(), "ClientScripts", "landing", "010-landing-v6.js")).Replace("\r\n", "\n");
-        Assert.Contains(fragment.Trim(), served);
+        foreach (var name in new[] { "010-landing-v6.js", "020-auth-pages.js" })
+        {
+            var fragment = File.ReadAllText(Path.Combine(WebProject(), "ClientScripts", "landing", name)).Replace("\r\n", "\n");
+            Assert.Contains(fragment.Trim(), served);
+        }
         Assert.DoesNotContain("\r", served);
     }
 
@@ -226,8 +265,8 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
         Assert.DoesNotContain("https://", css);
         var selectors = CssSelectors(StripComments(css)).ToList();
         Assert.True(selectors.Count >= Stylesheets[file], $"{file}: only {selectors.Count} selectors read; the parser missed rules");
-        // The sign-in refinement may start only from the sign-in modal; the landing files only from a landing root.
-        var root = file == "auth-v63.css" ? AuthRoot() : LandingRoot();
+        // The sign-in stylesheet may start only from the sign-in screen; the landing files only from a landing root.
+        var root = file == "auth.css" ? AuthRoot() : LandingRoot();
         var bad = selectors.Where(s => !root.IsMatch(s)).ToList();
         Assert.True(bad.Count == 0, $"{file}: selectors that could reach the rest of the application:\n  " + string.Join("\n  ", bad.Take(20)));
         foreach (Match k in Regex.Matches(css, "@keyframes\\s+([\\w-]+)")) Assert.StartsWith("nl-", k.Groups[1].Value);
@@ -236,7 +275,8 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     [Fact]
     public void No_legacy_stylesheet_uses_the_landing_prefix()
     {
-        foreach (var file in Directory.GetFiles(Path.Combine(WebRoot(), "css"), "*.css").Where(f => !Path.GetFileName(f).StartsWith("landing-v6", StringComparison.Ordinal)))
+        // The new stylesheets (landing-v6*.css and auth.css) are the ones allowed to use it.
+        foreach (var file in Directory.GetFiles(Path.Combine(WebRoot(), "css"), "*.css").Where(f => !Path.GetFileName(f).StartsWith("landing-v6", StringComparison.Ordinal) && Path.GetFileName(f) != "auth.css"))
         {
             var css = File.ReadAllText(file);
             Assert.DoesNotMatch("\\.nl-[\\w-]", css);

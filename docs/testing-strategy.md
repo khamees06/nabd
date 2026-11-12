@@ -16,19 +16,22 @@ Every claim below names the test or the tool that backs it. Where something was 
 | `legacy-manifest.json` | Size and SHA-256 of all 85 files of the legacy site, including the data files and the images |
 | `seams.json` | Every intentional difference between the legacy site and what the application serves, with its reason (20 entries) |
 
-`tests/Nabd.Tests/LandingBaseline/` holds the V6.2 public landing ([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md)):
-`regions.json` (where the three redesigned regions are in the served page and in the legacy page) and the
-approved snapshot of each region (`public-header.html`, `landing.html`, `site-footer.html`).
+`tests/Nabd.Tests/LandingBaseline/` holds the redesigned parts of the page: the V6.2 public landing
+([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md)) and, since V6.4, the sign-in screen
+([decision 0012](decisions/0012-sign-in-and-registration-pages.md)): `regions.json` (where the four redesigned
+regions are in the served page and in the legacy page) and the approved snapshot of each region
+(`public-header.html`, `landing.html`, `auth.html`, `site-footer.html`).
 
 ## Layers of tests
 
-All of these run with `dotnet test` (187 tests since V6.3, about ten seconds). None needs Node.js, a browser or a network.
+All of these run with `dotnet test` (204 tests since V6.4, about ten seconds). None needs Node.js, a browser or a network.
 
 | Layer | Test class | What it proves |
 |---|---|---|
 | Golden masters of the clinical core | `GoldenMasters/ErClinicalTraceTests` (46) | The domain model, replaying the inputs the legacy ER room received in 45 recorded scenarios, is in the same state after every step, to the last bit of every number, and gives the same score, score parts and verdict |
-| What the browser receives | `Baseline/LegacySiteBaselineTests` (32) | The rendered page outside the three landing regions, each script bundle and each stylesheet equal the legacy file character for character once the registered differences are undone; each landing region equals its approved V6.2 snapshot, and the regions come in page order; each data document and each of the 59 images is byte-identical; source fragments and unknown documents cannot be requested |
-| The landing (V6.2, refined in V6.3) | `Baseline/LandingV6Tests` (19) | Section order as in the prototype; one public header; the IDs the legacy client binds present exactly once and every ID unique; every in-page link has a target; no form or input, sign-in only through `openAuthModal`; external links only the credits, with `rel="noopener"`; every one of the 14 photos a local WebP of the declared size with Arabic alt text, eager hero and lazy others; every image file credited and used; font licence present; WOFF2 fonts served; `landing.js` is its fragment; every selector of the landing stylesheets starts from a landing root and every selector of `auth-v63.css` from `#auth-modal` (with a minimum number of selectors read per file); no legacy stylesheet uses the `nl-` prefix; V6.3: no Latin words on the header and landing except SBAR, ER, ECG, ICU; the steps are an ordered list with an arrow after steps 1–3 only; `auth-v63.css` sets `display` on nothing the legacy script toggles |
+| What the browser receives | `Baseline/LegacySiteBaselineTests` (33) | The rendered page outside the four redesigned regions, each script bundle and each stylesheet equal the legacy file character for character once the registered differences are undone; each redesigned region equals its approved snapshot, and the regions come in page order; each data document and each of the 59 images is byte-identical; source fragments and unknown documents cannot be requested |
+| Sign-in pages (V6.4) | `Web/AccountPagesTests` (14) | `/login` and `/register` are served like `/` (not stored, `HEAD` too) and equal `/` outside the sign-in screen and the title; `/login/` and `/register/` redirect to the address without the slash; `/` has the screen hidden on the sign-in form, each page has it open on its own form and first registration step; every id the legacy client reads is in the screen exactly once, with the three demo accounts, the three account types and the classes it reads (`nb-auth-simple`, `nb-auth-main`, `nb-step`); the Microsoft and Google buttons are `aria-disabled` and «قريباً», with no link to a sign-in service and no server endpoint (`/signin-google`, `/signin-microsoft`, `/signin-oidc` are 404) |
+| The landing (V6.2, refined in V6.3 and V6.4) | `Baseline/LandingV6Tests` (21) | Section order as in the prototype; one public header; the IDs the legacy client binds present exactly once and every ID unique; every in-page link has a target; no form or input, sign-in only through `openAuthModal`; external links only the credits, with `rel="noopener"`; every one of the 14 photos a local WebP of the declared size with Arabic alt text, eager hero and lazy others, and the one drawing (the laptop) a decorative SVG of its declared size; every image file credited and used; font licence present; WOFF2 fonts served; `landing.js` is its two fragments; every selector of the landing stylesheets starts from a landing root and every selector of `auth.css` from `#auth-modal` (with a minimum number of selectors read per file); no legacy stylesheet uses the `nl-` prefix; no Latin words on the header and landing except SBAR, ER, ECG, ICU, and none on the sign-in screen except Microsoft and Google; the steps are an ordered list with an arrow after steps 1–3 only; `auth.css` never sets `display` inside its layer on what `.hidden` or the registration steps show and hide, and sets it outside the layer, as an ordinary declaration, only for the forms, the fields and the error boxes |
 | Domain rules in plain terms | `Domain/SimulationSessionTests` (16) | Each clinical rule on its own: risk rate, onset of a treatment, the cuff cycle, the floor, the sepsis hold, repeats, harm, anaphylaxis, a test that becomes harmful in shock, arrest, the stable handover, the dangerous destination |
 | Use cases | `Application/SimulationUseCaseTests` (13) | The use cases against the real cases; a neglected patient arrests at exactly the simulated minute the legacy room recorded, for all six cases; a well-managed case scores 100 and passes; invalid and out-of-state requests are refused; the store is bounded |
 | Legacy data mapping | `Infrastructure/ErCaseFileMapperTests` (5) | Every field the clinical core uses is mapped as the file has it, in file order; the "not reviewed by a physician" flag is exposed; only the shipped files can be read |
@@ -87,7 +90,7 @@ node tools/legacy/compare-hosts.mjs
 
 It is a manual check, not part of `dotnet test`: it needs Chrome and two running hosts.
 
-Since the V6.2 landing, the tool takes the three redesigned regions out of both hosts (a placeholder in the DOM,
+Since the V6.2 landing, the tool takes the redesigned regions (since V6.4 four: the sign-in screen too) out of both hosts (a placeholder in the DOM,
 hidden before the screenshot) together with the landing's stylesheets, fonts and script, and leaves comments and
 the whitespace between tags out of the DOM comparison; the exact text, comments included, is the baseline tests'
 job. The landing itself is compared with the owner's prototype by two tools:
@@ -121,6 +124,10 @@ its new snapshots with `node tools/migration/landing-v6/approve-landing-baseline
 | V6.3, unchanged parts and the rest of the application | Header to specialties pixel-identical to V6.2 at 1440 and 390; signed-in views and ER room identical to the legacy site (DOM and screenshots); see `docs/visual-baseline/README.md` |
 | V6.3, behaviour in headless Chrome | Sign-in validation, error message, switch to registration, role cards, step 2 and back, demo sign-in, logout, mobile menu, dialog, in-page links: as before, no page errors |
 | V6.3, two review rounds | Round 1: 16 confirmed findings (partnership layout between 901 and 1250 px, contrast, unreadable laptop screen and phone thumbnails, the hospital photo's licence, modal states, …), 2 refuted; round 2 re-checked them and found 8 more (callouts overlapping on phones, answer boxes, photo subject, modal on tall and short screens, …). All of medium or high severity were fixed and re-measured |
+| V6.4 (2026-11-13), `dotnet test` | 204 passed, 0 failed, 0 skipped |
+| V6.4, rest of the application against the legacy site | DOM identical in all 22 pairs except the known ER-briefing toast timing; screenshots identical except the landing (redesigned) and the states documented as flaky (re-run identical) |
+| V6.4, sign-in pages in headless Chrome | Header button → `/login`, switch to `/register` and back, Back/Forward, Escape, protected-view prompt with its notice, brand link, final call to action, password reveal, registration in two steps with validation, demo sign-in on `/login` → home at `/`, wrong e-mail message, `/login` with a saved account → home, Tab kept on the screen; after the review: closing the screen inside the ER room keeps the trainee in the room, home opens at its top after a sign-in, Forward after a sign-in does not reopen the screen |
+| V6.4, independent review | Round 1: five lenses (behaviour, accessibility and RTL, honesty and brief, CSS isolation, tests and docs), each finding checked by a skeptic: 26 confirmed (none high; two issues were each found twice), 5 refuted; all fixed. Round 2 re-ran every confirmed scenario (all fixed) and hunted for regressions: 9 small follow-ups (two buttons named «رجوع» on registration step 2, no ring on focused fields, one 4.4:1 digit, a jump to a #fragment on closing, a Forward edge case, stale numbers), all fixed |
 | Isolation test checks itself | Adding `button { color: red; }` to the shell stylesheet failed `Every_landing_rule_starts_from_a_landing_root`; removed again |
 | Mutation check of the golden masters | Done by hand when the tests were written: one changed model constant failed 33 traces; one changed scoring weight failed 12. The constant: the delay before a treatment starts to move the vital signs, `SimulatedMinutes + 0.03` in `SimulationSession.ApplyIntervention`, changed to `0.04`. The weight: `UnneededOrders.Count * 2` in `SessionScorer.Score`, changed to `* 3`. Both were restored and the run is not automated |
 
@@ -161,6 +168,9 @@ Stated plainly, so that nobody reads more into the green run than it holds:
 - **The nurse role's score** is not ported; its clinical dynamics are (six traces).
 - **Order safety** (dose checks, allergy, "too early") is not ported; the traces cover what happens after the
   legacy client has decided.
+- **The sign-in pages' script** (`landing/020-auth-pages.js`: address and title, Back and Forward, focus) has no
+  automated test; it was exercised in headless Chrome by scripted flows (results above), which are not part of
+  `dotnet test`.
 - **Browsers other than Chrome**, real phones, and screen readers were not tested.
 - **Load, concurrency and long uptime** were not tested. The session store is bounded but was not stressed.
 - **Publishing** (`dotnet publish`) and running behind a reverse proxy were not exercised.
@@ -174,7 +184,7 @@ Stated plainly, so that nobody reads more into the green run than it holds:
    the clinical effect.
 3. When a room moves to the server, its golden master moves with it: record the room's behaviour first, then move.
 4. Never weaken a baseline test to make a change pass.
-5. A change to the public landing (the three regions) fails its snapshot test. Compare it with the design
+5. A change to the public landing or the sign-in screen (the four regions) fails its snapshot test. Compare it with the design
    (`landing-style-diff.mjs`, `landing-visual-compare.mjs`) first, then approve the new snapshots
    (`approve-landing-baseline.mjs`) in the same commit. A change outside the regions still fails the legacy
    comparison.

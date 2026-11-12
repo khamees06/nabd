@@ -17,7 +17,7 @@
 
 @await Html.PartialAsync("~/Views/Shared/Modals/_HandoverModal.cshtml")
 @await Html.PartialAsync("~/Views/Shared/Modals/_LevelModal.cshtml")
-@await Html.PartialAsync("~/Views/Shared/Modals/_AuthModal.cshtml")
+@await Html.PartialAsync("~/Views/Account/_AuthScreen.cshtml", ViewData[Nabd.Web.Controllers.AccountController.AuthPageKey] as Nabd.Web.Models.AuthPage? ?? Nabd.Web.Models.AuthPage.None)
 @await Html.PartialAsync("~/Views/Shared/Modals/_ImageLightbox.cshtml")
 @await Html.PartialAsync("~/Views/Shared/Modals/_StudentAttemptModal.cshtml")
 @await Html.PartialAsync("~/Views/Shared/Layout/_SiteFooter.cshtml")

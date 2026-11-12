@@ -1,0 +1,29 @@
+@model Nabd.Web.Models.AuthPage
+@{
+    // On "/" the screen is in the page, hidden, on the sign-in form (as the legacy modal was); on "/login" and
+    // "/register" it is the page itself, open on its form. The ids and the classes hidden, flex, nb-step and is-on
+    // are the ones the legacy client reads and toggles (openAuthModal, switchAuthModalTab, setRegStep).
+    var open = Model != Nabd.Web.Models.AuthPage.None;
+    var register = Model == Nabd.Web.Models.AuthPage.Register;
+}
+  <!-- nabd:region auth (sign-in and registration pages, design V6.4; see docs/ui-integration-map.md) -->
+<div id="auth-modal" role="dialog" aria-modal="true" aria-labelledby="auth-modal-title" class="nl-auth fixed inset-0 @(open ? "flex" : "hidden")" style="z-index: 85;" data-no-terms data-auth-tab="@(register ? "register" : "login")" data-auth-page="@(open ? (register ? "register" : "login") : null)">
+<div class="nb-auth-simple nl-auth-shell">
+<section class="nb-auth-main nl-auth-form-pane">
+<div class="nl-auth-topbar">
+<a class="nl-auth-mini-brand" href="./" data-auth-home aria-label="نَبْض: الصفحة الرئيسية"><svg aria-hidden="true" fill="none" viewBox="0 0 80 52"><path d="M2 27h17l7-15 10 31 9-23 7 7h9l5-10 5 10h8" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="3.2"></path></svg><span><strong>نَبْض</strong><small>أكاديمية المحاكاة السريرية</small></span></a>
+<button id="close-auth-modal-btn" class="nl-auth-back" type="button"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="2" viewBox="0 0 24 24"><path d="M6 6l12 12M18 6 6 18"></path></svg><span>إغلاق</span></button>
+</div>
+<div class="nl-auth-content">
+<span class="nl-auth-eyebrow"><span class="nl-auth-for-login">مساحتك التدريبية</span><span class="nl-auth-for-register">ابدأ رحلتك مع نبض</span></span>
+<h2 id="auth-modal-title" class="nl-auth-title" tabindex="-1">@(register ? "إنشاء حساب" : "تسجيل الدخول")</h2>
+@await Html.PartialAsync("~/Views/Account/_LoginForm.cshtml", register)
+@await Html.PartialAsync("~/Views/Account/_RegisterForm.cshtml", register)
+<div class="nl-auth-security-note"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M12 22s8-4 8-11V5l-8-3-8 3v6c0 7 8 11 8 11Z"></path><path d="m9 12 2 2 4-4"></path></svg><p>محاكاة سريرية بالعربية. يُحفظ الحساب والتقدّم على هذا الجهاز، أما كلامك في الغرفة فيُرسل إلى خدمة ذكاء اصطناعي لفهمه.</p></div>
+</div>
+<p class="nl-auth-footer">© 2026 نَبْض الأردن · منصة تعليمية للتدريب السريري المساند</p>
+</section>
+@await Html.PartialAsync("~/Views/Account/_AuthBrandPanel.cshtml")
+</div>
+</div>
+  <!-- /nabd:region auth -->

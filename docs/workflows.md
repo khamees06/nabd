@@ -145,6 +145,10 @@ sequenceDiagram
 
 - `HomeController.Index` (`GET /`) renders `Views/Home/Index.cshtml` inside `_Layout.cshtml`. The response is not
   cacheable.
+- `AccountController.Login` / `Register` (`GET /login`, `GET /register`, since V6.4) render the same page with the
+  sign-in screen open on its form and their own title (decision 0012). In the browser, `landing.js` keeps the
+  address in step with the screen: opening it from a button shows `/login` or `/register`, closing it (or signing
+  in) returns to the address it came from, and Back closes it.
 - Stylesheets and images are plain static files (`app.UseStaticFiles()`) from `wwwroot/css` and `wwwroot/img`.
 - The layout lists six scripts with `defer`, in this order: `script.js`, `motion.js`, `terms.js`, `ui.js`,
   `resp.js`, `er.js`.

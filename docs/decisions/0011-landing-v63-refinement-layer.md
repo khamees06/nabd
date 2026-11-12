@@ -49,3 +49,10 @@ regenerable; and the legacy stylesheets force fonts (and, in the sign-in modal, 
   scripts above.
 - The sign-in modal now uses the landing's font and palette while the signed-in application keeps its legacy
   look until it is redesigned.
+
+## Addendum, V6.4 (2026-11-13)
+
+The same approach carries the owner's next notes: `landing-v64.css` (the drawn laptop, the showcase's point cards
+and one card language for the landing) follows the rules of `landing-v63.css`; the sign-in look moved from the
+CSS-only `auth-v63.css` to the sign-in pages of [decision 0012](0012-sign-in-and-registration-pages.md), whose
+stylesheet `auth.css` uses `nl-refine` in the same way.

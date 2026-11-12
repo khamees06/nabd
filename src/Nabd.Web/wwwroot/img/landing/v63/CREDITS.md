@@ -14,7 +14,6 @@ material that a physician has not reviewed yet. No licence question: they are sc
 
 | File | Pixels | Where | Moment |
 |---|---|---|---|
-| `showcase-er-room.webp` | 1280 × 800 | The laptop screen | First treatments given (1280×800 window) |
 | `step-1-briefing.webp` | 640 × 480 | Step 01 | The case briefing and the choice of role |
 | `step-2-talk.webp` | 640 × 480 | Step 02 | Two questions and the patient's answers |
 | `step-3-workup.webp` | 640 × 480 | Step 03 | The blood gas result |

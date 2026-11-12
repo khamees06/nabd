@@ -27,7 +27,7 @@ sign-in; the public header and footer are still swapped by `syncAuthShellUI()`.
 | 8 | Final call to action `#join` | `Views/Home/Landing/_FinalCta.cshtml` | `section#nl-join` |
 | 9 | Information dialog | `Views/Home/Landing/_LandingDialog.cshtml` | `div#nl-dialog.nabd-landing` |
 | 10 | `footer.site-footer` | `Views/Shared/Layout/_SiteFooter.cshtml` | `footer#site-footer.nabd-landing.nl-site-footer` |
-| — | Demonstration sign-in screens (`.auth-app`) | not ported | the application's `#auth-modal` is used |
+| — | Demonstration sign-in screens (`.auth-app`) | V6.4: its design, on the application's own screen: `Views/Account/_AuthScreen.cshtml` and partials (see «V6.4» below) | `div#auth-modal`, served open on `/login` and `/register` |
 
 `Views/Home/Landing/_LandingView.cshtml` composes 2–9 inside
 `section#view-index.nl-index-view > div.nabd-landing.nl-landing[data-no-terms]`, followed by the legacy
@@ -64,7 +64,7 @@ Every prototype class `x` became `nl-x` in the markup and the stylesheet (252 cl
 
 | Prototype control | Prototype behaviour | Application behaviour |
 |---|---|---|
-| Header «تسجيل الدخول» / «إنشاء حساب» | Open the demonstration sign-in screens | `#public-login-btn` / `#public-register-btn`: the legacy client opens `openAuthModal('login' / 'register')` |
+| Header «تسجيل الدخول» / «إنشاء حساب» | Open the demonstration sign-in screens | `#public-login-btn` / `#public-register-btn`: the legacy client opens `openAuthModal('login' / 'register')`; since V6.4 the address becomes `/login` / `/register` (`landing/020-auth-pages.js`) |
 | Hero and final CTA buttons with `data-auth-open` | Same | `data-nl-auth="login|register"` → `openAuthModal(...)` (`landing.js`) |
 | «اكتشف حلول نبض للمؤسسات» (`data-modal="academic"`) | Information dialog | `data-nl-dialog="academic"` → the landing dialog (no form) |
 | Final CTA «للمؤسسات التعليمية» (`data-modal`) | Information dialog | Link to `#nl-institutions` |
@@ -118,3 +118,20 @@ Files added: `wwwroot/css/landing-v63.css`, `wwwroot/css/auth-v63.css`, `wwwroot
 `CREDITS.md`, `tools/migration/landing-v6/capture-er-session.js`, `tools/migration/landing-v6/build-v63-images.mjs`.
 Removed: `wwwroot/img/landing/institutions-campus.webp` (replaced). Changed: the head (two stylesheet links,
 registered difference 19), the layer order in `convert-css.mjs` (and so `landing-v6.css`).
+
+## V6.4 (2026-11-13): the laptop, the cards, the sign-in pages
+
+The owner's notes after reviewing V6.3: a realistic laptop open on a table showing a real screen, without the two
+text boxes; better colours and cards across the landing; sign-in and registration as official standalone pages,
+with Microsoft and Google accounts.
+
+| Part | Files | What changed | Ids kept |
+|---|---|---|---|
+| Showcase | `_SimulationShowcase.cshtml`, `landing-v64.css` | Title «داخل غرفة المحاكاة» and a new lead; four point cards with icon tiles (`.nl-room-point`) instead of check rows; the laptop is a drawing (`img/landing/v64/laptop.svg`, `build-laptop.mjs`) with the real screenshot (`showcase-respiratory-chat.webp`, 1600 × 1000, an asthma case captured in a 1024 px wide window so that its text is large enough to read) over its screen; the two enlarged messages are gone | `nl-experience`, `nl-experience-title` |
+| Cards | `landing-v64.css` | One card language (border, shadow, navy icon tiles with copper icons, copper hairline on hover) on the value strip, the steps, «عن نبض» and «لماذا صممنا نبض؟» | all |
+| Sign-in pages | `Controllers/AccountController.cs`, `Models/AuthPage.cs`, `Views/Account/Login.cshtml`, `Register.cshtml`, `_AuthScreen`, `_LoginForm`, `_RegisterForm`, `_ExternalSignIn`, `_DemoAccounts`, `_AuthBrandPanel`; `wwwroot/css/auth.css`; `ClientScripts/landing/020-auth-pages.js` | `/login` and `/register` are the page opened on the screen ([decision 0012](decisions/0012-sign-in-and-registration-pages.md)); the screen is the prototype's design; Microsoft and Google shown «قريباً» ([what they need](auth-external-providers.md)) | every id the legacy client reads (`AccountPagesTests`) |
+
+Removed: `Views/Shared/Modals/_AuthModal.cshtml`, `wwwroot/css/auth-v63.css`,
+`wwwroot/img/landing/v63/showcase-er-room.webp`. Changed: the head (registered difference 19: `landing-v64.css`,
+`auth.css`), the layout (renders `_AuthScreen` with the page's `AuthPage`), the title (per page, from the
+controller), `Program.cs` (Razor writes Arabic as it is), a fourth baseline region `auth`, `compare-hosts.mjs`.

@@ -1,0 +1,210 @@
+/* =========================================================================
+   Nabd public landing, V6.4 (2026-11-13). Hand-written; loaded after landing-v63.css. Read
+   docs/ui-design-system.md first.
+
+   What it changes:
+   - the laptop of the simulation showcase: a drawing (img/landing/v64/laptop.svg, made by
+     tools/migration/landing-v6/build-laptop.mjs: lid, hinge, aluminium base with the keyboard and the
+     trackpad in perspective, front edge, shadow on the table) with the real screenshot laid over its screen;
+     the two enlarged messages of V6.3 are gone;
+   - the showcase's four points: cards with an icon tile instead of check marks;
+   - one card language for the landing (the "DNA"): white cards with a hairline border and a soft deep shadow,
+     navy icon tiles with a copper line icon, a copper hairline at the top on hover, 16 px corners.
+   Same rules as landing-v63.css: every selector starts from #view-index.nl-index-view; fonts go into
+   @layer nl-refine as !important.
+   ========================================================================= */
+#view-index.nl-index-view {
+  --nl-dna-border: #d6e2e6;
+  --nl-dna-border-hover: #bdd0d7;
+  --nl-dna-shadow: 0 1px 2px rgba(8, 47, 61, .05), 0 16px 34px -18px rgba(8, 47, 61, .3);
+  --nl-dna-shadow-hover: 0 2px 4px rgba(8, 47, 61, .06), 0 26px 46px -20px rgba(8, 47, 61, .38);
+  --nl-dna-tile: linear-gradient(145deg, #0e4658 0%, #082f3d 100%);
+  --nl-dna-tile-icon: #f0bd9f;
+  /* from the reading start (right) toward the end: copper, lighter copper, then nothing */
+  --nl-dna-line: linear-gradient(to left, #c98768 0%, #e5ad8e 55%, rgba(229, 173, 142, 0) 100%);
+}
+
+/* ---------- 1. Simulation showcase ---------- */
+#view-index.nl-index-view .nl-showcase {
+  grid-template-columns: minmax(0, .9fr) minmax(0, 1.1fr);
+  border-color: #d3e1e6;
+  background:
+    radial-gradient(ellipse 58% 70% at 27% 56%, rgba(255, 255, 255, .95) 0%, rgba(255, 255, 255, 0) 72%),
+    radial-gradient(ellipse at 18% 100%, rgba(201, 135, 104, .1), transparent 52%),
+    linear-gradient(150deg, #f9fbfc 0%, #eef4f6 58%, #e5eef1 100%);
+  box-shadow: 0 1px 2px rgba(8, 47, 61, .04), 0 34px 64px -34px rgba(8, 47, 61, .32);
+}
+
+/* The laptop. The screen's box is the one build-laptop.mjs prints (percentages of the drawing). */
+#view-index.nl-index-view .nl-notebook {
+  position: relative;
+  width: 100%;
+  max-width: 704px;
+  margin: 0;
+  justify-self: center;
+}
+#view-index.nl-index-view .nl-notebook-device { position: relative; }
+#view-index.nl-index-view .nl-notebook-frame {
+  display: block;
+  width: 100%;
+  max-width: none;
+  height: auto;
+  user-select: none;
+}
+#view-index.nl-index-view .nl-notebook-screen {
+  position: absolute;
+  left: 14.3652%;
+  top: 3.9648%;
+  width: 71.2695%;
+  height: 62.7925%;
+  overflow: hidden;
+  border-radius: 2px;
+  background: #f3f7f9;
+}
+#view-index.nl-index-view .nl-notebook-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+/* A faint reflection on the glass. */
+#view-index.nl-index-view .nl-notebook-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .16) 0%, rgba(255, 255, 255, .04) 30%, rgba(255, 255, 255, 0) 46%);
+}
+#view-index.nl-index-view .nl-notebook-caption {
+  margin: 0;
+  color: var(--copy);
+  font-size: 12.5px;
+  line-height: 1.7;
+  text-align: center;
+}
+
+/* The four points. */
+#view-index.nl-index-view .nl-room-points {
+  display: grid;
+  grid-template-columns: repeat(2, minmax(0, 1fr));
+  gap: 12px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#view-index.nl-index-view .nl-room-point {
+  position: relative;
+  display: flex;
+  align-items: flex-start;
+  gap: 12px;
+  min-width: 0;
+  padding: 15px 15px 14px;
+  overflow: hidden;
+  border: 1px solid var(--nl-dna-border);
+  border-radius: 14px;
+  background: #fff;
+  box-shadow: var(--nl-dna-shadow);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+#view-index.nl-index-view .nl-room-point::before {
+  content: "";
+  position: absolute;
+  inset-inline: 0;
+  top: 0;
+  height: 2px;
+  background: var(--nl-dna-line);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+#view-index.nl-index-view .nl-room-point:hover { transform: translateY(-2px); border-color: var(--nl-dna-border-hover); box-shadow: var(--nl-dna-shadow-hover); }
+#view-index.nl-index-view .nl-room-point:hover::before { opacity: 1; }
+#view-index.nl-index-view .nl-room-icon {
+  display: grid;
+  place-items: center;
+  flex: 0 0 auto;
+  width: 40px;
+  height: 40px;
+  border-radius: 11px;
+  color: var(--nl-dna-tile-icon);
+  background: var(--nl-dna-tile);
+  box-shadow: 0 6px 14px -6px rgba(8, 47, 61, .55);
+}
+#view-index.nl-index-view .nl-room-icon svg { width: 20px; height: 20px; }
+#view-index.nl-index-view .nl-room-point b { display: block; color: var(--navy); }
+#view-index.nl-index-view .nl-room-point small { display: block; margin-top: 3px; color: #5d7079; }
+
+/* ---------- 2. The card language on the other sections ---------- */
+/* Value strip under the hero: tinted icon tiles instead of bare icons. */
+#view-index.nl-index-view .nl-value-icon {
+  width: 46px;
+  height: 46px;
+  border: 1px solid #d3e3e6;
+  border-radius: 12px;
+  color: var(--teal);
+  background: linear-gradient(160deg, #f4f9f9 0%, #e6f0f1 100%);
+}
+#view-index.nl-index-view .nl-value-icon svg { width: 26px; height: 26px; }
+
+/* «كيف تعمل نبض؟» */
+#view-index.nl-index-view .nl-flow-step { border-color: var(--nl-dna-border); box-shadow: var(--nl-dna-shadow); }
+#view-index.nl-index-view .nl-flow-step::before {
+  content: "";
+  position: absolute;
+  z-index: 3;
+  inset-inline: 16px;
+  top: -1px;
+  height: 3px;
+  background: var(--nl-dna-line);
+  opacity: 0;
+  transition: opacity .2s ease;
+}
+#view-index.nl-index-view .nl-flow-step:hover { border-color: var(--nl-dna-border-hover); box-shadow: var(--nl-dna-shadow-hover); }
+#view-index.nl-index-view .nl-flow-step:hover::before { opacity: 1; }
+#view-index.nl-index-view .nl-flow-num { color: var(--nl-dna-tile-icon); background: var(--nl-dna-tile); box-shadow: 0 6px 12px -6px rgba(8, 47, 61, .55); }
+/* The card does not clip (its arrow sits outside it): the hairline stops where the top corners start to curve. */
+#view-index.nl-index-view .nl-flow-step::before { border-radius: 0 0 3px 3px; }
+
+/* «عن نبض»: the icon tiles in the same navy and copper. */
+#view-index.nl-index-view .nl-pillar-icon { color: var(--nl-dna-tile-icon); background: var(--nl-dna-tile); }
+
+/* «لماذا صممنا نبض؟» */
+#view-index.nl-index-view .nl-why-card { border-color: var(--nl-dna-border); box-shadow: var(--nl-dna-shadow); }
+#view-index.nl-index-view .nl-why-card:hover { box-shadow: var(--nl-dna-shadow-hover); }
+#view-index.nl-index-view .nl-why-tag {
+  color: #fff;
+  background: rgba(8, 47, 61, .86);
+  box-shadow: 0 6px 16px rgba(4, 28, 38, .28);
+  -webkit-backdrop-filter: blur(4px);
+  backdrop-filter: blur(4px);
+}
+#view-index.nl-index-view .nl-why-body .nl-why-answer {
+  border-inline-start-color: var(--copper);
+  background: linear-gradient(180deg, #f6f9fa 0%, #eef4f6 100%);
+}
+#view-index.nl-index-view .nl-why-answer b { color: var(--copper-action); }
+
+/* ---------- Typography of the elements above ---------- */
+@layer nl-refine {
+  #view-index.nl-index-view .nl-room-point b { font-size: 15px !important; font-weight: 800 !important; line-height: 1.5 !important; }
+  #view-index.nl-index-view .nl-room-point small { font-size: 13px !important; line-height: 1.75 !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  #view-index.nl-index-view .nl-room-points { grid-template-columns: 1fr; gap: 10px; }
+}
+@media (max-width: 900px) {
+  #view-index.nl-index-view .nl-showcase { grid-template-columns: 1fr; }
+  #view-index.nl-index-view .nl-notebook { order: 1; max-width: 640px; }
+  #view-index.nl-index-view .nl-room-points { grid-template-columns: repeat(2, minmax(0, 1fr)); }
+}
+@media (max-width: 640px) {
+  #view-index.nl-index-view .nl-room-points { grid-template-columns: 1fr; }
+  #view-index.nl-index-view .nl-room-point { padding: 13px 13px 12px; }
+  #view-index.nl-index-view .nl-notebook-caption { font-size: 11.5px; }
+}
+@media (prefers-reduced-motion: reduce) {
+  #view-index.nl-index-view .nl-room-point { transition: none; }
+  #view-index.nl-index-view .nl-room-point:hover { transform: none; }
+}

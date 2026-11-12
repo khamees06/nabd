@@ -104,7 +104,7 @@ Layout partials:
 | `Shared/Layout/_Toast.cshtml` | 253-260 | Toast message container |
 | `Shared/Modals/_HandoverModal.cshtml` | 1890-1953 | SBAR handover modal of the specialty simulation |
 | `Shared/Modals/_LevelModal.cshtml` | 1954-1966 | Level (placement) modal |
-| `Shared/Modals/_AuthModal.cshtml` | 1967-2090 | Sign-in and registration page |
+| `Account/_AuthScreen.cshtml` (was `Shared/Modals/_AuthModal.cshtml`; with `_LoginForm`, `_RegisterForm`, `_ExternalSignIn`, `_DemoAccounts`, `_AuthBrandPanel`) | 1967-2090 | Sign-in and registration screen; redesigned in V6.4 and served open on `/login` and `/register` (decision 0012) |
 | `Shared/Modals/_ImageLightbox.cshtml` | 2091-2129 | Medical image lightbox |
 | `Shared/Modals/_StudentAttemptModal.cshtml` | 2130-2257 | Professor view of one student attempt |
 | `Shared/Layout/_SiteFooter.cshtml` | 2258-2310 | Site footer — **V6.2 design since 2026-11-12** (guest and signed-in links kept) |

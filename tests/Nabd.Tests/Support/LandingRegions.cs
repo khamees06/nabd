@@ -3,8 +3,8 @@ using System.Text.Json;
 namespace Nabd.Tests.Support;
 
 /// <summary>
-/// The three parts of the page that the V6.2 public landing replaced (public header, landing view, public footer;
-/// ADR 0010), as LandingBaseline/regions.json describes them. The served page marks each with
+/// The redesigned parts of the page: the three the V6.2 public landing replaced (public header, landing view, public
+/// footer; ADR 0010) and the sign-in screen (ADR 0012), as LandingBaseline/regions.json describes them. The served page marks each with
 /// <c>&lt;!-- nabd:region NAME ... --&gt;</c> … <c>&lt;!-- /nabd:region NAME --&gt;</c>; the frozen legacy page has the
 /// old version between two texts that occur there once.
 /// </summary>

@@ -1,0 +1,81 @@
+@model bool
+@* Registration in two steps. Model: true when the page opens on registration (the form is then shown).
+   Ids read by the legacy client: auth-pane-register, reg-dot-1, reg-dot-2, reg-bar, reg-step-1, reg-step-2 (the
+   nb-step / is-on classes show one step at a time), reg-name, reg-email, reg-pass, reg-rolecards and its data-rc
+   buttons, reg-role, reg-error-msg, reg-next-btn, reg-track-chip, reg-specialty, reg-year, reg-year-wrap,
+   reg-code, reg-code-wrap, reg-uni, reg-submit-error, reg-back-btn, submit-register-btn, auth-tab-login. *@
+<div id="auth-pane-register" class="nl-auth-form@(Model ? "" : " hidden")">
+<p class="nl-auth-subtitle">أنشئ ملفك التدريبي في خطوتين، ثم ابدأ أول حالة مباشرة.</p>
+<div class="nl-auth-steps" aria-hidden="true">
+<span class="nl-auth-dot on" id="reg-dot-1">1</span><span class="nl-auth-step-name">بياناتك</span>
+<span class="nl-auth-bar" id="reg-bar"></span>
+<span class="nl-auth-dot" id="reg-dot-2">2</span><span class="nl-auth-step-name">دراستك أو عملك</span>
+</div>
+
+<div class="nb-step is-on nl-auth-step" id="reg-step-1">
+<div class="nl-auth-field">
+<label class="nl-auth-label" for="reg-name">الاسم الكامل</label>
+<input id="reg-name" class="nl-auth-input" type="text" placeholder="مثال: أحمد الزعبي" autocomplete="name" />
+</div>
+<div class="nl-auth-field">
+<label class="nl-auth-label" for="reg-email">البريد الإلكتروني</label>
+<input id="reg-email" class="nl-auth-input" type="email" dir="ltr" inputmode="email" placeholder="name@university.edu.jo" autocomplete="email" />
+</div>
+<div class="nl-auth-field">
+<label class="nl-auth-label" for="reg-pass">كلمة المرور</label>
+<div class="nl-auth-input-wrap"><input id="reg-pass" class="nl-auth-input nl-has-toggle" type="password" placeholder="٨ أحرف على الأقل" autocomplete="new-password" minlength="8" /><button type="button" class="nl-auth-reveal" data-auth-reveal="reg-pass" aria-label="إظهار كلمة المرور" aria-pressed="false"><svg aria-hidden="true" fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.8" viewBox="0 0 24 24"><path d="M2 12s3.6-7 10-7 10 7 10 7-3.6 7-10 7S2 12 2 12Z"></path><circle cx="12" cy="12" r="3"></circle></svg></button></div>
+</div>
+<div class="nl-auth-field">
+<span class="nl-auth-label" id="nb8-rolehead">نوع الحساب</span>
+<div class="nl-auth-roles" id="reg-rolecards" role="group" aria-labelledby="nb8-rolehead">
+<button type="button" data-rc="nursing" class="is-on" aria-pressed="true"><span class="nl-auth-role-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24"><path d="M12 21s-7-4.4-7-10a4 4 0 0 1 7-2.6A4 4 0 0 1 19 11c0 5.6-7 10-7 10Z"></path><path d="M12 9v5M9.5 11.5h5"></path></svg></span><strong>طالب تمريض</strong><small>تقييم المريض والعناية السريرية</small></button>
+<button type="button" data-rc="medicine" aria-pressed="false"><span class="nl-auth-role-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24"><path d="M6 3v6a5 5 0 0 0 10 0V3"></path><path d="M11 14v2a5 5 0 0 0 10 0v-2"></path><circle cx="21" cy="12" r="2"></circle></svg></span><strong>طالب طب</strong><small>التشخيص التفريقي واتخاذ القرار</small></button>
+<button type="button" data-rc="supervisor" aria-pressed="false"><span class="nl-auth-role-icon" aria-hidden="true"><svg fill="none" stroke="currentColor" stroke-linecap="round" stroke-linejoin="round" stroke-width="1.7" viewBox="0 0 24 24"><path d="M3 21h18M5 21V8l7-4 7 4v13M9 21v-6h6v6M9 11h.01M15 11h.01"></path></svg></span><strong>مشرف / أستاذ</strong><small>إسناد الحالات ومتابعة الطلبة</small></button>
+</div>
+</div>
+<select id="reg-role" class="hidden" aria-hidden="true" tabindex="-1">
+<option value="student" selected>طالب جامعي</option>
+<option value="practitioner">ممارس صحي</option>
+<option value="professor">أستاذ جامعي</option>
+</select>
+<div id="reg-error-msg" role="alert" class="nl-auth-alert hidden"></div>
+<button id="reg-next-btn" type="button" class="nl-auth-submit">التالي</button>
+@await Html.PartialAsync("~/Views/Account/_ExternalSignIn.cshtml", "register")
+</div>
+
+<div class="nb-step nl-auth-step" id="reg-step-2">
+<div class="nl-auth-trackchip" id="reg-track-chip"><b>مسار التمريض</b></div>
+<div class="nl-auth-field hidden">
+<label class="nl-auth-label" for="reg-specialty">التخصص</label>
+<select id="reg-specialty" class="nl-auth-input">
+<option value="التمريض">التمريض</option>
+<option value="الطب">الطب البشري</option>
+</select>
+</div>
+<div class="nl-auth-field" id="reg-year-wrap">
+<label class="nl-auth-label" for="reg-year">السنة الدراسية</label>
+<select id="reg-year" class="nl-auth-input">
+<option value="1">السنة الأولى (مبتدئ)</option>
+<option value="2">السنة الثانية (مبتدئ)</option>
+<option value="3">السنة الثالثة (متقدم)</option>
+<option value="4" selected>السنة الرابعة (متقدم)</option>
+<option value="5">السنة الخامسة / السادسة (طب سريري)</option>
+</select>
+</div>
+<div class="nl-auth-field" id="reg-code-wrap">
+<label class="nl-auth-label" for="reg-code">رمز الشعبة <span class="nl-auth-optional">(اختياري)</span></label>
+<input id="reg-code" class="nl-auth-input" type="text" dir="ltr" placeholder="NUR-JU-2026" />
+<small class="nl-auth-hint">يعطيك المشرف هذا الرمز لتظهر لك واجبات شعبتك. يمكنك إضافته لاحقاً من بوابة المساقات.</small>
+</div>
+<div class="nl-auth-field">
+<label class="nl-auth-label" for="reg-uni">الجامعة أو الجهة</label>
+<input id="reg-uni" class="nl-auth-input" type="text" placeholder="الجامعة الأردنية، العلوم والتكنولوجيا…" autocomplete="organization" />
+</div>
+<div id="reg-submit-error" role="alert" class="nl-auth-alert hidden"></div>
+<div class="nl-auth-actions">
+<button id="reg-back-btn" type="button" class="nl-auth-secondary">رجوع</button>
+<button id="submit-register-btn" type="button" class="nl-auth-submit">إنشاء الحساب وبدء التدريب</button>
+</div>
+</div>
+<p class="nl-auth-switch">لديك حساب بالفعل؟ <button id="auth-tab-login" type="button">تسجيل الدخول</button></p>
+</div>

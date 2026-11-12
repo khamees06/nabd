@@ -1,4 +1,7 @@
+using System.Text.Encodings.Web;
 using System.Text.Json.Serialization;
+using System.Text.Unicode;
+using Microsoft.Extensions.WebEncoders;
 using Microsoft.AspNetCore.Mvc;
 using Nabd.Application;
 using Nabd.Infrastructure;
@@ -20,6 +23,10 @@ builder.Services
             StatusCode = StatusCodes.Status400BadRequest,
             ContentTypes = { "application/problem+json" },
         });
+// Razor writes the Arabic text of an expression as it is, like the Arabic written in the views, instead of the
+// default numeric character references (for example the page title, AccountController).
+builder.Services.Configure<WebEncoderOptions>(options => options.TextEncoderSettings =
+    new TextEncoderSettings(UnicodeRanges.BasicLatin, UnicodeRanges.Latin1Supplement, UnicodeRanges.GeneralPunctuation, UnicodeRanges.Arabic));
 builder.Services.AddSingleton<IClientBundleProvider, ClientBundleProvider>();
 builder.Services.AddProblemDetails();
 builder.Services.AddNabdRateLimits(builder.Configuration);

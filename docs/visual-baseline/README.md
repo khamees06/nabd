@@ -128,3 +128,17 @@ accessibility, isolation and honesty); every finding of medium or high severity 
 reviewer before it was fixed. Measured after the fixes: no horizontal overflow from the landing at 320–1536 px
 (the header's own overflow between 821 and 962 px predates V6.3); every checked text at 4.5:1 or more; focus
 indicators at 3:1 or more; registration fits a 1366 × 768 screen.
+
+## V6.4: the laptop, the cards, the sign-in pages (2026-11-13, local, awaiting the owner's review)
+
+[Decision 0012](../decisions/0012-sign-in-and-registration-pages.md) and the V6.4 addendum of
+[decision 0011](../decisions/0011-landing-v63-refinement-layer.md).
+
+| Part | Check | Result |
+|---|---|---|
+| The rest of the application against the legacy site (`compare-hosts.mjs`, the sign-in screen now taken out too) | DOM, screenshot, errors in 11 states × 2 viewports | DOM identical except the known ER-briefing toast timing; screenshots identical except the landing and the sign-in states (redesigned) and states that differed in one run and were identical when re-run (signed-in home, coach) |
+| The laptop's screen inside the drawn bezel | Screen box of `.nl-notebook-screen` against the drawing's screen at 1536, 1440, 1024, 768, 390, 320 px | Aligned at every width; no horizontal overflow from 320 px up |
+| The sign-in pages | Scripted flows in headless Chrome (see `docs/testing-strategy.md`), real keyboard input for focus | As described there; no page errors |
+
+Screenshots in [`landing-v64/`](landing-v64/): the showcase at 1440 and 390 px, `/login` and `/register` (step 1
+and step 2) at 1440 px, and `/login` and `/register` on a 390 px phone.

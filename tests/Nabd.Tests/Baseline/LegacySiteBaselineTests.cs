@@ -12,8 +12,9 @@ namespace Nabd.Tests.Baseline;
 /// the page, the six script bundles, the nine stylesheets, the data documents and the images.
 /// The only differences allowed are the ones registered in LegacyBaseline/seams.json; they are undone on the
 /// served text before the comparison, so any other change, down to one character, fails.
-/// The page's three public regions were redesigned (V6.2 landing, ADR 0010): they are compared with their own
-/// approved snapshots in LandingBaseline/, and the rest of the page is still compared with the legacy page.
+/// Four regions of the page were redesigned (the V6.2 landing's public header, landing view and public footer,
+/// ADR 0010; the V6.4 sign-in screen, ADR 0012): they are compared with their own approved snapshots in
+/// LandingBaseline/, and the rest of the page is still compared with the legacy page.
 /// </summary>
 public class LegacySiteBaselineTests : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -34,9 +35,9 @@ public class LegacySiteBaselineTests : IClassFixture<WebApplicationFactory<Progr
     public static TheoryData<string> LandingRegionNames() => [.. LandingRegions.All.Select(r => r.Name)];
 
     /// <summary>
-    /// The page is the legacy page everywhere except the three regions the V6.2 landing replaced (ADR 0010):
-    /// the public header, the landing view and the public footer. Those are cut out of both pages and checked
-    /// on their own against their approved snapshots (next test).
+    /// The page is the legacy page everywhere except the four redesigned regions: the public header, the landing
+    /// view and the public footer (V6.2, ADR 0010) and the sign-in screen (V6.4, ADR 0012). Those are cut out of
+    /// both pages and checked on their own against their approved snapshots (next test).
     /// </summary>
     [Fact]
     public async Task The_page_outside_the_landing_regions_is_the_legacy_page()
@@ -52,10 +53,10 @@ public class LegacySiteBaselineTests : IClassFixture<WebApplicationFactory<Progr
         AssertSameText(legacy, UndoSeams("index.html", served), "the page outside the landing regions");
     }
 
-    /// <summary>Each landing region is exactly its approved V6.2 snapshot (LandingBaseline/NAME.html).</summary>
+    /// <summary>Each redesigned region is exactly its approved snapshot (LandingBaseline/NAME.html).</summary>
     [Theory]
     [MemberData(nameof(LandingRegionNames))]
-    public async Task Each_landing_region_is_its_approved_V62_snapshot(string name)
+    public async Task Each_redesigned_region_is_its_approved_snapshot(string name)
     {
         var served = await Page();
         AssertSameText(TestData.ReadNormalized(LandingRegions.SnapshotPath(name)), LandingRegions.Extract(served, name), $"landing region '{name}'");

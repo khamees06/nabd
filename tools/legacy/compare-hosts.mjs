@@ -43,7 +43,9 @@ const ready = `for (const t0 = Date.now(); Date.now() - t0 < 20000 && (document.
 const settle = pause(1200);
 // The parts the V6.2 landing redesigned, and the files it adds (see the note at the top).
 const REGIONS = ['#public-header', '#view-index', '#site-footer'];
-const LANDING_FILES = 'link[href*="landing-v6"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
+// landing-v6*.css also matches landing-v63.css; auth-v63.css is the V6.3 restyle of the sign-in modal (CSS only,
+// so its DOM is still compared; its screenshots differ on purpose, see docs/visual-baseline/README.md).
+const LANDING_FILES = 'link[href*="landing-v6"], link[href*="auth-v63"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
 // A snapshot is taken only once the page is quiet: fonts in, every image loaded or failed.
 const snapshot = `document.querySelectorAll('img').forEach(i => i.loading = 'eager'); await document.fonts.ready;
   for (const t0 = Date.now(); Date.now() - t0 < 12000 && [...document.images].some(i => !i.complete);) ${pause(100)}

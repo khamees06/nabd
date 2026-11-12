@@ -6,6 +6,7 @@
 //        [--js "return document.title"] [--js-file steps.js] [--shot out.png] [--full] [--wait 3000]
 //        [--reduced-motion] [--mobile] [--init-js "code run before the page's own scripts"] [--errors]
 // --errors adds the page's uncaught exceptions and console errors to the printed JSON: { value, errors }.
+// --scale 2 renders at a device pixel ratio of 2 (a sharper screenshot at twice the pixel size); default 1.
 // --block "*fonts.googleapis.com*,*fonts.gstatic.com*" makes requests to matching URLs fail at once, so a run
 // does not depend on other hosts (a slow font host otherwise keeps the page from starting).
 // The script given with --js / --js-file is the body of an async function; its return value is printed as JSON.
@@ -20,7 +21,7 @@ const opt = name => { const i = argv.indexOf('--' + name); return i >= 0 ? argv[
 const flag = name => argv.includes('--' + name);
 const url = opt('url');
 if (!url) { console.error('missing --url'); process.exit(2); }
-const width = Number(opt('width') || 1440), height = Number(opt('height') || 900);
+const width = Number(opt('width') || 1440), height = Number(opt('height') || 900), scale = Number(opt('scale') || 1);
 const wait = Number(opt('wait') || 3000);
 const js = opt('js-file') ? fs.readFileSync(opt('js-file'), 'utf8') : opt('js');
 const shot = opt('shot');
@@ -67,7 +68,7 @@ try {
   });
   await send('Page.enable');
   await send('Runtime.enable');
-  await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: 1, mobile: flag('mobile') || width < 600 });
+  await send('Emulation.setDeviceMetricsOverride', { width, height, deviceScaleFactor: scale, mobile: flag('mobile') || width < 600 });
   if (flag('reduced-motion')) await send('Emulation.setEmulatedMedia', { features: [{ name: 'prefers-reduced-motion', value: 'reduce' }] });
   if (opt('block')) { await send('Network.enable'); await send('Network.setBlockedURLs', { urls: opt('block').split(',') }); }
   if (opt('init-js')) await send('Page.addScriptToEvaluateOnNewDocument', { source: opt('init-js') });

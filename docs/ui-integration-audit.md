@@ -72,3 +72,29 @@ The spec forbids invented contact information, partnerships, certifications and 
 - The old landing's stylesheets (`landing8.css`, `landing9.css`) and the old landing rules in `style.css` still
   load; they no longer match anything on the landing. They are frozen legacy files (baseline tests) and are left
   for the phase that retires the legacy CSS (backlog B9).
+
+## 6. V6.3 refinement (2026-11-12): what changed and the honesty checks
+
+| Brief item | Done | Notes |
+|---|---|---|
+| Hero unchanged | Yes | Not touched |
+| Showcase: smaller card and laptop, better laptop, a real training screen | Yes | Laptop about 500 px wide at 1440 (was about 650); the screen is a real screenshot of one session of the ER room (asthma case); the four cards kept, slightly more compact |
+| «كيف تعمل نبض؟»: RTL arrows, balanced cards, images of the real steps | Yes | Arrows sit between steps and point left (down when stacked); the images are real screens of the same session |
+| «عن نبض»: copy, typography, separated cards | Yes | Copy describes what the platform actually does; light solid cards on the navy section |
+| Remove "LEARN · SIMULATE · REFLECT" | Yes | Also removed: "CLINICAL SIMULATION" and the Latin keyboard letters in the laptop, "ACADEMIC LEARNING" on the campus photo. A test allows only SBAR, ER, ECG and ICU in Latin letters |
+| Partnership: real Jordanian university photo on the left | Yes, with a caveat | Jordan University of Science and Technology, Irbid: a CC0 photo uploaded by its photographer (Aroobhj), already shipped by the app; caption at the top says it implies no partnership; no logo in the frame. A first choice, the Jordan University Hospital photo, was dropped after the review: its Commons page shows it was copied from the hospital's website, so its CC BY-SA tag is only the uploader's claim. The JUST photo is 640 px wide as shipped (a much larger original exists on Commons; fetching it needs the owner's go-ahead) |
+| «لماذا صممنا نبض؟»: needs, meaningful visuals | Yes | Same three cards; each names the need, Nabd's answer and who benefits; photos are licensed (CC0 / public domain) |
+| Login and registration | Yes (CSS only) | Behaviour unchanged by construction (no markup or script change) |
+| Footer unchanged | Yes | Only the collapsed credits text changed, for the licences |
+
+Honesty: the laptop and the step images are screenshots of the product, captured by a script that types into the
+room and records what the room answers (`tools/migration/landing-v6/capture-er-session.js`); nothing is staged or
+drawn. The demo account's name and the patient are fictional training data; the clinical content has not been
+reviewed by a physician, and the disclaimer under the showcase says so.
+
+Review: two rounds of independent reviewers (see `docs/testing-strategy.md`). Changes they led to, beyond plain
+fixes: the laptop's two messages are shown enlarged in a strip on its lower edge (the screen alone is too small to
+read at the laptop's new size); the steps' screens are shown full width on phones; the «لماذا» cards share rows
+(subgrid) so titles, needs and answers line up; the partnership photo was replaced (licence), and its caption now
+names its real subject, King Abdullah University Hospital on the JUST campus; a card photo's description was
+corrected to what its source shows.

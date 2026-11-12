@@ -1,6 +1,10 @@
 # Images of the V6.2 public landing
 
-All seven files come from the owner's prototype `Nabd-Index-Prototype-V6.2.html`, where they were embedded as
+V6.3 (2026-11-12) removed the seventh, the small crop of the CC0 JUST photo used in the institutions section
+(`institutions-campus.webp`, Aroobhj); the section now uses a new 640 × 400 crop of the same photo,
+`v63/campus-just.webp`. The images V6.3 added are credited in `v63/CREDITS.md`.
+
+These six files come from the owner's prototype `Nabd-Index-Prototype-V6.2.html`, where they were embedded as
 JPEG data. They were extracted unchanged in size and saved as WebP (`docs/ui-integration-map.md`). The pixel size
 of each file is the size written in the markup (`width`/`height`), checked by `LandingV6Tests`.
 
@@ -11,7 +15,6 @@ of each file is the size written in the markup (`width`/`height`), checked by `L
 | `specialty-cardiology.webp` | 516 × 336 | Specialty card: cardiology | Supplied by the project team with the design. **Source and licence not yet documented.** |
 | `specialty-respiratory.webp` | 522 × 336 | Specialty card: respiratory | Supplied by the project team with the design. **Source and licence not yet documented.** |
 | `specialty-critical-care.webp` | 519 × 336 | Specialty card: critical care | Supplied by the project team with the design. **Source and licence not yet documented.** |
-| `institutions-campus.webp` | 335 × 220 | Institutions section | Wikimedia Commons, "Jordan University of Science and Technology tour 2025 (7).jpg" by Aroobhj, CC0 1.0 (https://commons.wikimedia.org/wiki/File:Jordan_University_of_Science_and_Technology_tour_2025_(7).jpg). Used here as a generic campus picture: it does not state or imply any partnership. |
 | `cta-stethoscope.webp` | 426 × 103 | Background of the final call to action | Supplied by the project team with the design. **Source and licence not yet documented.** |
 
 The public footer says the same in its "مصادر الصور" section. Until the open entries are documented, the

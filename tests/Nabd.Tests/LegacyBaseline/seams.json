@@ -41,8 +41,8 @@
    "file": "index.html",
    "count": 1,
    "legacy": "  <script>/* until script.js loads, a missing photo just hides */",
-   "current": "  <!-- 2026-11-12: public landing, design V6.2 (scoped stylesheet; self-hosted Noto Sans Arabic, SIL OFL 1.1) -->\n  <link rel=\"preload\" href=\"fonts/noto-sans-arabic/NotoSansArabic-Regular.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n  <link rel=\"preload\" href=\"fonts/noto-sans-arabic/NotoSansArabic-Bold.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n  <link rel=\"stylesheet\" href=\"css/landing-v6.css\">\n  <link rel=\"stylesheet\" href=\"css/landing-v6-shell.css\">\n  <script>/* until script.js loads, a missing photo just hides */",
-   "reason": "The V6.2 public landing (ADR 0010): its two scoped stylesheets and the preloaded self-hosted fonts, after every legacy stylesheet so that the landing's rules come last."
+   "current": "  <!-- 2026-11-12: public landing, design V6.2 (scoped stylesheet; self-hosted Noto Sans Arabic, SIL OFL 1.1) -->\n  <link rel=\"preload\" href=\"fonts/noto-sans-arabic/NotoSansArabic-Regular.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n  <link rel=\"preload\" href=\"fonts/noto-sans-arabic/NotoSansArabic-Bold.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n  <link rel=\"stylesheet\" href=\"css/landing-v6.css\">\n  <link rel=\"stylesheet\" href=\"css/landing-v6-shell.css\">\n  <!-- 2026-11-12: V6.3 visual refinement of the landing, and of sign-in / registration (CSS only) -->\n  <link rel=\"stylesheet\" href=\"css/landing-v63.css\">\n  <link rel=\"stylesheet\" href=\"css/auth-v63.css\">\n  <script>/* until script.js loads, a missing photo just hides */",
+   "reason": "The public landing (ADR 0010): the V6.2 stylesheets and the preloaded self-hosted fonts, then the V6.3 refinements of the landing and of the sign-in modal (ADR 0011), after every legacy stylesheet so that these rules come last."
   },
   {
    "file": "index.html",

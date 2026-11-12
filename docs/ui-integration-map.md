@@ -1,7 +1,9 @@
 # UI integration map: prototype V6.2 → Razor views
 
 Where every part of `Nabd-Index-Prototype-V6.2.html` went. Why: [ui-integration-audit.md](ui-integration-audit.md).
-Decision: [ADR 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md).
+Decision: [ADR 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md). The V6.3 refinement
+(2026-11-12) changed four partials and the sign-in look; see "V6.3 refinement" at the end and
+[ADR 0011](decisions/0011-landing-v63-refinement-layer.md).
 
 ## Request path (unchanged)
 
@@ -97,3 +99,22 @@ Every prototype class `x` became `nl-x` in the markup and the stylesheet (252 cl
 
 Two registered differences were added to `LegacyBaseline/seams.json` (the head links, the `landing.js` script tag).
 Removed: the old landing partials `_Facts`, `_Fields`, `_Jordan`, `_Problem`, `_Solution`, `_Audience`, `_Closing`.
+
+## V6.3 refinement (2026-11-12)
+
+The owner's brief "Nabd Landing Page – V6.3 Visual Refinement". Hero, specialties, final call to action, header and
+footer design unchanged (the footer's «مصادر الصور» text was updated for the new images' licences).
+
+| Section | File | What changed | Ids kept |
+|---|---|---|---|
+| Showcase | `_SimulationShowcase.cshtml` | Text and the four cards first (V6.2 classes kept), then a smaller laptop drawn in CSS (`.nl-device…`) whose screen is `img/landing/v63/showcase-er-room.webp`, a real screenshot of the ER room; the drawn chat mock, the English labels and the lettered keyboard are gone; disclaimer reworded for a real screen | `nl-experience`, `nl-experience-title` |
+| «كيف تعمل نبض؟» | `_Method.cshtml` | `<ol class="nl-flow">` of four steps, each with a real screen (`step-1…4`), a number badge, a title and one sentence that matches what the room does; an arrow after steps 1–3 | `nl-method`, `nl-method-title` |
+| «عن نبض» | `_About.cshtml` | New title and lead (`.nl-about-head`), three solid cards (`.nl-pillar`); the English signature removed | `nl-about`, `nl-about-title` |
+| Partnership | `_Institutions.cshtml` (first half) | Eyebrow «نحو شراكة في التعليم السريري», three checked points, the JUST campus photo (`campus-just.webp`, CC0; it shows the towers of King Abdullah University Hospital, as the caption says) with a caption at the top saying it implies no partnership; the English caption removed; text and photo share one row from 901 px up (the V6.2 base used to push the text to a second row between 901 and 1250 px) | `nl-institutions-section`, `nl-institutions` |
+| «لماذا صممنا نبض؟» | `_Institutions.cshtml` (second half) | The three audience cards became three need cards (`.nl-why-card`): photo with a "who benefits" tag, the need, Nabd's answer | `nl-audience` |
+| Sign-in / registration | none (CSS only) | `auth-v63.css` | all |
+
+Files added: `wwwroot/css/landing-v63.css`, `wwwroot/css/auth-v63.css`, `wwwroot/img/landing/v63/*.webp` and its
+`CREDITS.md`, `tools/migration/landing-v6/capture-er-session.js`, `tools/migration/landing-v6/build-v63-images.mjs`.
+Removed: `wwwroot/img/landing/institutions-campus.webp` (replaced). Changed: the head (two stylesheet links,
+registered difference 19), the layer order in `convert-css.mjs` (and so `landing-v6.css`).

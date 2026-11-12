@@ -1911,10 +1911,11 @@
    Guard (generated): the prototype's own declarations of the properties the legacy stylesheets force,
    repeated as !important inside layers. Layered important declarations win over unlayered ones.
    ========================================================================= */
-/* Layer order: for important declarations an earlier layer wins. landing-v6-shell.css fills two more:
-   nl-guard-shell (fonts of the elements the application adds; above the prototype) and
-   nl-guard-defaults (the browser defaults the prototype relied on; below every prototype declaration). */
-@layer nl-guard-own-important, nl-guard-shell, nl-guard, nl-guard-defaults;
+/* Layer order: for important declarations an earlier layer wins. Other stylesheets fill three more:
+   nl-refine (landing-v63.css, auth-v63.css: the V6.3 refinements, above everything else),
+   nl-guard-shell (landing-v6-shell.css: fonts of the elements the application adds; above the prototype) and
+   nl-guard-defaults (landing-v6-shell.css: browser defaults the prototype relied on; below every prototype declaration). */
+@layer nl-refine, nl-guard-own-important, nl-guard-shell, nl-guard, nl-guard-defaults;
 @layer nl-guard-own-important {
   .nl-prototype-note { font-size: 12.16px !important; }
 }

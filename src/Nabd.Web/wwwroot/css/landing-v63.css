@@ -1,0 +1,634 @@
+/* =========================================================================
+   Nabd public landing, V6.3 visual refinement (2026-11-12). Hand-written; loaded after landing-v6.css
+   (the generated V6.2 base) and landing-v6-shell.css. Read docs/ui-design-system.md first.
+
+   What it changes, and only this: the simulation showcase (a smaller laptop showing a real screen of the
+   ER room), «كيف تعمل نبض؟» (steps with real screens and right-to-left arrows), the «عن نبض» section,
+   the partnership section (a Jordanian university photo) and «لماذا صممنا نبض؟». The hero, the
+   specialties, the final call to action, the header and the footer are untouched.
+
+   Rules of this file:
+   - every selector starts from #view-index.nl-index-view, so nothing here reaches another page, and the
+     ID outranks every class rule of the V6.2 base without !important;
+   - fonts are the exception: the legacy stylesheets force headings, b and strong with !important, and the
+     V6.2 guard re-asserts the prototype's fonts in cascade layers. Font declarations therefore go into
+     @layer nl-refine as !important; that layer is first in the order landing-v6.css declares, so it wins
+     over the guard and over the legacy rules;
+   - colours come from the tokens on .nabd-landing (docs/ui-design-system.md).
+   ========================================================================= */
+
+/* ---------- 1. Simulation showcase: copy and cards on the right, the laptop on the left ---------- */
+#view-index.nl-index-view .nl-showcase {
+  display: grid;
+  grid-template-columns: minmax(0, 1.12fr) minmax(0, .88fr);
+  align-items: center;
+  gap: clamp(28px, 4vw, 56px);
+  padding: clamp(22px, 2.8vw, 38px) clamp(22px, 3.2vw, 44px);
+  border: 1px solid #d6e4e9;
+  border-radius: 24px;
+  background:
+    radial-gradient(ellipse at 22% 62%, rgba(190, 218, 227, .42), transparent 44%),
+    linear-gradient(130deg, #f9fbfc 0%, #edf4f6 100%);
+  box-shadow: 0 16px 40px rgba(8, 47, 61, .07);
+}
+#view-index.nl-index-view .nl-showcase-text { padding: 0; }
+#view-index.nl-index-view .nl-showcase-text .nl-premium-pill { width: fit-content; }
+#view-index.nl-index-view .nl-showcase-text .nl-premium-experience-intro { margin-bottom: 18px; }
+/* The cards beside the laptop keep their V6.2 look, a little more compact. */
+#view-index.nl-index-view .nl-showcase-text .nl-premium-check-list { gap: 11px; }
+#view-index.nl-index-view .nl-showcase-text .nl-premium-check-row { min-height: 0; padding: 13px 13px 12px; }
+#view-index.nl-index-view .nl-showcase-text .nl-premium-disclaimer { margin-top: 14px; color: var(--copy); }
+/* Contrast: the V6.2 greys of these texts are below 4.5:1 (measured in the V6.3 review); --copy is 5.8:1. */
+#view-index.nl-index-view .nl-showcase-text .nl-premium-experience-intro,
+#view-index.nl-index-view .nl-premium-method-section .nl-premium-section-intro p,
+#view-index.nl-index-view .nl-partner-copy p,
+#view-index.nl-index-view .nl-why .nl-premium-audience-heading p { color: var(--copy); }
+#view-index.nl-index-view .nl-showcase-text .nl-premium-check-row small { color: #5d7079; }
+#view-index.nl-index-view .nl-premium-method-section .nl-premium-section-intro .nl-eyebrow { color: #8d5c45; }
+
+/* The laptop: a thin dark lid around a real screenshot, and an aluminium base seen slightly from above. */
+#view-index.nl-index-view .nl-device {
+  position: relative;
+  width: 100%;
+  max-width: 440px;
+  margin: 0;
+  justify-self: center;
+}
+#view-index.nl-index-view .nl-device-lid {
+  position: relative;
+  z-index: 1;
+  padding: 2.4% 2.4% 2.9%;
+  border-radius: 16px 16px 5px 5px;
+  background: linear-gradient(180deg, #23313a 0%, #121c22 100%);
+  box-shadow:
+    inset 0 0 0 1px rgba(255, 255, 255, .07),
+    inset 0 1px 0 rgba(255, 255, 255, .14),
+    0 18px 34px rgba(5, 39, 52, .16);
+}
+#view-index.nl-index-view .nl-device-camera {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 5px;
+  height: 5px;
+  margin: 1.15% 0 0 -2.5px;
+  border-radius: 50%;
+  background: #34444d;
+  box-shadow: 0 0 0 1px rgba(255, 255, 255, .05);
+}
+#view-index.nl-index-view .nl-device-screen {
+  position: relative;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 3px;
+  background: #f1f6f8;
+}
+#view-index.nl-index-view .nl-device-screen img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+}
+/* A faint reflection on the glass. */
+#view-index.nl-index-view .nl-device-screen::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(118deg, rgba(255, 255, 255, .13) 0%, rgba(255, 255, 255, 0) 34%);
+}
+#view-index.nl-index-view .nl-device-base {
+  position: relative;
+  width: 114%;
+  margin: -1px -7% 0;
+  aspect-ratio: 1 / .14;
+}
+/* The deck: a trapezoid, wider at the front edge. */
+#view-index.nl-index-view .nl-device-deck {
+  position: absolute;
+  inset: 0 0 17% 0;
+  clip-path: polygon(6.15% 0, 93.85% 0, 100% 100%, 0 100%);
+  background: linear-gradient(180deg, #b6c2c8 0%, #dfe6e9 14%, #d3dbdf 62%, #c4ced3 100%);
+}
+#view-index.nl-index-view .nl-device-keys {
+  position: absolute;
+  top: 9%;
+  bottom: 37%;
+  left: 15%;
+  right: 15%;
+  display: grid;
+  grid-template-rows: repeat(5, 1fr);
+  gap: 9%;
+  transform: perspective(300px) rotateX(26deg);
+  transform-origin: 50% 100%;
+}
+#view-index.nl-index-view .nl-device-row { display: flex; gap: .9%; }
+#view-index.nl-index-view .nl-device-row span {
+  flex: 1 1 0;
+  min-width: 0;
+  border-radius: 1.5px;
+  background: linear-gradient(180deg, #3d4c55 0%, #26333b 100%);
+  box-shadow: 0 1px 0 rgba(10, 24, 31, .35);
+}
+#view-index.nl-index-view .nl-device-row .nl-key-wide { flex-grow: 1.5; }
+#view-index.nl-index-view .nl-device-row .nl-key-wider { flex-grow: 1.85; }
+#view-index.nl-index-view .nl-device-row .nl-key-widest { flex-grow: 2.4; }
+#view-index.nl-index-view .nl-device-row .nl-key-space { flex-grow: 5.6; }
+#view-index.nl-index-view .nl-device-pad {
+  position: absolute;
+  bottom: 7%;
+  left: 39%;
+  right: 39%;
+  height: 20%;
+  clip-path: polygon(3% 0, 97% 0, 100% 100%, 0 100%);
+  border-radius: 2px;
+  background: linear-gradient(180deg, #c6cfd4, #d9e0e3);
+  box-shadow: inset 0 0 0 1px rgba(98, 116, 125, .35);
+}
+/* The front edge, with the opening notch. */
+#view-index.nl-index-view .nl-device-lip {
+  position: absolute;
+  left: 0;
+  right: 0;
+  bottom: 0;
+  height: 18%;
+  border-radius: 0 0 45% 45% / 0 0 100% 100%;
+  background: linear-gradient(180deg, #aeb9bf 0%, #8c999f 100%);
+  box-shadow: 0 10px 18px rgba(8, 43, 55, .16);
+}
+#view-index.nl-index-view .nl-device-lip i {
+  position: absolute;
+  top: 0;
+  left: 50%;
+  width: 14%;
+  height: 46%;
+  margin-left: -7%;
+  border-radius: 0 0 8px 8px;
+  background: linear-gradient(180deg, #7d8a91, #95a2a8);
+}
+#view-index.nl-index-view .nl-device-caption {
+  margin: 20px 0 0;
+  color: var(--copy);
+  font-size: 12.5px;
+  line-height: 1.7;
+  text-align: center;
+}
+/* Two messages of the screenshot, enlarged so that the exchange can be read. They sit side by side across the
+   lower edge of the screen and the keyboard, where they cover neither their originals nor the vital signs, and
+   copy the look of the room's own bubbles: the trainee's in teal on the left, the patient's in white on the
+   right. The trainee's comes first in the markup (reading order) and is drawn on the left (row-reverse). */
+#view-index.nl-index-view .nl-device-thread {
+  position: absolute;
+  z-index: 3;
+  inset-inline: -4%;
+  bottom: -15%;
+  display: flex;
+  flex-direction: row-reverse;
+  align-items: flex-end;
+  justify-content: space-between;
+  gap: 10px;
+}
+#view-index.nl-index-view .nl-device-callout {
+  flex: 0 1 auto;
+  max-width: 50%;
+  margin: 0;
+  padding: 9px 13px 10px;
+  border-radius: 12px;
+  box-shadow: 0 12px 26px rgba(8, 47, 61, .2);
+  font-size: 13.5px;
+  line-height: 1.6;
+}
+#view-index.nl-index-view .nl-device-callout b { display: block; margin-bottom: 2px; font-size: 11.5px; }
+#view-index.nl-index-view .nl-device-callout-trainee {
+  margin-bottom: 30px;
+  color: #fff;
+  background: #13737a;
+}
+#view-index.nl-index-view .nl-device-callout-patient {
+  color: var(--ink);
+  background: #fff;
+  border: 1px solid #d6e2e6;
+}
+
+/* ---------- 2. «كيف تعمل نبض؟»: four steps, read from right to left ---------- */
+#view-index.nl-index-view .nl-flow {
+  display: grid;
+  grid-template-columns: repeat(4, minmax(0, 1fr));
+  gap: 30px;
+  margin: 0;
+  padding: 0;
+  list-style: none;
+}
+#view-index.nl-index-view .nl-flow-step {
+  position: relative;
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  border: 1px solid #dce6e9;
+  border-radius: 16px;
+  background: #fff;
+  box-shadow: 0 8px 22px rgba(8, 47, 61, .05);
+  transition: transform .2s ease, box-shadow .2s ease, border-color .2s ease;
+}
+#view-index.nl-index-view .nl-flow-step:hover {
+  transform: translateY(-3px);
+  border-color: #c5d9df;
+  box-shadow: 0 14px 30px rgba(8, 47, 61, .09);
+}
+#view-index.nl-index-view .nl-flow-shot {
+  position: relative;
+  margin: 10px 10px 0;
+  overflow: hidden;
+  aspect-ratio: 4 / 3;
+  border: 1px solid #e1eaee;
+  border-radius: 10px;
+  background: #f1f6f8;
+}
+#view-index.nl-index-view .nl-flow-shot img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  object-fit: cover;
+  object-position: top center;
+}
+/* The screens are crops of a longer page: a short fade at both edges shows that they continue. */
+#view-index.nl-index-view .nl-flow-shot::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  pointer-events: none;
+  background: linear-gradient(180deg, #f1f6f8 0%, rgba(241, 246, 248, 0) 9%, rgba(241, 246, 248, 0) 91%, #f1f6f8 100%);
+}
+#view-index.nl-index-view .nl-flow-body {
+  position: relative;
+  padding: 16px 20px 22px;
+}
+/* The step number sits above the title, so that it never covers the screen. */
+#view-index.nl-index-view .nl-flow-num {
+  display: inline-grid;
+  place-items: center;
+  min-width: 34px;
+  height: 28px;
+  margin-bottom: 10px;
+  padding: 0 8px;
+  border-radius: 8px;
+  color: #fff;
+  background: var(--navy);
+  font-size: 12.5px;
+  font-weight: 800;
+  line-height: 1;
+}
+#view-index.nl-index-view .nl-flow-body h3 { margin: 0 0 6px; color: var(--navy); }
+#view-index.nl-index-view .nl-flow-body p { margin: 0; color: var(--copy); font-size: 13.6px; line-height: 1.85; }
+/* The arrow from a step to the next one sits in the gap at the step's inline end: on its left, because
+   the page reads from right to left. It points left (toward the next step) and is centred on the screen. */
+#view-index.nl-index-view .nl-flow-arrow {
+  position: absolute;
+  z-index: 2;
+  top: 0;
+  inset-inline-end: -32px;
+  display: grid;
+  place-items: center;
+  width: 34px;
+  height: 34px;
+  margin-top: calc(10px + (100% - 20px) * .375 - 17px);
+  border: 1px solid #e6d3c8;
+  border-radius: 50%;
+  color: var(--copper-action);
+  background: #fff;
+  box-shadow: 0 6px 14px rgba(8, 47, 61, .1);
+}
+#view-index.nl-index-view .nl-flow-arrow svg { width: 17px; height: 17px; }
+/* Mirrored if the page is ever shown left to right. */
+#view-index.nl-index-view .nl-flow-arrow:dir(ltr) svg { transform: scaleX(-1); }
+
+/* ---------- 3. «عن نبض»: solid cards set apart from the navy section ---------- */
+#view-index.nl-index-view .nl-about-head {
+  display: grid;
+  grid-template-columns: minmax(0, 1.05fr) minmax(0, .95fr);
+  align-items: end;
+  gap: clamp(24px, 4vw, 64px);
+  margin-bottom: 46px;
+}
+#view-index.nl-index-view .nl-about-title h2 { margin: 12px 0 0; color: #fff; text-wrap: balance; }
+#view-index.nl-index-view .nl-about-lead {
+  margin: 0;
+  max-width: 620px;
+  padding-inline-start: 24px;
+  border-inline-start: 2px solid rgba(229, 173, 142, .6);
+  color: rgba(239, 247, 249, .84);
+  font-size: 15.5px;
+  line-height: 2.05;
+}
+#view-index.nl-index-view .nl-pillars {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+#view-index.nl-index-view .nl-pillar {
+  position: relative;
+  padding: 30px 28px 32px;
+  border-top: 3px solid var(--copper);
+  border-radius: 16px;
+  color: var(--ink);
+  background: linear-gradient(180deg, #ffffff 0%, #eef4f6 100%);
+  box-shadow: 0 20px 44px rgba(2, 20, 28, .3);
+}
+#view-index.nl-index-view .nl-pillar-icon {
+  display: grid;
+  place-items: center;
+  width: 54px;
+  height: 54px;
+  margin-bottom: 20px;
+  border-radius: 14px;
+  color: var(--copper-light);
+  background: var(--navy);
+  box-shadow: 0 8px 18px rgba(8, 47, 61, .22);
+}
+#view-index.nl-index-view .nl-pillar-icon svg { width: 28px; height: 28px; }
+#view-index.nl-index-view .nl-pillar h3 { margin: 0 0 10px; color: var(--navy); }
+#view-index.nl-index-view .nl-pillar p { margin: 0; color: var(--copy); font-size: 14.4px; line-height: 1.95; }
+
+/* ---------- 4. Partnership: the text on the right, the university photo on the left ---------- */
+#view-index.nl-index-view .nl-partner {
+  grid-template-columns: minmax(0, 1fr) minmax(0, 1.04fr);
+  gap: clamp(32px, 5vw, 72px);
+}
+/* The V6.2 base places .nl-premium-institution-copy in column 2, row 2 between 901 and 1250px (it was laid
+   out with the old photo); the V6.3 text and photo share one row, text first (right), photo second (left). */
+#view-index.nl-index-view .nl-partner-copy { padding: 0; grid-column: auto; grid-row: auto; }
+#view-index.nl-index-view .nl-partner-copy p { margin-bottom: 18px; }
+#view-index.nl-index-view .nl-partner-points {
+  display: grid;
+  gap: 10px;
+  margin: 0 0 26px;
+  padding: 0;
+  list-style: none;
+}
+#view-index.nl-index-view .nl-partner-points li {
+  position: relative;
+  padding-inline-start: 30px;
+  color: var(--ink);
+  font-size: 14.4px;
+  line-height: 1.8;
+}
+#view-index.nl-index-view .nl-partner-points li::before {
+  content: "";
+  position: absolute;
+  top: .3em;
+  inset-inline-start: 0;
+  width: 19px;
+  height: 19px;
+  border-radius: 50%;
+  background: var(--teal);
+}
+#view-index.nl-index-view .nl-partner-points li::after {
+  content: "";
+  position: absolute;
+  top: calc(.3em + 5px);
+  inset-inline-start: 6px;
+  width: 7px;
+  height: 4px;
+  border-bottom: 2px solid #fff;
+  border-left: 2px solid #fff;
+  transform: rotate(-45deg);
+}
+#view-index.nl-index-view .nl-partner-visual {
+  position: relative;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 10;
+  border-radius: 20px;
+  background: #d8e8ec;
+  box-shadow: 0 22px 44px rgba(8, 47, 61, .14);
+  isolation: isolate;
+}
+#view-index.nl-index-view .nl-partner-visual img {
+  position: absolute;
+  inset: 0;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  object-position: center bottom;
+  filter: saturate(.85) contrast(1.03);
+}
+/* A light grade toward the brand's teal and copper; the photo is mostly sky, so the caption sits at the top,
+   on a short navy fade, and the buildings at the foot stay clear. */
+#view-index.nl-index-view .nl-partner-visual::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 1;
+  background:
+    linear-gradient(180deg, rgba(8, 47, 61, .62) 0%, rgba(8, 47, 61, .18) 34%, rgba(8, 47, 61, 0) 52%),
+    linear-gradient(110deg, rgba(23, 106, 114, .14) 0%, rgba(201, 135, 104, .08) 100%);
+}
+#view-index.nl-index-view .nl-partner-visual::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  z-index: 3;
+  border-radius: inherit;
+  box-shadow: inset 0 0 0 1px rgba(255, 255, 255, .2);
+  pointer-events: none;
+}
+#view-index.nl-index-view .nl-partner-visual figcaption {
+  position: absolute;
+  z-index: 2;
+  inset-inline: 22px;
+  top: 18px;
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+  color: #fff;
+  text-shadow: 0 1px 8px rgba(4, 30, 40, .45);
+}
+#view-index.nl-index-view .nl-partner-visual figcaption span { color: #fff; font-size: 12.5px; line-height: 1.6; }
+
+/* ---------- 5. «لماذا صممنا نبض؟»: a need, Nabd's answer, and who benefits ---------- */
+#view-index.nl-index-view .nl-why-grid {
+  display: grid;
+  grid-template-columns: repeat(3, minmax(0, 1fr));
+  gap: 22px;
+}
+#view-index.nl-index-view .nl-why-card {
+  display: flex;
+  flex-direction: column;
+  min-width: 0;
+  overflow: hidden;
+  border: 1px solid #d9e5e9;
+  border-radius: 18px;
+  background: #fff;
+  box-shadow: 0 10px 26px rgba(8, 47, 61, .06);
+  transition: transform .2s ease, box-shadow .2s ease;
+}
+#view-index.nl-index-view .nl-why-card:hover { transform: translateY(-3px); box-shadow: 0 16px 34px rgba(8, 47, 61, .1); }
+#view-index.nl-index-view .nl-why-media {
+  position: relative;
+  flex: 0 0 auto;
+  margin: 0;
+  overflow: hidden;
+  aspect-ratio: 16 / 9;
+  background: #dfe9ec;
+}
+#view-index.nl-index-view .nl-why-media img {
+  display: block;
+  width: 100%;
+  height: 100%;
+  max-width: none;
+  object-fit: cover;
+  filter: saturate(.85);
+}
+#view-index.nl-index-view .nl-why-media::after {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background: linear-gradient(180deg, rgba(8, 47, 61, 0) 55%, rgba(8, 47, 61, .45) 100%);
+}
+#view-index.nl-index-view .nl-why-tag {
+  position: absolute;
+  z-index: 1;
+  bottom: 12px;
+  inset-inline-start: 14px;
+  padding: 5px 11px;
+  border-radius: 999px;
+  color: var(--navy);
+  background: rgba(255, 255, 255, .95);
+  box-shadow: 0 4px 12px rgba(8, 47, 61, .18);
+  font-size: 12px;
+  font-weight: 700;
+  line-height: 1.6;
+}
+#view-index.nl-index-view .nl-why-body {
+  display: flex;
+  flex: 1 1 auto;
+  flex-direction: column;
+  gap: 10px;
+  padding: 20px 22px 22px;
+}
+#view-index.nl-index-view .nl-why-body h3 { margin: 0; color: var(--navy); }
+#view-index.nl-index-view .nl-why-body p { margin: 0; color: var(--copy); font-size: 14px; line-height: 1.9; }
+/* Three cards in a row: photo, title, need and answer line up across the cards (each card spans four rows of
+   the grid and shares them through subgrid), whatever the length of each title. */
+@media (min-width: 901px) {
+  #view-index.nl-index-view .nl-why-card { display: grid; grid-row: span 4; grid-template-rows: subgrid; row-gap: 0; }
+  #view-index.nl-index-view .nl-why-body { display: contents; }
+  #view-index.nl-index-view .nl-why-body h3 { padding: 20px 22px 0; margin-bottom: 10px; }
+  #view-index.nl-index-view .nl-why-body p:not(.nl-why-answer) { padding: 0 22px; margin-bottom: 14px; }
+  #view-index.nl-index-view .nl-why-body .nl-why-answer { align-self: start; margin: 0 22px 22px; }
+}
+#view-index.nl-index-view .nl-why-body .nl-why-answer {
+  margin-top: 4px;
+  padding: 12px 14px;
+  border-inline-start: 3px solid var(--teal);
+  border-radius: 10px;
+  color: var(--ink);
+  background: #f1f7f8;
+}
+#view-index.nl-index-view .nl-why-answer b { color: var(--teal); }
+
+/* ---------- Typography of the elements above (see the rules at the top) ---------- */
+@layer nl-refine {
+  #view-index.nl-index-view .nl-flow-body h3 { font-size: 16.8px !important; font-weight: 750 !important; line-height: 1.5 !important; }
+  #view-index.nl-index-view .nl-about-title h2 { font-size: clamp(29px, 2.6vw, 40px) !important; font-weight: 800 !important; line-height: 1.45 !important; }
+  #view-index.nl-index-view .nl-pillar h3 { font-size: 19px !important; font-weight: 800 !important; line-height: 1.5 !important; }
+  #view-index.nl-index-view .nl-partner-visual figcaption b { font-size: 16px !important; font-weight: 750 !important; line-height: 1.5 !important; }
+  #view-index.nl-index-view .nl-why-body h3 { font-size: 17.5px !important; font-weight: 800 !important; line-height: 1.55 !important; }
+  #view-index.nl-index-view .nl-why-answer b { font-weight: 800 !important; }
+  #view-index.nl-index-view .nl-showcase-text .nl-premium-disclaimer { font-size: 12px !important; line-height: 1.8 !important; }
+}
+
+/* ---------- Responsive ---------- */
+@media (max-width: 1100px) {
+  #view-index.nl-index-view .nl-flow { gap: 24px; }
+  #view-index.nl-index-view .nl-flow-arrow { inset-inline-end: -29px; }
+  #view-index.nl-index-view .nl-flow-body { padding: 14px 16px 18px; }
+  #view-index.nl-index-view .nl-flow-body p { font-size: 13px; }
+  #view-index.nl-index-view .nl-why-grid { gap: 16px; }
+  #view-index.nl-index-view .nl-why-body { padding: 18px 18px 20px; }
+}
+
+@media (max-width: 900px) {
+  #view-index.nl-index-view .nl-showcase { grid-template-columns: 1fr; }
+  /* Text first, then the laptop (the V6.2 base gives the text column order 1 at this width). */
+  #view-index.nl-index-view .nl-showcase-text { order: 0; }
+  #view-index.nl-index-view .nl-device { order: 1; max-width: 460px; }
+  /* Two steps a row: 1 → 2 on the first row, 3 → 4 on the second. */
+  #view-index.nl-index-view .nl-flow { grid-template-columns: repeat(2, minmax(0, 1fr)); gap: 34px 28px; }
+  #view-index.nl-index-view .nl-flow-arrow { inset-inline-end: -31px; }
+  #view-index.nl-index-view .nl-flow-step:nth-child(2n) .nl-flow-arrow { display: none; }
+  #view-index.nl-index-view .nl-about-head { grid-template-columns: 1fr; align-items: start; gap: 18px; margin-bottom: 32px; }
+  #view-index.nl-index-view .nl-pillars { grid-template-columns: 1fr; gap: 14px; }
+  #view-index.nl-index-view .nl-pillar { display: grid; grid-template-columns: 54px minmax(0, 1fr); column-gap: 18px; padding: 24px 22px; }
+  #view-index.nl-index-view .nl-pillar-icon { grid-row: span 2; margin: 0; }
+  #view-index.nl-index-view .nl-partner { grid-template-columns: 1fr; }
+  /* The photo is 640 px wide: not enlarged beyond it when the section stacks. */
+  #view-index.nl-index-view .nl-partner-visual { width: 100%; max-width: 640px; justify-self: center; }
+  #view-index.nl-index-view .nl-why-grid { grid-template-columns: 1fr; }
+  #view-index.nl-index-view .nl-why-card { flex-direction: row; }
+  #view-index.nl-index-view .nl-why-media { flex: 0 0 40%; aspect-ratio: auto; min-height: 220px; }
+  #view-index.nl-index-view .nl-why-media img { position: absolute; inset: 0; }
+}
+
+@media (max-width: 640px) {
+  #view-index.nl-index-view .nl-showcase { padding: 18px; border-radius: 18px; }
+  #view-index.nl-index-view .nl-device-caption { margin-top: 14px; font-size: 11.5px; }
+  /* One step a row, its screen at full width so that it stays readable; the arrow points down to the next step. */
+  #view-index.nl-index-view .nl-flow { grid-template-columns: 1fr; gap: 40px; max-width: 460px; margin-inline: auto; }
+  #view-index.nl-index-view .nl-flow-body { padding: 14px 16px 18px; }
+  #view-index.nl-index-view .nl-flow-body p { font-size: 13.6px; line-height: 1.8; }
+  #view-index.nl-index-view .nl-flow-step:nth-child(2n) .nl-flow-arrow { display: grid; }
+  #view-index.nl-index-view .nl-flow-arrow {
+    top: auto;
+    bottom: -36px;
+    inset-inline-end: auto;
+    inset-inline-start: calc(50% - 15px);
+    width: 30px;
+    height: 30px;
+    margin: 0;
+    transform: rotate(-90deg);
+  }
+  #view-index.nl-index-view .nl-flow-arrow:dir(ltr) svg { transform: none; }
+  #view-index.nl-index-view .nl-about-lead { padding-inline-start: 16px; font-size: 14.4px; line-height: 1.95; }
+  #view-index.nl-index-view .nl-pillar { grid-template-columns: 46px minmax(0, 1fr); column-gap: 14px; padding: 20px 18px; }
+  #view-index.nl-index-view .nl-pillar-icon { width: 46px; height: 46px; border-radius: 12px; }
+  #view-index.nl-index-view .nl-pillar-icon svg { width: 24px; height: 24px; }
+  #view-index.nl-index-view .nl-pillar p { font-size: 13.6px; }
+  #view-index.nl-index-view .nl-partner-points li { font-size: 13.6px; }
+  #view-index.nl-index-view .nl-partner-visual { border-radius: 16px; }
+  #view-index.nl-index-view .nl-partner-visual figcaption { inset-inline: 16px; top: 14px; }
+  /* The base is 114% of the lid: keep it inside the card's rounded border. */
+  #view-index.nl-index-view .nl-device { max-width: calc((100% - 8px) / 1.14); }
+  #view-index.nl-index-view .nl-device-thread { inset-inline: -2%; bottom: -19%; gap: 8px; }
+  #view-index.nl-index-view .nl-device-callout { padding: 7px 10px 8px; border-radius: 10px; font-size: 12px; line-height: 1.55; }
+  #view-index.nl-index-view .nl-device-callout b { font-size: 10.5px; }
+  #view-index.nl-index-view .nl-device-callout-trainee { margin-bottom: 22px; }
+  #view-index.nl-index-view .nl-why-card { flex-direction: column; }
+  #view-index.nl-index-view .nl-why-media { flex: 0 0 auto; aspect-ratio: 16 / 9; min-height: 0; }
+  #view-index.nl-index-view .nl-why-media img { position: static; }
+  #view-index.nl-index-view .nl-why-body p { font-size: 13.6px; }
+  @layer nl-refine {
+    #view-index.nl-index-view .nl-flow-body h3 { font-size: 15.5px !important; }
+    #view-index.nl-index-view .nl-about-title h2 { font-size: 25.6px !important; }
+    #view-index.nl-index-view .nl-pillar h3 { font-size: 17px !important; }
+    #view-index.nl-index-view .nl-partner-visual figcaption b { font-size: 14.4px !important; }
+    #view-index.nl-index-view .nl-why-body h3 { font-size: 16.5px !important; }
+  }
+}
+
+@media (max-width: 360px) {
+  /* Longer caption lines on a narrow photo: a longer fade keeps them readable. */
+  #view-index.nl-index-view .nl-partner-visual::before {
+    background: linear-gradient(180deg, rgba(8, 47, 61, .7) 0%, rgba(8, 47, 61, .4) 45%, rgba(8, 47, 61, 0) 66%);
+  }
+}
+
+@media (prefers-reduced-motion: reduce) {
+  #view-index.nl-index-view .nl-flow-step,
+  #view-index.nl-index-view .nl-why-card { transition: none; }
+  #view-index.nl-index-view .nl-flow-step:hover,
+  #view-index.nl-index-view .nl-why-card:hover,
+  #view-index.nl-index-view .nl-partner-copy .nl-btn:hover { transform: none; }
+}

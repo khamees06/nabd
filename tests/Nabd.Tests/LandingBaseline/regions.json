@@ -1,0 +1,20 @@
+{
+ "note": "The three parts of the page that the V6.2 landing replaced (ADR 0010). In the served page each is wrapped in '<!-- nabd:region NAME ... -->' ... '<!-- /nabd:region NAME -->'; in the frozen legacy page it runs from 'legacyStart' to the first 'legacyEnd' after it. The baseline test replaces both with the same token (and the blank lines right after it), requires the rest of the page to equal the legacy page, and requires each region to equal its approved snapshot (NAME.html). Approve a new snapshot only with tools/migration/landing-v6/approve-landing-baseline.mjs, after the visual comparison (docs/testing-strategy.md).",
+ "regions": [
+  {
+   "name": "public-header",
+   "legacyStart": "<!-- =========================================================\n       1A. PUBLIC HEADER",
+   "legacyEnd": "\n  </header>"
+  },
+  {
+   "name": "landing",
+   "legacyStart": "<!-- =======================================================\n         VIEW 0: PUBLIC LANDING PAGE (INDEX)",
+   "legacyEnd": "\n    </section>"
+  },
+  {
+   "name": "site-footer",
+   "legacyStart": "<!-- =========================================================\n       FOOTER (Public Links Only for Guests; App Links Protected)",
+   "legacyEnd": "\n  </footer>"
+  }
+ ]
+}

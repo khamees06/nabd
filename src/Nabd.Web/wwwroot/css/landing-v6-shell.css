@@ -1,0 +1,141 @@
+/* =========================================================================
+   Nabd public landing, design V6.2: the integration rules written for the application.
+   landing-v6.css is generated from the prototype and is not edited by hand; this file holds what the
+   prototype could not know about:
+   1. the wrapper section #view-index that the legacy client shows and hides;
+   2. legacy rules that reach landing elements on properties the prototype never sets
+      (found with tools/legacy/landing-style-diff.mjs; listed in docs/ui-integration-audit.md);
+   3. the parts the application adds to the prototype's footer: the signed-in links and the credits.
+   Every selector starts from a landing root (#public-header, #view-index, #site-footer, #nl-dialog),
+   so nothing here reaches the rest of the application. Loaded after landing-v6.css.
+   ========================================================================= */
+
+/* ---------- 1. the wrapper section ---------- */
+/* theme.css lays #view-index out as a padded, centred flex column for the old landing; the V6.2 landing
+   is full width and brings its own spacing. .hidden (display:none !important) still hides it. */
+#view-index.nl-index-view:not(.hidden) {
+  display: block;
+  max-width: none;
+  margin: 0;
+  gap: 0;
+  padding: 0 !important;
+}
+/* style.css reveals each direct child of #view-index with a scroll-driven animation; the V6.2 landing is
+   one child and has its own motion. */
+#view-index.nl-index-view > .nabd-landing.nl-landing {
+  animation: none !important;
+  animation-timeline: auto !important;
+}
+
+/* ---------- 2. legacy rules on properties the prototype does not set ---------- */
+/* The prototype was designed at the browser's 16px; the application's html is 15px. */
+.nabd-landing { font-size: 16px; }
+/* style.css starts every element from its own defaults (a solid zero-width border in its line colour,
+   max-width 100% on svg and buttons, a colour and line height on headings and buttons). The prototype
+   expects the browser's defaults; revert gives them back. Same specificity as the legacy rules and
+   later, so the legacy rules lose; lower than every prototype class rule, so those still win. */
+:where(.nabd-landing),
+:where(.nabd-landing) *,
+:where(.nabd-landing) ::before,
+:where(.nabd-landing) ::after { border: revert; }
+/* style.css also makes ::before/::after border-box; the prototype sizes them as content-box. */
+:where(.nabd-landing) ::before,
+:where(.nabd-landing) ::after { box-sizing: revert; }
+:where(.nabd-landing) svg { max-width: revert; }
+:where(.nabd-landing) button { max-width: revert; color: revert; background-color: revert; }
+:where(.nabd-landing) h1,
+:where(.nabd-landing) h2,
+:where(.nabd-landing) h3,
+:where(.nabd-landing) h4 { color: revert; }
+/* The legacy stylesheets force b/strong to weight 500 and headings to their own sizes with !important.
+   Where the prototype sets none of its own, the browser's default is what it was designed with. This
+   layer loses to every prototype declaration (all of them are in the guard layers) and beats the
+   unlayered legacy rules. */
+@layer nl-guard-defaults {
+  :where(.nabd-landing) b,
+  :where(.nabd-landing) strong { font-weight: revert !important; }
+  :where(.nabd-landing) h1,
+  :where(.nabd-landing) h2,
+  :where(.nabd-landing) h3,
+  :where(.nabd-landing) h4 { font-size: revert !important; font-weight: revert !important; line-height: revert !important; }
+}
+/* #public-header: style.css/theme.css give the old header a fixed height, side padding, a gap, a minimum
+   height and a frosted backdrop; the V6.2 header takes its size from .nl-header-inner. */
+#public-header.nl-site-header {
+  height: auto;
+  min-height: 0;
+  padding: 0;
+  gap: normal;
+  -webkit-backdrop-filter: none !important;
+  backdrop-filter: none !important;
+}
+/* style.css's reveal-on-scroll marks footer headings .nb-io (hidden until scrolled into view);
+   the prototype shows them at once. */
+#site-footer.nabd-landing .nb-io {
+  opacity: 1;
+  translate: none;
+  transition: none;
+}
+/* theme.css rounds every div directly inside a [role="dialog"]. */
+#nl-dialog .nl-modal > div { border-radius: 0 !important; }
+
+/* ---------- 3. the footer: guest links, signed-in links, credits ---------- */
+/* The two link groups take the prototype's grid columns directly; .hidden (display:none !important)
+   decides which group shows, exactly as before (syncAuthShellUI). */
+#site-footer .nl-footer-links { display: contents; }
+#site-footer .nl-footer-col button,
+#site-footer .nl-footer-col span {
+  display: block;
+  width: fit-content;
+  margin: 7px 0;
+  padding: 3px 0;
+  color: rgba(255,255,255,.75);
+  background: none;
+  border: 0;
+  cursor: pointer;
+  text-align: start;
+  transition: color .18s ease;
+}
+#site-footer .nl-footer-col span { cursor: default; }
+#site-footer .nl-footer-col button:hover,
+#site-footer .nl-footer-col button:focus-visible { color: var(--copper-light); }
+
+#site-footer .nl-footer-credits {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  gap: 6px 22px;
+  margin-top: 8px;
+  text-align: start;
+}
+#site-footer .nl-footer-credits details { max-width: min(760px, 100%); }
+#site-footer .nl-footer-credits summary {
+  cursor: pointer;
+  color: rgba(255,255,255,.62);
+  text-align: center;
+}
+#site-footer .nl-footer-credits summary:hover,
+#site-footer .nl-footer-credits summary:focus-visible { color: var(--copper-light); }
+#site-footer .nl-footer-credits details[open] { flex-basis: 100%; }
+#site-footer .nl-footer-credits details > * + * { margin-top: 6px; }
+#site-footer .nl-footer-credits p,
+#site-footer .nl-footer-credits .nb-credit {
+  margin: 6px 0 0;
+  color: rgba(255,255,255,.62);
+}
+#site-footer .nl-footer-credits a {
+  color: var(--copper-light);
+  text-decoration: underline;
+  text-underline-offset: 2px;
+}
+
+/* Fonts of the elements above. The legacy stylesheets force button fonts with !important and the
+   generated guard (end of landing-v6.css) re-asserts the prototype's fonts in layers; a font rule
+   for an element the application adds must therefore sit in the guard's shell layer, which the layer
+   order in landing-v6.css places above the generated guard. */
+@layer nl-guard-shell {
+  #site-footer .nl-footer-col button,
+  #site-footer .nl-footer-col span { font-size: 12.48px !important; font-weight: 400 !important; line-height: 1.65 !important; }
+  #site-footer .nl-footer-credits p,
+  #site-footer .nl-footer-credits .nb-credit { font-size: 11.2px !important; line-height: 1.8 !important; }
+}

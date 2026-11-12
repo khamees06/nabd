@@ -1,6 +1,8 @@
 # 0003 — Razor views reproduce the legacy page exactly
 
-Status: accepted · 2026-11-11
+Status: accepted · 2026-11-11 · amended by [0010](0010-public-landing-v62-with-the-shell-preserved.md) (2026-11-12):
+the public header, the landing view and the public footer are now the V6.2 design and are compared with their own
+approved snapshots; `The_page_is_the_legacy_page` became `The_page_outside_the_landing_regions_is_the_legacy_page`.
 
 ## Context
 

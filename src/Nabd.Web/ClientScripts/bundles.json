@@ -229,6 +229,13 @@
    ],
    "open": "terms/_open.txt",
    "close": "terms/_close.txt"
+  },
+  {
+   "name": "landing",
+   "output": "landing.js",
+   "fragments": [
+    "landing/010-landing-v6.js"
+   ]
   }
  ]
 }

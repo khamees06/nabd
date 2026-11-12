@@ -91,9 +91,14 @@ Controllers are thin: each action calls one use case or one application port and
 
 ## How the page reaches the browser
 
-The user interface is **frozen**: the page, the styles and the client behaviour are the legacy ones.
+The user interface is **frozen**: the page, the styles and the client behaviour are the legacy ones, with one
+deliberate exception: the public landing (public header, landing view, public footer) is the owner's V6.2
+design ([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md),
+[ui-integration-map.md](ui-integration-map.md)). It keeps the IDs and the sign-in flow of the legacy client, and
+its stylesheets cannot reach the rest of the application.
 
-1. `GET /` → `HomeController.Index` → the layout and views render the same HTML the static `index.html` had.
+1. `GET /` → `HomeController.Index` → the layout and views render the same HTML the static `index.html` had,
+   except the three landing regions.
 2. `GET /css/*.css`, `GET /img/**` → static files.
 3. `GET /js/script.js` (and `er.js`, `resp.js`, `ui.js`, `motion.js`, `terms.js`) → `ClientScriptsController` →
    `ClientBundleProvider` joins the bundle's fragments in the order of `ClientScripts/bundles.json`. Joining is plain
@@ -105,9 +110,14 @@ The user interface is **frozen**: the page, the styles and the client behaviour 
    whether to work offline.
 
 `tests/Nabd.Tests/Baseline/LegacySiteBaselineTests.cs` starts the application in memory and compares every one of
-these assets with the frozen legacy site. The only differences allowed are the 18 entries of
+these assets with the frozen legacy site. The only differences allowed are the 20 entries of
 `tests/Nabd.Tests/LegacyBaseline/seams.json` (where stylesheets and scripts are served from, one image path
-inside a stylesheet that moved with it, and the two lines that told the rooms where the understanding service is).
+inside a stylesheet that moved with it, the two lines that told the rooms where the understanding service is, and
+the landing's stylesheet links and script tag) and the three landing regions, which are compared with their
+approved V6.2 snapshots instead (`tests/Nabd.Tests/LandingBaseline/`).
+
+The landing adds: `GET /css/landing-v6.css` and `/css/landing-v6-shell.css` (static), `GET /js/landing.js` (a
+seventh bundle, one fragment), `GET /fonts/noto-sans-arabic/*.woff2` and `GET /img/landing/*.webp` (static).
 
 ## Where the logic runs today
 

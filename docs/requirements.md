@@ -189,7 +189,7 @@ conversation, the respiratory room, the coach, the professor portal.
 
 | Constraint | State | Source |
 |---|---|---|
-| No redesign: the user interface and the page structure do not change | Held; 18 registered differences, none visual | [decision 0003](decisions/0003-razor-views-reproduce-the-legacy-page.md), `seams.json` |
+| No redesign: the user interface and the page structure do not change | Held for the application; the public landing (header, landing view, footer) was redesigned on the owner's instruction (V6.2, 2026-11-12). 20 registered differences | [decision 0003](decisions/0003-razor-views-reproduce-the-legacy-page.md), [decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md), `seams.json` |
 | No dataset rebuild: the eight JSON files are moved byte for byte | Held | [decision 0005](decisions/0005-legacy-data-behind-repositories.md) |
 | No model retraining: the three small models (`er-act.json`, `er-find.json`, `resp-model.json`) are served as they were and are not run on the server | Held | [decision 0005](decisions/0005-legacy-data-behind-repositories.md) |
 | No multi-agent implementation: contracts only | Held; a test fails if anything implements them | [decision 0009](decisions/0009-multi-agent-contracts-only.md) |

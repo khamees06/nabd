@@ -53,7 +53,9 @@ Notes:
 
 ## The registered differences
 
-`tests/Nabd.Tests/LegacyBaseline/seams.json` holds 18 entries. `LegacySiteBaselineTests` undoes them on what the application serves and requires the result to equal the legacy file; `Every_registered_difference_fits_the_legacy_file_exactly` checks that each entry matches the legacy file as many times as `count` says.
+`tests/Nabd.Tests/LegacyBaseline/seams.json` holds 20 entries (entries 19 and 20, added with the V6.2 landing, are
+the landing's head links and its script tag; the three landing regions themselves are compared with their own
+snapshots, see [ui-integration-map.md](ui-integration-map.md)). `LegacySiteBaselineTests` undoes them on what the application serves and requires the result to equal the legacy file; `Every_registered_difference_fits_the_legacy_file_exactly` checks that each entry matches the legacy file as many times as `count` says.
 
 | # | File | Legacy text | Current text | Reason |
 |---|---|---|---|---|
@@ -75,6 +77,8 @@ Notes:
 | 16 | `index.html` (1) | `src="ui.js"` | `src="js/ui.js"` | Same |
 | 17 | `index.html` (1) | `src="resp.js"` | `src="js/resp.js"` | Same |
 | 18 | `index.html` (1) | `src="er.js"` | `src="js/er.js"` | Same |
+| 19 | `index.html` (1) | the image-fallback script line in the head | the V6.2 landing's comment, two font preloads and two stylesheet links, then that line | The V6.2 public landing's stylesheets, after every legacy stylesheet ([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md)) |
+| 20 | `index.html` (1) | `\n</body>` | `\n  <script src="js/landing.js" defer></script>\n</body>` | The landing's script, after the legacy bundles |
 
 Two things about entries 1 and 2:
 
@@ -94,7 +98,7 @@ Layout partials:
 | View file | Legacy lines | Holds |
 |---|---|---|
 | `Shared/Layout/_Head.cshtml` | 3-32 | Document head: meta tags, fonts, the nine stylesheets, the image-fallback script |
-| `Shared/Layout/_PublicHeader.cshtml` | 35-83 | Header for a visitor who is not signed in |
+| `Shared/Layout/_PublicHeader.cshtml` | 35-83 | Header for a visitor who is not signed in — **V6.2 design since 2026-11-12** |
 | `Shared/Layout/_AppHeader.cshtml` | 84-185 | Header after sign-in |
 | `Shared/Layout/_SidebarDrawer.cshtml` | 186-252 | Side navigation drawer |
 | `Shared/Layout/_Toast.cshtml` | 253-260 | Toast message container |
@@ -103,7 +107,7 @@ Layout partials:
 | `Shared/Modals/_AuthModal.cshtml` | 1967-2090 | Sign-in and registration page |
 | `Shared/Modals/_ImageLightbox.cshtml` | 2091-2129 | Medical image lightbox |
 | `Shared/Modals/_StudentAttemptModal.cshtml` | 2130-2257 | Professor view of one student attempt |
-| `Shared/Layout/_SiteFooter.cshtml` | 2258-2310 | Site footer |
+| `Shared/Layout/_SiteFooter.cshtml` | 2258-2310 | Site footer — **V6.2 design since 2026-11-12** (guest and signed-in links kept) |
 
 Lines 1-2, 33-34, 261-265, 1888-1889 and 2311-2318 are literal text in `_Layout.cshtml`.
 
@@ -111,10 +115,10 @@ View partials (indented rows are nested inside the row above):
 
 | View file | Legacy lines | Holds |
 |---|---|---|
-| `Home/Landing/_LandingView.cshtml` | 266-404 | Public landing page |
-| &nbsp;&nbsp;`_Hero`, `_Jordan`, `_Facts` | 275-294, 295-306, 307-314 | Hero; Jordan band; facts strip |
-| &nbsp;&nbsp;`_About`, `_Problem`, `_Solution` | 315-328, 329-343, 344-360 | Vision, mission, goal; the problem; the solution |
-| &nbsp;&nbsp;`_Fields`, `_Audience`, `_Closing` | 361-378, 379-391, 392-400 | Training fields; who it is for; closing call to action |
+| `Home/Landing/_LandingView.cshtml` | 266-404 | Public landing page — **replaced by the V6.2 design** (2026-11-12, [decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md)): now `_Hero`, `_ValueStrip`, `_Overview` (`_Specialties`, `_SimulationShowcase`), `_Method`, `_About`, `_Institutions`, `_FinalCta`, `_LandingDialog`; see [ui-integration-map.md](ui-integration-map.md) |
+| &nbsp;&nbsp;(removed) `_Hero`, `_Jordan`, `_Facts` | 275-294, 295-306, 307-314 | Hero; Jordan band; facts strip |
+| &nbsp;&nbsp;(removed) `_About`, `_Problem`, `_Solution` | 315-328, 329-343, 344-360 | Vision, mission, goal; the problem; the solution |
+| &nbsp;&nbsp;(removed) `_Fields`, `_Audience`, `_Closing` | 361-378, 379-391, 392-400 | Training fields; who it is for; closing call to action |
 | `Home/Dashboard/_HomeView.cshtml` | 405-785 | Signed-in home page |
 | &nbsp;&nbsp;`_Welcome`, `_LearnPath`, `_TrainingPath` | 416-434, 435-442, 443-461 | Welcome card; learning path box; training path panel |
 | &nbsp;&nbsp;`_NurseEntry`, `_ProfessorHome`, `_Guide` | 462-475, 476-602, 603-612 | Nursing entry; professor home (cohort table and tools); role guide |

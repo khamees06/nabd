@@ -12,6 +12,8 @@ namespace Nabd.Tests.Baseline;
 /// the page, the six script bundles, the nine stylesheets, the data documents and the images.
 /// The only differences allowed are the ones registered in LegacyBaseline/seams.json; they are undone on the
 /// served text before the comparison, so any other change, down to one character, fails.
+/// The page's three public regions were redesigned (V6.2 landing, ADR 0010): they are compared with their own
+/// approved snapshots in LandingBaseline/, and the rest of the page is still compared with the legacy page.
 /// </summary>
 public class LegacySiteBaselineTests : IClassFixture<WebApplicationFactory<Program>>
 {
@@ -29,14 +31,51 @@ public class LegacySiteBaselineTests : IClassFixture<WebApplicationFactory<Progr
     public static TheoryData<string> DataDocuments() =>
         ["er-act", "er-cases", "er-find", "er-lang", "resp-ar", "resp-clinical", "resp-model", "resp-patients"];
 
+    public static TheoryData<string> LandingRegionNames() => [.. LandingRegions.All.Select(r => r.Name)];
+
+    /// <summary>
+    /// The page is the legacy page everywhere except the three regions the V6.2 landing replaced (ADR 0010):
+    /// the public header, the landing view and the public footer. Those are cut out of both pages and checked
+    /// on their own against their approved snapshots (next test).
+    /// </summary>
     [Fact]
-    public async Task The_page_is_the_legacy_page()
+    public async Task The_page_outside_the_landing_regions_is_the_legacy_page()
+    {
+        var served = await Page();
+        var legacy = Legacy("index.html");
+        foreach (var region in LandingRegions.All)
+        {
+            served = LandingRegions.TokenizeServed(served, region.Name);
+            legacy = LandingRegions.TokenizeLegacy(legacy, region);
+        }
+
+        AssertSameText(legacy, UndoSeams("index.html", served), "the page outside the landing regions");
+    }
+
+    /// <summary>Each landing region is exactly its approved V6.2 snapshot (LandingBaseline/NAME.html).</summary>
+    [Theory]
+    [MemberData(nameof(LandingRegionNames))]
+    public async Task Each_landing_region_is_its_approved_V62_snapshot(string name)
+    {
+        var served = await Page();
+        AssertSameText(TestData.ReadNormalized(LandingRegions.SnapshotPath(name)), LandingRegions.Extract(served, name), $"landing region '{name}'");
+    }
+
+    [Fact]
+    public async Task The_landing_regions_come_in_page_order()
+    {
+        var served = await Page();
+        var at = LandingRegions.All.Select(r => served.IndexOf($"<!-- nabd:region {r.Name} ", StringComparison.Ordinal)).ToList();
+        Assert.All(at, i => Assert.True(i >= 0));
+        Assert.Equal(at.Order(), at);
+    }
+
+    private async Task<string> Page()
     {
         var response = await _client.GetAsync("/");
         response.EnsureSuccessStatusCode();
         Assert.Equal("text/html", response.Content.Headers.ContentType?.MediaType);
-        var served = Normalize(await response.Content.ReadAsStringAsync());
-        AssertSameText(Legacy("index.html"), UndoSeams("index.html", served), "the page");
+        return Normalize(await response.Content.ReadAsStringAsync());
     }
 
     [Theory]

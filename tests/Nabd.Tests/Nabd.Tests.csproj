@@ -32,6 +32,8 @@
     <None Include="GoldenMasters\**\*.json" CopyToOutputDirectory="PreserveNewest" />
     <None Include="LegacyBaseline\**\*" CopyToOutputDirectory="PreserveNewest" />
     <Compile Remove="LegacyBaseline\**" />
+    <!-- The approved V6.2 landing regions (ADR 0010). -->
+    <None Include="LandingBaseline\**\*" CopyToOutputDirectory="PreserveNewest" />
   </ItemGroup>
 
 </Project>

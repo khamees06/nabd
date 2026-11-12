@@ -36,6 +36,20 @@
   { "file": "index.html", "count": 1, "legacy": "src=\"terms.js\"", "current": "src=\"js/terms.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
   { "file": "index.html", "count": 1, "legacy": "src=\"ui.js\"", "current": "src=\"js/ui.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
   { "file": "index.html", "count": 1, "legacy": "src=\"resp.js\"", "current": "src=\"js/resp.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
-  { "file": "index.html", "count": 1, "legacy": "src=\"er.js\"", "current": "src=\"js/er.js\"", "reason": "Script bundles are served from /js by the client-script bundler." }
+  { "file": "index.html", "count": 1, "legacy": "src=\"er.js\"", "current": "src=\"js/er.js\"", "reason": "Script bundles are served from /js by the client-script bundler." },
+  {
+   "file": "index.html",
+   "count": 1,
+   "legacy": "  <script>/* until script.js loads, a missing photo just hides */",
+   "current": "  <!-- 2026-11-12: public landing, design V6.2 (scoped stylesheet; self-hosted Noto Sans Arabic, SIL OFL 1.1) -->\n  <link rel=\"preload\" href=\"fonts/noto-sans-arabic/NotoSansArabic-Regular.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n  <link rel=\"preload\" href=\"fonts/noto-sans-arabic/NotoSansArabic-Bold.woff2\" as=\"font\" type=\"font/woff2\" crossorigin>\n  <link rel=\"stylesheet\" href=\"css/landing-v6.css\">\n  <link rel=\"stylesheet\" href=\"css/landing-v6-shell.css\">\n  <script>/* until script.js loads, a missing photo just hides */",
+   "reason": "The V6.2 public landing (ADR 0010): its two scoped stylesheets and the preloaded self-hosted fonts, after every legacy stylesheet so that the landing's rules come last."
+  },
+  {
+   "file": "index.html",
+   "count": 1,
+   "legacy": "\n</body>",
+   "current": "\n  <script src=\"js/landing.js\" defer></script>\n</body>",
+   "reason": "The V6.2 public landing's own script (mobile menu, in-page links, the landing dialog; sign-in goes to the legacy openAuthModal). Loaded after the legacy bundles."
+  }
  ]
 }

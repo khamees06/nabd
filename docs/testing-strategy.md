@@ -14,16 +14,21 @@ Every claim below names the test or the tool that backs it. Where something was 
 |---|---|
 | `site/` | The page, the six scripts and the nine stylesheets, exactly as stored in Git |
 | `legacy-manifest.json` | Size and SHA-256 of all 85 files of the legacy site, including the data files and the images |
-| `seams.json` | Every intentional difference between the legacy site and what the application serves, with its reason (18 entries) |
+| `seams.json` | Every intentional difference between the legacy site and what the application serves, with its reason (20 entries) |
+
+`tests/Nabd.Tests/LandingBaseline/` holds the V6.2 public landing ([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md)):
+`regions.json` (where the three redesigned regions are in the served page and in the legacy page) and the
+approved snapshot of each region (`public-header.html`, `landing.html`, `site-footer.html`).
 
 ## Layers of tests
 
-All of these run with `dotnet test` (164 tests, about ten seconds). None needs Node.js, a browser or a network.
+All of these run with `dotnet test` (182 tests, about ten seconds). None needs Node.js, a browser or a network.
 
 | Layer | Test class | What it proves |
 |---|---|---|
 | Golden masters of the clinical core | `GoldenMasters/ErClinicalTraceTests` (46) | The domain model, replaying the inputs the legacy ER room received in 45 recorded scenarios, is in the same state after every step, to the last bit of every number, and gives the same score, score parts and verdict |
-| What the browser receives | `Baseline/LegacySiteBaselineTests` (28) | The rendered page, each script bundle and each stylesheet equal the legacy file character for character once the registered differences are undone; each data document and each of the 59 images is byte-identical; source fragments and unknown documents cannot be requested |
+| What the browser receives | `Baseline/LegacySiteBaselineTests` (32) | The rendered page outside the three landing regions, each script bundle and each stylesheet equal the legacy file character for character once the registered differences are undone; each landing region equals its approved V6.2 snapshot, and the regions come in page order; each data document and each of the 59 images is byte-identical; source fragments and unknown documents cannot be requested |
+| The V6.2 landing | `Baseline/LandingV6Tests` (14) | Section order as in the prototype; one public header; the IDs the legacy client binds present exactly once and every ID unique; every in-page link has a target; no form or input, sign-in only through `openAuthModal`; external links only the credits, with `rel="noopener"`; every photo a local WebP of the declared size with Arabic alt text, eager hero and lazy others; credits and font licence present; WOFF2 fonts served; `landing.js` is its fragment; every selector of both landing stylesheets starts from a landing root (at least 1,000 selectors read) and no legacy stylesheet uses the `nl-` prefix |
 | Domain rules in plain terms | `Domain/SimulationSessionTests` (16) | Each clinical rule on its own: risk rate, onset of a treatment, the cuff cycle, the floor, the sepsis hold, repeats, harm, anaphylaxis, a test that becomes harmful in shock, arrest, the stable handover, the dangerous destination |
 | Use cases | `Application/SimulationUseCaseTests` (13) | The use cases against the real cases; a neglected patient arrests at exactly the simulated minute the legacy room recorded, for all six cases; a well-managed case scores 100 and passes; invalid and out-of-state requests are refused; the store is bounded |
 | Legacy data mapping | `Infrastructure/ErCaseFileMapperTests` (5) | Every field the clinical core uses is mapped as the file has it, in file order; the "not reviewed by a physician" flag is exposed; only the shipped files can be read |
@@ -82,6 +87,21 @@ node tools/legacy/compare-hosts.mjs
 
 It is a manual check, not part of `dotnet test`: it needs Chrome and two running hosts.
 
+Since the V6.2 landing, the tool takes the three redesigned regions out of both hosts (a placeholder in the DOM,
+hidden before the screenshot) together with the landing's stylesheets, fonts and script, and leaves comments and
+the whitespace between tags out of the DOM comparison; the exact text, comments included, is the baseline tests'
+job. The landing itself is compared with the owner's prototype by two tools:
+
+```
+node tools/legacy/landing-style-diff.mjs --proto <prototype.html> --app http://127.0.0.1:5199/ --width 1440
+node tools/legacy/landing-visual-compare.mjs --proto <prototype.html> --app http://127.0.0.1:5199/
+```
+
+The first lists every element (and drawn `::before`/`::after`) whose computed styles differ; the second
+screenshots both at 1536, 1440, 1024, 768, 390 and 320 px and counts differing pixels, writing the screenshots,
+a difference image per width and `report.json` to `.work/visual`. After an accepted change to the landing, record
+its new snapshots with `node tools/migration/landing-v6/approve-landing-baseline.mjs` and commit them with the change.
+
 ## Results of this phase
 
 | Check | Result |
@@ -93,6 +113,11 @@ It is a manual check, not part of `dotnet test`: it needs Chrome and two running
 | Browser comparison, live DOM | identical in 22 of 22 state × viewport pairs |
 | Browser comparison, screenshots | identical in 20 of 22 in the full run. The two that differed (signed-in home) have identical DOM, and an earlier full run differed on two other signed-in pairs instead: The legacy site compared with itself (`--current http://127.0.0.1:5180`, signed-in home of the medical student, four runs at two viewports) differed in 2 of 8 screenshots with identical DOM, so the difference is not between the hosts; its cause was not determined. See `docs/visual-baseline/README.md` |
 | Browser comparison, page errors | none on either host |
+| V6.2 landing (2026-11-12), `dotnet build Nabd.sln -c Release` / `dotnet test Nabd.sln -c Release` | 0 warnings, 0 errors / 182 passed, 0 failed, 0 skipped |
+| V6.2 landing against the prototype | Computed styles of the landing content identical at the six widths (header and footer differ only by the shortened brand line and the added credits); differing pixels in header + landing 0.009–0.064 %, all explained; no horizontal overflow. See `docs/visual-baseline/README.md` |
+| V6.2 landing, rest of the application against the legacy site | DOM identical in 22 of 22 state × viewport pairs (one pair differed in the first run because a toast was still showing, identical when run again); screenshots identical or within 3 colour levels of 255 |
+| V6.2 landing, interactions in headless Chrome | Mobile menu (open, Escape, outside click, link closes it, signed-in sidebar untouched), in-page links land 8 px below the sticky header, deep link `/#nl-method`, dialog (focus in, Tab trap, Escape, focus back), register/login buttons open the existing modal on the right tab, demo sign-in swaps header/footer/view, logout returns to the landing; no page errors |
+| Isolation test checks itself | Adding `button { color: red; }` to the shell stylesheet failed `Every_landing_rule_starts_from_a_landing_root`; removed again |
 | Mutation check of the golden masters | Done by hand when the tests were written: one changed model constant failed 33 traces; one changed scoring weight failed 12. The constant: the delay before a treatment starts to move the vital signs, `SimulatedMinutes + 0.03` in `SimulationSession.ApplyIntervention`, changed to `0.04`. The weight: `UnneededOrders.Count * 2` in `SessionScorer.Score`, changed to `* 3`. Both were restored and the run is not automated |
 
 ## Independent review
@@ -145,3 +170,7 @@ Stated plainly, so that nobody reads more into the green run than it holds:
    the clinical effect.
 3. When a room moves to the server, its golden master moves with it: record the room's behaviour first, then move.
 4. Never weaken a baseline test to make a change pass.
+5. A change to the public landing (the three regions) fails its snapshot test. Compare it with the design
+   (`landing-style-diff.mjs`, `landing-visual-compare.mjs`) first, then approve the new snapshots
+   (`approve-landing-baseline.mjs`) in the same commit. A change outside the regions still fails the legacy
+   comparison.

@@ -14,7 +14,8 @@ without changing what the user sees or what the simulation computes. The legacy 
 
 | | |
 |---|---|
-| The page, styles, scripts, data and images the browser receives | Identical to the legacy site, except 18 registered differences (where assets are served from, and where the rooms find the understanding service: the external function that reads what the trainee wrote and voices the people in the room). Proved by tests |
+| The page, styles, scripts, data and images the browser receives | Identical to the legacy site, except 20 registered differences (where assets are served from, where the rooms find the understanding service: the external function that reads what the trainee wrote and voices the people in the room, and the landing's stylesheets and script). Proved by tests |
+| The public landing (branch `ui/landing-v6-integration`) | The owner's V6.2 design: public header, landing view and public footer, as Razor partials with scoped styles; same IDs and same sign-in as before. Compared with the prototype at six widths and pinned by approved snapshots. See [docs/ui-integration-map.md](docs/ui-integration-map.md) |
 | The clinical core of the ER room (risk, vital signs, stages, treatments, harms, tests, score) | Ported to C# and proved equal to the legacy code, bit for bit, on 45 recorded scenarios |
 | Use cases, repositories, service gateway, session API | Implemented and tested. The session API is off by default |
 | The room in the browser | Still runs the legacy client engine. Moving it onto the server is the next phase |
@@ -68,6 +69,10 @@ docs/
 | [docs/data-catalog.md](docs/data-catalog.md) | Every data file and stored key: content, readers, sensitivity |
 | [docs/legacy-audit.md](docs/legacy-audit.md) | The audit of the legacy site; detailed parts under `docs/legacy-audit/` |
 | [docs/decisions/](docs/decisions/) | Architecture decision records |
+| [docs/ui-integration-audit.md](docs/ui-integration-audit.md) | The V6.2 landing prototype: conflicts with the application, honesty and accessibility review |
+| [docs/ui-integration-map.md](docs/ui-integration-map.md) | Where every part of the prototype went: partials, IDs, classes, actions, files |
+| [docs/ui-design-system.md](docs/ui-design-system.md) | The landing's tokens, typography, components, breakpoints, and how its stylesheets are built |
+| [docs/next-phase-backlog.md](docs/next-phase-backlog.md) | What the landing integration leaves open, including the owner's decisions |
 
 ## Ground rules
 
@@ -76,4 +81,8 @@ docs/
   `tests/Nabd.Tests/LegacyBaseline/seams.json`, with its reason.
 - A change to a clinical rule fails the golden masters on purpose; see
   [docs/testing-strategy.md](docs/testing-strategy.md) for how to change one deliberately.
-- Image credits are in `src/Nabd.Web/wwwroot/img/CREDITS.txt`.
+- The public landing's three regions are pinned by approved snapshots (`tests/Nabd.Tests/LandingBaseline/`);
+  change them only after comparing with the design, as [docs/testing-strategy.md](docs/testing-strategy.md) says.
+- Image credits are in `src/Nabd.Web/wwwroot/img/CREDITS.txt` and, for the landing, `src/Nabd.Web/wwwroot/img/landing/CREDITS.md`
+  (six of its photos still need a documented source and licence). The landing font's licence is
+  `src/Nabd.Web/wwwroot/fonts/noto-sans-arabic/LICENSE.md`.

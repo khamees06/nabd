@@ -46,3 +46,64 @@ Reading the table:
 - **errors**: uncaught exceptions and console errors on each host. None.
 
 To repeat the comparison, see `docs/testing-strategy.md`, "Browser comparison".
+
+## Since the V6.2 public landing (2026-11-12, branch `ui/landing-v6-integration`)
+
+The public header, the landing view and the public footer are now the owner's V6.2 design
+([decision 0010](../decisions/0010-public-landing-v62-with-the-shell-preserved.md)). The screenshots above of
+`landing`, `sign-in` and `register` show the **old** landing behind; they remain the legacy baseline.
+
+### The rest of the application against the legacy site
+
+`compare-hosts.mjs` now takes the three regions out of both hosts (placeholder in the DOM, hidden before the
+screenshot) and leaves comments and whitespace between tags out of the DOM comparison. Run of 2026-11-12 (Debug
+build, Development settings):
+
+| state | desktop DOM | desktop screenshot | phone DOM | phone screenshot | errors |
+|---|---|---|---|---|---|
+| landing | identical | 4,440 px differ by 1 level (of 255), left 21 px | identical | 4,166 px by 1 level, left 21 px | 0 / 0 |
+| sign-in | identical | identical | identical | identical | 0 / 0 |
+| register | identical | 1 px by 1 level | identical | identical | 0 / 0 |
+| home-medical-student | identical | 589 px by ≤ 3 levels, bottom 4 rows | identical | identical | 0 / 0 |
+| home-nursing-student | identical | identical | identical | identical | 0 / 0 |
+| home-professor | identical | identical | identical | identical | 0 / 0 |
+| university-professor | identical | identical | identical | identical | 0 / 0 |
+| profile-student | identical | identical | identical | identical | 0 / 0 |
+| coach-student | identical | 589 px by ≤ 3 levels, bottom 4 rows | identical | identical | 0 / 0 |
+| er-briefing-doctor | different in the first run (a toast still showing), identical when run again | identical | identical | identical | 0 / 0 |
+| er-briefing-nurse | identical | identical | identical | identical | 0 / 0 |
+
+No difference is visible: the largest is 3 colour levels out of 255. The landing-state strip is the shadow of the
+closed signed-in sidebar at the left edge (the legacy site compared with itself on that state: identical, so this
+1-level difference is between the hosts; its cause was not determined). The signed-in home rows are the same
+kind of difference the legacy site shows against itself (above).
+
+### The landing against the prototype
+
+`tools/legacy/landing-visual-compare.mjs` screenshots the prototype file and the application's page at six widths
+(full page, animations off) and compares them pixel by pixel (a channel difference above 24 counts); the footer is
+compared from its own top edge because the application's footer is about 26 px taller (it adds the credits).
+`tools/legacy/landing-style-diff.mjs` compares the computed styles of every element, `::before` and `::after`
+included. Run of 2026-11-12 ([`landing-v62/visual-compare-report.json`](landing-v62/visual-compare-report.json)):
+
+| width | header + landing: pixels that differ | footer | computed-style differences in the landing content |
+|---|---|---|---|
+| 1536 | 0.009 % (676 px) | 0.197 % | none |
+| 1440 | 0.010 % (676 px) | 0.211 % | none |
+| 1024 | 0.064 % (3,174 px) | 0.295 % | none |
+| 768 | 0.013 % (675 px) | 0.275 % | none |
+| 390 | 0.018 % (538 px) | 0.555 % | none |
+| 320 | 0.033 % (842 px) | 0.645 % | none |
+
+Every differing pixel is explained:
+
+- the brand line «أكاديمية المحاكاة السريرية» replaces «الأكاديمية الوطنية للمحاكاة السريرية» (header and footer);
+  at 1024 px the shorter brand also lets the nav sit a little further right;
+- the footer's credits line (added by the application) starts where the prototype's footer ends;
+- at 320 px, a 1-pixel column at the left edge is the closed signed-in sidebar of the legacy shell (hiding it
+  removes the difference: 0 rows).
+
+No horizontal overflow at any of the six widths (`scrollWidth` equals the viewport width).
+
+Screenshots in [`landing-v62/`](landing-v62/): the first screen of the application at each width
+(`app-<width>-top.png`) and `compare-1440-top.png` (prototype | application | differing pixels in red).

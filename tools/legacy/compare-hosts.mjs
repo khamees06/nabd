@@ -7,6 +7,14 @@
 // Requests to other hosts (web fonts, one remote photo) are blocked on both sides, so a run depends on the two
 // hosts only and is repeatable.
 //
+// Since the V6.2 public landing (ADR 0010) the public header, the landing view and the public footer are a new
+// design, compared elsewhere: with the owner's prototype (landing-visual-compare.mjs, landing-style-diff.mjs) and
+// with their approved snapshots (LandingV6Tests, LegacySiteBaselineTests). Here they are taken out of both pages:
+// each is replaced by a placeholder in the DOM and hidden before the screenshot, together with the landing's own
+// stylesheets, fonts and script. What is compared is everything else: the sign-in modal, every signed-in view,
+// the ER room. Comments and the whitespace between tags are left out of the DOM comparison (the text of the page,
+// comments included, is compared exactly by the baseline tests).
+//
 // usage: node tools/legacy/compare-hosts.mjs --legacy http://127.0.0.1:5180 --current http://127.0.0.1:5199 [--out folder] [--only state]
 // Both hosts must be running. The legacy one: node tools/legacy/serve-static.mjs <checkout of main> 5180
 // The current one must have the understanding services switched off (the Development settings do that), because
@@ -33,11 +41,23 @@ const pause = ms => `await new Promise(r => setTimeout(r, ${ms}));`;
 // Nothing is done before the page has finished loading and its own start-up has run.
 const ready = `for (const t0 = Date.now(); Date.now() - t0 < 20000 && (document.readyState !== 'complete' || !document.documentElement.dataset.terms || typeof nbDemoLogin !== 'function');) ${pause(100)}`;
 const settle = pause(1200);
+// The parts the V6.2 landing redesigned, and the files it adds (see the note at the top).
+const REGIONS = ['#public-header', '#view-index', '#site-footer'];
+const LANDING_FILES = 'link[href*="landing-v6"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
 // A snapshot is taken only once the page is quiet: fonts in, every image loaded or failed.
 const snapshot = `document.querySelectorAll('img').forEach(i => i.loading = 'eager'); await document.fonts.ready;
   for (const t0 = Date.now(); Date.now() - t0 < 12000 && [...document.images].some(i => !i.complete);) ${pause(100)}
+  const doc = document.documentElement.cloneNode(true);
+  for (const sel of ${JSON.stringify(REGIONS)}) {
+    doc.querySelector(sel)?.replaceWith(Object.assign(document.createElement('nabd-region'), { title: sel }));
+    document.querySelector(sel)?.style.setProperty('display', 'none', 'important');
+  }
+  doc.querySelectorAll(${JSON.stringify(LANDING_FILES)}).forEach(e => e.remove());
+  const comments = [];
+  for (const w = document.createTreeWalker(doc, NodeFilter.SHOW_COMMENT); w.nextNode();) comments.push(w.currentNode);
+  comments.forEach(c => c.remove());
   ${pause(900)}
-  return { html: document.documentElement.outerHTML, view: (typeof currentView === 'undefined' ? null : currentView) };`;
+  return { html: doc.outerHTML.replace(/>\\s+</g, '>\\n<'), view: (typeof currentView === 'undefined' ? null : currentView) };`;
 const STATES = [
   { name: 'landing', js: `${settle} ${snapshot}` },
   { name: 'sign-in', js: `openAuthModal('login'); ${settle} ${snapshot}` },

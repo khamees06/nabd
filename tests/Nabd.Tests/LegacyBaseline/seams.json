@@ -50,6 +50,20 @@
    "legacy": "\n</body>",
    "current": "\n  <script src=\"js/landing.js\" defer></script>\n</body>",
    "reason": "The V6.2 public landing's own script (mobile menu, in-page links, the landing dialog; sign-in goes to the legacy openAuthModal) and, since V6.4, the sign-in pages' (the address and title of /login and /register, Back and Forward, keyboard focus; ADR 0012). Loaded after the legacy bundles."
+  },
+  {
+   "file": "er.js",
+   "count": 1,
+   "legacy": "    buildOrders();\n    return true;\n  }\n  const nurseTag",
+   "current": "    buildOrders();\n    // 2026-11-13 (phone): the sheet closes after an order, as after a test, so the room's reply is seen\n    if (!wide()) toggleRecords(false);\n    return true;\n  }\n  const nurseTag",
+   "reason": "Phone fix (2026-11-13): after a nurse carries out a doctor's order from the orders sheet, the sheet closes on a phone (as it already does after a test), so the room's reply under it is seen."
+  },
+  {
+   "file": "script.js",
+   "count": 1,
+   "legacy": "      if (!(authState && authState.isAuthenticated)) { openAuthModal('login', 'سجّل الدخول لتبدأ غرفة المحاكاة المقترحة.'); return; }\n      document.getElementById('launch-er-random-btn')?.click();",
+   "current": "      if (!(authState && authState.isAuthenticated)) { openAuthModal('login', 'سجّل الدخول لتبدأ غرفة المحاكاة المقترحة.'); return; }\n      // 2026-11-13 (phone): «ابدأ» in the level-quiz result closes the dialog first, so the room is seen\n      if (nbQModal) nbCloseLevelModal();\n      document.getElementById('launch-er-random-btn')?.click();",
+   "reason": "Phone fix (2026-11-13): «ابدأ» in the level-quiz result closed nothing, so on a phone the full-screen dialog stayed over the room it had opened; it now closes the dialog first."
   }
  ]
 }

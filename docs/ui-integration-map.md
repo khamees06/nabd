@@ -144,3 +144,25 @@ room first, without any change that could cause an error. One stylesheet, `wwwro
 stylesheet changed. Changed: the head (registered difference 19: one link), `compare-hosts.mjs` (takes the link out
 of the DOM comparison), `LandingV6Tests` (two tests for the new file).
 
+### Phone fixes (2026-11-13, before a demo on phones)
+
+A check of every screen on phones (390, 360, 320 px and landscape) found 24 problems; the ones that hurt a demo
+were fixed, each verified on a phone-size screen:
+- Public header: «تسجيل الدخول» stays in the header on phones (it was only inside ☰); the full menu fits phones in
+  landscape (821–1000 px scrolled sideways); the ☰ menu scrolls when the screen is short; the institutions
+  dialog has its navy veil again (`landing-v64.css`). The sign-in/registration switch link is 44 px tall
+  (`auth.css`).
+- ER room: one column that never grows past the screen (nurse mode cut the room's left edge, «سلّم الحالة»
+  included); the room is exactly the screen below the header (it was a few pixels taller); the phone monitor's
+  canvas fits its 54 px strip; after a nurse carries out an order the sheet closes on a phone so the reply is
+  seen (`er/390-nurse-orders-panel.js`, registered difference).
+- Signed-in views (section 7b of `app-v65.css`): the professor's student table becomes one card per student with
+  «عرض الإجابات» beside the name; the session history and record tables show three readable columns on phones
+  (screen only, printing unchanged); the drawer's footer is compact on short phones so the whole list shows;
+  fields are 16 px on phones (iPhone Safari zooms into smaller ones); «ابدأ» in the level-quiz result closes the
+  dialog first (`script/200-room-lists-and-filters.js`, registered difference).
+
+Left (small, listed for the next round): registration step 2 and the phone Back gesture, the toast over the room
+header on entry, tiny text in the final call to action and the report chart's axis, the four «تعرّف على المجال»
+links pointing to one section, profile shortcuts landing at the top, a few controls under 40 px.
+

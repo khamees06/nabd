@@ -244,7 +244,7 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
             // a leading :is(…) list: every item must be one of the signed-in views
             if (s.StartsWith(":is(", StringComparison.Ordinal))
                 foreach (var item in s[4..s.IndexOf(')')].Split(','))
-                    Assert.Matches(@"^#view-(?:home|profile|university|debrief)$", item.Trim());
+                    Assert.Matches(@"^#view-(?:home|profile|university|debrief)(?: #[\w-]+)?$", item.Trim());
             // no sibling combinator, which could step from a signed-in root to a public part
             Assert.DoesNotMatch(@"[~+](?![^(]*\))", s);
             Assert.DoesNotMatch(@"#auth-modal|#view-index\b|#public-header|#site-footer|#nl-dialog|nl-auth|nb-auth", s.Replace(":not(#view-index)", ""));
@@ -256,9 +256,13 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     {
         // The scripts show and hide the signed-in parts (.hidden, [hidden], classes) and the ER room's height
         // depends on the header's: none of these properties may be set, except display and height on the
-        // generated ::before of the eyebrows (an element of this file's own).
+        // generated ::before of the eyebrows (an element of this file's own), and the named phone-layout rules
+        // (section 7b): table parts, the drawer's footer note and locked items, the room's height and its monitor
+        // canvas, none of them shown or hidden by a script, all outside the layer so that .hidden still wins.
         var css = StripComments(await Text("/css/app-v65.css"));
+        var layer = css.IndexOf("@layer nl-refine", StringComparison.Ordinal);
         var forbidden = new Regex(@"^(?:display|visibility|opacity|transform|translate|rotate|scale|position|z-index|(?:min-|max-)?(?:height|block-size)|inset(?:-.*)?|top|bottom|left|right|animation(?:-.*)?|transition(?:-.*)?|pointer-events|content-visibility|contain|all|float|clip|clip-path|overflow(?:-.*)?)$", RegexOptions.IgnoreCase);
+        var phoneLayout = new Regex(@"(?:\.prof-structured-table\b|\.overflow-x-auto\b|\.prof-open-stu-btn$|#app-sidebar \.v7-foot > small$|#sidebar-app-nav \.v7-item\.er-locked$|^#view-er$|^#view-er \.er-trace \.nb-mon-canvas$)");
         var declarations = 0;
         foreach (Match rule in Regex.Matches(css, @"([^{};]+)\{([^{}]*)\}"))
         {
@@ -268,8 +272,10 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
                 declarations++;
                 var property = declaration.Groups[1].Value.ToLowerInvariant();
                 if (property.StartsWith("--", StringComparison.Ordinal) || !forbidden.IsMatch(property)) continue;
-                Assert.True(selector.EndsWith("::before", StringComparison.Ordinal) && property is "display" or "height",
-                    $"app-v65.css sets {property} in '{selector}'");
+                var ownBefore = selector.EndsWith("::before", StringComparison.Ordinal) && property is "display" or "height";
+                var phone = rule.Index < layer && SplitSelectorList(selector).All(s => phoneLayout.IsMatch(s))
+                    && property is "display" or "overflow" or "height" or "min-height";
+                Assert.True(ownBefore || phone, $"app-v65.css sets {property} in '{selector}'");
             }
         }
         Assert.True(declarations > 300, $"only {declarations} declarations read");
@@ -346,7 +352,7 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
     // A selector of app-v65.css starts from the signed-in flag or from a part only a signed-in user sees. The drawer
     // and the toast are not such parts (the toast says goodbye on the landing; the closed drawer waits off-screen):
     // their rules must start from the flag.
-    [GeneratedRegex(@"^(?:html:has\(> body > #app-header:not\(\.hidden\)\)|:is\(#view-(?:home|profile|university|debrief)[,)]|#(?:app-header|account-dropdown-menu|app-brand-btn|app-open-sidebar-btn|user-menu-btn|handover-modal|level-modal|medical-image-lightbox|student-attempt-detail-modal|handover-modal-title|lightbox-title|stu-modal-title|view-(?:home|profile|university|debrief|coach|er|resp))\b)")]
+    [GeneratedRegex(@"^(?:html:has\(> body > #app-header:not\(\.hidden\)\)|:is\(#view-(?:home|profile|university|debrief)[,) ]|#(?:app-header|account-dropdown-menu|app-brand-btn|app-open-sidebar-btn|user-menu-btn|handover-modal|level-modal|medical-image-lightbox|student-attempt-detail-modal|handover-modal-title|lightbox-title|stu-modal-title|view-(?:home|profile|university|debrief|coach|er|resp))\b)")]
     private static partial Regex SignedInRoot();
 
     [GeneratedRegex("\\bid=\"([^\"]+)\"")]

@@ -44,6 +44,8 @@
     E.collect = null;
     if (col.length && (!E.pending || E.pending.type === 'dose')) openDoses(col[0].line);
     buildOrders();
+    // 2026-11-13 (phone): the sheet closes after an order, as after a test, so the room's reply is seen
+    if (!wide()) toggleRecords(false);
     return true;
   }
   const nurseTag = id => {

@@ -14,7 +14,7 @@ Every claim below names the test or the tool that backs it. Where something was 
 |---|---|
 | `site/` | The page, the six scripts and the nine stylesheets, exactly as stored in Git |
 | `legacy-manifest.json` | Size and SHA-256 of all 85 files of the legacy site, including the data files and the images |
-| `seams.json` | Every intentional difference between the legacy site and what the application serves, with its reason (20 entries) |
+| `seams.json` | Every intentional difference between the legacy site and what the application serves, with its reason (22 entries) |
 
 `tests/Nabd.Tests/LandingBaseline/` holds the redesigned parts of the page: the V6.2 public landing
 ([decision 0010](decisions/0010-public-landing-v62-with-the-shell-preserved.md)) and, since V6.4, the sign-in screen

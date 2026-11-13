@@ -24,6 +24,8 @@
 
     function nbOpenRoom(id) {
       if (!(authState && authState.isAuthenticated)) { openAuthModal('login', 'سجّل الدخول لتبدأ غرفة المحاكاة المقترحة.'); return; }
+      // 2026-11-13 (phone): «ابدأ» in the level-quiz result closes the dialog first, so the room is seen
+      if (nbQModal) nbCloseLevelModal();
       document.getElementById('launch-er-random-btn')?.click();
     }
 

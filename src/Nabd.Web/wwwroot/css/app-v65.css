@@ -201,6 +201,9 @@ html:has(> body > #app-header:not(.hidden)) #calm-toast { --navy: #082f3d; --tex
   --page: #f3f6f7;
   --border-standard: #e7edef;
 }
+/* One column that never grows past the room: long people chips (nurse mode «د. فادي (خارج الغرفة)») used to widen
+   the grid past a phone's width and cut off its left edge (input bar, «سلّم الحالة», the BP tile). */
+#view-er .er-room { grid-template-columns: minmax(0, 1fr); }
 /* Header of the room */
 #view-er .er-id b { color: #082f3d; font-weight: 700; }
 #view-er #er-bed { color: #875b43; background: #f8eee8; padding-inline: .5rem; border-radius: 5px; }
@@ -266,6 +269,49 @@ html:has(> body > #app-header:not(.hidden)) #calm-toast { --navy: #082f3d; --tex
 /* ---------- 7. Respiratory room (closed today; colours only, through its variables) ---------- */
 #view-resp { --tint: #e3eff0; --signal-strong: #0f5a61; --r-lg: 16px; }
 #view-resp .v7-eyebrow { color: #9b6247; }
+
+/* ---------- 7b. Phone layout (2026-11-13, from a phone check of every screen) ----------
+   The only rules of this file that change layout. Each one is ordinary (outside the layer, so .hidden and the
+   [hidden] attribute still win), and none touches an element the scripts show or hide: table parts, the drawer's
+   footer note, the room's height and its monitor canvas. Tested by name in LandingV6Tests. */
+/* The room is exactly the screen below the header (4.5rem; 4rem up to 768 px): the legacy heights left the page
+   a few pixels taller, so it moved under the finger and, in landscape, cut the input bar's edge. */
+#view-er { height: calc(100dvh - 4.5rem); }
+#view-er .er-feed { overscroll-behavior: contain; }
+@media (max-width: 768px) {
+  #view-er { height: calc(100dvh - 4rem); }
+}
+@media (max-width: 1023.98px) {
+  /* the phone monitor strip is 54 px: the canvas (62 px) was clipped and the SpO2 wave lost its lower half */
+  #view-er .er-trace .nb-mon-canvas { height: 100%; }
+}
+@media screen and (max-width: 640px) {
+  /* The professor's student table becomes one card per student, with «عرض الإجابات» beside the name
+     (on a phone it sat four columns off-screen). */
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .overflow-x-auto { overflow: visible; border: 0 !important; background: transparent !important; box-shadow: none !important; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) :is(.prof-structured-table, .prof-structured-table tbody) { display: block; min-width: 0 !important; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .prof-structured-table thead { display: none; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .prof-structured-table tr { display: grid; grid-template-columns: 1fr auto; gap: .4rem .75rem; padding: .85rem; margin-bottom: .6rem; background: #fff; border: 1px solid #d9e1e5; border-radius: 14px; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .prof-structured-table td { display: block; grid-column: 1 / -1; padding: 0 !important; max-width: none !important; white-space: normal !important; text-align: right !important; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .prof-structured-table td:first-child { grid-column: 1; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .prof-structured-table td:last-child { grid-column: 2; grid-row: 1; align-self: start; }
+  :is(#view-home #home-prof-reports-pane, #view-university #nb8-pane-reports) .prof-structured-table td:only-child { grid-column: 1 / -1; }
+  :is(#view-home, #view-university) .prof-open-stu-btn { min-height: 40px; }
+  /* Session history and the record's cases table: three readable columns (case, date, score) instead of five
+     cut ones; printing is not affected (screen only). */
+  #view-profile :is(#profile-pane-history, #profile-pane-certificate) .overflow-x-auto table { min-width: 0 !important; }
+  #view-profile :is(#profile-pane-history, #profile-pane-certificate) .overflow-x-auto :is(th, td):is(:nth-child(2), :nth-child(4)) { display: none; }
+  #view-profile :is(#profile-pane-history, #profile-pane-certificate) .overflow-x-auto :is(th, td) { padding-inline: .6rem !important; }
+  #student-attempt-detail-modal .overflow-x-auto table { min-width: 0 !important; }
+  #student-attempt-detail-modal .overflow-x-auto td { white-space: normal !important; }
+}
+@media (max-width: 640px) and (max-height: 860px) {
+  /* The drawer's list scrolls in the room its footer leaves: a shorter footer shows the whole list
+     (the professor's «الجلسات الجامعية» was hidden under it). */
+  html:has(> body > #app-header:not(.hidden)) #app-sidebar .v7-foot > small { display: none; }
+  html:has(> body > #app-header:not(.hidden)) #sidebar-app-footer:not(.hidden) { grid-template-columns: 1fr 1fr; }
+  html:has(> body > #app-header:not(.hidden)) #sidebar-app-nav .v7-item.er-locked { min-height: 0; padding-block: .45rem; }
+}
 
 /* ---------- 8. Overrides of legacy !important rules ---------- */
 @layer nl-refine {
@@ -357,6 +403,12 @@ html:has(> body > #app-header:not(.hidden)) #calm-toast { --navy: #082f3d; --tex
   :is(#view-home, #view-profile, #view-university, #view-debrief) :is(button, a, .focus-ring):focus-visible { outline: 3px solid #9b6247 !important; outline-offset: 2px !important; }
   /* the training card's button covers the card, which clips: its ring stays inside, as before */
   #view-home .h9-open:focus-visible { outline-offset: -3px !important; }
+
+  /* fields of 16 px on phones: iPhone Safari zooms into any smaller field and stays zoomed */
+  @media (max-width: 640px) {
+    html:has(> body > #app-header:not(.hidden)) #main-container :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea),
+    html:has(> body > #app-header:not(.hidden)) :is(#student-attempt-detail-modal, #level-modal) :is(input:not([type="checkbox"]):not([type="radio"]), select, textarea) { font-size: 16px !important; }
+  }
 
   /* ---------- ER room ---------- */
   /* main action (send, start, hand over) in copper as on the landing; disabled keeps the legacy opacity */

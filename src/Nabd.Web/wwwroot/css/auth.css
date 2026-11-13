@@ -257,6 +257,8 @@
     text-underline-offset: 4px !important;
     cursor: pointer !important;
   }
+  /* a finger-sized target: on a phone this link is the way between sign-in and registration */
+  #auth-modal .nl-auth-switch button { min-height: 44px !important; padding-inline: 8px !important; }
   #auth-modal .nl-auth-switch button:hover { color: var(--nl-a-navy) !important; text-decoration-color: currentColor !important; }
 
   /* ---------- Microsoft and Google (not connected yet) ---------- */

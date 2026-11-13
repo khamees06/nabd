@@ -142,3 +142,17 @@ indicators at 3:1 or more; registration fits a 1366 × 768 screen.
 
 Screenshots in [`landing-v64/`](landing-v64/): the showcase at 1440 and 390 px, `/login` and `/register` (step 1
 and step 2) at 1440 px, and `/login` and `/register` on a 390 px phone.
+
+## V6.5: the signed-in application in the landing's identity (2026-11-13, local, awaiting the owner's review)
+
+[Decision 0013](../decisions/0013-signed-in-application-in-the-landing-identity.md).
+
+| Check | Result |
+|---|---|
+| The rest of the application against the legacy site (`compare-hosts.mjs`, `app-v65.css` taken out of the DOM comparison) | DOM identical in all 22 state × viewport pairs except the known ER-briefing toast timing (identical when re-run); no page errors; screenshots of signed-in screens differ on purpose |
+| Same page with the new stylesheet switched on and off | Signed out: drawer, toast, landing and sign-in screens unchanged. Signed in: alarm and out-of-indication bubbles keep their red and yellow borders, the monitor keeps its digits (weight 500) and corners (20 px), the ER input bar keeps its height at 1440 and 390 px |
+| Review | Three lenses (ER states, shell and views, isolation and cascade), each finding checked by a skeptic: 14 confirmed, 4 refuted; all fixed and re-checked |
+
+Screenshots in [`app-v65/`](app-v65/): the home (student and professor), the ER room (briefing, nurse briefing, chat,
+tests and a lab result, critical stage, handover, report, phone), the profile, the university portal, the drawer
+and the account menu.

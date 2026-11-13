@@ -1,0 +1,396 @@
+/* =========================================================================
+   Nabd signed-in application, V6.5 (2026-11-13): the screens after sign-in take the approved landing's
+   identity (navy, copper, teal, paper; Noto Sans Arabic). Hand-written; loaded last. Read
+   docs/ui-design-system.md, section "The signed-in application (V6.5)".
+
+   What it changes: colours, borders, shadows, corner radii and font weights of the application header, the
+   side drawer, the toast, the four application dialogs, the home, profile, university and empty-report views,
+   and the ER room (briefing, header, chat, tests panel, orders, handover and report). Nothing else.
+
+   Rules of this file (they keep the legacy behaviour and the approved public pages exactly as they are):
+   - every selector starts from a signed-in root: the flag html:has(> body > #app-header:not(.hidden)) (the
+     application header is shown only to a signed-in user), or the ID of a part only a signed-in user sees
+     (#app-header, the dialogs, #view-home, #view-profile, #view-university, #view-debrief, #view-er,
+     #view-resp). The drawer and the toast also exist for guests (the toast says goodbye on the landing after
+     sign-out; the closed drawer waits off-screen), so their rules always start from the flag. The landing,
+     the sign-in screen and the public footer are never selected;
+   - colours are given first by redefining the legacy colour variables on those roots (ordinary declarations,
+     an ID outranks :root); a rule is written only where the legacy stylesheets hard-code a value;
+   - where the legacy stylesheets use !important, the override is !important inside @layer nl-refine (first in
+     the layer order landing-v6.css declares: a layered important declaration wins over every unlayered one).
+     Inside that layer a state rule of the legacy CSS no longer wins by specificity, so every state an override
+     touches (pressed, done, out of indication, critical) is declared again after it;
+   - display, visibility, opacity, transform, position, z-index and heights are never set: the scripts show and
+     hide these parts, and the ER room's height depends on the header's;
+   - clinical colours keep their meaning and are not changed: alarm red, urgent amber, the "out of indication"
+     yellow, the monitor (its screen, its traces drawn in script and its reading colours), success green.
+   Palette (contrast on white): navy #082f3d, navy-2 #0b3a49, navy-3 #164b5b; copper #c98768 (lines and icons
+   only, 2.9:1), copper-light #e5ad8e (on navy, 7.2:1), copper-text #9b6247 (4.9:1), hover #89543d; teal #176a72
+   (6.3:1), teal-soft #e8f0f1; paper #f3f6f7; ink #102f40; copy #536875; muted #5d7079 (5.2:1).
+   ========================================================================= */
+
+/* ---------- 1. Tokens of the whole signed-in application ---------- */
+/* The flag element is :root itself, so the legacy aliases defined from these (--nb-teal, --nb-ink, …) follow. */
+html:has(> body > #app-header:not(.hidden)) {
+  --bg: #f3f6f7;
+  --bg-main: #f3f6f7;
+  --bg-secondary: #f3f7f7;
+  --paper: #f3f6f7;
+  --paper-2: #e8f0f1;
+  --surface: #fff;
+  --surface-muted: #f3f7f7;
+  --surface-elevated: #e8eef0;
+  --ink: #102f40;
+  --ink-2: #536875;
+  --ink-3: #5d7079;
+  --text-primary: #102f40;
+  --text-secondary: #536875;
+  --text-muted: #5d7079;
+  --line: #d9e1e5;
+  --line-2: #e6edf0;
+  --border-standard: #d9e1e5;
+  --tint: #e8f0f1;
+  --tint-2: #f3f7f7;
+  --signal: #176a72;
+  --signal-strong: #135c63;
+  --signal-light: #e5ad8e;
+  --accent: #176a72;
+  --accent-dark: #135c63;
+  --accent-soft: #e8f0f1;
+  --navy: #082f3d;
+  --navy-2: #0b3a49;
+  --r: 12px;
+  --r-lg: 12px;
+  --r-xl: 16px;
+  --sh-1: 0 1px 2px rgba(8, 47, 61, .05);
+  --sh-2: 0 16px 34px rgba(8, 47, 61, .12);
+  --font-ar: "Noto Sans Arabic", "Segoe UI Variable", "Segoe UI", Tahoma, Arial, sans-serif;
+}
+/* Monitors keep their look: the traces are drawn in script in fixed colours, and the legend must match them. */
+html:has(> body > #app-header:not(.hidden)) .nb-mon,
+#view-er .er-mon,
+#view-resp .rs-mon {
+  --signal: #16838A;
+  --signal-light: #6CC9CE;
+  --paper: #F4F8FA;
+  --r-lg: 20px;
+}
+
+/* ---------- 2. Application header: navy, like the public header (same height) ---------- */
+#app-header {
+  --ink: #fff;
+  --ink-2: rgba(255, 255, 255, .86);
+  --ink-3: rgba(255, 255, 255, .74);
+  --line: rgba(255, 255, 255, .28);
+  --tint: rgba(255, 255, 255, .14);
+  --tint-2: rgba(255, 255, 255, .07);
+  --signal: #c98768;
+  --signal-strong: #e5ad8e;
+}
+/* The account menu sits inside the header: back to the light tokens. */
+#account-dropdown-menu {
+  --ink: #102f40;
+  --ink-2: #536875;
+  --ink-3: #5d7079;
+  --line: #d9e1e5;
+  --tint: #e8f0f1;
+  --tint-2: #f3f7f7;
+  --signal: #176a72;
+  --signal-strong: #176a72;
+  --sh-2: 0 16px 34px rgba(8, 47, 61, .14);
+}
+
+/* ---------- 3. Side drawer and toast ---------- */
+html:has(> body > #app-header:not(.hidden)) #app-sidebar {
+  --surface: #fff;
+  --line: #d9e1e5;
+  --line-2: #e6edf0;
+  --tint: #e8f0f1;
+  --tint-2: #f3f7f7;
+  --signal: #c98768;
+  --signal-strong: #082f3d;
+  /* closed, the drawer waits just off the left edge: its shadow must not reach into the page */
+  --sh-2: 0 10px 30px -14px rgba(8, 47, 61, .22);
+}
+html:has(> body > #app-header:not(.hidden)) #app-sidebar[aria-hidden="false"] { --sh-2: 0 18px 44px rgba(8, 47, 61, .18); }
+html:has(> body > #app-header:not(.hidden)) #app-sidebar .v7-drawer-head > span { color: #9b6247; font-weight: 700; }
+html:has(> body > #app-header:not(.hidden)) #app-sidebar .v7-user .v7-av { background: linear-gradient(145deg, #0e4658, #082f3d); color: #f0bd9f; }
+html:has(> body > #app-header:not(.hidden)) #app-sidebar .v7-user b { color: #082f3d; }
+html:has(> body > #app-header:not(.hidden)) #app-sidebar .v7-item .v7-tag { background: #faf3ee; color: #9b6247; }
+html:has(> body > #app-header:not(.hidden)) #calm-toast { --navy: #082f3d; --text-muted: rgba(255, 255, 255, .74); --sh-2: 0 14px 32px rgba(8, 47, 61, .22); }
+
+/* ---------- 4. The application's dialogs (each by its ID; never a bare [role=dialog]) ---------- */
+#handover-modal, #level-modal, #medical-image-lightbox, #student-attempt-detail-modal {
+  --signal: #0b3a49;
+  --signal-strong: #176a72;
+  --accent: #0b3a49;
+  --accent-dark: #082f3d;
+  --nb-ink: #102f40;
+  --nb-text: #102f40;
+  --nb-teal: #0b3a49;
+  --nb-teal-dark: #082f3d;
+  --nb-sky: #e8f0f1;
+  --nb-line: #d9e1e5;
+  --nb-muted: #5d7079;
+  --nb-mist: #f3f7f7;
+  --sh-2: 0 24px 60px rgba(8, 47, 61, .24);
+}
+#level-modal .nb-q-prog i { background: #dce6e9; }
+#level-modal .nb-q-prog i.done { background: #0b3a49; }
+#level-modal .nb-q-prog i.now { background: #c98768; }
+#level-modal .nb-q-meta { color: #536875; }
+#level-modal .nb-opt b { background: #e8f0f1; color: #176a72; }
+#level-modal .nb-ghost-btn { border: 1px solid rgba(255, 255, 255, .4); }
+
+/* ---------- 5. Home, profile, university, empty report ---------- */
+#view-home, #view-profile, #view-university, #view-debrief, #view-coach {
+  /* the legacy aliases resolved at :root are given again, so that elements of these views follow too */
+  --nb-ink: #102f40;
+  --nb-text: #102f40;
+  --nb-teal: #176a72;
+  --nb-teal-dark: #135c63;
+  --nb-sky: #e8f0f1;
+  --nb-mist: #f3f7f7;
+  --nb-line: #d9e1e5;
+  --nb-muted: #5d7079;
+}
+/* The emergency-room card: the landing's navy band; its steps in navy tiles with copper numbers. */
+#view-home #home-er-card > .v7-er-main { background: linear-gradient(110deg, #062b39, #0a3948 58%, #062c3a); box-shadow: inset 0 -2px 0 rgba(201, 135, 104, .55); }
+#view-home .v7-er-steps li b { background: linear-gradient(145deg, #0e4658, #082f3d); color: #f0bd9f; }
+#view-home .nb8-step-ic { background: linear-gradient(145deg, #0e4658, #082f3d); color: #f0bd9f; }
+/* Training sections: landing card shadow; the open one framed in copper. */
+#view-home .h9-fields li { border-radius: 12px; border-color: #d6e2e6; box-shadow: 0 1px 2px rgba(8, 47, 61, .05), 0 16px 34px -18px rgba(8, 47, 61, .3); }
+#view-home .h9-fields li.is-open { border-color: #c98768; box-shadow: 0 2px 4px rgba(8, 47, 61, .06), 0 22px 40px -20px rgba(8, 47, 61, .38); }
+#view-home .h9-tag { background: rgba(8, 47, 61, .82); }
+#view-home .h9-tag.h9-tag-open { background: #9b6247; }
+#view-home .h9-open { border-radius: 12px; }
+#view-home .h9-open:focus-visible { outline-color: #9b6247; }
+/* Profile dashboard cards (hard-coded colours in the legacy stylesheet). */
+#view-profile .nb-dc { border: 1px solid #d9e1e5; }
+#view-profile .nb-dc h3 { color: #102f40; }
+#view-profile .nb-dsub { color: #536875; }
+#view-profile .nb-bar > div, #view-profile .nb-li { color: #102f40; }
+#view-profile .nb-li small { color: #5d7079; }
+#view-profile .nb-bar i { background: #e6edf0; }
+#view-profile .nb-sc { background: #e8f0f1; color: #0b3a49; }
+#view-profile .prof-structured-table th, #view-university .prof-structured-table th, #view-home .prof-structured-table th { background: #f3f7f7; color: #536875; }
+#view-profile .prof-structured-table td, #view-university .prof-structured-table td, #view-home .prof-structured-table td { color: #102f40; }
+#view-university .nb8-details, #view-university .nb8-join, #view-home .nb8-join { border-color: #cbd7dc; }
+/* filled actions: copper only to enter the room (an assignment's «ابدأ»), navy for every other one */
+#view-home .nb8-go, #view-university .nb8-go { background: #082f3d; border-color: #082f3d; color: #fff; }
+#view-home .nb8-go:hover, #view-university .nb8-go:hover { background: #164b5b; }
+#view-home .nb8-as-card .nb8-go, #view-university .nb8-as-card .nb8-go { background: #9b6247; border-color: #9b6247; }
+#view-home .nb8-as-card .nb8-go:hover, #view-university .nb8-as-card .nb8-go:hover { background: #89543d; }
+/* Eyebrows: copper text with the landing's short rule before it. */
+#view-home .v7-welcome #home-welcome-role::before,
+#view-home #nb8-guide-track::before {
+  content: "";
+  display: inline-block;
+  width: 18px;
+  height: 2px;
+  margin-inline-end: 8px;
+  vertical-align: middle;
+  background: #c98768;
+}
+
+/* ---------- 6. ER room ---------- */
+#view-er {
+  --ink-3: #5d7079;
+  --line-2: #e7edef;
+  --tint-2: #f2f6f7;
+  --page: #f3f6f7;
+  --border-standard: #e7edef;
+}
+/* Header of the room */
+#view-er .er-id b { color: #082f3d; font-weight: 700; }
+#view-er #er-bed { color: #875b43; background: #f8eee8; padding-inline: .5rem; border-radius: 5px; }
+#view-er #er-clock { color: #082f3d; }
+#view-er .er-draft { color: #5d7079; }
+/* Who is in the room: patient grey, relative copper, nurse teal, supervisor navy */
+#view-er .er-p[data-who="p"], #view-er .er-brief-people i[data-who="p"] { --c: #788b95; }
+#view-er .er-p[data-who="c"], #view-er .er-brief-people i[data-who="c"] { --c: #c98768; }
+#view-er .er-p[data-who="n"], #view-er .er-brief-people i[data-who="n"] { --c: #176a72; }
+#view-er .er-p[data-who="d"], #view-er .er-brief-people i[data-who="d"] { --c: #0b3a49; }
+/* The stage keeps its urgent and critical frames: this rule (1,1,0) stays below #view-er[data-stage=…] .er-stage */
+#view-er .er-stage { border-color: #d9e1e5; box-shadow: 0 8px 24px rgba(8, 47, 61, .065); }
+#view-er .er-feed { background: #fff; }
+/* Chat bubbles, one look per speaker (alarm and lab cards keep theirs) */
+#view-er .er-msg { border-radius: 10px; }
+#view-er .er-msg:not(.k-alarm):not(.is-off) { border-color: #e1e9eb; }
+#view-er .er-msg.k-me { background: #164b5b; border-color: #164b5b; color: #fff; border-top-left-radius: 3px; }
+#view-er .er-msg.k-me .er-who { color: rgba(255, 255, 255, .74); }
+#view-er .er-msg.k-p, #view-er .er-msg.k-n, #view-er .er-msg.k-c, #view-er .er-msg.k-d { border-top-right-radius: 3px; }
+#view-er .er-msg.k-p { background: #eef3f4; border-color: #e1e9eb; }
+#view-er .er-msg.k-p .er-who { color: #536875; }
+#view-er .er-msg.k-n { background: #e8f0f1; border-color: #cfe0e2; }
+#view-er .er-msg.k-n .er-who { color: #176a72; }
+#view-er .er-msg.k-c { background: #f8eee8; border-color: #ecd5c8; }
+#view-er .er-msg.k-c .er-who { color: #875b43; }
+#view-er .er-msg.k-d { background: #fff; border-color: #cbd7dc; border-inline-start: 3px solid #0b3a49; }
+#view-er .er-msg.k-d .er-who { color: #082f3d; font-weight: 700; }
+#view-er .er-msg.k-sys { color: #536875; }
+#view-er .er-msg.k-exam { border-color: #cbd7dc; }
+#view-er .er-dots span { background: #788b95; }
+/* Lab result card: its header in paper, unless it is out of indication (that amber stays) */
+#view-er .er-card:not(.is-off) .er-card-h { background: #f5f7f8; }
+#view-er .er-card-h b { color: #082f3d; font-weight: 700; }
+/* Input bar */
+#view-er .er-bar { border-top-color: #e7edef; }
+/* Tests panel and nurse orders */
+#view-er .er-rec-h b { color: #082f3d; font-weight: 700; }
+#view-er .er-rec-hint { color: #9b6247; }
+#view-er .er-rec-sec h4 { color: #9b6247; font-weight: 700; }
+#view-er .er-tc-en { color: #082f3d; font-weight: 700; }
+#view-er .er-tc:not(.is-off) .er-tc-go { color: #9b6247; }
+#view-er .er-ord { background: #f5f7f8; border-color: #d9e1e5; }
+#view-er .er-ord h4 { color: #9b6247; }
+#view-er .er-ord-chip.is-doc, #view-er .er-tag-ord { color: #0b3a49; border-color: #cbd7dc; }
+#view-er #er-test[data-badge]::after, #view-er #er-tab-labs[data-badge]::after { background: #9b6247; }
+/* Briefing */
+#view-er .er-sheet { background: rgba(8, 47, 61, .45); }
+#view-er .er-brief h4 { color: #9b6247; }
+#view-er .er-brief-now { background: #faf7f5; border-inline-start: 3px solid #c98768; }
+#view-er .er-brief-steps li::marker { color: #9b6247; }
+#view-er .er-brief-scope { background: #f5f7f8; }
+#view-er .er-brief-f { border-top-color: #e7edef; }
+#view-er .er-brief-bed { color: #875b43; background: #f8eee8; }
+/* Report */
+#view-er .er-score { border: 1px solid #d9e1e5; border-inline-start: 4px solid #c98768; }
+#view-er .er-score b { color: #082f3d; font-weight: 700; }
+#view-er .er-parts li { border: 1px solid #e1e9eb; border-radius: 8px; }
+#view-er .er-parts li b { color: #082f3d; }
+#view-er .er-report-page h4 { color: #082f3d; font-weight: 700; }
+#view-er .er-chart { border: 1px solid #e1e9eb; }
+#view-er .er-tests th { background: #f5f7f8; }
+
+/* ---------- 7. Respiratory room (closed today; colours only, through its variables) ---------- */
+#view-resp { --tint: #e3eff0; --signal-strong: #0f5a61; --r-lg: 16px; }
+#view-resp .v7-eyebrow { color: #9b6247; }
+
+/* ---------- 8. Overrides of legacy !important rules ---------- */
+@layer nl-refine {
+  /* type: Noto Sans Arabic has a regular and a bold face; the legacy 500 would fall on the regular one */
+  html:has(> body > #app-header:not(.hidden)) #main-container > section:not(#view-index) :is(h1, h2) { font-weight: 750 !important; }
+  html:has(> body > #app-header:not(.hidden)) #main-container > section:not(#view-index) :is(h3, h4) { font-weight: 650 !important; }
+  html:has(> body > #app-header:not(.hidden)) #main-container > section:not(#view-index) :is(b, strong, th):not(.font-num):not(.er-mon *):not(.nb-mon *):not(.rs-mon *) { font-weight: 650 !important; }
+  html:has(> body > #app-header:not(.hidden)) .nb-progress { background: #c98768 !important; }
+  html:has(> body > #app-header:not(.hidden)) .nb-sweep { background: #e5ad8e !important; }
+
+  /* header */
+  #app-header { background: linear-gradient(110deg, #062b39, #0a3948 58%, #062c3a) !important; border-bottom: 1px solid rgba(201, 135, 104, .58) !important; box-shadow: 0 5px 20px rgba(4, 24, 34, .12) !important; }
+  #app-brand-btn > div:first-child { background: rgba(255, 255, 255, .06) !important; color: #e5ad8e !important; box-shadow: inset 0 0 0 1px rgba(229, 173, 142, .38) !important; }
+  #app-brand-btn:hover > div:first-child { background: rgba(255, 255, 255, .12) !important; color: #f0bd9f !important; }
+  #app-header .nav-link-item { font-weight: 600 !important; }
+  #app-header .nav-link-item:hover { color: #e5ad8e !important; }
+  #app-header :focus-visible { outline: 3px solid #e5ad8e !important; outline-offset: 2px !important; }
+  #app-open-sidebar-btn:hover { background: rgba(255, 255, 255, .14) !important; }
+  #user-menu-btn #header-avatar-circle { background: linear-gradient(135deg, #cf9475, #a96f52) !important; }
+  #account-dropdown-menu { border-radius: 12px !important; }
+  #app-header #account-dropdown-menu #dropdown-user-name { color: #082f3d !important; font-weight: 700 !important; }
+  #app-header #account-dropdown-menu #dropdown-user-role { color: #9b6247 !important; }
+  #app-header #account-dropdown-menu #dropdown-logout-btn,
+  #app-header #account-dropdown-menu #dropdown-logout-btn * { color: #b3261e !important; }
+  #app-header #account-dropdown-menu :focus-visible { outline-color: #9b6247 !important; }
+
+  /* drawer, toast (behind the flag: both exist for guests too) */
+  html:has(> body > #app-header:not(.hidden)) #sidebar-backdrop { background: rgba(8, 47, 61, .5) !important; }
+  html:has(> body > #app-header:not(.hidden)) #app-sidebar :focus-visible { outline: 3px solid #9b6247 !important; }
+  html:has(> body > #app-header:not(.hidden)) #side-switch-demo-btn { border-color: #cbd7dc !important; color: #082f3d !important; }
+  html:has(> body > #app-header:not(.hidden)) #calm-toast { border-radius: 12px !important; box-shadow: inset -3px 0 0 #c98768, 0 14px 32px rgba(8, 47, 61, .22) !important; }
+
+  /* dialogs */
+  #handover-modal, #level-modal, #medical-image-lightbox, #student-attempt-detail-modal { background-color: rgba(8, 47, 61, .58) !important; }
+  #handover-modal > div, #level-modal > div, #medical-image-lightbox > div, #student-attempt-detail-modal > div { border-radius: 16px !important; }
+  #handover-modal :focus-visible, #level-modal :focus-visible, #medical-image-lightbox :focus-visible, #student-attempt-detail-modal :focus-visible { outline: 3px solid #9b6247 !important; }
+  #level-modal .nb-quiz-aside { background: linear-gradient(160deg, #0b3a49, #082f3d) !important; }
+  #level-modal .nb-opt:hover { background: #f3f7f7 !important; border-color: #82969f !important; }
+  #level-modal .nb-opt.is-sel { background: #f0f6f6 !important; border-color: #176a72 !important; }
+  #handover-modal-title, #lightbox-title, #stu-modal-title { color: #082f3d !important; font-weight: 700 !important; }
+
+  /* home: the main actions as on the landing (copper for the room, navy and outline for the rest) */
+  #view-home #launch-er-random-btn { background: #9b6247 !important; color: #fff !important; border-radius: 8px !important; font-weight: 700 !important; }
+  #view-home #launch-er-random-btn:hover { background: #89543d !important; }
+  #view-home .v7-welcome .v7-welcome-actions button { border-radius: 8px !important; font-weight: 700 !important; }
+  #view-home #home-quick-profile-btn { background: #082f3d !important; color: #fff !important; }
+  #view-home #home-quick-profile-btn:hover { background: #164b5b !important; }
+  #view-home #home-quick-uni-btn { background: #fff !important; color: #082f3d !important; border: 1px solid #82969f !important; }
+  #view-home #home-quick-uni-btn:hover { background: #edf3f5 !important; }
+  #view-home #home-welcome-role { color: #9b6247 !important; }
+  #view-home #nb8-guide-track { color: #9b6247 !important; }
+  @media (max-width: 640px) {
+    #view-home #home-quick-er-btn { background: #9b6247 !important; color: #fff !important; }
+    #view-home #home-quick-er-btn:hover { background: #89543d !important; }
+    #view-home #home-quick-profile-btn { background: #fff !important; color: #082f3d !important; border: 1px solid #82969f !important; }
+    #view-home #home-quick-profile-btn:hover { background: #edf3f5 !important; }
+  }
+  /* cards of the home, profile and university views: the landing's corners and shadow */
+  #view-home > .bg-white, #view-home #home-er-card, #view-home #home-professor-section, #view-home #home-student-uni-section {
+    border-color: #d9e1e5 !important;
+    border-radius: 14px !important;
+    box-shadow: 0 1px 2px rgba(8, 47, 61, .05), 0 16px 34px -18px rgba(8, 47, 61, .28) !important;
+  }
+  #view-profile .rounded-3xl, #view-profile .rounded-2xl, #view-university .rounded-3xl, #view-profile .nb-dc {
+    border-radius: 14px !important;
+  }
+  #view-profile .profile-tab-btn.bg-teal-700, #view-home #home-prof-tab-reports-btn.bg-teal-700 { background: #082f3d !important; color: #fff !important; }
+  /* the other filled actions of these views: navy, as on the landing (teal is for links and "good") */
+  #view-profile #print-certificate-btn, #view-university .nb8-course-actions button.is-main,
+  #view-university #nb8-as-save, #view-university #doc-save-case-btn { background: #082f3d !important; border-color: #082f3d !important; color: #fff !important; }
+  #view-profile #print-certificate-btn:hover, #view-university .nb8-course-actions button.is-main:hover,
+  #view-university #nb8-as-save:hover, #view-university #doc-save-case-btn:hover { background: #164b5b !important; }
+  #view-profile #profile-quick-open-cert-btn { color: #082f3d !important; border-color: #82969f !important; }
+  #view-profile #profile-quick-open-cert-btn:hover { background: #edf3f5 !important; border-color: #082f3d !important; }
+  #view-profile .text-sky-700, #view-profile .text-sky-800 { color: #0b3a49 !important; }
+  #view-profile .border-teal-200, #view-university .border-teal-200, #view-home .border-teal-200 { border-color: #cbd7dc !important; }
+  #view-home .prof-open-stu-btn:hover, #view-university .prof-open-stu-btn:hover { color: #fff !important; background: #176a72 !important; }
+  #view-profile #dash-coach u { background: #082f3d !important; }
+  /* empty report */
+  #view-debrief #debrief-empty-state { border-radius: 16px !important; border-color: #d6e2e6 !important; }
+  #view-debrief #debrief-empty-state > div:first-child { background: linear-gradient(145deg, #0e4658, #082f3d) !important; color: #f0bd9f !important; border-color: transparent !important; border-radius: 12px !important; }
+  #view-debrief #debrief-empty-state h2 { color: #082f3d !important; }
+  #view-debrief #empty-debrief-go-home { background: #082f3d !important; color: #fff !important; border-color: #082f3d !important; border-radius: 10px !important; }
+  #view-debrief #empty-debrief-go-home:hover { background: #164b5b !important; }
+  #view-debrief #empty-debrief-go-er { background: #fff !important; color: #9b6247 !important; border: 1px solid #c98768 !important; border-radius: 10px !important; }
+  #view-debrief #empty-debrief-go-er:hover { background: #fbf3ee !important; }
+  /* fields and buttons of these views */
+  :is(#view-home, #view-profile, #view-university, #view-debrief) :is(input, select, textarea):focus { border-color: #176a72 !important; box-shadow: 0 0 0 3px rgba(23, 106, 114, .16) !important; }
+  :is(#view-home, #view-profile, #view-university, #view-debrief) :is(button, a, .focus-ring):focus-visible { outline: 3px solid #9b6247 !important; outline-offset: 2px !important; }
+  /* the training card's button covers the card, which clips: its ring stays inside, as before */
+  #view-home .h9-open:focus-visible { outline-offset: -3px !important; }
+
+  /* ---------- ER room ---------- */
+  /* main action (send, start, hand over) in copper as on the landing; disabled keeps the legacy opacity */
+  #view-er .p { background: #9b6247 !important; border-color: #9b6247 !important; color: #fff !important; }
+  #view-er .p:hover:not(:disabled) { background: #89543d !important; border-color: #89543d !important; }
+  #view-er .s { background: #fff !important; color: #082f3d !important; box-shadow: inset 0 0 0 1px #cbd7dc !important; }
+  #view-er .s:hover:not(:disabled) { background: #edf3f5 !important; }
+  #view-er .er-help { background: #fff !important; color: #082f3d !important; border-color: #cbd7dc !important; }
+  #view-er .er-help:hover { background: #edf3f5 !important; }
+  /* Vitals / Labs tabs; the critical red on the Vitals tab is declared again after them */
+  #view-er .er-side-tabs button { color: #536875 !important; background: transparent !important; }
+  #view-er .er-side-tabs button:not([aria-pressed="true"]):hover { color: #102f40 !important; }
+  #view-er .er-side-tabs button[aria-pressed="true"] { background: #082f3d !important; color: #fff !important; }
+  #view-er[data-stage="critical"] .er-grid[data-side="labs"] #er-tab-mon { color: #C62828 !important; }
+  /* tests panel: filters and test cards with their states */
+  #view-er .er-rec-f button { background: #f5f7f8 !important; border-color: #d9e1e5 !important; color: #102f40 !important; }
+  #view-er .er-rec-f button[aria-pressed="true"] { background: #082f3d !important; border-color: #082f3d !important; color: #fff !important; }
+  #view-er .er-tc { background: #fff !important; border-color: #d9e1e5 !important; border-radius: 10px !important; }
+  #view-er .er-tc:hover { border-color: #176a72 !important; }
+  #view-er .er-tc.is-done { background: #f0f6f6 !important; border-color: #176a72 !important; }
+  #view-er .er-tc.is-off { background: #FFF8E1 !important; border-color: #E8B65A !important; }
+  /* role choice in the briefing */
+  #view-er .er-role-sw button { background: #fff !important; border-color: #cbd7dc !important; color: #102f40 !important; }
+  #view-er .er-role-sw button[aria-checked="true"] { background: #082f3d !important; border-color: #082f3d !important; color: #fff !important; }
+  /* nurse orders */
+  #view-er .er-ord-row button { background: #9b6247 !important; border-color: #9b6247 !important; color: #fff !important; }
+  #view-er #er-rec-x { background: #edf3f5 !important; color: #082f3d !important; }
+  /* fields and focus */
+  #view-er :is(input, textarea, select):focus { border-color: #176a72 !important; box-shadow: 0 0 0 3px rgba(23, 106, 114, .16) !important; }
+  #view-er button:focus-visible { outline: 3px solid #9b6247 !important; outline-offset: 2px !important; }
+  #view-er .er-tc:focus-visible { outline-offset: -3px !important; }
+  #view-er .er-just { border-radius: 10px !important; }
+  /* the dialogs inside the room keep a white pane, with the landing's corners */
+  #view-er .er-pane { background-color: #fff !important; }
+  #view-er .er-pane[role="dialog"] > div { border-radius: 10px !important; }
+  #view-er .er-brief-top h3, #view-er .er-pane h3 { color: #082f3d !important; font-weight: 750 !important; }
+}

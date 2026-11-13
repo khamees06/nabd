@@ -70,6 +70,7 @@ From the prototype, unchanged: 1250, 1100, 900, 820 (header menu), 640/620/600, 
 | `wwwroot/css/landing-v63.css` | By hand (V6.3) | The refined sections. Every selector starts from `#view-index.nl-index-view`; fonts in `@layer nl-refine` as `!important` |
 | `wwwroot/css/landing-v64.css` | By hand (V6.4) | The laptop, the showcase's point cards and the card language below. Same rules as `landing-v63.css` |
 | `wwwroot/css/auth.css` | By hand (V6.4, replaces `auth-v63.css`) | The sign-in and registration pages (`#auth-modal`, markup in `Views/Account`). Every selector starts from `#auth-modal`; declarations `!important` in `@layer nl-refine`, except `display` on what `.hidden` may hide, which is an ordinary declaration outside the layer (tested) |
+| `wwwroot/css/app-v65.css` | By hand (V6.5) | The signed-in application in the landing's identity: legacy colour variables redefined on signed-in roots, `!important` in `@layer nl-refine` only against legacy `!important`; paint only, never display or placement (tested); never selects the landing, the sign-in screen or the footer (tested) |
 
 **The guard.** The legacy stylesheets force some properties on the landing with `!important` or with ID
 selectors (fonts on every button/heading/`b`/`strong`; paint, padding and display on `#public-header`, its nav and
@@ -129,3 +130,34 @@ hidden under 900 px (tighter on windows lower than 760 px, so its training-only 
 button outlines `#82969f` (3:1 against white); fields 50 px high with 16 px text on phones; a show/hide button
 in the password fields (the value stays left to right, the placeholder right to left); an opaque copper focus ring (4.9:1); registration steps as numbered dots joined by a bar; account types as three cards with a
 round icon, teal when chosen.
+
+## The signed-in application (V6.5)
+
+[Decision 0013](decisions/0013-signed-in-application-in-the-landing-identity.md). `wwwroot/css/app-v65.css` gives
+the screens after sign-in the landing's identity, with CSS only, by redefining the legacy colour variables on
+signed-in roots:
+
+| Legacy variable | Value in V6.5 | Was |
+|---|---|---|
+| `--bg`, `--bg-main` (page) | `#f3f6f7` | `#F4F8FA` |
+| `--ink` / `--ink-2` / `--ink-3` | `#102f40` / `#536875` / `#5d7079` | `#193B4A` / `#4F6A77` / `#587180` |
+| `--line` / `--line-2` | `#d9e1e5` / `#e6edf0` | `#DCE7EB` / `#E8EFF2` |
+| `--tint` / `--tint-2` | `#e8f0f1` / `#f3f7f7` | `#E6F2F4` / `#F0F7F8` |
+| `--signal` / `--signal-strong` | `#176a72` / `#135c63` | `#16838A` / `#0F6A70` |
+| `--signal-light` | `#e5ad8e` (copper-light, on navy) | `#6CC9CE` |
+| `--navy` | `#082f3d` | `#193B4A` |
+| `--r`, `--r-lg` / `--r-xl` | `12px` / `16px` | `14px`, `20px` / `28px` |
+| `--font-ar` | Noto Sans Arabic | Readex Pro |
+
+Inside the monitors (`.nb-mon`, `#view-er .er-mon`, `#view-resp .rs-mon`) `--signal`, `--signal-light` and
+`--paper` keep their legacy values: the traces are drawn in script and the legend must match them.
+
+Parts: the application header is navy with a copper rule and a copper avatar, like the public header (same
+height); the account menu and the drawer are white with navy text, copper eyebrows and a copper bar on the current
+item; the toast is navy with a copper edge; the dialogs have a navy veil and 16 px corners. Home: the ER card in
+the landing's navy band with a copper «ادخل الـ ER» button, navy step tiles with copper numbers, the open training
+section framed in copper. ER room: copper send/start/hand-over buttons, white secondary buttons, navy pressed tabs,
+filters and role choice, chat bubbles per speaker (trainee navy-teal, patient grey, nurse teal tint, relative
+copper tint, supervisor white with a navy rule), copper eyebrows in the briefing, the tests panel and the report.
+Unchanged on purpose: alarms, urgent and critical frames, the out-of-indication yellow, the monitor, success and
+warning colours.

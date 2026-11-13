@@ -19,7 +19,6 @@ What the work on `ui/landing-v6-integration` leaves open, most important first. 
 | # | Item | Detail |
 |---|---|---|
 | B5 | Higher-resolution photos | The hero and specialty photos are the prototype's embedded sizes (hero 790 × 349 px): soft on high-density screens. Add larger originals and `srcset` |
-| B6 | Signed-in shell consistency | After sign-in the footer is the V6.2 footer and the sign-in pages have the V6.4 look, while the application header and views keep the legacy look |
 | B7 | Product screenshots go out of date | The laptop and step images are screenshots of the ER room; when the room's look changes, rebuild them (`capture-er-session.js`, `build-v63-images.mjs`, `build-v64-images.mjs`) |
 | B8 | Accessibility measurement | Contrast was measured by script in V6.3's review; an automated audit (axe or Lighthouse) and a screen-reader pass (NVDA/VoiceOver) were not done |
 | B9 | Other browsers | Checked in headless Chrome only; Firefox and Safari (iOS) not tested. The `:dir(ltr)` rule (mirroring arrows in a left-to-right page) needs Chrome 120+, Safari 16.4+, Firefox 49+ |
@@ -47,6 +46,12 @@ What the work on `ui/landing-v6-integration` leaves open, most important first. 
 |---|---|---|
 | B15 | Not deployed | V6.2 is pushed on the branch; V6.3 is a local commit only (the owner asked for no push, merge or deployment before his review). The public links (Vercel, GitHub Pages) still serve `main` |
 | B16 | Merge order | `ui/landing-v6-integration` is based on `refactor/clean-architecture`, which is itself not merged to `main` |
+
+## Closed by V6.5
+
+- The screens after sign-in (header, drawer, home, profile, university, dialogs, and the ER room in every state)
+  take the landing's colours, type and cards, with CSS only (decision 0013); B6 (signed-in shell consistency) is
+  closed by it.
 
 ## Closed by V6.4
 

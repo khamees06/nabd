@@ -46,7 +46,9 @@ const settle = pause(1200);
 // The parts the V6.2 landing and the V6.4 sign-in pages redesigned, and the files they add (see the note at the top).
 const REGIONS = ['#public-header', '#view-index', '#auth-modal', '#site-footer'];
 // landing-v6*.css also matches landing-v63.css and landing-v64.css; auth.css is the sign-in screen's stylesheet.
-const LANDING_FILES = 'link[href*="landing-v6"], link[href$="css/auth.css"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
+// app-v65.css (V6.5) restyles the signed-in screens with CSS only: it is taken out of the DOM comparison, which
+// then still proves that their markup and behaviour are the legacy ones; their screenshots differ on purpose.
+const LANDING_FILES = 'link[href*="landing-v6"], link[href$="css/auth.css"], link[href$="css/app-v65.css"], link[href*="noto-sans-arabic"], script[src*="landing.js"]';
 // A snapshot is taken only once the page is quiet: fonts in, every image loaded or failed.
 const snapshot = `document.querySelectorAll('img').forEach(i => i.loading = 'eager'); await document.fonts.ready;
   for (const t0 = Date.now(); Date.now() - t0 < 12000 && [...document.images].some(i => !i.complete);) ${pause(100)}

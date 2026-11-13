@@ -227,6 +227,54 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
         Assert.True(english.Count == 0, "English words on the sign-in screen: " + string.Join(", ", english));
     }
 
+    /* ---------- V6.5: the signed-in application's stylesheet ---------- */
+
+    [Fact]
+    public async Task The_application_stylesheet_reaches_only_signed_in_screens()
+    {
+        var css = StripComments(await Text("/css/app-v65.css"));
+        // Only the at-rules the selector reader understands, so that no rule is skipped unseen.
+        Assert.Empty(Regex.Matches(css, @"@(?!media\b|layer\b|supports\b)[a-zA-Z-]+").Select(m => m.Value));
+        var selectors = CssSelectors(css).ToList();
+        Assert.True(selectors.Count >= 150, $"app-v65.css: only {selectors.Count} selectors read; the parser missed rules");
+        var bad = selectors.Where(s => !SignedInRoot().IsMatch(s)).ToList();
+        Assert.True(bad.Count == 0, "app-v65.css selectors that could reach the landing, the sign-in screen or the footer:\n  " + string.Join("\n  ", bad.Take(20)));
+        foreach (var s in selectors)
+        {
+            // a leading :is(…) list: every item must be one of the signed-in views
+            if (s.StartsWith(":is(", StringComparison.Ordinal))
+                foreach (var item in s[4..s.IndexOf(')')].Split(','))
+                    Assert.Matches(@"^#view-(?:home|profile|university|debrief)$", item.Trim());
+            // no sibling combinator, which could step from a signed-in root to a public part
+            Assert.DoesNotMatch(@"[~+](?![^(]*\))", s);
+            Assert.DoesNotMatch(@"#auth-modal|#view-index\b|#public-header|#site-footer|#nl-dialog|nl-auth|nb-auth", s.Replace(":not(#view-index)", ""));
+        }
+    }
+
+    [Fact]
+    public async Task The_application_stylesheet_changes_only_paint_never_what_the_scripts_show_hide_or_place()
+    {
+        // The scripts show and hide the signed-in parts (.hidden, [hidden], classes) and the ER room's height
+        // depends on the header's: none of these properties may be set, except display and height on the
+        // generated ::before of the eyebrows (an element of this file's own).
+        var css = StripComments(await Text("/css/app-v65.css"));
+        var forbidden = new Regex(@"^(?:display|visibility|opacity|transform|translate|rotate|scale|position|z-index|(?:min-|max-)?(?:height|block-size)|inset(?:-.*)?|top|bottom|left|right|animation(?:-.*)?|transition(?:-.*)?|pointer-events|content-visibility|contain|all|float|clip|clip-path|overflow(?:-.*)?)$", RegexOptions.IgnoreCase);
+        var declarations = 0;
+        foreach (Match rule in Regex.Matches(css, @"([^{};]+)\{([^{}]*)\}"))
+        {
+            var selector = rule.Groups[1].Value.Trim();
+            foreach (Match declaration in Regex.Matches(rule.Groups[2].Value, @"(?:^|;)\s*([a-zA-Z-]+)\s*:"))
+            {
+                declarations++;
+                var property = declaration.Groups[1].Value.ToLowerInvariant();
+                if (property.StartsWith("--", StringComparison.Ordinal) || !forbidden.IsMatch(property)) continue;
+                Assert.True(selector.EndsWith("::before", StringComparison.Ordinal) && property is "display" or "height",
+                    $"app-v65.css sets {property} in '{selector}'");
+            }
+        }
+        Assert.True(declarations > 300, $"only {declarations} declarations read");
+    }
+
     /* ---------- fonts and script ---------- */
 
     [Theory]
@@ -294,6 +342,12 @@ public partial class LandingV6Tests : IClassFixture<WebApplicationFactory<Progra
 
     [GeneratedRegex(@"^#auth-modal\b")]
     private static partial Regex AuthRoot();
+
+    // A selector of app-v65.css starts from the signed-in flag or from a part only a signed-in user sees. The drawer
+    // and the toast are not such parts (the toast says goodbye on the landing; the closed drawer waits off-screen):
+    // their rules must start from the flag.
+    [GeneratedRegex(@"^(?:html:has\(> body > #app-header:not\(\.hidden\)\)|:is\(#view-(?:home|profile|university|debrief)[,)]|#(?:app-header|account-dropdown-menu|app-brand-btn|app-open-sidebar-btn|user-menu-btn|handover-modal|level-modal|medical-image-lightbox|student-attempt-detail-modal|handover-modal-title|lightbox-title|stu-modal-title|view-(?:home|profile|university|debrief|coach|er|resp))\b)")]
+    private static partial Regex SignedInRoot();
 
     [GeneratedRegex("\\bid=\"([^\"]+)\"")]
     private static partial Regex IdAttribute();

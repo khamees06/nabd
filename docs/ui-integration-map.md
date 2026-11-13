@@ -135,3 +135,12 @@ Removed: `Views/Shared/Modals/_AuthModal.cshtml`, `wwwroot/css/auth-v63.css`,
 `wwwroot/img/landing/v63/showcase-er-room.webp`. Changed: the head (registered difference 19: `landing-v64.css`,
 `auth.css`), the layout (renders `_AuthScreen` with the page's `AuthPage`), the title (per page, from the
 controller), `Program.cs` (Razor writes Arabic as it is), a fourth baseline region `auth`, `compare-hosts.mjs`.
+
+## V6.5 (2026-11-13): the signed-in application
+
+The owner's request after approving V6.4: the screens after sign-in in the landing's colours and shapes, the ER
+room first, without any change that could cause an error. One stylesheet, `wwwroot/css/app-v65.css`, CSS only
+([decision 0013](decisions/0013-signed-in-application-in-the-landing-identity.md)); no view, script or legacy
+stylesheet changed. Changed: the head (registered difference 19: one link), `compare-hosts.mjs` (takes the link out
+of the DOM comparison), `LandingV6Tests` (two tests for the new file).
+

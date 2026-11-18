@@ -1,0 +1,8 @@
+$ npm run preview:standalone   (2026-11-14T20:51:51+03:00)
+
+> nabd-clinical-simulator@1.5.0 preview:standalone
+> node scripts/build-preview.mjs
+
+Built standalone preview: dist\Nabd-Clinical-Simulator-v1.5-Preview.html (34.70 MiB)
+exit=0
+85d2f54e0f1bc9f75fc66d228445c549b33b4e8fff36b72a1187f7e8fd3ec638 *dist/Nabd-Clinical-Simulator-v1.5-Preview.html

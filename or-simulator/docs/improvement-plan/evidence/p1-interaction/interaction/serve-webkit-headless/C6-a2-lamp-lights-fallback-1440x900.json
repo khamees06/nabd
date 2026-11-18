@@ -1,0 +1,90 @@
+{
+  "check": "C6-a2-lamp-lights-fallback-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T16:24:35.939Z",
+  "result": {
+    "assets": {
+      "operatingTable": true,
+      "surgicalLightsAndPendant": false,
+      "anesthesiaWorkstation": true
+    },
+    "lamps": [
+      {
+        "name": "NabdLampTaskLight0",
+        "type": "SpotLight",
+        "color": "#fffbf1",
+        "intensity": 1.18,
+        "castShadow": false,
+        "lit": true,
+        "position": [
+          -0.8,
+          2.91,
+          0.03
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.15
+        ]
+      },
+      {
+        "name": "NabdLampTaskLight1",
+        "type": "SpotLight",
+        "color": "#fffbf1",
+        "intensity": 1.18,
+        "castShadow": false,
+        "lit": true,
+        "position": [
+          0.8,
+          2.9166,
+          -0.32
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.15
+        ]
+      }
+    ],
+    "visibleLights": [
+      {
+        "type": "SpotLight",
+        "name": "NabdLampTaskLight0",
+        "intensity": 1.18
+      },
+      {
+        "type": "SpotLight",
+        "name": "NabdLampTaskLight1",
+        "intensity": 1.18
+      },
+      {
+        "type": "HemisphereLight",
+        "name": "",
+        "intensity": 1.22
+      },
+      {
+        "type": "DirectionalLight",
+        "name": "",
+        "intensity": 1.25
+      },
+      {
+        "type": "DirectionalLight",
+        "name": "",
+        "intensity": 0.38
+      }
+    ],
+    "headErrorM": [
+      0,
+      0
+    ]
+  },
+  "errors": [],
+  "unexpected": []
+}

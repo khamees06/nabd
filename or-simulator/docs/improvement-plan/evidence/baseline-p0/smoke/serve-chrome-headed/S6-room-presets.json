@@ -1,0 +1,433 @@
+{
+  "flow": "S6-room-presets",
+  "server": "serve",
+  "project": "chrome",
+  "mode": "headed",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "capturedAt": "2026-11-14T15:31:30.333Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "teardown": {
+    "drillActiveBefore": true,
+    "forearmAfter": null,
+    "mode": false,
+    "forearmButtonPressed": "false",
+    "supervisorVisible": true,
+    "handsVisible": false
+  },
+  "obstructed": [
+    "camera-overview covered by #anatomy-toggle"
+  ],
+  "presets": [
+    {
+      "id": "camera-room",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          0,
+          1.5999999999999996,
+          4.24
+        ],
+        "cameraRotation": [
+          -0.14267044965491407,
+          0,
+          0,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "من مدخل الغرفة",
+        "cameraLabel": "من مدخل الغرفة"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 107",
+          "frame": "Frame 7 ms",
+          "draw": "Draw 1528",
+          "triangles": "Triangles 462,240",
+          "assets": "Geo 1362 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1528,
+        "triangles": 462240,
+        "overlayFps": 107
+      }
+    },
+    {
+      "id": "camera-surgeon",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          -2.55,
+          2.2399999999999993,
+          1.0300000000000002
+        ],
+        "cameraRotation": [
+          -0.4396708374696502,
+          -1.2141761908434643,
+          0,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "موقع الجرّاح",
+        "cameraLabel": "موقع الجرّاح"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 118",
+          "frame": "Frame 7.1 ms",
+          "draw": "Draw 1040",
+          "triangles": "Triangles 392,862",
+          "assets": "Geo 1364 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1040,
+        "triangles": 392862,
+        "overlayFps": 118
+      }
+    },
+    {
+      "id": "camera-anesthesia",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          -2.17,
+          2.2199999999999998,
+          -2.9
+        ],
+        "cameraRotation": [
+          -0.4215499379523842,
+          -2.2688838727645964,
+          3.041854124507708e-17,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "منطقة التخدير",
+        "cameraLabel": "منطقة التخدير"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 107",
+          "frame": "Frame 7.1 ms",
+          "draw": "Draw 1051",
+          "triangles": "Triangles 400,678",
+          "assets": "Geo 1374 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1051,
+        "triangles": 400678,
+        "overlayFps": 107
+      }
+    },
+    {
+      "id": "camera-instruments",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          -3.2,
+          2.1000000000000005,
+          2.1299999999999994
+        ],
+        "cameraRotation": [
+          -0.45942532839066474,
+          -0.816637996827717,
+          6.19331566969616e-17,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "الأدوات الجراحية",
+        "cameraLabel": "الأدوات الجراحية"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 110",
+          "frame": "Frame 6.9 ms",
+          "draw": "Draw 1522",
+          "triangles": "Triangles 442,548",
+          "assets": "Geo 1374 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1522,
+        "triangles": 442548,
+        "overlayFps": 110
+      }
+    },
+    {
+      "id": "camera-overview",
+      "obstructedBy": "#anatomy-toggle",
+      "clickedVia": "dispatchEvent (DOM click)",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          2.92,
+          2.58,
+          -2.66
+        ],
+        "cameraRotation": [
+          -0.4551377672221573,
+          2.3020957040885,
+          0,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "الجسم كامل",
+        "cameraLabel": "الجسم كامل"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 62",
+          "frame": "Frame 34.8 ms",
+          "draw": "Draw 1548",
+          "triangles": "Triangles 457,566",
+          "assets": "Geo 1383 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1548,
+        "triangles": 457566,
+        "overlayFps": 62
+      }
+    },
+    {
+      "id": "camera-left",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          -2.6499999999999986,
+          1.9660000000000004,
+          0.06499999999999997
+        ],
+        "cameraRotation": [
+          -0.32048184871868457,
+          -1.5406168134196665,
+          -2.924460151371861e-17,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "الجانب الأيسر",
+        "cameraLabel": "الجانب الأيسر"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 122",
+          "frame": "Frame 7 ms",
+          "draw": "Draw 994",
+          "triangles": "Triangles 382,418",
+          "assets": "Geo 1385 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 994,
+        "triangles": 382418,
+        "overlayFps": 122
+      }
+    },
+    {
+      "id": "camera-right",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          2.6499999999999986,
+          1.9660000000000004,
+          0.06499999999999997
+        ],
+        "cameraRotation": [
+          -0.32048184871868457,
+          1.5406168134196665,
+          2.924460151371861e-17,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "الجانب الأيمن",
+        "cameraLabel": "الجانب الأيمن"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 112",
+          "frame": "Frame 6.9 ms",
+          "draw": "Draw 1225",
+          "triangles": "Triangles 370,982",
+          "assets": "Geo 1386 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1225,
+        "triangles": 370982,
+        "overlayFps": 112
+      }
+    },
+    {
+      "id": "camera-overhead",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          0.08000000000000022,
+          4.3,
+          -0.45000000000000034
+        ],
+        "cameraRotation": [
+          -1.44789036330311,
+          2.965653028137265,
+          -1.1319864750963415e-16,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "من الأعلى",
+        "cameraLabel": "من الأعلى"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 120",
+          "frame": "Frame 6.9 ms",
+          "draw": "Draw 1348",
+          "triangles": "Triangles 403,608",
+          "assets": "Geo 1386 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1348,
+        "triangles": 403608,
+        "overlayFps": 120
+      }
+    },
+    {
+      "id": "camera-torso",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          0.14000000000000004,
+          2.2809999999999997,
+          -0.08499999999999985
+        ],
+        "cameraRotation": [
+          -1.308619252610653,
+          0.449759613069839,
+          1.0708837102990353e-16,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "الصدر",
+        "cameraLabel": "الصدر"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 126",
+          "frame": "Frame 7 ms",
+          "draw": "Draw 523",
+          "triangles": "Triangles 283,154",
+          "assets": "Geo 1386 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 523,
+        "triangles": 283154,
+        "overlayFps": 126
+      }
+    },
+    {
+      "id": "camera-abdomen",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          0.11999999999999997,
+          1.956,
+          0.16499999999999995
+        ],
+        "cameraRotation": [
+          -1.1819373384647816,
+          0.33929261445404485,
+          -1.4641610006905524e-16,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "البطن",
+        "cameraLabel": "البطن"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 142",
+          "frame": "Frame 7 ms",
+          "draw": "Draw 508",
+          "triangles": "Triangles 278,276",
+          "assets": "Geo 1386 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 508,
+        "triangles": 278276,
+        "overlayFps": 142
+      }
+    },
+    {
+      "id": "camera-face",
+      "obstructedBy": null,
+      "clickedVia": "pointer click",
+      "pressed": "true",
+      "camera": {
+        "getCamera": [
+          0.3400000000000001,
+          1.7160000000000002,
+          -0.8850000000000002
+        ],
+        "cameraRotation": [
+          -1.0060704583410134,
+          2.0344439357957036,
+          0,
+          "YXZ"
+        ],
+        "cameraFov": 62,
+        "mode": false,
+        "workMoving": false,
+        "detailView": "الوجه",
+        "cameraLabel": "الوجه"
+      },
+      "counters": {
+        "raw": {
+          "fps": "FPS 124",
+          "frame": "Frame 6.9 ms",
+          "draw": "Draw 571",
+          "triangles": "Triangles 289,646",
+          "assets": "Geo 1386 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 571,
+        "triangles": 289646,
+        "overlayFps": 124
+      }
+    }
+  ],
+  "M11": 0,
+  "errors": []
+}

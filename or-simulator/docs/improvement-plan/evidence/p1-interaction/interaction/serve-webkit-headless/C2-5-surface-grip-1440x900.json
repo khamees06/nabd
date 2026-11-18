@@ -1,0 +1,117 @@
+{
+  "check": "C2-5-surface-grip-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T16:00:24.008Z",
+  "result": {
+    "pinch": [
+      {
+        "attempt": 1,
+        "attachMs": 718,
+        "gapAtAttachM": 0.014,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 2,
+        "attachMs": 782,
+        "gapAtAttachM": 0.0143,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 3,
+        "attachMs": 673,
+        "gapAtAttachM": 0.0168,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 4,
+        "attachMs": 751,
+        "gapAtAttachM": 0.014,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 5,
+        "attachMs": 722,
+        "gapAtAttachM": 0.0144,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      }
+    ],
+    "pinchMotion": {
+      "frames": 260,
+      "maxTurnDeg": 5.83,
+      "turnAtMs": 1452,
+      "maxStepM": 0.025,
+      "maxStep": {
+        "atMs": 5029,
+        "dtMs": 36,
+        "dyM": -0.0112
+      },
+      "minFingersForward": 0.975,
+      "renderIntervalP50Ms": 33
+    },
+    "pinchSleeve": {
+      "framesWithSleeve": 260,
+      "maxLength": 0.3
+    },
+    "slide": {
+      "pressMs": 484,
+      "slideMs": 3284,
+      "pathPx": 200,
+      "amplitudePx": 50,
+      "samples": 40,
+      "maxShiftY": -0.00694,
+      "minShiftY": -0.00694,
+      "recentres": 4,
+      "grip": "press",
+      "shifts": [
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694,
+        -0.00694
+      ]
+    }
+  },
+  "errors": []
+}

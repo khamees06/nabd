@@ -1,0 +1,35 @@
+# npm test, run 2026-11-14T17:56:13+03:00 with tests/browser/* present (smoke.spec.mjs, playwright.config.mjs, perf-capture.mjs)
+v26.13.1
+
+> nabd-clinical-simulator@1.5.0 test
+> node --test
+
+✔ asset manifest paths, byte sizes and SHA-256 hashes match the delivered assets (80.2693ms)
+✔ EventLogger creates structured events with unique IDs and ISO timestamps (4.1194ms)
+✔ EventLogger rejects unknown events and trims to the configured event limit (1.7165ms)
+✔ returned event snapshots cannot mutate the stored session record (11.3679ms)
+✔ sweeps stop a glove probe crossing the forearm or mattress in one update (2.9964ms)
+✔ overlap correction pushes a glove probe out along the local surface normal (1.0369ms)
+✔ camera look pauses the active manipulation and the next manipulation input resumes it (1.6042ms)
+✔ configuration covers only the four instruments already present in v0.22 (2.6363ms)
+✔ instrument grip offsets preserve the existing v0.22 anchor (0.5657ms)
+✔ scope must align to the selected port before insertion (6.8885ms)
+✔ scope pivots around the selected port after insertion; roll is independent (0.7728ms)
+✔ all relative JavaScript imports resolve to real files (63.1756ms)
+✔ PerformanceMonitor samples FPS and renderer counters without requiring browser memory APIs (1.7139ms)
+✔ SceneManager renders and resizes through the existing renderer (2.5909ms)
+✔ both tower displays share a live render target and camera follows the scope tip (3.5881ms)
+✔ starting a session clears the previous log and records lifecycle transitions (11.6414ms)
+✔ repeated stage assignment and completion are idempotent (0.3429ms)
+✔ reset detaches subsequent events from the previous session (0.194ms)
+✔ privacy filtering is applied to the intersected face, not the entire multi-material mesh (0.9028ms)
+✔ single-material privacy surfaces remain excluded (0.2568ms)
+✔ work walk reaches all four sides without changing the selected work point (3.8112ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 326.2507

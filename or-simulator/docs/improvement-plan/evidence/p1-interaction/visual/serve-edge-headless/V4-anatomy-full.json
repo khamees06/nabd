@@ -1,0 +1,44 @@
+{
+  "flow": "V4-anatomy-full",
+  "server": "serve",
+  "project": "edge",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "capturedAt": "2026-11-17T15:50:16.025Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "camera": {
+    "getCamera": [
+      0.3919415118422549,
+      1.6807959623344837,
+      -0.2759167695829724
+    ],
+    "cameraRotation": [
+      -1.0118710731506984,
+      1.4275533779832092,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 49,
+    "mode": false,
+    "workMoving": false,
+    "detailView": "من مدخل الغرفة",
+    "cameraLabel": "تشريح المريض"
+  },
+  "counters": {
+    "raw": {
+      "fps": "FPS 144",
+      "frame": "Frame 6.9 ms",
+      "draw": "Draw 541",
+      "triangles": "Triangles 464,003",
+      "assets": "Geo 1161 · Tex 17",
+      "events": "Events 0"
+    },
+    "drawCalls": 541,
+    "triangles": 464003,
+    "overlayFps": 144
+  },
+  "screenshot": "V4-anatomy-full.jpg",
+  "settleMs": 2000
+}

@@ -1,0 +1,6 @@
+{
+  "checkedAt": "2026-11-14",
+  "how": "Claude desktop built-in browser (Chromium), viewport emulated 1440x900, http://localhost:4190/ served by scripts/serve.mjs, code at commit 006881f (F19 fixed), read after #model-status reached data-state=ready",
+  "R5": { "buttonsVisible": 39, "buttonsTotal": 76, "formControlsVisible": 8, "textareas": 0, "matchesAudit": true },
+  "R16": { "eventsBeforeSession": 0, "stage": "idle", "note": "Checked right after load only; a grip before starting a session was not repeated in this re-check" }
+}

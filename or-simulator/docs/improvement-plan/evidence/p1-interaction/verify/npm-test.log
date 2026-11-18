@@ -1,0 +1,34 @@
+
+> nabd-clinical-simulator@1.5.0 test
+> node --test
+
+✔ asset manifest paths, byte sizes and SHA-256 hashes match the delivered assets (49.3158ms)
+✔ EventLogger creates structured events with unique IDs and ISO timestamps (2.822ms)
+✔ EventLogger rejects unknown events and trims to the configured event limit (0.8372ms)
+✔ returned event snapshots cannot mutate the stored session record (5.7394ms)
+✔ sweeps stop a glove probe crossing the forearm or mattress in one update (2.6991ms)
+✔ overlap correction pushes a glove probe out along the local surface normal (0.8795ms)
+✔ camera look pauses the active manipulation and the next manipulation input resumes it (0.7173ms)
+✔ configuration covers only the four instruments already present in v0.22 (1.6637ms)
+✔ instrument grip offsets preserve the existing v0.22 anchor (0.276ms)
+✔ scope must align to the selected port before insertion (3.9165ms)
+✔ scope pivots around the selected port after insertion; roll is independent (0.827ms)
+✔ all relative JavaScript imports resolve to real files (47.5354ms)
+✔ PerformanceMonitor samples FPS and renderer counters without requiring browser memory APIs (1.2167ms)
+✔ SceneManager renders and resizes through the existing renderer (0.7349ms)
+✔ both tower displays share a live render target and camera follows the scope tip (3.5074ms)
+✔ starting a session clears the previous log and records lifecycle transitions (8.8402ms)
+✔ repeated stage assignment and completion are idempotent (0.3923ms)
+✔ reset detaches subsequent events from the previous session (0.2756ms)
+✔ privacy filtering is applied to the intersected face, not the entire multi-material mesh (0.5746ms)
+✔ single-material privacy surfaces remain excluded (0.1076ms)
+✔ work walk reaches all four sides without changing the selected work point (1.8792ms)
+ℹ tests 21
+ℹ suites 0
+ℹ pass 21
+ℹ fail 0
+ℹ cancelled 0
+ℹ skipped 0
+ℹ todo 0
+ℹ duration_ms 286.9031
+exit 0

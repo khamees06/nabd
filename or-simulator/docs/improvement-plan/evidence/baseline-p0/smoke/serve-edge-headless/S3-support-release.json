@@ -1,0 +1,98 @@
+{
+  "flow": "S3-support-release",
+  "server": "serve",
+  "project": "edge",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.46",
+  "capturedAt": "2026-11-14T15:27:47.536Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "gripAttempts": [
+    {
+      "attempt": 1,
+      "offsetPx": [
+        0,
+        0
+      ],
+      "outcome": "out of reach (hold timeout)",
+      "ms": 3458,
+      "glove": {
+        "left": [
+          0.6014624112173659,
+          1.0594179361937008,
+          0.24986886198952651
+        ],
+        "right": [
+          0.5586654105866004,
+          1.0789851999197844,
+          -0.044982426845495346
+        ]
+      }
+    },
+    {
+      "attempt": 2,
+      "offsetPx": [
+        0,
+        -6
+      ],
+      "outcome": "gripped",
+      "ms": 413,
+      "glove": {
+        "left": [
+          0.6014624112173658,
+          1.0594179361937006,
+          0.2498688619895265
+        ],
+        "right": [
+          0.47483132369259545,
+          1.0900054274254731,
+          0.05721656802117067
+        ]
+      }
+    }
+  ],
+  "restWristY": 0.9827970622183444,
+  "liftedWristY": 1.092243161559064,
+  "assistLabelSupported": "إنهاء المساندة",
+  "supportGap": 0.000519723404985597,
+  "forearmSupported": {
+    "state": "gripped",
+    "overlap": 0,
+    "stops": 263,
+    "supportGap": 0.000519723404985597,
+    "gap": 0.0023000880762872084,
+    "contact": [
+      0.31118227659258674,
+      1.1167880155495826,
+      0.06996803653626199
+    ]
+  },
+  "feedbackAfterRelease": "المشرف مسنّد الساعد",
+  "forearmReleased": {
+    "state": "idle",
+    "overlap": 0,
+    "stops": 272,
+    "supportGap": 0.000016995216043302174,
+    "gap": null,
+    "contact": null
+  },
+  "releasedWristY": 1.092243161559064,
+  "raisedAfterReleaseM": 0.10944609934071958,
+  "afterEndSupport": {
+    "forearm": {
+      "state": "idle",
+      "overlap": 0,
+      "stops": 272,
+      "supportGap": null,
+      "gap": null,
+      "contact": null
+    },
+    "wristY": 0.9827970622183444,
+    "aboveRestM": 0,
+    "feedback": "",
+    "assistLabel": "اطلب مساندة المشرف"
+  },
+  "M11": 0,
+  "errors": []
+}

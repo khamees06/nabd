@@ -1,0 +1,103 @@
+{
+  "check": "C2-3-glove-faces-skin-560x890",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T16:02:08.659Z",
+  "result": {
+    "press": {
+      "attachMs": 614,
+      "gripKind": "press",
+      "contactGapM": 0.0129,
+      "status": "جسّ خفيف · الأصابع لامست السطح",
+      "settled": {
+        "contactGapM": 0.0251,
+        "heightFieldPenetrationM": 0,
+        "localPenetrationM": 0
+      },
+      "approach": {
+        "frames": 20,
+        "maxTurnDeg": 5.83,
+        "turnAtMs": 46,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 180,
+          "dtMs": 51,
+          "dyM": 0.0007
+        },
+        "minFingersForward": 0.975,
+        "renderIntervalP50Ms": 46
+      },
+      "release": {
+        "frames": 18,
+        "maxTurnDeg": 4.57,
+        "turnAtMs": 36,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 256,
+          "dtMs": 42,
+          "dyM": -0.0101
+        },
+        "minFingersForward": 0.98,
+        "renderIntervalP50Ms": 42
+      },
+      "whole": {
+        "frames": 48,
+        "maxTurnDeg": 5.83,
+        "turnAtMs": 1353,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 1609,
+          "dtMs": 42,
+          "dyM": -0.0101
+        },
+        "minFingersForward": 0.975,
+        "renderIntervalP50Ms": 43
+      },
+      "sleeve": {
+        "framesWithSleeve": 48,
+        "maxLength": 0.3
+      }
+    },
+    "flank": {
+      "point": {
+        "x": 258.3557928215843,
+        "y": 393.83646750244804
+      },
+      "attachMs": 391,
+      "grip": "touch",
+      "status": "الأصابع لامست سطح المريض",
+      "maxLocalPenetrationM": 0,
+      "normal": [
+        0.9978307007260573,
+        0.019910407186478064,
+        -0.0627492499892558
+      ],
+      "maxHeightFieldPenetrationM": 0.0606,
+      "contactGapM": 0.0133,
+      "motion": {
+        "frames": 46,
+        "maxTurnDeg": 5.83,
+        "turnAtMs": 470,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 190,
+          "dtMs": 48,
+          "dyM": -0.0047
+        },
+        "minFingersForward": 0.951,
+        "renderIntervalP50Ms": 51
+      },
+      "sleeve": {
+        "framesWithSleeve": 46,
+        "maxLength": 0.3
+      }
+    }
+  },
+  "errors": []
+}

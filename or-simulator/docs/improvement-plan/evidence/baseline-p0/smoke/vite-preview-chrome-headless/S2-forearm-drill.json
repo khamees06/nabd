@@ -1,0 +1,178 @@
+{
+  "flow": "S2-forearm-drill",
+  "server": "vite-preview",
+  "project": "chrome",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "capturedAt": "2026-11-14T15:32:50.145Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "restWristY": 0.9827970622183444,
+  "statusOnEntry": "انقر على جلد الرسغ · حرّك لفوق لرفع الساعد · انقر ثانية للإفلات",
+  "cameraOnEntry": {
+    "getCamera": [
+      0.76,
+      1.6,
+      0.07486886198952614
+    ],
+    "cameraRotation": [
+      -0.9357447082467416,
+      1.5707963267948988,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 52,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "ذراع المريض اليسرى"
+  },
+  "entryForearm": {
+    "state": "idle",
+    "overlap": 0,
+    "stops": 0,
+    "supportGap": null,
+    "gap": null,
+    "contact": null
+  },
+  "entryRegion": "leftArm",
+  "preApproachClick": {
+    "outcome": "out of reach",
+    "outOfReachAfterMs": 3468,
+    "sequence": [
+      {
+        "ms": 273,
+        "status": "الإيد بتقرب من نقطة التلامس",
+        "forearmState": "approaching"
+      },
+      {
+        "ms": 3468,
+        "status": "خارج مدى الإيد · غيّر وقفتك أو اقترب",
+        "forearmState": "idle"
+      }
+    ]
+  },
+  "statusBeforeApproach": "خارج مدى الإيد · غيّر وقفتك أو اقترب",
+  "forearmBeforeApproach": {
+    "state": "idle",
+    "overlap": 0,
+    "stops": 150,
+    "supportGap": null,
+    "gap": null,
+    "contact": null
+  },
+  "cameraAfterApproach": {
+    "getCamera": [
+      0.705,
+      1.6,
+      0.07486886198952614
+    ],
+    "cameraRotation": [
+      -0.9959912090131557,
+      1.5707963267948992,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 52,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "ذراع المريض اليسرى"
+  },
+  "approachMovedM": 0.05500000000000005,
+  "gripAttempts": [
+    {
+      "attempt": 1,
+      "offsetPx": [
+        0,
+        0
+      ],
+      "outcome": "gripped",
+      "ms": 460,
+      "glove": {
+        "left": [
+          0.6014624114244149,
+          1.0594179362596834,
+          0.2498688619895265
+        ],
+        "right": [
+          0.45075381494250205,
+          1.1021483751723051,
+          0.09533952185757026
+        ]
+      }
+    }
+  ],
+  "statusGripped": "تم إمساك الطرف · حرّكه ضمن مداه",
+  "forearmGripped": {
+    "state": "gripped",
+    "overlap": 0,
+    "stops": 162,
+    "supportGap": null,
+    "gap": 0.026850076613056856,
+    "contact": [
+      0.31769444895463705,
+      1.0020929247427266,
+      0.07486886198952725
+    ]
+  },
+  "forearmLifted": {
+    "state": "gripped",
+    "overlap": 0,
+    "stops": 222,
+    "supportGap": null,
+    "gap": 0.026850074315690798,
+    "contact": [
+      0.31664164390152405,
+      1.1119454648447262,
+      0.07041750399384182
+    ]
+  },
+  "liftedWristY": 1.0924894146573016,
+  "wristLiftM": 0.10969235243895725,
+  "grip": "wrist",
+  "crew": {
+    "handVisible": true,
+    "toolVisible": false,
+    "mode": "tray",
+    "offer": 0,
+    "toolSide": "right",
+    "toolPosition": [
+      0.5,
+      1.13,
+      0.49
+    ],
+    "offeredPoint": [
+      -1.7264410960450314,
+      0.9293315798148876,
+      0.4870577315566824
+    ],
+    "wrists": {
+      "left": [
+        0.6014624112173659,
+        1.0594179361937008,
+        0.2498688619895265
+      ],
+      "right": [
+        0.44566281388445306,
+        1.218878319884429,
+        0.06308005467642751
+      ]
+    },
+    "contact": {
+      "left": null,
+      "right": 0.026850074315690798
+    },
+    "reach": {
+      "left": null,
+      "right": [
+        0.31664164390152405,
+        1.1119454648447262,
+        0.07041750399384182
+      ]
+    }
+  },
+  "M11": 0,
+  "errors": []
+}

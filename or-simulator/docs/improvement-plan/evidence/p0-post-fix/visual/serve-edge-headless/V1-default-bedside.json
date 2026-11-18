@@ -1,0 +1,44 @@
+{
+  "flow": "V1-default-bedside",
+  "server": "serve",
+  "project": "edge",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.46",
+  "capturedAt": "2026-11-14T17:15:08.441Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "camera": {
+    "getCamera": [
+      0.735,
+      1.6,
+      0.15
+    ],
+    "cameraRotation": [
+      -0.6,
+      1.5707963267948966,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 62,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "منظور المتدرّب"
+  },
+  "counters": {
+    "raw": {
+      "fps": "FPS 142",
+      "frame": "Frame 7.2 ms",
+      "draw": "Draw 1206",
+      "triangles": "Triangles 387,848",
+      "assets": "Geo 1126 · Tex 17",
+      "events": "Events 0"
+    },
+    "drawCalls": 1206,
+    "triangles": 387848,
+    "overlayFps": 142
+  },
+  "screenshot": "V1-default-bedside.jpg",
+  "settleMs": 2000
+}

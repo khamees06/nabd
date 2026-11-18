@@ -1,0 +1,76 @@
+{
+  "mode": "head",
+  "width": 560,
+  "height": 890,
+  "bedside": {
+    "attachMs": 186,
+    "aim": {
+      "aimErrorDeg": 17.8,
+      "fingersForward": 0.999
+    },
+    "penetrationHeld": {
+      "tested": 2823,
+      "inside": 852,
+      "over5mm": 629,
+      "deepestM": 0.0208
+    },
+    "lift110": {
+      "dx": -0.1266,
+      "dy": 0.1838,
+      "dz": -0.006
+    },
+    "distanceToRest2sAfterRelease": 0.2233
+  },
+  "armStation": {
+    "attachMs": 228,
+    "penetrationAtAttach": {
+      "tested": 2130,
+      "inside": 0,
+      "over5mm": 0,
+      "deepestM": 0
+    },
+    "lift110": {
+      "dx": -0.0953,
+      "dy": 0.1147,
+      "dz": -0.0618
+    },
+    "penetrationLifted": {
+      "tested": 2857,
+      "inside": 919,
+      "over5mm": 659,
+      "deepestM": 0.0252
+    },
+    "distanceToRest2sAfterRelease": 0.1614
+  },
+  "ankles": [
+    {
+      "attachMs": null,
+      "status": "خارج مدى الإيد · غيّر وقفتك أو اقترب"
+    },
+    {
+      "attachMs": null,
+      "status": "خارج مدى الإيد · غيّر وقفتك أو اقترب"
+    }
+  ],
+  "drill": {
+    "gripped": 0,
+    "clicks": 14,
+    "outcomes": [
+      "outOfReach:3251",
+      "outOfReach:3231",
+      "outOfReach:3228",
+      "outOfReach:3357",
+      "outOfReach:3319",
+      "outOfReach:3333",
+      "outOfReach:3275",
+      "outOfReach:3305",
+      "outOfReach:3301",
+      "outOfReach:3323",
+      "outOfReach:3250",
+      "outOfReach:3264",
+      "outOfReach:3242",
+      "outOfReach:3267"
+    ]
+  },
+  "errors": []
+}

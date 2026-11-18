@@ -1,0 +1,175 @@
+{
+  "check": "C4-11d-scope-monitor-roll-escape-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:19:56.652Z",
+  "result": {
+    "attachMs": 489,
+    "monitor": {
+      "fov": 26.85,
+      "fill": {
+        "height": 0.518,
+        "width": 0.875,
+        "topPx": 186,
+        "bottomPx": 455,
+        "leftPx": 51,
+        "rightPx": 522,
+        "canvasTop": 71,
+        "canvasBottom": 591
+      },
+      "band": {
+        "top": 153,
+        "bottom": 493
+      },
+      "looking": true,
+      "live": true,
+      "depthBar": false,
+      "monitorControls": true,
+      "bandShare": 0.791
+    },
+    "rollPlus": {
+      "roll": 90,
+      "plusDisabled": true,
+      "minusDisabled": false,
+      "status": "وصل لفّ الأداة لحدّه · 90°"
+    },
+    "rollBack": {
+      "roll": 75,
+      "plusDisabled": false,
+      "minusDisabled": false,
+      "status": "وصل لفّ الأداة لحدّه · 90°"
+    },
+    "rollMinus": {
+      "roll": -90,
+      "plusDisabled": false,
+      "minusDisabled": true,
+      "status": "وصل لفّ الأداة لحدّه · 90°"
+    },
+    "rollZero": {
+      "roll": 0,
+      "plusDisabled": false,
+      "minusDisabled": false,
+      "status": "وصل لفّ الأداة لحدّه · 90°"
+    },
+    "back": {
+      "fov": 64,
+      "angles": {
+        "pitch": 0,
+        "yaw": 0,
+        "roll": 0,
+        "insertion": 0.072
+      }
+    },
+    "resumed": {
+      "angles": {
+        "pitch": -1,
+        "yaw": 0,
+        "roll": 0,
+        "insertion": 0.072
+      },
+      "percent": 53
+    },
+    "steer": {
+      "angles": {
+        "pitch": -9,
+        "yaw": 0,
+        "roll": 0,
+        "insertion": 0.072
+      },
+      "resume": {
+        "frames": 46,
+        "toolMaxTurnDeg": 0.21,
+        "toolMaxStepM": 0.0008,
+        "handMaxTurnDeg": 0.21,
+        "handMaxStepM": 0.0011,
+        "camMaxTurnDeg": 0.21,
+        "camMaxStepM": 0.0008,
+        "toolTurnAtMs": 130,
+        "toolStepAtMs": 130,
+        "maxShaftCamZ": -0.7486,
+        "maxToolCamZ": -0.685,
+        "camStep": {
+          "atMs": 130,
+          "dtMs": 11.2,
+          "from": [
+            0,
+            0.141,
+            -0.685
+          ],
+          "to": [
+            -0.001,
+            0.141,
+            -0.685
+          ],
+          "cameraMovedM": 0,
+          "cameraTurnDeg": 0
+        },
+        "toolTotalTurnDeg": 0.8,
+        "toolTravelM": 0.0029
+      },
+      "move": {
+        "frames": 56,
+        "toolMaxTurnDeg": 1.79,
+        "toolMaxStepM": 0.0066,
+        "handMaxTurnDeg": 1.79,
+        "handMaxStepM": 0.0093,
+        "camMaxTurnDeg": 1.79,
+        "camMaxStepM": 0.0066,
+        "toolTurnAtMs": 67,
+        "toolStepAtMs": 67,
+        "maxShaftCamZ": -0.7401,
+        "maxToolCamZ": -0.685,
+        "camStep": {
+          "atMs": 67,
+          "dtMs": 9.6,
+          "from": [
+            -0.009,
+            0.14,
+            -0.685
+          ],
+          "to": [
+            -0.016,
+            0.14,
+            -0.686
+          ],
+          "cameraMovedM": 0,
+          "cameraTurnDeg": 0
+        },
+        "toolTotalTurnDeg": 7.9,
+        "toolTravelM": 0.0292
+      }
+    },
+    "resumeAngleChangeDeg": 1,
+    "steerAngleChangeDeg": 8,
+    "escape": {
+      "before": {
+        "percent": 53,
+        "grip": "tool"
+      },
+      "mode": "placed",
+      "grip": null,
+      "toolVisible": true,
+      "percent": 53,
+      "live": true,
+      "focused": true,
+      "status": "فلّت الأداة وهي ثابتة في فتحة التدريب"
+    },
+    "field": {
+      "fov": 64,
+      "angles": {
+        "pitch": 0,
+        "yaw": 0,
+        "roll": 0,
+        "insertion": 0.072
+      },
+      "percent": 53
+    }
+  },
+  "errors": []
+}

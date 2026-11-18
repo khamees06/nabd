@@ -1,0 +1,10 @@
+=== vite-run2-S1 start 2026-11-14T18:44:56+03:00 server=vite headed=0 args: --project chrome --project webkit --project edge --grep S1 
+
+Running 3 tests using 1 worker
+
+  ok 1 [chrome] › tests\browser\smoke.spec.mjs:194:1 › S1 boot and assets (5.6s)
+  ok 2 [webkit] › tests\browser\smoke.spec.mjs:194:1 › S1 boot and assets (6.0s)
+  ok 3 [edge] › tests\browser\smoke.spec.mjs:194:1 › S1 boot and assets (5.7s)
+
+  3 passed (22.1s)
+=== vite-run2-S1 exit 0 end 2026-11-14T18:45:20+03:00

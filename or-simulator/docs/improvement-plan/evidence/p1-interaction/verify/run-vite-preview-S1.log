@@ -1,0 +1,10 @@
+
+Running 3 tests using 1 worker
+
+  ok 1 [chrome] › tests\browser\smoke.spec.mjs:197:1 › S1 boot and assets (5.6s)
+  ok 2 [webkit] › tests\browser\smoke.spec.mjs:197:1 › S1 boot and assets (5.5s)
+  ok 3 [edge] › tests\browser\smoke.spec.mjs:197:1 › S1 boot and assets (5.8s)
+
+  3 passed (21.7s)
+exit 0 after 23 s
+ALLDONE

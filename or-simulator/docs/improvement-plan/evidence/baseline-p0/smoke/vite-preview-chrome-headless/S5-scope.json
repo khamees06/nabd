@@ -1,0 +1,28 @@
+{
+  "flow": "S5-scope",
+  "server": "vite-preview",
+  "project": "chrome",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "capturedAt": "2026-11-14T15:33:30.805Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "tool": "scope",
+  "selected": "scope",
+  "source": "tray",
+  "crew": {
+    "toolVisible": true,
+    "mode": "tray",
+    "toolPosition": [
+      0.5,
+      1.13,
+      0.49
+    ]
+  },
+  "M11": 0,
+  "nanErrors": 0,
+  "errors": [],
+  "knownF19": false,
+  "screenshot": "S5-scope-tray.jpg"
+}

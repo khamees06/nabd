@@ -1,0 +1,84 @@
+{
+  "check": "F26 lamp lights: V1 mean luma (Rec. 709) of page screenshots, Chrome headless 1440x900, regions in page pixels",
+  "regions": {
+    "canvas": [
+      20,
+      190,
+      1070,
+      640
+    ],
+    "patientTorso": [
+      560,
+      300,
+      900,
+      420
+    ],
+    "tablePadsNear": [
+      430,
+      470,
+      1000,
+      560
+    ],
+    "room": [
+      500,
+      90,
+      760,
+      200
+    ]
+  },
+  "before_9c5f55f_noLampLight": {
+    "canvas": {
+      "meanLuma": 113.9,
+      "clippedPct": 0.1
+    },
+    "patientTorso": {
+      "meanLuma": 129.1,
+      "clippedPct": 0
+    },
+    "tablePadsNear": {
+      "meanLuma": 112.9,
+      "clippedPct": 0
+    },
+    "room": {
+      "meanLuma": 94.7,
+      "clippedPct": 0
+    }
+  },
+  "notChosen_directionalLights_typeAsFallback": {
+    "canvas": {
+      "meanLuma": 148.6,
+      "clippedPct": 0.1
+    },
+    "patientTorso": {
+      "meanLuma": 168.7,
+      "clippedPct": 0
+    },
+    "tablePadsNear": {
+      "meanLuma": 149.6,
+      "clippedPct": 0
+    },
+    "room": {
+      "meanLuma": 114.4,
+      "clippedPct": 0.04
+    }
+  },
+  "chosen_spotLights": {
+    "canvas": {
+      "meanLuma": 121.6,
+      "clippedPct": 0.1
+    },
+    "patientTorso": {
+      "meanLuma": 144.1,
+      "clippedPct": 0
+    },
+    "tablePadsNear": {
+      "meanLuma": 127.3,
+      "clippedPct": 0
+    },
+    "room": {
+      "meanLuma": 97.1,
+      "clippedPct": 0
+    }
+  },
+  "note": "Restoring the two DirectionalLights (the fallback type) brightens every upward surface in the room (canvas +30 %, room +21 %, patient torso +31 %); the authored cone (angle .44, penumbra .78, decay 1.35, distance 4.9) only acts on a SpotLight, which lights the work area (torso +12 %) and leaves the room almost unchanged (+2.5 %). Both paths now use the same SpotLight."
+}

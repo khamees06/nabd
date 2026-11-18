@@ -1,0 +1,30 @@
+{
+  "server": "vite-preview",
+  "project": "chrome",
+  "tools": {
+    "grasper": {
+      "M11": 0,
+      "nanErrors": 0,
+      "knownF19": false,
+      "at": "2026-11-14T15:33:25.373Z"
+    },
+    "scope": {
+      "M11": 0,
+      "nanErrors": 0,
+      "knownF19": false,
+      "at": "2026-11-14T15:33:30.809Z"
+    },
+    "scissors": {
+      "M11": 4,
+      "nanErrors": 4,
+      "knownF19": true,
+      "at": "2026-11-14T15:33:36.032Z"
+    },
+    "needleHolder": {
+      "M11": 4,
+      "nanErrors": 4,
+      "knownF19": true,
+      "at": "2026-11-14T15:33:41.360Z"
+    }
+  }
+}

@@ -1,0 +1,80 @@
+{
+  "check": "C5-10a-refusals-explained-560x890",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:46:45.185Z",
+  "result": {
+    "bedEdge": {
+      "movedM": 0,
+      "status": "وصلت إلى حافة السرير · افتح منطقة عمل لتدور حوله"
+    },
+    "drillRoomView": {
+      "mode": true,
+      "drill": true,
+      "status": "أغلق تمرين الساعد أولًا ثم افتح معاينة الغرفة"
+    },
+    "drillEscape": {
+      "drill": true,
+      "focused": true,
+      "status": "لإنهاء تمرين الساعد انقر «تدريب لمس الساعد»"
+    },
+    "drillAnatomy": {
+      "anatomy": false,
+      "drill": true,
+      "status": "أغلق تمرين الساعد قبل عرض التشريح"
+    },
+    "drillHeld": {
+      "gripped": true,
+      "aMovedM": 0,
+      "statusDuringA": "أفلِت ما في يدك لتمشي حول السرير",
+      "otherSideMovedM": 0,
+      "otherSideStatus": "أفلِت ما في يدك لتمشي حول السرير"
+    },
+    "drillClosed": {
+      "drill": false,
+      "status": "انقر عند الرسغ أو المرفق وحرّك الإيد. انقر مرة ثانية للإفلات"
+    },
+    "busyClick": {
+      "moving": true,
+      "status": "انتظر حتى تنتهي الحركة"
+    },
+    "toolHeld": {
+      "dMovedM": 0,
+      "statusDuringD": "أفلِت ما في يدك لتتحرك",
+      "headMovedM": 0,
+      "headStatus": "أفلِت ما في يدك لتتحرك"
+    },
+    "toolHeldRoomView": {
+      "mode": true,
+      "grip": "tool",
+      "status": "أفلِت ما في يدك قبل معاينة الغرفة"
+    },
+    "scopeArrival": {
+      "status": "وجّه طرف الأداة نحو حلقة فتحة التدريب ثم أدخلها",
+      "depthState": "وجّه طرف الأداة نحو حلقة فتحة التدريب"
+    },
+    "standBack": {
+      "cameraX": 1.01,
+      "percentBefore": 0,
+      "aligned": false,
+      "depthState": "خارج مدى اليد · اقترب من السرير",
+      "approachLimitStatus": "لا تستطيع الابتعاد أكثر من هنا",
+      "percentAfterWheel": 0,
+      "statusAfterWheel": "خارج مدى اليد · اقترب من السرير",
+      "insertDisabled": true
+    },
+    "inPlace": {
+      "cameraX": 0.68,
+      "percentAfterWheel": 49,
+      "status": "وجّه طرف الأداة نحو حلقة فتحة التدريب ثم أدخلها",
+      "depthState": "طرف الأداة بمحاذاة الفتحة التدريبية"
+    }
+  },
+  "errors": []
+}

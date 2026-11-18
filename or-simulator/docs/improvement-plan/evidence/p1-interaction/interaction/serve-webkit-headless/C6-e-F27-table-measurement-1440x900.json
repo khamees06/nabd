@@ -1,0 +1,235 @@
+{
+  "check": "C6-e-F27-table-measurement-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T16:26:30.865Z",
+  "result": {
+    "code": {
+      "deckY": 0.9,
+      "halfWidth": 0.47,
+      "halfLength": 1.06,
+      "patientRootY": 0.936,
+      "mattressTopY": 0.9
+    },
+    "measured": {
+      "pads": [
+        {
+          "name": "radiolucent_deck",
+          "topY": 0.8525,
+          "x": [
+            -0.31,
+            0.31
+          ],
+          "z": [
+            -1.01,
+            1.01
+          ]
+        },
+        {
+          "name": "head_pad",
+          "topY": 0.9525,
+          "x": [
+            -0.2525,
+            0.2525
+          ],
+          "z": [
+            -0.981,
+            -0.739
+          ]
+        },
+        {
+          "name": "back_pad",
+          "topY": 0.9525,
+          "x": [
+            -0.2825,
+            0.2825
+          ],
+          "z": [
+            -0.701,
+            -0.019
+          ]
+        },
+        {
+          "name": "seat_pad",
+          "topY": 0.9525,
+          "x": [
+            -0.2825,
+            0.2825
+          ],
+          "z": [
+            0.014,
+            0.386
+          ]
+        },
+        {
+          "name": "leg_L_pad",
+          "topY": 0.9525,
+          "x": [
+            -0.2725,
+            -0.0275
+          ],
+          "z": [
+            0.515,
+            0.885
+          ]
+        },
+        {
+          "name": "leg_R_pad",
+          "topY": 0.9525,
+          "x": [
+            0.0275,
+            0.2725
+          ],
+          "z": [
+            0.515,
+            0.885
+          ]
+        },
+        {
+          "name": "headrest_cushion",
+          "topY": 0.98,
+          "x": [
+            -0.215,
+            0.215
+          ],
+          "z": [
+            -1.14,
+            -0.92
+          ]
+        },
+        {
+          "name": "headrest_top",
+          "topY": 1.0075,
+          "x": [
+            -0.2,
+            0.2
+          ],
+          "z": [
+            -1.125,
+            -0.935
+          ]
+        },
+        {
+          "name": "L_armboard_pad",
+          "topY": 0.9325,
+          "x": [
+            -0.601,
+            -0.356
+          ],
+          "z": [
+            -0.705,
+            -0.235
+          ]
+        },
+        {
+          "name": "L_armboard_top",
+          "topY": 0.951,
+          "x": [
+            -0.591,
+            -0.366
+          ],
+          "z": [
+            -0.6925,
+            -0.2475
+          ]
+        },
+        {
+          "name": "R_armboard_pad",
+          "topY": 0.9325,
+          "x": [
+            0.356,
+            0.601
+          ],
+          "z": [
+            -0.705,
+            -0.235
+          ]
+        },
+        {
+          "name": "R_armboard_top",
+          "topY": 0.951,
+          "x": [
+            0.366,
+            0.591
+          ],
+          "z": [
+            -0.6925,
+            -0.2475
+          ]
+        }
+      ],
+      "cells": 17139,
+      "vertices": 70278,
+      "below0": 3063,
+      "below2mm": 2860,
+      "byPad": {
+        "back_pad": {
+          "vertices": 1540,
+          "maxDepthM": 0.0388
+        },
+        "head_pad": {
+          "vertices": 6,
+          "maxDepthM": 0.0042
+        },
+        "seat_pad": {
+          "vertices": 732,
+          "maxDepthM": 0.0478
+        },
+        "leg_R_pad": {
+          "vertices": 292,
+          "maxDepthM": 0.0518
+        },
+        "leg_L_pad": {
+          "vertices": 290,
+          "maxDepthM": 0.0518
+        }
+      },
+      "deepest": {
+        "depth": 0.0518,
+        "at": [
+          -0.1561,
+          0.9007,
+          0.584
+        ],
+        "pad": "leg_L_pad",
+        "padTopY": 0.9525
+      },
+      "lowestOverBackPadY": 0.9137,
+      "skinMinY": 0.9007,
+      "offPadVerticesBelow099": 0,
+      "offPadLowestY": null,
+      "maxAbsXBelow1m": 0.3269,
+      "tableTopY": 0.9
+    },
+    "qaBounds": {
+      "min": [
+        -0.3269298914633579,
+        0.9006899943898729,
+        -0.8051173115668443
+      ],
+      "max": [
+        0.32692981020580997,
+        1.171022551197591,
+        1.01228739780006
+      ]
+    },
+    "qaDeck": 0.9,
+    "summary": {
+      "backPadTopY": 0.9525,
+      "backPadHalfWidth": 0.2825,
+      "deckTopY": 0.8525,
+      "deckHalfWidth": 0.31,
+      "deckHalfLength": 1.01,
+      "padTopAboveCodeDeckM": 0.0525,
+      "codeHalfWidthMinusPadM": 0.1875,
+      "patientBackOverPadM": -0.0388
+    }
+  },
+  "errors": []
+}

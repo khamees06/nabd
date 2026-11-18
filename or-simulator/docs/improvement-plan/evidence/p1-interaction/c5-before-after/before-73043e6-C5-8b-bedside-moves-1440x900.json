@@ -1,0 +1,142 @@
+{
+  "check": "C5-8b-bedside-moves-1440x900",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T13:58:35.967Z",
+  "result": {
+    "stepHead": {
+      "frames": 11,
+      "maxYawDeg": 0,
+      "maxTurnDeg": 0,
+      "maxStepM": 0.18,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 1,
+      "turningFrames": 0,
+      "fovFrames": 0,
+      "yawAtMs": null,
+      "stepAtMs": 35,
+      "totalStepM": 0.18,
+      "totalYawDeg": 0,
+      "fov": [
+        62,
+        62
+      ],
+      "durationMs": 742
+    },
+    "stepNear1": {
+      "frames": 11,
+      "maxYawDeg": 0,
+      "maxTurnDeg": 0,
+      "maxStepM": 0.085,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 1,
+      "turningFrames": 0,
+      "fovFrames": 0,
+      "yawAtMs": null,
+      "stepAtMs": 23,
+      "totalStepM": 0.085,
+      "totalYawDeg": 0,
+      "fov": [
+        62,
+        62
+      ],
+      "durationMs": 711
+    },
+    "stepNear2": {
+      "frames": 11,
+      "maxYawDeg": 0,
+      "maxTurnDeg": 0,
+      "maxStepM": 0,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 0,
+      "turningFrames": 0,
+      "fovFrames": 0,
+      "yawAtMs": null,
+      "stepAtMs": null,
+      "totalStepM": 0,
+      "totalYawDeg": 0,
+      "fov": [
+        62,
+        62
+      ],
+      "durationMs": 717,
+      "status": "واقف بجانب المريض"
+    },
+    "recentre": {
+      "frames": 11,
+      "maxYawDeg": 44.49,
+      "maxTurnDeg": 44.49,
+      "maxStepM": 0.1991,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 1,
+      "turningFrames": 1,
+      "fovFrames": 0,
+      "yawAtMs": 31,
+      "stepAtMs": 31,
+      "totalStepM": 0.1991,
+      "totalYawDeg": -44.49,
+      "fov": [
+        62,
+        62
+      ],
+      "durationMs": 703,
+      "positionError": 0,
+      "yawDeg": 90
+    },
+    "stepRecentre": {
+      "frames": 11,
+      "maxYawDeg": 31.8,
+      "maxTurnDeg": 32.05,
+      "maxStepM": 0.2976,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 1,
+      "turningFrames": 1,
+      "fovFrames": 0,
+      "yawAtMs": 27,
+      "stepAtMs": 27,
+      "totalStepM": 0.2976,
+      "totalYawDeg": 31.8,
+      "fov": [
+        62,
+        62
+      ],
+      "durationMs": 742,
+      "positionError": 0.1188,
+      "yawErrorDeg": -2.73,
+      "status": "واقف بجانب المريض"
+    },
+    "room": {
+      "frames": 9,
+      "maxYawDeg": 90,
+      "maxTurnDeg": 92.95,
+      "maxStepM": 4.1555,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 1,
+      "turningFrames": 1,
+      "fovFrames": 0,
+      "yawAtMs": 32,
+      "stepAtMs": 32,
+      "totalStepM": 4.1555,
+      "totalYawDeg": -90,
+      "fov": [
+        62,
+        62
+      ],
+      "durationMs": 645,
+      "mode": false
+    }
+  },
+  "errors": []
+}

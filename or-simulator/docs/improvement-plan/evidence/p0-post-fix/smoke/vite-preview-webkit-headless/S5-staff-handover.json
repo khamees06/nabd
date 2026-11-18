@@ -1,0 +1,28 @@
+{
+  "flow": "S5-staff-handover",
+  "server": "vite-preview",
+  "project": "webkit",
+  "mode": "headless",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-14T17:47:25.440Z",
+  "attempt": 1,
+  "webglContextLostMessages": 0,
+  "source": "staff",
+  "phase": "pickup",
+  "offeredWithin10s": true,
+  "crew": {
+    "mode": "offered",
+    "offer": 0.9994497842038208,
+    "toolVisible": true,
+    "offeredPoint": [
+      0.24490078681173064,
+      1.1750248717029272,
+      0.21820208365530458
+    ]
+  },
+  "instruction": "انقر على مقبض الأداة بإيد المشرف.",
+  "M11": 0,
+  "errors": [],
+  "note": "Handover observed up to the offer only (the pickup from the supervisor hand is exercised in S4 with the tray source)."
+}

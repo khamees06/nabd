@@ -1,0 +1,255 @@
+{
+  "flow": "S1-boot",
+  "server": "serve",
+  "project": "webkit",
+  "mode": true,
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-17T16:26:37.436Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "readyMs": 2767,
+  "ui": {
+    "forearmEnabled": true,
+    "anatomyEnabled": true,
+    "trainingToolEnabled": true,
+    "modelStatus": "المجسم جاهز",
+    "qaKeys": [
+      "getTargets",
+      "getAssetStatus",
+      "getSimulationState",
+      "getScopePixels",
+      "getState",
+      "getCamera",
+      "workMoving",
+      "getJoints",
+      "setPose"
+    ],
+    "nabdSimulationKeys": [
+      "getState",
+      "getEvents",
+      "exportEvents",
+      "clear"
+    ],
+    "webgl": "Apple GPU",
+    "reducedMotion": false,
+    "devicePixelRatio": 1,
+    "userAgent": "Mozilla/5.0 (Macintosh; Intel Mac OS X 10_15_7) AppleWebKit/605.1.15 (KHTML, like Gecko) Version/27.2 Safari/605.1.15"
+  },
+  "supervisorVisible": true,
+  "handsVisible": true,
+  "assetStatus": {
+    "operatingTable": true,
+    "surgicalLightsAndPendant": true,
+    "anesthesiaWorkstation": true
+  },
+  "counters": {
+    "raw": {
+      "fps": "FPS 44",
+      "frame": "Frame 33 ms",
+      "draw": "Draw 1206",
+      "triangles": "Triangles 387,848",
+      "assets": "Geo 1126 · Tex 17",
+      "events": "Events 0"
+    },
+    "drawCalls": 1206,
+    "triangles": 387848,
+    "overlayFps": 44
+  },
+  "camera": {
+    "getCamera": [
+      0.735,
+      1.6,
+      0.15
+    ],
+    "cameraRotation": [
+      -0.6,
+      1.5707963267948966,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 62,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "منظور المتدرّب"
+  },
+  "network": {
+    "modules": {
+      "count": 21,
+      "allOk": true,
+      "list": [
+        {
+          "path": "/src/engine.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/app/NabdRuntime.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/interaction/ForearmContact.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/instruments/InstrumentKinematics.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/core/WorkstationNavigation.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/patient/AbdomenSurface.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/interaction/BedsideInteraction.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/staff/CrewController.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/patient/InternalAnatomy.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/ui/MonitorUI.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/instruments/EndoscopeFeed.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/core/SceneManager.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/core/EventBus.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/simulation/SimulationManager.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/ui/DiagnosticsPanel.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/interaction/hold-gate.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/interaction/ForearmGrip.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/interaction/target-filter.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/instruments/InstrumentConfig.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/core/PerformanceMonitor.js",
+          "status": 200,
+          "type": "script"
+        },
+        {
+          "path": "/src/simulation/EventLogger.js",
+          "status": 200,
+          "type": "script"
+        }
+      ]
+    },
+    "glbs": {
+      "count": 9,
+      "allOk": true,
+      "list": [
+        {
+          "path": "/assets/operating-table/base.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/operating-table/top.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/surgical-system/light-pendant-system.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/anesthesia/workstation.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/staff/glove-left.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/staff/glove-right.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/staff/supervisor.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/patient/patient.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/anatomy/internal-atlas.glb",
+          "status": 200,
+          "type": "fetch"
+        }
+      ]
+    },
+    "rapier": [
+      {
+        "path": "/vendor/rapier/rapier.mjs",
+        "status": 200,
+        "type": "script"
+      }
+    ],
+    "notOk": [],
+    "failed": [],
+    "foreignOrigin": [],
+    "totalResponses": 42
+  },
+  "M11": 0,
+  "errors": [],
+  "warnings": []
+}

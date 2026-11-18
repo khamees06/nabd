@@ -1,0 +1,28 @@
+{
+  "flow": "S5-scope",
+  "server": "serve",
+  "project": "webkit",
+  "mode": "headless",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-14T17:09:55.785Z",
+  "attempt": 1,
+  "webglContextLostMessages": 0,
+  "tool": "scope",
+  "selected": "scope",
+  "source": "tray",
+  "crew": {
+    "toolVisible": true,
+    "mode": "tray",
+    "toolPosition": [
+      0.5,
+      1.13,
+      0.49
+    ]
+  },
+  "M11": 0,
+  "nanErrors": 0,
+  "errors": [],
+  "knownF19": false,
+  "screenshot": "S5-scope-tray.jpg"
+}

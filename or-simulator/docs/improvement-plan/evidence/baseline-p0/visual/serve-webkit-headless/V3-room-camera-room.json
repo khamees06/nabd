@@ -1,0 +1,44 @@
+{
+  "flow": "V3-room-camera-room",
+  "server": "serve",
+  "project": "webkit",
+  "mode": "headless",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-14T15:27:02.238Z",
+  "attempt": 1,
+  "webglContextLostMessages": 0,
+  "camera": {
+    "getCamera": [
+      0,
+      1.5999999999999996,
+      4.24
+    ],
+    "cameraRotation": [
+      -0.14267044965491407,
+      0,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 62,
+    "mode": false,
+    "workMoving": false,
+    "detailView": "من مدخل الغرفة",
+    "cameraLabel": "من مدخل الغرفة"
+  },
+  "counters": {
+    "raw": {
+      "fps": "FPS 36",
+      "frame": "Frame 49 ms",
+      "draw": "Draw 1528",
+      "triangles": "Triangles 462,240",
+      "assets": "Geo 1359 · Tex 19",
+      "events": "Events 0"
+    },
+    "drawCalls": 1528,
+    "triangles": 462240,
+    "overlayFps": 36
+  },
+  "screenshot": "V3-room-camera-room.jpg",
+  "settleMs": 2000
+}

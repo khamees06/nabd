@@ -1,0 +1,265 @@
+{
+  "check": "C4-11b-free-carry-work-area-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-14T23:54:42.953Z",
+  "result": {
+    "attachMs": 483,
+    "entry": {
+      "frames": 90,
+      "toolMaxTurnDeg": 0.01,
+      "toolMaxStepM": 0.025,
+      "handMaxTurnDeg": 0.01,
+      "handMaxStepM": 0.025,
+      "camMaxTurnDeg": 26.78,
+      "camMaxStepM": 0.4562,
+      "toolTurnAtMs": 136,
+      "toolStepAtMs": 695,
+      "maxShaftCamZ": -0.7802,
+      "maxToolCamZ": -0.1999,
+      "camStep": {
+        "atMs": 126,
+        "dtMs": 104.2,
+        "from": [
+          -0.29,
+          -0.018,
+          -0.647
+        ],
+        "to": [
+          -0.399,
+          -0.252,
+          -0.271
+        ],
+        "cameraMovedM": 0.27,
+        "cameraTurnDeg": 26.8
+      },
+      "toolTotalTurnDeg": 0,
+      "toolTravelM": 0.7741
+    },
+    "near": {
+      "carry": {
+        "shaftCam": [
+          0,
+          0.549,
+          -0.836
+        ],
+        "toolCam": [
+          0.13,
+          -0.18,
+          -0.38
+        ]
+      },
+      "sweep": {
+        "maxMoveM": 0,
+        "minTipClearanceM": null,
+        "maxGlovePenetrationM": 0,
+        "points": [
+          {
+            "u": 0.3,
+            "v": 0.5,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.7,
+            "v": 0.5,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.5,
+            "v": 0.3,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.5,
+            "v": 0.62,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          }
+        ]
+      },
+      "status": "انقر لتلامس البطن بأصابع مبسوطة. انقر مرة ثانية للإفلات",
+      "cameraX": 0.76
+    },
+    "walk": {
+      "frames": 393,
+      "toolMaxTurnDeg": 0,
+      "toolMaxStepM": 0.025,
+      "handMaxTurnDeg": 0,
+      "handMaxStepM": 0.025,
+      "camMaxTurnDeg": 176.3,
+      "camMaxStepM": 1.0737,
+      "toolTurnAtMs": null,
+      "toolStepAtMs": 787,
+      "maxShaftCamZ": 0.8693,
+      "maxToolCamZ": -0.0117,
+      "camStep": {
+        "atMs": 2978,
+        "dtMs": 22.9,
+        "from": [
+          0.496,
+          -0.188,
+          -0.367
+        ],
+        "to": [
+          -0.494,
+          -0.405,
+          -0.013
+        ],
+        "cameraMovedM": 0.018,
+        "cameraTurnDeg": 180
+      },
+      "toolTotalTurnDeg": 0,
+      "toolTravelM": 1.0915
+    },
+    "far": {
+      "carry": {
+        "shaftCam": [
+          0,
+          -0.494,
+          0.869
+        ],
+        "toolCam": [
+          0.13,
+          -0.18,
+          -0.38
+        ]
+      },
+      "sweep": {
+        "maxMoveM": 0,
+        "minTipClearanceM": null,
+        "maxGlovePenetrationM": 0,
+        "points": [
+          {
+            "u": 0.3,
+            "v": 0.5,
+            "tool": [
+              -0.519,
+              1.256,
+              -0.023
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.7,
+            "v": 0.5,
+            "tool": [
+              -0.519,
+              1.256,
+              -0.023
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.5,
+            "v": 0.3,
+            "tool": [
+              -0.519,
+              1.256,
+              -0.023
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.5,
+            "v": 0.62,
+            "tool": [
+              -0.519,
+              1.256,
+              -0.023
+            ],
+            "glovePenetrationM": 0
+          }
+        ]
+      },
+      "cameraX": -0.76
+    },
+    "needleHolder": {
+      "attachMs": 475,
+      "carry": {
+        "shaftCam": [
+          0,
+          0.549,
+          -0.836
+        ],
+        "toolCam": [
+          0.13,
+          -0.18,
+          -0.38
+        ]
+      },
+      "sweep": {
+        "maxMoveM": 0,
+        "minTipClearanceM": null,
+        "maxGlovePenetrationM": 0,
+        "points": [
+          {
+            "u": 0.3,
+            "v": 0.5,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.7,
+            "v": 0.5,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.5,
+            "v": 0.3,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          },
+          {
+            "u": 0.5,
+            "v": 0.62,
+            "tool": [
+              0.541,
+              1.241,
+              -0.283
+            ],
+            "glovePenetrationM": 0
+          }
+        ]
+      }
+    }
+  },
+  "errors": []
+}

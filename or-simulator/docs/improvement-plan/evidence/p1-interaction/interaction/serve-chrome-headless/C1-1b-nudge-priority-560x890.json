@@ -1,0 +1,19 @@
+{
+  "check": "C1-1b-nudge-priority-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:09:42.329Z",
+  "result": {
+    "arrowYawDeg": 0,
+    "toolMovedM": 0.10202009684291911,
+    "buttonYawDeg": 15.000000000000021,
+    "grip": "tool"
+  },
+  "errors": []
+}

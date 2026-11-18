@@ -1,0 +1,117 @@
+{
+  "check": "C1-4-look-not-cut-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:54:54.000Z",
+  "result": {
+    "animatingAfterStart": false,
+    "trainingStart": {
+      "yawDeg": -44.42033253926314,
+      "headPulledBackDeg": 0,
+      "walkedM": 0.11884864324004711,
+      "phase": "monitor"
+    },
+    "contextMenu": [
+      {
+        "target": "CANVAS",
+        "prevented": true
+      }
+    ],
+    "contextMenuLater": [
+      {
+        "target": "SPAN",
+        "prevented": false
+      }
+    ],
+    "slowDrag": {
+      "pressedReach": {
+        "left": null,
+        "right": [
+          0.05502812097201659,
+          1.1365553265093509,
+          -0.1529999999999997
+        ]
+      },
+      "grip": null,
+      "reachPendingAtStart": true,
+      "afterDrag": {
+        "grip": "press",
+        "reach": {
+          "left": null,
+          "right": [
+            0.05502812097201659,
+            1.1365553265093509,
+            -0.1529999999999997
+          ]
+        }
+      },
+      "reachTimedOutDuringDrag": false,
+      "yawDeg": 87.59378771960034,
+      "expectedDeg": 87.59378771960024,
+      "samples": [
+        {
+          "k": 5,
+          "yawDeg": 8.94,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 10,
+          "yawDeg": 17.65,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 15,
+          "yawDeg": 26.37,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 20,
+          "yawDeg": 35.08,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 25,
+          "yawDeg": 43.8,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 30,
+          "yawDeg": 52.74,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 35,
+          "yawDeg": 61.45,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 40,
+          "yawDeg": 70.16,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 45,
+          "yawDeg": 78.88,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        },
+        {
+          "k": 50,
+          "yawDeg": 87.59,
+          "status": "جسّ خفيف · الأصابع لامست السطح"
+        }
+      ]
+    },
+    "lookWhileWalking": {
+      "moving": true,
+      "yawDeg": -41.122685128439265,
+      "stillMoving": true
+    }
+  },
+  "errors": []
+}

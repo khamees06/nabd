@@ -1,0 +1,248 @@
+{
+  "check": "C3-9a-drill-grips-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:15:08.430Z",
+  "result": {
+    "clicks": 14,
+    "gripped": 14,
+    "gripMs": {
+      "min": 287,
+      "max": 352
+    },
+    "minGripNormalY": 0.6,
+    "attempts": [
+      {
+        "label": "before «اقترب»",
+        "offsetPx": [
+          0,
+          0
+        ],
+        "outcome": "gripped",
+        "ms": 288,
+        "gripNormal": [
+          0.38,
+          0.6,
+          -0.704
+        ],
+        "padGapM": 0.0087,
+        "sweepStops": 6
+      },
+      {
+        "label": "after «اقترب» 1",
+        "offsetPx": [
+          0,
+          0
+        ],
+        "outcome": "gripped",
+        "ms": 287,
+        "gripNormal": [
+          0.344,
+          0.6,
+          -0.722
+        ],
+        "padGapM": 0.0072,
+        "sweepStops": 14
+      },
+      {
+        "label": "after «اقترب» 2",
+        "offsetPx": [
+          0,
+          -5
+        ],
+        "outcome": "gripped",
+        "ms": 295,
+        "gripNormal": [
+          0.027,
+          0.6,
+          -0.8
+        ],
+        "padGapM": 0.0145,
+        "sweepStops": 22
+      },
+      {
+        "label": "after «اقترب» 3",
+        "offsetPx": [
+          5,
+          0
+        ],
+        "outcome": "gripped",
+        "ms": 330,
+        "gripNormal": [
+          0.353,
+          0.6,
+          -0.718
+        ],
+        "padGapM": 0.0081,
+        "sweepStops": 29
+      },
+      {
+        "label": "after «اقترب» 4",
+        "offsetPx": [
+          -5,
+          0
+        ],
+        "outcome": "gripped",
+        "ms": 352,
+        "gripNormal": [
+          0.363,
+          0.6,
+          -0.713
+        ],
+        "padGapM": 0.0054,
+        "sweepStops": 38
+      },
+      {
+        "label": "after «اقترب» 5",
+        "offsetPx": [
+          0,
+          5
+        ],
+        "outcome": "gripped",
+        "ms": 337,
+        "gripNormal": [
+          0.536,
+          0.6,
+          -0.594
+        ],
+        "padGapM": 0.002,
+        "sweepStops": 46
+      },
+      {
+        "label": "after «اقترب» 6",
+        "offsetPx": [
+          4,
+          4
+        ],
+        "outcome": "gripped",
+        "ms": 289,
+        "gripNormal": [
+          0.497,
+          0.6,
+          -0.627
+        ],
+        "padGapM": 0.0043,
+        "sweepStops": 53
+      },
+      {
+        "label": "after «اقترب» 7",
+        "offsetPx": [
+          -4,
+          -4
+        ],
+        "outcome": "gripped",
+        "ms": 339,
+        "gripNormal": [
+          0.148,
+          0.6,
+          -0.786
+        ],
+        "padGapM": 0.0111,
+        "sweepStops": 61
+      },
+      {
+        "label": "after «اقترب» 8",
+        "offsetPx": [
+          4,
+          -4
+        ],
+        "outcome": "gripped",
+        "ms": 331,
+        "gripNormal": [
+          0.115,
+          0.6,
+          -0.792
+        ],
+        "padGapM": 0.0131,
+        "sweepStops": 69
+      },
+      {
+        "label": "after «اقترب» 9",
+        "offsetPx": [
+          -4,
+          4
+        ],
+        "outcome": "gripped",
+        "ms": 337,
+        "gripNormal": [
+          0.512,
+          0.6,
+          -0.615
+        ],
+        "padGapM": 0.0016,
+        "sweepStops": 76
+      },
+      {
+        "label": "after «اقترب» 10",
+        "offsetPx": [
+          0,
+          -9
+        ],
+        "outcome": "gripped",
+        "ms": 350,
+        "gripNormal": [
+          -0.483,
+          0.6,
+          -0.638
+        ],
+        "padGapM": null,
+        "sweepStops": 86
+      },
+      {
+        "label": "after «اقترب» 11",
+        "offsetPx": [
+          9,
+          0
+        ],
+        "outcome": "gripped",
+        "ms": 297,
+        "gripNormal": [
+          0.36,
+          0.6,
+          -0.715
+        ],
+        "padGapM": 0.009,
+        "sweepStops": 94
+      },
+      {
+        "label": "after «اقترب» 12",
+        "offsetPx": [
+          -9,
+          0
+        ],
+        "outcome": "gripped",
+        "ms": 295,
+        "gripNormal": [
+          0.4,
+          0.6,
+          -0.693
+        ],
+        "padGapM": 0.0045,
+        "sweepStops": 101
+      },
+      {
+        "label": "after «اقترب» 13",
+        "offsetPx": [
+          0,
+          9
+        ],
+        "outcome": "gripped",
+        "ms": 293,
+        "gripNormal": [
+          0.65,
+          0.6,
+          -0.467
+        ],
+        "padGapM": 0.0072,
+        "sweepStops": 108
+      }
+    ]
+  },
+  "errors": []
+}

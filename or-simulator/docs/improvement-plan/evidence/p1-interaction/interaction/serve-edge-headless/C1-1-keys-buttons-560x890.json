@@ -1,0 +1,103 @@
+{
+  "check": "C1-1-keys-buttons-560x890",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:34:04.227Z",
+  "result": {
+    "freeHandle": {
+      "handle": {
+        "x": 33.67295036977263,
+        "y": 515.9023263386564
+      },
+      "topElement": "CANVAS"
+    },
+    "free": {
+      "leftYawDeg": 63.75600000000019,
+      "leftMovedM": 0,
+      "rightYawDeg": -63.090000000000174,
+      "rightMovedM": 0
+    },
+    "pitch": {
+      "upRad": 0.42,
+      "downRad": -1.28
+    },
+    "walkD": {
+      "movedM": 0.38045700000000093,
+      "yawDeg": 0
+    },
+    "leftButtonClickDeg": 15.000000000000037,
+    "rightButtonHold1sDeg": -89.991,
+    "overlay": {
+      "canvas": {
+        "left": 11,
+        "top": 71,
+        "right": 549,
+        "bottom": 591,
+        "width": 538,
+        "height": 520,
+        "visible": true
+      },
+      "overlay": {
+        "left": 19,
+        "top": 543,
+        "right": 395.78125,
+        "bottom": 583,
+        "width": 376.78125,
+        "height": 40,
+        "visible": true
+      },
+      "lookButton": {
+        "left": 274.46875,
+        "top": 548,
+        "right": 334.828125,
+        "bottom": 578,
+        "width": 60.359375,
+        "height": 30,
+        "visible": true
+      },
+      "innerHeight": 890
+    },
+    "overlayInsideCanvas": true,
+    "hint": "اسحب بالزر الأيمن أو ←/→ للالتفات · L لتغيير النظر",
+    "step1": {
+      "leftYawDeg": 63.73800000000024,
+      "leftMovedM": 0,
+      "rightYawDeg": -63.72900000000002,
+      "rightMovedM": 0
+    },
+    "drill": {
+      "leftYawDeg": 63.73800000000027,
+      "leftMovedM": 0,
+      "rightYawDeg": -63.73799999999992,
+      "rightMovedM": 0
+    },
+    "drillOverlay": {
+      "overlay": {
+        "left": 19,
+        "top": 543,
+        "right": 395.78125,
+        "bottom": 583,
+        "width": 376.78125,
+        "height": 40,
+        "visible": true
+      },
+      "canvas": {
+        "left": 11,
+        "top": 71,
+        "right": 549,
+        "bottom": 591,
+        "width": 538,
+        "height": 520,
+        "visible": true
+      },
+      "onScreen": true
+    }
+  },
+  "errors": []
+}

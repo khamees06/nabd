@@ -1,0 +1,33 @@
+{
+  "flow": "S5-needleHolder",
+  "server": "vite-preview",
+  "project": "chrome",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "capturedAt": "2026-11-14T15:33:41.359Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "tool": "needleHolder",
+  "selected": "needleHolder",
+  "source": "tray",
+  "crew": {
+    "toolVisible": true,
+    "mode": "tray",
+    "toolPosition": [
+      0.5,
+      1.13,
+      0.49
+    ]
+  },
+  "M11": 4,
+  "nanErrors": 4,
+  "errors": [
+    "console.error: THREE.BufferGeometry.computeBoundingSphere(): Computed radius is NaN. The \"position\" attribute is likely to have NaN values. Hd",
+    "console.error: THREE.BufferGeometry.computeBoundingSphere(): Computed radius is NaN. The \"position\" attribute is likely to have NaN values. Hd",
+    "console.error: THREE.BufferGeometry.computeBoundingSphere(): Computed radius is NaN. The \"position\" attribute is likely to have NaN values. Hd",
+    "console.error: THREE.BufferGeometry.computeBoundingSphere(): Computed radius is NaN. The \"position\" attribute is likely to have NaN values. Hd"
+  ],
+  "knownF19": true,
+  "screenshot": "S5-needleHolder-tray.jpg"
+}

@@ -1,0 +1,20 @@
+{
+  "check": "C6-c-rapier-licence-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T16:26:24.818Z",
+  "result": {
+    "found": true,
+    "bullet": "- Rapier 0.21.0 physics engine (collision queries in the forearm drill), Copyright 2020 Dimforge EURL — Apache License 2.0. See `vendor/rapier/LICENSE`; the full text follows below.",
+    "apacheText": true,
+    "dimforge": true,
+    "licenseFile": 200
+  },
+  "errors": []
+}

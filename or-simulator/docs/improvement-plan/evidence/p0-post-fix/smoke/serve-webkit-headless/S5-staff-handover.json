@@ -1,0 +1,28 @@
+{
+  "flow": "S5-staff-handover",
+  "server": "serve",
+  "project": "webkit",
+  "mode": "headless",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-14T17:11:18.866Z",
+  "attempt": 1,
+  "webglContextLostMessages": 0,
+  "source": "staff",
+  "phase": "pickup",
+  "offeredWithin10s": true,
+  "crew": {
+    "mode": "offered",
+    "offer": 0.9994956297819868,
+    "toolVisible": true,
+    "offeredPoint": [
+      0.24492822771064518,
+      1.1750345836222764,
+      0.21819936975150767
+    ]
+  },
+  "instruction": "انقر على مقبض الأداة بإيد المشرف.",
+  "M11": 0,
+  "errors": [],
+  "note": "Handover observed up to the offer only (the pickup from the supervisor hand is exercised in S4 with the tray source)."
+}

@@ -1,0 +1,103 @@
+{
+  "check": "C2-6-human-speed-1440x900",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:36:45.216Z",
+  "result": {
+    "tray": {
+      "pickMs": 667,
+      "pick": {
+        "frames": 70,
+        "maxTurnDeg": 5.83,
+        "turnAtMs": 327,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 327,
+          "dtMs": 58.7,
+          "dyM": -0.0013
+        },
+        "minFingersForward": -0.005,
+        "renderIntervalP50Ms": 19.6
+      },
+      "release": {
+        "frames": 52,
+        "maxTurnDeg": 5.82,
+        "turnAtMs": 42,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 146,
+          "dtMs": 22.6,
+          "dyM": -0.0047
+        },
+        "minFingersForward": 0.974,
+        "renderIntervalP50Ms": 19.7
+      },
+      "render": {
+        "frames": 373,
+        "fps": 125.3,
+        "p50Ms": 6.9,
+        "p95Ms": 16.1,
+        "maxMs": 62.4
+      }
+    },
+    "idle": {
+      "frames": 182,
+      "walkedM": 0.941,
+      "turnedDeg": 53.1,
+      "driftM": {
+        "left": 0,
+        "right": 0.00003
+      },
+      "render": {
+        "frames": 251,
+        "fps": 93,
+        "p50Ms": 8.6,
+        "p95Ms": 29.3,
+        "maxMs": 51.9
+      }
+    },
+    "abdomen": {
+      "attachMs": 313,
+      "click": {
+        "frames": 34,
+        "maxTurnDeg": 5.83,
+        "turnAtMs": 9,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 46,
+          "dtMs": 23.5,
+          "dyM": 0.0018
+        },
+        "minFingersForward": 0.975,
+        "renderIntervalP50Ms": 19.6
+      },
+      "release": {
+        "frames": 42,
+        "maxTurnDeg": 3.81,
+        "turnAtMs": 23,
+        "maxStepM": 0.025,
+        "maxStep": {
+          "atMs": 111,
+          "dtMs": 10.6,
+          "dyM": -0.0093
+        },
+        "minFingersForward": 0.975,
+        "renderIntervalP50Ms": 12.6
+      },
+      "render": {
+        "frames": 160,
+        "fps": 100.4,
+        "p50Ms": 8,
+        "p95Ms": 26.4,
+        "maxMs": 55.7
+      }
+    }
+  },
+  "errors": []
+}

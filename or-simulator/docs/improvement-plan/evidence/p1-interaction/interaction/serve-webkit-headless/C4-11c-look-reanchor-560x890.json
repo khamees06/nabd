@@ -1,0 +1,110 @@
+{
+  "check": "C4-11c-look-reanchor-560x890",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T16:17:15.150Z",
+  "result": {
+    "attachMs": 689,
+    "look": {
+      "yawDeg": 49.16,
+      "paused": true,
+      "toolMovedDuringLookM": 0,
+      "resumeJumpM": 0,
+      "resume": {
+        "frames": 31,
+        "toolMaxTurnDeg": 5.83,
+        "toolMaxStepM": 0,
+        "handMaxTurnDeg": 5.83,
+        "handMaxStepM": 0.0088,
+        "camMaxTurnDeg": 5.83,
+        "camMaxStepM": 0,
+        "toolTurnAtMs": 47,
+        "toolStepAtMs": 47,
+        "maxShaftCamZ": -0.6004,
+        "maxToolCamZ": -0.4504,
+        "camStep": {
+          "atMs": 47,
+          "dtMs": 28,
+          "from": [
+            0.353,
+            -0.122,
+            -0.45
+          ],
+          "to": [
+            0.353,
+            -0.122,
+            -0.45
+          ],
+          "cameraMovedM": 0,
+          "cameraTurnDeg": 0
+        },
+        "toolTotalTurnDeg": 43.3,
+        "toolTravelM": 0
+      },
+      "move": {
+        "frames": 39,
+        "toolMaxTurnDeg": 0,
+        "toolMaxStepM": 0.009,
+        "handMaxTurnDeg": 0,
+        "handMaxStepM": 0.009,
+        "camMaxTurnDeg": 0,
+        "camMaxStepM": 0.009,
+        "toolTurnAtMs": 46,
+        "toolStepAtMs": 93,
+        "maxShaftCamZ": -0.8253,
+        "maxToolCamZ": -0.4186,
+        "camStep": {
+          "atMs": 93,
+          "dtMs": 30,
+          "from": [
+            0.364,
+            -0.129,
+            -0.44
+          ],
+          "to": [
+            0.37,
+            -0.133,
+            -0.434
+          ],
+          "cameraMovedM": 0,
+          "cameraTurnDeg": 0
+        },
+        "toolTotalTurnDeg": 0,
+        "toolTravelM": 0.0482
+      },
+      "moveTravelM": 0.0508,
+      "carryBefore": {
+        "shaftCam": [
+          0,
+          0.565,
+          -0.825
+        ],
+        "toolCam": [
+          0.002,
+          -0.03,
+          -0.584
+        ]
+      },
+      "carryAfter": {
+        "shaftCam": [
+          0,
+          0.565,
+          -0.825
+        ],
+        "toolCam": [
+          0.386,
+          -0.144,
+          -0.419
+        ]
+      },
+      "grip": "tool"
+    }
+  },
+  "errors": []
+}

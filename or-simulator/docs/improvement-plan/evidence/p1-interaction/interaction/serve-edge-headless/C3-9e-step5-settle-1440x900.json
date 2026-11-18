@@ -1,0 +1,104 @@
+{
+  "check": "C3-9e-step5-settle-1440x900",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:40:58.897Z",
+  "result": {
+    "firstLiftM": 0.0864,
+    "failedReturn": {
+      "settle": {
+        "frames": 302,
+        "startDistanceM": 0.0864,
+        "maxSpeedMs": 0.32,
+        "maxStepM": 0.0111,
+        "jointStepsM": [
+          0,
+          0.0068,
+          0.0111
+        ],
+        "within3mmMs": 542,
+        "fastest": {
+          "atMs": 28,
+          "dtMs": 6.7,
+          "stepM": 0.00215,
+          "toRestM": 0.082,
+          "around": [
+            [
+              7,
+              0
+            ],
+            [
+              13.9,
+              0
+            ],
+            [
+              21,
+              0.00228
+            ],
+            [
+              27.7,
+              0.00215
+            ],
+            [
+              34.7,
+              0.00224
+            ],
+            [
+              41.7,
+              0.00224
+            ]
+          ]
+        },
+        "midSteps": [
+          [
+            21,
+            0.0022,
+            0.0023
+          ],
+          [
+            76,
+            0.0063,
+            0.009
+          ],
+          [
+            111,
+            0.0068,
+            0.0111
+          ],
+          [
+            125,
+            0.0025,
+            0.0045
+          ],
+          [
+            160,
+            0.003,
+            0.0058
+          ]
+        ],
+        "distanceAt2sM": 0
+      },
+      "feedback": "ارفع الرسغ أول، بعدين رجّعه لمكانه قبل ما تفلّت.",
+      "phase": "wrist",
+      "retries": 1
+    },
+    "completed": {
+      "phase": "complete",
+      "results": [
+        "monitor",
+        "pickup",
+        "aim",
+        "deposit",
+        "wrist"
+      ],
+      "retries": 1
+    }
+  },
+  "errors": []
+}

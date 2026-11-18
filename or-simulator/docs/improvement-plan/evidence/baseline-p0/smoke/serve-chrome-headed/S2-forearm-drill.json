@@ -1,0 +1,199 @@
+{
+  "flow": "S2-forearm-drill",
+  "server": "serve",
+  "project": "chrome",
+  "mode": "headed",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "capturedAt": "2026-11-14T15:30:12.239Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "restWristY": 0.9827970622183444,
+  "statusOnEntry": "انقر على جلد الرسغ · حرّك لفوق لرفع الساعد · انقر ثانية للإفلات",
+  "cameraOnEntry": {
+    "getCamera": [
+      0.76,
+      1.6,
+      0.07486886198952614
+    ],
+    "cameraRotation": [
+      -0.9357447082467416,
+      1.5707963267948988,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 52,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "ذراع المريض اليسرى"
+  },
+  "entryForearm": {
+    "state": "idle",
+    "overlap": 0,
+    "stops": 0,
+    "supportGap": null,
+    "gap": null,
+    "contact": null
+  },
+  "entryRegion": "leftArm",
+  "preApproachClick": {
+    "outcome": "out of reach",
+    "outOfReachAfterMs": 3508,
+    "sequence": [
+      {
+        "ms": 299,
+        "status": "الإيد بتقرب من نقطة التلامس",
+        "forearmState": "approaching"
+      },
+      {
+        "ms": 3508,
+        "status": "خارج مدى الإيد · غيّر وقفتك أو اقترب",
+        "forearmState": "idle"
+      }
+    ]
+  },
+  "statusBeforeApproach": "خارج مدى الإيد · غيّر وقفتك أو اقترب",
+  "forearmBeforeApproach": {
+    "state": "idle",
+    "overlap": 0,
+    "stops": 151,
+    "supportGap": null,
+    "gap": null,
+    "contact": null
+  },
+  "cameraAfterApproach": {
+    "getCamera": [
+      0.705,
+      1.6,
+      0.07486886198952614
+    ],
+    "cameraRotation": [
+      -0.9959912090131557,
+      1.5707963267948992,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 52,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "ذراع المريض اليسرى"
+  },
+  "approachMovedM": 0.05500000000000005,
+  "gripAttempts": [
+    {
+      "attempt": 1,
+      "offsetPx": [
+        0,
+        0
+      ],
+      "outcome": "out of reach (hold timeout)",
+      "ms": 3424,
+      "glove": {
+        "left": [
+          0.6014624112173659,
+          1.0594179361937008,
+          0.2498688619895265
+        ],
+        "right": [
+          0.5210968309816192,
+          1.095906291581856,
+          0.003431441315299766
+        ]
+      }
+    },
+    {
+      "attempt": 2,
+      "offsetPx": [
+        0,
+        -6
+      ],
+      "outcome": "gripped",
+      "ms": 425,
+      "glove": {
+        "left": [
+          0.6014624112173658,
+          1.0594179361937006,
+          0.2498688619895265
+        ],
+        "right": [
+          0.4783237733189837,
+          1.0896586590177484,
+          0.05662281636053263
+        ]
+      }
+    }
+  ],
+  "statusGripped": "تم إمساك الطرف · حرّكه ضمن مداه",
+  "forearmGripped": {
+    "state": "gripped",
+    "overlap": 0,
+    "stops": 319,
+    "supportGap": null,
+    "gap": 0.007983577281968673,
+    "contact": [
+      0.3124740689925868,
+      1.0074569981975068,
+      0.07486887822568401
+    ]
+  },
+  "forearmLifted": {
+    "state": "gripped",
+    "overlap": 0,
+    "stops": 378,
+    "supportGap": null,
+    "gap": 0.007983577281969223,
+    "contact": [
+      0.31118229374258977,
+      1.116788008900229,
+      0.06996805296980362
+    ]
+  },
+  "liftedWristY": 1.0922431615411914,
+  "wristLiftM": 0.10944609932284699,
+  "grip": "wrist",
+  "crew": {
+    "handVisible": true,
+    "toolVisible": false,
+    "mode": "tray",
+    "offer": 0,
+    "toolSide": "right",
+    "toolPosition": [
+      0.5,
+      1.13,
+      0.49
+    ],
+    "offeredPoint": [
+      -1.7264410960450314,
+      0.9293315798148876,
+      0.4870577315566824
+    ],
+    "wrists": {
+      "left": [
+        0.6014624112173658,
+        1.0594179361937006,
+        0.2498688619895265
+      ],
+      "right": [
+        0.4709892357645261,
+        1.2006926737201031,
+        0.025046958332558884
+      ]
+    },
+    "contact": {
+      "left": null,
+      "right": 0.007983577281969223
+    },
+    "reach": {
+      "left": null,
+      "right": [
+        0.31118229374258977,
+        1.116788008900229,
+        0.06996805296980362
+      ]
+    }
+  },
+  "M11": 0,
+  "errors": []
+}

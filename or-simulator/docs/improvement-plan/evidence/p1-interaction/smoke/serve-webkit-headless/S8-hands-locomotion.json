@@ -1,0 +1,254 @@
+{
+  "flow": "S8-hands-locomotion",
+  "server": "serve",
+  "project": "webkit",
+  "mode": "headless",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-17T16:33:11.249Z",
+  "attempt": 1,
+  "webglContextLostMessages": 0,
+  "hands": {
+    "initial": {
+      "left": "false",
+      "right": "true"
+    },
+    "afterLeftButton": {
+      "buttons": {
+        "left": "true",
+        "right": "false"
+      },
+      "crew": {
+        "handVisible": true,
+        "toolVisible": true,
+        "mode": "tray",
+        "offer": 0,
+        "toolSide": "right",
+        "toolPosition": [
+          0.5,
+          1.13,
+          0.49
+        ],
+        "offeredPoint": [
+          -0.5764410960450315,
+          0.9293315798148876,
+          0.2970577315566823
+        ],
+        "wrists": {
+          "left": [
+            0.4309598283888364,
+            1.1411878662822286,
+            0.3250000000000001
+          ],
+          "right": [
+            0.4309598283888363,
+            1.1411878662822286,
+            -0.02499999999999991
+          ]
+        },
+        "contact": {
+          "left": null,
+          "right": null
+        },
+        "reach": {
+          "left": null,
+          "right": null
+        },
+        "reachNormal": {
+          "left": null,
+          "right": null
+        },
+        "forearmContact": {
+          "left": false,
+          "right": false
+        },
+        "moving": false
+      }
+    },
+    "afterRightButton": {
+      "buttons": {
+        "left": "false",
+        "right": "true"
+      },
+      "crew": {
+        "handVisible": true,
+        "toolVisible": true,
+        "mode": "tray",
+        "offer": 0,
+        "toolSide": "right",
+        "toolPosition": [
+          0.5,
+          1.13,
+          0.49
+        ],
+        "offeredPoint": [
+          -0.5764410960450315,
+          0.9293315798148876,
+          0.2970577315566823
+        ],
+        "wrists": {
+          "left": [
+            0.4309598283888364,
+            1.1411878662822286,
+            0.3250000000000001
+          ],
+          "right": [
+            0.4309598283888363,
+            1.1411878662822286,
+            -0.02499999999999991
+          ]
+        },
+        "contact": {
+          "left": null,
+          "right": null
+        },
+        "reach": {
+          "left": null,
+          "right": null
+        },
+        "reachNormal": {
+          "left": null,
+          "right": null
+        },
+        "forearmContact": {
+          "left": false,
+          "right": false
+        },
+        "moving": false
+      }
+    },
+    "afterQ": {
+      "left": "true",
+      "right": "false"
+    },
+    "afterE": {
+      "left": "false",
+      "right": "true"
+    }
+  },
+  "lateralOrderingAtRest": {
+    "leftGloveCameraX": -0.17500000000000016,
+    "rightGloveCameraX": 0.17499999999999988
+  },
+  "crewAtRest": {
+    "handVisible": true,
+    "toolVisible": true,
+    "mode": "tray",
+    "offer": 0,
+    "toolSide": "right",
+    "toolPosition": [
+      0.5,
+      1.13,
+      0.49
+    ],
+    "offeredPoint": [
+      -0.5764410960450315,
+      0.9293315798148876,
+      0.2970577315566823
+    ],
+    "wrists": {
+      "left": [
+        0.4309598283888364,
+        1.1411878662822286,
+        0.3250000000000001
+      ],
+      "right": [
+        0.4309598283888363,
+        1.1411878662822286,
+        -0.02499999999999991
+      ]
+    },
+    "contact": {
+      "left": null,
+      "right": null
+    },
+    "reach": {
+      "left": null,
+      "right": null
+    },
+    "reachNormal": {
+      "left": null,
+      "right": null
+    },
+    "forearmContact": {
+      "left": false,
+      "right": false
+    },
+    "moving": false
+  },
+  "holdD2s": {
+    "before": [
+      0.735,
+      1.6,
+      0.15
+    ],
+    "after": [
+      0.735,
+      1.6,
+      -1.1213400000000004
+    ],
+    "movedM": 1.2713400000000004
+  },
+  "workWalk": {
+    "atStation": {
+      "getCamera": [
+        0.76,
+        1.6,
+        -0.1529999999999998
+      ],
+      "cameraRotation": [
+        -0.5815559490019999,
+        1.5707963267948963,
+        0,
+        "YXZ"
+      ],
+      "cameraFov": 52,
+      "mode": true,
+      "workMoving": false,
+      "detailView": "بجانب السرير",
+      "cameraLabel": "البطن"
+    },
+    "sideAtStation": "يسار المريض",
+    "afterStep": {
+      "getCamera": [
+        0.76,
+        1.6,
+        0.10699999999999998
+      ],
+      "cameraRotation": [
+        -0.5526714800061576,
+        1.2174773159104764,
+        0,
+        "YXZ"
+      ],
+      "cameraFov": 52,
+      "mode": true,
+      "workMoving": false,
+      "detailView": "بجانب السرير",
+      "cameraLabel": "البطن"
+    },
+    "stepMovedM": 0.2599999999999998,
+    "afterOtherSide": {
+      "getCamera": [
+        -0.76,
+        1.6,
+        -0.15299999999999936
+      ],
+      "cameraRotation": [
+        -0.5170614252770442,
+        4.712388980384691,
+        0,
+        "YXZ"
+      ],
+      "cameraFov": 52,
+      "mode": true,
+      "workMoving": false,
+      "detailView": "بجانب السرير",
+      "cameraLabel": "البطن"
+    },
+    "sideAfterOtherSide": "يمين المريض",
+    "otherSideMovedM": 1.5420765220960988
+  },
+  "M11": 0,
+  "errors": []
+}

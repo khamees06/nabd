@@ -1,0 +1,44 @@
+{
+  "flow": "V2-forearm-drill-after-approach",
+  "server": "serve",
+  "project": "edge",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "capturedAt": "2026-11-17T15:50:05.369Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "camera": {
+    "getCamera": [
+      0.705,
+      1.6,
+      0.07486886198952614
+    ],
+    "cameraRotation": [
+      -0.9959912090131557,
+      1.5707963267948992,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 52,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "ذراع المريض اليسرى"
+  },
+  "counters": {
+    "raw": {
+      "fps": "FPS 144",
+      "frame": "Frame 7.1 ms",
+      "draw": "Draw 479",
+      "triangles": "Triangles 299,400",
+      "assets": "Geo 1128 · Tex 17",
+      "events": "Events 0"
+    },
+    "drawCalls": 479,
+    "triangles": 299400,
+    "overlayFps": 144
+  },
+  "screenshot": "V2-forearm-drill-after-approach.jpg",
+  "settleMs": 2000
+}

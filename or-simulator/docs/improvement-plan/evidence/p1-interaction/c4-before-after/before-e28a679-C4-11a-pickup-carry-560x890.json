@@ -1,0 +1,325 @@
+{
+  "check": "C4-11a-pickup-carry-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-14T23:54:12.623Z",
+  "result": {
+    "tools": {
+      "grasper": {
+        "handle": {
+          "x": 143.4726341471157,
+          "y": 385.54478801257227
+        },
+        "attachMs": 471,
+        "grip": "tool",
+        "pick": {
+          "frames": 76,
+          "toolMaxTurnDeg": 7.18,
+          "toolMaxStepM": 0.0392,
+          "handMaxTurnDeg": 5.83,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 7.18,
+          "camMaxStepM": 0.0392,
+          "toolTurnAtMs": 477,
+          "toolStepAtMs": 477,
+          "maxShaftCamZ": 0.0315,
+          "maxToolCamZ": -0.6394,
+          "camStep": {
+            "atMs": 477,
+            "dtMs": 21,
+            "from": [
+              -0.29,
+              -0.116,
+              -0.707
+            ],
+            "to": [
+              -0.258,
+              -0.106,
+              -0.687
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 90,
+          "toolTravelM": 0.115
+        },
+        "liftM": 0.115,
+        "heldY": 1.245,
+        "shaftCamHeld": [
+          0.037,
+          0.525,
+          -0.851
+        ],
+        "carry": {
+          "frames": 65,
+          "toolMaxTurnDeg": 0,
+          "toolMaxStepM": 0.025,
+          "handMaxTurnDeg": 0,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 0,
+          "camMaxStepM": 0.025,
+          "toolTurnAtMs": 21,
+          "toolStepAtMs": 267,
+          "maxShaftCamZ": -0.8505,
+          "maxToolCamZ": -0.649,
+          "camStep": {
+            "atMs": 362,
+            "dtMs": 9.7,
+            "from": [
+              0.004,
+              0.058,
+              -0.77
+            ],
+            "to": [
+              -0.017,
+              0.065,
+              -0.781
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 0,
+          "toolTravelM": 0.2786
+        }
+      },
+      "scope": {
+        "handle": {
+          "x": 143.4726341471157,
+          "y": 385.54478801257227
+        },
+        "attachMs": 496,
+        "grip": "tool",
+        "pick": {
+          "frames": 78,
+          "toolMaxTurnDeg": 7.14,
+          "toolMaxStepM": 0.039,
+          "handMaxTurnDeg": 5.83,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 7.13,
+          "camMaxStepM": 0.039,
+          "toolTurnAtMs": 489,
+          "toolStepAtMs": 489,
+          "maxShaftCamZ": 0.0315,
+          "maxToolCamZ": -0.6395,
+          "camStep": {
+            "atMs": 489,
+            "dtMs": 24.5,
+            "from": [
+              -0.29,
+              -0.116,
+              -0.707
+            ],
+            "to": [
+              -0.258,
+              -0.106,
+              -0.687
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 90,
+          "toolTravelM": 0.115
+        },
+        "liftM": 0.115,
+        "heldY": 1.245,
+        "shaftCamHeld": [
+          0.037,
+          0.525,
+          -0.851
+        ],
+        "carry": {
+          "frames": 64,
+          "toolMaxTurnDeg": 0,
+          "toolMaxStepM": 0.025,
+          "handMaxTurnDeg": 0,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 0,
+          "camMaxStepM": 0.025,
+          "toolTurnAtMs": 58,
+          "toolStepAtMs": 289,
+          "maxShaftCamZ": -0.8505,
+          "maxToolCamZ": -0.649,
+          "camStep": {
+            "atMs": 289,
+            "dtMs": 10.6,
+            "from": [
+              -0.051,
+              0.032,
+              -0.728
+            ],
+            "to": [
+              -0.028,
+              0.037,
+              -0.736
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 0,
+          "toolTravelM": 0.2786
+        }
+      },
+      "scissors": {
+        "handle": {
+          "x": 143.4726341471157,
+          "y": 385.54478801257227
+        },
+        "attachMs": 475,
+        "grip": "tool",
+        "pick": {
+          "frames": 76,
+          "toolMaxTurnDeg": 7.14,
+          "toolMaxStepM": 0.039,
+          "handMaxTurnDeg": 5.83,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 7.14,
+          "camMaxStepM": 0.039,
+          "toolTurnAtMs": 477,
+          "toolStepAtMs": 477,
+          "maxShaftCamZ": 0.0315,
+          "maxToolCamZ": -0.6395,
+          "camStep": {
+            "atMs": 477,
+            "dtMs": 21.1,
+            "from": [
+              -0.29,
+              -0.116,
+              -0.707
+            ],
+            "to": [
+              -0.258,
+              -0.106,
+              -0.687
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 90,
+          "toolTravelM": 0.115
+        },
+        "liftM": 0.115,
+        "heldY": 1.245,
+        "shaftCamHeld": [
+          0.037,
+          0.525,
+          -0.851
+        ],
+        "carry": {
+          "frames": 69,
+          "toolMaxTurnDeg": 0,
+          "toolMaxStepM": 0.025,
+          "handMaxTurnDeg": 0,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 0,
+          "camMaxStepM": 0.025,
+          "toolTurnAtMs": 22,
+          "toolStepAtMs": 332,
+          "maxShaftCamZ": -0.8505,
+          "maxToolCamZ": -0.649,
+          "camStep": {
+            "atMs": 332,
+            "dtMs": 10.1,
+            "from": [
+              -0.036,
+              0.042,
+              -0.745
+            ],
+            "to": [
+              -0.03,
+              0.055,
+              -0.766
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 0,
+          "toolTravelM": 0.2785
+        }
+      },
+      "needleHolder": {
+        "handle": {
+          "x": 143.4726341471157,
+          "y": 385.54478801257227
+        },
+        "attachMs": 499,
+        "grip": "tool",
+        "pick": {
+          "frames": 78,
+          "toolMaxTurnDeg": 7.17,
+          "toolMaxStepM": 0.0391,
+          "handMaxTurnDeg": 5.83,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 7.16,
+          "camMaxStepM": 0.0391,
+          "toolTurnAtMs": 489,
+          "toolStepAtMs": 489,
+          "maxShaftCamZ": 0.0315,
+          "maxToolCamZ": -0.6394,
+          "camStep": {
+            "atMs": 489,
+            "dtMs": 24,
+            "from": [
+              -0.29,
+              -0.116,
+              -0.707
+            ],
+            "to": [
+              -0.258,
+              -0.106,
+              -0.687
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 90,
+          "toolTravelM": 0.115
+        },
+        "liftM": 0.115,
+        "heldY": 1.245,
+        "shaftCamHeld": [
+          0.037,
+          0.525,
+          -0.851
+        ],
+        "carry": {
+          "frames": 65,
+          "toolMaxTurnDeg": 0,
+          "toolMaxStepM": 0.025,
+          "handMaxTurnDeg": 0,
+          "handMaxStepM": 0.025,
+          "camMaxTurnDeg": 0,
+          "camMaxStepM": 0.025,
+          "toolTurnAtMs": 7,
+          "toolStepAtMs": 250,
+          "maxShaftCamZ": -0.8505,
+          "maxToolCamZ": -0.6469,
+          "camStep": {
+            "atMs": 250,
+            "dtMs": 18.2,
+            "from": [
+              -0.092,
+              0.027,
+              -0.72
+            ],
+            "to": [
+              -0.069,
+              0.032,
+              -0.728
+            ],
+            "cameraMovedM": 0,
+            "cameraTurnDeg": 0
+          },
+          "toolTotalTurnDeg": 0,
+          "toolTravelM": 0.2819
+        }
+      }
+    }
+  },
+  "errors": []
+}

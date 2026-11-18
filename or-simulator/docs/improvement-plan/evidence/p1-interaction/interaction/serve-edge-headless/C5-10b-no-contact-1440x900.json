@@ -1,0 +1,28 @@
+{
+  "check": "C5-10b-no-contact-1440x900",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:47:04.180Z",
+  "result": {
+    "timeline": [
+      {
+        "ms": 7207,
+        "status": "لم تصل الأصابع إلى الجلد · جرّب نقطة أخرى أو اقترب"
+      }
+    ],
+    "shownAfterMs": 7207,
+    "finalStatus": "لم تصل الأصابع إلى الجلد · جرّب نقطة أخرى أو اقترب",
+    "grip": null,
+    "reach": {
+      "left": null,
+      "right": null
+    }
+  },
+  "errors": []
+}

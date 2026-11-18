@@ -1,0 +1,91 @@
+{
+  "mode": "work",
+  "width": 560,
+  "height": 890,
+  "bedside": {
+    "attachMs": 125,
+    "aim": {
+      "aimErrorDeg": 2.3,
+      "fingersForward": 0.984
+    },
+    "penetrationHeld": {
+      "tested": 2936,
+      "inside": 648,
+      "over5mm": 341,
+      "deepestM": 0.0209
+    },
+    "lift110": {
+      "dx": -0.0107,
+      "dy": 0.2563,
+      "dz": -0.0398
+    },
+    "distanceToRest2sAfterRelease": 0
+  },
+  "armStation": {
+    "attachMs": 118,
+    "gapAttach": 0.0010319288441133331,
+    "penetrationAtAttach": {
+      "tested": 3051,
+      "inside": 34,
+      "over5mm": 1,
+      "deepestM": 0.0051
+    },
+    "lift110": {
+      "dx": -0.0057,
+      "dy": 0.2281,
+      "dz": -0.0291
+    },
+    "penetrationLifted": {
+      "tested": 1685,
+      "inside": 35,
+      "over5mm": 22,
+      "deepestM": 0.0109
+    },
+    "distanceToRest2sAfterRelease": 0
+  },
+  "ankles": [
+    {
+      "attachMs": 222,
+      "status": "تم إمساك الطرف · حرّكه ضمن مداه",
+      "penetrationAtAttach": {
+        "tested": 2949,
+        "inside": 0,
+        "over5mm": 0,
+        "deepestM": 0
+      },
+      "gap": 0.0011085970646331695
+    },
+    {
+      "attachMs": 232,
+      "status": "تم إمساك الطرف · حرّكه ضمن مداه",
+      "penetrationAtAttach": {
+        "tested": 2949,
+        "inside": 0,
+        "over5mm": 0,
+        "deepestM": 0
+      },
+      "gap": 0.0011102740642866336
+    }
+  ],
+  "drill": {
+    "gripped": 14,
+    "clicks": 14,
+    "outcomes": [
+      "gripped:287",
+      "gripped:288",
+      "gripped:284",
+      "gripped:337",
+      "gripped:333",
+      "gripped:338",
+      "gripped:294",
+      "gripped:338",
+      "gripped:330",
+      "gripped:289",
+      "gripped:285",
+      "gripped:290",
+      "gripped:295",
+      "gripped:287"
+    ]
+  },
+  "errors": []
+}

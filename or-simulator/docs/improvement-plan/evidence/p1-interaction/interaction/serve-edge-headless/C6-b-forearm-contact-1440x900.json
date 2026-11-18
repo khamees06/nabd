@@ -1,0 +1,75 @@
+{
+  "check": "C6-b-forearm-contact-1440x900",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:47:30.487Z",
+  "result": {
+    "before": {
+      "left": false,
+      "right": false
+    },
+    "rightGripped": {
+      "left": false,
+      "right": true
+    },
+    "afterRightRelease": {
+      "left": false,
+      "right": false
+    },
+    "releaseMotion": {
+      "frames": 64,
+      "maxTurnDeg": 5.83,
+      "turnAtMs": 44,
+      "maxStepM": 0.025,
+      "maxStep": {
+        "atMs": 97,
+        "dtMs": 14.3,
+        "dyM": -0.0114
+      },
+      "minFingersForward": 0.952,
+      "renderIntervalP50Ms": 20
+    },
+    "turnDrift": {
+      "frames": 66,
+      "maxFrameStepM": 0,
+      "maxFromStartM": 0
+    },
+    "afterSwitchToLeft": {
+      "left": false,
+      "right": false
+    },
+    "leftGripOk": true,
+    "leftGripped": {
+      "left": true,
+      "right": false
+    },
+    "leftCollision": {
+      "overlap": 0,
+      "stops": 78
+    },
+    "switchWhileHolding": {
+      "left": true,
+      "right": false
+    },
+    "afterTurnWhileLeftHolds": {
+      "overlap": 0,
+      "stops": 139,
+      "state": "gripped",
+      "flags": {
+        "left": true,
+        "right": false
+      }
+    },
+    "afterLeftRelease": {
+      "left": false,
+      "right": false
+    }
+  },
+  "errors": []
+}

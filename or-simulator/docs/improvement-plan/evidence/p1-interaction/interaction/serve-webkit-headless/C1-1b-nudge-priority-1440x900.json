@@ -1,0 +1,19 @@
+{
+  "check": "C1-1b-nudge-priority-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:50:55.533Z",
+  "result": {
+    "arrowYawDeg": 0,
+    "toolMovedM": 0.05394812009553245,
+    "buttonYawDeg": 15.000000000000007,
+    "grip": "tool"
+  },
+  "errors": []
+}

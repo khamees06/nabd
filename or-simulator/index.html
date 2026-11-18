@@ -1,0 +1,789 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <meta name="theme-color" content="#edf3f2">
+  <title>Nabd Clinical Simulation | v1.5 Forearm Contact</title>
+  <link rel="icon" href="data:,">
+  <link rel="stylesheet" href="./src/styles.css">
+</head>
+<body>
+  <svg class="symbols" xmlns="http://www.w3.org/2000/svg" aria-hidden="true">
+    <symbol id="icon-pulse" viewBox="0 0 24 24"><path d="M2 12h5l2.4-5 3.6 10 2.6-5H22"/></symbol>
+    <symbol id="icon-home" viewBox="0 0 24 24"><path d="m3 11 9-8 9 8M5.5 10v10h13V10M10 20v-6h4v6"/></symbol>
+    <symbol id="icon-grid" viewBox="0 0 24 24"><rect x="4" y="4" width="16" height="16" rx="2"/><path d="M4 9.3h16M4 14.7h16M9.3 4v16M14.7 4v16"/></symbol>
+    <symbol id="icon-full" viewBox="0 0 24 24"><path d="M9 4H4v5m11-5h5v5m0 6v5h-5m-6 0H4v-5"/></symbol>
+    <symbol id="icon-reset" viewBox="0 0 24 24"><path d="M4 11a8 8 0 1 1 2 6m-2-6V5m0 6h6"/></symbol>
+    <symbol id="icon-joints" viewBox="0 0 24 24"><circle cx="12" cy="12" r="5"/><path d="M12 2v3m0 14v3M2 12h3m14 0h3"/></symbol>
+    <symbol id="icon-lying" viewBox="0 0 24 24"><circle cx="6" cy="10" r="2"/><path d="M9 12h10m-16 4h18m-16 0v3m14-3v3"/></symbol>
+    <symbol id="icon-sitting" viewBox="0 0 24 24"><circle cx="10" cy="5" r="2"/><path d="M10 9v6h6l2 5M5 11v7h8m-6 0v3"/></symbol>
+    <symbol id="icon-standing" viewBox="0 0 24 24"><circle cx="12" cy="5" r="2"/><path d="m6 12 6-3 6 3m-6-3v6m-4 6 4-6 4 6"/></symbol>
+  </svg>
+
+  <header class="site-header">
+    <div class="brand">
+      <span class="brand-mark"><svg><use href="#icon-pulse"/></svg></span>
+      <div><span class="brand-name">نبض</span><span class="brand-en" lang="en">NABD</span></div>
+    </div>
+    <span class="header-divider"></span>
+    <div class="header-title">غرفة العمليات التعليمية <small lang="en" dir="ltr">OPERATIONS STUDIO</small></div>
+    <span class="build-label">تفاعل الساعد <b dir="ltr">v1.5</b></span>
+  </header>
+
+  <main class="workspace">
+    <section class="viewport-panel" aria-label="غرفة المحاكاة ثلاثية الأبعاد">
+      <div id="viewport" class="viewport">
+        <div class="viewport-loading" id="loading-state" role="status">
+          <div class="loading-orbit"></div>
+          <span>جاري تجهيز المريض الافتراضي…</span>
+        </div>
+        <div id="body-markers" class="body-markers" aria-hidden="true" hidden></div>
+        <div id="training-target" class="training-target" hidden aria-hidden="true"></div>
+        <div class="viewport-caption"><span class="status-dot"></span> محاكاة تفاعلية · غرفة العمليات <small dir="ltr">GENERAL OR · 07</small></div>
+        <div class="viewport-tools">
+          <button type="button" class="mode-button abdomen-button" data-abdomen-focus aria-pressed="false" disabled>منطقة العمل</button>
+          <button type="button" class="mode-button" id="forearm-practice" aria-pressed="false" disabled>تدريب لمس الساعد</button>
+          <button type="button" class="mode-button" id="toggle-trainee-mode" aria-pressed="true">معاينة الغرفة</button>
+          <button type="button" class="icon-button" id="open-vitals" title="العلامات الحيوية" aria-label="العلامات الحيوية"><svg><use href="#icon-pulse"/></svg></button>
+          <button type="button" class="icon-button" id="fullscreen" title="ملء الشاشة" aria-label="ملء الشاشة"><svg><use href="#icon-full"/></svg></button>
+          <button type="button" class="icon-button" id="toggle-grid" title="شبكة الأرضية" aria-label="شبكة الأرضية" aria-pressed="false"><svg><use href="#icon-grid"/></svg></button>
+          <button type="button" class="icon-button" id="home-camera" title="إعادة الكاميرا" aria-label="إعادة الكاميرا"><svg><use href="#icon-home"/></svg></button>
+        </div>
+        <div class="viewport-views" aria-label="زوايا الكاميرا">
+          <div class="view-group" aria-label="مناظير غرفة العمليات">
+            <span class="view-group-label">الغرفة</span>
+            <button type="button" class="view-button" id="camera-room" aria-pressed="true">من مدخل الغرفة</button>
+            <button type="button" class="view-button" id="camera-surgeon" aria-pressed="false">موقع الجرّاح</button>
+            <button type="button" class="view-button" id="camera-anesthesia" aria-pressed="false">التخدير</button>
+            <button type="button" class="view-button" id="camera-instruments" aria-pressed="false">الأدوات</button>
+          </div>
+          <div class="view-group" aria-label="مناظير المريض">
+            <span class="view-group-label">المريض</span>
+            <button type="button" class="view-button" id="camera-overview" aria-pressed="false">الجسم كامل</button>
+            <button type="button" class="view-button" id="camera-left" aria-pressed="false">الجانب الأيسر</button>
+            <button type="button" class="view-button" id="camera-right" aria-pressed="false">الجانب الأيمن</button>
+            <button type="button" class="view-button" id="camera-overhead" aria-pressed="false">من الأعلى</button>
+            <button type="button" class="view-button" id="camera-torso" aria-pressed="false">الصدر</button>
+            <button type="button" class="view-button" id="camera-abdomen" aria-pressed="false">البطن</button>
+            <button type="button" class="view-button" id="camera-face" aria-pressed="false">الوجه</button>
+          </div>
+        </div>
+        <button id="anatomy-toggle" class="mode-button anatomy-toggle" type="button" aria-pressed="false" aria-controls="anatomy-controls" disabled>التشريح الداخلي</button>
+        <div class="viewport-info" aria-live="polite">
+          <span class="viewport-info-label">وضع المحاكاة</span>
+          <strong id="camera-detail-label">منظور الطبيب المتدرّب</strong>
+          <span class="viewport-info-divider"></span>
+          <span class="viewport-info-lock" id="trainee-status">اليدان جاهزتان للتفاعل</span>
+        </div>
+        <!-- Controls that must stay visible over the 3D view: scope station, held-tool bar, looking. -->
+        <div class="viewport-dock">
+        <div id="scope-station" class="scope-station" hidden>
+          <div class="scope-station-header">
+            <span id="scope-signal" role="status">بانتظار إدخال المنظار</span>
+            <button id="scope-view" class="mode-button" type="button" aria-pressed="false">انظر إلى الشاشة</button>
+          </div>
+          <div id="scope-monitor-controls" class="scope-monitor-controls" role="group" aria-label="التحكم بالمنظار أثناء مشاهدة الشاشة" hidden>
+            <button class="mode-button" type="button" data-tool-depth="-1">اسحب</button>
+            <button class="mode-button" type="button" data-tool-depth="1">أدخل</button>
+            <output id="scope-monitor-depth" dir="ltr" aria-label="العمق الافتراضي">—</output>
+            <button class="mode-button" type="button" data-tool-roll="-1" aria-label="تدوير المنظار يسارًا">لفّ −</button>
+            <button class="mode-button" type="button" data-tool-roll="1" aria-label="تدوير المنظار يمينًا">لفّ +</button>
+          </div>
+        </div>
+        <section id="tool-depth-controls" class="work-controls depth-dock" aria-label="التحكم بالأداة" hidden>
+          <div class="work-steps depth-actions">
+            <button type="button" id="open-tool-field">منطقة البطن</button>
+            <button type="button" data-tool-depth="-1">اسحب الأداة</button>
+            <button type="button" data-tool-depth="1">أدخل الأداة</button>
+            <output id="tool-depth-value" dir="ltr">—</output>
+            <button type="button" data-tool-roll="-1">تدوير −</button>
+            <button type="button" data-tool-roll="1">تدوير +</button>
+            <button type="button" id="release-held">إفلات</button>
+          <output id="tool-angle-value" class="tool-angle-value" dir="ltr">Pitch 0° · Yaw 0° · Roll 0°</output>
+          </div>
+          <p id="tool-depth-state"></p>
+        </section>
+        <div id="look-controls" class="look-controls" role="group" aria-label="الالتفات وتغيير النظر">
+          <div class="look-buttons">
+            <button type="button" data-look-turn="-1" aria-label="التفت يمين" title="التفت يمين (→)">↻ يمين</button>
+            <button type="button" id="trainee-look-mode" aria-pressed="false" title="تغيير النظر (L)">تغيير النظر</button>
+            <button type="button" data-look-turn="1" aria-label="التفت يسار" title="التفت يسار (←)">يسار ↺</button>
+          </div>
+          <span class="look-hint look-hint-mouse">اسحب بالزر الأيمن أو ←/→ للالتفات · L لتغيير النظر</span>
+          <span class="look-hint look-hint-touch">اسحب على مكان فارغ أو استعمل ↺ ↻ للالتفات</span>
+        </div>
+        </div>
+      </div>
+      <div class="viewport-footer">
+        <span id="model-status" class="model-status" role="status">جاري تحميل المجسم</span>
+        <span>انقر للإمساك ثم انقر للإفلات · اسحب بزر الفأرة الأيمن أو ←/→ للنظر</span>
+      </div>
+        <section id="anatomy-controls" class="work-controls anatomy-controls" aria-label="عرض تشريح المريض" hidden>
+          <div class="anatomy-controls-row">
+            <label>المجموعة
+              <select id="anatomy-system">
+                <option value="all">جميع البنى</option>
+                <option value="neural">الدماغ</option>
+                <option value="thorax">التنفس والقلب</option>
+                <option value="digestion">الهضمي</option>
+                <option value="urinary">البولي والحوض</option>
+                <option value="glands">الغدد</option>
+                <option value="vessels">الأوعية الرئيسية</option>
+              </select>
+            </label>
+            <label>العضو <select id="anatomy-organ"></select></label>
+            <label class="anatomy-check"><input id="anatomy-isolate" type="checkbox" disabled> عزل العضو</label>
+            <button id="anatomy-reset" class="secondary-button" type="button">العرض الكامل</button>
+          </div>
+          <p class="anatomy-source"><strong id="anatomy-readout" role="status"></strong><a href="https://dbarchive.biosciencedbc.jp/en/bodyparts3d/lic.html" target="_blank" rel="noopener">BodyParts3D · DBCLS · CC BY 4.0</a></p>
+        </section>
+        <section id="work-controls" class="work-controls" aria-label="موضع المتدرّب حول السرير" hidden>
+          <div class="work-pickers">
+            <label>المنطقة
+              <select id="work-region">
+                <option value="abdomen">البطن</option>
+                <option value="chest">الصدر</option>
+                <option value="head">الرأس</option>
+                <option value="hip">جانب الحوض</option>
+                <option value="leftArm">ذراع المريض اليسرى</option>
+                <option value="rightArm">ذراع المريض اليمنى</option>
+                <option value="leftLeg">ساق المريض اليسرى</option>
+                <option value="rightLeg">ساق المريض اليمنى</option>
+              </select>
+            </label>
+            <label>طريقة التلامس
+              <select id="work-action">
+                <option value="press">جسّ خفيف</option>
+                <option value="abdomen">إمساك السطح</option>
+              </select>
+            </label>
+            <label><input id="show-body-points" type="checkbox" checked> نقاط الجسم</label>
+            <span id="work-side"></span>
+          </div>
+          <div class="work-steps">
+            <button type="button" data-work-step="1">خطوة حول السرير</button>
+            <button type="button" data-work-step="-1">خطوة بالعكس</button>
+            <button type="button" id="work-other-side">الجانب المقابل</button>
+            <button type="button" data-work-approach="-1">اقترب</button>
+            <button type="button" data-work-approach="1">ابتعد</button>
+          </div>
+          <div class="focus-target-row"><span id="work-focus-readout">منطقة العمل: البطن</span><div class="focus-actions"><button type="button" id="pick-focus-point" class="secondary-button">تحديد نقطة العمل</button><button type="button" id="recenter-work-focus" class="secondary-button">إعادة التركيز</button></div></div>
+          <div id="forearm-actions" class="work-steps" hidden>
+            <button type="button" id="forearm-assist" aria-pressed="false" disabled>اطلب مساندة المشرف</button>
+            <button type="button" id="forearm-reset">إعادة وضع الساعد</button>
+            <output id="forearm-feedback" aria-live="polite"></output>
+          </div>
+          <p id="work-help"></p>
+        </section>
+        <div class="trainee-hud" id="trainee-hud">
+          <div class="trainee-hud-head"><strong>حركة المتدرّب</strong><span id="pointer-status">انقر للإمساك ثم انقر للإفلات · اسحب للالتفات</span></div>
+          <div class="trainee-hud-actions">
+            <button type="button" data-step="head">نحو الرأس</button>
+            <button type="button" data-step="feet">نحو القدمين</button>
+            <button type="button" data-step="near">اقترب</button>
+            <button type="button" data-step="back">ابتعد</button>
+            <button type="button" id="trainee-lock">إعادة المنظور</button>
+            <button type="button" id="trainee-zoom-in">تقريب +</button>
+            <button type="button" id="trainee-zoom-out">إبعاد −</button>
+            <button type="button" id="trainee-focus-chest" data-region-shortcut="chest" disabled>الصدر</button>
+            <button type="button" id="trainee-focus-abdomen" data-abdomen-focus aria-pressed="false" disabled>البطن</button>
+            <button type="button" id="trainee-focus-arm" data-region-shortcut="leftArm" disabled>الذراع</button>
+            <button type="button" id="trainee-focus-leg" data-region-shortcut="leftLeg" disabled>الساق</button>
+            <button type="button" id="trainee-pick-focus" aria-pressed="false">تحديد نقطة العمل</button>
+            <button type="button" id="trainee-recenter-focus">إعادة التركيز</button>
+            <button type="button" id="trainee-patient-position" aria-pressed="false">تحريك أطراف المريض</button>
+            <button type="button" id="trainee-reach-left">اليد اليسرى</button>
+            <button type="button" id="trainee-reach-right">اليد اليمنى</button>
+            <button type="button" id="trainee-grip">قبض / إفلات</button>
+            <button type="button" id="trainee-tray-view">الصينية</button>
+            <button type="button" id="trainee-tool" aria-pressed="false">ابدأ التدريب</button>
+            <button type="button" id="trainee-reset">إعادة وضع اليدين</button>
+          </div>
+          <div class="trainee-hud-foot">اسحب بزر الفأرة الأيمن أو ←/→ للالتفات و↑/↓ للنظر أعلى وأسفل · L لتغيير النظر · W/A/S/D للحركة حول السرير · اختر نقطة العمل من جسم المريض · Q/E لاختيار اليد · F للقبض والإفلات · R/V لعمق الأداة · Z/X لدوران المنظار</div>
+        </div>
+    </section>
+
+    <aside class="control-panel" aria-labelledby="patient-title">
+      <header class="panel-heading">
+        <div class="panel-kicker"><span class="status-dot"></span> إعداد وضعية المحاكاة</div>
+        <h1 id="patient-title">المريض الافتراضي</h1>
+        <p>بالغ · نموذج ثلاثي الأبعاد</p>
+      </header>
+
+      <section id="training-session" class="training-session" aria-labelledby="training-title">
+        <div class="training-heading"><h2 id="training-title">تمرين الإمساك والتحريك</h2><span id="training-count" dir="ltr"></span></div>
+        <p id="training-instruction" aria-live="polite">تدرّب على التقاط الأداة وتوجيهها، ثم ارفع رسغ المريض وأعده إلى مكانه.</p>
+        <label class="training-tool-picker" for="training-tool">
+          <span>أداة التمرين</span>
+          <select id="training-tool" disabled>
+            <option value="grasper">ملقط المنظار</option>
+            <option value="scope">منظار تدريبي</option>
+            <option value="scissors">المقص الجراحي</option>
+            <option value="needleHolder">ماسك الإبرة</option>
+          </select>
+        </label>
+        <label class="training-tool-picker" for="training-source">
+          <span>مناولة الأداة</span>
+          <select id="training-source" disabled>
+            <option value="tray">الصينية</option>
+            <option value="staff">المشرف</option>
+          </select>
+        </label>
+        <ol class="training-checklist" aria-label="المهارات">
+          <li data-check="monitor">قراءة الشاشة</li>
+          <li data-check="pickup">القبض</li>
+          <li data-check="aim">التوجيه</li>
+          <li data-check="deposit">الإرجاع</li>
+          <li data-check="wrist">تحريك الرسغ</li>
+        </ol>
+        <p id="training-feedback" role="status"></p>
+        <p id="training-results" class="training-results" hidden></p>
+        <div class="training-actions">
+          <button type="button" id="training-action" class="reset-button" disabled>ابدأ التدريب</button>
+          <button type="button" id="training-reset" class="secondary-button" hidden>إعادة</button>
+        </div>
+      </section>
+      <section class="control-section" aria-labelledby="pose-title">
+        <h2 id="pose-title">وضعية الجسم</h2>
+        <div class="pose-grid">
+          <button type="button" class="pose-button active" data-pose="supine" aria-pressed="true" disabled><svg><use href="#icon-lying"/></svg>استلقاء</button>
+          <button type="button" class="pose-button" data-pose="sitting" aria-pressed="false" disabled><svg><use href="#icon-sitting"/></svg>جلوس</button>
+          <button type="button" class="pose-button" data-pose="standing" aria-pressed="false" disabled><svg><use href="#icon-standing"/></svg>وقوف</button>
+        </div>
+      </section>
+
+      <section class="control-section movement-section" aria-labelledby="limb-title">
+        <h2 id="limb-title">تحريك الأطراف</h2>
+        <p class="section-note">اسحب اليد أو القدم لتحريك الطرف عبر مفاصله. الحركة مقيدة تشريحياً ولا تسمح بالدوران الحر حول محور الطرف.</p>
+        <div class="slider-control">
+          <div class="slider-label"><label for="left-arm">رفع الذراع اليسرى</label><output for="left-arm" id="left-arm-value">0°</output></div>
+          <input id="left-arm" type="range" min="-12" max="65" value="0" disabled>
+        </div>
+        <div class="slider-control">
+          <div class="slider-label"><label for="right-arm">رفع الذراع اليمنى</label><output for="right-arm" id="right-arm-value">0°</output></div>
+          <input id="right-arm" type="range" min="-12" max="65" value="0" disabled>
+        </div>
+        <div class="slider-control">
+          <div class="slider-label"><label for="left-leg">رفع الساق اليسرى</label><output for="left-leg" id="left-leg-value">0°</output></div>
+          <input id="left-leg" type="range" min="-4" max="29" value="0" disabled>
+        </div>
+        <div class="slider-control">
+          <div class="slider-label"><label for="right-leg">رفع الساق اليمنى</label><output for="right-leg" id="right-leg-value">0°</output></div>
+          <input id="right-leg" type="range" min="-4" max="29" value="0" disabled>
+        </div>
+      </section>
+
+      <section class="control-section patient-hand-section" aria-labelledby="patient-hand-title">
+        <h2 id="patient-hand-title">حركة يدي المريض</h2>
+        <p class="section-note">هذا التحكم يحرك عظام الأصابع الفعلية في نموذج المريض؛ افتح اليد أو اقبضها تدريجياً، ويمكن تحريك الرسغ والذراع لاحقاً ضمن حدود المفاصل.</p>
+        <div class="slider-control">
+          <div class="slider-label"><label for="left-hand-curl">قبض أصابع اليد اليسرى</label><output for="left-hand-curl" id="left-hand-curl-value">0%</output></div>
+          <input id="left-hand-curl" type="range" min="0" max="100" value="0" disabled>
+        </div>
+        <div class="slider-control">
+          <div class="slider-label"><label for="right-hand-curl">قبض أصابع اليد اليمنى</label><output for="right-hand-curl" id="right-hand-curl-value">0%</output></div>
+          <input id="right-hand-curl" type="range" min="0" max="100" value="0" disabled>
+        </div>
+        <div class="hand-action-row">
+          <button type="button" class="secondary-button" id="patient-hands-open">فتح اليدين</button>
+          <button type="button" class="secondary-button" id="patient-hands-close">قبض اليدين</button>
+          <button type="button" class="secondary-button" id="patient-hands-demo">اختبار الحركة</button>
+          <button type="button" class="reset-button" id="patient-hands-reset">إعادة الوضع</button>
+        </div>
+        <p class="section-note" id="patient-hand-status" aria-live="polite">وضع اليدين الطبيعي · النموذج يحتوي على عظام منفصلة للأصابع</p>
+      </section>
+
+      <section class="control-section details-section" aria-labelledby="scene-details-title">
+        <h2 id="scene-details-title">حالة المحاكاة</h2>
+        <div class="detail-grid">
+          <div class="detail-item"><span>وضعية المريض</span><strong id="detail-pose">استلقاء</strong></div>
+          <div class="detail-item"><span>زاوية الكاميرا</span><strong id="detail-view">الغرفة كاملة</strong></div>
+          <div class="detail-item"><span>المفصل المحدد</span><strong id="detail-joint">لم يتم تحديد مفصل</strong></div>
+          <div class="detail-item"><span>مستوى التقريب</span><strong id="detail-zoom">واسع</strong></div>
+        </div>
+        <div class="equipment-summary">
+          <span class="equipment-summary-label">تجهيز الغرفة</span>
+          <span>مراقبة حيوية · تخدير · منظار · أدوات جراحية</span>
+        </div>
+        <div class="anatomy-lock-note">
+          <span class="anatomy-lock-icon">✓</span>
+          <span>حركة المفاصل مقيدة تشريحياً؛ اليد والقدم تتبعان الطرف دون دوران مستقل 360°.</span>
+        </div>
+      </section>
+
+      <div class="panel-actions">
+        <button type="button" id="toggle-handles" class="secondary-button" aria-pressed="false" disabled><svg><use href="#icon-joints"/></svg>نقاط التحكم</button>
+        <button type="button" id="reset-patient" class="reset-button" disabled><svg><use href="#icon-reset"/></svg>إعادة الوضعية</button>
+      </div>
+    </aside>
+  </main>
+  <!--
+# Third-party licenses
+
+- Three.js r180 — MIT. See `vendor/three/LICENSE`.
+- IBM Plex Sans Arabic and Inter — SIL Open Font License 1.1. See `vendor/fonts/IBM-Plex-OFL.txt` and `vendor/fonts/Inter-OFL.txt`.
+- Virtual patient anatomy, rig and adapted textures — CC0 1.0. See `assets/patient/ASSET-PROVENANCE.md` for source and modification details.
+- Rapier 0.21.0 physics engine (collision queries in the forearm drill), Copyright 2020 Dimforge EURL — Apache License 2.0. See `vendor/rapier/LICENSE`; the full text follows below.
+
+
+The MIT License
+
+Copyright © 2010-2025 three.js authors
+
+Permission is hereby granted, free of charge, to any person obtaining a copy
+of this software and associated documentation files (the "Software"), to deal
+in the Software without restriction, including without limitation the rights
+to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+copies of the Software, and to permit persons to whom the Software is
+furnished to do so, subject to the following conditions:
+
+The above copyright notice and this permission notice shall be included in
+all copies or substantial portions of the Software.
+
+THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT. IN NO EVENT SHALL THE
+AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN
+THE SOFTWARE.
+
+
+Copyright © 2017 IBM Corp. with Reserved Font Name "Plex"
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+
+This license is copied below, and is also available with a FAQ at: http://scripts.sil.org/OFL
+
+
+–––––––––––––––––––––––––––––-
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+–––––––––––––––––––––––––––––-
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded, 
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting – in part or in whole – any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+
+Copyright 2020 The Inter Project Authors (https://github.com/rsms/inter)
+
+This Font Software is licensed under the SIL Open Font License, Version 1.1.
+This license is copied below, and is also available with a FAQ at:
+https://scripts.sil.org/OFL
+
+
+–––––––––––––––––––––––––––––-
+SIL OPEN FONT LICENSE Version 1.1 - 26 February 2007
+–––––––––––––––––––––––––––––-
+
+PREAMBLE
+The goals of the Open Font License (OFL) are to stimulate worldwide
+development of collaborative font projects, to support the font creation
+efforts of academic and linguistic communities, and to provide a free and
+open framework in which fonts may be shared and improved in partnership
+with others.
+
+The OFL allows the licensed fonts to be used, studied, modified and
+redistributed freely as long as they are not sold by themselves. The
+fonts, including any derivative works, can be bundled, embedded, 
+redistributed and/or sold with any software provided that any reserved
+names are not used by derivative works. The fonts and derivatives,
+however, cannot be released under any other type of license. The
+requirement for fonts to remain under this license does not apply
+to any document created using the fonts or their derivatives.
+
+DEFINITIONS
+"Font Software" refers to the set of files released by the Copyright
+Holder(s) under this license and clearly marked as such. This may
+include source files, build scripts and documentation.
+
+"Reserved Font Name" refers to any names specified as such after the
+copyright statement(s).
+
+"Original Version" refers to the collection of Font Software components as
+distributed by the Copyright Holder(s).
+
+"Modified Version" refers to any derivative made by adding to, deleting,
+or substituting – in part or in whole – any of the components of the
+Original Version, by changing formats or by porting the Font Software to a
+new environment.
+
+"Author" refers to any designer, engineer, programmer, technical
+writer or other person who contributed to the Font Software.
+
+PERMISSION & CONDITIONS
+Permission is hereby granted, free of charge, to any person obtaining
+a copy of the Font Software, to use, study, copy, merge, embed, modify,
+redistribute, and sell modified and unmodified copies of the Font
+Software, subject to the following conditions:
+
+1) Neither the Font Software nor any of its individual components,
+in Original or Modified Versions, may be sold by itself.
+
+2) Original or Modified Versions of the Font Software may be bundled,
+redistributed and/or sold with any software, provided that each copy
+contains the above copyright notice and this license. These can be
+included either as stand-alone text files, human-readable headers or
+in the appropriate machine-readable metadata fields within text or
+binary files as long as those fields can be easily viewed by the user.
+
+3) No Modified Version of the Font Software may use the Reserved Font
+Name(s) unless explicit written permission is granted by the corresponding
+Copyright Holder. This restriction only applies to the primary font name as
+presented to the users.
+
+4) The name(s) of the Copyright Holder(s) or the Author(s) of the Font
+Software shall not be used to promote, endorse or advertise any
+Modified Version, except to acknowledge the contribution(s) of the
+Copyright Holder(s) and the Author(s) or with their explicit written
+permission.
+
+5) The Font Software, modified or unmodified, in part or in whole,
+must be distributed entirely under this license, and must not be
+distributed under any other license. The requirement for fonts to
+remain under this license does not apply to any document created
+using the Font Software.
+
+TERMINATION
+This license becomes null and void if any of the above conditions are
+not met.
+
+DISCLAIMER
+THE FONT SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND,
+EXPRESS OR IMPLIED, INCLUDING BUT NOT LIMITED TO ANY WARRANTIES OF
+MERCHANTABILITY, FITNESS FOR A PARTICULAR PURPOSE AND NONINFRINGEMENT
+OF COPYRIGHT, PATENT, TRADEMARK, OR OTHER RIGHT. IN NO EVENT SHALL THE
+COPYRIGHT HOLDER BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER LIABILITY,
+INCLUDING ANY GENERAL, SPECIAL, INDIRECT, INCIDENTAL, OR CONSEQUENTIAL
+DAMAGES, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING
+FROM, OUT OF THE USE OR INABILITY TO USE THE FONT SOFTWARE OR FROM
+OTHER DEALINGS IN THE FONT SOFTWARE.
+
+
+Rapier 0.21.0 — Apache License 2.0 (copy of `vendor/rapier/LICENSE`)
+
+                                 Apache License
+                           Version 2.0, January 2004
+                        http://www.apache.org/licenses/
+
+   TERMS AND CONDITIONS FOR USE, REPRODUCTION, AND DISTRIBUTION
+
+   1. Definitions.
+
+      "License" shall mean the terms and conditions for use, reproduction,
+      and distribution as defined by Sections 1 through 9 of this document.
+
+      "Licensor" shall mean the copyright owner or entity authorized by
+      the copyright owner that is granting the License.
+
+      "Legal Entity" shall mean the union of the acting entity and all
+      other entities that control, are controlled by, or are under common
+      control with that entity. For the purposes of this definition,
+      "control" means (i) the power, direct or indirect, to cause the
+      direction or management of such entity, whether by contract or
+      otherwise, or (ii) ownership of fifty percent (50%) or more of the
+      outstanding shares, or (iii) beneficial ownership of such entity.
+
+      "You" (or "Your") shall mean an individual or Legal Entity
+      exercising permissions granted by this License.
+
+      "Source" form shall mean the preferred form for making modifications,
+      including but not limited to software source code, documentation
+      source, and configuration files.
+
+      "Object" form shall mean any form resulting from mechanical
+      transformation or translation of a Source form, including but
+      not limited to compiled object code, generated documentation,
+      and conversions to other media types.
+
+      "Work" shall mean the work of authorship, whether in Source or
+      Object form, made available under the License, as indicated by a
+      copyright notice that is included in or attached to the work
+      (an example is provided in the Appendix below).
+
+      "Derivative Works" shall mean any work, whether in Source or Object
+      form, that is based on (or derived from) the Work and for which the
+      editorial revisions, annotations, elaborations, or other modifications
+      represent, as a whole, an original work of authorship. For the purposes
+      of this License, Derivative Works shall not include works that remain
+      separable from, or merely link (or bind by name) to the interfaces of,
+      the Work and Derivative Works thereof.
+
+      "Contribution" shall mean any work of authorship, including
+      the original version of the Work and any modifications or additions
+      to that Work or Derivative Works thereof, that is intentionally
+      submitted to Licensor for inclusion in the Work by the copyright owner
+      or by an individual or Legal Entity authorized to submit on behalf of
+      the copyright owner. For the purposes of this definition, "submitted"
+      means any form of electronic, verbal, or written communication sent
+      to the Licensor or its representatives, including but not limited to
+      communication on electronic mailing lists, source code control systems,
+      and issue tracking systems that are managed by, or on behalf of, the
+      Licensor for the purpose of discussing and improving the Work, but
+      excluding communication that is conspicuously marked or otherwise
+      designated in writing by the copyright owner as "Not a Contribution."
+
+      "Contributor" shall mean Licensor and any individual or Legal Entity
+      on behalf of whom a Contribution has been received by Licensor and
+      subsequently incorporated within the Work.
+
+   2. Grant of Copyright License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      copyright license to reproduce, prepare Derivative Works of,
+      publicly display, publicly perform, sublicense, and distribute the
+      Work and such Derivative Works in Source or Object form.
+
+   3. Grant of Patent License. Subject to the terms and conditions of
+      this License, each Contributor hereby grants to You a perpetual,
+      worldwide, non-exclusive, no-charge, royalty-free, irrevocable
+      (except as stated in this section) patent license to make, have made,
+      use, offer to sell, sell, import, and otherwise transfer the Work,
+      where such license applies only to those patent claims licensable
+      by such Contributor that are necessarily infringed by their
+      Contribution(s) alone or by combination of their Contribution(s)
+      with the Work to which such Contribution(s) was submitted. If You
+      institute patent litigation against any entity (including a
+      cross-claim or counterclaim in a lawsuit) alleging that the Work
+      or a Contribution incorporated within the Work constitutes direct
+      or contributory patent infringement, then any patent licenses
+      granted to You under this License for that Work shall terminate
+      as of the date such litigation is filed.
+
+   4. Redistribution. You may reproduce and distribute copies of the
+      Work or Derivative Works thereof in any medium, with or without
+      modifications, and in Source or Object form, provided that You
+      meet the following conditions:
+
+      (a) You must give any other recipients of the Work or
+          Derivative Works a copy of this License; and
+
+      (b) You must cause any modified files to carry prominent notices
+          stating that You changed the files; and
+
+      (c) You must retain, in the Source form of any Derivative Works
+          that You distribute, all copyright, patent, trademark, and
+          attribution notices from the Source form of the Work,
+          excluding those notices that do not pertain to any part of
+          the Derivative Works; and
+
+      (d) If the Work includes a "NOTICE" text file as part of its
+          distribution, then any Derivative Works that You distribute must
+          include a readable copy of the attribution notices contained
+          within such NOTICE file, excluding those notices that do not
+          pertain to any part of the Derivative Works, in at least one
+          of the following places: within a NOTICE text file distributed
+          as part of the Derivative Works; within the Source form or
+          documentation, if provided along with the Derivative Works; or,
+          within a display generated by the Derivative Works, if and
+          wherever such third-party notices normally appear. The contents
+          of the NOTICE file are for informational purposes only and
+          do not modify the License. You may add Your own attribution
+          notices within Derivative Works that You distribute, alongside
+          or as an addendum to the NOTICE text from the Work, provided
+          that such additional attribution notices cannot be construed
+          as modifying the License.
+
+      You may add Your own copyright statement to Your modifications and
+      may provide additional or different license terms and conditions
+      for use, reproduction, or distribution of Your modifications, or
+      for any such Derivative Works as a whole, provided Your use,
+      reproduction, and distribution of the Work otherwise complies with
+      the conditions stated in this License.
+
+   5. Submission of Contributions. Unless You explicitly state otherwise,
+      any Contribution intentionally submitted for inclusion in the Work
+      by You to the Licensor shall be under the terms and conditions of
+      this License, without any additional terms or conditions.
+      Notwithstanding the above, nothing herein shall supersede or modify
+      the terms of any separate license agreement you may have executed
+      with Licensor regarding such Contributions.
+
+   6. Trademarks. This License does not grant permission to use the trade
+      names, trademarks, service marks, or product names of the Licensor,
+      except as required for reasonable and customary use in describing the
+      origin of the Work and reproducing the content of the NOTICE file.
+
+   7. Disclaimer of Warranty. Unless required by applicable law or
+      agreed to in writing, Licensor provides the Work (and each
+      Contributor provides its Contributions) on an "AS IS" BASIS,
+      WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or
+      implied, including, without limitation, any warranties or conditions
+      of TITLE, NON-INFRINGEMENT, MERCHANTABILITY, or FITNESS FOR A
+      PARTICULAR PURPOSE. You are solely responsible for determining the
+      appropriateness of using or redistributing the Work and assume any
+      risks associated with Your exercise of permissions under this License.
+
+   8. Limitation of Liability. In no event and under no legal theory,
+      whether in tort (including negligence), contract, or otherwise,
+      unless required by applicable law (such as deliberate and grossly
+      negligent acts) or agreed to in writing, shall any Contributor be
+      liable to You for damages, including any direct, indirect, special,
+      incidental, or consequential damages of any character arising as a
+      result of this License or out of the use or inability to use the
+      Work (including but not limited to damages for loss of goodwill,
+      work stoppage, computer failure or malfunction, or any and all
+      other commercial damages or losses), even if such Contributor
+      has been advised of the possibility of such damages.
+
+   9. Accepting Warranty or Additional Liability. While redistributing
+      the Work or Derivative Works thereof, You may choose to offer,
+      and charge a fee for, acceptance of support, warranty, indemnity,
+      or other liability obligations and/or rights consistent with this
+      License. However, in accepting such obligations, You may act only
+      on Your own behalf and on Your sole responsibility, not on behalf
+      of any other Contributor, and only if You agree to indemnify,
+      defend, and hold each Contributor harmless for any liability
+      incurred by, or claims asserted against, such Contributor by reason
+      of your accepting any such warranty or additional liability.
+
+   END OF TERMS AND CONDITIONS
+
+   APPENDIX: How to apply the Apache License to your work.
+
+      To apply the Apache License to your work, attach the following
+      boilerplate notice, with the fields enclosed by brackets "[]"
+      replaced with your own identifying information. (Don't include
+      the brackets!)  The text should be enclosed in the appropriate
+      comment syntax for the file format. We also recommend that a
+      file or class name and description of purpose be included on the
+      same "printed page" as the copyright notice for easier
+      identification within third-party archives.
+
+   Copyright 2020 Dimforge EURL
+
+   Licensed under the Apache License, Version 2.0 (the "License");
+   you may not use this file except in compliance with the License.
+   You may obtain a copy of the License at
+
+       http://www.apache.org/licenses/LICENSE-2.0
+
+   Unless required by applicable law or agreed to in writing, software
+   distributed under the License is distributed on an "AS IS" BASIS,
+   WITHOUT WARRANTIES OR CONDITIONS OF ANY KIND, either express or implied.
+   See the License for the specific language governing permissions and
+   limitations under the License.
+
+# Clinical patient model
+
+`patient.glb` is a self-contained adult male patient with a human surface, 163-joint skeleton, skin weights, eyes, brows, and embedded textures. It uses meters, +Y up, and +Z forward with an A-pose bind stance. The figure is approximately 1.79 m tall.
+
+## Source and license
+
+- Base mesh and rig from Innerscene's [Male base mesh, rigged A-pose](https://www.innerscene.com/tools/library/3d-parts/male-base-mesh-3d-person-rigged-a-pose-380e6d89), adapted from MakeHuman and published under [CC0 1.0](https://creativecommons.org/publicdomain/zero/1.0/).
+- Skin, brown iris and eyebrows from the [MakeHuman System Assets pack](https://static.makehumancommunity.org/assets/assetpacks/makehuman_system_assets.html), published under CC0 1.0. The embedded textures derive from `middleage_asian_male`, `brown_eye.png` and `eyebrow001.png`.
+- This edition restores the exposed clinical surface, adds pore detail, and adapts the protected geometry and skin atlas for localized privacy.
+
+## Coverage
+
+The visible surface includes the scalp, chest, abdomen, shoulders, hips, hands, legs and feet. Local masking covers the genital and perineal region and a narrow posterior midline. The exported mesh has smoothed geometry in these regions and an opaque surface. Its baked atlas replaces the original protected texels with softly blurred neighboring skin tones. The protected surface uses the same skin weights as the surrounding body. The runtime does not add a removable overlay.
+
+## Rig mapping
+
+| Body area | GLB joint names |
+| –- | –- |
+| Root | `root` |
+| Spine | `spine05`, `spine04`, `spine03`, `spine02`, `spine01` |
+| Neck and head | `neck01`, `neck02`, `neck03`, `head` |
+| Shoulders and upper arms | `shoulder01.L`, `shoulder01.R`, `upperarm01.L`, `upperarm01.R` |
+| Elbows and wrists | `lowerarm01.L`, `lowerarm01.R`, `wrist.L`, `wrist.R` |
+| Hips and knees | `upperleg01.L`, `upperleg01.R`, `lowerleg01.L`, `lowerleg01.R` |
+| Ankles | `foot.L`, `foot.R` |
+
+-->
+<dialog id="vitals-dialog" class="vitals-dialog" aria-labelledby="vitals-title">
+  <header><div><h2 id="vitals-title">شاشة العلامات الحيوية</h2><span>قراءات محاكاة</span></div><button id="vitals-close" type="button" aria-label="إغلاق الشاشة">×</button></header>
+  <canvas id="vitals-display" width="960" height="540" role="img" aria-label="موجات العلامات الحيوية المحاكية"></canvas>
+  <footer id="vitals-question" hidden>
+    <p>أي رمز على الشاشة يشير إلى تشبّع الأكسجين؟</p>
+    <div class="vitals-choices">
+      <button class="secondary-button" data-vital-choice type="button">HR</button>
+      <button id="vitals-confirm" class="secondary-button" type="button">SpO₂</button>
+      <button class="secondary-button" data-vital-choice type="button">RR</button>
+    </div>
+    <p id="vitals-answer" role="status"></p>
+  </footer>
+</dialog>
+<script type="module" src="./src/engine.js"></script>
+</body>
+</html>

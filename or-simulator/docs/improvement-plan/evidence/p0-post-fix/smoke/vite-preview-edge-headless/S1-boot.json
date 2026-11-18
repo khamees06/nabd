@@ -1,0 +1,155 @@
+{
+  "flow": "S1-boot",
+  "server": "vite-preview",
+  "project": "edge",
+  "mode": true,
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.46",
+  "capturedAt": "2026-11-14T17:49:23.149Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "readyMs": 3262,
+  "ui": {
+    "forearmEnabled": true,
+    "anatomyEnabled": true,
+    "trainingToolEnabled": true,
+    "modelStatus": "المجسم جاهز",
+    "qaKeys": [
+      "getTargets",
+      "getAssetStatus",
+      "getSimulationState",
+      "getScopePixels",
+      "getState",
+      "getCamera",
+      "workMoving",
+      "getJoints",
+      "setPose"
+    ],
+    "nabdSimulationKeys": [
+      "getState",
+      "getEvents",
+      "exportEvents",
+      "clear"
+    ],
+    "webgl": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A6) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "reducedMotion": false,
+    "devicePixelRatio": 1,
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) HeadlessChrome/157.0.0.0 Safari/537.36 Edg/157.0.0.0"
+  },
+  "supervisorVisible": true,
+  "handsVisible": true,
+  "assetStatus": {
+    "operatingTable": true,
+    "surgicalLightsAndPendant": true,
+    "anesthesiaWorkstation": true
+  },
+  "counters": {
+    "raw": {
+      "fps": "FPS 136",
+      "frame": "Frame 6.9 ms",
+      "draw": "Draw 1206",
+      "triangles": "Triangles 387,848",
+      "assets": "Geo 1126 · Tex 17",
+      "events": "Events 0"
+    },
+    "drawCalls": 1206,
+    "triangles": 387848,
+    "overlayFps": 136
+  },
+  "camera": {
+    "getCamera": [
+      0.735,
+      1.6,
+      0.15
+    ],
+    "cameraRotation": [
+      -0.6,
+      1.5707963267948966,
+      0,
+      "YXZ"
+    ],
+    "cameraFov": 62,
+    "mode": true,
+    "workMoving": false,
+    "detailView": "بجانب السرير",
+    "cameraLabel": "منظور المتدرّب"
+  },
+  "network": {
+    "modules": {
+      "count": 1,
+      "allOk": true,
+      "list": [
+        {
+          "path": "/assets/index-Bqn62syv.js",
+          "status": 200,
+          "type": "script"
+        }
+      ]
+    },
+    "glbs": {
+      "count": 9,
+      "allOk": true,
+      "list": [
+        {
+          "path": "/assets/operating-table/base.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/operating-table/top.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/surgical-system/light-pendant-system.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/anesthesia/workstation.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/staff/glove-left.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/staff/glove-right.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/staff/supervisor.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/patient/patient.glb",
+          "status": 200,
+          "type": "fetch"
+        },
+        {
+          "path": "/assets/anatomy/internal-atlas.glb",
+          "status": 200,
+          "type": "fetch"
+        }
+      ]
+    },
+    "rapier": [
+      {
+        "path": "/vendor/rapier/rapier.mjs",
+        "status": 200,
+        "type": "script"
+      }
+    ],
+    "notOk": [],
+    "failed": [],
+    "foreignOrigin": [],
+    "totalResponses": 22
+  },
+  "M11": 0,
+  "errors": [],
+  "warnings": []
+}

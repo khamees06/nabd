@@ -1,0 +1,145 @@
+{
+  "check": "C6-a-lamp-lights-1440x900",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:47:10.742Z",
+  "result": {
+    "assets": {
+      "operatingTable": true,
+      "surgicalLightsAndPendant": true,
+      "anesthesiaWorkstation": true
+    },
+    "lamps": [
+      {
+        "name": "NabdLampTaskLight0",
+        "type": "SpotLight",
+        "color": "#fffbf1",
+        "intensity": 1.18,
+        "castShadow": false,
+        "lit": true,
+        "position": [
+          -0.83,
+          2.94,
+          0.05
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.15
+        ]
+      },
+      {
+        "name": "NabdLampTaskLight1",
+        "type": "SpotLight",
+        "color": "#fffbf1",
+        "intensity": 1.18,
+        "castShadow": false,
+        "lit": true,
+        "position": [
+          0.83,
+          2.94,
+          -0.28
+        ],
+        "target": [
+          0,
+          0.95,
+          -0.15
+        ]
+      }
+    ],
+    "visibleLights": [
+      {
+        "type": "SpotLight",
+        "name": "NabdLampTaskLight0",
+        "intensity": 1.18
+      },
+      {
+        "type": "SpotLight",
+        "name": "NabdLampTaskLight1",
+        "intensity": 1.18
+      },
+      {
+        "type": "HemisphereLight",
+        "name": "",
+        "intensity": 1.22
+      },
+      {
+        "type": "DirectionalLight",
+        "name": "",
+        "intensity": 1.25
+      },
+      {
+        "type": "DirectionalLight",
+        "name": "",
+        "intensity": 0.38
+      }
+    ],
+    "aimV1": [
+      0,
+      0
+    ],
+    "lampFaceErrorM": [
+      0,
+      0
+    ],
+    "lumaV1": {
+      "lampsOn": {
+        "canvas": {
+          "meanLuma": 121.7,
+          "clippedPct": 0.09
+        },
+        "patientTorso": {
+          "meanLuma": 144.8,
+          "clippedPct": 0
+        },
+        "room": {
+          "meanLuma": 96.3,
+          "clippedPct": 0
+        }
+      },
+      "lampsOff": {
+        "canvas": {
+          "meanLuma": 113.9,
+          "clippedPct": 0.09
+        },
+        "patientTorso": {
+          "meanLuma": 129.6,
+          "clippedPct": 0
+        },
+        "room": {
+          "meanLuma": 94,
+          "clippedPct": 0
+        }
+      },
+      "gainPct": {
+        "canvas": 6.8,
+        "patientTorso": 11.7,
+        "room": 2.4
+      }
+    },
+    "drill": {
+      "lightTarget": [
+        0.3051951911649788,
+        0.9827970622183444,
+        0.07486886198952714
+      ],
+      "aim": [
+        0,
+        0
+      ],
+      "targetMovedM": 0.3805,
+      "targetToWristM": 0,
+      "lit": [
+        true,
+        true
+      ]
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,60 @@
+{
+  "check": "Test-only probe: cost of the main patient-skin raycast during 4 s of hover (Chrome 157 headless, 1440x900, V1), wrapping SkinnedMesh.raycast via the three.js devtools hook",
+  "capturedAt": "2026-11-17",
+  "runs": [
+    {
+      "tree": "9c5f55f (after C2-C5)",
+      "skinBoundingSphereRadiusM": 1.3283,
+      "boundingBox": null,
+      "room": {
+        "casts": 86,
+        "hits": 0,
+        "medianMs": 40,
+        "under1ms": 0
+      },
+      "patient": {
+        "casts": 79,
+        "hits": 62,
+        "medianMs": 40,
+        "under1ms": 0
+      }
+    },
+    {
+      "tree": "059b46f (before C2)",
+      "skinBoundingSphereRadiusM": 0.9283,
+      "boundingBox": null,
+      "room": {
+        "casts": 73,
+        "hits": 0,
+        "medianMs": 39,
+        "under1ms": 0
+      },
+      "patient": {
+        "casts": 73,
+        "hits": 59,
+        "medianMs": 39.6,
+        "under1ms": 0
+      }
+    },
+    {
+      "tree": "9c5f55f with a test-only expanded bounding box (+0.4 m)",
+      "room": {
+        "casts": 87,
+        "hits": 0,
+        "medianMs": 40.1,
+        "under1ms": 0
+      },
+      "patient": {
+        "casts": 79,
+        "hits": 64,
+        "medianMs": 40.3,
+        "under1ms": 0
+      }
+    }
+  ],
+  "bands": {
+    "room": "pointer along y = 12 % of the canvas, x = centre ± 40 %",
+    "patient": "pointer along y = 47 %, x = centre ± 15 %"
+  },
+  "conclusion": "Every hover pick costs about 40 ms in both trees, also for rays that hit nothing; a box early-out does not help in V1."
+}

@@ -1,0 +1,117 @@
+{
+  "check": "C2-5-surface-grip-1440x900",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:36:31.931Z",
+  "result": {
+    "pinch": [
+      {
+        "attempt": 1,
+        "attachMs": 667,
+        "gapAtAttachM": 0.0156,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 2,
+        "attachMs": 524,
+        "gapAtAttachM": 0.0165,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 3,
+        "attachMs": 604,
+        "gapAtAttachM": 0.0136,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 4,
+        "attachMs": 603,
+        "gapAtAttachM": 0.0158,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      {
+        "attempt": 5,
+        "attachMs": 689,
+        "gapAtAttachM": 0.0145,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      }
+    ],
+    "pinchMotion": {
+      "frames": 421,
+      "maxTurnDeg": 5.83,
+      "turnAtMs": 3405,
+      "maxStepM": 0.025,
+      "maxStep": {
+        "atMs": 6575,
+        "dtMs": 11,
+        "dyM": 0.0038
+      },
+      "minFingersForward": 0.975,
+      "renderIntervalP50Ms": 14.5
+    },
+    "pinchSleeve": {
+      "framesWithSleeve": 421,
+      "maxLength": 0.3
+    },
+    "slide": {
+      "pressMs": 421,
+      "slideMs": 2213,
+      "pathPx": 200,
+      "amplitudePx": 50,
+      "samples": 40,
+      "maxShiftY": -0.00691,
+      "minShiftY": -0.00691,
+      "recentres": 4,
+      "grip": "press",
+      "shifts": [
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691,
+        -0.00691
+      ]
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,206 @@
+{
+  "base": "http://127.0.0.1:4594",
+  "startedAt": "2026-11-17T15:28:52.365Z",
+  "runs": {
+    "wide-look": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "hover5s": {
+        "fps": 23,
+        "p50": 41.70000000000073,
+        "p95": 48.79999999999927,
+        "pointerMoves": 117
+      },
+      "idle1s": {
+        "fps": 136,
+        "p50": 7
+      },
+      "arrowLeft700ms": {
+        "yawDeg": 65,
+        "movedM": 0
+      },
+      "turnRightButtonClick": {
+        "yawDeg": -15
+      },
+      "rightDrag200pxLeft": {
+        "yawDeg": 44.7
+      },
+      "hint": "اسحب بالزر الأيمن أو ←/→ للالتفات · L لتغيير النظر",
+      "ms": 15143,
+      "consoleErrors": []
+    },
+    "wide-abdomen": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "press": {
+        "attachMs": 352,
+        "contactGapM": 0.025,
+        "status": "جسّ خفيف · الأصابع لامست السطح"
+      },
+      "pinch": {
+        "attachMs": 482,
+        "gapM": 0.0162,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      "flank": {
+        "attachMs": 276,
+        "grip": "touch",
+        "status": "الأصابع لامست سطح المريض",
+        "heightFieldPenetrationM": 0.0404
+      },
+      "ms": 13806,
+      "consoleErrors": []
+    },
+    "wide-drill": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "drill": {
+        "gripped": true,
+        "gripMs": 311,
+        "statusAfterClick": "تم إمساك الطرف · حرّكه ضمن مداه",
+        "liftM": {
+          "dx": 0,
+          "dy": 0.1019,
+          "dz": 0
+        },
+        "statusLifted": "تم إمساك الطرف · حرّكه ضمن مداه",
+        "distanceFromRest2300msM": 0
+      },
+      "ms": 10241,
+      "consoleErrors": []
+    },
+    "wide-ankle": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "marker": {
+        "x": 536.4000377655029,
+        "y": 337.1416317286452
+      },
+      "attachMs": 221,
+      "statusGrip": "تم إمساك الطرف · حرّكه ضمن مداه",
+      "liftM": {
+        "dx": -0.0003,
+        "dy": 0.1191,
+        "dz": -0.0052
+      },
+      "distanceFromRest2300msM": 0,
+      "ms": 11126,
+      "consoleErrors": []
+    },
+    "wide-scissors-walk": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "pickMs": 497,
+      "pickWallMs": 500,
+      "nearSide": {
+        "cameraX": 0.76,
+        "status": "الأداة في يدك فوق الجلد · حرّك المؤشر لتحريكها · انقر للإفلات"
+      },
+      "midWalk": {
+        "atMs": 731,
+        "cameraX": 0.76,
+        "yawDeg": 137.7
+      },
+      "walkMs": 3709,
+      "farSide": {
+        "cameraX": -0.76,
+        "grip": "tool",
+        "tipClearanceM": 0.071,
+        "status": "الأداة في يدك فوق الجلد · حرّك المؤشر لتحريكها · انقر للإفلات"
+      },
+      "ms": 16051,
+      "consoleErrors": []
+    },
+    "wide-scope-monitor": {
+      "viewport": {
+        "width": 1440,
+        "height": 900
+      },
+      "pickMs": 506,
+      "aligned": true,
+      "percent": 53,
+      "monitor": {
+        "looking": true,
+        "live": true,
+        "fov": 24.1
+      },
+      "afterEscape": {
+        "percent": 53,
+        "grip": null,
+        "status": "فلّت الأداة وهي ثابتة في فتحة التدريب"
+      },
+      "ms": 15199,
+      "consoleErrors": []
+    },
+    "narrow-look": {
+      "viewport": {
+        "width": 560,
+        "height": 890
+      },
+      "canvasTopAfterStart": -0.4,
+      "scrollY": 71.19999694824219,
+      "arrowLeft700ms": {
+        "yawDeg": 64.4,
+        "movedM": 0
+      },
+      "turnRightButtonClick": {
+        "yawDeg": -15
+      },
+      "rightDrag200pxLeft": {
+        "yawDeg": 44.7
+      },
+      "ms": 7954,
+      "consoleErrors": []
+    },
+    "narrow-abdomen": {
+      "viewport": {
+        "width": 560,
+        "height": 890
+      },
+      "press": {
+        "attachMs": 319,
+        "contactGapM": 0.025,
+        "status": "جسّ خفيف · الأصابع لامست السطح"
+      },
+      "pinch": {
+        "attachMs": 429,
+        "gapM": 0.0145,
+        "status": "السطح بين الأصابع · اسحب برفق"
+      },
+      "ms": 10095,
+      "consoleErrors": []
+    },
+    "narrow-drill": {
+      "viewport": {
+        "width": 560,
+        "height": 890
+      },
+      "drill": {
+        "gripped": true,
+        "gripMs": 287,
+        "statusAfterClick": "تم إمساك الطرف · حرّكه ضمن مداه",
+        "liftM": {
+          "dx": -0.001,
+          "dy": 0.142,
+          "dz": -0.0053
+        },
+        "statusLifted": "تم إمساك الطرف · حرّكه ضمن مداه",
+        "distanceFromRest2300msM": 0
+      },
+      "ms": 10118,
+      "consoleErrors": []
+    }
+  },
+  "browserVersion": "157.0.8103.51",
+  "finishedAt": "2026-11-17T15:30:44.184Z"
+}

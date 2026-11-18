@@ -1,0 +1,42 @@
+{
+  "check": "C1-2b-patient-drag-cursors-560x890",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:58:48.460Z",
+  "result": {
+    "cursors": [
+      "all-scroll",
+      "not-allowed",
+      "crosshair"
+    ],
+    "skin": {
+      "x": 392.97999999999996,
+      "y": 331,
+      "cursor": "crosshair"
+    },
+    "far": {
+      "x": 54.04,
+      "y": 331,
+      "cursor": "not-allowed"
+    },
+    "statusOnPress": "لمس سطح المريض",
+    "patientDragYawDeg": -13.407212406061237,
+    "statusAfterDrag": "واقف بجانب المريض",
+    "reachAfterDrag": {
+      "left": null,
+      "right": null
+    },
+    "farCursorAgain": "not-allowed",
+    "feedbackOnFarPress": "",
+    "farDragYawDeg": 13.183758865960215,
+    "feedbackAfterFarDrag": "",
+    "feedbackAfterFarClick": "الهدف خارج مدى إيدك. قرّب وقفتك من السرير."
+  },
+  "errors": []
+}

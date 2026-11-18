@@ -1,0 +1,73 @@
+{
+  "schemaVersion": 1,
+  "generatedAt": "2026-11-12T20:08:59.675Z",
+  "assetCount": 13,
+  "totalBytes": 22134700,
+  "assets": [
+    {
+      "path": "assets/anatomy/PROVENANCE.md",
+      "bytes": 1903,
+      "sha256": "f87fa9789270308149372f15c8c48498d65ddd5cd66b8e3e2786f934fefec7f8"
+    },
+    {
+      "path": "assets/anatomy/internal-atlas.glb",
+      "bytes": 4525104,
+      "sha256": "2a513ef7ac2e594f522776240f650ea964f507223747b50d80c41a7e26814b5d"
+    },
+    {
+      "path": "assets/anatomy/structure-sources.json",
+      "bytes": 4467,
+      "sha256": "a0cb0379de4187e79c5f2926113ec05e2d8a2abdda361612022db21d4a497d97"
+    },
+    {
+      "path": "assets/anesthesia/workstation.glb",
+      "bytes": 117648,
+      "sha256": "9c9a91be00bd33dd1ad865995e9a6adaf77b64cef2ac7b823432e2eb8add80de"
+    },
+    {
+      "path": "assets/operating-table/base.glb",
+      "bytes": 36400,
+      "sha256": "fb85486ee80da468296be6715d6839f18d3c5ca3f2d98db241d85cdaa0d858cd"
+    },
+    {
+      "path": "assets/operating-table/top.glb",
+      "bytes": 51224,
+      "sha256": "4b79ede772593ca573e6d79b6bb8810cb962b7a5dcc6a3ef80fb0627b4e84399"
+    },
+    {
+      "path": "assets/patient/ASSET-PROVENANCE.md",
+      "bytes": 823,
+      "sha256": "c6368daa154e31b94133695b333e3b5719c4512f817c194bd013db28cb6ff597"
+    },
+    {
+      "path": "assets/patient/patient.glb",
+      "bytes": 8097160,
+      "sha256": "e80a5a1da7cb0d2f1f2822496090912ae4d06d3839a338dfcdae5bb7fa1ff779"
+    },
+    {
+      "path": "assets/staff/ASSET-PROVENANCE.md",
+      "bytes": 403,
+      "sha256": "036d7a6db4398ce05c2a32265218dca9827912144f91e0300fdfd1ce3586930a"
+    },
+    {
+      "path": "assets/staff/glove-left.glb",
+      "bytes": 628380,
+      "sha256": "8232611fe75296e57ea082232fe4e0e247ed29158f16eebc14a8537c30157517"
+    },
+    {
+      "path": "assets/staff/glove-right.glb",
+      "bytes": 628552,
+      "sha256": "f3ca18933e50147cb6fae121afc5f3031b1bd1093ea1e845f2610a13c162ae59"
+    },
+    {
+      "path": "assets/staff/supervisor.glb",
+      "bytes": 7907564,
+      "sha256": "e839f688ae69bb3e1935b1570eb2cfcebbd1b8294f8cb1523d8aa4eeb9ba800c"
+    },
+    {
+      "path": "assets/surgical-system/light-pendant-system.glb",
+      "bytes": 135072,
+      "sha256": "b3f7d2f19e01eeae04c417021fcafe0fd5abb62805f87fccbaa190d671bec003"
+    }
+  ]
+}

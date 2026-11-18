@@ -1,0 +1,4 @@
+grasper:5.83/5.83@815ms attach 661  scope:5.83/5.83@877ms attach 747  scissors:5.83/5.83@677ms attach 583  needleHolder:5.83/5.83@823ms attach 717
+grasper:5.83/5.83@890ms attach 559  scope:5.83/5.83@868ms attach 544  scissors:5.83/5.83@731ms attach 594  needleHolder:5.83/5.83@769ms attach 666
+grasper:5.83/5.83@803ms attach 528  scope:5.83/5.83@1250ms attach 797  scissors:5.83/5.83@896ms attach 728  needleHolder:6.72/5.83@705ms attach 653
+grasper:5.83/5.83@791ms attach 584  scope:5.83/5.83@790ms attach 514  scissors:5.83/5.83@885ms attach 536  needleHolder:5.83/5.83@752ms attach 647

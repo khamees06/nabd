@@ -1,0 +1,7 @@
+
+> nabd-clinical-simulator@1.5.0 preview:standalone
+> node scripts/build-preview.mjs
+
+Built standalone preview: dist\Nabd-Clinical-Simulator-v1.5-Preview.html (34.78 MiB)
+exit 0
+rapier-line=2 apache-header=6 apache-terms=1 dimforge=2

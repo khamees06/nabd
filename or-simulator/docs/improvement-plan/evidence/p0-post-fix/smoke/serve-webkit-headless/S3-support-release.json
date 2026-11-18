@@ -1,0 +1,77 @@
+{
+  "flow": "S3-support-release",
+  "server": "serve",
+  "project": "webkit",
+  "mode": "headless",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "capturedAt": "2026-11-14T17:08:23.489Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "gripAttempts": [
+    {
+      "attempt": 1,
+      "offsetPx": [
+        0,
+        0
+      ],
+      "outcome": "gripped",
+      "ms": 506,
+      "glove": {
+        "left": [
+          0.6014624149615294,
+          1.059417937386906,
+          0.2498688619895315
+        ],
+        "right": [
+          0.4507815777751201,
+          1.102094018355764,
+          0.09595070611783915
+        ]
+      }
+    }
+  ],
+  "restWristY": 0.9827970622183442,
+  "liftedWristY": 1.092489414657301,
+  "assistLabelSupported": "إنهاء المساندة",
+  "supportGap": 0.0007250597408366282,
+  "forearmSupported": {
+    "state": "gripped",
+    "overlap": 0,
+    "stops": 81,
+    "supportGap": 0.0007250597408366282,
+    "gap": 0.027012194978761027,
+    "contact": [
+      0.3166416439015243,
+      1.111945464844725,
+      0.07041750399384192
+    ]
+  },
+  "feedbackAfterRelease": "المشرف مسنّد الساعد",
+  "forearmReleased": {
+    "state": "idle",
+    "overlap": 0,
+    "stops": 83,
+    "supportGap": 0.00001699484672244828,
+    "gap": null,
+    "contact": null
+  },
+  "releasedWristY": 1.092489414657301,
+  "raisedAfterReleaseM": 0.10969235243895681,
+  "afterEndSupport": {
+    "forearm": {
+      "state": "idle",
+      "overlap": 0,
+      "stops": 83,
+      "supportGap": null,
+      "gap": null,
+      "contact": null
+    },
+    "wristY": 0.9827970622183442,
+    "aboveRestM": 0,
+    "feedback": "",
+    "assistLabel": "اطلب مساندة المشرف"
+  },
+  "M11": 0,
+  "errors": []
+}

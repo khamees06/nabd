@@ -1,0 +1,111 @@
+{
+  "check": "C1-7-view-on-screen-wheel-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T15:55:08.275Z",
+  "result": {
+    "steps": [
+      {
+        "step": "start",
+        "canvasTop": 83,
+        "canvasBottom": 700.953125,
+        "scrollY": 0
+      },
+      {
+        "step": "confirm",
+        "canvasTop": 83,
+        "canvasBottom": 700.953125,
+        "scrollY": 0
+      },
+      {
+        "step": "abdomen",
+        "canvasTop": 83,
+        "canvasBottom": 653,
+        "scrollY": 0
+      },
+      {
+        "step": "region-select",
+        "canvasTop": -42,
+        "canvasBottom": 528,
+        "scrollY": 125
+      },
+      {
+        "step": "drill",
+        "canvasTop": 83,
+        "canvasBottom": 653,
+        "scrollY": 0
+      }
+    ],
+    "pickup": {
+      "beforePickup": {
+        "canvas": {
+          "left": 17,
+          "top": 83,
+          "right": 1071,
+          "bottom": 700.953125,
+          "width": 1054,
+          "height": 617.953125,
+          "visible": true
+        },
+        "docHeight": 900
+      },
+      "afterPickup": {
+        "canvas": {
+          "left": 17,
+          "top": 83,
+          "right": 1071,
+          "bottom": 700.953125,
+          "width": 1054,
+          "height": 617.953125,
+          "visible": true
+        },
+        "docHeight": 900
+      }
+    },
+    "depthBar": {
+      "bar": {
+        "left": 29,
+        "top": 596.953125,
+        "right": 1059,
+        "bottom": 640.953125,
+        "width": 1030,
+        "height": 44,
+        "visible": true
+      },
+      "viewport": {
+        "left": 17,
+        "top": 83,
+        "right": 1071,
+        "bottom": 700.953125,
+        "width": 1054,
+        "height": 617.953125,
+        "visible": true
+      }
+    },
+    "heldToolButtons": {
+      "zoomIn": true,
+      "stepHead": true
+    },
+    "aimWheel": {
+      "fovBefore": 62,
+      "fovAfter": 54.5,
+      "scrollY": 0,
+      "grip": "tool",
+      "paused": true,
+      "fovAfterOut": 57,
+      "scrollYAfterOut": 0
+    },
+    "workstationButtons": {
+      "zoomIn": false,
+      "stepHead": false
+    }
+  },
+  "innerHeight": 900,
+  "errors": []
+}

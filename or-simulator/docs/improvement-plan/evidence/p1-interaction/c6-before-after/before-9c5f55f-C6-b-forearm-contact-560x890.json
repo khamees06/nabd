@@ -1,0 +1,43 @@
+{
+  "check": "C6-b-forearm-contact-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T14:21:27.200Z",
+  "result": {
+    "releaseMotion": {
+      "frames": 78,
+      "maxTurnDeg": 5.83,
+      "turnAtMs": 41,
+      "maxStepM": 0.025,
+      "maxStep": {
+        "atMs": 41,
+        "dtMs": 7.2,
+        "dyM": -0.0157
+      },
+      "minFingersForward": 0.973,
+      "renderIntervalP50Ms": 13.5
+    },
+    "turnDrift": {
+      "frames": 93,
+      "maxFrameStepM": 0.0044,
+      "maxFromStartM": 0.017
+    },
+    "leftGripOk": true,
+    "leftCollision": {
+      "overlap": 0,
+      "stops": 80
+    },
+    "afterTurnWhileLeftHolds": {
+      "overlap": 0,
+      "stops": 141,
+      "state": "gripped"
+    }
+  },
+  "errors": []
+}

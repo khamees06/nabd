@@ -1,0 +1,166 @@
+{
+  "check": "C4-11d-scope-monitor-roll-escape-1440x900",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-14T23:53:44.993Z",
+  "result": {
+    "attachMs": 501,
+    "monitor": {
+      "fov": 52,
+      "fill": {
+        "height": 0.254,
+        "width": 0.24,
+        "centre": [
+          0.007,
+          0.003
+        ]
+      },
+      "looking": true,
+      "live": true
+    },
+    "rollPlus": {
+      "roll": -135,
+      "plusDisabled": false,
+      "minusDisabled": false,
+      "status": "تنظر إلى الشاشة · استخدم أزرار العمق والدوران"
+    },
+    "rollBack": {
+      "roll": -150,
+      "plusDisabled": false,
+      "minusDisabled": false,
+      "status": "تنظر إلى الشاشة · استخدم أزرار العمق والدوران"
+    },
+    "rollMinus": {
+      "roll": -15,
+      "plusDisabled": false,
+      "minusDisabled": false,
+      "status": "تنظر إلى الشاشة · استخدم أزرار العمق والدوران"
+    },
+    "rollZero": {
+      "roll": 75,
+      "plusDisabled": false,
+      "minusDisabled": false,
+      "status": "تنظر إلى الشاشة · استخدم أزرار العمق والدوران"
+    },
+    "back": {
+      "fov": 52,
+      "angles": {
+        "pitch": 0,
+        "yaw": 0,
+        "roll": 75,
+        "insertion": 0.072
+      }
+    },
+    "resumed": {
+      "angles": {
+        "pitch": 16,
+        "yaw": -10,
+        "roll": 75,
+        "insertion": 0.072
+      },
+      "percent": 53
+    },
+    "steer": {
+      "angles": {
+        "pitch": 10,
+        "yaw": -10,
+        "roll": 75,
+        "insertion": 0.072
+      },
+      "resume": {
+        "frames": 53,
+        "toolMaxTurnDeg": 2.67,
+        "toolMaxStepM": 0.0098,
+        "handMaxTurnDeg": 2.67,
+        "handMaxStepM": 0.0139,
+        "camMaxTurnDeg": 2.67,
+        "camMaxStepM": 0.0098,
+        "toolTurnAtMs": 24,
+        "toolStepAtMs": 24,
+        "maxShaftCamZ": -0.7271,
+        "maxToolCamZ": -0.6866,
+        "camStep": {
+          "atMs": 24,
+          "dtMs": 8.5,
+          "from": [
+            0.013,
+            0.139,
+            -0.687
+          ],
+          "to": [
+            0.023,
+            0.139,
+            -0.688
+          ],
+          "cameraMovedM": 0,
+          "cameraTurnDeg": 0
+        },
+        "toolTotalTurnDeg": 9.4,
+        "toolTravelM": 0.0346
+      },
+      "move": {
+        "frames": 57,
+        "toolMaxTurnDeg": 0.91,
+        "toolMaxStepM": 0.0034,
+        "handMaxTurnDeg": 0.91,
+        "handMaxStepM": 0.0047,
+        "camMaxTurnDeg": 0.91,
+        "camMaxStepM": 0.0034,
+        "toolTurnAtMs": 126,
+        "toolStepAtMs": 126,
+        "maxShaftCamZ": -0.7271,
+        "maxToolCamZ": -0.6869,
+        "camStep": {
+          "atMs": 126,
+          "dtMs": 33.2,
+          "from": [
+            0.036,
+            0.139,
+            -0.688
+          ],
+          "to": [
+            0.033,
+            0.139,
+            -0.688
+          ],
+          "cameraMovedM": 0,
+          "cameraTurnDeg": 0
+        },
+        "toolTotalTurnDeg": 5.4,
+        "toolTravelM": 0.0198
+      }
+    },
+    "resumeAngleChangeDeg": 16,
+    "steerAngleChangeDeg": 6,
+    "escape": {
+      "before": {
+        "percent": 53,
+        "grip": "tool"
+      },
+      "mode": "tray",
+      "grip": null,
+      "toolVisible": false,
+      "percent": 0,
+      "live": false,
+      "focused": true,
+      "status": "تم إفلات الأداة · رجعت للصينية"
+    },
+    "field": {
+      "fov": 52,
+      "angles": {
+        "pitch": 0,
+        "yaw": 0,
+        "roll": 0,
+        "insertion": 0.072
+      },
+      "percent": 53
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,142 @@
+{
+  "check": "C5-8b-bedside-moves-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-17T15:21:48.390Z",
+  "result": {
+    "stepHead": {
+      "frames": 32,
+      "maxYawDeg": 0,
+      "maxTurnDeg": 0,
+      "maxStepM": 0.0224,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 23,
+      "turningFrames": 0,
+      "fovFrames": 0,
+      "yawAtMs": null,
+      "stepAtMs": 200,
+      "totalStepM": 0.1796,
+      "totalYawDeg": 0,
+      "fov": [
+        76,
+        76
+      ],
+      "durationMs": 944
+    },
+    "stepNear1": {
+      "frames": 34,
+      "maxYawDeg": 0,
+      "maxTurnDeg": 0,
+      "maxStepM": 0.0105,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 25,
+      "turningFrames": 0,
+      "fovFrames": 0,
+      "yawAtMs": null,
+      "stepAtMs": 169,
+      "totalStepM": 0.085,
+      "totalYawDeg": 0,
+      "fov": [
+        76,
+        76
+      ],
+      "durationMs": 950
+    },
+    "stepNear2": {
+      "frames": 10,
+      "maxYawDeg": 0,
+      "maxTurnDeg": 0,
+      "maxStepM": 0,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 0,
+      "turningFrames": 0,
+      "fovFrames": 0,
+      "yawAtMs": null,
+      "stepAtMs": null,
+      "totalStepM": 0,
+      "totalYawDeg": 0,
+      "fov": [
+        76,
+        76
+      ],
+      "durationMs": 685,
+      "status": "وصلت إلى حافة السرير · افتح منطقة عمل لتدور حوله"
+    },
+    "recentre": {
+      "frames": 52,
+      "maxYawDeg": 3.54,
+      "maxTurnDeg": 3.54,
+      "maxStepM": 0.0156,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 41,
+      "turningFrames": 41,
+      "fovFrames": 0,
+      "yawAtMs": 276,
+      "stepAtMs": 276,
+      "totalStepM": 0.1991,
+      "totalYawDeg": -45.14,
+      "fov": [
+        76,
+        76
+      ],
+      "durationMs": 1228,
+      "positionError": 0,
+      "yawDeg": 90
+    },
+    "stepRecentre": {
+      "frames": 45,
+      "maxYawDeg": 2.98,
+      "maxTurnDeg": 2.98,
+      "maxStepM": 0.0249,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 35,
+      "turningFrames": 35,
+      "fovFrames": 0,
+      "yawAtMs": 306,
+      "stepAtMs": 306,
+      "totalStepM": 0.3071,
+      "totalYawDeg": 36.86,
+      "fov": [
+        76,
+        76
+      ],
+      "durationMs": 1238,
+      "positionError": 0,
+      "yawErrorDeg": 0,
+      "status": "بجانب السرير · الصينية ومجال العمل"
+    },
+    "room": {
+      "frames": 85,
+      "maxYawDeg": 9.36,
+      "maxTurnDeg": 9.46,
+      "maxStepM": 0.2518,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 78,
+      "turningFrames": 78,
+      "fovFrames": 0,
+      "yawAtMs": 341,
+      "stepAtMs": 577,
+      "totalStepM": 4.1886,
+      "totalYawDeg": -92.12,
+      "fov": [
+        76,
+        76
+      ],
+      "durationMs": 1647,
+      "mode": false
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,68 @@
+{
+  "check": "C2-12-no-hitches-1440x900",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T16:01:55.000Z",
+  "result": {
+    "hover": {
+      "sweepMoves": 120,
+      "sweepRaycasts": 119,
+      "maxPerFrame": 1,
+      "burstMoves": 30,
+      "burstRaycasts": 1,
+      "tinyMoveRaycasts": 0,
+      "raycastMs": {
+        "p50": 88,
+        "max": 94
+      }
+    },
+    "limb": {
+      "gripMs": 221,
+      "grip": "wrist",
+      "drag": {
+        "frames": 79,
+        "fps": 31.5,
+        "p50Ms": 32,
+        "p95Ms": 40,
+        "maxMs": 45
+      },
+      "renderEveryFrameNoLimb": {
+        "frames": 86,
+        "fps": 32,
+        "p50Ms": 33,
+        "p95Ms": 41,
+        "maxMs": 52
+      },
+      "clickFrameMs": 21,
+      "boundingSphereRecomputes": 0,
+      "spheresKept": true,
+      "sphereRadius": 1.328,
+      "sleeveWhileHeld": {
+        "framesWithSleeve": 0,
+        "maxLength": 0
+      },
+      "sleeve": {
+        "framesWithSleeve": 123,
+        "maxLength": 0.3
+      }
+    },
+    "abdomenClick": {
+      "hoverThenClick": {
+        "frameMs": 24,
+        "raycastsNearClick": []
+      },
+      "clickStraightAfterMove": {
+        "frameMs": 107,
+        "raycastsNearClick": []
+      }
+    },
+    "boundingSphereRecomputesTotal": 0
+  },
+  "errors": []
+}

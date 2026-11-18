@@ -1,0 +1,30 @@
+{
+  "server": "vite-preview",
+  "project": "edge",
+  "tools": {
+    "grasper": {
+      "M11": 0,
+      "nanErrors": 0,
+      "knownF19": false,
+      "at": "2026-11-14T17:50:00.765Z"
+    },
+    "scope": {
+      "M11": 0,
+      "nanErrors": 0,
+      "knownF19": false,
+      "at": "2026-11-14T17:50:05.776Z"
+    },
+    "scissors": {
+      "M11": 0,
+      "nanErrors": 0,
+      "knownF19": false,
+      "at": "2026-11-14T17:50:10.783Z"
+    },
+    "needleHolder": {
+      "M11": 0,
+      "nanErrors": 0,
+      "knownF19": false,
+      "at": "2026-11-14T17:50:15.767Z"
+    }
+  }
+}

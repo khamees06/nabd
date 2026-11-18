@@ -1,0 +1,423 @@
+{
+  "flow": "S4-training-session",
+  "server": "vite-preview",
+  "project": "chrome",
+  "mode": "headless",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.51",
+  "capturedAt": "2026-11-14T15:33:20.065Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "steps": [
+    {
+      "step": "started",
+      "phase": "monitor",
+      "results": [],
+      "retries": 0,
+      "lift": 0,
+      "count": "1 / 5",
+      "instruction": "افتح الشاشة وحدّد رمز تشبّع الأكسجين.",
+      "feedback": "",
+      "startedWith": "#training-action"
+    },
+    {
+      "step": "step1-monitor-done",
+      "phase": "pickup",
+      "results": [
+        "monitor"
+      ],
+      "retries": 0,
+      "lift": 0,
+      "count": "2 / 5",
+      "instruction": "انقر على مقبض الأداة بالصينية.",
+      "feedback": "قراءة تشبّع الأكسجين صحيحة. هسّا امسك مقبض الأداة."
+    },
+    {
+      "step": "step2-pickup-done",
+      "phase": "aim",
+      "results": [
+        "monitor",
+        "pickup"
+      ],
+      "retries": 0,
+      "lift": 0,
+      "count": "3 / 5",
+      "instruction": "حرّك المؤشر لحد ما يصل طرف الأداة للحلقة.",
+      "feedback": "الأداة ثابتة بإيدك · حرّك المؤشر لتوجيهها",
+      "clickedHandle": {
+        "x": 283.07921978609687,
+        "y": 518.3872242557818
+      }
+    },
+    {
+      "step": "step3-aim-done",
+      "phase": "deposit",
+      "results": [
+        "monitor",
+        "pickup",
+        "aim"
+      ],
+      "retries": 0,
+      "lift": 0,
+      "count": "4 / 5",
+      "instruction": "حرّك الأداة فوق الصينية، ثم انقر للإفلات.",
+      "feedback": "وصلت للهدف · ارجع فوق الصينية",
+      "aimPointer": {
+        "x": 769.9446799981895,
+        "y": 410.34377243967486
+      },
+      "aimTries": 1,
+      "tipToAimM": 2.409694067339941e-7
+    },
+    {
+      "step": "step4-deposit-done",
+      "phase": "wrist",
+      "results": [
+        "monitor",
+        "pickup",
+        "aim",
+        "deposit"
+      ],
+      "retries": 0,
+      "lift": 0,
+      "count": "5 / 5",
+      "instruction": "اضغط على رسغ المريض المحدّد. ارفعه، رجّعه لمكانه، وبعدين فلّت.",
+      "feedback": "تم إرجاع الأداة · دورك ترفع رسغ المريض وترجعه",
+      "trayPointer": {
+        "x": 303.3449114531961,
+        "y": 484.6012020746649
+      }
+    },
+    {
+      "step": "step5-wrist-done",
+      "phase": "complete",
+      "results": [
+        "monitor",
+        "pickup",
+        "aim",
+        "deposit",
+        "wrist"
+      ],
+      "retries": 0,
+      "lift": 0.07444179276461993,
+      "count": "5 / 5",
+      "instruction": "اكتملت المهارات الخمس. راجع النتيجة أو جرّب التدريب مرة ثانية.",
+      "feedback": "أنهيت التمرين · ثبّتت القبضة ووجّهت الأداة وحرّكت الرسغ",
+      "wristPointer": {
+        "x": 553.8253944296492,
+        "y": 411.6260564116842
+      },
+      "maxLiftM": 0.07444179276461993
+    }
+  ],
+  "finalPhase": "complete",
+  "results": [
+    "monitor",
+    "pickup",
+    "aim",
+    "deposit",
+    "wrist"
+  ],
+  "retries": 0,
+  "resultText": "5 من 5 مهارات مكتملة · محاولات الإعادة 0",
+  "goldenTrace": [
+    "simulation_started@idle",
+    "camera_changed@idle",
+    "simulation_stage_changed@monitor",
+    "checklist_item_completed@monitor",
+    "simulation_stage_changed@pickup",
+    "camera_changed@pickup",
+    "instrument_picked@pickup",
+    "checklist_item_completed@pickup",
+    "simulation_stage_changed@aim",
+    "checklist_item_completed@aim",
+    "simulation_stage_changed@deposit",
+    "instrument_released@deposit",
+    "simulation_stage_changed@wrist",
+    "checklist_item_completed@wrist",
+    "camera_changed@wrist",
+    "patient_interaction@wrist",
+    "patient_interaction@wrist",
+    "checklist_item_completed@wrist",
+    "simulation_stage_changed@complete",
+    "simulation_completed@complete"
+  ],
+  "eventCount": 20,
+  "events": [
+    {
+      "eventId": "13cc157e-a8c0-4f3f-9854-84331a26ea13",
+      "event": "simulation_started",
+      "timestamp": "2026-11-14T15:33:10.028Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "idle",
+      "success": true,
+      "metadata": {
+        "scenario": "clinical-skills-practice",
+        "source": "tray",
+        "instrument": "grasper"
+      }
+    },
+    {
+      "eventId": "e2e4b008-4975-44b6-b579-73d8321d20b5",
+      "event": "camera_changed",
+      "timestamp": "2026-11-14T15:33:10.028Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "idle",
+      "success": true,
+      "metadata": {
+        "view": "work-area",
+        "area": "practice"
+      }
+    },
+    {
+      "eventId": "16ba4148-f89f-424d-8abe-82fba9916bb6",
+      "event": "simulation_stage_changed",
+      "timestamp": "2026-11-14T15:33:10.028Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "monitor",
+      "success": true,
+      "metadata": {
+        "from": "idle",
+        "to": "monitor",
+        "scenario": "tray"
+      }
+    },
+    {
+      "eventId": "fb959b89-1986-4086-ada8-9590cb7b9f62",
+      "event": "checklist_item_completed",
+      "timestamp": "2026-11-14T15:33:10.972Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "monitor",
+      "success": true,
+      "metadata": {
+        "checkId": "monitor",
+        "label": "قراءة الشاشة"
+      }
+    },
+    {
+      "eventId": "210abe4d-90fb-4dc6-bedd-01c6c5a12b50",
+      "event": "simulation_stage_changed",
+      "timestamp": "2026-11-14T15:33:10.972Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "pickup",
+      "success": true,
+      "metadata": {
+        "from": "monitor",
+        "to": "pickup",
+        "scenario": "tray"
+      }
+    },
+    {
+      "eventId": "26d7613d-984c-4efc-8c37-aa190a117a42",
+      "event": "camera_changed",
+      "timestamp": "2026-11-14T15:33:10.972Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "pickup",
+      "success": true,
+      "metadata": {
+        "view": "work-area",
+        "area": "practice"
+      }
+    },
+    {
+      "eventId": "d5603132-1954-4f2d-aea7-40fefa73d48c",
+      "event": "instrument_picked",
+      "timestamp": "2026-11-14T15:33:12.301Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "pickup",
+      "success": true,
+      "metadata": {
+        "contact": [
+          0.5,
+          1.13,
+          0.49
+        ],
+        "toolMode": "tray"
+      },
+      "instrument": "grasper",
+      "hand": "right",
+      "target": "instrument_handle"
+    },
+    {
+      "eventId": "0d81d229-c6e4-4335-8a1a-fb7a192dd2da",
+      "event": "checklist_item_completed",
+      "timestamp": "2026-11-14T15:33:12.301Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "pickup",
+      "success": true,
+      "metadata": {
+        "checkId": "pickup",
+        "label": "القبض"
+      }
+    },
+    {
+      "eventId": "60936c18-d5c1-489e-a45d-deaa2a3f86c0",
+      "event": "simulation_stage_changed",
+      "timestamp": "2026-11-14T15:33:12.301Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "aim",
+      "success": true,
+      "metadata": {
+        "from": "pickup",
+        "to": "aim",
+        "scenario": "tray"
+      }
+    },
+    {
+      "eventId": "49005e60-078f-49be-ae20-c87a4f203b88",
+      "event": "checklist_item_completed",
+      "timestamp": "2026-11-14T15:33:12.916Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "aim",
+      "success": true,
+      "metadata": {
+        "checkId": "aim",
+        "label": "التوجيه"
+      }
+    },
+    {
+      "eventId": "5d5d93f1-168c-4b27-8bb1-13c2919a9465",
+      "event": "simulation_stage_changed",
+      "timestamp": "2026-11-14T15:33:12.916Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "deposit",
+      "success": true,
+      "metadata": {
+        "from": "aim",
+        "to": "deposit",
+        "scenario": "tray"
+      }
+    },
+    {
+      "eventId": "0ccc101a-7fd7-4427-b9d3-c66d0b730d6b",
+      "event": "instrument_released",
+      "timestamp": "2026-11-14T15:33:15.459Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "deposit",
+      "success": true,
+      "metadata": {
+        "cancelled": false,
+        "toolMode": "held"
+      },
+      "instrument": "grasper",
+      "hand": "right",
+      "target": "instrument"
+    },
+    {
+      "eventId": "ec6183d8-c833-4704-b82c-f7c075994ed8",
+      "event": "simulation_stage_changed",
+      "timestamp": "2026-11-14T15:33:15.459Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "wrist",
+      "success": true,
+      "metadata": {
+        "from": "deposit",
+        "to": "wrist",
+        "scenario": "tray"
+      }
+    },
+    {
+      "eventId": "cf231a4f-306b-40f0-a6e6-8c9b2de88bfb",
+      "event": "checklist_item_completed",
+      "timestamp": "2026-11-14T15:33:15.459Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "wrist",
+      "success": true,
+      "metadata": {
+        "checkId": "deposit",
+        "label": "الإرجاع"
+      }
+    },
+    {
+      "eventId": "f4843c32-c1e9-4d15-94f3-da568c4404f1",
+      "event": "camera_changed",
+      "timestamp": "2026-11-14T15:33:15.459Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "wrist",
+      "success": true,
+      "metadata": {
+        "view": "work-area",
+        "area": "wrist"
+      }
+    },
+    {
+      "eventId": "f9834da0-df37-4dab-a690-fa38f4aff2ab",
+      "event": "patient_interaction",
+      "timestamp": "2026-11-14T15:33:16.712Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "wrist",
+      "success": true,
+      "metadata": {
+        "action": "contact_attached",
+        "region": null,
+        "contact": [
+          0.3214783993819018,
+          1.0015890479708174,
+          0.07746084996079246
+        ],
+        "stationGrip": false
+      },
+      "hand": "right",
+      "target": "wrist"
+    },
+    {
+      "eventId": "7b92290d-3239-4ec9-a96d-844ba3da0b9f",
+      "event": "patient_interaction",
+      "timestamp": "2026-11-14T15:33:19.850Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "wrist",
+      "success": true,
+      "metadata": {
+        "action": "contact_released",
+        "cancelled": false,
+        "region": null,
+        "contact": [
+          0.3214773676690471,
+          1.0015850740247698,
+          0.07746206682987596
+        ]
+      },
+      "hand": "right",
+      "target": "wrist"
+    },
+    {
+      "eventId": "b59a03fd-818a-478d-98ac-4058be86fca8",
+      "event": "checklist_item_completed",
+      "timestamp": "2026-11-14T15:33:19.850Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "wrist",
+      "success": true,
+      "metadata": {
+        "checkId": "wrist",
+        "label": "تحريك الرسغ"
+      }
+    },
+    {
+      "eventId": "329fdd9c-6929-43b2-877c-5861d8f4f448",
+      "event": "simulation_stage_changed",
+      "timestamp": "2026-11-14T15:33:19.850Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "complete",
+      "success": true,
+      "metadata": {
+        "from": "wrist",
+        "to": "complete",
+        "scenario": "tray"
+      }
+    },
+    {
+      "eventId": "79ec7bff-bf3c-4450-bc1c-29ec5f3081d4",
+      "event": "simulation_completed",
+      "timestamp": "2026-11-14T15:33:19.851Z",
+      "sessionId": "c8461a0b-8672-4eee-a054-eba0bf01e96a",
+      "stage": "complete",
+      "success": true,
+      "metadata": {
+        "scenario": "tray",
+        "completedAt": "2026-11-14T15:33:19.851Z"
+      }
+    }
+  ],
+  "M11": 0,
+  "errors": []
+}

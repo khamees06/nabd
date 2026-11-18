@@ -1,0 +1,25 @@
+{
+  "check": "AC-P1-6 text search for the Rapier notice",
+  "capturedAt": "2026-11-17T14:42:58.500Z",
+  "results": {
+    "dist/Nabd-Clinical-Simulator-v1.5-Preview.html (node scripts/build-preview.mjs, script unchanged)": {
+      "bullet": 1,
+      "header": 1,
+      "apacheTerms": 1,
+      "copyright": 2
+    },
+    "Vite output index.html (npx vite build --outDir <scratch>)": {
+      "bullet": 1,
+      "header": 1,
+      "apacheTerms": 1,
+      "copyright": 2
+    },
+    "served index.html": {
+      "bullet": 1,
+      "header": 1,
+      "apacheTerms": 1,
+      "copyright": 2
+    }
+  },
+  "viteOutputVendorRapierLicense": true
+}

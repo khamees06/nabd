@@ -7,6 +7,8 @@
 ▶️ **جرّب المحاكي مباشرة:** https://khamees06.github.io/nabd/or-simulator/
 (متصفح كمبيوتر حديث مثل Chrome أو Edge، ولا يحتاج أي تثبيت)
 
+📱 **عرض للهاتف** (الصور والفكرة في شرائح): https://khamees06.github.io/nabd/or-simulator/showcase/
+
 ![غرفة العمليات](showcase/01-room-overview.jpg)
 
 ---

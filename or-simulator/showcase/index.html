@@ -1,0 +1,275 @@
+<!doctype html>
+<html lang="ar" dir="rtl">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>نبض · محاكي غرفة العمليات</title>
+<meta name="description" content="نموذج أولي تفاعلي يعمل في المتصفح لتدريب طلاب الطب والتمريض داخل غرفة عمليات افتراضية ثلاثية الأبعاد.">
+<meta name="theme-color" content="#0d1f23">
+<meta name="mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-capable" content="yes">
+<meta name="apple-mobile-web-app-status-bar-style" content="black-translucent">
+<meta name="apple-mobile-web-app-title" content="محاكي نبض">
+<meta property="og:type" content="website">
+<meta property="og:title" content="نبض · محاكي غرفة العمليات ثلاثي الأبعاد">
+<meta property="og:description" content="غرفة عمليات افتراضية يتدرّب فيها طالب الطب والتمريض بيديه، وبجانبه طبيب مشرف.">
+<meta property="og:image" content="https://khamees06.github.io/nabd/or-simulator/showcase/01-room-overview.jpg">
+<meta property="og:url" content="https://khamees06.github.io/nabd/or-simulator/showcase/">
+<link rel="icon" href="data:,">
+<link rel="stylesheet" href="fonts.css">
+<style>
+:root{
+  --bg:#0d1f23; --bg2:#132b30; --ink:#eef5f4; --muted:#a6bfbd;
+  --teal:#43b3a6; --teal-deep:#1c6862; --line:rgba(255,255,255,.13);
+  --top:calc(env(safe-area-inset-top) + 52px);
+}
+*{box-sizing:border-box;margin:0;padding:0}
+html,body{height:100%;background:var(--bg);color:var(--ink);color-scheme:dark}
+body{font-family:"IBM Plex Sans Arabic",system-ui,-apple-system,"Segoe UI",sans-serif;line-height:1.6;-webkit-text-size-adjust:100%;overflow:hidden}
+a{color:inherit}
+
+/* top bar */
+.top{position:fixed;inset:0 0 auto 0;z-index:5;height:var(--top);padding:env(safe-area-inset-top) 16px 0;display:flex;align-items:center;gap:10px;background:linear-gradient(var(--bg) 70%,rgba(13,31,35,0));}
+.brand{font-weight:700;font-size:15px;display:flex;align-items:center;gap:8px;white-space:nowrap}
+.brand i{width:26px;height:26px;border-radius:8px;background:var(--teal-deep);display:grid;place-items:center;font-style:normal}
+.brand i svg{width:16px;height:16px}
+.count{margin-inline-start:auto;font-size:13px;color:var(--muted);font-variant-numeric:tabular-nums;direction:ltr}
+.open-mini{font-size:13px;font-weight:600;text-decoration:none;padding:6px 12px;border:1px solid var(--line);border-radius:999px;white-space:nowrap}
+.bar{position:fixed;inset:var(--top) 0 auto 0;height:2px;z-index:5;background:var(--teal);transform-origin:right;transform:scaleX(0);transition:transform .3s}
+
+/* deck */
+.deck{height:100vh;height:100dvh;overflow-y:auto;scroll-snap-type:y mandatory;overscroll-behavior:contain;-webkit-overflow-scrolling:touch;scrollbar-width:none}
+.deck::-webkit-scrollbar{display:none}
+.slide{position:relative;height:100%;scroll-snap-align:start;scroll-snap-stop:always;display:flex;flex-direction:column;justify-content:center;gap:14px;
+  padding:calc(var(--top) + 14px) max(20px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 34px) max(20px,env(safe-area-inset-left));overflow:hidden;max-width:760px;margin:0 auto}
+.num{font-size:13px;font-weight:600;color:var(--teal);letter-spacing:.02em}
+h1{font-size:clamp(27px,7.6vw,40px);line-height:1.25;font-weight:800}
+h2{font-size:clamp(22px,6vw,32px);line-height:1.3;font-weight:700}
+.lead{font-size:clamp(15px,4.2vw,18px);color:var(--muted)}
+.cap{font-size:clamp(14.5px,4vw,17px);color:var(--muted)}
+figure{border-radius:14px;overflow:hidden;background:#000;border:1px solid var(--line);display:flex;justify-content:center}
+figure img{display:block;width:100%;height:auto;max-height:52vh;max-height:52dvh;object-fit:contain}
+.pill{align-self:flex-start;font-size:12.5px;font-weight:600;color:var(--teal);border:1px solid rgba(67,179,166,.45);border-radius:999px;padding:3px 12px}
+.btn{display:inline-flex;align-items:center;justify-content:center;gap:8px;min-height:50px;padding:0 22px;border-radius:14px;background:var(--teal);color:#062a26;font-weight:700;font-size:16px;text-decoration:none;border:0;font-family:inherit;cursor:pointer}
+.btn.ghost{background:transparent;color:var(--ink);border:1px solid var(--line)}
+.row{display:flex;flex-wrap:wrap;gap:10px}
+.hint{position:absolute;inset:auto 0 calc(env(safe-area-inset-bottom) + 10px) 0;text-align:center;font-size:12.5px;color:var(--muted);animation:nudge 2.2s ease-in-out infinite}
+@keyframes nudge{50%{transform:translateY(-5px);opacity:.6}}
+
+/* lists */
+.list{list-style:none;display:grid;gap:12px}
+.list li{display:grid;grid-template-columns:30px 1fr;gap:10px;align-items:start;font-size:clamp(14.5px,4vw,17px);color:var(--muted)}
+.list li b{color:var(--ink);font-weight:700}
+.list .k{width:30px;height:30px;border-radius:9px;background:var(--bg2);border:1px solid var(--line);display:grid;place-items:center;font-size:14px;font-weight:700;color:var(--teal)}
+.note{font-size:13px;color:var(--muted);border-inline-start:3px solid var(--teal-deep);padding-inline-start:10px}
+
+/* phone held sideways: pictures fill the screen */
+@media (orientation:landscape) and (max-height:560px){
+  .top{background:linear-gradient(rgba(13,31,35,.85),rgba(13,31,35,0))}
+  .shot{max-width:none;padding:0}
+  .shot figure{position:absolute;inset:0;border-radius:0;border:0}
+  .shot figure img{width:100%;height:100%;max-height:none;object-fit:contain}
+  .shot .txt{position:absolute;inset:auto 0 0 0;padding:40px max(24px,env(safe-area-inset-right)) calc(env(safe-area-inset-bottom) + 12px) max(24px,env(safe-area-inset-left));background:linear-gradient(rgba(5,14,16,0),rgba(5,14,16,.9) 45%)}
+  .shot .txt h2{font-size:20px}
+  .shot .txt .cap{font-size:14px;color:#d3e2e0}
+  .shot .num{display:none}
+  .cover figure{display:none}
+  .text-slide{justify-content:flex-start;gap:8px;padding-top:calc(var(--top) + 4px);padding-bottom:calc(env(safe-area-inset-bottom) + 10px)}
+  .text-slide h2{font-size:22px}
+  .text-slide .lead,.text-slide .cap{font-size:14.5px}
+  .text-slide .list{grid-template-columns:1fr 1fr;gap:6px 18px}
+  .text-slide .list li{font-size:14px;line-height:1.5}
+  .text-slide .note{font-size:12.5px}
+  .text-slide .btn{min-height:42px}
+  .hint{display:none}
+}
+@media (prefers-reduced-motion:reduce){.hint{animation:none}.bar{transition:none}}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <span class="brand"><i><svg viewBox="0 0 24 24" fill="none" stroke="#eef5f4" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round"><path d="M3 12h4l2.5-6 4 12 2.5-6H21"/></svg></i>نبض</span>
+  <span class="count" id="count">1 / 15</span>
+  <a class="open-mini" href="../">افتح المحاكي</a>
+</header>
+<div class="bar" id="bar"></div>
+
+<main class="deck" id="deck">
+
+  <section class="slide cover">
+    <span class="pill">نموذج أولي · يعمل في المتصفح</span>
+    <h1>محاكي غرفة العمليات ثلاثي الأبعاد</h1>
+    <p class="lead">يتدرّب فيه طالب الطب والتمريض داخل غرفة عمليات افتراضية، بيديه، وبجانبه طبيب مشرف.</p>
+    <figure><img src="01-room-overview.jpg" width="1508" height="944" alt="غرفة العمليات الافتراضية: المريض على الطاولة والطبيب المشرف والأجهزة"></figure>
+    <div class="row">
+      <button class="btn ghost" type="button" data-next>ابدأ العرض</button>
+      <a class="btn" href="../">افتح المحاكي</a>
+    </div>
+    <p class="hint">اسحب للأعلى للمتابعة · أدِر الهاتف لترى الصور أكبر</p>
+  </section>
+
+  <section class="slide text-slide">
+    <span class="num">الفكرة</span>
+    <h2>المتدرّب داخل الغرفة، لا أمام شاشة أزرار</h2>
+    <p class="lead">أمامه مريض افتراضي على طاولة العمليات، وبجانبه طبيب مشرف. يتعلّم بالملاحظة والسؤال واتخاذ القرار.</p>
+    <ul class="list">
+      <li><span class="k">١</span><span><b>يتعلّم بيديه:</b> يلمس المريض، ويحرّك أطرافه ضمن حدود المفاصل، ويمسك الأدوات ويوجّهها.</span></li>
+      <li><span class="k">٢</span><span><b>المشرف يقود:</b> يوجّه ويشرح ويسأل، ويتدخّل بيده عند الحاجة.</span></li>
+      <li><span class="k">٣</span><span><b>فريق كامل:</b> وستنضم ممرضة تستلم الطلبات وتناول الأدوات المناسبة لكل مرحلة.</span></li>
+      <li><span class="k">٤</span><span><b>الحالة تتحكّم بالغرفة:</b> حالة المريض والأدوات والخطوة التالية مرتبطة بسيناريو واحد.</span></li>
+    </ul>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">الغرفة</span>
+    <figure><img src="04-room-from-above.jpg" width="1508" height="944" loading="lazy" alt="غرفة العمليات من الأعلى"></figure>
+    <div class="txt">
+      <h2>غرفة عمليات كاملة</h2>
+      <p class="cap">طاولة عمليات، وإضاءة جراحية تتبع منطقة العمل، وجهاز تخدير، وبرج منظار بشاشات، ومراقب للعلامات الحيوية.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">المتدرّب</span>
+    <figure><img src="02-trainee-at-bedside.jpg" width="1508" height="840" loading="lazy" alt="منظور المتدرّب بجانب المريض"></figure>
+    <div class="txt">
+      <h2>من عينَي المتدرّب</h2>
+      <p class="cap">يرى المتدرّب الغرفة من موقعه بجانب المريض، ويداه أمامه في المشهد.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">الأدوات</span>
+    <figure><img src="03-instruments-and-supervisor.jpg" width="1508" height="944" loading="lazy" alt="عربة الأدوات والطبيب المشرف"></figure>
+    <div class="txt">
+      <h2>الأدوات والطبيب المشرف</h2>
+      <p class="cap">ملقط المنظار، والمنظار، والمقص الجراحي، وماسك الإبرة، وبجانبها طبيب مشرف بملابس العمليات.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">اللمس</span>
+    <figure><img src="07-abdomen-touch.jpg" width="1440" height="900" loading="lazy" alt="يد المتدرّب على بطن المريض"></figure>
+    <div class="txt">
+      <h2>لمس البطن</h2>
+      <p class="cap">يضع المتدرّب يده على بطن المريض بأصابع مبسوطة ويضغط عليه.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">الحركة</span>
+    <figure><img src="08-lifting-the-leg.jpg" width="1440" height="900" loading="lazy" alt="المتدرّب يمسك الكاحل ويرفع الساق"></figure>
+    <div class="txt">
+      <h2>رفع الساق</h2>
+      <p class="cap">يمسك الكاحل ويرفع الساق، والمفاصل مقيّدة بحدودها التشريحية الطبيعية.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">المشرف</span>
+    <figure><img src="10-supervisor-supports-arm.png" width="580" height="320" loading="lazy" alt="الطبيب المشرف يسند ساعد المريض"></figure>
+    <div class="txt">
+      <h2>المشرف يتدخّل بيده</h2>
+      <p class="cap">يسند الطبيب المشرف ساعد المريض، ويتدخّل عند الحاجة كما في الغرفة الحقيقية.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">المنظار</span>
+    <figure><img src="09-laparoscope-monitor.jpg" width="1440" height="900" loading="lazy" alt="صورة المنظار الحية على الشاشة"></figure>
+    <div class="txt">
+      <h2>صورة المنظار الحية</h2>
+      <p class="cap">يدخل المنظار من منفذ في البطن، وتظهر صورته مباشرة على الشاشة.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">التشريح</span>
+    <figure><img src="05-internal-anatomy.jpg" width="1508" height="800" loading="lazy" alt="التشريح الداخلي داخل جسم المريض"></figure>
+    <div class="txt">
+      <h2>التشريح الداخلي</h2>
+      <p class="cap">أطلس من 35 عضواً وبنية داخل جسم المريض.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">الحالة الأولى</span>
+    <figure><img src="06-appendix-isolated.jpg" width="1508" height="800" loading="lazy" alt="الزائدة الدودية معزولة في الأطلس"></figure>
+    <div class="txt">
+      <h2>الزائدة الدودية</h2>
+      <p class="cap">يمكن عزل أي عضو لدراسته. والحالة الأولى المخطَّط لها: التهاب الزائدة الدودية.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">التمرين</span>
+    <figure><img src="11-training-drill.jpg" width="1440" height="900" loading="lazy" alt="بداية تمرين التدريب"></figure>
+    <div class="txt">
+      <h2>تمرين من خمس خطوات</h2>
+      <p class="cap">قراءة الشاشة، ثم الإمساك، ثم التوجيه، ثم الإرجاع، ثم تحريك الرسغ.</p>
+    </div>
+  </section>
+
+  <section class="slide shot">
+    <span class="num">الواجهة</span>
+    <figure><img src="12-full-interface.jpg" width="1920" height="1080" loading="lazy" alt="الواجهة الكاملة للمحاكي"></figure>
+    <div class="txt">
+      <h2>يعمل في المتصفح</h2>
+      <p class="cap">المشهد ثلاثي الأبعاد مع أدوات التحكم، دون أي تثبيت.</p>
+    </div>
+  </section>
+
+  <section class="slide text-slide">
+    <span class="num">الخطوات القادمة</span>
+    <h2>إلى أين نتّجه</h2>
+    <ol class="list">
+      <li><span class="k">١</span><span><b>جسم كامل للمتدرّب:</b> الكاميرا عند عينيه، وذراعاه متصلتان بكتفيه.</span></li>
+      <li><span class="k">٢</span><span><b>الإمساك من أي مكان:</b> يمسك المريض من أي موضع ويحرّكه بواقعية، دون أن تغوص اليد في الجسم. قيد التطوير الآن.</span></li>
+      <li><span class="k">٣</span><span><b>ممرضة</b> بملابس ولون مختلفين.</span></li>
+      <li><span class="k">٤</span><span><b>محادثة جانبية</b> مع الطبيب والممرضة، يشغّلها نموذج نبض اللغوي.</span></li>
+      <li><span class="k">٥</span><span><b>سيناريو الزائدة الكامل:</b> من تقديم الحالة إلى الإجراء والتقييم الختامي.</span></li>
+      <li><span class="k">٦</span><span><b>غرفة وأجهزة أكثر واقعية.</b></span></li>
+    </ol>
+  </section>
+
+  <section class="slide text-slide">
+    <span class="num">جرّبه بنفسك</span>
+    <h2>المحاكي يعمل الآن في المتصفح</h2>
+    <p class="lead">افتحه وتجوّل في الغرفة، والمس المريض، وحرّك أطرافه.</p>
+    <div class="row"><a class="btn" href="../">افتح المحاكي ثلاثي الأبعاد</a></div>
+    <p class="cap" style="direction:ltr;text-align:right;font-size:14px">khamees06.github.io/nabd/or-simulator</p>
+    <p class="note">التجربة التفاعلية الكاملة على الكمبيوتر (Chrome أو Edge). هذا نموذج أولي، ومحتواه السريري توضيحي، وسيُراجعه ويعتمده أطباء معتمدون قبل استخدامه في التدريب الفعلي.</p>
+    <p class="cap" style="font-size:13.5px"><a href="https://github.com/khamees06/nabd/tree/main/or-simulator">التفاصيل والصور على GitHub</a></p>
+  </section>
+
+</main>
+
+<script>
+(() => {
+  const deck = document.getElementById('deck');
+  const slides = [...deck.querySelectorAll('.slide')];
+  const count = document.getElementById('count');
+  const bar = document.getElementById('bar');
+  const n = slides.length;
+  let cur = 0;
+  const show = (i) => {
+    cur = i;
+    count.textContent = (i + 1) + ' / ' + n;
+    bar.style.transform = 'scaleX(' + ((i + 1) / n) + ')';
+  };
+  const io = new IntersectionObserver((entries) => {
+    entries.forEach((e) => { if (e.isIntersecting) show(slides.indexOf(e.target)); });
+  }, { root: deck, threshold: 0.6 });
+  slides.forEach((s) => io.observe(s));
+  const go = (i) => slides[Math.max(0, Math.min(n - 1, i))].scrollIntoView({ behavior: 'smooth', block: 'start' });
+  document.querySelectorAll('[data-next]').forEach((b) => b.addEventListener('click', () => go(cur + 1)));
+  addEventListener('keydown', (e) => {
+    if (['ArrowDown', 'PageDown', ' ', 'ArrowLeft'].includes(e.key)) { e.preventDefault(); go(cur + 1); }
+    else if (['ArrowUp', 'PageUp', 'ArrowRight'].includes(e.key)) { e.preventDefault(); go(cur - 1); }
+  });
+  show(0);
+})();
+</script>
+</body>
+</html>

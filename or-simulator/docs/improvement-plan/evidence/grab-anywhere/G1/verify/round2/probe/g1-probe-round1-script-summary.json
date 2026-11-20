@@ -1,0 +1,553 @@
+{
+ "method": "verify/scripts/g1-probe.mjs (round 1 verifier, independent code) re-run on a00ec35; summarised by summarize-probe.cjs",
+ "rows": [
+  {
+   "file": "probe-chrome-1440x900.json",
+   "browser": "157.0.8103.79",
+   "readyMs": 2884,
+   "triSeg": {
+    "implAssigned": 1,
+    "implSingle": 0.9417228931602124,
+    "indClinical": [
+     105822,
+     105822,
+     0.9417228931602124
+    ],
+    "nonPrivacyAssignedAll": true,
+    "nonPrivTris": 107530
+   },
+   "outsideInner": {
+    "min": 0.9627477003340809,
+    "seg": "head",
+    "segments": 17,
+    "allGe95": true
+   },
+   "lowest": {
+    "allSample": true,
+    "n": 17,
+    "disagreeWithIndependent": 0,
+    "keys": 17
+   },
+   "supports": {
+    "implWorstMm": 4.440892098500626e-13,
+    "implSamples": 1049,
+    "ownSamples": 6292,
+    "ownWorstMm": 0,
+    "arm": [
+     [
+      "L_armboard_pad",
+      "0.9325",
+      "-0.601..-0.356",
+      "-0.705..-0.235"
+     ],
+     [
+      "L_armboard_top",
+      "0.9510",
+      "-0.591..-0.366",
+      "-0.692..-0.248"
+     ],
+     [
+      "R_armboard_pad",
+      "0.9325",
+      "0.356..0.601",
+      "-0.705..-0.235"
+     ],
+     [
+      "R_armboard_top",
+      "0.9510",
+      "0.366..0.591",
+      "-0.692..-0.248"
+     ]
+    ],
+    "pads": [
+     [
+      "head_pad",
+      "0.95250"
+     ],
+     [
+      "back_pad",
+      "0.95250"
+     ],
+     [
+      "seat_pad",
+      "0.95250"
+     ],
+     [
+      "leg_L_pad",
+      "0.95250"
+     ],
+     [
+      "leg_R_pad",
+      "0.95250"
+     ]
+    ]
+   },
+   "penetration": {
+    "impl": {
+     "supportMaxMm": 51.8100071002432,
+     "supportP95Mm": 36.5768137185023,
+     "over2mm": 2705,
+     "belowTopMaxMm": 51.8100071002432,
+     "belowTopP95Mm": 41.71803452694933,
+     "belowTopOver2mm": 2755,
+     "downward": 0,
+     "sideExit": {
+      "vertices": 320,
+      "maxSideDepthMm": 47.41049530670627,
+      "maxBelowTopMm": 51.07089442469304,
+      "belowTopMinusSideOver10mm": 200
+     },
+     "selfMaxMm": 0
+    },
+    "independent": {
+     "penMaxMm": 51.8100071002432,
+     "penMaxAt": {
+      "vertex": 52206,
+      "which": "leg_L_pad",
+      "y": 0.900689994389873
+     },
+     "over2mm": 2755,
+     "penetrating": 2954
+    }
+   },
+   "joints": {
+    "hard": 0,
+    "warn": 0,
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+    "warnList": []
+   },
+   "timing": {
+    "poseVersionMs": 0.20000004768371582,
+    "segmentsMs": 32.299999952316284,
+    "jointsMs": 1.4000000357627869,
+    "supportsMs": 2.300000011920929,
+    "restCaptureMs": 10.099999964237213,
+    "loadMs": 46.40000003576279,
+    "proxiesMs": 49.799999952316284,
+    "bodyMs": 83.30000001192093,
+    "penMs": 260.19999998807907
+   },
+   "poseVersion": {
+    "v0": 0,
+    "v1": 0,
+    "idleChanged": false,
+    "hoverBefore": 0,
+    "hoverAfter": 0,
+    "hoverChanged": false
+   },
+   "errors": 0,
+   "console": []
+  },
+  {
+   "file": "probe-chrome-560x890.json",
+   "browser": "157.0.8103.79",
+   "readyMs": 2916,
+   "triSeg": {
+    "implAssigned": 1,
+    "implSingle": 0.9417228931602124,
+    "indClinical": [
+     105822,
+     105822,
+     0.9417228931602124
+    ],
+    "nonPrivacyAssignedAll": true,
+    "nonPrivTris": 107530
+   },
+   "outsideInner": {
+    "min": 0.9627477003340809,
+    "seg": "head",
+    "segments": 17,
+    "allGe95": true
+   },
+   "lowest": {
+    "allSample": true,
+    "n": 17,
+    "disagreeWithIndependent": 0,
+    "keys": 17
+   },
+   "supports": {
+    "implWorstMm": 4.440892098500626e-13,
+    "implSamples": 1049,
+    "ownSamples": 6292,
+    "ownWorstMm": 0,
+    "arm": [
+     [
+      "L_armboard_pad",
+      "0.9325",
+      "-0.601..-0.356",
+      "-0.705..-0.235"
+     ],
+     [
+      "L_armboard_top",
+      "0.9510",
+      "-0.591..-0.366",
+      "-0.692..-0.248"
+     ],
+     [
+      "R_armboard_pad",
+      "0.9325",
+      "0.356..0.601",
+      "-0.705..-0.235"
+     ],
+     [
+      "R_armboard_top",
+      "0.9510",
+      "0.366..0.591",
+      "-0.692..-0.248"
+     ]
+    ],
+    "pads": [
+     [
+      "head_pad",
+      "0.95250"
+     ],
+     [
+      "back_pad",
+      "0.95250"
+     ],
+     [
+      "seat_pad",
+      "0.95250"
+     ],
+     [
+      "leg_L_pad",
+      "0.95250"
+     ],
+     [
+      "leg_R_pad",
+      "0.95250"
+     ]
+    ]
+   },
+   "penetration": {
+    "impl": {
+     "supportMaxMm": 51.8100071002432,
+     "supportP95Mm": 36.5768137185023,
+     "over2mm": 2705,
+     "belowTopMaxMm": 51.8100071002432,
+     "belowTopP95Mm": 41.71803452694933,
+     "belowTopOver2mm": 2755,
+     "downward": 0,
+     "sideExit": {
+      "vertices": 320,
+      "maxSideDepthMm": 47.41049530670627,
+      "maxBelowTopMm": 51.07089442469304,
+      "belowTopMinusSideOver10mm": 200
+     },
+     "selfMaxMm": 0
+    },
+    "independent": {
+     "penMaxMm": 51.8100071002432,
+     "penMaxAt": {
+      "vertex": 52206,
+      "which": "leg_L_pad",
+      "y": 0.900689994389873
+     },
+     "over2mm": 2755,
+     "penetrating": 2954
+    }
+   },
+   "joints": {
+    "hard": 0,
+    "warn": 0,
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+    "warnList": []
+   },
+   "timing": {
+    "poseVersionMs": 0.19999998807907104,
+    "segmentsMs": 32,
+    "jointsMs": 1.5,
+    "supportsMs": 1.600000023841858,
+    "restCaptureMs": 9.5,
+    "loadMs": 44.80000001192093,
+    "proxiesMs": 50.39999997615814,
+    "bodyMs": 84.80000001192093,
+    "penMs": 272.80000001192093
+   },
+   "poseVersion": {
+    "v0": 0,
+    "v1": 0,
+    "idleChanged": false,
+    "hoverBefore": 0,
+    "hoverAfter": 0,
+    "hoverChanged": false
+   },
+   "errors": 0,
+   "console": []
+  },
+  {
+   "file": "probe-webkit-1440x900.json",
+   "browser": "27.2",
+   "readyMs": 2868,
+   "triSeg": {
+    "implAssigned": 1,
+    "implSingle": 0.9417228931602124,
+    "indClinical": [
+     105822,
+     105822,
+     0.9417228931602124
+    ],
+    "nonPrivacyAssignedAll": true,
+    "nonPrivTris": 107530
+   },
+   "outsideInner": {
+    "min": 0.9627477003340809,
+    "seg": "head",
+    "segments": 17,
+    "allGe95": true
+   },
+   "lowest": {
+    "allSample": true,
+    "n": 17,
+    "disagreeWithIndependent": 0,
+    "keys": 17
+   },
+   "supports": {
+    "implWorstMm": 4.440892098500626e-13,
+    "implSamples": 1049,
+    "ownSamples": 6292,
+    "ownWorstMm": 0,
+    "arm": [
+     [
+      "L_armboard_pad",
+      "0.9325",
+      "-0.601..-0.356",
+      "-0.705..-0.235"
+     ],
+     [
+      "L_armboard_top",
+      "0.9510",
+      "-0.591..-0.366",
+      "-0.692..-0.248"
+     ],
+     [
+      "R_armboard_pad",
+      "0.9325",
+      "0.356..0.601",
+      "-0.705..-0.235"
+     ],
+     [
+      "R_armboard_top",
+      "0.9510",
+      "0.366..0.591",
+      "-0.692..-0.248"
+     ]
+    ],
+    "pads": [
+     [
+      "head_pad",
+      "0.95250"
+     ],
+     [
+      "back_pad",
+      "0.95250"
+     ],
+     [
+      "seat_pad",
+      "0.95250"
+     ],
+     [
+      "leg_L_pad",
+      "0.95250"
+     ],
+     [
+      "leg_R_pad",
+      "0.95250"
+     ]
+    ]
+   },
+   "penetration": {
+    "impl": {
+     "supportMaxMm": 51.81000710024297,
+     "supportP95Mm": 36.57681371850208,
+     "over2mm": 2705,
+     "belowTopMaxMm": 51.81000710024297,
+     "belowTopP95Mm": 41.71803452694933,
+     "belowTopOver2mm": 2755,
+     "downward": 0,
+     "sideExit": {
+      "vertices": 320,
+      "maxSideDepthMm": 47.4104953067066,
+      "maxBelowTopMm": 51.07089442469292,
+      "belowTopMinusSideOver10mm": 200
+     },
+     "selfMaxMm": 0
+    },
+    "independent": {
+     "penMaxMm": 51.81000710024297,
+     "penMaxAt": {
+      "vertex": 52206,
+      "which": "leg_L_pad",
+      "y": 0.9006899943898732
+     },
+     "over2mm": 2755,
+     "penetrating": 2954
+    }
+   },
+   "joints": {
+    "hard": 0,
+    "warn": 0,
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+    "warnList": []
+   },
+   "timing": {
+    "poseVersionMs": 1,
+    "segmentsMs": 32,
+    "jointsMs": 1,
+    "supportsMs": 2,
+    "restCaptureMs": 13,
+    "loadMs": 50,
+    "proxiesMs": 55,
+    "bodyMs": 83,
+    "penMs": 315
+   },
+   "poseVersion": {
+    "v0": 0,
+    "v1": 0,
+    "idleChanged": false,
+    "hoverBefore": 0,
+    "hoverAfter": 0,
+    "hoverChanged": false
+   },
+   "errors": 0,
+   "console": []
+  },
+  {
+   "file": "probe-webkit-560x890.json",
+   "browser": "27.2",
+   "readyMs": 2865,
+   "triSeg": {
+    "implAssigned": 1,
+    "implSingle": 0.9417228931602124,
+    "indClinical": [
+     105822,
+     105822,
+     0.9417228931602124
+    ],
+    "nonPrivacyAssignedAll": true,
+    "nonPrivTris": 107530
+   },
+   "outsideInner": {
+    "min": 0.9627477003340809,
+    "seg": "head",
+    "segments": 17,
+    "allGe95": true
+   },
+   "lowest": {
+    "allSample": true,
+    "n": 17,
+    "disagreeWithIndependent": 0,
+    "keys": 17
+   },
+   "supports": {
+    "implWorstMm": 4.440892098500626e-13,
+    "implSamples": 1049,
+    "ownSamples": 6292,
+    "ownWorstMm": 0,
+    "arm": [
+     [
+      "L_armboard_pad",
+      "0.9325",
+      "-0.601..-0.356",
+      "-0.705..-0.235"
+     ],
+     [
+      "L_armboard_top",
+      "0.9510",
+      "-0.591..-0.366",
+      "-0.692..-0.248"
+     ],
+     [
+      "R_armboard_pad",
+      "0.9325",
+      "0.356..0.601",
+      "-0.705..-0.235"
+     ],
+     [
+      "R_armboard_top",
+      "0.9510",
+      "0.366..0.591",
+      "-0.692..-0.248"
+     ]
+    ],
+    "pads": [
+     [
+      "head_pad",
+      "0.95250"
+     ],
+     [
+      "back_pad",
+      "0.95250"
+     ],
+     [
+      "seat_pad",
+      "0.95250"
+     ],
+     [
+      "leg_L_pad",
+      "0.95250"
+     ],
+     [
+      "leg_R_pad",
+      "0.95250"
+     ]
+    ]
+   },
+   "penetration": {
+    "impl": {
+     "supportMaxMm": 51.81000710024297,
+     "supportP95Mm": 36.57681371850208,
+     "over2mm": 2705,
+     "belowTopMaxMm": 51.81000710024297,
+     "belowTopP95Mm": 41.71803452694933,
+     "belowTopOver2mm": 2755,
+     "downward": 0,
+     "sideExit": {
+      "vertices": 320,
+      "maxSideDepthMm": 47.4104953067066,
+      "maxBelowTopMm": 51.07089442469292,
+      "belowTopMinusSideOver10mm": 200
+     },
+     "selfMaxMm": 0
+    },
+    "independent": {
+     "penMaxMm": 51.81000710024297,
+     "penMaxAt": {
+      "vertex": 52206,
+      "which": "leg_L_pad",
+      "y": 0.9006899943898732
+     },
+     "over2mm": 2755,
+     "penetrating": 2954
+    }
+   },
+   "joints": {
+    "hard": 0,
+    "warn": 0,
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+    "warnList": []
+   },
+   "timing": {
+    "poseVersionMs": 0,
+    "segmentsMs": 36,
+    "jointsMs": 1,
+    "supportsMs": 1,
+    "restCaptureMs": 14,
+    "loadMs": 52,
+    "proxiesMs": 47,
+    "bodyMs": 75,
+    "penMs": 314
+   },
+   "poseVersion": {
+    "v0": 0,
+    "v1": 0,
+    "idleChanged": false,
+    "hoverBefore": 0,
+    "hoverAfter": 0,
+    "hoverChanged": false
+   },
+   "errors": 0,
+   "console": []
+  }
+ ]
+}

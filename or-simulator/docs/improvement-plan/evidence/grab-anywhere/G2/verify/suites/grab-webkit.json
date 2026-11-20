@@ -1,0 +1,369 @@
+{
+ "report": "grab-webkit-report.json",
+ "startTime": "2026-11-18T23:05:27.008Z",
+ "durationMs": 543096.566,
+ "expected": 15,
+ "flaky": 7,
+ "unexpected": 0,
+ "skipped": 0,
+ "firstAttemptFailures": [
+  {
+   "title": "Q1-c the render readout follows a WebGL context loss and restore (1440x900)",
+   "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded."
+  },
+  {
+   "title": "G1-a segments, proxies and supports meet the G1 gates (1440x900)",
+   "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3"
+  },
+  {
+   "title": "G1-d skin penetration readout: supports and self contact on re-skinned vertices (1440x900)",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  },
+  {
+   "title": "G1-a segments, proxies and supports meet the G1 gates (560x890)",
+   "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3"
+  },
+  {
+   "title": "G1-d skin penetration readout: supports and self contact on re-skinned vertices (560x890)",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  },
+  {
+   "title": "G2-a the supine rest lies on the drawn supports: per-segment lowest skin, compression, wrists (1440x900)",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  },
+  {
+   "title": "G2-a the supine rest lies on the drawn supports: per-segment lowest skin, compression, wrists (560x890)",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  }
+ ],
+ "tests": [
+  {
+   "title": "Q1-a the render readout is present and agrees with the renderer (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 7151,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "Q1-a the render readout is present and agrees with the renderer (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 6556,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "Q1-c the render readout follows a WebGL context loss and restore (1440x900)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 21868,
+     "error": "TimeoutError: page.waitForFunction: Timeout 15000ms exceeded."
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 10291,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "Q1-b image-metric baselines in V1 and V2: lamp-luma regions with the rail, skin hue terciles, shimmer, joint bands (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 12796,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-a segments, proxies and supports meet the G1 gates (1440x900)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 20843,
+     "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 5120,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-b the authored supine pose in joint-model frames: no HARD violation (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4959,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-c grab samples per region are on screen and hit their region first (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 36230,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-d skin penetration readout: supports and self contact on re-skinned vertices (1440x900)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65489,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 6283,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-e pose round trip: supports follow the deck, snapshot bones come back bit for bit (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 9825,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-f joint clamp on the live rig: overhead shoulder and every 180° wrap (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5050,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-a segments, proxies and supports meet the G1 gates (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 20232,
+     "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 5128,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-b the authored supine pose in joint-model frames: no HARD violation (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4882,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-c grab samples per region are on screen and hit their region first (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 35237,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-d skin penetration readout: supports and self contact on re-skinned vertices (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65494,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 5739,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-e pose round trip: supports follow the deck, snapshot bones come back bit for bit (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 9228,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G1-f joint clamp on the live rig: overhead shoulder and every 180° wrap (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4990,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G2-a the supine rest lies on the drawn supports: per-segment lowest skin, compression, wrists (1440x900)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65517,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 5905,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G2-b what is drawn: the lowered top, no carrier under it, the head ring and its support (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5405,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G2-c a pose round trip brings back the same rest on the same supports (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10501,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G2-a the supine rest lies on the drawn supports: per-segment lowest skin, compression, wrists (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65503,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 5488,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G2-b what is drawn: the lowered top, no carrier under it, the head ring and its support (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5848,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "G2-c a pose round trip brings back the same rest on the same supports (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10487,
+     "error": null
+    }
+   ]
+  }
+ ]
+}

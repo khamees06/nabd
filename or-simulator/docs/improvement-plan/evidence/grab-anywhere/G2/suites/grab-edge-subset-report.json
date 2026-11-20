@@ -1,0 +1,61 @@
+{
+ "report": "ev-edge-grab-report.json",
+ "stats": {
+  "startTime": "2026-11-18T22:47:44.951Z",
+  "duration": 47759.437,
+  "expected": 7,
+  "skipped": 0,
+  "unexpected": 0,
+  "flaky": 0
+ },
+ "expected": 7,
+ "flaky": 0,
+ "unexpected": 0,
+ "skipped": 0,
+ "notPassed": [],
+ "skippedTitles": [],
+ "tests": [
+  {
+   "title": "Q1-b image-metric baselines in V1 and V2: lamp-luma regions with the rail, skin hue terciles, shimmer, joint bands (1440x900)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "G2-a the supine rest lies on the drawn supports: per-segment lowest skin, compression, wrists (1440x900)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "G2-b what is drawn: the lowered top, no carrier under it, the head ring and its support (1440x900)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "G2-c a pose round trip brings back the same rest on the same supports (1440x900)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "G2-a the supine rest lies on the drawn supports: per-segment lowest skin, compression, wrists (560x890)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "G2-b what is drawn: the lowered top, no carrier under it, the head ring and its support (560x890)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "G2-c a pose round trip brings back the same rest on the same supports (560x890)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": 1
+  }
+ ]
+}

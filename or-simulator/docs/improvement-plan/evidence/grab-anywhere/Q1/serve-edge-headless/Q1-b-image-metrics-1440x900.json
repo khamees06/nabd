@@ -1,0 +1,780 @@
+{
+  "check": "Q1-b-image-metrics-1440x900",
+  "cluster": "Q1",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T23:44:28.736Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "result": {
+    "method": "reducedMotion reduce (the vitals monitor draws once); one frame rendered through the app renderer and read back from the canvas (toDataURL in the same task), decoded in Node; luma = Rec. 709 of the sRGB bytes; regions in canvas pixels",
+    "v1Canvas": {
+      "left": 17,
+      "top": 83,
+      "width": 1054,
+      "height": 617.953125
+    },
+    "v1Buffer": {
+      "width": 1054,
+      "height": 618
+    },
+    "v1": {
+      "luma": {
+        "canvas": {
+          "pixels": 472500,
+          "meanLuma": 121.6,
+          "sdLuma": 47.94,
+          "clippedPct": 0.1
+        },
+        "patientTorso": {
+          "pixels": 40800,
+          "meanLuma": 144.1,
+          "sdLuma": 45.39,
+          "clippedPct": 0
+        },
+        "tablePadsNear": {
+          "pixels": 51300,
+          "meanLuma": 127.3,
+          "sdLuma": 28.45,
+          "clippedPct": 0
+        },
+        "room": {
+          "pixels": 28600,
+          "meanLuma": 96.2,
+          "sdLuma": 48.25,
+          "clippedPct": 0
+        },
+        "rail": {
+          "pixels": 8580,
+          "meanLuma": 100.2,
+          "sdLuma": 68.56,
+          "clippedPct": 0
+        },
+        "railBar": {
+          "pixels": 1170,
+          "meanLuma": 142.6,
+          "sdLuma": 33.81,
+          "clippedPct": 0
+        }
+      },
+      "skinHue": {
+        "patientTorso": {
+          "pixelsConsidered": 40800,
+          "skinPixels": 26230,
+          "skinSharePct": 64.3,
+          "meanHueDeg": 29.41,
+          "meanLuma": 169.6,
+          "sdLuma": 16.09,
+          "terciles": [
+            {
+              "tercile": "shade",
+              "pixels": 8743,
+              "meanHueDeg": 29.17,
+              "meanLuma": 154.9
+            },
+            {
+              "tercile": "mid",
+              "pixels": 8743,
+              "meanHueDeg": 28.71,
+              "meanLuma": 173.7
+            },
+            {
+              "tercile": "light",
+              "pixels": 8744,
+              "meanHueDeg": 30.34,
+              "meanLuma": 180.3
+            }
+          ],
+          "spreadDeg": 1.63
+        },
+        "torsoSkin": {
+          "pixelsConsidered": 12100,
+          "skinPixels": 11884,
+          "skinSharePct": 98.2,
+          "meanHueDeg": 28.99,
+          "meanLuma": 175,
+          "sdLuma": 7.23,
+          "terciles": [
+            {
+              "tercile": "shade",
+              "pixels": 3961,
+              "meanHueDeg": 27.93,
+              "meanLuma": 166.1
+            },
+            {
+              "tercile": "mid",
+              "pixels": 3961,
+              "meanHueDeg": 29.09,
+              "meanLuma": 177
+            },
+            {
+              "tercile": "light",
+              "pixels": 3962,
+              "meanHueDeg": 29.96,
+              "meanLuma": 181.9
+            }
+          ],
+          "spreadDeg": 2.03
+        },
+        "nearLeftHand": {
+          "pixelsConsidered": 3200,
+          "skinPixels": 2985,
+          "skinSharePct": 93.3,
+          "meanHueDeg": 24.97,
+          "meanLuma": 126.1,
+          "sdLuma": 19.25,
+          "terciles": [
+            {
+              "tercile": "shade",
+              "pixels": 995,
+              "meanHueDeg": 22.97,
+              "meanLuma": 104.1
+            },
+            {
+              "tercile": "mid",
+              "pixels": 995,
+              "meanHueDeg": 24.79,
+              "meanLuma": 128.1
+            },
+            {
+              "tercile": "light",
+              "pixels": 995,
+              "meanHueDeg": 27.15,
+              "meanLuma": 146.1
+            }
+          ],
+          "spreadDeg": 4.18
+        }
+      },
+      "railRows": [
+        [
+          525,
+          85.3
+        ],
+        [
+          526,
+          87.2
+        ],
+        [
+          527,
+          84.4
+        ],
+        [
+          528,
+          84.2
+        ],
+        [
+          529,
+          88.5
+        ],
+        [
+          530,
+          195.8
+        ],
+        [
+          531,
+          200
+        ],
+        [
+          532,
+          200.3
+        ],
+        [
+          533,
+          200.7
+        ],
+        [
+          534,
+          201
+        ],
+        [
+          535,
+          201.3
+        ],
+        [
+          536,
+          201.6
+        ],
+        [
+          537,
+          71
+        ],
+        [
+          538,
+          27.6
+        ],
+        [
+          539,
+          27.8
+        ],
+        [
+          540,
+          27.9
+        ],
+        [
+          541,
+          28
+        ],
+        [
+          542,
+          28.4
+        ],
+        [
+          543,
+          28.4
+        ],
+        [
+          544,
+          28.6
+        ],
+        [
+          545,
+          28.9
+        ],
+        [
+          546,
+          28.9
+        ],
+        [
+          547,
+          29.1
+        ],
+        [
+          548,
+          29.3
+        ],
+        [
+          549,
+          29.3
+        ],
+        [
+          550,
+          113.7
+        ],
+        [
+          551,
+          142.1
+        ],
+        [
+          552,
+          142.3
+        ],
+        [
+          553,
+          142.5
+        ],
+        [
+          554,
+          142.7
+        ],
+        [
+          555,
+          142.8
+        ],
+        [
+          556,
+          142.9
+        ],
+        [
+          557,
+          116.5
+        ],
+        [
+          558,
+          39.3
+        ],
+        [
+          559,
+          46.4
+        ],
+        [
+          560,
+          77.3
+        ],
+        [
+          561,
+          109.5
+        ],
+        [
+          562,
+          110.3
+        ],
+        [
+          563,
+          117.1
+        ],
+        [
+          564,
+          118.9
+        ],
+        [
+          565,
+          118.6
+        ],
+        [
+          566,
+          167.7
+        ],
+        [
+          567,
+          183.9
+        ],
+        [
+          568,
+          183.4
+        ],
+        [
+          569,
+          154.1
+        ],
+        [
+          570,
+          67.8
+        ],
+        [
+          571,
+          67.6
+        ],
+        [
+          572,
+          67.4
+        ],
+        [
+          573,
+          37.7
+        ],
+        [
+          574,
+          37.7
+        ],
+        [
+          575,
+          37.7
+        ],
+        [
+          576,
+          29.2
+        ],
+        [
+          577,
+          29.2
+        ],
+        [
+          578,
+          20.9
+        ],
+        [
+          579,
+          161.1
+        ]
+      ],
+      "lumaVsC6": {
+        "canvas": 0,
+        "patientTorso": 0,
+        "tablePadsNear": 0,
+        "room": -0.9
+      },
+      "jointVisibility": {
+        "elbowL": {
+          "visible": true,
+          "firstSkinHitM": 0.775,
+          "jointDistanceM": 0.8354,
+          "offsetM": 0.0604
+        },
+        "elbowR": {
+          "visible": false,
+          "firstSkinHitM": 0.9343,
+          "jointDistanceM": 1.2308,
+          "offsetM": 0.2965
+        },
+        "axillaL": {
+          "visible": true,
+          "firstSkinHitM": 0.9079,
+          "jointDistanceM": 0.9711,
+          "offsetM": 0.0632
+        },
+        "axillaR": {
+          "visible": false,
+          "firstSkinHitM": 0.9376,
+          "jointDistanceM": 1.2038,
+          "offsetM": 0.2663
+        },
+        "kneeL": {
+          "visible": true,
+          "firstSkinHitM": 0.8516,
+          "jointDistanceM": 0.9042,
+          "offsetM": 0.0525
+        },
+        "kneeR": {
+          "visible": true,
+          "firstSkinHitM": 1.0614,
+          "jointDistanceM": 1.1111,
+          "offsetM": 0.0497
+        }
+      },
+      "joints": {
+        "elbowL": {
+          "x": 775.9,
+          "y": 482.1,
+          "pixels": 169,
+          "meanLuma": 153.4,
+          "sdLuma": 6.46,
+          "clippedPct": 0
+        },
+        "elbowR": null,
+        "axillaL": {
+          "x": 872.8,
+          "y": 415.3,
+          "pixels": 169,
+          "meanLuma": 155,
+          "sdLuma": 10.33,
+          "clippedPct": 0
+        },
+        "axillaR": null,
+        "kneeL": {
+          "x": 333,
+          "y": 411.2,
+          "pixels": 169,
+          "meanLuma": 99.3,
+          "sdLuma": 4.69,
+          "clippedPct": 0
+        },
+        "kneeR": {
+          "x": 375.6,
+          "y": 311.4,
+          "pixels": 169,
+          "meanLuma": 97.7,
+          "sdLuma": 2.21,
+          "clippedPct": 0
+        }
+      },
+      "shimmer": {
+        "torsoSkin": {
+          "rect": [
+            603,
+            257,
+            823,
+            312
+          ],
+          "halfPixelX": {
+            "pixels": 12100,
+            "meanAbs": 0.344,
+            "p95": 1,
+            "max": 39.26,
+            "over4Pct": 0.5
+          },
+          "halfPixelY": {
+            "pixels": 12100,
+            "meanAbs": 0.782,
+            "p95": 1.79,
+            "max": 56.57,
+            "over4Pct": 1.48
+          },
+          "noiseFloor": {
+            "pixels": 12100,
+            "meanAbs": 0,
+            "p95": 0,
+            "max": 0,
+            "over4Pct": 0
+          }
+        },
+        "nearLeftHand": {
+          "rect": [
+            463,
+            477,
+            543,
+            517
+          ],
+          "halfPixelX": {
+            "pixels": 3200,
+            "meanAbs": 1.263,
+            "p95": 3.93,
+            "max": 45.7,
+            "over4Pct": 4.69
+          },
+          "halfPixelY": {
+            "pixels": 3200,
+            "meanAbs": 2.599,
+            "p95": 9.71,
+            "max": 47.53,
+            "over4Pct": 14.28
+          },
+          "noiseFloor": {
+            "pixels": 3200,
+            "meanAbs": 0,
+            "p95": 0,
+            "max": 0,
+            "over4Pct": 0
+          }
+        }
+      },
+      "render": {
+        "calls": 1206,
+        "tris": 387848,
+        "shadowCalls": 1210,
+        "shadowTris": 326832,
+        "shadowUpdates": 13,
+        "shadowUpdatesLastFrame": 1,
+        "frames": 13,
+        "rendersLastFrame": 1,
+        "programs": 17,
+        "casters": [
+          {
+            "light": "DirectionalLight",
+            "type": "DirectionalLight",
+            "lit": true,
+            "mapSize": [
+              2048,
+              2048
+            ],
+            "autoUpdate": true,
+            "casters": 1404,
+            "visible": 1212,
+            "drawn": 1210,
+            "alwaysDrawn": 372,
+            "drawCalls": 1210,
+            "sphereMissing": 0
+          }
+        ],
+        "envReady": false,
+        "toneMapping": "ACESFilmic",
+        "exposure": 0.88,
+        "pixelRatio": 1,
+        "gpuMs": null,
+        "gpuTimer": "off",
+        "gpuSamples": 0,
+        "gpuTimerResets": 0,
+        "infoAutoReset": true,
+        "contextLost": false,
+        "contextLosses": 0,
+        "contextRestores": 0,
+        "rendererRebuilds": 0,
+        "lostFrames": 0
+      }
+    },
+    "v2Canvas": {
+      "left": 17,
+      "top": 83,
+      "width": 1054,
+      "height": 570
+    },
+    "v2": {
+      "joints": {
+        "elbowL": {
+          "x": 742.4,
+          "y": 262.2,
+          "pixels": 169,
+          "meanLuma": 154.8,
+          "sdLuma": 5.71,
+          "clippedPct": 0
+        },
+        "elbowR": null,
+        "axillaL": {
+          "x": 870.9,
+          "y": 187.8,
+          "pixels": 169,
+          "meanLuma": 154.6,
+          "sdLuma": 9.59,
+          "clippedPct": 0
+        },
+        "axillaR": null,
+        "kneeL": {
+          "x": 248.1,
+          "y": 182.3,
+          "pixels": 169,
+          "meanLuma": 100.3,
+          "sdLuma": 3.05,
+          "clippedPct": 0
+        },
+        "kneeR": {
+          "x": 292.5,
+          "y": 55.1,
+          "pixels": 169,
+          "meanLuma": 99.2,
+          "sdLuma": 1.54,
+          "clippedPct": 0
+        },
+        "forearmMid": {
+          "x": 635.1,
+          "y": 273.6,
+          "pixels": 169,
+          "meanLuma": 159,
+          "sdLuma": 3.72,
+          "clippedPct": 0
+        }
+      },
+      "jointVisibility": {
+        "elbowL": {
+          "visible": true,
+          "firstSkinHitM": 0.7312,
+          "jointDistanceM": 0.7904,
+          "offsetM": 0.0592
+        },
+        "elbowR": {
+          "visible": false,
+          "firstSkinHitM": 0.9068,
+          "jointDistanceM": 1.1867,
+          "offsetM": 0.2799
+        },
+        "axillaL": {
+          "visible": true,
+          "firstSkinHitM": 0.8523,
+          "jointDistanceM": 0.9141,
+          "offsetM": 0.0618
+        },
+        "axillaR": {
+          "visible": false,
+          "firstSkinHitM": 0.8955,
+          "jointDistanceM": 1.1494,
+          "offsetM": 0.2539
+        },
+        "kneeL": {
+          "visible": true,
+          "firstSkinHitM": 0.8591,
+          "jointDistanceM": 0.9141,
+          "offsetM": 0.0551
+        },
+        "kneeR": {
+          "visible": true,
+          "firstSkinHitM": 1.0593,
+          "jointDistanceM": 1.1116,
+          "offsetM": 0.0523
+        }
+      },
+      "forearmMid": {
+        "x": 635.1295666275838,
+        "y": 273.5726994945277,
+        "page": {
+          "x": 652.1295666275838,
+          "y": 356.5726994945277
+        }
+      },
+      "skinHue": {
+        "forearmPatch": {
+          "pixelsConsidered": 720,
+          "skinPixels": 720,
+          "skinSharePct": 100,
+          "meanHueDeg": 28.34,
+          "meanLuma": 158.8,
+          "sdLuma": 5.65,
+          "terciles": [
+            {
+              "tercile": "shade",
+              "pixels": 240,
+              "meanHueDeg": 27.96,
+              "meanLuma": 151.8
+            },
+            {
+              "tercile": "mid",
+              "pixels": 240,
+              "meanHueDeg": 28.71,
+              "meanLuma": 160.1
+            },
+            {
+              "tercile": "light",
+              "pixels": 240,
+              "meanHueDeg": 28.35,
+              "meanLuma": 164.3
+            }
+          ],
+          "spreadDeg": 0.75
+        }
+      },
+      "luma": {
+        "forearmPatch": {
+          "pixels": 720,
+          "meanLuma": 158.8,
+          "sdLuma": 5.65,
+          "clippedPct": 0
+        },
+        "canvas": {
+          "pixels": 600780,
+          "meanLuma": 123,
+          "sdLuma": 49.07,
+          "clippedPct": 0.04
+        }
+      },
+      "shimmer": {
+        "forearmPatch": {
+          "rect": [
+            617,
+            264,
+            653,
+            284
+          ],
+          "halfPixelX": {
+            "pixels": 720,
+            "meanAbs": 0.385,
+            "p95": 1,
+            "max": 1.79,
+            "over4Pct": 0
+          },
+          "halfPixelY": {
+            "pixels": 720,
+            "meanAbs": 0.545,
+            "p95": 1.65,
+            "max": 2.57,
+            "over4Pct": 0
+          },
+          "noiseFloor": {
+            "pixels": 720,
+            "meanAbs": 0,
+            "p95": 0,
+            "max": 0,
+            "over4Pct": 0
+          }
+        }
+      },
+      "render": {
+        "calls": 479,
+        "tris": 299400,
+        "shadowCalls": 1213,
+        "shadowTris": 354268,
+        "shadowUpdates": 25,
+        "shadowUpdatesLastFrame": 1,
+        "frames": 25,
+        "rendersLastFrame": 1,
+        "programs": 19,
+        "casters": [
+          {
+            "light": "DirectionalLight",
+            "type": "DirectionalLight",
+            "lit": true,
+            "mapSize": [
+              2048,
+              2048
+            ],
+            "autoUpdate": true,
+            "casters": 1410,
+            "visible": 1215,
+            "drawn": 1213,
+            "alwaysDrawn": 378,
+            "drawCalls": 1213,
+            "sphereMissing": 0
+          }
+        ],
+        "envReady": false,
+        "toneMapping": "ACESFilmic",
+        "exposure": 0.88,
+        "pixelRatio": 1,
+        "gpuMs": null,
+        "gpuTimer": "off",
+        "gpuSamples": 0,
+        "gpuTimerResets": 0,
+        "infoAutoReset": true,
+        "contextLost": false,
+        "contextLosses": 0,
+        "contextRestores": 0,
+        "rendererRebuilds": 0,
+        "lostFrames": 0
+      }
+    }
+  },
+  "errors": []
+}

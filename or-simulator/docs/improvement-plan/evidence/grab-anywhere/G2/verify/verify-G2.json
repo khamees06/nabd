@@ -1,0 +1,61 @@
+{
+ "cluster": "G2",
+ "role": "independent verifier",
+ "verifiedCommit": "ff8705c",
+ "baseCommit": "c2b94097e8a589b4b120f4c0d43b7954819664ca",
+ "date": "2026-11-19",
+ "verdict": "pass",
+ "verdictScope": "Every gate that an agent can measure reproduces, in Chrome and WebKit at both sizes where specified, and no blocking defect was found. Two gates belong to the owner and stay open by design: the owner's visual review and the owner-eye seam check of a V3 under-table orbit. G2 is not accepted until the owner has seen the images.",
+ "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+ "browsers": {
+  "chrome": "157.0.8103.79",
+  "edge": "installed msedge channel",
+  "webkit": "Playwright WebKit 27.2 on Windows (approximates Safari, not Safari)"
+ },
+ "method": "The diff c2b9409..ff8705c was read line by line. Every G2 gate was re-measured with code written for this verification (scripts/g2-probe.mjs). It has its own bone-to-segment table. It re-skins every vertex of all four patient skinned meshes and casts its own vertical lines through every drawn, visible table-top triangle, the head ring included (4,636 triangles, bucketed). A per-mesh parity test decides whether a vertex is inside a solid, and the depth is read below that mesh's top. The lowest gap is read over the drawn surface under each vertex. The app's restSupport() is never used for these numbers. The same probe ran on an exported base tree (git archive c2b9409) for before values. Extra probes: arm overhang past the pad edge, lowest gap per third of each limb segment, rest stability over 10 s, an 8-frame under-table orbit (scripts/g2-extra.mjs), column-area mesh bounds in both trees (scripts/base-parts.mjs), pose-tween speeds in both trees (scripts/tween-probe.mjs), and WebKit boot probes base vs G2 (scripts/boot-probe.mjs). Suites ran on ports 4800-4809 with their own servers. Scripts carry absolute paths of this machine.",
+ "acceptance": [
+  {"check": "skinPenetration: 0 vertices > 2 mm below a support, except a declared compression <= 5 mm under pelvis, calf and heel (DN5)", "target": "0 over allowance", "measured": "Own cast, clinical skin: 47 vertices inside a drawn solid, deepest 2.00 mm (pelvis, seat_pad), calves 1.79 mm (leg pads), 0 vertices > 2 mm anywhere. The privacy skin's deepest vertex is 1.28 mm (seat_pad). Brows and eyes: 0. App readout: belowTopOverAllowance 0, supportDownward 0. Identical in Chrome and WebKit at 1440x900 and 560x890. Base: 2,755 vertices > 2 mm, deepest 51.81 mm", "pass": true},
+  {"check": "Lowest skin over its support: head", "target": "-5..+5 mm", "measured": "+0.50 mm over head_ring_gel (own cast and app equal). 0 head vertices inside the ring: C6-e's 6 vertices at 2.8 mm are its 1 cm grid, as the implementer said. Base: -5.20 mm into back_pad", "pass": true},
+  {"check": "Lowest skin over its support: upper arm L/R", "target": "-5..+5 mm", "measured": "+0.52 / +0.52 mm over back_pad. By thirds, proximal to distal: 4.32, 0.69, 0.52 mm, so the arm lies along its length", "pass": true},
+  {"check": "Lowest skin over its support: forearm L/R", "target": "-5..+5 mm", "measured": "+1.67 / +1.67 mm over back_pad. By thirds: 1.67, 1.67, 7.39 mm (the wrist end tapers). Base: +5.95 mm", "pass": true},
+  {"check": "Lowest skin over its support: hand L/R", "target": "-5..+5 mm", "measured": "+0.40 / +0.40 mm over seat_pad. Base: -18.75 mm", "pass": true},
+  {"check": "Lowest skin over its support: pelvis", "target": "-5..+5 mm", "measured": "-2.00 mm over seat_pad (declared compression). Base: -47.81 mm", "pass": true},
+  {"check": "Lowest skin over its support: calf L/R", "target": "-5..+5 mm", "measured": "-1.79 / -1.79 mm. Base: -51.81 mm", "pass": true},
+  {"check": "Lowest skin over its support: heel", "target": "-5..+5 mm", "measured": "No drawn support under either heel. They overhang the leg pads' end (z 0.885) by 67.7 mm, and the first drawn surface below is radiolucent_deck, 103.1 mm down. Against the leg-pad plane: +3.09 / +3.09 mm. The base had the same overhang (67.9 mm). Met only by the design's own F27 method (the pad plane); over a drawn support the gate cannot apply. Owner or clinician choice", "pass": true},
+  {"check": "Chest", "target": "<= +8 mm", "measured": "+5.45 mm over back_pad. Base: -37.33 mm", "pass": true},
+  {"check": "Both wrists |x|", "target": "<= 0.258 m", "measured": "0.25175 / 0.25175 m from the wrist bones. Base: 0.3052 m", "pass": true},
+  {"check": "No base/top seam in a V3 under-table orbit", "target": "owner eye", "measured": "Pending the owner. Agent side: 0 visible top meshes below the base mount plate (own AABB test). In 8 own orbit frames under the deck (images/under-table-orbit-montage.jpg) there is no gap between the deck and the base. The hidden central_carrier is the only hidden top mesh. The deck (y 0.745-0.800) now overlaps the mount plate by 15 mm and the mount top by 18 mm; see nonBlocking", "pass": false},
+  {"check": "Drill S2, S3, C3-9a, C3-9d, C6-a, C6-b green", "target": "green", "measured": "Chrome: all green. S2 lift 0.1197 m. S3 supportGap 1.60 mm (WebKit 1.22, Edge 1.60; gate < 20). C3-9a 14/14 at both sizes in Chrome and WebKit", "pass": true},
+  {"check": "C5-8a aim", "target": "< 1 deg", "measured": "Final aim error 0 deg at both sizes in Chrome (mid-walk 6.8-6.9 deg, not gated)", "pass": true},
+  {"check": "C3-9b, C3-9c, C3-9e, S4 green", "target": "green", "measured": "Chrome: green, with C3-9e at 560 skipped by design. C3-9b wrist glove depth 8.8 mm (WebKit 8.8 / 8.9; gate 10). C3-9c settle max 0.321 m/s. S4 golden trace identical to G1 in Chrome, Edge and WebKit", "pass": true},
+  {"check": "V1-V4 baselines refreshed with before/after images", "target": "refreshed deliberately", "measured": "Pixel diff c2b9409 vs G2 (Chrome 1440x900, rendered): V1 273,675, V2 568,373, V3 15,898, V4 574,005 differing pixels. G2 is self-identical in every view; the base is self-identical except 37 px in V3. Four before/after composites are present, plus the side, top, under-table and head-ring images (8 JPEGs, 836 KB)", "pass": true},
+  {"check": "Owner visual review", "target": "owner", "measured": "Pending the owner (images in evidence/grab-anywhere/G2/images)", "pass": false},
+  {"check": "qaAdd: per-segment lowest-skin gap readout", "target": "present", "measured": "__studioQA.restSupport() present; its per-segment gaps equal the own cast to 0.01 mm on the 15 segments over a resting surface. For the feet the app gives null (no resting surface) and the own cast 103.1 mm to the deck", "pass": true}
+ ],
+ "globalGates": [
+  {"check": "npm test", "target": "all pass", "measured": "81/81", "pass": true},
+  {"check": "smoke S1-S9 + V1-V4", "target": "green in Chrome, Edge, WebKit", "measured": "Chrome 17/17; Edge 17/17; WebKit 15 + 2 passed on retry. The 2 first attempts (S4, S6) were ready timeouts (U21). S1: 29 modules, all HTTP 200, in all three browsers", "pass": true},
+  {"check": "grab.spec (Q1, G1, G2)", "target": "green", "measured": "Chrome 22/22. WebKit 15 + 7 passed on retry. The first attempts were 4 ready timeouts, 2 'WebGL: context lost.' console errors and 1 Q1-c restore timeout", "pass": true},
+  {"check": "interaction suite", "target": "green", "measured": "Chrome full suite: 54 passed, 1 skipped by design (C3-9e 560). WebKit subset C1-2b, C2-12, C3-9a, C3-9b: 6 + 2 passed on retry (1 'WebGL: context lost.', 1 ready timeout). WebKit limb drag 31.2 fps against 33.1 plain (0.94)", "pass": true},
+  {"check": "perf-capture V1-V4 M8/M9 rise <= 10 %", "target": "<= 10 %", "measured": "Headed Chrome, base and G2 in one session (runs 1, loads 1): max M8 +1.86 % (V1 active), max M9 +0.65 % (V2). V4 hover reads -7.9 % M8 (fewer draws), and 0 console errors in both trees", "pass": true},
+  {"check": "M11 = 0, S4 identical, no new event types, kind 'wrist', DN5 labels", "target": "all", "measured": "M11 0 on every Chrome and Edge test and every passing WebKit attempt. S4 is identical in the three browsers. EventLogger and BedsideInteraction are untouched, so the event types and kind 'wrist' are unchanged. The DN5 label is on restSupport, the ring summary and the code comments of every new clinical value; see nonBlocking for skinPenetration().allowanceMm", "pass": true}
+ ],
+ "webkitBoot": {
+  "freshProcessABBA": "8/8 base and 8/8 G2 ready, 0 context losses in either tree (median ready 2.84 s base, 3.27 s G2)",
+  "sharedProcessBAAB": "base 8/8 ready (1 loss, recovered); G2 5/8 ready (3 losses at loads 6, 10, 14, none recovered)",
+  "sharedProcessABBA": "base 7/8 ready (1 loss at load 14, not recovered); G2 6/8 ready (3 losses at loads 3, 7, 11, one recovered)",
+  "reading": "With fresh processes neither tree loses a context. With one shared process, losses come every 3-4 loads by position (3, 6/7, 10/11, 14) in both orders, and they hit both trees. In both orders they fell mostly on G2 positions: 6 of 16 G2 loads against 2 of 16 base loads (Fisher exact p about 0.22, not significant). This matches U21 and the implementer's single-tree runs. Not a G2 defect on this evidence; a larger single-tree probe would settle it"
+ },
+ "nonBlocking": [
+  "Heels: nothing drawn supports them. They overhang the leg pads by 67.7 mm, 103 mm above the deck, as in the base (67.9 mm). The gate is met only against the pad plane. Owner and clinician choose: heels floated, a heel pad, or a longer leg section",
+  "The mid-thigh floats over the seat pad: the lowest gap by thirds of the thigh is 3.7 / 29.6 / 36.6 mm (L) and 6.1 / 29.7 / 36.6 mm (R). The thigh is not a G2 gate; the base had it 40 mm sunk. Show it in the owner review",
+  "The lowered deck now overlaps the base. radiolucent_deck (y 0.745-0.800) overlaps table_mount_plate (0.71-0.76) by 15 mm and table_mount_top (0.76-0.778) by 18 mm, so the mount top sits fully inside the deck slab; the column bolts overlap by 25 mm. The plate is 10 mm wider than the deck on each side (x +-0.32 against +-0.31), so its top 15 mm meets the deck's side faces. There is no gap and nothing hangs below, but the owner should see it in the seam check",
+  "C3-9b wrist glove depth rises from 5.1 mm (base) to 8.8 mm (WebKit 560: 8.9) against a 10 mm gate, leaving 1.1 mm of headroom; G3 should replace the fixed station grip",
+  "Pose tween (studio setPose supine<->sitting), present before G2: the bones move far faster than the human caps in both trees. Feet peak at 9.2 m/s in G2 against 7.8 m/s in the base, with a largest frame step of 100.5 mm against 76.3 mm (supine->sitting). The re-aimed rest legs travel further. This is not a trainee manipulation path; leave it to G3's pose-tween handling",
+  "The head ring is built inside buildGrabFoundations. If that build throws, the ring is never added, and the head would hang about 35 mm above the lowered pads, because a QA foundation build now carries a visual support. The ring is also fitted once, at load (G7 must re-press it)",
+  "skinPenetration().allowanceMm exposes the 5 mm compression without a DN5 label in that readout; restSupport() carries the label",
+  "Test updates beyond the work-list's testsUpdate list: G1-a pad tops, G1-b rest offsets, G1-d F27 sinking (now <= 5 mm and 0 below half a pad), Q1-b regions and luma reference. None is weaker (G1-d is stricter); the reasons are in the f8ce489 body",
+  "Forearm lateral skin reaches |x| 0.2854 m, 2.9 mm past the back-pad edge (0.2825), on 42 vertices. All of them are at least 33 mm above the pad top, so nothing hangs (R4 holds)",
+  "Naming in readouts: the patient's left shank rests on the GLB's leg_R_pad and the right on leg_L_pad (table naming), which is cosmetic"
+ ]
+}

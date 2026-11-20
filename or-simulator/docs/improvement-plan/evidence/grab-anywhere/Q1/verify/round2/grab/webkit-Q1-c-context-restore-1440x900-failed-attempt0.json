@@ -1,0 +1,62 @@
+{
+  "check": "Q1-c-context-restore-1440x900-failed-attempt0",
+  "cluster": "Q1",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T01:10:16.874Z",
+  "attempt": 0,
+  "webglContextLostMessages": 2,
+  "failedAt": "page.waitForFunction: Timeout 15000ms exceeded.",
+  "result": {
+    "gpuTimerSwitch": {
+      "available": false,
+      "enabled": false
+    },
+    "boot": {
+      "contextLost": false,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rendererRebuilds": 0,
+      "lostFrames": 0,
+      "gpuTimerResets": 0,
+      "frames": 30,
+      "gpuMs": null,
+      "gpuSamples": 0
+    },
+    "before": {
+      "glDraws": 2416,
+      "glTris": 714680,
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "liveInfoCalls": 1206,
+      "liveInfoTris": 387848,
+      "shadowMapRender": "countedShadowRender",
+      "render": "countedRender"
+    },
+    "lose": {
+      "extension": true
+    },
+    "whileLost": {
+      "contextLost": true,
+      "framesAdded": 0,
+      "lostFramesAdded": 11,
+      "shadowUpdatesAdded": 0
+    }
+  },
+  "contextConsole": [
+    "log: THREE.WebGLRenderer: Context Lost.",
+    "log: THREE.WebGLRenderer: Context Restored.",
+    "error: WebGL: context lost."
+  ],
+  "errors": [
+    "console.error: WebGL: context lost."
+  ]
+}

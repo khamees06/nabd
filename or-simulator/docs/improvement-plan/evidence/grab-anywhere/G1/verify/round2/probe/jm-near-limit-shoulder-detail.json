@@ -1,0 +1,722 @@
+{
+ "shoulder.L": {
+  "jumps": [
+   {
+    "line": 567,
+    "beyondDeg": 28.84,
+    "outStepDeg": 2.184,
+    "ratio": 21.84,
+    "swingExcessDeg": [
+     28.84,
+     28.89
+    ],
+    "twistExcessDeg": [
+     0,
+     0
+    ],
+    "twistAt": [
+     0,
+     0
+    ],
+    "outSwingMoveDeg": 2.12,
+    "out": {
+     "elevation": 180,
+     "flexion": -180,
+     "abduction": -180,
+     "internalRotation": -3.6
+    }
+   },
+   {
+    "line": 236,
+    "beyondDeg": 28.99,
+    "outStepDeg": 2.539,
+    "ratio": 25.39,
+    "swingExcessDeg": [
+     29,
+     28.99
+    ],
+    "twistExcessDeg": [
+     0,
+     0
+    ],
+    "twistAt": [
+     0,
+     0
+    ],
+    "outSwingMoveDeg": 2.461,
+    "out": {
+     "elevation": 180,
+     "flexion": -180,
+     "abduction": -180,
+     "internalRotation": 5.5
+    }
+   },
+   {
+    "line": 394,
+    "beyondDeg": 35.54,
+    "outStepDeg": 2.025,
+    "ratio": 20.25,
+    "swingExcessDeg": [
+     28.25,
+     28.22
+    ],
+    "twistExcessDeg": [
+     22.83,
+     21.83
+    ],
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "outSwingMoveDeg": 1.978,
+    "out": {
+     "elevation": 178,
+     "flexion": 178,
+     "abduction": -179.9,
+     "internalRotation": -90
+    }
+   },
+   {
+    "line": 720,
+    "beyondDeg": 35.98,
+    "outStepDeg": 4.534,
+    "ratio": 45.34,
+    "swingExcessDeg": [
+     35.97,
+     36.04
+    ],
+    "twistExcessDeg": [
+     0.92,
+     5.41
+    ],
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "outSwingMoveDeg": 2.876,
+    "out": {
+     "elevation": 177.1,
+     "flexion": -179.8,
+     "abduction": 177.1,
+     "internalRotation": -90
+    }
+   },
+   {
+    "line": 1082,
+    "beyondDeg": 84.03,
+    "outStepDeg": 3.42,
+    "ratio": 34.2,
+    "swingExcessDeg": [
+     33.47,
+     33.51
+    ],
+    "twistExcessDeg": [
+     78.25,
+     81.57
+    ],
+    "twistAt": [
+     1,
+     1
+    ],
+    "outSwingMoveDeg": 2.223,
+    "out": {
+     "elevation": 180,
+     "flexion": -180,
+     "abduction": 180,
+     "internalRotation": 70
+    }
+   },
+   {
+    "line": 669,
+    "beyondDeg": 99.82,
+    "outStepDeg": 160.273,
+    "ratio": 1602.73,
+    "swingExcessDeg": [
+     0,
+     0
+    ],
+    "twistExcessDeg": [
+     99.82,
+     99.9
+    ],
+    "twistAt": [
+     -1,
+     1
+    ],
+    "outSwingMoveDeg": 0.1,
+    "out": {
+     "elevation": 144.3,
+     "flexion": 144.8,
+     "abduction": 171.8,
+     "internalRotation": 70
+    }
+   },
+   {
+    "line": 1086,
+    "beyondDeg": 99.83,
+    "outStepDeg": 160.156,
+    "ratio": 1601.56,
+    "swingExcessDeg": [
+     0,
+     0
+    ],
+    "twistExcessDeg": [
+     99.83,
+     99.98
+    ],
+    "twistAt": [
+     -1,
+     1
+    ],
+    "outSwingMoveDeg": 0.095,
+    "out": {
+     "elevation": 124,
+     "flexion": 125.6,
+     "abduction": -153.8,
+     "internalRotation": 70
+    }
+   },
+   {
+    "line": 852,
+    "beyondDeg": 99.84,
+    "outStepDeg": 160.259,
+    "ratio": 1602.59,
+    "swingExcessDeg": [
+     2.52,
+     2.49
+    ],
+    "twistExcessDeg": [
+     99.82,
+     99.97
+    ],
+    "twistAt": [
+     1,
+     -1
+    ],
+    "outSwingMoveDeg": 0.084,
+    "out": {
+     "elevation": 139,
+     "flexion": 140.8,
+     "abduction": -163.2,
+     "internalRotation": -90
+    }
+   }
+  ],
+  "fasterThan8x": {
+   "count": 33,
+   "nearest": [
+    {
+     "line": 639,
+     "beyondDeg": 18.42,
+     "outStepDeg": 1.017,
+     "ratio": 10.17,
+     "swingExcessDeg": [
+      18.42,
+      18.42
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.01,
+     "out": {
+      "elevation": 180,
+      "flexion": 180,
+      "abduction": -180,
+      "internalRotation": 58.9
+     }
+    },
+    {
+     "line": 214,
+     "beyondDeg": 21.59,
+     "outStepDeg": 1.322,
+     "ratio": 13.22,
+     "swingExcessDeg": [
+      21.65,
+      21.59
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.296,
+     "out": {
+      "elevation": 180,
+      "flexion": -180,
+      "abduction": -180,
+      "internalRotation": 68.8
+     }
+    },
+    {
+     "line": 988,
+     "beyondDeg": 22.87,
+     "outStepDeg": 1.42,
+     "ratio": 14.2,
+     "swingExcessDeg": [
+      22.9,
+      22.87
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.395,
+     "out": {
+      "elevation": 178.6,
+      "flexion": 178.6,
+      "abduction": -179.9,
+      "internalRotation": -20
+     }
+    },
+    {
+     "line": 1286,
+     "beyondDeg": 25.61,
+     "outStepDeg": 1.466,
+     "ratio": 14.66,
+     "swingExcessDeg": [
+      25.61,
+      25.61
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.416,
+     "out": {
+      "elevation": 178.6,
+      "flexion": -179.9,
+      "abduction": 178.6,
+      "internalRotation": -66.1
+     }
+    },
+    {
+     "line": 536,
+     "beyondDeg": 30.72,
+     "outStepDeg": 1.74,
+     "ratio": 17.4,
+     "swingExcessDeg": [
+      30.72,
+      30.78
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.693,
+     "out": {
+      "elevation": 178.3,
+      "flexion": -179.9,
+      "abduction": 178.3,
+      "internalRotation": -62.3
+     }
+    },
+    {
+     "line": 1341,
+     "beyondDeg": 68.35,
+     "outStepDeg": 0.805,
+     "ratio": 8.05,
+     "swingExcessDeg": [
+      39.45,
+      39.48
+     ],
+     "twistExcessDeg": [
+      56.98,
+      57.88
+     ],
+     "twistAt": [
+      -1,
+      -1
+     ],
+     "outSwingMoveDeg": 0.251,
+     "out": {
+      "elevation": 138.5,
+      "flexion": 140.4,
+      "abduction": -162.8,
+      "internalRotation": -90
+     }
+    }
+   ],
+   "maxRatio": 17.4
+  }
+ },
+ "shoulder.R": {
+  "jumps": [
+   {
+    "line": 288,
+    "beyondDeg": 28.25,
+    "outStepDeg": 2.083,
+    "ratio": 20.83,
+    "swingExcessDeg": [
+     28.32,
+     28.25
+    ],
+    "twistExcessDeg": [
+     0,
+     0
+    ],
+    "twistAt": [
+     0,
+     0
+    ],
+    "outSwingMoveDeg": 2.031,
+    "out": {
+     "elevation": 180,
+     "flexion": -180,
+     "abduction": -180,
+     "internalRotation": -67.4
+    }
+   },
+   {
+    "line": 587,
+    "beyondDeg": 29.38,
+    "outStepDeg": 2.58,
+    "ratio": 25.8,
+    "swingExcessDeg": [
+     29.41,
+     29.38
+    ],
+    "twistExcessDeg": [
+     0,
+     0
+    ],
+    "twistAt": [
+     0,
+     0
+    ],
+    "outSwingMoveDeg": 2.481,
+    "out": {
+     "elevation": 177.5,
+     "flexion": 177.5,
+     "abduction": -179.8,
+     "internalRotation": -86.8
+    }
+   },
+   {
+    "line": 1352,
+    "beyondDeg": 32.25,
+    "outStepDeg": 2.987,
+    "ratio": 29.87,
+    "swingExcessDeg": [
+     32.29,
+     32.25
+    ],
+    "twistExcessDeg": [
+     0,
+     0
+    ],
+    "twistAt": [
+     0,
+     0
+    ],
+    "outSwingMoveDeg": 2.846,
+    "out": {
+     "elevation": 177.2,
+     "flexion": 177.2,
+     "abduction": -179.8,
+     "internalRotation": 69.5
+    }
+   },
+   {
+    "line": 1169,
+    "beyondDeg": 61.81,
+    "outStepDeg": 15.468,
+    "ratio": 154.68,
+    "swingExcessDeg": [
+     48,
+     47.98
+    ],
+    "twistExcessDeg": [
+     56.03,
+     40.19
+    ],
+    "twistAt": [
+     1,
+     1
+    ],
+    "outSwingMoveDeg": 10.975,
+    "out": {
+     "elevation": 169,
+     "flexion": 169.2,
+     "abduction": -178.3,
+     "internalRotation": -90
+    }
+   },
+   {
+    "line": 467,
+    "beyondDeg": 98.82,
+    "outStepDeg": 2.056,
+    "ratio": 20.56,
+    "swingExcessDeg": [
+     28.23,
+     28.13
+    ],
+    "twistExcessDeg": [
+     95.73,
+     97.61
+    ],
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "outSwingMoveDeg": 1.379,
+    "out": {
+     "elevation": 180,
+     "flexion": -180,
+     "abduction": 180,
+     "internalRotation": 70
+    }
+   },
+   {
+    "line": 199,
+    "beyondDeg": 99.69,
+    "outStepDeg": 160.267,
+    "ratio": 1602.67,
+    "swingExcessDeg": [
+     0.68,
+     0.68
+    ],
+    "twistExcessDeg": [
+     99.69,
+     99.99
+    ],
+    "twistAt": [
+     -1,
+     1
+    ],
+    "outSwingMoveDeg": 0.083,
+    "out": {
+     "elevation": 153.6,
+     "flexion": 154.4,
+     "abduction": -172.7,
+     "internalRotation": -90
+    }
+   },
+   {
+    "line": 567,
+    "beyondDeg": 99.72,
+    "outStepDeg": 160.233,
+    "ratio": 1602.33,
+    "swingExcessDeg": [
+     0,
+     0
+    ],
+    "twistExcessDeg": [
+     99.72,
+     100
+    ],
+    "twistAt": [
+     1,
+     -1
+    ],
+    "outSwingMoveDeg": 0.087,
+    "out": {
+     "elevation": 137.1,
+     "flexion": -164.5,
+     "abduction": 138.4,
+     "internalRotation": 70
+    }
+   },
+   {
+    "line": 1145,
+    "beyondDeg": 99.76,
+    "outStepDeg": 160.226,
+    "ratio": 1602.26,
+    "swingExcessDeg": [
+     0,
+     0
+    ],
+    "twistExcessDeg": [
+     99.99,
+     99.76
+    ],
+    "twistAt": [
+     1,
+     -1
+    ],
+    "outSwingMoveDeg": 0.097,
+    "out": {
+     "elevation": 141.6,
+     "flexion": 145.2,
+     "abduction": 159,
+     "internalRotation": 70
+    }
+   }
+  ],
+  "fasterThan8x": {
+   "count": 49,
+   "nearest": [
+    {
+     "line": 917,
+     "beyondDeg": 17.56,
+     "outStepDeg": 0.886,
+     "ratio": 8.86,
+     "swingExcessDeg": [
+      17.56,
+      17.63
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 0.878,
+     "out": {
+      "elevation": 180,
+      "flexion": -180,
+      "abduction": -180,
+      "internalRotation": 1.1
+     }
+    },
+    {
+     "line": 294,
+     "beyondDeg": 19.52,
+     "outStepDeg": 1.034,
+     "ratio": 10.34,
+     "swingExcessDeg": [
+      19.55,
+      19.52
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.026,
+     "out": {
+      "elevation": 179,
+      "flexion": 179,
+      "abduction": -180,
+      "internalRotation": -86.1
+     }
+    },
+    {
+     "line": 811,
+     "beyondDeg": 19.75,
+     "outStepDeg": 0.949,
+     "ratio": 9.49,
+     "swingExcessDeg": [
+      19.5,
+      19.55
+     ],
+     "twistExcessDeg": [
+      3.54,
+      2.81
+     ],
+     "twistAt": [
+      -1,
+      -1
+     ],
+     "outSwingMoveDeg": 0.654,
+     "out": {
+      "elevation": 179.3,
+      "flexion": -180,
+      "abduction": 179.3,
+      "internalRotation": 70
+     }
+    },
+    {
+     "line": 1154,
+     "beyondDeg": 19.79,
+     "outStepDeg": 1.089,
+     "ratio": 10.89,
+     "swingExcessDeg": [
+      19.79,
+      19.8
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.063,
+     "out": {
+      "elevation": 178.9,
+      "flexion": 178.9,
+      "abduction": -180,
+      "internalRotation": -33.9
+     }
+    },
+    {
+     "line": 583,
+     "beyondDeg": 21.11,
+     "outStepDeg": 1.203,
+     "ratio": 12.03,
+     "swingExcessDeg": [
+      21.17,
+      21.11
+     ],
+     "twistExcessDeg": [
+      0,
+      0
+     ],
+     "twistAt": [
+      0,
+      0
+     ],
+     "outSwingMoveDeg": 1.184,
+     "out": {
+      "elevation": 178.8,
+      "flexion": 178.8,
+      "abduction": -179.9,
+      "internalRotation": -8.9
+     }
+    },
+    {
+     "line": 890,
+     "beyondDeg": 21.67,
+     "outStepDeg": 1.368,
+     "ratio": 13.68,
+     "swingExcessDeg": [
+      21.64,
+      21.7
+     ],
+     "twistExcessDeg": [
+      1.08,
+      2.3
+     ],
+     "twistAt": [
+      -1,
+      -1
+     ],
+     "outSwingMoveDeg": 0.933,
+     "out": {
+      "elevation": 180,
+      "flexion": -180,
+      "abduction": 180,
+      "internalRotation": 70
+     }
+    }
+   ],
+   "maxRatio": 19.3
+  }
+ }
+}

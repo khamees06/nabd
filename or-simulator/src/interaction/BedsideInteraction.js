@@ -46,17 +46,22 @@ export function createBedside({
   let hoverFrame = 0;
   let hoverPicked = null;
   // The last hover pick, reused by a click at the same pixel while nothing that a pick depends on has
-  // changed (camera pose and lens, canvas box, tool pose, limb tips), so the click frame does not repeat the
-  // full-skin raycast. Cleared when a gesture starts or ends.
+  // changed (camera pose and lens, canvas box, tool pose, patient pose), so the click frame does not repeat
+  // the full-skin raycast. Cleared when a gesture starts or ends.
   const pickReuseMs = 600;
   const keyPoint = new Vector3();
   let lastPick = null;
   function pickKey(x, y, radius) {
     const box = canvas.getBoundingClientRect();
     camera.updateMatrixWorld();
+    // The patient's pose version (G1, 12 §2.7) changes with any bone of the patient, so a pick is never reused
+    // across a turned head or a bent elbow; the old key held only the four limb tips. Their world matrices are
+    // still brought up to date first, as reading their positions did before.
+    for (const chain of patient.chains) chain.joints[2].updateWorldMatrix(true, false);
+    const pose = patient.poseVersion ? [patient.poseVersion()]
+      : patient.chains.flatMap((chain) => chain.joints[2].getWorldPosition(keyPoint).toArray());
     return [x, y, radius, box.left, box.top, box.width, box.height, ...camera.matrixWorld.elements,
-      ...camera.projectionMatrix.elements, ...crew.tool.position.toArray(), crew.tool.visible, crew.toolMode,
-      ...patient.chains.flatMap((chain) => chain.joints[2].getWorldPosition(keyPoint).toArray())].join(',');
+      ...camera.projectionMatrix.elements, ...crew.tool.position.toArray(), crew.tool.visible, crew.toolMode, ...pose].join(',');
   }
   function copyTarget(target) {
     return target && { ...target, point: target.point.clone(), normal: target.normal?.clone(), rotation: target.rotation?.clone() };

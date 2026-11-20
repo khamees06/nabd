@@ -1,0 +1,16 @@
+{
+ "outsideDirections": 3836,
+ "nearTiesSkippedForPoint": 1279,
+ "worstDistanceDiffDeg": 2.1391186720975895e-8,
+ "worstPointDiffDeg": 0.00000352019892386405,
+ "worstCase": {
+  "id": "elbow.R",
+  "ctx": {
+   "kneeFlexionDeg": 25
+  },
+  "angleDeg": 0.020232941884633763
+ },
+ "insideDisagreements": 0,
+ "clampAxisVsBruteWorstDeg": 0.0000031945284701301985,
+ "clampAxisOffBy01": 0
+}

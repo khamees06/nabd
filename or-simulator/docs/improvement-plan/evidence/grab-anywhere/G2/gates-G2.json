@@ -1,0 +1,246 @@
+{
+ "cluster": "G2",
+ "base": "c2b94097e8a589b4b120f4c0d43b7954819664ca",
+ "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+ "gates": [
+  {
+   "gate": "skinPenetration: 0 vertices > 2 mm below a support, except a declared compression <= 5 mm under pelvis, calf and heel (DN5)",
+   "target": "0 over allowance; declared parts <= 5 mm",
+   "measured": "0 vertices over their allowance; deepest 2.000 mm (pelvis); calves 1.79 mm; 0 vertices > 2 mm in any other segment; 0 ways out pointing down",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: head",
+   "target": "-5...+5 mm",
+   "measured": "0.5 mm over head_ring_gel",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: upperArm.L",
+   "target": "-5...+5 mm",
+   "measured": "0.52 mm over back_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: upperArm.R",
+   "target": "-5...+5 mm",
+   "measured": "0.52 mm over back_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: forearm.L",
+   "target": "-5...+5 mm",
+   "measured": "1.67 mm over back_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: forearm.R",
+   "target": "-5...+5 mm",
+   "measured": "1.67 mm over back_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: hand.L",
+   "target": "-5...+5 mm",
+   "measured": "0.4 mm over seat_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: hand.R",
+   "target": "-5...+5 mm",
+   "measured": "0.4 mm over seat_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: pelvis",
+   "target": "-5...+5 mm",
+   "measured": "-2 mm over seat_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: shank.L",
+   "target": "-5...+5 mm",
+   "measured": "-1.79 mm over leg_R_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: shank.R",
+   "target": "-5...+5 mm",
+   "measured": "-1.79 mm over leg_L_pad",
+   "pass": true
+  },
+  {
+   "gate": "lowest skin over its support: heels",
+   "target": "-5...+5 mm",
+   "measured": "no drawn support under either heel (they overhang the leg pads' end by 67.7 mm); 3.09 mm (L) and 3.09 mm (R) against the leg-pad plane, the design's own measure",
+   "pass": true,
+   "note": "met against the plane only; over a drawn support the gate is not applicable (owner and clinician item: heels floated, or a heel pad)"
+  },
+  {
+   "gate": "chest",
+   "target": "<= +8 mm",
+   "measured": "5.45 mm over back_pad",
+   "pass": true
+  },
+  {
+   "gate": "both wrists |x|",
+   "target": "<= 0.258 m",
+   "measured": "0.2518, 0.2518 m",
+   "pass": true
+  },
+  {
+   "gate": "no base/top seam in a V3 under-table orbit (owner eye)",
+   "target": "owner eye",
+   "measured": "numeric: 0 table-top meshes hang below the base mount plate (the carrier did before it was hidden); images/G2-under-table-before-after.jpg, images/G2-V3-before-after-1440x900.jpg",
+   "pass": null,
+   "note": "owner eye not given"
+  },
+  {
+   "gate": "drill S2, S3, C3-9a, C3-9d, C6-a, C6-b green",
+   "target": "green",
+   "measured": "Chrome, Edge: all green; S3 support gap 1.8 mm (< 20); WebKit smoke S2/S3 green",
+   "pass": true
+  },
+  {
+   "gate": "C5-8a aim",
+   "target": "< 1 deg",
+   "measured": "final aim error 0 deg at both sizes (Chrome, Edge)",
+   "pass": true
+  },
+  {
+   "gate": "C3-9b, C3-9c, C3-9e, S4 green",
+   "target": "green",
+   "measured": "green in Chrome and Edge (C3-9e 560 skipped by design); C3-9b wrist glove depth 8.8 mm (gate 10, base 5.1); S4 golden trace identical in Chrome, Edge and WebKit",
+   "pass": true
+  },
+  {
+   "gate": "V1-V4 baselines refreshed with before/after images",
+   "target": "refreshed",
+   "measured": "pixel diff base vs G2: V1 273675 px, V2 568373 px, V3 15861 px, V4 574005 px (each tree self-identical); Q1-b image metrics re-baselined on the G2 picture in Chrome, Edge and WebKit; images/G2-V1..V4-before-after",
+   "pass": true
+  },
+  {
+   "gate": "owner visual review",
+   "target": "owner",
+   "measured": "pending: 8 images in images/",
+   "pass": null
+  }
+ ],
+ "global": [
+  {
+   "gate": "npm test",
+   "measured": "81/81",
+   "pass": true
+  },
+  {
+   "gate": "smoke S1-S9 + V1-V4",
+   "measured": "Chrome 17/17, Edge 17/17, WebKit 13 + 4 passed on retry (all four first attempts: ready timeout, U21); S1 29 modules",
+   "pass": true
+  },
+  {
+   "gate": "interaction suite",
+   "measured": "Chrome 54 passed + 1 skipped by design; Edge 54 + 1; WebKit subset (C1-2b, C2-12, C3-9b) 4 + 2 passed on retry ('WebGL: context lost.')",
+   "pass": true
+  },
+  {
+   "gate": "perf-capture V1-V4 M8/M9 rise <= 10 %",
+   "measured": "max M8 rise 3.10 % (V4 hover), max M9 rise 1.14 %, against G1 verify round 2; 0 console errors",
+   "pass": true
+  },
+  {
+   "gate": "M11 = 0",
+   "measured": "every Chrome and Edge test and every passing WebKit attempt; WebKit first attempts that failed logged only \"WebGL: context lost.\" or timed out at boot",
+   "pass": true
+  },
+  {
+   "gate": "S4 golden trace identical",
+   "measured": "Chrome, Edge, WebKit identical to G1 (and P1)",
+   "pass": true
+  },
+  {
+   "gate": "kind 'wrist' alias, no new event types",
+   "measured": "no change to BedsideInteraction, EventLogger or SUPPORTED_EVENTS",
+   "pass": true
+  },
+  {
+   "gate": "DN5 label on every clinical value",
+   "measured": "restSupport, skinPenetration compression, headRing summary and the code comments carry it",
+   "pass": true
+  }
+ ],
+ "reports": {
+  "interaction-chrome-report": {
+   "expected": 54,
+   "flaky": 0,
+   "unexpected": 0,
+   "skipped": 1
+  },
+  "interaction-edge-report": {
+   "expected": 54,
+   "flaky": 0,
+   "unexpected": 0,
+   "skipped": 1
+  },
+  "interaction-webkit-subset-report": {
+   "expected": 4,
+   "flaky": 2,
+   "unexpected": 0,
+   "skipped": 0
+  },
+  "grab-chrome-report": {
+   "expected": 22,
+   "flaky": 0,
+   "unexpected": 0,
+   "skipped": 0
+  },
+  "grab-webkit-report": {
+   "expected": 15,
+   "flaky": 7,
+   "unexpected": 0,
+   "skipped": 0
+  },
+  "grab-edge-subset-report": {
+   "expected": 7,
+   "flaky": 0,
+   "unexpected": 0,
+   "skipped": 0
+  }
+ },
+ "ring": {
+  "triangles": 1040,
+  "vertices": 600,
+  "centre": [
+   0,
+   -0.722
+  ],
+  "semiAxes": [
+   0.11,
+   0.1
+  ],
+  "hole": 0.25,
+  "freeHeight": 0.055,
+  "clearance": 0.001,
+  "maxHeight": 0.055,
+  "clampedVertices": 33,
+  "touchingVertices": 50,
+  "topVertices": 520,
+  "baseY": 0.9,
+  "fieldTriangles": 31034,
+  "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+ },
+ "perf": {
+  "M8": 0.03100775193798455,
+  "M9": 0.011438076133057029
+ },
+ "wristGlove": {
+  "G2mm": 8.8,
+  "baseMm": 5.1
+ },
+ "notes": [
+  "C6-e (measure only, unchanged) now reads 6 vertices up to 2.8 mm below the head ring with its 1 cm grid that keeps the highest table triangle per cell. Under the deepest of them (x -0.025, z -0.6815) the exact ring top is 0.9470 m and the skin 0.9476 m (+0.6 mm); the highest ring top within that cell is 0.9515 m. A coarse-grid artefact on a sloped support (scripts/c6echeck.mjs); restSupport and the G1-d independent check read the drawn triangles exactly. Its other numbers: patient back 0.5 mm over the back pad, table top at 0.8475 m, pad tops 0.900 m.",
+  "Heels: the leg pads end at z 0.885 m and the heels at z 0.953 m, over the deck end with no pad. They are checked against the leg-pad plane (as the design 13 section 1 F27 numbers were). Floated heels are common practice (pressure-injury prevention); a heel pad would be a table change. Owner and clinician item (DN5).",
+  "WebKit: every first-attempt failure was a ready timeout at boot or a \"WebGL: context lost.\" console error (U21) and passed on retry; Q1-c timed out once (the known second loss after a restore). Shared-process boot probes (probe/webkit-boot-probes.json): every 4th load of a process loses its context for the base and the G2 tree alike.",
+  "perf: compared with G1 verify round 2 on this machine (not a same-session base run); M8/M9 are deterministic counts per view, frame rates within run-to-run noise (V1 active 108.2 -> 105.9 fps).",
+  "The wrist glove depth at a workstation grab (C3-9b) rose from 5.1 mm to 8.8 mm (gate 10 mm): the fixed station grip closes its fingers on a wrist that now lies lower and rolled to neutral. The G3 finger-curl solve replaces that grip."
+ ]
+}

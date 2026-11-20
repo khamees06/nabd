@@ -1,0 +1,1516 @@
+{
+ "browserName": "chrome",
+ "boxes": [
+  {
+   "name": "radiolucent_deck",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.31,
+    0.31
+   ],
+   "y": [
+    0.7975,
+    0.8525
+   ],
+   "z": [
+    -1.01,
+    1.01
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "central_carrier",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.22,
+    0.22
+   ],
+   "y": [
+    0.7275,
+    0.8025
+   ],
+   "z": [
+    -0.34,
+    0.38
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "head_support",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.265,
+    0.265
+   ],
+   "y": [
+    0.8425,
+    0.8875
+   ],
+   "z": [
+    -0.99,
+    -0.73
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "head_pad",
+   "kind": "pad",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2525,
+    0.2525
+   ],
+   "y": [
+    0.8775,
+    0.9525
+   ],
+   "z": [
+    -0.981,
+    -0.739
+   ],
+   "stackBottom": 0.7975
+  },
+  {
+   "name": "head_side_trim_-02475",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2535,
+    -0.2415
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    -0.965,
+    -0.755
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "head_side_trim_02475",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.2415,
+    0.2535
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    -0.965,
+    -0.755
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "back_support",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.295,
+    0.295
+   ],
+   "y": [
+    0.8425,
+    0.8875
+   ],
+   "z": [
+    -0.71,
+    -0.01
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "back_pad",
+   "kind": "pad",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2825,
+    0.2825
+   ],
+   "y": [
+    0.8775,
+    0.9525
+   ],
+   "z": [
+    -0.701,
+    -0.019
+   ],
+   "stackBottom": 0.7275
+  },
+  {
+   "name": "back_side_trim_-027749999999999997",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2835,
+    -0.2715
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    -0.685,
+    -0.035
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "back_side_trim_027749999999999997",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.2715,
+    0.2835
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    -0.685,
+    -0.035
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "seat_support",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.295,
+    0.295
+   ],
+   "y": [
+    0.8425,
+    0.8875
+   ],
+   "z": [
+    0.005,
+    0.395
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "seat_pad",
+   "kind": "pad",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2825,
+    0.2825
+   ],
+   "y": [
+    0.8775,
+    0.9525
+   ],
+   "z": [
+    0.014,
+    0.386
+   ],
+   "stackBottom": 0.7275
+  },
+  {
+   "name": "seat_side_trim_-027749999999999997",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2835,
+    -0.2715
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    0.03,
+    0.37
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "seat_side_trim_027749999999999997",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.2715,
+    0.2835
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    0.03,
+    0.37
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_L_support",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2825,
+    -0.0175
+   ],
+   "y": [
+    0.84,
+    0.89
+   ],
+   "z": [
+    0.505,
+    0.895
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_L_pad",
+   "kind": "pad",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2725,
+    -0.0275
+   ],
+   "y": [
+    0.8775,
+    0.9525
+   ],
+   "z": [
+    0.515,
+    0.885
+   ],
+   "stackBottom": 0.7975
+  },
+  {
+   "name": "leg_L_edge",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.281,
+    -0.269
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    0.53,
+    0.87
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_L_hinge",
+   "kind": "fitting",
+   "verts": 58,
+   "round": 0.045,
+   "x": [
+    -0.285,
+    -0.015
+   ],
+   "y": [
+    0.825,
+    0.915
+   ],
+   "z": [
+    0.435,
+    0.525
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_L_hinge_pin",
+   "kind": "fitting",
+   "verts": 50,
+   "round": 0.018,
+   "x": [
+    -0.295,
+    -0.005
+   ],
+   "y": [
+    0.852,
+    0.888
+   ],
+   "z": [
+    0.462,
+    0.498
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_R_support",
+   "kind": "deck",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.0175,
+    0.2825
+   ],
+   "y": [
+    0.84,
+    0.89
+   ],
+   "z": [
+    0.505,
+    0.895
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_R_pad",
+   "kind": "pad",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.0275,
+    0.2725
+   ],
+   "y": [
+    0.8775,
+    0.9525
+   ],
+   "z": [
+    0.515,
+    0.885
+   ],
+   "stackBottom": 0.7975
+  },
+  {
+   "name": "leg_R_edge",
+   "kind": "trim",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.269,
+    0.281
+   ],
+   "y": [
+    0.879,
+    0.897
+   ],
+   "z": [
+    0.53,
+    0.87
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_R_hinge",
+   "kind": "fitting",
+   "verts": 58,
+   "round": 0.045,
+   "x": [
+    0.015,
+    0.285
+   ],
+   "y": [
+    0.825,
+    0.915
+   ],
+   "z": [
+    0.435,
+    0.525
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "leg_R_hinge_pin",
+   "kind": "fitting",
+   "verts": 50,
+   "round": 0.018,
+   "x": [
+    0.005,
+    0.295
+   ],
+   "y": [
+    0.852,
+    0.888
+   ],
+   "z": [
+    0.462,
+    0.498
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "headrest_cushion",
+   "kind": "headrest",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.215,
+    0.215
+   ],
+   "y": [
+    0.89,
+    0.98
+   ],
+   "z": [
+    -1.14,
+    -0.92
+   ],
+   "stackBottom": 0.7975
+  },
+  {
+   "name": "headrest_top",
+   "kind": "headrest",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.2,
+    0.2
+   ],
+   "y": [
+    0.9625,
+    1.0075
+   ],
+   "z": [
+    -1.125,
+    -0.935
+   ],
+   "stackBottom": 0.7975
+  },
+  {
+   "name": "headrest_joint_-02",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.0275,
+   "x": [
+    -0.2275,
+    -0.1725
+   ],
+   "y": [
+    0.832,
+    0.888
+   ],
+   "z": [
+    -0.928,
+    -0.872
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "headrest_joint_02",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.0275,
+   "x": [
+    0.1725,
+    0.2275
+   ],
+   "y": [
+    0.832,
+    0.888
+   ],
+   "z": [
+    -0.928,
+    -0.872
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_side_rail_front",
+   "kind": "rail",
+   "verts": 42,
+   "round": 0.014,
+   "x": [
+    -0.344,
+    -0.316
+   ],
+   "y": [
+    0.851,
+    0.879
+   ],
+   "z": [
+    -0.68,
+    0.55
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_rail_mount_-058",
+   "kind": "rail",
+   "verts": 38,
+   "round": 0.02,
+   "x": [
+    -0.35,
+    -0.31
+   ],
+   "y": [
+    0.8404,
+    0.8896
+   ],
+   "z": [
+    -0.605,
+    -0.555
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_rail_mount_-01",
+   "kind": "rail",
+   "verts": 38,
+   "round": 0.02,
+   "x": [
+    -0.35,
+    -0.31
+   ],
+   "y": [
+    0.8404,
+    0.8896
+   ],
+   "z": [
+    -0.125,
+    -0.075
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_rail_mount_042",
+   "kind": "rail",
+   "verts": 38,
+   "round": 0.02,
+   "x": [
+    -0.35,
+    -0.31
+   ],
+   "y": [
+    0.8404,
+    0.8896
+   ],
+   "z": [
+    0.395,
+    0.445
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_armboard_stem",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.018,
+   "x": [
+    -0.4538,
+    -0.3217
+   ],
+   "y": [
+    0.804,
+    0.896
+   ],
+   "z": [
+    -0.488,
+    -0.452
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_armboard_joint",
+   "kind": "fitting",
+   "verts": 162,
+   "round": 0.038,
+   "x": [
+    -0.4835,
+    -0.4075
+   ],
+   "y": [
+    0.782,
+    0.858
+   ],
+   "z": [
+    -0.508,
+    -0.432
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "L_armboard_plate",
+   "kind": "armboard",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.6135,
+    -0.3435
+   ],
+   "y": [
+    0.8425,
+    0.8775
+   ],
+   "z": [
+    -0.72,
+    -0.22
+   ],
+   "stackBottom": 0.782
+  },
+  {
+   "name": "L_armboard_pad",
+   "kind": "armboard",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.601,
+    -0.356
+   ],
+   "y": [
+    0.8775,
+    0.9325
+   ],
+   "z": [
+    -0.705,
+    -0.235
+   ],
+   "stackBottom": 0.782
+  },
+  {
+   "name": "L_armboard_top",
+   "kind": "armboard",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    -0.591,
+    -0.366
+   ],
+   "y": [
+    0.933,
+    0.951
+   ],
+   "z": [
+    -0.6925,
+    -0.2475
+   ],
+   "stackBottom": 0.782
+  },
+  {
+   "name": "R_side_rail_front",
+   "kind": "rail",
+   "verts": 42,
+   "round": 0.014,
+   "x": [
+    0.316,
+    0.344
+   ],
+   "y": [
+    0.851,
+    0.879
+   ],
+   "z": [
+    -0.68,
+    0.55
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "R_rail_mount_-058",
+   "kind": "rail",
+   "verts": 38,
+   "round": 0.02,
+   "x": [
+    0.31,
+    0.35
+   ],
+   "y": [
+    0.8404,
+    0.8896
+   ],
+   "z": [
+    -0.605,
+    -0.555
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "R_rail_mount_-01",
+   "kind": "rail",
+   "verts": 38,
+   "round": 0.02,
+   "x": [
+    0.31,
+    0.35
+   ],
+   "y": [
+    0.8404,
+    0.8896
+   ],
+   "z": [
+    -0.125,
+    -0.075
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "R_rail_mount_042",
+   "kind": "rail",
+   "verts": 38,
+   "round": 0.02,
+   "x": [
+    0.31,
+    0.35
+   ],
+   "y": [
+    0.8404,
+    0.8896
+   ],
+   "z": [
+    0.395,
+    0.445
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "R_armboard_stem",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.018,
+   "x": [
+    0.3217,
+    0.4538
+   ],
+   "y": [
+    0.804,
+    0.896
+   ],
+   "z": [
+    -0.488,
+    -0.452
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "R_armboard_joint",
+   "kind": "fitting",
+   "verts": 162,
+   "round": 0.038,
+   "x": [
+    0.4075,
+    0.4835
+   ],
+   "y": [
+    0.782,
+    0.858
+   ],
+   "z": [
+    -0.508,
+    -0.432
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "R_armboard_plate",
+   "kind": "armboard",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.3435,
+    0.6135
+   ],
+   "y": [
+    0.8425,
+    0.8775
+   ],
+   "z": [
+    -0.72,
+    -0.22
+   ],
+   "stackBottom": 0.782
+  },
+  {
+   "name": "R_armboard_pad",
+   "kind": "armboard",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.356,
+    0.601
+   ],
+   "y": [
+    0.8775,
+    0.9325
+   ],
+   "z": [
+    -0.705,
+    -0.235
+   ],
+   "stackBottom": 0.782
+  },
+  {
+   "name": "R_armboard_top",
+   "kind": "armboard",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.366,
+    0.591
+   ],
+   "y": [
+    0.933,
+    0.951
+   ],
+   "z": [
+    -0.6925,
+    -0.2475
+   ],
+   "stackBottom": 0.782
+  },
+  {
+   "name": "hand_control_body",
+   "kind": "control",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.325,
+    0.435
+   ],
+   "y": [
+    0.8775,
+    0.9125
+   ],
+   "z": [
+    0.705,
+    0.935
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "hand_control_key_0",
+   "kind": "control",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.3475,
+    0.4125
+   ],
+   "y": [
+    0.912,
+    0.924
+   ],
+   "z": [
+    0.7375,
+    0.7625
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "hand_control_key_1",
+   "kind": "control",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.3475,
+    0.4125
+   ],
+   "y": [
+    0.912,
+    0.924
+   ],
+   "z": [
+    0.7725,
+    0.7975
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "hand_control_key_2",
+   "kind": "control",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.3475,
+    0.4125
+   ],
+   "y": [
+    0.912,
+    0.924
+   ],
+   "z": [
+    0.8075,
+    0.8325
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "hand_control_key_3",
+   "kind": "control",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.3475,
+    0.4125
+   ],
+   "y": [
+    0.912,
+    0.924
+   ],
+   "z": [
+    0.8425,
+    0.8675
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "hand_control_key_4",
+   "kind": "control",
+   "verts": 8,
+   "round": 0,
+   "x": [
+    0.3475,
+    0.4125
+   ],
+   "y": [
+    0.912,
+    0.924
+   ],
+   "z": [
+    0.8775,
+    0.9025
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "hand_control_cable",
+   "kind": "control",
+   "verts": 42,
+   "round": 0.0159,
+   "x": [
+    0.3741,
+    0.4059
+   ],
+   "y": [
+    0.7762,
+    0.8938
+   ],
+   "z": [
+    0.9053,
+    1.0047
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_-031_-07",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    -0.3225,
+    -0.2975
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    -0.718,
+    -0.682
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_-031_-025",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    -0.3225,
+    -0.2975
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    -0.268,
+    -0.232
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_-031_025",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    -0.3225,
+    -0.2975
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    0.232,
+    0.268
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_-031_058",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    -0.3225,
+    -0.2975
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    0.562,
+    0.598
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_031_-07",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    0.2975,
+    0.3225
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    -0.718,
+    -0.682
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_031_-025",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    0.2975,
+    0.3225
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    -0.268,
+    -0.232
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_031_025",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    0.2975,
+    0.3225
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    0.232,
+    0.268
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "rail_socket_031_058",
+   "kind": "rail",
+   "verts": 34,
+   "round": 0.0125,
+   "x": [
+    0.2975,
+    0.3225
+   ],
+   "y": [
+    0.857,
+    0.893
+   ],
+   "z": [
+    0.562,
+    0.598
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_-024_-072",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    -0.249,
+    -0.231
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    -0.729,
+    -0.711
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_024_-072",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    0.231,
+    0.249
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    -0.729,
+    -0.711
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_-024_-028",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    -0.249,
+    -0.231
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    -0.289,
+    -0.271
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_024_-028",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    0.231,
+    0.249
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    -0.289,
+    -0.271
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_-024_018",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    -0.249,
+    -0.231
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    0.171,
+    0.189
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_024_018",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    0.231,
+    0.249
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    0.171,
+    0.189
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_-024_056",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    -0.249,
+    -0.231
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    0.551,
+    0.569
+   ],
+   "stackBottom": null
+  },
+  {
+   "name": "deck_fastener_024_056",
+   "kind": "fitting",
+   "verts": 42,
+   "round": 0.009,
+   "x": [
+    0.231,
+    0.249
+   ],
+   "y": [
+    0.871,
+    0.889
+   ],
+   "z": [
+    0.551,
+    0.569
+   ],
+   "stackBottom": null
+  }
+ ],
+ "points": 200000,
+ "insideDownward": 1852,
+ "byKind": {
+  "deck:central_carrier": 152,
+  "deck:radiolucent_deck": 1337,
+  "rail:R_side_rail_front": 40,
+  "control:hand_control_body": 38,
+  "deck:seat_support": 19,
+  "deck:back_support": 95,
+  "deck:head_support": 38,
+  "control:hand_control_key_3": 19,
+  "fitting:leg_R_hinge": 19,
+  "control:hand_control_cable": 38,
+  "fitting:leg_L_hinge": 38,
+  "rail:L_rail_mount_-058": 19
+ },
+ "reachableInside": 18291,
+ "reachableDownward": 95,
+ "reachRows": [
+  {
+   "p": [
+    0.2933,
+    0.8042,
+    -0.5483
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -6.7,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    0.3014,
+    0.8024,
+    -0.5838
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -4.9,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    -0.2895,
+    0.8009,
+    -0.463
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -3.4,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    -0.2897,
+    0.8151,
+    -0.2946
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -17.6,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    -0.3341,
+    0.8468,
+    -0.577
+   ],
+   "box": "L_rail_mount_-058",
+   "kind": "rail",
+   "sdMm": -5.8,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    0.2933,
+    0.8042,
+    -0.5483
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -6.7,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    0.3014,
+    0.8024,
+    -0.5838
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -4.9,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    -0.2895,
+    0.8009,
+    -0.463
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -3.4,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    -0.2897,
+    0.8151,
+    -0.2946
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -17.6,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    -0.3341,
+    0.8468,
+    -0.577
+   ],
+   "box": "L_rail_mount_-058",
+   "kind": "rail",
+   "sdMm": -5.8,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    0.2933,
+    0.8042,
+    -0.5483
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -6.7,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  },
+  {
+   "p": [
+    0.3014,
+    0.8024,
+    -0.5838
+   ],
+   "box": "radiolucent_deck",
+   "kind": "deck",
+   "sdMm": -4.9,
+   "support": {
+    "y": 0,
+    "kind": "floor",
+    "name": null
+   }
+  }
+ ]
+}

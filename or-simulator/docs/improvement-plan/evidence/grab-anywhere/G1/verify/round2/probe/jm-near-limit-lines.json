@@ -1,0 +1,292 @@
+{
+ "shoulder.L": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 14,
+  "minBeyond": 28.840660870335356,
+  "within25": 0,
+  "maxRatioWithin10": 3.314564383317938,
+  "maxRatioWithin25": 14.200353741368012,
+  "worstNear": {
+   "ratio": 3.314564383317938,
+   "beyondDeg": 1.6235713184956124,
+   "outStepDeg": 0.3314564383341964,
+   "angles": {
+    "swingY": -15.07606971096858,
+    "swingZ": 49.615957161545104,
+    "twist": -91.72180382529284,
+    "elevation": 138.8063972050032,
+    "flexion": 140.62088207565168,
+    "abduction": -163.0983197615149,
+    "internalRotation": -90.00000000000003,
+    "limitSwingY": -48.1893162338801,
+    "limitSwingZ": 130.1729837790631
+   }
+  }
+ },
+ "hip.L": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.3350562590707622,
+  "maxRatioWithin25": 1.3350562590707622,
+  "worstNear": {
+   "ratio": 1.3350562590707622,
+   "beyondDeg": 3.3995504248558635,
+   "outStepDeg": 0.13350562590804396,
+   "angles": {
+    "swingY": -6.483383814013338,
+    "swingZ": 85.94189315592327,
+    "twist": 39.99999999999999,
+    "elevation": 86.18609670302942,
+    "flexion": 86.17529163210996,
+    "abduction": -48.45310383209634,
+    "internalRotation": 39.99999999999999
+   }
+  }
+ },
+ "elbow.L": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 3.4997222812944884,
+  "maxRatioWithin25": 3.4997222812944884,
+  "worstNear": {
+   "ratio": 3.4997222812944884,
+   "beyondDeg": 0.427102594029284,
+   "outStepDeg": 0.3499722280809646,
+   "angles": {
+    "swingY": 0.017355000350777687,
+    "swingZ": 148.73577396810836,
+    "twist": 3.999999999999999,
+    "flexion": 148.73577396810836,
+    "offAxis": 0.017355000350777687
+   }
+  }
+ },
+ "knee.L": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 2.7625630505012992,
+  "maxRatioWithin25": 2.7625630505012992,
+  "worstNear": {
+   "ratio": 2.7625630505012992,
+   "beyondDeg": 7.268545584764255,
+   "outStepDeg": 0.2762563050521324,
+   "angles": {
+    "swingY": -0.2995347404644772,
+    "swingZ": 139.31947651415337,
+    "twist": 4.000000000000002,
+    "flexion": 139.31947651415337,
+    "offAxis": -0.2995347404644772
+   }
+  }
+ },
+ "wrist.L": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.3100176704872042,
+  "maxRatioWithin25": 1.3100176704872042,
+  "worstNear": {
+   "ratio": 1.3100176704872042,
+   "beyondDeg": 7.169761430179254,
+   "outStepDeg": 0.13100176701147356,
+   "angles": {
+    "swingY": -2.0694838779448332,
+    "swingZ": 84.79751814214382,
+    "twist": 85,
+    "flexion": 84.79751814214382,
+    "radialDeviation": -2.0694838779448332,
+    "pronation": 85
+   }
+  }
+ },
+ "ankle.L": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.1071677649544351,
+  "maxRatioWithin25": 1.1422408968101063,
+  "worstNear": {
+   "ratio": 1.1071677649544351,
+   "beyondDeg": 0.051456488495314104,
+   "outStepDeg": 0.1107167764801051,
+   "angles": {
+    "swingY": -6.485983120400864,
+    "swingZ": -51.047656106451264,
+    "twist": -35,
+    "dorsiflexion": -51.047656106451264,
+    "abduction": -6.485983120400864,
+    "eversion": -35
+   }
+  }
+ },
+ "shoulder.R": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 12,
+  "minBeyond": 28.25370799040706,
+  "within25": 0,
+  "maxRatioWithin10": 3.541944084869337,
+  "maxRatioWithin25": 16.44551936876219,
+  "worstNear": {
+   "ratio": 3.541944084869337,
+   "beyondDeg": 2.7825141958725923,
+   "outStepDeg": 0.35419440848950107,
+   "angles": {
+    "swingY": 11.90947950828742,
+    "swingZ": 56.051733096225874,
+    "twist": -87.9027658637006,
+    "elevation": 145.40271756025285,
+    "flexion": 146.72533036827755,
+    "abduction": -168.00458121787986,
+    "internalRotation": 69.99999999999993,
+    "limitSwingY": 44.788165505819016,
+    "limitSwingZ": 138.33282511584164
+   }
+  }
+ },
+ "hip.R": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.337702505219243,
+  "maxRatioWithin25": 1.337702505219243,
+  "worstNear": {
+   "ratio": 1.337702505219243,
+   "beyondDeg": 4.524613712042907,
+   "outStepDeg": 0.13377025048389032,
+   "angles": {
+    "swingY": -9.78902713594988,
+    "swingZ": 85.9422476332944,
+    "twist": 50.00000000000001,
+    "elevation": 86.4979478399971,
+    "flexion": 86.4753605693465,
+    "abduction": 61.59708527182025,
+    "internalRotation": -50.00000000000001
+   }
+  }
+ },
+ "elbow.R": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 3.4997222812944884,
+  "maxRatioWithin25": 3.4997222812944884,
+  "worstNear": {
+   "ratio": 3.4997222812944884,
+   "beyondDeg": 0.427102594029284,
+   "outStepDeg": 0.3499722280809646,
+   "angles": {
+    "swingY": 0.017355000350777687,
+    "swingZ": 148.73577396810836,
+    "twist": 3.999999999999999,
+    "flexion": 148.73577396810836,
+    "offAxis": 0.017355000350777687
+   }
+  }
+ },
+ "knee.R": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 2.7625630505012992,
+  "maxRatioWithin25": 2.7625630505012992,
+  "worstNear": {
+   "ratio": 2.7625630505012992,
+   "beyondDeg": 7.268545584764255,
+   "outStepDeg": 0.2762563050521324,
+   "angles": {
+    "swingY": -0.2995347404644772,
+    "swingZ": 139.31947651415337,
+    "twist": 4.000000000000002,
+    "flexion": 139.31947651415337,
+    "offAxis": -0.2995347404644772
+   }
+  }
+ },
+ "wrist.R": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.3000826817035869,
+  "maxRatioWithin25": 1.3034029399733145,
+  "worstNear": {
+   "ratio": 1.3000826817035869,
+   "beyondDeg": 9.975095953315764,
+   "outStepDeg": 0.13000826817130107,
+   "angles": {
+    "swingY": 7.519689667155062,
+    "swingZ": 82.78886850919368,
+    "twist": -85,
+    "flexion": 82.78886850919368,
+    "radialDeviation": -7.519689667155062,
+    "pronation": 85
+   }
+  }
+ },
+ "ankle.R": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.1071677649247,
+  "maxRatioWithin25": 1.1422307927294661,
+  "worstNear": {
+   "ratio": 1.1071677649247,
+   "beyondDeg": 0.051456488495314104,
+   "outStepDeg": 0.11071677649327255,
+   "angles": {
+    "swingY": -6.48598312040087,
+    "swingZ": -51.04765610645129,
+    "twist": -19.999999999999996,
+    "dorsiflexion": -51.04765610645129,
+    "abduction": 6.48598312040087,
+    "eversion": 19.999999999999996
+   }
+  }
+ },
+ "neck": {
+  "lines": 1500,
+  "steps": 600000,
+  "jumps": 0,
+  "minBeyond": "none",
+  "within25": 0,
+  "maxRatioWithin10": 1.1263142385117266,
+  "maxRatioWithin25": 1.1480597974461344,
+  "worstNear": {
+   "ratio": 1.1263142385117266,
+   "beyondDeg": 0.9673629734307284,
+   "outStepDeg": 0.11263142386840917,
+   "angles": {
+    "swingY": 25.29215244628604,
+    "swingZ": -49.621512840095804,
+    "twist": -80.00000000000003,
+    "flexion": -49.621512840095804,
+    "lateralFlexionRight": 25.29215244628604,
+    "rotationLeft": -80.00000000000003
+   }
+  }
+ }
+}

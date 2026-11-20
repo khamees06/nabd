@@ -5,14 +5,17 @@
 //   node tests/browser/perf-capture.mjs --browser webkit --runs 1 --loads 0   (WebKit on Windows, headless)
 //
 // Options: --port 4301 --runs 3 --settle 10 --idle 30 --active 30 --hover 30 --loads 3 --views V1,V2,V3,V4
-//          --out <dir> --label <name>   (--hover 0 skips the hover segment)
+//          --out <dir> --label <name> --gpu 1   (--hover 0 skips the hover segment; --gpu 1 loads ?qa&debug=1&gpu=1,
+//          which times each canvas frame, shadow pass + main pass, on the GPU where EXT_disjoint_timer_query_webgl2 exists)
 //
 // Read-only with respect to the app. An init script adds measurement probes only:
 //  * its own requestAnimationFrame loop that records frame timestamps (M7: rAF interval);
 //  * a counter on WebGL clear() calls, so frames in which the app rendered can be told apart from
 //    frames in which it did not (render rate; the ?debug=1 overlay FPS is the rAF rate, 09 §2.4);
 //  * a 5 ms poll for #model-status[data-state="ready"] and an enabled #forearm-practice (M10).
-// M8/M9 come from the ?debug=1 overlay, sampled once per second.
+// M8/M9 come from the ?debug=1 overlay, sampled once per second. Since Q1 the same sample also reads the
+// ?qa render readout (__studioQA.getRenderStats): the shadow pass's draw calls and triangles, which the overlay
+// never counted, the light-map redraws per second and, with --gpu 1, the GPU time of each canvas frame (shadow pass + main pass).
 import fs from 'node:fs';
 import os from 'node:os';
 import path from 'node:path';
@@ -37,8 +40,9 @@ const LOADS = Number(arg('loads', 3));
 const OUT = path.resolve(arg('out', path.join(root, 'docs/improvement-plan/evidence/baseline-p0/perf')));
 const LABEL = arg('label', BROWSER === 'chrome' ? 'chrome-headed' : 'webkit-on-windows-headless');
 const VIEWS = (arg('views', 'V1,V2,V3,V4')).split(',');
+const GPU = arg('gpu', '0') === '1';
 const BASE = `http://127.0.0.1:${PORT}`;
-const ENTRY = `${BASE}/?qa&debug=1`;
+const ENTRY = `${BASE}/?qa&debug=1${GPU ? '&gpu=1' : ''}`;
 const TIMING_ARGS = ['--disable-renderer-backgrounding', '--disable-background-timer-throttling',
   '--disable-features=CalculateNativeWinOcclusion', '--window-position=0,0'];
 const sleep = (ms) => new Promise((resolve) => setTimeout(resolve, ms));
@@ -67,7 +71,10 @@ const PROBE = () => {
   }, 5);
   const readOverlay = () => {
     const q = (k) => document.querySelector(`.nabd-diagnostics [data-metric="${k}"]`)?.textContent ?? null;
-    return { t: performance.now(), fps: q('fps'), frame: q('frame'), draw: q('draw'), triangles: q('triangles') };
+    const r = window.__studioQA?.getRenderStats?.() ?? null;
+    return { t: performance.now(), fps: q('fps'), frame: q('frame'), draw: q('draw'), triangles: q('triangles'),
+      render: r && { calls: r.calls, tris: r.tris, shadowCalls: r.shadowCalls, shadowTris: r.shadowTris, shadowUpdates: r.shadowUpdates,
+        frames: r.frames, programs: r.programs, gpuMs: r.gpuMs } };
   };
   P.start = () => {
     P.frames = []; P.renders = []; P.overlay = [readOverlay()]; P.recording = true;
@@ -85,6 +92,19 @@ const PROBE = () => {
 const quantile = (sorted, q) => sorted.length ? sorted[Math.min(sorted.length - 1, Math.floor(q * (sorted.length - 1) + 0.5))] : null;
 const round = (v, d = 2) => (v === null || v === undefined || Number.isNaN(v) ? null : Number(v.toFixed(d)));
 const num = (text) => (text ? Number(String(text).replace(/[^0-9.]/g, '')) : null);
+// The ?qa render readout sampled with the overlay (Q1): per-frame values as min/median/max, cumulative
+// counters as rates over the segment.
+function renderSummary(overlay) {
+  const samples = overlay.map((o) => o.render).filter(Boolean);
+  if (samples.length < 2) return null;
+  const stat = (key) => { const v = samples.map((s) => s[key]).filter((x) => Number.isFinite(x)).sort((a, b) => a - b);
+    return v.length ? { min: v[0], median: quantile(v, 0.5), max: v.at(-1) } : null; };
+  const spanS = (overlay.at(-1).t - overlay.find((o) => o.render).t) / 1000;
+  const first = samples[0], last = samples.at(-1);
+  return { samples: samples.length, calls: stat('calls'), tris: stat('tris'), shadowCalls: stat('shadowCalls'), shadowTris: stat('shadowTris'),
+    programs: stat('programs'), gpuMs: stat('gpuMs'),
+    appRendersPerS: round((last.frames - first.frames) / (spanS || 1), 1), shadowUpdatesPerS: round((last.shadowUpdates - first.shadowUpdates) / (spanS || 1), 1) };
+}
 function summarise({ frames, renders, overlay, visibility }) {
   const intervals = frames.slice(1).map((t, i) => t - frames[i]);
   const sorted = [...intervals].sort((a, b) => a - b);
@@ -103,6 +123,7 @@ function summarise({ frames, renders, overlay, visibility }) {
       M8_drawCalls: stat(overlay.map((o) => num(o.draw))), M9_triangles: stat(overlay.map((o) => num(o.triangles))),
       overlayFps: stat(overlay.map((o) => num(o.fps))), overlayFrameMs: stat(overlay.map((o) => num(o.frame))),
     },
+    render: renderSummary(overlay),
     visibility,
     rawIntervalsMs: intervals.map((x) => round(x, 2)),
   };
@@ -279,7 +300,7 @@ async function loadOnce(page) {
 const server = spawn(process.execPath, [path.join(root, 'scripts/serve.mjs')], { env: { ...process.env, PORT: String(PORT) }, stdio: 'pipe' });
 await sleep(900);
 const result = { label: LABEL, browserKind: BROWSER, startedAt: new Date().toISOString(),
-  protocol: { runs: RUNS, settleS: SETTLE_S, idleS: IDLE_S, activeS: ACTIVE_S, hoverS: HOVER_S, loads: LOADS, views: VIEWS, entry: '/?qa&debug=1',
+  protocol: { runs: RUNS, settleS: SETTLE_S, idleS: IDLE_S, activeS: ACTIVE_S, hoverS: HOVER_S, loads: LOADS, views: VIEWS, entry: ENTRY.replace(BASE, ''),
     server: `node scripts/serve.mjs (PORT=${PORT})`, launchArgs: BROWSER === 'webkit' ? [] : TIMING_ARGS,
     headed: BROWSER !== 'webkit', viewport: '1440x900' },
   system: systemInfo(), loads: { cold: [], warm: [] }, runs: [] };
@@ -333,7 +354,9 @@ try {
       console.log(`${LABEL} run ${run} ${view}: idle rAF ${idle.rafFps} fps (render ${idle.renderRateFps}), median ${idle.M7_rafIntervalMs.median} ms; ` +
         `active rAF ${active.rafFps} fps (render ${active.renderRateFps}), median ${active.M7_rafIntervalMs.median} ms, p95 ${active.M7_rafIntervalMs.p95} ms; ` +
         (hover ? `hover rAF ${hover.rafFps} fps (render ${hover.renderRateFps}), median ${hover.M7_rafIntervalMs.median} ms, p95 ${hover.M7_rafIntervalMs.p95} ms; ` : '') +
-        `draw ${active.overlay.M8_drawCalls?.median} tri ${active.overlay.M9_triangles?.median}; errors ${errors.length}`);
+        `draw ${active.overlay.M8_drawCalls?.median} tri ${active.overlay.M9_triangles?.median}; ` +
+        `shadow ${active.render?.shadowCalls?.median} / ${active.render?.shadowTris?.median}, ${active.render?.shadowUpdatesPerS} maps/s` +
+        (GPU ? `, gpu ${active.render?.gpuMs?.median} ms` : '') + `; errors ${errors.length}`);
       await context.close();
       break;
       } catch (error) {

@@ -1,0 +1,13 @@
+{"shoulder.L":{"jumps":29,"minExcessAtJumpDeg":0.2,"stepAtThat":0.34,"worstJumpDeg":160.23,"maxRatioOtherwise":3.199},
+"hip.L":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.484},
+"elbow.L":{"jumps":3,"minExcessAtJumpDeg":9.06,"stepAtThat":0.33,"worstJumpDeg":0.33,"maxRatioOtherwise":3.132},
+"knee.L":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":2.666},
+"wrist.L":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.459},
+"ankle.L":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.331},
+"shoulder.R":{"jumps":23,"minExcessAtJumpDeg":13.64,"stepAtThat":0.5,"worstJumpDeg":160.23,"maxRatioOtherwise":3.19},
+"hip.R":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.54},
+"elbow.R":{"jumps":3,"minExcessAtJumpDeg":9.06,"stepAtThat":0.33,"worstJumpDeg":0.33,"maxRatioOtherwise":3.132},
+"knee.R":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":2.666},
+"wrist.R":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.507},
+"ankle.R":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.331},
+"neck":{"jumps":0,"minExcessAtJumpDeg":null,"stepAtThat":null,"worstJumpDeg":0,"maxRatioOtherwise":1.17}}

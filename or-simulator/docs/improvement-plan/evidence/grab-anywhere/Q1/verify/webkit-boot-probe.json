@@ -1,0 +1,278 @@
+{
+  "browser": "webkit",
+  "summary": {
+    "base": {
+      "loads": 15,
+      "ready": 14,
+      "notReady": 1,
+      "contextLost": 4,
+      "medianReadyMs": 2734
+    },
+    "work": {
+      "loads": 15,
+      "ready": 13,
+      "notReady": 2,
+      "contextLost": 4,
+      "medianReadyMs": 2698
+    }
+  },
+  "rows": [
+    {
+      "tree": "base",
+      "k": 0,
+      "ready": true,
+      "ms": 2695,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 0,
+      "ready": true,
+      "ms": 2698,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 1,
+      "ready": true,
+      "ms": 2670,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 1,
+      "ready": false,
+      "ms": 60341,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "base",
+      "k": 2,
+      "ready": true,
+      "ms": 2727,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 2,
+      "ready": true,
+      "ms": 2619,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 3,
+      "ready": true,
+      "ms": 2636,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 3,
+      "ready": true,
+      "ms": 17804,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "base",
+      "k": 4,
+      "ready": true,
+      "ms": 2708,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 4,
+      "ready": true,
+      "ms": 2722,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 5,
+      "ready": true,
+      "ms": 17825,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "base",
+      "k": 5,
+      "ready": true,
+      "ms": 2680,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 6,
+      "ready": true,
+      "ms": 2734,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 6,
+      "ready": false,
+      "ms": 60363,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "work",
+      "k": 7,
+      "ready": true,
+      "ms": 3162,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 7,
+      "ready": true,
+      "ms": 2858,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 8,
+      "ready": true,
+      "ms": 2732,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 8,
+      "ready": false,
+      "ms": 60356,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost.",
+        "error: WebGL: INVALID_VALUE: drawBuffers: more than max draw buffers"
+      ]
+    },
+    {
+      "tree": "work",
+      "k": 9,
+      "ready": true,
+      "ms": 2770,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 9,
+      "ready": true,
+      "ms": 2686,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 10,
+      "ready": true,
+      "ms": 2651,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 10,
+      "ready": true,
+      "ms": 17826,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "work",
+      "k": 11,
+      "ready": true,
+      "ms": 2626,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 11,
+      "ready": true,
+      "ms": 2783,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 12,
+      "ready": true,
+      "ms": 17861,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "work",
+      "k": 12,
+      "ready": true,
+      "ms": 2601,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 13,
+      "ready": true,
+      "ms": 2680,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "base",
+      "k": 13,
+      "ready": true,
+      "ms": 17824,
+      "contextLost": 2,
+      "errors": [
+        "error: WebGL: context lost."
+      ]
+    },
+    {
+      "tree": "base",
+      "k": 14,
+      "ready": true,
+      "ms": 2738,
+      "contextLost": 0,
+      "errors": []
+    },
+    {
+      "tree": "work",
+      "k": 14,
+      "ready": true,
+      "ms": 2719,
+      "contextLost": 0,
+      "errors": []
+    }
+  ]
+}

@@ -1,0 +1,1238 @@
+{
+  "check": "G1-f-joint-clamp-sweeps-560x890",
+  "cluster": "G1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-18T18:19:53.958Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "result": {
+    "shoulder.L flexion 170-190": {
+      "id": "shoulder.L",
+      "motion": "flexion",
+      "fromDeg": 170,
+      "toDeg": 190,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.25000000001809924,
+      "maxRatio": 1,
+      "jumps": [],
+      "end": {
+        "elevation": 179.6796233268649,
+        "flexion": -179.9932327853746,
+        "abduction": 179.67969480272157,
+        "internalRotation": -90
+      }
+    },
+    "shoulder.L flexion 150-210": {
+      "id": "shoulder.L",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.25000000001809924,
+      "maxRatio": 1,
+      "jumps": [],
+      "end": {
+        "elevation": 176.40915264763566,
+        "flexion": -179.74220770699822,
+        "abduction": 176.41837000252298,
+        "internalRotation": -90
+      }
+    },
+    "shoulder.L abduction 170-190": {
+      "id": "shoulder.L",
+      "motion": "abduction",
+      "fromDeg": 170,
+      "toDeg": 190,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.56558160838292,
+      "maxRatio": 2.2623264334734356,
+      "jumps": [],
+      "end": {
+        "elevation": 179.54244979850424,
+        "flexion": 179.54265786736195,
+        "abduction": -179.98620229093888,
+        "internalRotation": 70
+      }
+    },
+    "shoulder.L abduction 150-210": {
+      "id": "shoulder.L",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.5874082378745671,
+      "maxRatio": 2.349632951382969,
+      "jumps": [],
+      "end": {
+        "elevation": 174.7692561617,
+        "flexion": 174.79748936261197,
+        "abduction": -179.4542665317571,
+        "internalRotation": 69.99999999999997
+      }
+    },
+    "shoulder.L twist at 150": {
+      "id": "shoulder.L",
+      "motion": "twist",
+      "fromDeg": -180,
+      "toDeg": 180,
+      "stepDeg": 0.5,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.500000000011566,
+      "maxRatio": 1,
+      "jumps": [
+        {
+          "atDeg": -145,
+          "outStepDeg": 159.99999999999997,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 149.99999999999997,
+        "flexion": 149.99999999999997,
+        "abduction": 180,
+        "internalRotation": 70.00000000000004
+      }
+    },
+    "shoulder.L twist at 175": {
+      "id": "shoulder.L",
+      "motion": "twist",
+      "fromDeg": -180,
+      "toDeg": 180,
+      "stepDeg": 0.5,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.500000000011566,
+      "maxRatio": 1,
+      "jumps": [
+        {
+          "atDeg": -101.5,
+          "outStepDeg": 160.00000000000003,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 174.99999999999997,
+        "flexion": 174.99999999999997,
+        "abduction": -180,
+        "internalRotation": 69.99999999999999
+      }
+    },
+    "shoulder.L twist at 180": {
+      "id": "shoulder.L",
+      "motion": "twist",
+      "fromDeg": -180,
+      "toDeg": 180,
+      "stepDeg": 0.5,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.500000000011566,
+      "maxRatio": 1,
+      "jumps": [
+        {
+          "atDeg": -100,
+          "outStepDeg": 160,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 180,
+        "flexion": 180,
+        "abduction": 180,
+        "internalRotation": 70
+      }
+    },
+    "shoulder.R flexion 170-190": {
+      "id": "shoulder.R",
+      "motion": "flexion",
+      "fromDeg": 170,
+      "toDeg": 190,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.25000000001809924,
+      "maxRatio": 1,
+      "jumps": [],
+      "end": {
+        "elevation": 179.6796222590002,
+        "flexion": -179.99323275150968,
+        "abduction": 179.679693735334,
+        "internalRotation": -90
+      }
+    },
+    "shoulder.R flexion 150-210": {
+      "id": "shoulder.R",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.25000000001809924,
+      "maxRatio": 1,
+      "jumps": [],
+      "end": {
+        "elevation": 176.4091515504994,
+        "flexion": -179.7422075874391,
+        "abduction": 176.41836891109452,
+        "internalRotation": -90
+      }
+    },
+    "shoulder.R abduction 170-190": {
+      "id": "shoulder.R",
+      "motion": "abduction",
+      "fromDeg": 170,
+      "toDeg": 190,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.5655816083854978,
+      "maxRatio": 2.2623264334837465,
+      "jumps": [],
+      "end": {
+        "elevation": 179.54245003656408,
+        "flexion": 179.54265810520482,
+        "abduction": -179.98620230172114,
+        "internalRotation": 70.00000000000001
+      }
+    },
+    "shoulder.R abduction 150-210": {
+      "id": "shoulder.R",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.5874082378770489,
+      "maxRatio": 2.349632951392896,
+      "jumps": [],
+      "end": {
+        "elevation": 174.76925744896533,
+        "flexion": 174.79749063572427,
+        "abduction": -179.4542667369776,
+        "internalRotation": 70
+      }
+    },
+    "shoulder.R twist at 150": {
+      "id": "shoulder.R",
+      "motion": "twist",
+      "fromDeg": -180,
+      "toDeg": 180,
+      "stepDeg": 0.5,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.500000000011566,
+      "maxRatio": 1,
+      "jumps": [
+        {
+          "atDeg": 145.5,
+          "outStepDeg": 159.99999999999997,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 150,
+        "flexion": 150,
+        "abduction": -180,
+        "internalRotation": 69.99999999999997
+      }
+    },
+    "shoulder.R twist at 175": {
+      "id": "shoulder.R",
+      "motion": "twist",
+      "fromDeg": -180,
+      "toDeg": 180,
+      "stepDeg": 0.5,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.5000000000086502,
+      "maxRatio": 1,
+      "jumps": [
+        {
+          "atDeg": 102,
+          "outStepDeg": 160.00000000000003,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 174.99999999999997,
+        "flexion": 174.99999999999997,
+        "abduction": 180,
+        "internalRotation": 70.00000000000001
+      }
+    },
+    "shoulder.R twist at 180": {
+      "id": "shoulder.R",
+      "motion": "twist",
+      "fromDeg": -180,
+      "toDeg": 180,
+      "stepDeg": 0.5,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.500000000011566,
+      "maxRatio": 1,
+      "jumps": [
+        {
+          "atDeg": 100.5,
+          "outStepDeg": 160,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 180,
+        "flexion": 180,
+        "abduction": -180,
+        "internalRotation": 70
+      }
+    },
+    "hip.L flexion 150-210": {
+      "id": "hip.L",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000024148365394514667,
+      "maxRatio": 0.000009659346158007806,
+      "jumps": [],
+      "end": {
+        "elevation": 85.72441609573583,
+        "flexion": 85.72441609573583,
+        "abduction": 0,
+        "internalRotation": 0
+      }
+    },
+    "hip.L abduction 150-210": {
+      "id": "hip.L",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.1594814071392658,
+      "maxRatio": 0.6379256285555197,
+      "jumps": [
+        {
+          "atDeg": 177,
+          "outStepDeg": 90.05911917186776,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 84.79428456897047,
+        "flexion": 84.78629705548403,
+        "abduction": -31.341718423697703,
+        "internalRotation": -49.99999999999997
+      }
+    },
+    "hip.R flexion 150-210": {
+      "id": "hip.R",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000024148365394514667,
+      "maxRatio": 0.000009659346158007806,
+      "jumps": [],
+      "end": {
+        "elevation": 85.72441270426178,
+        "flexion": 85.72441270426178,
+        "abduction": 0,
+        "internalRotation": 0
+      }
+    },
+    "hip.R abduction 150-210": {
+      "id": "hip.R",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.15948140986335818,
+      "maxRatio": 0.6379256394518892,
+      "jumps": [
+        {
+          "atDeg": 177,
+          "outStepDeg": 90.05912007880964,
+          "twistAt": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "end": {
+        "elevation": 84.79428084047113,
+        "flexion": 84.78629331733451,
+        "abduction": -31.34170643930949,
+        "internalRotation": -49.999999999999986
+      }
+    },
+    "elbow.L flexion 150-210": {
+      "id": "elbow.L",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000024148365394514667,
+      "maxRatio": 0.000009659346157782494,
+      "jumps": [],
+      "end": {
+        "flexion": 150
+      }
+    },
+    "elbow.L abduction 150-210": {
+      "id": "elbow.L",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.00018228417251347164,
+      "maxRatio": 0.0007291366900521223,
+      "jumps": [
+        {
+          "atDeg": 180.25,
+          "outStepDeg": 8.000126825566792,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "flexion": 149.99740147526137
+      }
+    },
+    "elbow.R flexion 150-210": {
+      "id": "elbow.R",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000024148365394514667,
+      "maxRatio": 0.000009659346157782494,
+      "jumps": [],
+      "end": {
+        "flexion": 150
+      }
+    },
+    "elbow.R abduction 150-210": {
+      "id": "elbow.R",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.00018228417251347164,
+      "maxRatio": 0.0007291366900521223,
+      "jumps": [
+        {
+          "atDeg": 180.25,
+          "outStepDeg": 8.000126732586686,
+          "twistAt": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "end": {
+        "flexion": 149.99740147526137
+      }
+    },
+    "knee.L flexion 150-210": {
+      "id": "knee.L",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000017075472925031877,
+      "maxRatio": 0.000006830189170155544,
+      "jumps": [],
+      "end": {
+        "flexion": 140
+      }
+    },
+    "knee.L abduction 150-210": {
+      "id": "knee.L",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.00021855938323204897,
+      "maxRatio": 0.0008742375329260805,
+      "jumps": [
+        {
+          "atDeg": 180.25,
+          "outStepDeg": 8.000147672153966,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "flexion": 139.9968033215181
+      }
+    },
+    "knee.R flexion 150-210": {
+      "id": "knee.R",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000017075472925031877,
+      "maxRatio": 0.000006830189170155544,
+      "jumps": [],
+      "end": {
+        "flexion": 140
+      }
+    },
+    "knee.R abduction 150-210": {
+      "id": "knee.R",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.00021855938323204897,
+      "maxRatio": 0.0008742375329260805,
+      "jumps": [
+        {
+          "atDeg": 180.25,
+          "outStepDeg": 8.000147613882838,
+          "twistAt": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "end": {
+        "flexion": 139.9968033215181
+      }
+    },
+    "wrist.L flexion 150-210": {
+      "id": "wrist.L",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000024148365394514667,
+      "maxRatio": 0.000009659346158007806,
+      "jumps": [
+        {
+          "atDeg": 185.25,
+          "outStepDeg": 159.99999999999997,
+          "twistAt": [
+            0,
+            0
+          ]
+        }
+      ],
+      "end": {
+        "flexion": -74.99999999999999
+      }
+    },
+    "wrist.L abduction 150-210": {
+      "id": "wrist.L",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.07599971225555315,
+      "maxRatio": 0.30399884902147706,
+      "jumps": [
+        {
+          "atDeg": 178,
+          "outStepDeg": 175.0145900323648,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "flexion": 83.30995625636325
+      }
+    },
+    "wrist.R flexion 150-210": {
+      "id": "wrist.R",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000024148365394514667,
+      "maxRatio": 0.000009659346158007806,
+      "jumps": [
+        {
+          "atDeg": 185.25,
+          "outStepDeg": 159.99999999999997,
+          "twistAt": [
+            0,
+            0
+          ]
+        }
+      ],
+      "end": {
+        "flexion": -74.99999999999999
+      }
+    },
+    "wrist.R abduction 150-210": {
+      "id": "wrist.R",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.07599971229391801,
+      "maxRatio": 0.30399884917493647,
+      "jumps": [
+        {
+          "atDeg": 178,
+          "outStepDeg": 175.0145900323648,
+          "twistAt": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "end": {
+        "flexion": 83.30995625636324
+      }
+    },
+    "ankle.L flexion 150-210": {
+      "id": "ankle.L",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.17629464554090463,
+      "maxRatio": 0.7051785821619123,
+      "jumps": [
+        {
+          "atDeg": 150.5,
+          "outStepDeg": 63.755025345997936,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 151.5,
+          "outStepDeg": 64.42744220097906,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 151.75,
+          "outStepDeg": 64.58907784803657,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 153,
+          "outStepDeg": 65.36062377285565,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 153.25,
+          "outStepDeg": 65.5078976905858,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 153.5,
+          "outStepDeg": 65.65291962569724,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 154,
+          "outStepDeg": 65.93636303347004,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 154.25,
+          "outStepDeg": 66.07485723176352,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 154.75,
+          "outStepDeg": 66.34557333100848,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 155.25,
+          "outStepDeg": 66.60815625023052,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 155.5,
+          "outStepDeg": 66.73648173386401,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 156.5,
+          "outStepDeg": 67.23075368148837,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 157,
+          "outStepDeg": 67.4668964127205,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 157.25,
+          "outStepDeg": 67.58232132226338,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 157.5,
+          "outStepDeg": 67.69601744609425,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 157.75,
+          "outStepDeg": 67.80801249283535,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 158,
+          "outStepDeg": 67.9183335280549,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 159,
+          "outStepDeg": 76.6194109709191,
+          "twistAt": [
+            -1,
+            0
+          ]
+        }
+      ],
+      "end": {
+        "abduction": 0
+      }
+    },
+    "ankle.L abduction 150-210": {
+      "id": "ankle.L",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.12087269453286663,
+      "maxRatio": 0.4834907781302967,
+      "jumps": [
+        {
+          "atDeg": 183.25,
+          "outStepDeg": 55.02907448730367,
+          "twistAt": [
+            -1,
+            1
+          ]
+        }
+      ],
+      "end": {
+        "abduction": -8.896305162885785
+      }
+    },
+    "ankle.R flexion 150-210": {
+      "id": "ankle.R",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.17240766410134745,
+      "maxRatio": 0.6896306564037211,
+      "jumps": [
+        {
+          "atDeg": 150.25,
+          "outStepDeg": 63.58022729519031,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 151.5,
+          "outStepDeg": 64.42744626409308,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 152,
+          "outStepDeg": 64.74821816906035,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 152.75,
+          "outStepDeg": 65.2110621804149,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 153,
+          "outStepDeg": 65.36062710751435,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 154.25,
+          "outStepDeg": 66.074860381548,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 155,
+          "outStepDeg": 66.47786750907395,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 156.25,
+          "outStepDeg": 67.10998111581897,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 156.5,
+          "outStepDeg": 67.23075606524718,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 156.75,
+          "outStepDeg": 67.34971894154317,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 157.25,
+          "outStepDeg": 67.58232312523131,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 157.75,
+          "outStepDeg": 67.80801496129091,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 158.25,
+          "outStepDeg": 68.02700626457911,
+          "twistAt": [
+            1,
+            -1
+          ]
+        },
+        {
+          "atDeg": 159,
+          "outStepDeg": 69.32956566692864,
+          "twistAt": [
+            -1,
+            0
+          ]
+        }
+      ],
+      "end": {
+        "abduction": 0
+      }
+    },
+    "ankle.R abduction 150-210": {
+      "id": "ankle.R",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.12087365962304049,
+      "maxRatio": 0.48349463849099206,
+      "jumps": [
+        {
+          "atDeg": 183.25,
+          "outStepDeg": 55.029074711562465,
+          "twistAt": [
+            1,
+            -1
+          ]
+        }
+      ],
+      "end": {
+        "abduction": -8.896305162885785
+      }
+    },
+    "neck flexion 150-210": {
+      "id": "neck",
+      "motion": "flexion",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 0.0000029575586669421963,
+      "maxRatio": 0.00001183023466801611,
+      "jumps": [
+        {
+          "atDeg": 175.25,
+          "outStepDeg": 109.99999999999999,
+          "twistAt": [
+            0,
+            0
+          ]
+        }
+      ],
+      "end": {
+        "flexion": -59.99999999999998
+      }
+    },
+    "neck abduction 150-210": {
+      "id": "neck",
+      "motion": "abduction",
+      "fromDeg": 150,
+      "toDeg": 210,
+      "stepDeg": 0.25,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+      "maxStepDeg": 1.9390433931977182,
+      "maxRatio": 7.756173572953025,
+      "jumps": [
+        {
+          "atDeg": 152.5,
+          "outStepDeg": 11.314483843928114,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 152.75,
+          "outStepDeg": 7.90536254796316,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 153,
+          "outStepDeg": 5.445584371221835,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 153.25,
+          "outStepDeg": 4.405322619666042,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 153.5,
+          "outStepDeg": 3.78841434083694,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 153.75,
+          "outStepDeg": 3.3675246879200564,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 154,
+          "outStepDeg": 3.056759859447039,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 154.25,
+          "outStepDeg": 2.8152699072904652,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 154.5,
+          "outStepDeg": 2.6207666438899158,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 154.75,
+          "outStepDeg": 2.459921921671614,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 155,
+          "outStepDeg": 2.3241847424050253,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 155.25,
+          "outStepDeg": 2.2077783962187607,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 155.5,
+          "outStepDeg": 2.1066153743283293,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 155.75,
+          "outStepDeg": 2.017777862590604,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 180,
+          "outStepDeg": 160.1535280794723,
+          "twistAt": [
+            -1,
+            1
+          ]
+        },
+        {
+          "atDeg": 204.5,
+          "outStepDeg": 2.017779588281096,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 204.75,
+          "outStepDeg": 2.106621023098433,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 205,
+          "outStepDeg": 2.2077692135327585,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 205.25,
+          "outStepDeg": 2.324185391675114,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 205.5,
+          "outStepDeg": 2.4599276279179008,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 205.75,
+          "outStepDeg": 2.6207723962349876,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 206,
+          "outStepDeg": 2.815256591882706,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 206.25,
+          "outStepDeg": 3.0567674226638326,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 206.5,
+          "outStepDeg": 3.3675246879200564,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 206.75,
+          "outStepDeg": 3.7884143408361703,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 207,
+          "outStepDeg": 4.405316046424797,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 207.25,
+          "outStepDeg": 5.445570704371007,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 207.5,
+          "outStepDeg": 7.905367253850743,
+          "twistAt": [
+            0,
+            0
+          ]
+        },
+        {
+          "atDeg": 207.75,
+          "outStepDeg": 11.314499370684434,
+          "twistAt": [
+            0,
+            0
+          ]
+        }
+      ],
+      "end": {
+        "flexion": -0.0000019567452897776526
+      }
+    }
+  },
+  "errors": []
+}

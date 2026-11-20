@@ -1,0 +1,216 @@
+{
+ "browserName": "chrome",
+ "padYRange": {
+  "head_pad": [
+   0.8774999985098839,
+   0.9525000014901162,
+   8
+  ],
+  "back_pad": [
+   0.8774999985098839,
+   0.9525000014901162,
+   8
+  ],
+  "seat_pad": [
+   0.8774999985098839,
+   0.9525000014901162,
+   8
+  ],
+  "leg_L_pad": [
+   0.8774999985098839,
+   0.9525000014901162,
+   8
+  ],
+  "leg_R_pad": [
+   0.8774999985098839,
+   0.9525000014901162,
+   8
+  ],
+  "headrest_cushion": [
+   0.8899999982118607,
+   0.9800000017881394,
+   8
+  ],
+  "headrest_top": [
+   0.9624999991059303,
+   1.0075000008940695,
+   8
+  ],
+  "headrest_joint_-02": [
+   0.8319999991357326,
+   0.8880000008642673,
+   42
+  ],
+  "headrest_joint_02": [
+   0.8319999991357326,
+   0.8880000008642673,
+   42
+  ],
+  "L_armboard_stem": [
+   0.8040267035172884,
+   0.8959732964827115,
+   42
+  ],
+  "L_armboard_joint": [
+   0.7820000012218953,
+   0.8579999987781048,
+   162
+  ],
+  "L_armboard_plate": [
+   0.8424999999254942,
+   0.8775000000745058,
+   8
+  ],
+  "L_armboard_pad": [
+   0.8775000001490116,
+   0.9324999998509884,
+   8
+  ],
+  "L_armboard_top": [
+   0.9330000003874303,
+   0.9509999996125699,
+   8
+  ],
+  "R_armboard_stem": [
+   0.8040267035172884,
+   0.8959732964827115,
+   42
+  ],
+  "R_armboard_joint": [
+   0.7820000012218953,
+   0.8579999987781048,
+   162
+  ],
+  "R_armboard_plate": [
+   0.8424999999254942,
+   0.8775000000745058,
+   8
+  ],
+  "R_armboard_pad": [
+   0.8775000001490116,
+   0.9324999998509884,
+   8
+  ],
+  "R_armboard_top": [
+   0.9330000003874303,
+   0.9509999996125699,
+   8
+  ]
+ },
+ "sdMaxRow": {
+  "vertex": 14259,
+  "y": 0.9150250930389092,
+  "depthBelowTopMm": 37.474908451206936,
+  "sdDepthMm": 37.474908451206936,
+  "under": "seat_pad",
+  "nearestBox": "seat_pad"
+ },
+ "depthMaxRow": {
+  "vertex": 52206,
+  "y": 0.900689994389873,
+  "depthBelowTopMm": 51.8100071002432,
+  "sdDepthMm": 23.189995879989045,
+  "under": "leg_L_pad",
+  "nearestBox": "leg_L_pad"
+ },
+ "verticesDeeperThan2mmBelowTop": 2755,
+ "ofWhichSdUnderReadsByMoreThan10mm": 283,
+ "deepest": [
+  {
+   "vertex": 52206,
+   "y": 0.900689994389873,
+   "depthBelowTopMm": 51.8100071002432,
+   "sdDepthMm": 23.189995879989045,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 17495,
+   "y": 0.9006899994553975,
+   "depthBelowTopMm": 51.810002034718636,
+   "sdDepthMm": 23.1900009455136,
+   "under": "leg_R_pad",
+   "nearestBox": "leg_R_pad"
+  },
+  {
+   "vertex": 18368,
+   "y": 0.9007911143253329,
+   "depthBelowTopMm": 51.70888716478328,
+   "sdDepthMm": 23.29111581544896,
+   "under": "leg_R_pad",
+   "nearestBox": "leg_R_pad"
+  },
+  {
+   "vertex": 18369,
+   "y": 0.9007911143253329,
+   "depthBelowTopMm": 51.70888716478328,
+   "sdDepthMm": 23.29111581544896,
+   "under": "leg_R_pad",
+   "nearestBox": "leg_R_pad"
+  },
+  {
+   "vertex": 53087,
+   "y": 0.9007911437204441,
+   "depthBelowTopMm": 51.70885776967204,
+   "sdDepthMm": 23.291145210560195,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 53088,
+   "y": 0.9007911437204441,
+   "depthBelowTopMm": 51.70885776967204,
+   "sdDepthMm": 23.291145210560195,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 53340,
+   "y": 0.901235309927467,
+   "depthBelowTopMm": 51.26469156264912,
+   "sdDepthMm": 23.735311417583116,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 53341,
+   "y": 0.901235309927467,
+   "depthBelowTopMm": 51.26469156264912,
+   "sdDepthMm": 23.735311417583116,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 52472,
+   "y": 0.9013305258150657,
+   "depthBelowTopMm": 51.16947567505048,
+   "sdDepthMm": 23.83052730518176,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 17322,
+   "y": 0.9014291070654231,
+   "depthBelowTopMm": 51.07089442469304,
+   "sdDepthMm": 23.9291085555392,
+   "under": "leg_R_pad",
+   "nearestBox": "leg_R_pad"
+  },
+  {
+   "vertex": 52027,
+   "y": 0.901429136932772,
+   "depthBelowTopMm": 51.07086455734411,
+   "sdDepthMm": 23.92913842288813,
+   "under": "leg_L_pad",
+   "nearestBox": "leg_L_pad"
+  },
+  {
+   "vertex": 18621,
+   "y": 0.901454515877748,
+   "depthBelowTopMm": 51.045485612368104,
+   "sdDepthMm": 23.954517367864135,
+   "under": "leg_R_pad",
+   "nearestBox": "leg_R_pad"
+  }
+ ]
+}

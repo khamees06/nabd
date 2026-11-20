@@ -1,0 +1,510 @@
+{
+ "what": "perf-capture V1-V4, headed Chrome, runs 1, loads 3: G1 verify round 2 (c2b9409 tree, docs/.../G1/verify/round2/perf) against G2",
+ "gate": "M8/M9 rise <= 10 %",
+ "maxRise": {
+  "M8": 0.03100775193798455,
+  "M9": 0.011438076133057029
+ },
+ "pass": true,
+ "consoleErrorsG2": 0,
+ "loads": {
+  "g1": {
+   "cold": [
+    {
+     "M10_readyMs": 2572,
+     "M10_forearmEnabledMs": 2572,
+     "domContentLoadedMs": 605,
+     "loadEventMs": 612,
+     "resources": 39,
+     "transferKB": 27085,
+     "wallClockToReadyDetectedMs": 2608,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1927,
+     "M10_forearmEnabledMs": 1927,
+     "domContentLoadedMs": 683,
+     "loadEventMs": 689,
+     "resources": 39,
+     "transferKB": 27085,
+     "wallClockToReadyDetectedMs": 1961,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1600,
+     "M10_forearmEnabledMs": 1600,
+     "domContentLoadedMs": 452,
+     "loadEventMs": 540,
+     "resources": 39,
+     "transferKB": 27085,
+     "wallClockToReadyDetectedMs": 1616,
+     "consoleErrors": 0
+    }
+   ],
+   "warm": [
+    {
+     "M10_readyMs": 1244,
+     "M10_forearmEnabledMs": 1244,
+     "domContentLoadedMs": 339,
+     "loadEventMs": 345,
+     "resources": 39,
+     "transferKB": 21104,
+     "wallClockToReadyDetectedMs": 1268,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1290,
+     "M10_forearmEnabledMs": 1290,
+     "domContentLoadedMs": 348,
+     "loadEventMs": 355,
+     "resources": 39,
+     "transferKB": 21104,
+     "wallClockToReadyDetectedMs": 1304,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1231,
+     "M10_forearmEnabledMs": 1231,
+     "domContentLoadedMs": 333,
+     "loadEventMs": 338,
+     "resources": 39,
+     "transferKB": 21104,
+     "wallClockToReadyDetectedMs": 1236,
+     "consoleErrors": 0
+    }
+   ]
+  },
+  "g2": {
+   "cold": [
+    {
+     "M10_readyMs": 2512,
+     "M10_forearmEnabledMs": 2512,
+     "domContentLoadedMs": 569,
+     "loadEventMs": 577,
+     "resources": 40,
+     "transferKB": 27108,
+     "wallClockToReadyDetectedMs": 2540,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1756,
+     "M10_forearmEnabledMs": 1756,
+     "domContentLoadedMs": 553,
+     "loadEventMs": 660,
+     "resources": 40,
+     "transferKB": 27108,
+     "wallClockToReadyDetectedMs": 1808,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1561,
+     "M10_forearmEnabledMs": 1561,
+     "domContentLoadedMs": 538,
+     "loadEventMs": 543,
+     "resources": 40,
+     "transferKB": 27108,
+     "wallClockToReadyDetectedMs": 1580,
+     "consoleErrors": 0
+    }
+   ],
+   "warm": [
+    {
+     "M10_readyMs": 1231,
+     "M10_forearmEnabledMs": 1231,
+     "domContentLoadedMs": 352,
+     "loadEventMs": 358,
+     "resources": 40,
+     "transferKB": 21127,
+     "wallClockToReadyDetectedMs": 1250,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1291,
+     "M10_forearmEnabledMs": 1291,
+     "domContentLoadedMs": 335,
+     "loadEventMs": 341,
+     "resources": 40,
+     "transferKB": 21127,
+     "wallClockToReadyDetectedMs": 1310,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1257,
+     "M10_forearmEnabledMs": 1257,
+     "domContentLoadedMs": 364,
+     "loadEventMs": 370,
+     "resources": 40,
+     "transferKB": 21127,
+     "wallClockToReadyDetectedMs": 1280,
+     "consoleErrors": 0
+    }
+   ]
+  }
+ },
+ "browser": {
+  "g1": "157.0.8103.79",
+  "g2": "157.0.8103.79"
+ },
+ "rows": [
+  {
+   "view": "V1",
+   "seg": "idle",
+   "M8": {
+    "g1": 1206,
+    "g2": 1206
+   },
+   "M9": {
+    "g1": 387848,
+    "g2": 388876
+   },
+   "M8rise": 0,
+   "M9rise": 0.0026505228852540252,
+   "shadowCalls": {
+    "g1": 1210,
+    "g2": 1210
+   },
+   "rafFps": {
+    "g1": 133.9,
+    "g2": 134.4
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 13.7,
+    "g2": 13.7
+   }
+  },
+  {
+   "view": "V1",
+   "seg": "active",
+   "M8": {
+    "g1": 1166,
+    "g2": 1158
+   },
+   "M9": {
+    "g1": 381776,
+    "g2": 381316
+   },
+   "M8rise": -0.006861063464837058,
+   "M9rise": -0.0012048950169732953,
+   "shadowCalls": {
+    "g1": 1210,
+    "g2": 1210
+   },
+   "rafFps": {
+    "g1": 108.2,
+    "g2": 105.9
+   },
+   "renderRateFps": {
+    "g1": 82.8,
+    "g2": 82.6
+   },
+   "p95Ms": {
+    "g1": 20.7,
+    "g2": 20.7
+   }
+  },
+  {
+   "view": "V1",
+   "seg": "hover",
+   "M8": {
+    "g1": 1205,
+    "g2": 1206
+   },
+   "M9": {
+    "g1": 387784,
+    "g2": 388876
+   },
+   "M8rise": 0.0008298755186721962,
+   "M9rise": 0.0028160006601614107,
+   "shadowCalls": {
+    "g1": 1210,
+    "g2": 1210
+   },
+   "rafFps": {
+    "g1": 133.5,
+    "g2": 134.9
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 13.8,
+    "g2": 13.8
+   }
+  },
+  {
+   "view": "V2",
+   "seg": "idle",
+   "M8": {
+    "g1": 479,
+    "g2": 486
+   },
+   "M9": {
+    "g1": 299400,
+    "g2": 301348
+   },
+   "M8rise": 0.014613778705636848,
+   "M9rise": 0.006506346025384024,
+   "shadowCalls": {
+    "g1": 1213,
+    "g2": 1213
+   },
+   "rafFps": {
+    "g1": 144,
+    "g2": 144
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 7.2,
+    "g2": 7.2
+   }
+  },
+  {
+   "view": "V2",
+   "seg": "active",
+   "M8": {
+    "g1": 478,
+    "g2": 485
+   },
+   "M9": {
+    "g1": 299328,
+    "g2": 301276
+   },
+   "M8rise": 0.014644351464435212,
+   "M9rise": 0.0065079110540944285,
+   "shadowCalls": {
+    "g1": 1213,
+    "g2": 1213
+   },
+   "rafFps": {
+    "g1": 143.8,
+    "g2": 143.6
+   },
+   "renderRateFps": {
+    "g1": 95.5,
+    "g2": 94.4
+   },
+   "p95Ms": {
+    "g1": 7.1,
+    "g2": 7.1
+   }
+  },
+  {
+   "view": "V2",
+   "seg": "hover",
+   "M8": {
+    "g1": 479,
+    "g2": 486
+   },
+   "M9": {
+    "g1": 299400,
+    "g2": 301348
+   },
+   "M8rise": 0.014613778705636848,
+   "M9rise": 0.006506346025384024,
+   "shadowCalls": {
+    "g1": 1213,
+    "g2": 1213
+   },
+   "rafFps": {
+    "g1": 143.9,
+    "g2": 143.8
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 7.4,
+    "g2": 7.3
+   }
+  },
+  {
+   "view": "V3",
+   "seg": "idle",
+   "M8": {
+    "g1": 1528,
+    "g2": 1528
+   },
+   "M9": {
+    "g1": 462240,
+    "g2": 463268
+   },
+   "M8rise": 0,
+   "M9rise": 0.002223952924887529,
+   "shadowCalls": {
+    "g1": 1210,
+    "g2": 1210
+   },
+   "rafFps": {
+    "g1": 129.5,
+    "g2": 131.7
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 13.8,
+    "g2": 13.7
+   }
+  },
+  {
+   "view": "V3",
+   "seg": "active",
+   "M8": {
+    "g1": 1472,
+    "g2": 1465
+   },
+   "M9": {
+    "g1": 446262,
+    "g2": 438356
+   },
+   "M8rise": -0.004755434782608647,
+   "M9rise": -0.01771605021265532,
+   "shadowCalls": {
+    "g1": 1210,
+    "g2": 1210
+   },
+   "rafFps": {
+    "g1": 71.8,
+    "g2": 71.6
+   },
+   "renderRateFps": {
+    "g1": 71.7,
+    "g2": 71.5
+   },
+   "p95Ms": {
+    "g1": 27.8,
+    "g2": 27.8
+   }
+  },
+  {
+   "view": "V3",
+   "seg": "hover",
+   "M8": {
+    "g1": 1530,
+    "g2": 1531
+   },
+   "M9": {
+    "g1": 461382,
+    "g2": 463468
+   },
+   "M8rise": 0.0006535947712418277,
+   "M9rise": 0.004521199353247463,
+   "shadowCalls": {
+    "g1": 1210,
+    "g2": 1210
+   },
+   "rafFps": {
+    "g1": 135.9,
+    "g2": 136.9
+   },
+   "renderRateFps": {
+    "g1": 12.3,
+    "g2": 12.3
+   },
+   "p95Ms": {
+    "g1": 13.6,
+    "g2": 7.4
+   }
+  },
+  {
+   "view": "V4",
+   "seg": "idle",
+   "M8": {
+    "g1": 542,
+    "g2": 539
+   },
+   "M9": {
+    "g1": 464067,
+    "g2": 463855
+   },
+   "M8rise": -0.005535055350553542,
+   "M9rise": -0.0004568305869626643,
+   "shadowCalls": {
+    "g1": 1206,
+    "g2": 1206
+   },
+   "rafFps": {
+    "g1": 144,
+    "g2": 144
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 7.2,
+    "g2": 7.2
+   }
+  },
+  {
+   "view": "V4",
+   "seg": "active",
+   "M8": {
+    "g1": 512,
+    "g2": 509
+   },
+   "M9": {
+    "g1": 461427,
+    "g2": 461555
+   },
+   "M8rise": -0.005859375,
+   "M9rise": 0.00027740032551193394,
+   "shadowCalls": {
+    "g1": 1206,
+    "g2": 1206
+   },
+   "rafFps": {
+    "g1": 117,
+    "g2": 117.3
+   },
+   "renderRateFps": {
+    "g1": 115.5,
+    "g2": 115.7
+   },
+   "p95Ms": {
+    "g1": 14,
+    "g2": 14
+   }
+  },
+  {
+   "view": "V4",
+   "seg": "hover",
+   "M8": {
+    "g1": 516,
+    "g2": 532
+   },
+   "M9": {
+    "g1": 458119,
+    "g2": 463359
+   },
+   "M8rise": 0.03100775193798455,
+   "M9rise": 0.011438076133057029,
+   "shadowCalls": {
+    "g1": 1206,
+    "g2": 1206
+   },
+   "rafFps": {
+    "g1": 144,
+    "g2": 144
+   },
+   "renderRateFps": {
+    "g1": 12,
+    "g2": 12
+   },
+   "p95Ms": {
+    "g1": 7.2,
+    "g2": 7.2
+   }
+  }
+ ]
+}

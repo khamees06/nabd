@@ -1,0 +1,152 @@
+{
+  "check": "C5-8a-work-area-moves-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-18T23:37:03.177Z",
+  "result": {
+    "entry": {
+      "frames": 82,
+      "maxYawDeg": 3.45,
+      "maxTurnDeg": 3.47,
+      "maxStepM": 0.0314,
+      "maxFovDeg": 1.25,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 18,
+      "turningFrames": 73,
+      "fovFrames": 25,
+      "yawAtMs": 14,
+      "stepAtMs": 100,
+      "totalStepM": 0.304,
+      "totalYawDeg": 1.22,
+      "fov": [
+        75.98,
+        64
+      ],
+      "durationMs": 1431,
+      "finalAimErrorDeg": 0
+    },
+    "otherSide": {
+      "frames": 388,
+      "maxYawDeg": 1.83,
+      "maxTurnDeg": 1.86,
+      "maxStepM": 0.0281,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 308,
+      "turningFrames": 381,
+      "fovFrames": 0,
+      "yawAtMs": 332,
+      "stepAtMs": 2140,
+      "totalStepM": 1.52,
+      "totalYawDeg": -180,
+      "fov": [
+        64,
+        64
+      ],
+      "durationMs": 4144,
+      "midWalkAimErrorDeg": 6.9,
+      "finalAimErrorDeg": 0,
+      "cameraX": -0.76
+    },
+    "arm": {
+      "frames": 495,
+      "maxYawDeg": 2.2,
+      "maxTurnDeg": 2.22,
+      "maxStepM": 0.0281,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 393,
+      "turningFrames": 486,
+      "fovFrames": 0,
+      "yawAtMs": 43,
+      "stepAtMs": 43,
+      "totalStepM": 1.538,
+      "totalYawDeg": -180,
+      "fov": [
+        64,
+        64
+      ],
+      "durationMs": 4487,
+      "finalAimErrorDeg": 0,
+      "cameraX": 0.76
+    },
+    "lookKept": {
+      "offsetBeforeDeg": 36.24,
+      "offsetAfterStepDeg": 36.24,
+      "step": {
+        "frames": 127,
+        "maxYawDeg": 0.74,
+        "maxTurnDeg": 0.75,
+        "maxStepM": 0.0097,
+        "maxFovDeg": 0,
+        "maxGloveCamStepM": 0,
+        "movingFrames": 28,
+        "turningFrames": 118,
+        "fovFrames": 0,
+        "yawAtMs": 208,
+        "stepAtMs": 34,
+        "totalStepM": 0.26,
+        "totalYawDeg": -27.09,
+        "fov": [
+          64,
+          64
+        ],
+        "durationMs": 1445
+      }
+    },
+    "recentre": {
+      "frames": 108,
+      "maxYawDeg": 2.48,
+      "maxTurnDeg": 2.48,
+      "maxStepM": 0,
+      "maxFovDeg": 0,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 0,
+      "turningFrames": 100,
+      "fovFrames": 0,
+      "yawAtMs": 93,
+      "stepAtMs": null,
+      "totalStepM": 0,
+      "totalYawDeg": -36.24,
+      "fov": [
+        64,
+        64
+      ],
+      "durationMs": 1420,
+      "offsetAfterDeg": 0
+    },
+    "escape": {
+      "frames": 44,
+      "maxYawDeg": 2.93,
+      "maxTurnDeg": 3.34,
+      "maxStepM": 0.0208,
+      "maxFovDeg": 1.22,
+      "maxGloveCamStepM": 0,
+      "movingFrames": 30,
+      "turningFrames": 30,
+      "fovFrames": 35,
+      "yawAtMs": 189,
+      "stepAtMs": 189,
+      "totalStepM": 0.1931,
+      "totalYawDeg": 27.09,
+      "fov": [
+        64,
+        76
+      ],
+      "durationMs": 984,
+      "focused": false,
+      "cameraPosition": [
+        0.735,
+        1.6,
+        0.15
+      ]
+    }
+  },
+  "errors": []
+}

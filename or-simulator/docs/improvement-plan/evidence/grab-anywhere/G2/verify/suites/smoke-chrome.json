@@ -1,0 +1,233 @@
+{
+ "report": "smoke-chrome-report.json",
+ "startTime": "2026-11-18T23:14:31.591Z",
+ "durationMs": 144903.203,
+ "expected": 17,
+ "flaky": 0,
+ "unexpected": 0,
+ "skipped": 0,
+ "firstAttemptFailures": [],
+ "tests": [
+  {
+   "title": "S1 boot and assets",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5719,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S2 forearm drill",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10089,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S3 support and release",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 12843,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S4 training session (golden trace)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10032,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — grasper (tray view)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4817,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — scope (tray view)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4777,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — scissors (tray view)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4851,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — needleHolder (tray view)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4761,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — staff handover (#training-source = staff)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 3477,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S6 room view and camera presets",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 26314,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S7 internal anatomy",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 8816,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S8 hands and locomotion",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 13318,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S9 port and scope",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10723,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V1 default bedside view",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4218,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V2 forearm drill after approach",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 7283,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V3 room view preset",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5690,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V4 internal anatomy full view",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5765,
+     "error": null
+    }
+   ]
+  }
+ ]
+}

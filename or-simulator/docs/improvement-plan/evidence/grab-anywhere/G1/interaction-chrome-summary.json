@@ -1,0 +1,745 @@
+{
+  "suite": "tests/browser/interaction.spec.mjs",
+  "project": "chrome",
+  "ranAt": "2026-11-18T03:52:42.029Z",
+  "stats": {
+    "startTime": "2026-11-18T03:52:42.029Z",
+    "duration": 959696.151,
+    "expected": 54,
+    "skipped": 1,
+    "unexpected": 0,
+    "flaky": 0
+  },
+  "counts": {
+    "expected": 54,
+    "skipped": 1
+  },
+  "tests": [
+    {
+      "title": "C1-1 keys and buttons turn the view (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 23476
+        }
+      ]
+    },
+    {
+      "title": "C1-1b arrows nudge a held tool instead of turning (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 8341
+        }
+      ]
+    },
+    {
+      "title": "C1-2 left-drag grid turns the view: free (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 21504
+        }
+      ]
+    },
+    {
+      "title": "C1-2 left-drag grid turns the view: monitor (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 23137
+        }
+      ]
+    },
+    {
+      "title": "C1-2 left-drag grid turns the view: drill (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 23052
+        }
+      ]
+    },
+    {
+      "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 10059
+        }
+      ]
+    },
+    {
+      "title": "C1-4 look is never cut or ignored (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 15351
+        }
+      ]
+    },
+    {
+      "title": "C1-7 view stays on screen and the wheel zooms (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9188
+        }
+      ]
+    },
+    {
+      "title": "C1-1 keys and buttons turn the view (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 22033
+        }
+      ]
+    },
+    {
+      "title": "C1-1b arrows nudge a held tool instead of turning (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 8615
+        }
+      ]
+    },
+    {
+      "title": "C1-2 left-drag grid turns the view: free (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 20762
+        }
+      ]
+    },
+    {
+      "title": "C1-2 left-drag grid turns the view: monitor (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 21792
+        }
+      ]
+    },
+    {
+      "title": "C1-2 left-drag grid turns the view: drill (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 22004
+        }
+      ]
+    },
+    {
+      "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9989
+        }
+      ]
+    },
+    {
+      "title": "C1-4 look is never cut or ignored (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 15103
+        }
+      ]
+    },
+    {
+      "title": "C1-7 view stays on screen and the wheel zooms (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 10705
+        }
+      ]
+    },
+    {
+      "title": "C2-3 glove faces the skin; press attaches; flank is touch only (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9862
+        }
+      ]
+    },
+    {
+      "title": "C2-5 surface grip attaches 5/5; a sliding press keeps its dent (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 16790
+        }
+      ]
+    },
+    {
+      "title": "C2-6 hands move at human speed (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 13322
+        }
+      ]
+    },
+    {
+      "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 20342
+        }
+      ]
+    },
+    {
+      "title": "C2-3 glove faces the skin; press attaches; flank is touch only (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9402
+        }
+      ]
+    },
+    {
+      "title": "C2-5 surface grip attaches 5/5; a sliding press keeps its dent (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 16339
+        }
+      ]
+    },
+    {
+      "title": "C2-6 hands move at human speed (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 13259
+        }
+      ]
+    },
+    {
+      "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 20286
+        }
+      ]
+    },
+    {
+      "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 19494
+        }
+      ]
+    },
+    {
+      "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 42199
+        }
+      ]
+    },
+    {
+      "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 19268
+        }
+      ]
+    },
+    {
+      "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 41749
+        }
+      ]
+    },
+    {
+      "title": "C3-9c bedside wrist: glove from the trainee's side, vertical lift, settles back (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9203
+        }
+      ]
+    },
+    {
+      "title": "C3-9d drill: the held forearm stays put outside the view; only a press resumes (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 15019
+        }
+      ]
+    },
+    {
+      "title": "C3-9e step 5: a failed return settles back instead of jumping (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 15112
+        }
+      ]
+    },
+    {
+      "title": "C3-9c bedside wrist: glove from the trainee's side, vertical lift, settles back (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9160
+        }
+      ]
+    },
+    {
+      "title": "C3-9d drill: the held forearm stays put outside the view; only a press resumes (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 14929
+        }
+      ]
+    },
+    {
+      "title": "C3-9e step 5: a failed return settles back instead of jumping (560x890)",
+      "project": "chrome",
+      "status": "skipped",
+      "results": [
+        {
+          "status": "skipped",
+          "retry": 0,
+          "ms": 111
+        }
+      ]
+    },
+    {
+      "title": "C4-11a every tool is picked up at human speed and carried pointing ahead (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 25480
+        }
+      ]
+    },
+    {
+      "title": "C4-11b free instruments follow the pointer at the work area on both sides of the bed (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 30222
+        }
+      ]
+    },
+    {
+      "title": "C4-11c a held tool keeps its place through a look, then points along the new heading (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9296
+        }
+      ]
+    },
+    {
+      "title": "C4-11d scope: monitor fills the view, steering resumes in place, roll stops at ±90°, Escape places it (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 21671
+        }
+      ]
+    },
+    {
+      "title": "C4-11a every tool is picked up at human speed and carried pointing ahead (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 25033
+        }
+      ]
+    },
+    {
+      "title": "C4-11b free instruments follow the pointer at the work area on both sides of the bed (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 30031
+        }
+      ]
+    },
+    {
+      "title": "C4-11c a held tool keeps its place through a look, then points along the new heading (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 9095
+        }
+      ]
+    },
+    {
+      "title": "C4-11d scope: monitor fills the view, steering resumes in place, roll stops at ±90°, Escape places it (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 21437
+        }
+      ]
+    },
+    {
+      "title": "C5-8a work-area moves turn smoothly and keep the trainee's look (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 19312
+        }
+      ]
+    },
+    {
+      "title": "C5-8b bedside steps, «إعادة المنظور» and the room view glide instead of jumping (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 13923
+        }
+      ]
+    },
+    {
+      "title": "C5-10a every refused move or action says why (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 39312
+        }
+      ]
+    },
+    {
+      "title": "C5-8a work-area moves turn smoothly and keep the trainee's look (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 19269
+        }
+      ]
+    },
+    {
+      "title": "C5-8b bedside steps, «إعادة المنظور» and the room view glide instead of jumping (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 13537
+        }
+      ]
+    },
+    {
+      "title": "C5-10a every refused move or action says why (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 39358
+        }
+      ]
+    },
+    {
+      "title": "C5-10b a reach that times out says the fingers did not touch, and the text stays (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 18345
+        }
+      ]
+    },
+    {
+      "title": "C6-a the lamp task lights are in the scene, lit and aimed at the work point (default GLB path) (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 7014
+        }
+      ]
+    },
+    {
+      "title": "C6-a2 the fallback lamp path has the same lights (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 3926
+        }
+      ]
+    },
+    {
+      "title": "C6-b only the hand that holds the forearm keeps its collision object (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 16024
+        }
+      ]
+    },
+    {
+      "title": "C6-b only the hand that holds the forearm keeps its collision object (560x890)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 15922
+        }
+      ]
+    },
+    {
+      "title": "C6-c the page lists Rapier 0.21.0 with its Apache-2.0 licence text (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 3878
+        }
+      ]
+    },
+    {
+      "title": "C6-e F27 table pads against the code constants and the patient (measure only) (1440x900)",
+      "project": "chrome",
+      "status": "expected",
+      "results": [
+        {
+          "status": "passed",
+          "retry": 0,
+          "ms": 4861
+        }
+      ]
+    }
+  ],
+  "C2_12": {
+    "1440x900": {
+      "hover": {
+        "sweepMoves": 120,
+        "sweepRaycasts": 119,
+        "maxPerFrame": 1,
+        "burstMoves": 30,
+        "burstRaycasts": 1,
+        "tinyMoveRaycasts": 0,
+        "raycastMs": {
+          "p50": 5.1,
+          "max": 7
+        }
+      },
+      "limbDragFps": 143.2,
+      "plainFps": 122.1,
+      "abdomenClick": {
+        "hoverThenClick": {
+          "frameMs": 15.8,
+          "raycastsNearClick": []
+        },
+        "clickStraightAfterMove": {
+          "frameMs": 13.1,
+          "raycastsNearClick": [
+            {
+              "dtMs": -7.1,
+              "ms": 6.5
+            }
+          ]
+        }
+      },
+      "browserVersion": "157.0.8103.79"
+    },
+    "560x890": {
+      "hover": {
+        "sweepMoves": 120,
+        "sweepRaycasts": 59,
+        "maxPerFrame": 1,
+        "burstMoves": 30,
+        "burstRaycasts": 1,
+        "tinyMoveRaycasts": 0,
+        "raycastMs": {
+          "p50": 5.2,
+          "max": 6.7
+        }
+      },
+      "limbDragFps": 144.3,
+      "plainFps": 141,
+      "abdomenClick": {
+        "hoverThenClick": {
+          "frameMs": 15,
+          "raycastsNearClick": []
+        },
+        "clickStraightAfterMove": {
+          "frameMs": 12.8,
+          "raycastsNearClick": [
+            {
+              "dtMs": -6.4,
+              "ms": 5.8
+            }
+          ]
+        }
+      },
+      "browserVersion": "157.0.8103.79"
+    }
+  }
+}

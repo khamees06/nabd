@@ -1,0 +1,1824 @@
+{
+ "shoulder.L flexion": {
+  "consecutiveJumps": 42,
+  "firstAtDeg": 233.5,
+  "lastAtDeg": 243.75,
+  "minBeyondDeg": 56.3,
+  "rows": [
+   {
+    "atDeg": 233.5,
+    "outStepDeg": 2.01,
+    "beyond": 87.8,
+    "swingExc": 52.4,
+    "twistExc": 73.1,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -174.5,
+     155.5,
+     -90
+    ],
+    "to": [
+     -174.2,
+     154.9,
+     -90
+    ]
+   },
+   {
+    "atDeg": 233.75,
+    "outStepDeg": 2.09,
+    "beyond": 89.7,
+    "swingExc": 52.6,
+    "twistExc": 75.5,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -174.2,
+     154.9,
+     -90
+    ],
+    "to": [
+     -173.9,
+     154.3,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234,
+    "outStepDeg": 2.16,
+    "beyond": 91.8,
+    "swingExc": 52.8,
+    "twistExc": 78,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -173.9,
+     154.3,
+     -90
+    ],
+    "to": [
+     -173.7,
+     153.6,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234.25,
+    "outStepDeg": 2.24,
+    "beyond": 93.9,
+    "swingExc": 53,
+    "twistExc": 80.5,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -173.7,
+     153.6,
+     -90
+    ],
+    "to": [
+     -173.4,
+     153,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234.5,
+    "outStepDeg": 2.32,
+    "beyond": 96,
+    "swingExc": 53.2,
+    "twistExc": 83.1,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -173.4,
+     153,
+     -90
+    ],
+    "to": [
+     -173,
+     152.3,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234.75,
+    "outStepDeg": 2.4,
+    "beyond": 98.3,
+    "swingExc": 53.4,
+    "twistExc": 85.9,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -173,
+     152.3,
+     -90
+    ],
+    "to": [
+     -172.7,
+     151.5,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235,
+    "outStepDeg": 2.48,
+    "beyond": 100.7,
+    "swingExc": 53.6,
+    "twistExc": 88.7,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -172.7,
+     151.5,
+     -90
+    ],
+    "to": [
+     -172.3,
+     150.8,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235.25,
+    "outStepDeg": 2.56,
+    "beyond": 103.1,
+    "swingExc": 53.8,
+    "twistExc": 91.6,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -172.3,
+     150.8,
+     -90
+    ],
+    "to": [
+     -171.9,
+     150,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235.5,
+    "outStepDeg": 2.65,
+    "beyond": 105.7,
+    "swingExc": 54,
+    "twistExc": 94.6,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -171.9,
+     150,
+     -90
+    ],
+    "to": [
+     -171.5,
+     149.2,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235.75,
+    "outStepDeg": 2.73,
+    "beyond": 108.3,
+    "swingExc": 54.2,
+    "twistExc": 97.8,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     -171.5,
+     149.2,
+     -90
+    ],
+    "to": [
+     -171.1,
+     148.4,
+     -90
+    ]
+   },
+   {
+    "atDeg": 236,
+    "outStepDeg": 162.66,
+    "beyond": 109.4,
+    "swingExc": 54.4,
+    "twistExc": 99,
+    "twistAt": [
+     -1,
+     1
+    ],
+    "from": [
+     -171.1,
+     148.4,
+     -90
+    ],
+    "to": [
+     -170.6,
+     147.5,
+     70
+    ]
+   },
+   {
+    "atDeg": 236.25,
+    "outStepDeg": 2.91,
+    "beyond": 106.8,
+    "swingExc": 54.6,
+    "twistExc": 95.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -170.6,
+     147.5,
+     70
+    ],
+    "to": [
+     -170,
+     146.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 236.5,
+    "outStepDeg": 2.99,
+    "beyond": 104,
+    "swingExc": 54.8,
+    "twistExc": 92.3,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -170,
+     146.6,
+     70
+    ],
+    "to": [
+     -169.5,
+     145.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 236.75,
+    "outStepDeg": 3.08,
+    "beyond": 101.3,
+    "swingExc": 55,
+    "twistExc": 88.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -169.5,
+     145.6,
+     70
+    ],
+    "to": [
+     -168.8,
+     144.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 237,
+    "outStepDeg": 3.16,
+    "beyond": 98.5,
+    "swingExc": 55.2,
+    "twistExc": 85.1,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -168.8,
+     144.6,
+     70
+    ],
+    "to": [
+     -168.2,
+     143.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 237.25,
+    "outStepDeg": 3.24,
+    "beyond": 95.6,
+    "swingExc": 55.3,
+    "twistExc": 81.4,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -168.2,
+     143.6,
+     70
+    ],
+    "to": [
+     -167.4,
+     142.5,
+     70
+    ]
+   },
+   {
+    "atDeg": 237.5,
+    "outStepDeg": 3.31,
+    "beyond": 92.7,
+    "swingExc": 55.5,
+    "twistExc": 77.5,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -167.4,
+     142.5,
+     70
+    ],
+    "to": [
+     -166.6,
+     141.3,
+     70
+    ]
+   },
+   {
+    "atDeg": 237.75,
+    "outStepDeg": 3.37,
+    "beyond": 89.9,
+    "swingExc": 55.7,
+    "twistExc": 73.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -166.6,
+     141.3,
+     70
+    ],
+    "to": [
+     -165.7,
+     140.1,
+     70
+    ]
+   },
+   {
+    "atDeg": 238,
+    "outStepDeg": 3.43,
+    "beyond": 87,
+    "swingExc": 55.8,
+    "twistExc": 69.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -165.7,
+     140.1,
+     70
+    ],
+    "to": [
+     -164.7,
+     138.8,
+     70
+    ]
+   },
+   {
+    "atDeg": 238.25,
+    "outStepDeg": 3.47,
+    "beyond": 84.2,
+    "swingExc": 56,
+    "twistExc": 65.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -164.7,
+     138.8,
+     70
+    ],
+    "to": [
+     -163.6,
+     137.5,
+     70
+    ]
+   },
+   {
+    "atDeg": 238.5,
+    "outStepDeg": 3.5,
+    "beyond": 81.4,
+    "swingExc": 56.1,
+    "twistExc": 61.6,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -163.6,
+     137.5,
+     70
+    ],
+    "to": [
+     -162.4,
+     136.1,
+     70
+    ]
+   },
+   {
+    "atDeg": 238.75,
+    "outStepDeg": 3.5,
+    "beyond": 78.7,
+    "swingExc": 56.3,
+    "twistExc": 57.5,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -162.4,
+     136.1,
+     70
+    ],
+    "to": [
+     -161,
+     134.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 239,
+    "outStepDeg": 3.49,
+    "beyond": 76.2,
+    "swingExc": 56.4,
+    "twistExc": 53.4,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -161,
+     134.6,
+     70
+    ],
+    "to": [
+     -159.4,
+     133.1,
+     70
+    ]
+   },
+   {
+    "atDeg": 239.25,
+    "outStepDeg": 3.45,
+    "beyond": 73.7,
+    "swingExc": 56.5,
+    "twistExc": 49.4,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -159.4,
+     133.1,
+     70
+    ],
+    "to": [
+     -157.7,
+     131.4,
+     70
+    ]
+   },
+   {
+    "atDeg": 239.5,
+    "outStepDeg": 3.38,
+    "beyond": 71.4,
+    "swingExc": 56.6,
+    "twistExc": 45.5,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -157.7,
+     131.4,
+     70
+    ],
+    "to": [
+     -155.7,
+     129.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 239.75,
+    "outStepDeg": 3.28,
+    "beyond": 69.4,
+    "swingExc": 56.8,
+    "twistExc": 41.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -155.7,
+     129.6,
+     70
+    ],
+    "to": [
+     -153.4,
+     127.8,
+     70
+    ]
+   },
+   {
+    "atDeg": 240,
+    "outStepDeg": 3.16,
+    "beyond": 67.6,
+    "swingExc": 56.9,
+    "twistExc": 38.1,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -153.4,
+     127.8,
+     70
+    ],
+    "to": [
+     -150.8,
+     125.7,
+     70
+    ]
+   },
+   {
+    "atDeg": 240.25,
+    "outStepDeg": 3.02,
+    "beyond": 66,
+    "swingExc": 57,
+    "twistExc": 34.8,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -150.8,
+     125.7,
+     70
+    ],
+    "to": [
+     -147.7,
+     123.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 240.5,
+    "outStepDeg": 2.92,
+    "beyond": 64.7,
+    "swingExc": 57,
+    "twistExc": 31.9,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -147.7,
+     123.6,
+     70
+    ],
+    "to": [
+     -144.2,
+     121.3,
+     70
+    ]
+   },
+   {
+    "atDeg": 240.75,
+    "outStepDeg": 3.09,
+    "beyond": 63.4,
+    "swingExc": 57.1,
+    "twistExc": 28.8,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -144.2,
+     121.3,
+     70
+    ],
+    "to": [
+     -140.1,
+     118.7,
+     70
+    ]
+   },
+   {
+    "atDeg": 241,
+    "outStepDeg": 3.35,
+    "beyond": 62.1,
+    "swingExc": 57.2,
+    "twistExc": 25.5,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -140.1,
+     118.7,
+     70
+    ],
+    "to": [
+     -135.3,
+     116,
+     70
+    ]
+   },
+   {
+    "atDeg": 241.25,
+    "outStepDeg": 3.66,
+    "beyond": 60.9,
+    "swingExc": 57.2,
+    "twistExc": 21.9,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -135.3,
+     116,
+     70
+    ],
+    "to": [
+     -129.8,
+     113,
+     70
+    ]
+   },
+   {
+    "atDeg": 241.5,
+    "outStepDeg": 4.01,
+    "beyond": 59.7,
+    "swingExc": 57.2,
+    "twistExc": 17.9,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -129.8,
+     113,
+     70
+    ],
+    "to": [
+     -123.4,
+     109.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 241.75,
+    "outStepDeg": 4.44,
+    "beyond": 58.7,
+    "swingExc": 57.2,
+    "twistExc": 13.5,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -123.4,
+     109.6,
+     70
+    ],
+    "to": [
+     -116.2,
+     105.9,
+     70
+    ]
+   },
+   {
+    "atDeg": 242,
+    "outStepDeg": 4.96,
+    "beyond": 57.8,
+    "swingExc": 57.2,
+    "twistExc": 8.7,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -116.2,
+     105.9,
+     70
+    ],
+    "to": [
+     -108.2,
+     101.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 242.25,
+    "outStepDeg": 5.61,
+    "beyond": 57.2,
+    "swingExc": 57.2,
+    "twistExc": 3.2,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     -108.2,
+     101.6,
+     70
+    ],
+    "to": [
+     -99.8,
+     96.7,
+     70
+    ]
+   },
+   {
+    "atDeg": 242.5,
+    "outStepDeg": 5.66,
+    "beyond": 57.1,
+    "swingExc": 57.1,
+    "twistExc": 0,
+    "twistAt": [
+     1,
+     0
+    ],
+    "from": [
+     -99.8,
+     96.7,
+     70
+    ],
+    "to": [
+     -91.2,
+     90.9,
+     66.9
+    ]
+   },
+   {
+    "atDeg": 242.75,
+    "outStepDeg": 7.64,
+    "beyond": 57,
+    "swingExc": 57,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     -91.2,
+     90.9,
+     66.9
+    ],
+    "to": [
+     -82.8,
+     83.7,
+     59.4
+    ]
+   },
+   {
+    "atDeg": 243,
+    "outStepDeg": 9.3,
+    "beyond": 56.9,
+    "swingExc": 56.9,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     -82.8,
+     83.7,
+     59.4
+    ],
+    "to": [
+     -75,
+     74.3,
+     50.4
+    ]
+   },
+   {
+    "atDeg": 243.25,
+    "outStepDeg": 12.18,
+    "beyond": 56.7,
+    "swingExc": 56.7,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     -75,
+     74.3,
+     50.4
+    ],
+    "to": [
+     -67.9,
+     60.4,
+     38.5
+    ]
+   },
+   {
+    "atDeg": 243.5,
+    "outStepDeg": 20.02,
+    "beyond": 56.5,
+    "swingExc": 56.5,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     -67.9,
+     60.4,
+     38.5
+    ],
+    "to": [
+     -61.7,
+     32.4,
+     18.8
+    ]
+   },
+   {
+    "atDeg": 243.75,
+    "outStepDeg": 19.08,
+    "beyond": 56.3,
+    "swingExc": 56.3,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     -61.7,
+     32.4,
+     18.8
+    ],
+    "to": [
+     -60,
+     0,
+     0
+    ]
+   }
+  ]
+ },
+ "shoulder.L abduction": {
+  "consecutiveJumps": 44,
+  "firstAtDeg": 228.5,
+  "lastAtDeg": 239.25,
+  "minBeyondDeg": 50.7,
+  "rows": [
+   {
+    "atDeg": 228.5,
+    "outStepDeg": 2.04,
+    "beyond": 91.2,
+    "swingExc": 47.2,
+    "twistExc": 80.5,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     155.8,
+     -173.4,
+     70
+    ],
+    "to": [
+     155.2,
+     -173.1,
+     70
+    ]
+   },
+   {
+    "atDeg": 228.75,
+    "outStepDeg": 2.13,
+    "beyond": 93.3,
+    "swingExc": 47.4,
+    "twistExc": 82.9,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     155.2,
+     -173.1,
+     70
+    ],
+    "to": [
+     154.7,
+     -172.8,
+     70
+    ]
+   },
+   {
+    "atDeg": 229,
+    "outStepDeg": 2.22,
+    "beyond": 95.4,
+    "swingExc": 47.6,
+    "twistExc": 85.3,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     154.7,
+     -172.8,
+     70
+    ],
+    "to": [
+     154,
+     -172.5,
+     70
+    ]
+   },
+   {
+    "atDeg": 229.25,
+    "outStepDeg": 2.31,
+    "beyond": 97.7,
+    "swingExc": 47.8,
+    "twistExc": 87.9,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     154,
+     -172.5,
+     70
+    ],
+    "to": [
+     153.4,
+     -172.2,
+     70
+    ]
+   },
+   {
+    "atDeg": 229.5,
+    "outStepDeg": 2.4,
+    "beyond": 100,
+    "swingExc": 48,
+    "twistExc": 90.6,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     153.4,
+     -172.2,
+     70
+    ],
+    "to": [
+     152.8,
+     -171.8,
+     70
+    ]
+   },
+   {
+    "atDeg": 229.75,
+    "outStepDeg": 2.5,
+    "beyond": 102.5,
+    "swingExc": 48.2,
+    "twistExc": 93.4,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     152.8,
+     -171.8,
+     70
+    ],
+    "to": [
+     152.1,
+     -171.5,
+     70
+    ]
+   },
+   {
+    "atDeg": 230,
+    "outStepDeg": 2.61,
+    "beyond": 105,
+    "swingExc": 48.4,
+    "twistExc": 96.3,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     152.1,
+     -171.5,
+     70
+    ],
+    "to": [
+     151.4,
+     -171.1,
+     70
+    ]
+   },
+   {
+    "atDeg": 230.25,
+    "outStepDeg": 2.72,
+    "beyond": 107.7,
+    "swingExc": 48.6,
+    "twistExc": 99.3,
+    "twistAt": [
+     1,
+     1
+    ],
+    "from": [
+     151.4,
+     -171.1,
+     70
+    ],
+    "to": [
+     150.7,
+     -170.6,
+     70
+    ]
+   },
+   {
+    "atDeg": 230.5,
+    "outStepDeg": 162.71,
+    "beyond": 106.2,
+    "swingExc": 48.8,
+    "twistExc": 97.5,
+    "twistAt": [
+     1,
+     -1
+    ],
+    "from": [
+     150.7,
+     -170.6,
+     70
+    ],
+    "to": [
+     149.9,
+     -170.2,
+     -90
+    ]
+   },
+   {
+    "atDeg": 230.75,
+    "outStepDeg": 2.94,
+    "beyond": 103.5,
+    "swingExc": 49,
+    "twistExc": 94.3,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     149.9,
+     -170.2,
+     -90
+    ],
+    "to": [
+     149.2,
+     -169.7,
+     -90
+    ]
+   },
+   {
+    "atDeg": 231,
+    "outStepDeg": 3.06,
+    "beyond": 100.7,
+    "swingExc": 49.2,
+    "twistExc": 90.9,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     149.2,
+     -169.7,
+     -90
+    ],
+    "to": [
+     148.4,
+     -169.1,
+     -90
+    ]
+   },
+   {
+    "atDeg": 231.25,
+    "outStepDeg": 3.18,
+    "beyond": 97.8,
+    "swingExc": 49.3,
+    "twistExc": 87.3,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     148.4,
+     -169.1,
+     -90
+    ],
+    "to": [
+     147.5,
+     -168.6,
+     -90
+    ]
+   },
+   {
+    "atDeg": 231.5,
+    "outStepDeg": 3.3,
+    "beyond": 94.8,
+    "swingExc": 49.5,
+    "twistExc": 83.7,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     147.5,
+     -168.6,
+     -90
+    ],
+    "to": [
+     146.7,
+     -168,
+     -90
+    ]
+   },
+   {
+    "atDeg": 231.75,
+    "outStepDeg": 3.42,
+    "beyond": 91.8,
+    "swingExc": 49.7,
+    "twistExc": 79.8,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     146.7,
+     -168,
+     -90
+    ],
+    "to": [
+     145.8,
+     -167.3,
+     -90
+    ]
+   },
+   {
+    "atDeg": 232,
+    "outStepDeg": 3.54,
+    "beyond": 88.7,
+    "swingExc": 49.9,
+    "twistExc": 75.9,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     145.8,
+     -167.3,
+     -90
+    ],
+    "to": [
+     144.8,
+     -166.6,
+     -90
+    ]
+   },
+   {
+    "atDeg": 232.25,
+    "outStepDeg": 3.67,
+    "beyond": 85.5,
+    "swingExc": 50,
+    "twistExc": 71.8,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     144.8,
+     -166.6,
+     -90
+    ],
+    "to": [
+     143.9,
+     -165.8,
+     -90
+    ]
+   },
+   {
+    "atDeg": 232.5,
+    "outStepDeg": 3.79,
+    "beyond": 82.3,
+    "swingExc": 50.2,
+    "twistExc": 67.6,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     143.9,
+     -165.8,
+     -90
+    ],
+    "to": [
+     142.9,
+     -165,
+     -90
+    ]
+   },
+   {
+    "atDeg": 232.75,
+    "outStepDeg": 3.9,
+    "beyond": 79.1,
+    "swingExc": 50.3,
+    "twistExc": 63.2,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     142.9,
+     -165,
+     -90
+    ],
+    "to": [
+     141.8,
+     -164.1,
+     -90
+    ]
+   },
+   {
+    "atDeg": 233,
+    "outStepDeg": 4.01,
+    "beyond": 75.9,
+    "swingExc": 50.5,
+    "twistExc": 58.7,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     141.8,
+     -164.1,
+     -90
+    ],
+    "to": [
+     140.7,
+     -163.1,
+     -90
+    ]
+   },
+   {
+    "atDeg": 233.25,
+    "outStepDeg": 4.11,
+    "beyond": 72.8,
+    "swingExc": 50.6,
+    "twistExc": 54.1,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     140.7,
+     -163.1,
+     -90
+    ],
+    "to": [
+     139.6,
+     -162,
+     -90
+    ]
+   },
+   {
+    "atDeg": 233.5,
+    "outStepDeg": 4.2,
+    "beyond": 69.7,
+    "swingExc": 50.8,
+    "twistExc": 49.4,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     139.6,
+     -162,
+     -90
+    ],
+    "to": [
+     138.4,
+     -160.8,
+     -90
+    ]
+   },
+   {
+    "atDeg": 233.75,
+    "outStepDeg": 4.27,
+    "beyond": 66.7,
+    "swingExc": 50.9,
+    "twistExc": 44.6,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     138.4,
+     -160.8,
+     -90
+    ],
+    "to": [
+     137.1,
+     -159.5,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234,
+    "outStepDeg": 4.32,
+    "beyond": 63.9,
+    "swingExc": 51.1,
+    "twistExc": 39.7,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     137.1,
+     -159.5,
+     -90
+    ],
+    "to": [
+     135.8,
+     -158.1,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234.25,
+    "outStepDeg": 4.33,
+    "beyond": 61.2,
+    "swingExc": 51.2,
+    "twistExc": 34.8,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     135.8,
+     -158.1,
+     -90
+    ],
+    "to": [
+     134.4,
+     -156.5,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234.5,
+    "outStepDeg": 4.31,
+    "beyond": 58.9,
+    "swingExc": 51.3,
+    "twistExc": 29.9,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     134.4,
+     -156.5,
+     -90
+    ],
+    "to": [
+     132.9,
+     -154.8,
+     -90
+    ]
+   },
+   {
+    "atDeg": 234.75,
+    "outStepDeg": 4.24,
+    "beyond": 56.8,
+    "swingExc": 51.4,
+    "twistExc": 25.1,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     132.9,
+     -154.8,
+     -90
+    ],
+    "to": [
+     131.4,
+     -152.8,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235,
+    "outStepDeg": 4.1,
+    "beyond": 55.2,
+    "swingExc": 51.5,
+    "twistExc": 20.5,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     131.4,
+     -152.8,
+     -90
+    ],
+    "to": [
+     129.7,
+     -150.6,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235.25,
+    "outStepDeg": 3.9,
+    "beyond": 53.9,
+    "swingExc": 51.6,
+    "twistExc": 16,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     129.7,
+     -150.6,
+     -90
+    ],
+    "to": [
+     128,
+     -148.1,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235.5,
+    "outStepDeg": 3.6,
+    "beyond": 52.9,
+    "swingExc": 51.7,
+    "twistExc": 12,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     128,
+     -148.1,
+     -90
+    ],
+    "to": [
+     126.1,
+     -145.3,
+     -90
+    ]
+   },
+   {
+    "atDeg": 235.75,
+    "outStepDeg": 3.23,
+    "beyond": 52.4,
+    "swingExc": 51.7,
+    "twistExc": 8.5,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     126.1,
+     -145.3,
+     -90
+    ],
+    "to": [
+     124.1,
+     -142.2,
+     -90
+    ]
+   },
+   {
+    "atDeg": 236,
+    "outStepDeg": 2.94,
+    "beyond": 52.1,
+    "swingExc": 51.8,
+    "twistExc": 5.5,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     124.1,
+     -142.2,
+     -90
+    ],
+    "to": [
+     122,
+     -138.7,
+     -90
+    ]
+   },
+   {
+    "atDeg": 236.25,
+    "outStepDeg": 3.1,
+    "beyond": 51.9,
+    "swingExc": 51.8,
+    "twistExc": 2.5,
+    "twistAt": [
+     -1,
+     -1
+    ],
+    "from": [
+     122,
+     -138.7,
+     -90
+    ],
+    "to": [
+     119.7,
+     -134.8,
+     -90
+    ]
+   },
+   {
+    "atDeg": 236.5,
+    "outStepDeg": 2.98,
+    "beyond": 51.9,
+    "swingExc": 51.9,
+    "twistExc": 0,
+    "twistAt": [
+     -1,
+     0
+    ],
+    "from": [
+     119.7,
+     -134.8,
+     -90
+    ],
+    "to": [
+     117.2,
+     -130.3,
+     -89.1
+    ]
+   },
+   {
+    "atDeg": 236.75,
+    "outStepDeg": 3.46,
+    "beyond": 51.9,
+    "swingExc": 51.9,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     117.2,
+     -130.3,
+     -89.1
+    ],
+    "to": [
+     114.5,
+     -125.4,
+     -85.5
+    ]
+   },
+   {
+    "atDeg": 237,
+    "outStepDeg": 3.78,
+    "beyond": 51.9,
+    "swingExc": 51.9,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     114.5,
+     -125.4,
+     -85.5
+    ],
+    "to": [
+     111.5,
+     -120,
+     -81.6
+    ]
+   },
+   {
+    "atDeg": 237.25,
+    "outStepDeg": 4.16,
+    "beyond": 51.9,
+    "swingExc": 51.9,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     111.5,
+     -120,
+     -81.6
+    ],
+    "to": [
+     108.1,
+     -114.1,
+     -77.3
+    ]
+   },
+   {
+    "atDeg": 237.5,
+    "outStepDeg": 4.62,
+    "beyond": 51.8,
+    "swingExc": 51.8,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     108.1,
+     -114.1,
+     -77.3
+    ],
+    "to": [
+     104.3,
+     -107.8,
+     -72.5
+    ]
+   },
+   {
+    "atDeg": 237.75,
+    "outStepDeg": 5.19,
+    "beyond": 51.8,
+    "swingExc": 51.8,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     104.3,
+     -107.8,
+     -72.5
+    ],
+    "to": [
+     99.8,
+     -101.3,
+     -67.1
+    ]
+   },
+   {
+    "atDeg": 238,
+    "outStepDeg": 5.93,
+    "beyond": 51.7,
+    "swingExc": 51.7,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     99.8,
+     -101.3,
+     -67.1
+    ],
+    "to": [
+     94.5,
+     -94.6,
+     -60.8
+    ]
+   },
+   {
+    "atDeg": 238.25,
+    "outStepDeg": 6.96,
+    "beyond": 51.6,
+    "swingExc": 51.6,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     94.5,
+     -94.6,
+     -60.8
+    ],
+    "to": [
+     87.9,
+     -88.1,
+     -53.5
+    ]
+   },
+   {
+    "atDeg": 238.5,
+    "outStepDeg": 8.51,
+    "beyond": 51.4,
+    "swingExc": 51.4,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     87.9,
+     -88.1,
+     -53.5
+    ],
+    "to": [
+     78.8,
+     -81.8,
+     -44.6
+    ]
+   },
+   {
+    "atDeg": 238.75,
+    "outStepDeg": 11.37,
+    "beyond": 51.2,
+    "swingExc": 51.2,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     78.8,
+     -81.8,
+     -44.6
+    ],
+    "to": [
+     64.3,
+     -75.9,
+     -32.6
+    ]
+   },
+   {
+    "atDeg": 239,
+    "outStepDeg": 22.08,
+    "beyond": 51,
+    "swingExc": 51,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     64.3,
+     -75.9,
+     -32.6
+    ],
+    "to": [
+     21.8,
+     -70.4,
+     -9
+    ]
+   },
+   {
+    "atDeg": 239.25,
+    "outStepDeg": 8.46,
+    "beyond": 50.7,
+    "swingExc": 50.7,
+    "twistExc": 0,
+    "twistAt": [
+     0,
+     0
+    ],
+    "from": [
+     21.8,
+     -70.4,
+     -9
+    ],
+    "to": [
+     0,
+     -70,
+     0
+    ]
+   }
+  ]
+ }
+}

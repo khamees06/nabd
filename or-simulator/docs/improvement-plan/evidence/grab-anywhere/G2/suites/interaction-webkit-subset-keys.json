@@ -1,0 +1,60 @@
+{
+ "label": "serve-webkit-headless",
+ "files": 6,
+ "pick": {
+  "C1-2b-patient-drag-cursors-1440x900": {
+   "errors": 0
+  },
+  "C1-2b-patient-drag-cursors-560x890": {
+   "errors": 0
+  },
+  "C2-12-no-hitches-1440x900": {
+   "errors": 0
+  },
+  "C2-12-no-hitches-560x890": {
+   "errors": 0
+  },
+  "C3-9b-workstation-limbs-1440x900": {
+   "wristDepthAtAttachM": 0.0088,
+   "ankleDepthAtAttachM": 0,
+   "lift": {
+    "pointerUpPx": 110,
+    "dxM": -0.0018,
+    "dyM": 0.1929,
+    "dzM": -0.018
+   },
+   "settle2sM": [
+    0,
+    0,
+    0.0001
+   ],
+   "maxSpeed": [
+    0.32,
+    0.32,
+    0.2
+   ],
+   "attached": 4
+  },
+  "C3-9b-workstation-limbs-560x890": {
+   "wristDepthAtAttachM": 0.0088,
+   "ankleDepthAtAttachM": 0,
+   "lift": {
+    "pointerUpPx": 110,
+    "dxM": -0.0037,
+    "dyM": 0.2434,
+    "dzM": -0.0359
+   },
+   "settle2sM": [
+    0,
+    0,
+    0.0001
+   ],
+   "maxSpeed": [
+    0.32,
+    0.32,
+    0.32
+   ],
+   "attached": 4
+  }
+ }
+}

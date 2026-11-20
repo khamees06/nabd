@@ -1,0 +1,57 @@
+{
+  "what": "Suites run on the Q1 fix working tree (before commit), 2026-11-18, one after the other on this machine (scripts/chain.sh). Browsers: Google Chrome 157.0.8103.79 (updated since the Q1 runs on 157.0.8103.51), Microsoft Edge 157.0.4341.60, Playwright WebKit 27.2 on Windows (an approximation of Safari, not Safari).",
+  "npmTest": "43/43 (39 before the fix + 4 new LookDev cases; the 4 new cases fail on the previous LookDev.js)",
+  "grabSpec": {
+    "chrome": "4/4 passed (Q1-a 1440x900 and 560x890, Q1-c, Q1-b)",
+    "edge": "4/4 passed",
+    "webkit": "4 passed, 1 flaky: Q1-c first attempt timed out waiting for frames after the forced restore; its console shows WebKit losing the restored context again by itself (\"WebGL: context lost.\", then THREE \"Context Lost.\" with no restore) and a WebKit \"drawBuffers: more than max draw buffers\" error during that loss; evidence serve-webkit-headless/Q1-c-context-restore-1440x900-failed-attempt0.json. The retry passed."
+  },
+  "pixelDiffBase0a87bd7": "fix/pixel-diff/*.json: 0 differing pixels in V1-V4, rendered canvas and page, Chrome 1440x900 and 560x890, WebKit 1440x900 and 560x890, Edge 1440x900; each tree 0 against itself. WebKit boot timeouts during these loads (retried by the script): work tree 4 of 16 loads, base 2 of 16.",
+  "ctxRestoreRepro": "The verifier's verify/scripts/ctx-restore-repro.mjs on this tree: consistentAfter true in Chrome and WebKit (fix/ctx-restore/).",
+  "restoreProbeWebKit": "fix/restore-probe/restore-probe-webkit.json: 8 forced restores per tree; this tree 6 recovered, all shadowCalls 1210 afterwards; previous Q1 code 6 recovered, all shadowCalls 0; 2 of 8 hung in each tree after WebKit lost the context again by itself.",
+  "chromeSmokeInteraction": "71 passed, 1 skipped by design (C3-9e at 560x890), 0 failed, 18.2 min",
+  "edgeSmokeInteraction": "71 passed, 1 skipped by design, 0 failed, 18.1 min",
+  "webkitSmoke": "13 passed, 4 flaky (S4, S6, S8, V2: first attempt never reached ready within 60 s at boot, locator.waitFor timeout; passed on retry), 0 failed, 7.7 min. Q1 before the fix: 13 passed, 4 flaky (same cause); base 0a87bd7: 16 passed, 1 flaky.",
+  "s1Modules": "23 /src modules, all HTTP 200, in Chrome, Edge and WebKit",
+  "s4GoldenTrace": "identical to evidence/p1-interaction S4 (20 events) in Chrome, Edge and WebKit",
+  "webkitLimbDragC212": {
+    "1440x900": {
+      "dragFps": [
+        31.6,
+        32.3,
+        32.6
+      ],
+      "p95Ms": [
+        39,
+        35,
+        33
+      ],
+      "plainRenderFps": [
+        33.5,
+        33.8,
+        33.5
+      ]
+    },
+    "560x890": {
+      "dragFps": [
+        42,
+        41.4,
+        40.9
+      ],
+      "p95Ms": [
+        31,
+        31,
+        31
+      ],
+      "plainRenderFps": [
+        40.2,
+        41.3,
+        40
+      ]
+    },
+    "q1Baseline": "about 31.7 fps at 1440x900 (Q1 repeats 31.4, 31.7, 32.1; base 31.5, 32.0, 31.8) and 40.9 at 560x890",
+    "errors": 0
+  },
+  "webkitBootProbe": "fix/webkit-boot-probe.json (the verifier's verify/scripts/boot-probe.mjs, alternating fresh contexts on /?qa&debug=1): base 0a87bd7 ready 11/15 (4 never ready in 60 s, 6 context-lost messages), this tree ready 15/15 (2 context-lost messages, both loads still ready). With the pixel-diff loads: this tree 4 boot timeouts in 31 loads, base 6 in 31. The boot hangs are WebKit's, not the fix's.",
+  "perfCaptureChromeHeaded": "fix/perf/chrome-headed-q1fix.json, 1 run, --loads 0. Idle M8/M9 identical to P0 in V1-V4 (1206/387848, 479/299400, 1528/462240, 542/464067). Active M8 vs the Q1 baseline (3-run mean): V1 1154 vs 1148, V2 478 vs 478, V3 1476 vs 1478, V4 512 vs 509 (at most +0.6 %). Active rAF fps V1 114.4 (Q1 114.0), V2 143.8 (143.8), V3 74.1 (74.7), V4 119.9 (120.1); idle V1 132.6 (131.5). Shadow pass unchanged: V1 1210/326832, V2 1213/354268, V3 1210/326832, V4 1206/217584, one light-map redraw per rendered frame. 0 console errors."
+}

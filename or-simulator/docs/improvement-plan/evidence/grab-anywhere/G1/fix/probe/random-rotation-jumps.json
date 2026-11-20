@@ -1,0 +1,171 @@
+{
+ "N": 3000,
+ "clamps": 273000,
+ "usPerClamp": 4.225332600732601,
+ "out": {
+  "shoulder.L": {
+   "jumps": 10,
+   "minMarginDeg": 57.07099607905223,
+   "worst": {
+    "step": 2.8871571143402224,
+    "margin": 57.07099607905223,
+    "swingExcessDeg": 31.648025501379045,
+    "twistExcessDeg": 48.11823592303114,
+    "other": {
+     "swingExcessDeg": 31.650304904619382,
+     "twistExcessDeg": 46.47098478967087
+    }
+   }
+  },
+  "hip.L": {
+   "jumps": 1,
+   "minMarginDeg": 141.24861842363225,
+   "worst": {
+    "step": 90.00799495221925,
+    "margin": 141.24861842363225,
+    "swingExcessDeg": 60.09906928983986,
+    "twistExcessDeg": 134.92649714728066,
+    "other": {
+     "swingExcessDeg": 60.114840053954424,
+     "twistExcessDeg": 134.9964469966399
+    }
+   }
+  },
+  "elbow.L": {
+   "jumps": 0,
+   "minMarginDeg": null,
+   "worst": null
+  },
+  "knee.L": {
+   "jumps": 1,
+   "minMarginDeg": 139.81847948141757,
+   "worst": {
+    "step": 2.1279928355402276,
+    "margin": 139.81847948141757,
+    "swingExcessDeg": 87.9464896810844,
+    "twistExcessDeg": 122.97930453518919,
+    "other": {
+     "swingExcessDeg": 87.9743052160338,
+     "twistExcessDeg": 125.17641791932802
+    }
+   }
+  },
+  "wrist.L": {
+   "jumps": 4,
+   "minMarginDeg": 112.1804253170003,
+   "worst": {
+    "step": 174.99728469021295,
+    "margin": 112.1804253170003,
+    "swingExcessDeg": 72.46798999377901,
+    "twistExcessDeg": 92.4792080308012,
+    "other": {
+     "swingExcessDeg": 72.45117598215188,
+     "twistExcessDeg": 92.49632306376556
+    }
+   }
+  },
+  "ankle.L": {
+   "jumps": 7,
+   "minMarginDeg": 107.53846961871086,
+   "worst": {
+    "step": 31.033327011911645,
+    "margin": 107.53846961871086,
+    "swingExcessDeg": 105.74927852366828,
+    "twistExcessDeg": 23.382934119046602,
+    "other": {
+     "swingExcessDeg": 105.7341103292511,
+     "twistExcessDeg": 0
+    }
+   }
+  },
+  "shoulder.R": {
+   "jumps": 1,
+   "minMarginDeg": 99.96317463773413,
+   "worst": {
+    "step": 160.02199106453247,
+    "margin": 99.96317463773413,
+    "swingExcessDeg": 0,
+    "twistExcessDeg": 99.96317463773414,
+    "other": {
+     "swingExcessDeg": 0,
+     "twistExcessDeg": 99.98682536226588
+    }
+   }
+  },
+  "hip.R": {
+   "jumps": 2,
+   "minMarginDeg": 134.95172562557283,
+   "worst": {
+    "step": 90.00155265685136,
+    "margin": 134.95172562557283,
+    "swingExcessDeg": 0,
+    "twistExcessDeg": 134.9517256255728,
+    "other": {
+     "swingExcessDeg": 0,
+     "twistExcessDeg": 134.9982743744272
+    }
+   }
+  },
+  "elbow.R": {
+   "jumps": 0,
+   "minMarginDeg": null,
+   "worst": null
+  },
+  "knee.R": {
+   "jumps": 1,
+   "minMarginDeg": 139.81847948141757,
+   "worst": {
+    "step": 2.1279928355402276,
+    "margin": 139.81847948141757,
+    "swingExcessDeg": 87.9464896810844,
+    "twistExcessDeg": 122.97930453518919,
+    "other": {
+     "swingExcessDeg": 87.9743052160338,
+     "twistExcessDeg": 125.17641791932802
+    }
+   }
+  },
+  "wrist.R": {
+   "jumps": 5,
+   "minMarginDeg": 90.5310914429539,
+   "worst": {
+    "step": 151.17895992410408,
+    "margin": 90.5310914429539,
+    "swingExcessDeg": 90.03527428626893,
+    "twistExcessDeg": 10.678524118037991,
+    "other": {
+     "swingExcessDeg": 89.99531672471167,
+     "twistExcessDeg": 0
+    }
+   }
+  },
+  "ankle.R": {
+   "jumps": 11,
+   "minMarginDeg": 110.49700112792843,
+   "worst": {
+    "step": 27.944817008841927,
+    "margin": 110.49700112792843,
+    "swingExcessDeg": 105.74927852366828,
+    "twistExcessDeg": 38.3829341190466,
+    "other": {
+     "swingExcessDeg": 105.7341103292511,
+     "twistExcessDeg": 0
+    }
+   }
+  },
+  "neck": {
+   "jumps": 7,
+   "minMarginDeg": 100.10653265401363,
+   "worst": {
+    "step": 160.0162772074904,
+    "margin": 100.10653265401363,
+    "swingExcessDeg": 5.552325909574597,
+    "twistExcessDeg": 99.99371816171339,
+    "other": {
+     "swingExcessDeg": 5.556642386504484,
+     "twistExcessDeg": 99.95657687740176
+    }
+   }
+  }
+ }
+}

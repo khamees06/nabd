@@ -1,0 +1,503 @@
+{
+ "method": "one shared WebKit process, new context per load, ABBA order, ready timeout 45 s",
+ "base": {
+  "loads": 30,
+  "ready": 26,
+  "withContextLost": 5,
+  "lostAndRecovered": 1,
+  "otherErrors": 0,
+  "readyMsMedian": 2774
+ },
+ "work": {
+  "loads": 30,
+  "ready": 21,
+  "withContextLost": 10,
+  "lostAndRecovered": 1,
+  "otherErrors": 1,
+  "readyMsMedian": 2869
+ },
+ "loads": [
+  {
+   "k": 0,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2762,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 1,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2727,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 2,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2801,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 3,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45387,
+   "contextLost": 2,
+   "errors": [
+    "error: WebGL: INVALID_VALUE: drawBuffers: more than max draw buffers"
+   ]
+  },
+  {
+   "k": 4,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3280,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 5,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2725,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 6,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2755,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 7,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45368,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 8,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2788,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 9,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2685,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 10,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2804,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 11,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45387,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 12,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3277,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 13,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2774,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 14,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2737,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 15,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45363,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 16,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2725,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 17,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2805,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 18,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2789,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 19,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45385,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 20,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3289,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 21,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2803,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 22,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 3227,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 23,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45367,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 24,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3268,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 25,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2810,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 26,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 3334,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 27,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45373,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 28,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3355,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 29,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2669,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 30,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2764,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 31,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45354,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 32,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2869,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 33,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2746,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 34,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2817,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 35,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45365,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 36,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2779,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 37,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 3182,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 38,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2696,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 39,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 18407,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 40,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2699,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 41,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2758,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 42,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45356,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 43,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2817,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 44,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3281,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 45,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2751,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 46,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45360,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 47,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2793,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 48,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2756,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 49,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2743,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 50,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 17913,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 51,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3244,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 52,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2797,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 53,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45356,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 54,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2806,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 55,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3212,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 56,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2779,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 57,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45379,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 58,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2707,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 59,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3259,
+   "contextLost": 0,
+   "errors": []
+  }
+ ]
+}

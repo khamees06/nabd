@@ -1,0 +1,114 @@
+{
+  "check": "G1-d-skin-penetration-560x890",
+  "cluster": "G1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-18T03:36:14.657Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "penetration": {
+    "vertices": 70278,
+    "supportMaxMm": 37.474908451206936,
+    "supportP95Mm": 33.850759746736124,
+    "supportPenetrating": 2954,
+    "over2mm": 2705,
+    "selfMaxMm": 0,
+    "selfWorstPair": null,
+    "bySegment": {
+      "abdomen": {
+        "minGapMm": -17.24420083054912,
+        "maxDepthMm": 17.24420083054912,
+        "selfMaxMm": 0
+      },
+      "pelvis": {
+        "minGapMm": -37.196168347949474,
+        "maxDepthMm": 37.196168347949474,
+        "selfMaxMm": 0
+      },
+      "chest": {
+        "minGapMm": -37.3272292118435,
+        "maxDepthMm": 37.3272292118435,
+        "selfMaxMm": 0
+      },
+      "head": {
+        "minGapMm": -4.396502211650555,
+        "maxDepthMm": 4.396502211650555,
+        "selfMaxMm": 0
+      },
+      "neck": {
+        "minGapMm": 20.555544516678516,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "thigh.L": {
+        "minGapMm": -37.474908451206936,
+        "maxDepthMm": 37.474908451206936,
+        "selfMaxMm": 0
+      },
+      "upperArm.L": {
+        "minGapMm": -1.2103984751817842,
+        "maxDepthMm": 1.2103984751817842,
+        "selfMaxMm": 0
+      },
+      "shank.L": {
+        "minGapMm": -37.42919418829904,
+        "maxDepthMm": 37.42919418829904,
+        "selfMaxMm": 0
+      },
+      "foot.L": {
+        "minGapMm": 14.29439789075504,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "forearm.L": {
+        "minGapMm": 5.60384788832557,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "hand.L": {
+        "minGapMm": -1.1622512006457253,
+        "maxDepthMm": 1.1622512006457253,
+        "selfMaxMm": 0
+      },
+      "thigh.R": {
+        "minGapMm": -37.40628271547164,
+        "maxDepthMm": 37.40628271547164,
+        "selfMaxMm": 0
+      },
+      "upperArm.R": {
+        "minGapMm": -1.2102730616496693,
+        "maxDepthMm": 1.2102730616496693,
+        "selfMaxMm": 0
+      },
+      "shank.R": {
+        "minGapMm": -37.34617985015065,
+        "maxDepthMm": 37.34617985015065,
+        "selfMaxMm": 0
+      },
+      "foot.R": {
+        "minGapMm": 14.435716777811635,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "forearm.R": {
+        "minGapMm": 5.603947293838826,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "hand.R": {
+        "minGapMm": -1.1618478575410318,
+        "maxDepthMm": 1.1618478575410318,
+        "selfMaxMm": 0
+      }
+    },
+    "deck": 0.9,
+    "ms": 243.5
+  },
+  "errors": []
+}

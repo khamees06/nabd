@@ -1,0 +1,22 @@
+{
+ "what": "table-top GLB request aborted",
+ "assets": {
+  "operatingTable": false,
+  "surgicalLightsAndPendant": true,
+  "anesthesiaWorkstation": true
+ },
+ "ring": {
+  "worldY": 0.9,
+  "parentVisible": true,
+  "parentName": "",
+  "triangles": 1040
+ },
+ "restSupport": null,
+ "supportSurface": null,
+ "deck": 0.9,
+ "log": [
+  "error: Failed to load resource: net::ERR_FAILED",
+  "warning: Nabd operating table GLB fallback active. TypeError: Failed to fetch\n    at ys.load (http://127.0.0.1:4783/src/app/NabdRuntime.js:76:53800)\n    at Ra.load (http://127.0.0.1:4783/src/app/NabdRuntime.js"
+ ],
+ "unexpected": []
+}

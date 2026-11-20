@@ -1,0 +1,49 @@
+{
+  "check": "C3-9d-drill-pause-560x890",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-18T23:32:37.449Z",
+  "result": {
+    "rest": [
+      0.25175241482964233,
+      0.9360350756135176,
+      0.08146899335141314
+    ],
+    "lifted": [
+      0.25105662478593815,
+      1.084597674977306,
+      0.07465838661742977
+    ],
+    "assistOnScreen": true,
+    "outside": {
+      "status": "الطرف ثابت · اسحب لتكمل تحريكه أو انقر للإفلات",
+      "paused": true
+    },
+    "hoverBack": {
+      "status": "الطرف ثابت · اسحب لتكمل تحريكه أو انقر للإفلات",
+      "paused": true
+    },
+    "afterLeave": {
+      "maxMoveM": 0,
+      "minWristY": 1.0413,
+      "restY": 0.936
+    },
+    "pressDrag": {
+      "dyM": 0.0448,
+      "state": "gripped",
+      "status": "تم إمساك الطرف · حرّكه ضمن مداه"
+    },
+    "support": {
+      "maxMoveAfterLeaveM": 0,
+      "stateAfterClick": "idle",
+      "raisedM": 0.1052
+    }
+  },
+  "errors": []
+}

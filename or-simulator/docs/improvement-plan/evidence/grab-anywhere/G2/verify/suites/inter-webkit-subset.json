@@ -1,0 +1,137 @@
+{
+ "report": "inter-webkit-subset-report.json",
+ "startTime": "2026-11-19T00:00:15.730Z",
+ "durationMs": 339029.107,
+ "expected": 6,
+ "flaky": 2,
+ "unexpected": 0,
+ "skipped": 0,
+ "firstAttemptFailures": [
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+   "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3"
+  },
+  {
+   "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (560x890)",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  }
+ ],
+ "tests": [
+  {
+   "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 14753,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 13887,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 25948,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 40708,
+     "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 25029,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 25464,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 51327,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65518,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 23949,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 49429,
+     "error": null
+    }
+   ]
+  }
+ ]
+}

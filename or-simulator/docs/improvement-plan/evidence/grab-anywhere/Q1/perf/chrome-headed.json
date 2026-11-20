@@ -1,0 +1,3334 @@
+{
+  "label": "chrome-headed",
+  "browserKind": "chrome",
+  "startedAt": "2026-11-17T21:00:00.902Z",
+  "protocol": {
+    "runs": 3,
+    "settleS": 10,
+    "idleS": 30,
+    "activeS": 30,
+    "hoverS": 30,
+    "loads": 3,
+    "views": [
+      "V1",
+      "V2",
+      "V3",
+      "V4"
+    ],
+    "entry": "/?qa&debug=1",
+    "server": "node scripts/serve.mjs (PORT=4703)",
+    "launchArgs": [
+      "--disable-renderer-backgrounding",
+      "--disable-background-timer-throttling",
+      "--disable-features=CalculateNativeWinOcclusion",
+      "--window-position=0,0"
+    ],
+    "headed": true,
+    "viewport": "1440x900"
+  },
+  "system": {
+    "node": "v26.13.1",
+    "platform": "win32",
+    "release": "10.0.26300",
+    "cpu": "12th Gen Intel(R) Core(TM) i5-12500H",
+    "logicalCpus": 16,
+    "totalMemGB": 15.6,
+    "video": {
+      "Name": "Intel(R) Iris(R) Xe Graphics",
+      "DriverVersion": "32.0.101.6790",
+      "CurrentRefreshRate": 144,
+      "CurrentHorizontalResolution": 1920,
+      "CurrentVerticalResolution": 1080
+    },
+    "os": {
+      "Caption": "Microsoft Windows 11 Pro",
+      "Version": "10.0.26300",
+      "BuildNumber": "26300"
+    },
+    "battery": {
+      "BatteryStatus": 2,
+      "EstimatedChargeRemaining": 100
+    },
+    "system": {
+      "Manufacturer": "ASUSTeK COMPUTER INC.",
+      "Model": "ASUS TUF Gaming F15 FX507ZC4_FX507ZC4"
+    },
+    "powerNote": "Win32_Battery.BatteryStatus 2 = on AC power (mains)"
+  },
+  "loads": {
+    "cold": [
+      {
+        "M10_readyMs": 2595,
+        "M10_forearmEnabledMs": 2595,
+        "domContentLoadedMs": 633,
+        "loadEventMs": 640,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 2634,
+        "consoleErrors": 0
+      },
+      {
+        "M10_readyMs": 1736,
+        "M10_forearmEnabledMs": 1736,
+        "domContentLoadedMs": 547,
+        "loadEventMs": 667,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1790,
+        "consoleErrors": 0
+      },
+      {
+        "M10_readyMs": 1515,
+        "M10_forearmEnabledMs": 1515,
+        "domContentLoadedMs": 534,
+        "loadEventMs": 539,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1538,
+        "consoleErrors": 0
+      }
+    ],
+    "warm": [
+      {
+        "M10_readyMs": 1197,
+        "M10_forearmEnabledMs": 1197,
+        "domContentLoadedMs": 379,
+        "loadEventMs": 385,
+        "resources": 34,
+        "transferKB": 20997,
+        "wallClockToReadyDetectedMs": 1203,
+        "consoleErrors": 0
+      },
+      {
+        "M10_readyMs": 1216,
+        "M10_forearmEnabledMs": 1216,
+        "domContentLoadedMs": 326,
+        "loadEventMs": 332,
+        "resources": 34,
+        "transferKB": 20997,
+        "wallClockToReadyDetectedMs": 1253,
+        "consoleErrors": 0
+      },
+      {
+        "M10_readyMs": 1135,
+        "M10_forearmEnabledMs": 1135,
+        "domContentLoadedMs": 314,
+        "loadEventMs": 320,
+        "resources": 34,
+        "transferKB": 20997,
+        "wallClockToReadyDetectedMs": 1179,
+        "consoleErrors": 0
+      }
+    ]
+  },
+  "runs": [
+    {
+      "run": 1,
+      "view": "V1",
+      "load": {
+        "M10_readyMs": 1529,
+        "M10_forearmEnabledMs": 1529,
+        "domContentLoadedMs": 613,
+        "loadEventMs": 618,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1557
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 3919,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.8,
+          "p99": 20.7,
+          "max": 21.1,
+          "mean": 7.66
+        },
+        "rafFps": 130.6,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "overlayFps": {
+            "min": 124,
+            "median": 130,
+            "max": 132
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7,
+            "max": 21.1
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "tris": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 11557.300000011921,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 41559.80000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.02,
+        "frames": 3460,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 14.1,
+          "p99": 20.9,
+          "max": 34.5,
+          "mean": 8.68
+        },
+        "rafFps": 115.2,
+        "renderedFrames": 2561,
+        "renderRateFps": 85.3,
+        "framesOver33ms": 1,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 701,
+            "median": 1148,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 330414,
+            "median": 380082,
+            "max": 389274
+          },
+          "overlayFps": {
+            "min": 99,
+            "median": 110,
+            "max": 140
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7.1,
+            "max": 20.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 802,
+            "median": 1198,
+            "max": 1206
+          },
+          "tris": {
+            "min": 337494,
+            "median": 387408,
+            "max": 389450
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 85.3,
+          "shadowUpdatesPerS": 85.3
+        },
+        "visibility": [
+          {
+            "t": 41601.30000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 71645.10000002384,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "look: right-button drag on the canvas",
+          "pointerMoves": 1942
+        }
+      },
+      "hover": {
+        "durationS": 30.02,
+        "frames": 4044,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.7,
+          "p99": 20.7,
+          "max": 21.1,
+          "mean": 7.42
+        },
+        "rafFps": 134.7,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "overlayFps": {
+            "min": 124,
+            "median": 134,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 21
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "tris": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 72706.80000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 102724.20000004768,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2406
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 1,
+      "view": "V2",
+      "load": {
+        "M10_readyMs": 1468,
+        "M10_forearmEnabledMs": 1468,
+        "domContentLoadedMs": 524,
+        "loadEventMs": 528,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1481
+      },
+      "idle": {
+        "durationS": 30.01,
+        "frames": 4323,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 7.8,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 144,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7,
+            "max": 7.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "tris": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 13923.300000011921,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 43935,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30,
+        "frames": 4318,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.1,
+          "p99": 7.2,
+          "max": 20.9,
+          "mean": 6.95
+        },
+        "rafFps": 143.9,
+        "renderedFrames": 2790,
+        "renderRateFps": 93,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 478,
+            "median": 478,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299328,
+            "median": 299328,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 140,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.8,
+            "median": 7,
+            "max": 7.1
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 478,
+            "median": 478,
+            "max": 479
+          },
+          "tris": {
+            "min": 299328,
+            "median": 299328,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 93,
+          "shadowUpdatesPerS": 93
+        },
+        "visibility": [
+          {
+            "t": 43959.60000002384,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 73969.10000002384,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "lift: forearm grip held (grip on attempt 1), pointer moved up and down",
+          "pointerMoves": 2423
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4318,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.3,
+          "p99": 7.4,
+          "max": 14.2,
+          "mean": 6.95
+        },
+        "rafFps": 143.9,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 136,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 7.4
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "tris": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 75016.89999997616,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 105028.80000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2600
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 1,
+      "view": "V3",
+      "load": {
+        "M10_readyMs": 1518,
+        "M10_forearmEnabledMs": 1518,
+        "domContentLoadedMs": 524,
+        "loadEventMs": 528,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1550
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4003,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.7,
+          "p99": 13.9,
+          "max": 21,
+          "mean": 7.5
+        },
+        "rafFps": 133.4,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1528,
+            "median": 1528,
+            "max": 1528
+          },
+          "M9_triangles": {
+            "min": 462240,
+            "median": 462240,
+            "max": 462240
+          },
+          "overlayFps": {
+            "min": 128,
+            "median": 132,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7.1,
+            "max": 21
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1528,
+            "median": 1528,
+            "max": 1528
+          },
+          "tris": {
+            "min": 462240,
+            "median": 462240,
+            "max": 462240
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 12210.099999964237,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 42217.30000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.02,
+        "frames": 2242,
+        "M7_rafIntervalMs": {
+          "median": 13.9,
+          "p95": 27.7,
+          "p99": 27.9,
+          "max": 62.4,
+          "mean": 13.39
+        },
+        "rafFps": 74.7,
+        "renderedFrames": 2239,
+        "renderRateFps": 74.6,
+        "framesOver33ms": 2,
+        "framesOver50ms": 2,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1191,
+            "median": 1478,
+            "max": 1552
+          },
+          "M9_triangles": {
+            "min": 431724,
+            "median": 443144,
+            "max": 464382
+          },
+          "overlayFps": {
+            "min": 71,
+            "median": 74,
+            "max": 132
+          },
+          "overlayFrameMs": {
+            "min": 6.2,
+            "median": 13.9,
+            "max": 27.7
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1193,
+            "median": 1472,
+            "max": 1529
+          },
+          "tris": {
+            "min": 429024,
+            "median": 443690,
+            "max": 462240
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 18,
+            "max": 18
+          },
+          "gpuMs": null,
+          "appRendersPerS": 74.6,
+          "shadowUpdatesPerS": 74.6
+        },
+        "visibility": [
+          {
+            "t": 42244.19999998808,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 72276.19999998808,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "orbit: left-button drag on the canvas",
+          "pointerMoves": 782
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4123,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.4,
+          "p99": 13.9,
+          "max": 21.1,
+          "mean": 7.28
+        },
+        "rafFps": 137.4,
+        "renderedFrames": 368,
+        "renderRateFps": 12.3,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1531,
+            "median": 1531,
+            "max": 1532
+          },
+          "M9_triangles": {
+            "min": 462440,
+            "median": 462440,
+            "max": 462608
+          },
+          "overlayFps": {
+            "min": 96,
+            "median": 132,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 6.9,
+            "max": 13.8
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1531,
+            "median": 1531,
+            "max": 1532
+          },
+          "tris": {
+            "min": 462440,
+            "median": 462440,
+            "max": 462608
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 18,
+            "median": 18,
+            "max": 18
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12.3,
+          "shadowUpdatesPerS": 12.3
+        },
+        "visibility": [
+          {
+            "t": 73299.5,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 103308.5,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 1852
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 1,
+      "view": "V4",
+      "load": {
+        "M10_readyMs": 1561,
+        "M10_forearmEnabledMs": 1561,
+        "domContentLoadedMs": 544,
+        "loadEventMs": 634,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1589
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4311,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 14,
+          "mean": 6.96
+        },
+        "rafFps": 143.7,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 542,
+            "median": 542,
+            "max": 542
+          },
+          "M9_triangles": {
+            "min": 464067,
+            "median": 464067,
+            "max": 464067
+          },
+          "overlayFps": {
+            "min": 140,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.5,
+            "median": 7,
+            "max": 7.3
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 542,
+            "median": 542,
+            "max": 542
+          },
+          "tris": {
+            "min": 464067,
+            "median": 464067,
+            "max": 464067
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 12562.199999988079,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 42564.5,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.02,
+        "frames": 3591,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 14,
+          "p99": 14.1,
+          "max": 20.9,
+          "mean": 8.36
+        },
+        "rafFps": 119.6,
+        "renderedFrames": 3546,
+        "renderRateFps": 118.1,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 465,
+            "median": 509,
+            "max": 658
+          },
+          "M9_triangles": {
+            "min": 454053,
+            "median": 460527,
+            "max": 486263
+          },
+          "overlayFps": {
+            "min": 103,
+            "median": 120,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7.1,
+            "max": 13.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 461,
+            "median": 510,
+            "max": 680
+          },
+          "tris": {
+            "min": 453387,
+            "median": 459475,
+            "max": 489119
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 118.1,
+          "shadowUpdatesPerS": 118.1
+        },
+        "visibility": [
+          {
+            "t": 42592.59999996424,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 72639,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "orbit: left-button drag on the canvas",
+          "pointerMoves": 1045
+        }
+      },
+      "hover": {
+        "durationS": 30.01,
+        "frames": 4245,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 354,
+          "mean": 7.07
+        },
+        "rafFps": 141.4,
+        "renderedFrames": 355,
+        "renderRateFps": 11.8,
+        "framesOver33ms": 3,
+        "framesOver50ms": 3,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 516,
+            "median": 516,
+            "max": 516
+          },
+          "M9_triangles": {
+            "min": 458643,
+            "median": 458643,
+            "max": 458643
+          },
+          "overlayFps": {
+            "min": 39,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 354
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 516,
+            "median": 516,
+            "max": 516
+          },
+          "tris": {
+            "min": 458643,
+            "median": 458643,
+            "max": 458643
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 11.8,
+          "shadowUpdatesPerS": 11.8
+        },
+        "visibility": [
+          {
+            "t": 73679.80000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 103698.5,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2037
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 2,
+      "view": "V1",
+      "load": {
+        "M10_readyMs": 1466,
+        "M10_forearmEnabledMs": 1466,
+        "domContentLoadedMs": 528,
+        "loadEventMs": 533,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1490
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 3981,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.8,
+          "p99": 14.1,
+          "max": 21.1,
+          "mean": 7.54
+        },
+        "rafFps": 132.7,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "overlayFps": {
+            "min": 126,
+            "median": 132,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 14
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "tris": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 11496.099999964237,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 41498.5,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.02,
+        "frames": 3392,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 14.1,
+          "p99": 20.9,
+          "max": 27.9,
+          "mean": 8.85
+        },
+        "rafFps": 112.9,
+        "renderedFrames": 2564,
+        "renderRateFps": 85.4,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 691,
+            "median": 1157,
+            "max": 1207
+          },
+          "M9_triangles": {
+            "min": 329250,
+            "median": 380676,
+            "max": 389262
+          },
+          "overlayFps": {
+            "min": 94,
+            "median": 110,
+            "max": 142
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7,
+            "max": 20.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 807,
+            "median": 1198,
+            "max": 1207
+          },
+          "tris": {
+            "min": 338338,
+            "median": 387408,
+            "max": 388926
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 85.4,
+          "shadowUpdatesPerS": 85.4
+        },
+        "visibility": [
+          {
+            "t": 41533.5,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 71564.80000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "look: right-button drag on the canvas",
+          "pointerMoves": 1947
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4060,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.7,
+          "p99": 14.2,
+          "max": 21.5,
+          "mean": 7.39
+        },
+        "rafFps": 135.3,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "overlayFps": {
+            "min": 126,
+            "median": 136,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 21
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "tris": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 72591.89999997616,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 102598.89999997616,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2461
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 2,
+      "view": "V2",
+      "load": {
+        "M10_readyMs": 1487,
+        "M10_forearmEnabledMs": 1487,
+        "domContentLoadedMs": 524,
+        "loadEventMs": 529,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1503
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4320,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 13.9,
+          "mean": 6.95
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 144,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 6.9,
+            "max": 7.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "tris": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 13885,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 43886.10000002384,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30,
+        "frames": 4312,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.1,
+          "p99": 7.2,
+          "max": 34.8,
+          "mean": 6.96
+        },
+        "rafFps": 143.7,
+        "renderedFrames": 2786,
+        "renderRateFps": 92.9,
+        "framesOver33ms": 1,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 478,
+            "median": 478,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299328,
+            "median": 299328,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 142,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.8,
+            "median": 6.9,
+            "max": 7.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 478,
+            "median": 478,
+            "max": 479
+          },
+          "tris": {
+            "min": 299328,
+            "median": 299328,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 92.8,
+          "shadowUpdatesPerS": 92.8
+        },
+        "visibility": [
+          {
+            "t": 43911.10000002384,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 73921.5,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "lift: forearm grip held (grip on attempt 1), pointer moved up and down",
+          "pointerMoves": 2425
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4319,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.3,
+          "p99": 7.4,
+          "max": 14.2,
+          "mean": 6.95
+        },
+        "rafFps": 143.9,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 136,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.5,
+            "median": 6.9,
+            "max": 7.4
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "tris": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 74981.80000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 104988.60000002384,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2634
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 2,
+      "view": "V3",
+      "load": {
+        "M10_readyMs": 1658,
+        "M10_forearmEnabledMs": 1658,
+        "domContentLoadedMs": 617,
+        "loadEventMs": 622,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1667
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4006,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.7,
+          "p99": 13.9,
+          "max": 20.7,
+          "mean": 7.49
+        },
+        "rafFps": 133.5,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1528,
+            "median": 1528,
+            "max": 1528
+          },
+          "M9_triangles": {
+            "min": 462240,
+            "median": 462240,
+            "max": 462240
+          },
+          "overlayFps": {
+            "min": 130,
+            "median": 132,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 13.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1528,
+            "median": 1528,
+            "max": 1528
+          },
+          "tris": {
+            "min": 462240,
+            "median": 462240,
+            "max": 462240
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 12374.100000023842,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 42376,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.04,
+        "frames": 2244,
+        "M7_rafIntervalMs": {
+          "median": 13.9,
+          "p95": 27.7,
+          "p99": 27.9,
+          "max": 55.5,
+          "mean": 13.39
+        },
+        "rafFps": 74.7,
+        "renderedFrames": 2241,
+        "renderRateFps": 74.6,
+        "framesOver33ms": 1,
+        "framesOver50ms": 1,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1191,
+            "median": 1463,
+            "max": 1553
+          },
+          "M9_triangles": {
+            "min": 431136,
+            "median": 439844,
+            "max": 464510
+          },
+          "overlayFps": {
+            "min": 71,
+            "median": 74,
+            "max": 132
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 13.9,
+            "max": 28
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1193,
+            "median": 1471,
+            "max": 1530
+          },
+          "tris": {
+            "min": 429024,
+            "median": 443690,
+            "max": 462240
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 18,
+            "max": 18
+          },
+          "gpuMs": null,
+          "appRendersPerS": 74.6,
+          "shadowUpdatesPerS": 74.6
+        },
+        "visibility": [
+          {
+            "t": 42400.80000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 72452.30000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "orbit: left-button drag on the canvas",
+          "pointerMoves": 805
+        }
+      },
+      "hover": {
+        "durationS": 30.02,
+        "frames": 4153,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.3,
+          "p99": 13.8,
+          "max": 20.9,
+          "mean": 7.23
+        },
+        "rafFps": 138.3,
+        "renderedFrames": 370,
+        "renderRateFps": 12.3,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1531,
+            "median": 1531,
+            "max": 1532
+          },
+          "M9_triangles": {
+            "min": 462440,
+            "median": 462440,
+            "max": 462608
+          },
+          "overlayFps": {
+            "min": 92,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 6.9,
+            "max": 13.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1531,
+            "median": 1531,
+            "max": 1532
+          },
+          "tris": {
+            "min": 462440,
+            "median": 462440,
+            "max": 462608
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 18,
+            "median": 18,
+            "max": 18
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12.3,
+          "shadowUpdatesPerS": 12.3
+        },
+        "visibility": [
+          {
+            "t": 73489.80000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 103511.5,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 1926
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 2,
+      "view": "V4",
+      "load": {
+        "M10_readyMs": 1564,
+        "M10_forearmEnabledMs": 1564,
+        "domContentLoadedMs": 625,
+        "loadEventMs": 631,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1585
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4321,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 7.7,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 542,
+            "median": 542,
+            "max": 542
+          },
+          "M9_triangles": {
+            "min": 464067,
+            "median": 464067,
+            "max": 464067
+          },
+          "overlayFps": {
+            "min": 144,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.5,
+            "median": 6.9,
+            "max": 7.1
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 542,
+            "median": 542,
+            "max": 542
+          },
+          "tris": {
+            "min": 464067,
+            "median": 464067,
+            "max": 464067
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 12224.800000011921,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 42227.40000003576,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.03,
+        "frames": 3628,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 14,
+          "p99": 14.1,
+          "max": 20.9,
+          "mean": 8.28
+        },
+        "rafFps": 120.8,
+        "renderedFrames": 3581,
+        "renderRateFps": 119.2,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 463,
+            "median": 512,
+            "max": 653
+          },
+          "M9_triangles": {
+            "min": 453679,
+            "median": 460223,
+            "max": 486343
+          },
+          "overlayFps": {
+            "min": 103,
+            "median": 122,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.9,
+            "median": 7,
+            "max": 14.3
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 461,
+            "median": 510,
+            "max": 680
+          },
+          "tris": {
+            "min": 453387,
+            "median": 459235,
+            "max": 489627
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 119.2,
+          "shadowUpdatesPerS": 119.2
+        },
+        "visibility": [
+          {
+            "t": 42259.30000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 72307.80000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "orbit: left-button drag on the canvas",
+          "pointerMoves": 1049
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4322,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 7.4,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 515,
+            "median": 515,
+            "max": 515
+          },
+          "M9_triangles": {
+            "min": 458055,
+            "median": 458055,
+            "max": 458055
+          },
+          "overlayFps": {
+            "min": 136,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.5,
+            "median": 7,
+            "max": 7.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 515,
+            "median": 515,
+            "max": 515
+          },
+          "tris": {
+            "min": 458055,
+            "median": 458055,
+            "max": 458055
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 73349.30000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 103357.90000003576,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2062
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 3,
+      "view": "V1",
+      "load": {
+        "M10_readyMs": 1416,
+        "M10_forearmEnabledMs": 1416,
+        "domContentLoadedMs": 528,
+        "loadEventMs": 534,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1437
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 3940,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.8,
+          "p99": 14,
+          "max": 21.1,
+          "mean": 7.62
+        },
+        "rafFps": 131.3,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "overlayFps": {
+            "min": 128,
+            "median": 132,
+            "max": 134
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7,
+            "max": 13.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "tris": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 11440.700000047684,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 41454.200000047684,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.02,
+        "frames": 3419,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 14.1,
+          "p99": 20.9,
+          "max": 34.8,
+          "mean": 8.78
+        },
+        "rafFps": 113.9,
+        "renderedFrames": 2562,
+        "renderRateFps": 85.4,
+        "framesOver33ms": 1,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 708,
+            "median": 1158,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 330854,
+            "median": 381246,
+            "max": 389334
+          },
+          "overlayFps": {
+            "min": 99,
+            "median": 110,
+            "max": 142
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 13.8,
+            "max": 20.8
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 802,
+            "median": 1198,
+            "max": 1206
+          },
+          "tris": {
+            "min": 337494,
+            "median": 387408,
+            "max": 389514
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 85.3,
+          "shadowUpdatesPerS": 85.3
+        },
+        "visibility": [
+          {
+            "t": 41481.80000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 71514.20000004768,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "look: right-button drag on the canvas",
+          "pointerMoves": 1951
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4053,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.8,
+          "p99": 20.7,
+          "max": 21.1,
+          "mean": 7.4
+        },
+        "rafFps": 135.1,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "M9_triangles": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "overlayFps": {
+            "min": 118,
+            "median": 136,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.4,
+            "median": 6.9,
+            "max": 13.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "tris": {
+            "min": 387848,
+            "median": 387848,
+            "max": 387848
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 72563.30000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 102572.30000001192,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2447
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 3,
+      "view": "V2",
+      "load": {
+        "M10_readyMs": 1531,
+        "M10_forearmEnabledMs": 1531,
+        "domContentLoadedMs": 572,
+        "loadEventMs": 578,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1556
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4322,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 7.8,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 144,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.5,
+            "median": 7,
+            "max": 7.3
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "tris": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 13913.200000047684,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 43923.700000047684,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.01,
+        "frames": 4315,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.1,
+          "p99": 7.2,
+          "max": 21,
+          "mean": 6.96
+        },
+        "rafFps": 143.8,
+        "renderedFrames": 2797,
+        "renderRateFps": 93.2,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 478,
+            "median": 478,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299328,
+            "median": 299328,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 138,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 6.9,
+            "max": 7.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 478,
+            "median": 478,
+            "max": 479
+          },
+          "tris": {
+            "min": 299328,
+            "median": 299328,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 93.2,
+          "shadowUpdatesPerS": 93.2
+        },
+        "visibility": [
+          {
+            "t": 43978.200000047684,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 73998.60000002384,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "lift: forearm grip held (grip on attempt 1), pointer moved up and down",
+          "pointerMoves": 2421
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4321,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 7.3,
+          "p99": 7.4,
+          "max": 7.7,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "M9_triangles": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "overlayFps": {
+            "min": 136,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.6,
+            "median": 7,
+            "max": 7.5
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 479,
+            "median": 479,
+            "max": 479
+          },
+          "tris": {
+            "min": 299400,
+            "median": 299400,
+            "max": 299400
+          },
+          "shadowCalls": {
+            "min": 1213,
+            "median": 1213,
+            "max": 1213
+          },
+          "shadowTris": {
+            "min": 354268,
+            "median": 354268,
+            "max": 354268
+          },
+          "programs": {
+            "min": 19,
+            "median": 19,
+            "max": 19
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 75046.30000001192,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 105052,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 2642
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 3,
+      "view": "V3",
+      "load": {
+        "M10_readyMs": 1466,
+        "M10_forearmEnabledMs": 1466,
+        "domContentLoadedMs": 551,
+        "loadEventMs": 555,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1485
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 3975,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.7,
+          "p99": 13.9,
+          "max": 21,
+          "mean": 7.55
+        },
+        "rafFps": 132.5,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1528,
+            "median": 1528,
+            "max": 1528
+          },
+          "M9_triangles": {
+            "min": 462240,
+            "median": 462240,
+            "max": 462240
+          },
+          "overlayFps": {
+            "min": 126,
+            "median": 132,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.9,
+            "median": 7.1,
+            "max": 13.7
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1528,
+            "median": 1528,
+            "max": 1528
+          },
+          "tris": {
+            "min": 462240,
+            "median": 462240,
+            "max": 462240
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 17,
+            "max": 17
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 12111,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 42115,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.02,
+        "frames": 2245,
+        "M7_rafIntervalMs": {
+          "median": 13.9,
+          "p95": 27.7,
+          "p99": 27.9,
+          "max": 41.8,
+          "mean": 13.38
+        },
+        "rafFps": 74.7,
+        "renderedFrames": 2242,
+        "renderRateFps": 74.7,
+        "framesOver33ms": 2,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1193,
+            "median": 1464,
+            "max": 1531
+          },
+          "M9_triangles": {
+            "min": 429576,
+            "median": 443438,
+            "max": 462240
+          },
+          "overlayFps": {
+            "min": 71,
+            "median": 74,
+            "max": 132
+          },
+          "overlayFrameMs": {
+            "min": 6.8,
+            "median": 13.9,
+            "max": 21.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1193,
+            "median": 1472,
+            "max": 1529
+          },
+          "tris": {
+            "min": 429024,
+            "median": 443690,
+            "max": 462240
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 17,
+            "median": 18,
+            "max": 18
+          },
+          "gpuMs": null,
+          "appRendersPerS": 74.7,
+          "shadowUpdatesPerS": 74.7
+        },
+        "visibility": [
+          {
+            "t": 42140.69999998808,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 72180.60000002384,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "orbit: left-button drag on the canvas",
+          "pointerMoves": 806
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4032,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 13.7,
+          "p99": 13.9,
+          "max": 21,
+          "mean": 7.44
+        },
+        "rafFps": 134.4,
+        "renderedFrames": 370,
+        "renderRateFps": 12.3,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 1531,
+            "median": 1531,
+            "max": 1532
+          },
+          "M9_triangles": {
+            "min": 462440,
+            "median": 462440,
+            "max": 462608
+          },
+          "overlayFps": {
+            "min": 97,
+            "median": 132,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.4,
+            "median": 7,
+            "max": 13.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 1531,
+            "median": 1531,
+            "max": 1532
+          },
+          "tris": {
+            "min": 462440,
+            "median": 462440,
+            "max": 462608
+          },
+          "shadowCalls": {
+            "min": 1210,
+            "median": 1210,
+            "max": 1210
+          },
+          "shadowTris": {
+            "min": 326832,
+            "median": 326832,
+            "max": 326832
+          },
+          "programs": {
+            "min": 18,
+            "median": 18,
+            "max": 18
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12.3,
+          "shadowUpdatesPerS": 12.3
+        },
+        "visibility": [
+          {
+            "t": 73206.69999998808,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 103217.5,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 1749
+        }
+      },
+      "consoleErrors": []
+    },
+    {
+      "run": 3,
+      "view": "V4",
+      "load": {
+        "M10_readyMs": 1532,
+        "M10_forearmEnabledMs": 1532,
+        "domContentLoadedMs": 511,
+        "loadEventMs": 597,
+        "resources": 34,
+        "transferKB": 26978,
+        "wallClockToReadyDetectedMs": 1548
+      },
+      "idle": {
+        "durationS": 30,
+        "frames": 4321,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 7.6,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 542,
+            "median": 542,
+            "max": 542
+          },
+          "M9_triangles": {
+            "min": 464067,
+            "median": 464067,
+            "max": 464067
+          },
+          "overlayFps": {
+            "min": 144,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 7,
+            "max": 7.2
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 542,
+            "median": 542,
+            "max": 542
+          },
+          "tris": {
+            "min": 464067,
+            "median": 464067,
+            "max": 464067
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 12180.699999988079,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 42182.39999997616,
+            "state": "visible",
+            "focus": true
+          }
+        ]
+      },
+      "active": {
+        "durationS": 30.03,
+        "frames": 3599,
+        "M7_rafIntervalMs": {
+          "median": 7,
+          "p95": 14,
+          "p99": 14.1,
+          "max": 21,
+          "mean": 8.35
+        },
+        "rafFps": 119.8,
+        "renderedFrames": 3548,
+        "renderRateFps": 118.1,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 465,
+            "median": 511,
+            "max": 667
+          },
+          "M9_triangles": {
+            "min": 454053,
+            "median": 460251,
+            "max": 488821
+          },
+          "overlayFps": {
+            "min": 103,
+            "median": 120,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.5,
+            "median": 7,
+            "max": 20.9
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 461,
+            "median": 510,
+            "max": 682
+          },
+          "tris": {
+            "min": 453387,
+            "median": 459235,
+            "max": 489247
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 118.1,
+          "shadowUpdatesPerS": 118.1
+        },
+        "visibility": [
+          {
+            "t": 42214.19999998808,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 72264,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "orbit: left-button drag on the canvas",
+          "pointerMoves": 1078
+        }
+      },
+      "hover": {
+        "durationS": 30,
+        "frames": 4322,
+        "M7_rafIntervalMs": {
+          "median": 6.9,
+          "p95": 7.2,
+          "p99": 7.3,
+          "max": 7.8,
+          "mean": 6.94
+        },
+        "rafFps": 144,
+        "renderedFrames": 360,
+        "renderRateFps": 12,
+        "framesOver33ms": 0,
+        "framesOver50ms": 0,
+        "overlay": {
+          "M8_drawCalls": {
+            "min": 494,
+            "median": 494,
+            "max": 494
+          },
+          "M9_triangles": {
+            "min": 449945,
+            "median": 449945,
+            "max": 449945
+          },
+          "overlayFps": {
+            "min": 132,
+            "median": 144,
+            "max": 144
+          },
+          "overlayFrameMs": {
+            "min": 6.7,
+            "median": 6.9,
+            "max": 7.1
+          }
+        },
+        "render": {
+          "samples": 31,
+          "calls": {
+            "min": 494,
+            "median": 494,
+            "max": 494
+          },
+          "tris": {
+            "min": 449945,
+            "median": 449945,
+            "max": 449945
+          },
+          "shadowCalls": {
+            "min": 1206,
+            "median": 1206,
+            "max": 1206
+          },
+          "shadowTris": {
+            "min": 217584,
+            "median": 217584,
+            "max": 217584
+          },
+          "programs": {
+            "min": 21,
+            "median": 21,
+            "max": 21
+          },
+          "gpuMs": null,
+          "appRendersPerS": 12,
+          "shadowUpdatesPerS": 12
+        },
+        "visibility": [
+          {
+            "t": 73297,
+            "state": "visible",
+            "focus": true
+          },
+          {
+            "t": 103305.59999996424,
+            "state": "visible",
+            "focus": true
+          }
+        ],
+        "input": {
+          "mode": "hover: no button, Lissajous across 84 % × 72 % of the canvas (patient and room)",
+          "pointerMoves": 1967
+        }
+      },
+      "consoleErrors": []
+    }
+  ],
+  "browserVersion": "157.0.8103.51",
+  "page": {
+    "gpu": "ANGLE (Intel, Intel(R) Iris(R) Xe Graphics (0x000046A6) Direct3D11 vs_5_0 ps_5_0, D3D11)",
+    "gpuVendor": "Google Inc. (Intel)",
+    "userAgent": "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Chrome/157.0.0.0 Safari/537.36",
+    "viewport": {
+      "width": 1440,
+      "height": 900
+    },
+    "devicePixelRatio": 1.0000000149011612,
+    "screen": {
+      "width": 1440,
+      "height": 900,
+      "availWidth": 1440,
+      "availHeight": 900
+    },
+    "window": {
+      "outerWidth": 1456,
+      "outerHeight": 882,
+      "screenX": 0,
+      "screenY": 0
+    },
+    "reducedMotion": false,
+    "visibility": "visible",
+    "hasFocus": true
+  },
+  "failedAttempts": [],
+  "finishedAt": "2026-11-17T21:21:00.919Z"
+}

@@ -1,0 +1,286 @@
+{
+  "check": "G1-b-joint-angles-1440x900",
+  "cluster": "G1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T22:45:18.092Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "joints": {
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+    "hardCount": 0,
+    "warnCount": 0,
+    "joints": {
+      "shoulder.L": {
+        "swingY": 20.04457906696044,
+        "swingZ": -94.69552435065778,
+        "twist": 16.59692612768589,
+        "elevation": 13.723112808909459,
+        "flexion": -6.942815210824782,
+        "abduction": 11.951609358995235,
+        "internalRotation": 3.9333415192502317,
+        "limitSwingY": 11.895219177594864,
+        "limitSwingZ": -6.843068455235139,
+        "flex": -6.942815210824782,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 180,
+          "yNeg": 70,
+          "zPos": 180,
+          "zNeg": 59.99999999999999,
+          "twistMin": -90,
+          "twistMax": 70
+        }
+      },
+      "hip.L": {
+        "swingY": 4.004307549501468,
+        "swingZ": -0.00009358489510206992,
+        "twist": 9.486082810774695,
+        "elevation": 4.004307550595057,
+        "flexion": -0.0000937375614947789,
+        "abduction": 4.004307549505027,
+        "internalRotation": 9.486082810774695,
+        "flex": -0.0000937375614947789,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 45,
+          "yNeg": 29.999999999999996,
+          "zPos": 86.45702309205355,
+          "zNeg": 14.999999999999998,
+          "twistMin": -50,
+          "twistMax": 40
+        }
+      },
+      "elbow.L": {
+        "swingY": -1.5262857153740287e-15,
+        "swingZ": 7.984083464244748,
+        "twist": 0,
+        "flexion": 7.984083464244748,
+        "offAxis": -1.5262857153740287e-15,
+        "flex": 7.984083464244748,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 4,
+          "yNeg": 4,
+          "zPos": 150,
+          "zNeg": 5,
+          "twistMin": -4,
+          "twistMax": 4
+        }
+      },
+      "knee.L": {
+        "swingY": 1.2713476625757297e-14,
+        "swingZ": 2.9140461841070855,
+        "twist": 3.9769791935830017e-16,
+        "flexion": 2.9140461841070855,
+        "offAxis": 1.2713476625757297e-14,
+        "flex": 2.9140461841070855,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 4,
+          "yNeg": 4,
+          "zPos": 140,
+          "zNeg": 5,
+          "twistMin": -4,
+          "twistMax": 4
+        }
+      },
+      "wrist.L": {
+        "swingY": 9.73040971478785,
+        "swingZ": 3.1337130285745487,
+        "twist": 1.5804448949342633,
+        "flexion": 3.1337130285745487,
+        "radialDeviation": 9.73040971478785,
+        "pronation": 1.5804448949342633,
+        "flex": 3.1337130285745487,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 25,
+          "yNeg": 35,
+          "zPos": 85,
+          "zNeg": 75,
+          "twistMin": -90,
+          "twistMax": 85
+        }
+      },
+      "ankle.L": {
+        "swingY": 5.761291988069777,
+        "swingZ": -5.778000169213087,
+        "twist": -3.6650875070807483,
+        "dorsiflexion": -5.778000169213087,
+        "abduction": 5.761291988069777,
+        "eversion": -3.6650875070807483,
+        "flex": null,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 25,
+          "yNeg": 25,
+          "zPos": 10.647565818690463,
+          "zNeg": 55,
+          "twistMin": -35,
+          "twistMax": 20
+        }
+      },
+      "shoulder.R": {
+        "swingY": -20.04464526474368,
+        "swingZ": -94.69550133663,
+        "twist": -16.59704032003919,
+        "elevation": 13.72314418733979,
+        "flexion": -6.942807260158657,
+        "abduction": 11.951650515583903,
+        "internalRotation": 3.9334130105063965,
+        "limitSwingY": -11.895260284066772,
+        "limitSwingZ": -6.843059926730259,
+        "flex": -6.942807260158657,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 70,
+          "yNeg": 180,
+          "zPos": 180,
+          "zNeg": 59.99999999999999,
+          "twistMin": -70,
+          "twistMax": 90
+        }
+      },
+      "hip.R": {
+        "swingY": -4.004324467773906,
+        "swingZ": -0.00010402019658684862,
+        "twist": -9.486007162559924,
+        "elevation": 4.00432446912497,
+        "flexion": -0.00010418988767446818,
+        "abduction": 4.004324467778301,
+        "internalRotation": 9.486007162559924,
+        "flex": -0.00010418988767446818,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 29.999999999999996,
+          "yNeg": 45,
+          "zPos": 86.45701997340684,
+          "zNeg": 14.999999999999998,
+          "twistMin": -40,
+          "twistMax": 50
+        }
+      },
+      "elbow.R": {
+        "swingY": -2.0718194063539072e-14,
+        "swingZ": 7.984085214215041,
+        "twist": 4.6828014355621754e-15,
+        "flexion": 7.984085214215041,
+        "offAxis": -2.0718194063539072e-14,
+        "flex": 7.984085214215041,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 4,
+          "yNeg": 4,
+          "zPos": 150,
+          "zNeg": 5,
+          "twistMin": -4,
+          "twistMax": 4
+        }
+      },
+      "knee.R": {
+        "swingY": 1.2885404048280805e-14,
+        "swingZ": 2.914039946813695,
+        "twist": -6.363166700923248e-15,
+        "flexion": 2.914039946813695,
+        "offAxis": 1.2885404048280805e-14,
+        "flex": 2.914039946813695,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 4,
+          "yNeg": 4,
+          "zPos": 140,
+          "zNeg": 5,
+          "twistMin": -4,
+          "twistMax": 4
+        }
+      },
+      "wrist.R": {
+        "swingY": -9.730497203043495,
+        "swingZ": 3.1336089672914396,
+        "twist": -1.580415441933109,
+        "flexion": 3.1336089672914396,
+        "radialDeviation": 9.730497203043495,
+        "pronation": 1.580415441933109,
+        "flex": 3.1336089672914396,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 35,
+          "yNeg": 25,
+          "zPos": 85,
+          "zNeg": 75,
+          "twistMin": -85,
+          "twistMax": 90
+        }
+      },
+      "ankle.R": {
+        "swingY": -5.7612759908646,
+        "swingZ": -5.777980800304409,
+        "twist": 3.665110568102214,
+        "dorsiflexion": -5.777980800304409,
+        "abduction": 5.7612759908646,
+        "eversion": -3.665110568102214,
+        "flex": null,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 25,
+          "yNeg": 25,
+          "zPos": 10.647564432625266,
+          "zNeg": 55,
+          "twistMin": -20,
+          "twistMax": 35
+        }
+      },
+      "neck": {
+        "swingY": -0.02316402243238026,
+        "swingZ": -2.8645430601565685,
+        "twist": 0.029287153111250037,
+        "flexion": -2.8645430601565685,
+        "lateralFlexionRight": -0.02316402243238026,
+        "rotationLeft": 0.029287153111250037,
+        "flex": -2.8645430601565685,
+        "warn": [],
+        "hard": [],
+        "limits": {
+          "yPos": 45,
+          "yNeg": 45,
+          "zPos": 50,
+          "zNeg": 59.99999999999999,
+          "twistMin": -80,
+          "twistMax": 80
+        }
+      }
+    },
+    "restOffsetDeg": {
+      "elbow.L": 9.660541497891414,
+      "knee.L": -1.6427753034293568,
+      "elbow.R": -9.660566747586262,
+      "knee.R": 1.642778873758027
+    },
+    "restFlexionDeg": {
+      "elbow.L": 7.984083464244745,
+      "knee.L": 2.914046184107087,
+      "elbow.R": 7.984085214215023,
+      "knee.R": 2.9140399468136944
+    }
+  },
+  "errors": []
+}

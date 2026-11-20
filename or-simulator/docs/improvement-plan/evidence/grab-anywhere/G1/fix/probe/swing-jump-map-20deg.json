@@ -1,0 +1,13 @@
+{"shoulder.L":{"jumps":218,"minExcessDeg":50.36,"at":{"polarDeg":120.50000000000001,"azDeg":90,"exDeg":50.36168998236621,"sepDeg":24.665899927490308}},
+"hip.L":{"jumps":527,"minExcessDeg":74.9,"at":{"polarDeg":119.99999999999999,"azDeg":270.5,"exDeg":74.90448752087215,"sepDeg":22.340191640496418}},
+"elbow.L":{"jumps":441,"minExcessDeg":86.85,"at":{"polarDeg":91.99999999999999,"azDeg":89.00000000000001,"exDeg":86.84817649663952,"sepDeg":23.734930485435672}},
+"knee.L":{"jumps":457,"minExcessDeg":86.88,"at":{"polarDeg":91,"azDeg":90,"exDeg":86.88278173500046,"sepDeg":26.30609911163654}},
+"wrist.L":{"jumps":609,"minExcessDeg":82.88,"at":{"polarDeg":117.99999999999999,"azDeg":90,"exDeg":82.88070696181155,"sepDeg":25.096799515057462}},
+"ankle.L":{"jumps":495,"minExcessDeg":102.96,"at":{"polarDeg":128,"azDeg":90,"exDeg":102.95564553645707,"sepDeg":20.118133871128286}},
+"shoulder.R":{"jumps":218,"minExcessDeg":50.36,"at":{"polarDeg":120.50000000000001,"azDeg":270.5,"exDeg":50.36168998236618,"sepDeg":24.665911435930894}},
+"hip.R":{"jumps":527,"minExcessDeg":74.9,"at":{"polarDeg":119.99999999999999,"azDeg":90,"exDeg":74.90448752087215,"sepDeg":22.340187029986847}},
+"elbow.R":{"jumps":441,"minExcessDeg":86.85,"at":{"polarDeg":91.99999999999999,"azDeg":89.00000000000001,"exDeg":86.84817649663952,"sepDeg":23.734930485435672}},
+"knee.R":{"jumps":457,"minExcessDeg":86.88,"at":{"polarDeg":91,"azDeg":90,"exDeg":86.88278173500046,"sepDeg":26.30609911163654}},
+"wrist.R":{"jumps":609,"minExcessDeg":82.88,"at":{"polarDeg":117.99999999999999,"azDeg":270.5,"exDeg":82.88070696181154,"sepDeg":25.096801997784915}},
+"ankle.R":{"jumps":495,"minExcessDeg":102.96,"at":{"polarDeg":128,"azDeg":90,"exDeg":102.95564553645707,"sepDeg":20.118133871128286}},
+"neck":{"jumps":444,"minExcessDeg":108.93,"at":{"polarDeg":154,"azDeg":270.5,"exDeg":108.92715740067871,"sepDeg":23.451607040289247}}}

@@ -1,0 +1,1594 @@
+{
+  "check": "G1-c-grab-samples-560x890",
+  "cluster": "G1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-18T03:36:10.525Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "result": {
+    "forearm.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 444.55853236947195,
+          "y": 448.6885629764831,
+          "world": [
+            0.3171147209629901,
+            1.027912356869964,
+            -0.180279577819408
+          ],
+          "region": "forearm",
+          "side": "left",
+          "hitRegion": "forearm",
+          "segment": "forearm.L",
+          "part": "forearm.L",
+          "zone": null,
+          "w1": 0.8890150593377895,
+          "skin": 0,
+          "triangle": 68764
+        },
+        {
+          "x": 335.87356501179096,
+          "y": 462.853620321814,
+          "world": [
+            0.32361021148581504,
+            0.9902829825485278,
+            0.03519091269083771
+          ],
+          "region": "forearm",
+          "side": "left",
+          "hitRegion": "forearm",
+          "segment": "forearm.L",
+          "part": "forearm.L",
+          "zone": null,
+          "w1": 0.9144880109360394,
+          "skin": 0,
+          "triangle": 69811
+        },
+        {
+          "x": 340.6404310868911,
+          "y": 449.10495737175694,
+          "world": [
+            0.30697690305803493,
+            1.0126638893576632,
+            0.025197172785382763
+          ],
+          "region": "forearm",
+          "side": "left",
+          "hitRegion": "forearm",
+          "segment": "forearm.L",
+          "part": "forearm.L",
+          "zone": null,
+          "w1": 0.9465709400354752,
+          "skin": 0,
+          "triangle": 69898
+        }
+      ]
+    },
+    "forearm.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 311.5675431844894,
+          "y": 302.2465349623728,
+          "world": [
+            -0.30770444779510886,
+            1.0115252889035662,
+            0.036846925933133
+          ],
+          "region": "forearm",
+          "side": "right",
+          "hitRegion": "forearm",
+          "segment": "forearm.R",
+          "part": "forearm.R",
+          "zone": null,
+          "w1": 0.8846267447231169,
+          "skin": 0,
+          "triangle": 22869
+        },
+        {
+          "x": 362.6839043920195,
+          "y": 298.2624402464339,
+          "world": [
+            -0.2870292130981076,
+            1.0390844149746685,
+            -0.13827235963870754
+          ],
+          "region": "forearm",
+          "side": "right",
+          "hitRegion": "forearm",
+          "segment": "forearm.R",
+          "part": "forearm.R",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 26799
+        },
+        {
+          "x": 317.6332781060352,
+          "y": 301.9312885416631,
+          "world": [
+            -0.3063460384981313,
+            1.0135821828313434,
+            0.015362574479540607
+          ],
+          "region": "forearm",
+          "side": "right",
+          "hitRegion": "forearm",
+          "segment": "forearm.R",
+          "part": "forearm.R",
+          "zone": null,
+          "w1": 0.965667673983527,
+          "skin": 0,
+          "triangle": 22637
+        }
+      ]
+    },
+    "hand.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 228.41644012220294,
+          "y": 429.3503316825408,
+          "world": [
+            0.2647037428924767,
+            1.0224992316325225,
+            0.26071032929482824
+          ],
+          "region": "hand",
+          "side": "left",
+          "hitRegion": "hand",
+          "segment": "hand.L",
+          "part": "hand.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 58526
+        },
+        {
+          "x": 300.54061285932227,
+          "y": 434.0259444252774,
+          "world": [
+            0.2751191037592833,
+            1.0202045867625362,
+            0.1063656751030923
+          ],
+          "region": "hand",
+          "side": "left",
+          "hitRegion": "hand",
+          "segment": "hand.L",
+          "part": "hand.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 71369
+        },
+        {
+          "x": 283.39381120911725,
+          "y": 468.28035170151566,
+          "world": [
+            0.32195505256292767,
+            0.9689312668817036,
+            0.14288950956517799
+          ],
+          "region": "hand",
+          "side": "left",
+          "hitRegion": "hand",
+          "segment": "hand.L",
+          "part": "hand.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 67740
+        }
+      ]
+    },
+    "hand.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 282.1923168616148,
+          "y": 301.68221627342564,
+          "world": [
+            -0.25892529349503113,
+            1.0412583567610907,
+            0.14251751318651615
+          ],
+          "region": "hand",
+          "side": "right",
+          "hitRegion": "hand",
+          "segment": "hand.R",
+          "part": "hand.R",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 23626
+        },
+        {
+          "x": 279.9373426117819,
+          "y": 300.9160279504624,
+          "world": [
+            -0.294180459823684,
+            1.0245291853025247,
+            0.15022110980931735
+          ],
+          "region": "hand",
+          "side": "right",
+          "hitRegion": "hand",
+          "segment": "hand.R",
+          "part": "hand.R",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 26056
+        },
+        {
+          "x": 283.03524064735785,
+          "y": 300.9482528710296,
+          "world": [
+            -0.2758137899037413,
+            1.0346715395412405,
+            0.13947951954576251
+          ],
+          "region": "hand",
+          "side": "right",
+          "hitRegion": "hand",
+          "segment": "hand.R",
+          "part": "hand.R",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 23809
+        }
+      ]
+    },
+    "elbow.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 465.30330878703063,
+          "y": 446.7490799990529,
+          "world": [
+            0.31011614810288696,
+            1.024624152136798,
+            -0.2261658413264335
+          ],
+          "region": "elbow",
+          "side": "left",
+          "hitRegion": "elbow",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": "elbow",
+          "w1": 0.600891748083642,
+          "skin": 0,
+          "triangle": 68464
+        },
+        {
+          "x": 450.92064875485124,
+          "y": 430.35196979625806,
+          "world": [
+            0.29007145042426324,
+            1.0505528447819432,
+            -0.1979465091804272
+          ],
+          "region": "elbow",
+          "side": "left",
+          "hitRegion": "elbow",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": "elbow",
+          "w1": 0.526376871686119,
+          "skin": 0,
+          "triangle": 68640
+        },
+        {
+          "x": 453.16860096416156,
+          "y": 425.996201144738,
+          "world": [
+            0.2806160222943911,
+            1.0525109734222475,
+            -0.20600822941192581
+          ],
+          "region": "elbow",
+          "side": "left",
+          "hitRegion": "elbow",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": "elbow",
+          "w1": 0.6297115270794612,
+          "skin": 0,
+          "triangle": 68540
+        }
+      ]
+    },
+    "elbow.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 380.0800343214478,
+          "y": 294.921741352611,
+          "world": [
+            -0.29025782041982245,
+            1.050491573543033,
+            -0.19778723936680606
+          ],
+          "region": "elbow",
+          "side": "right",
+          "hitRegion": "elbow",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": "elbow",
+          "w1": 0.5240855164690494,
+          "skin": 0,
+          "triangle": 21608
+        },
+        {
+          "x": 382.3232414282124,
+          "y": 294.7056994746473,
+          "world": [
+            -0.2900570981954389,
+            1.0514454779332874,
+            -0.20536604008086307
+          ],
+          "region": "elbow",
+          "side": "right",
+          "hitRegion": "elbow",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": "elbow",
+          "w1": 0.594794509942616,
+          "skin": 0,
+          "triangle": 21506
+        },
+        {
+          "x": 381.6740005572124,
+          "y": 296.6430094617196,
+          "world": [
+            -0.2774290023415441,
+            1.0506828408984983,
+            -0.2000585006852891
+          ],
+          "region": "elbow",
+          "side": "right",
+          "hitRegion": "elbow",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": "elbow",
+          "w1": 0.5917611756922032,
+          "skin": 0,
+          "triangle": 26881
+        }
+      ]
+    },
+    "wrist.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 317.77799020130595,
+          "y": 463.01851747778636,
+          "world": [
+            0.322793689957389,
+            0.9885082427409801,
+            0.07218346707785123
+          ],
+          "region": "wrist",
+          "side": "left",
+          "hitRegion": "wrist",
+          "segment": "forearm.L",
+          "part": "forearm.L",
+          "zone": "wrist",
+          "w1": 0.5675106097449608,
+          "skin": 0,
+          "triangle": 70034
+        },
+        {
+          "x": 317.3894387970817,
+          "y": 465.84965844498,
+          "world": [
+            0.3233093826461067,
+            0.9795095180093656,
+            0.07246076609166527
+          ],
+          "region": "wrist",
+          "side": "left",
+          "hitRegion": "wrist",
+          "segment": "forearm.L",
+          "part": "forearm.L",
+          "zone": "wrist",
+          "w1": 0.6198319543674823,
+          "skin": 0,
+          "triangle": 74215
+        },
+        {
+          "x": 316.9710591585823,
+          "y": 447.3979585616819,
+          "world": [
+            0.2999781301120583,
+            1.0087472107244506,
+            0.0730232024159185
+          ],
+          "region": "wrist",
+          "side": "left",
+          "hitRegion": "wrist",
+          "segment": "forearm.L",
+          "part": "forearm.L",
+          "zone": "wrist",
+          "w1": 0.5347829423468744,
+          "skin": 0,
+          "triangle": 74235
+        }
+      ]
+    },
+    "wrist.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 299.3540285362605,
+          "y": 302.4252424421841,
+          "world": [
+            -0.30916415554924714,
+            1.0099673699984708,
+            0.0805047406562493
+          ],
+          "region": "wrist",
+          "side": "right",
+          "hitRegion": "wrist",
+          "segment": "hand.R",
+          "part": "hand.R",
+          "zone": "wrist",
+          "w1": 0.6466711417568394,
+          "skin": 0,
+          "triangle": 23092
+        },
+        {
+          "x": 301.466700577996,
+          "y": 302.750398457585,
+          "world": [
+            -0.30738373203581204,
+            1.0096387344269668,
+            0.07300150601345785
+          ],
+          "region": "wrist",
+          "side": "right",
+          "hitRegion": "wrist",
+          "segment": "forearm.R",
+          "part": "forearm.R",
+          "zone": "wrist",
+          "w1": 0.5222383100375158,
+          "skin": 0,
+          "triangle": 25424
+        },
+        {
+          "x": 299.4030866787649,
+          "y": 302.986431348146,
+          "world": [
+            -0.30358423686138625,
+            1.0108242078597516,
+            0.08062530743162591
+          ],
+          "region": "wrist",
+          "side": "right",
+          "hitRegion": "wrist",
+          "segment": "hand.R",
+          "part": "hand.R",
+          "zone": "wrist",
+          "w1": 0.6231418345652147,
+          "skin": 0,
+          "triangle": 27077
+        }
+      ]
+    },
+    "upperArm.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 525.2394733178543,
+          "y": 438.7407611127041,
+          "world": [
+            0.26001869583816495,
+            0.9850670367322132,
+            -0.39476615766576084
+          ],
+          "region": "upperArm",
+          "side": "left",
+          "hitRegion": "upperArm",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 56718
+        },
+        {
+          "x": 475.96901745661995,
+          "y": 410.1656519213558,
+          "world": [
+            0.24215293406218377,
+            1.0572511746399624,
+            -0.27000011500817406
+          ],
+          "region": "upperArm",
+          "side": "left",
+          "hitRegion": "upperArm",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": null,
+          "w1": 0.9241129094417168,
+          "skin": 0,
+          "triangle": 71857
+        },
+        {
+          "x": 492.5182252858335,
+          "y": 406.5203092323932,
+          "world": [
+            0.23399752789140932,
+            1.0596612674076527,
+            -0.3088976991300706
+          ],
+          "region": "upperArm",
+          "side": "left",
+          "hitRegion": "upperArm",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": null,
+          "w1": 0.9670638426170431,
+          "skin": 0,
+          "triangle": 72349
+        }
+      ]
+    },
+    "upperArm.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 406.21370795750795,
+          "y": 300.28670807689355,
+          "world": [
+            -0.24061487467263304,
+            1.05687985539728,
+            -0.2716968020414743
+          ],
+          "region": "upperArm",
+          "side": "right",
+          "hitRegion": "upperArm",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": null,
+          "w1": 0.9249492523060586,
+          "skin": 0,
+          "triangle": 24825
+        },
+        {
+          "x": 412.2442094504877,
+          "y": 297.8454567897388,
+          "world": [
+            -0.25090370589774647,
+            1.0605017741034877,
+            -0.29440732222776195
+          ],
+          "region": "upperArm",
+          "side": "right",
+          "hitRegion": "upperArm",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": null,
+          "w1": 0.9464350263004837,
+          "skin": 0,
+          "triangle": 10374
+        },
+        {
+          "x": 410.5477130533875,
+          "y": 297.8618470920484,
+          "world": [
+            -0.24973203400272143,
+            1.0610805214679642,
+            -0.28819869150175176
+          ],
+          "region": "upperArm",
+          "side": "right",
+          "hitRegion": "upperArm",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": null,
+          "w1": 0.9421607434797398,
+          "skin": 0,
+          "triangle": 24822
+        }
+      ]
+    },
+    "shoulder.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 533.7567417077012,
+          "y": 354.7067194790486,
+          "world": [
+            0.08813470303786781,
+            1.0863409016122922,
+            -0.47825554925033453
+          ],
+          "region": "shoulder",
+          "side": "left",
+          "hitRegion": "shoulder",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 0.8411172294114787,
+          "skin": 0,
+          "triangle": 55331
+        },
+        {
+          "x": 540.4862101942044,
+          "y": 362.14442261267504,
+          "world": [
+            0.11441967586694682,
+            1.0843441006442318,
+            -0.47881817292585693
+          ],
+          "region": "shoulder",
+          "side": "left",
+          "hitRegion": "shoulder",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 0.7576974189854011,
+          "skin": 0,
+          "triangle": 72256
+        },
+        {
+          "x": 540.9202187841629,
+          "y": 369.3983243571087,
+          "world": [
+            0.1560054015075617,
+            1.09740709282429,
+            -0.44717244653711785
+          ],
+          "region": "shoulder",
+          "side": "left",
+          "hitRegion": "shoulder",
+          "segment": "upperArm.L",
+          "part": "upperArm.L",
+          "zone": null,
+          "w1": 0.8551237767979956,
+          "skin": 0,
+          "triangle": 54797
+        }
+      ]
+    },
+    "shoulder.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 490.78150880704897,
+          "y": 315.6034613857135,
+          "world": [
+            -0.08714442260354323,
+            1.0916676515888077,
+            -0.4615799757323751
+          ],
+          "region": "shoulder",
+          "side": "right",
+          "hitRegion": "shoulder",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 0.9570757754497682,
+          "skin": 0,
+          "triangle": 8284
+        },
+        {
+          "x": 483.2834771129119,
+          "y": 307.6389938294037,
+          "world": [
+            -0.1271881079910971,
+            1.0949260953155502,
+            -0.45888910218040646
+          ],
+          "region": "shoulder",
+          "side": "right",
+          "hitRegion": "shoulder",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": null,
+          "w1": 0.7942912917908749,
+          "skin": 0,
+          "triangle": 7740
+        },
+        {
+          "x": 497.49098300356513,
+          "y": 318.48923315893273,
+          "world": [
+            -0.08306911841300556,
+            1.084345821570571,
+            -0.4815511376964162
+          ],
+          "region": "shoulder",
+          "side": "right",
+          "hitRegion": "shoulder",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 0.8572693694672057,
+          "skin": 0,
+          "triangle": 8286
+        }
+      ]
+    },
+    "thigh.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 257.4345375771768,
+          "y": 372.04413298033995,
+          "world": [
+            0.16278359113214327,
+            1.0953715105597648,
+            0.20134454936588794
+          ],
+          "region": "thigh",
+          "side": "left",
+          "hitRegion": "thigh",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 93796
+        },
+        {
+          "x": 301.22581568842,
+          "y": 358.1320252852315,
+          "world": [
+            0.12761950317697637,
+            1.107476897602031,
+            0.1002884916350939
+          ],
+          "region": "thigh",
+          "side": "left",
+          "hitRegion": "thigh",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": null,
+          "w1": 0.8930903825532833,
+          "skin": 0,
+          "triangle": 78083
+        },
+        {
+          "x": 277.177050415923,
+          "y": 412.8735074573837,
+          "world": [
+            0.17140864893398328,
+            0.9696755866154051,
+            0.15696489345340936
+          ],
+          "region": "thigh",
+          "side": "left",
+          "hitRegion": "thigh",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": null,
+          "w1": 0.9979778079210669,
+          "skin": 0,
+          "triangle": 94281
+        }
+      ]
+    },
+    "thigh.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 207.3815358061364,
+          "y": 315.4992642078282,
+          "world": [
+            -0.12206128648058336,
+            1.0704486076501842,
+            0.3696045864099945
+          ],
+          "region": "thigh",
+          "side": "right",
+          "hitRegion": "thigh",
+          "segment": "thigh.R",
+          "part": "thigh.R",
+          "zone": null,
+          "w1": 0.9700956052605776,
+          "skin": 0,
+          "triangle": 31221
+        },
+        {
+          "x": 247.74865307286348,
+          "y": 307.2996515929032,
+          "world": [
+            -0.11477117548187962,
+            1.1033573912968293,
+            0.2451469679204289
+          ],
+          "region": "thigh",
+          "side": "right",
+          "hitRegion": "thigh",
+          "segment": "thigh.R",
+          "part": "thigh.R",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 46007
+        },
+        {
+          "x": 292.7011179666519,
+          "y": 303.17633874913196,
+          "world": [
+            -0.1395197460948439,
+            1.1032406745671992,
+            0.11174744568006403
+          ],
+          "region": "thigh",
+          "side": "right",
+          "hitRegion": "thigh",
+          "segment": "thigh.R",
+          "part": "thigh.R",
+          "zone": null,
+          "w1": 0.9233643037050463,
+          "skin": 0,
+          "triangle": 30491
+        }
+      ]
+    },
+    "knee.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 160.6821050381036,
+          "y": 421.9209808411212,
+          "world": [
+            0.18753748562650913,
+            0.9554023197867787,
+            0.44250263585285565
+          ],
+          "region": "knee",
+          "side": "left",
+          "hitRegion": "knee",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": "knee",
+          "w1": 0.5896909010819246,
+          "skin": 0,
+          "triangle": 79155
+        },
+        {
+          "x": 145.65128642371252,
+          "y": 421.92041398669204,
+          "world": [
+            0.19825265958500224,
+            0.9680206955968246,
+            0.47290339005950466
+          ],
+          "region": "knee",
+          "side": "left",
+          "hitRegion": "knee",
+          "segment": "shank.L",
+          "part": "shank.L",
+          "zone": null,
+          "w1": 0.6618193906232226,
+          "skin": 0,
+          "triangle": 79483
+        },
+        {
+          "x": 144.34334838141334,
+          "y": 385.09438376213916,
+          "world": [
+            0.14259559296479257,
+            1.0356601607962794,
+            0.47920360761674075
+          ],
+          "region": "knee",
+          "side": "left",
+          "hitRegion": "knee",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": "knee",
+          "w1": 0.6029891242164228,
+          "skin": 0,
+          "triangle": 79338
+        }
+      ]
+    },
+    "knee.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 172.43027306629924,
+          "y": 319.35361464264975,
+          "world": [
+            -0.15672070457118298,
+            1.034683489548992,
+            0.49107447706910057
+          ],
+          "region": "knee",
+          "side": "right",
+          "hitRegion": "knee",
+          "segment": "shank.R",
+          "part": "shank.R",
+          "zone": "knee",
+          "w1": 0.5051746027446592,
+          "skin": 0,
+          "triangle": 31866
+        },
+        {
+          "x": 169.35205045581378,
+          "y": 334.9483946477977,
+          "world": [
+            -0.1118802218890066,
+            1.005746476408956,
+            0.49396230500532357
+          ],
+          "region": "knee",
+          "side": "right",
+          "hitRegion": "knee",
+          "segment": "thigh.R",
+          "part": "thigh.R",
+          "zone": "knee",
+          "w1": 0.5970050658006847,
+          "skin": 0,
+          "triangle": 31890
+        },
+        {
+          "x": 178.3503599646105,
+          "y": 349.15430406632095,
+          "world": [
+            -0.0953264105328125,
+            0.9628678845787387,
+            0.46921208373759193
+          ],
+          "region": "knee",
+          "side": "right",
+          "hitRegion": "knee",
+          "segment": "thigh.R",
+          "part": "thigh.R",
+          "zone": "knee",
+          "w1": 0.535470009415886,
+          "skin": 0,
+          "triangle": 43435
+        }
+      ]
+    },
+    "shank.left": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 73.19081441914318,
+          "y": 435.22833212100096,
+          "world": [
+            0.20712189594196925,
+            0.9299559151086085,
+            0.655867863841621
+          ],
+          "region": "shank",
+          "side": "left",
+          "hitRegion": "shank",
+          "segment": "shank.L",
+          "part": "shank.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 80121
+        },
+        {
+          "x": 98.1738263659857,
+          "y": 388.6788295710491,
+          "world": [
+            0.11823783503292223,
+            1.0000074733240594,
+            0.6132282422071482
+          ],
+          "region": "shank",
+          "side": "left",
+          "hitRegion": "shank",
+          "segment": "shank.L",
+          "part": "shank.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 80027
+        },
+        {
+          "x": 75.05155397471492,
+          "y": 418.5718983896516,
+          "world": [
+            0.20897056520731538,
+            0.9922949644118311,
+            0.6286989396591653
+          ],
+          "region": "shank",
+          "side": "left",
+          "hitRegion": "shank",
+          "segment": "shank.L",
+          "part": "shank.L",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 79955
+        }
+      ]
+    },
+    "shank.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 170.33748712646988,
+          "y": 352.70283350850184,
+          "world": [
+            -0.11274278833968768,
+            0.9350750682660792,
+            0.504283135088693
+          ],
+          "region": "shank",
+          "side": "right",
+          "hitRegion": "shank",
+          "segment": "shank.R",
+          "part": "shank.R",
+          "zone": null,
+          "w1": 0.9168412870759834,
+          "skin": 0,
+          "triangle": 31842
+        },
+        {
+          "x": 57.79891602383196,
+          "y": 328.61301696257647,
+          "world": [
+            -0.15114602170581157,
+            1.003040361429747,
+            0.8633972521072514
+          ],
+          "region": "shank",
+          "side": "right",
+          "hitRegion": "shank",
+          "segment": "shank.R",
+          "part": "shank.R",
+          "zone": null,
+          "w1": 0.9414127189211083,
+          "skin": 0,
+          "triangle": 40236
+        },
+        {
+          "x": 63.98479334527294,
+          "y": 326.51274029007834,
+          "world": [
+            -0.15504530740509234,
+            1.0085446893035082,
+            0.8436084771113023
+          ],
+          "region": "shank",
+          "side": "right",
+          "hitRegion": "shank",
+          "segment": "shank.R",
+          "part": "shank.R",
+          "zone": null,
+          "w1": 0.9218906735193945,
+          "skin": 0,
+          "triangle": 40599
+        }
+      ]
+    },
+    "ankle.left": {
+      "count": 0,
+      "hitRegion": 0,
+      "first": []
+    },
+    "ankle.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 42.60580157586944,
+          "y": 328.49167540410656,
+          "world": [
+            -0.14461326973206406,
+            1.0079073448051072,
+            0.9063695676062096
+          ],
+          "region": "ankle",
+          "side": "right",
+          "hitRegion": "ankle",
+          "segment": "foot.R",
+          "part": "foot.R",
+          "zone": "ankle",
+          "w1": 0.5835709784321041,
+          "skin": 0,
+          "triangle": 40648
+        },
+        {
+          "x": 50.02835998716134,
+          "y": 326.24418419482777,
+          "world": [
+            -0.1522354774308607,
+            1.0114433057401813,
+            0.8856879095451258
+          ],
+          "region": "ankle",
+          "side": "right",
+          "hitRegion": "ankle",
+          "segment": "shank.R",
+          "part": "shank.R",
+          "zone": "ankle",
+          "w1": 0.6297277416530822,
+          "skin": 0,
+          "triangle": 40445
+        },
+        {
+          "x": 42.912646038627635,
+          "y": 331.3440840278159,
+          "world": [
+            -0.14149343870119713,
+            0.9990272153765116,
+            0.9071296834958359
+          ],
+          "region": "ankle",
+          "side": "right",
+          "hitRegion": "ankle",
+          "segment": "foot.R",
+          "part": "foot.R",
+          "zone": "ankle",
+          "w1": 0.565037913409615,
+          "skin": 0,
+          "triangle": 40653
+        }
+      ]
+    },
+    "foot.left": {
+      "count": 0,
+      "hitRegion": 0,
+      "first": []
+    },
+    "foot.right": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 41.73207727445437,
+          "y": 316.3900080655608,
+          "world": [
+            -0.1683753378095284,
+            1.0384927988031731,
+            0.9108300810450967
+          ],
+          "region": "foot",
+          "side": "right",
+          "hitRegion": "foot",
+          "segment": "foot.R",
+          "part": "foot.R",
+          "zone": null,
+          "w1": 0.7692878940112412,
+          "skin": 0,
+          "triangle": 42218
+        },
+        {
+          "x": 34.692700178088124,
+          "y": 316.4859334832004,
+          "world": [
+            -0.15717768026525766,
+            1.04509697021113,
+            0.9237467670105135
+          ],
+          "region": "foot",
+          "side": "right",
+          "hitRegion": "foot",
+          "segment": "foot.R",
+          "part": "foot.R",
+          "zone": null,
+          "w1": 0.9012827786923568,
+          "skin": 0,
+          "triangle": 40163
+        },
+        {
+          "x": 29.757623437955296,
+          "y": 300.81316577484495,
+          "world": [
+            -0.22331283822207815,
+            1.0645407223201442,
+            0.9721023174738472
+          ],
+          "region": "foot",
+          "side": "right",
+          "hitRegion": "foot",
+          "segment": "foot.R",
+          "part": "foot.R",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 45323
+        }
+      ]
+    },
+    "head": {
+      "count": 0,
+      "hitRegion": 0,
+      "first": []
+    },
+    "neck": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 538.2966941747868,
+          "y": 336.6823438011165,
+          "world": [
+            0.013418118817247299,
+            1.0880375671892901,
+            -0.5366154025548803
+          ],
+          "region": "neck",
+          "side": null,
+          "hitRegion": "neck",
+          "segment": "neck",
+          "part": "head",
+          "zone": null,
+          "w1": 0.44395898163546854,
+          "skin": 0,
+          "triangle": 50225
+        },
+        {
+          "x": 542.9491685144568,
+          "y": 348.35406646500235,
+          "world": [
+            0.041831280369294434,
+            1.0707486252995033,
+            -0.5381670129851961
+          ],
+          "region": "neck",
+          "side": null,
+          "hitRegion": "neck",
+          "segment": "neck",
+          "part": "head",
+          "zone": null,
+          "w1": 0.6107857651369599,
+          "skin": 0,
+          "triangle": 71461
+        },
+        {
+          "x": 537.7644263742924,
+          "y": 334.387927642018,
+          "world": [
+            0.006506814896348952,
+            1.0906469646670576,
+            -0.5384775227157761
+          ],
+          "region": "neck",
+          "side": null,
+          "hitRegion": "neck",
+          "segment": "neck",
+          "part": "head",
+          "zone": null,
+          "w1": 0.42636020264325314,
+          "skin": 0,
+          "triangle": 50203
+        }
+      ]
+    },
+    "chest": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 480.5832333417617,
+          "y": 305.30286129393687,
+          "world": [
+            -0.11532813082428542,
+            1.1098157304989913,
+            -0.4398337869143397
+          ],
+          "region": "chest",
+          "side": null,
+          "hitRegion": "chest",
+          "segment": "upperArm.R",
+          "part": "upperArm.R",
+          "zone": null,
+          "w1": 0.7274412314428108,
+          "skin": 0,
+          "triangle": 7882
+        },
+        {
+          "x": 473.9633734891048,
+          "y": 331.5445727582887,
+          "world": [
+            0.08139976300398812,
+            1.1512761018644764,
+            -0.31208759305189104
+          ],
+          "region": "chest",
+          "side": null,
+          "hitRegion": "chest",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 0.9715561402732563,
+          "skin": 0,
+          "triangle": 57787
+        },
+        {
+          "x": 493.0017106286354,
+          "y": 330.209608897099,
+          "world": [
+            0.060396925918538305,
+            1.1408275438014883,
+            -0.3723146455991111
+          ],
+          "region": "chest",
+          "side": null,
+          "hitRegion": "chest",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 1,
+          "skin": 0,
+          "triangle": 58200
+        }
+      ]
+    },
+    "abdomen": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 381.71803310304523,
+          "y": 332.5269084980708,
+          "world": [
+            0.06080480348992802,
+            1.1342027151573655,
+            -0.10046953306978972
+          ],
+          "region": "abdomen",
+          "side": null,
+          "hitRegion": "abdomen",
+          "segment": "abdomen",
+          "part": "abdomen",
+          "zone": null,
+          "w1": 0.7182961065167349,
+          "skin": 0,
+          "triangle": 76195
+        },
+        {
+          "x": 362.4814113615178,
+          "y": 305.80243766691353,
+          "world": [
+            -0.08055280803979328,
+            1.1282394074739175,
+            -0.08285228310061665
+          ],
+          "region": "abdomen",
+          "side": null,
+          "hitRegion": "abdomen",
+          "segment": "abdomen",
+          "part": "abdomen",
+          "zone": null,
+          "w1": 0.698517576646192,
+          "skin": 0,
+          "triangle": 76251
+        },
+        {
+          "x": 350.1876855607022,
+          "y": 317.3878245043263,
+          "world": [
+            -0.002167170545462691,
+            1.1387376510225824,
+            -0.03325107428654257
+          ],
+          "region": "abdomen",
+          "side": null,
+          "hitRegion": "abdomen",
+          "segment": "abdomen",
+          "part": "abdomen",
+          "zone": null,
+          "w1": 0.5776424147261437,
+          "skin": 0,
+          "triangle": 30077
+        }
+      ]
+    },
+    "flank": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 439.1419155467789,
+          "y": 353.86456331139925,
+          "world": [
+            0.12326566304057028,
+            1.1167444055801616,
+            -0.22193121939330637
+          ],
+          "region": "flank",
+          "side": null,
+          "hitRegion": "flank",
+          "segment": "abdomen",
+          "part": "abdomen",
+          "zone": null,
+          "w1": 0.5235003359016639,
+          "skin": 0,
+          "triangle": 75420
+        },
+        {
+          "x": 462.5180881918516,
+          "y": 348.6647442289246,
+          "world": [
+            0.11669444846910046,
+            1.1269966309190853,
+            -0.2763633701739834
+          ],
+          "region": "flank",
+          "side": null,
+          "hitRegion": "flank",
+          "segment": "chest",
+          "part": "chest",
+          "zone": null,
+          "w1": 0.8546188613398119,
+          "skin": 0,
+          "triangle": 75630
+        },
+        {
+          "x": 406.9186286139022,
+          "y": 376.3008554295809,
+          "world": [
+            0.13720330594269806,
+            1.0592937267212432,
+            -0.15460663508570596
+          ],
+          "region": "flank",
+          "side": null,
+          "hitRegion": "flank",
+          "segment": "abdomen",
+          "part": "abdomen",
+          "zone": null,
+          "w1": 0.9567305367013438,
+          "skin": 0,
+          "triangle": 75997
+        }
+      ]
+    },
+    "pelvis": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 335.42217337262684,
+          "y": 304.084877212513,
+          "world": [
+            -0.12140039043944184,
+            1.1104566872634571,
+            -0.013748462829214806
+          ],
+          "region": "pelvis",
+          "side": null,
+          "hitRegion": "pelvis",
+          "segment": "pelvis",
+          "part": "pelvis",
+          "zone": null,
+          "w1": 0.5222567342799836,
+          "skin": 0,
+          "triangle": 76956
+        },
+        {
+          "x": 329.3828576337709,
+          "y": 308.6046777013114,
+          "world": [
+            -0.07047272338879218,
+            1.1250202623369758,
+            0.011552664999811238
+          ],
+          "region": "pelvis",
+          "side": null,
+          "hitRegion": "pelvis",
+          "segment": "pelvis",
+          "part": "pelvis",
+          "zone": null,
+          "w1": 0.5423412335065421,
+          "skin": 0,
+          "triangle": 76976
+        },
+        {
+          "x": 347.44583129550176,
+          "y": 337.63727414941064,
+          "world": [
+            0.07274879398047479,
+            1.1272708861452494,
+            -0.014873349002502055
+          ],
+          "region": "pelvis",
+          "side": null,
+          "hitRegion": "pelvis",
+          "segment": "pelvis",
+          "part": "pelvis",
+          "zone": null,
+          "w1": 0.49862109518249836,
+          "skin": 0,
+          "triangle": 77298
+        }
+      ]
+    },
+    "privacy": {
+      "count": 40,
+      "hitRegion": 40,
+      "first": [
+        {
+          "x": 308.8446180426869,
+          "y": 341.36124097452654,
+          "world": [
+            0.06370986441339456,
+            1.1093949531388094,
+            0.07796698005671246
+          ],
+          "region": "privacy",
+          "side": null,
+          "hitRegion": "privacy",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": null,
+          "w1": 0.5631576445061179,
+          "skin": 1,
+          "triangle": 1217
+        },
+        {
+          "x": 324.16454391179883,
+          "y": 328.6671220054108,
+          "world": [
+            0.03181848128654224,
+            1.1261297032995663,
+            0.03746976199890279
+          ],
+          "region": "privacy",
+          "side": null,
+          "hitRegion": "privacy",
+          "segment": "pelvis",
+          "part": "pelvis",
+          "zone": null,
+          "w1": 0.7126694236347203,
+          "skin": 1,
+          "triangle": 1250
+        },
+        {
+          "x": 298.6590331770499,
+          "y": 343.4817978643167,
+          "world": [
+            0.05929530743458477,
+            1.099540014936841,
+            0.10288692635531264
+          ],
+          "region": "privacy",
+          "side": null,
+          "hitRegion": "privacy",
+          "segment": "thigh.L",
+          "part": "thigh.L",
+          "zone": null,
+          "w1": 0.6629133301707687,
+          "skin": 1,
+          "triangle": 1312
+        }
+      ]
+    }
+  },
+  "repeatable": true,
+  "errors": []
+}

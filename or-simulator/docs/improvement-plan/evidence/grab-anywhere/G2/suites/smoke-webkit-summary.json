@@ -1,0 +1,205 @@
+{
+  "label": "serve-webkit-headless",
+  "S1": {
+    "readyMs": 3411,
+    "modules": 29,
+    "glbs": 9,
+    "foreign": [],
+    "M11": 0
+  },
+  "S2": {
+    "restWristY": 0.9360350756135176,
+    "liftedWristY": 1.0556845891837223,
+    "wristLiftM": 0.1196495135702047
+  },
+  "S3": {
+    "supportGap": 0.0011681490199672445,
+    "gateLessThan": 0.02,
+    "restWristY": 0.9360350756135176,
+    "releasedWristY": 1.0556845891837223,
+    "M11": 0
+  },
+  "S4": {
+    "goldenTrace": [
+      "simulation_started@idle",
+      "camera_changed@idle",
+      "simulation_stage_changed@monitor",
+      "checklist_item_completed@monitor",
+      "simulation_stage_changed@pickup",
+      "camera_changed@pickup",
+      "instrument_picked@pickup",
+      "checklist_item_completed@pickup",
+      "simulation_stage_changed@aim",
+      "checklist_item_completed@aim",
+      "simulation_stage_changed@deposit",
+      "instrument_released@deposit",
+      "simulation_stage_changed@wrist",
+      "checklist_item_completed@wrist",
+      "camera_changed@wrist",
+      "patient_interaction@wrist",
+      "patient_interaction@wrist",
+      "checklist_item_completed@wrist",
+      "simulation_stage_changed@complete",
+      "simulation_completed@complete"
+    ],
+    "identicalToG1": true,
+    "results": [
+      "monitor",
+      "pickup",
+      "aim",
+      "deposit",
+      "wrist"
+    ],
+    "M11": 0
+  },
+  "flows": {
+    "S1-boot": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S2-forearm-drill": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S3-support-release": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S4-training-session": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 2,
+      "browserVersion": "27.2"
+    },
+    "S5-grasper": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-needleHolder": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-scissors": {
+      "attempt": 1,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-scope": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-staff-handover": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S6-room-presets": {
+      "attempt": 1,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S7-anatomy": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S8-hands-locomotion": {
+      "attempt": 1,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S9-port-scope": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    }
+  },
+  "visual": {
+    "V1-default-bedside": {
+      "counters": {
+        "raw": {
+          "fps": "FPS 41",
+          "frame": "Frame 15 ms",
+          "draw": "Draw 1206",
+          "triangles": "Triangles 388,876",
+          "assets": "Geo 1126 · Tex 17",
+          "events": "Events 0"
+        },
+        "drawCalls": 1206,
+        "triangles": 388876,
+        "overlayFps": 41
+      },
+      "attempt": 0,
+      "webglContextLostMessages": 0
+    },
+    "V2-forearm-drill-after-approach": {
+      "counters": {
+        "raw": {
+          "fps": "FPS 55",
+          "frame": "Frame 15 ms",
+          "draw": "Draw 486",
+          "triangles": "Triangles 301,348",
+          "assets": "Geo 1128 · Tex 17",
+          "events": "Events 0"
+        },
+        "drawCalls": 486,
+        "triangles": 301348,
+        "overlayFps": 55
+      },
+      "attempt": 1,
+      "webglContextLostMessages": 0
+    },
+    "V3-room-camera-room": {
+      "counters": {
+        "raw": {
+          "fps": "FPS 51",
+          "frame": "Frame 32 ms",
+          "draw": "Draw 1528",
+          "triangles": "Triangles 463,268",
+          "assets": "Geo 1333 · Tex 19",
+          "events": "Events 0"
+        },
+        "drawCalls": 1528,
+        "triangles": 463268,
+        "overlayFps": 51
+      },
+      "attempt": 0,
+      "webglContextLostMessages": 0
+    },
+    "V4-anatomy-full": {
+      "counters": {
+        "raw": {
+          "fps": "FPS 55",
+          "frame": "Frame 31 ms",
+          "draw": "Draw 539",
+          "triangles": "Triangles 463,855",
+          "assets": "Geo 1161 · Tex 17",
+          "events": "Events 0"
+        },
+        "drawCalls": 539,
+        "triangles": 463855,
+        "overlayFps": 55
+      },
+      "attempt": 0,
+      "webglContextLostMessages": 0
+    }
+  }
+}

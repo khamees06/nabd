@@ -1,0 +1,367 @@
+{
+ "rows": [
+  {
+   "view": "V1",
+   "seg": "idle",
+   "M8": {
+    "q1": 1206,
+    "g1": 1206
+   },
+   "M9": {
+    "q1": 387848,
+    "g1": 387848
+   },
+   "M8rise": 0,
+   "M9rise": 0,
+   "rafFps": {
+    "q1": 131.3,
+    "g1": 133.9
+   }
+  },
+  {
+   "view": "V1",
+   "seg": "active",
+   "M8": {
+    "q1": 1157,
+    "g1": 1166
+   },
+   "M9": {
+    "q1": 380676,
+    "g1": 381776
+   },
+   "M8rise": 0.007778738115816767,
+   "M9rise": 0.0028895964021897888,
+   "rafFps": {
+    "q1": 113.9,
+    "g1": 108.2
+   }
+  },
+  {
+   "view": "V1",
+   "seg": "hover",
+   "M8": {
+    "q1": 1206,
+    "g1": 1205
+   },
+   "M9": {
+    "q1": 387848,
+    "g1": 387784
+   },
+   "M8rise": -0.0008291873963515755,
+   "M9rise": -0.00016501309791464697,
+   "rafFps": {
+    "q1": 135.1,
+    "g1": 133.5
+   }
+  },
+  {
+   "view": "V2",
+   "seg": "idle",
+   "M8": {
+    "q1": 479,
+    "g1": 479
+   },
+   "M9": {
+    "q1": 299400,
+    "g1": 299400
+   },
+   "M8rise": 0,
+   "M9rise": 0,
+   "rafFps": {
+    "q1": 144,
+    "g1": 144
+   }
+  },
+  {
+   "view": "V2",
+   "seg": "active",
+   "M8": {
+    "q1": 478,
+    "g1": 478
+   },
+   "M9": {
+    "q1": 299328,
+    "g1": 299328
+   },
+   "M8rise": 0,
+   "M9rise": 0,
+   "rafFps": {
+    "q1": 143.8,
+    "g1": 143.8
+   }
+  },
+  {
+   "view": "V2",
+   "seg": "hover",
+   "M8": {
+    "q1": 479,
+    "g1": 479
+   },
+   "M9": {
+    "q1": 299400,
+    "g1": 299400
+   },
+   "M8rise": 0,
+   "M9rise": 0,
+   "rafFps": {
+    "q1": 143.9,
+    "g1": 143.9
+   }
+  },
+  {
+   "view": "V3",
+   "seg": "idle",
+   "M8": {
+    "q1": 1528,
+    "g1": 1528
+   },
+   "M9": {
+    "q1": 462240,
+    "g1": 462240
+   },
+   "M8rise": 0,
+   "M9rise": 0,
+   "rafFps": {
+    "q1": 133.4,
+    "g1": 129.5
+   }
+  },
+  {
+   "view": "V3",
+   "seg": "active",
+   "M8": {
+    "q1": 1464,
+    "g1": 1472
+   },
+   "M9": {
+    "q1": 443144,
+    "g1": 446262
+   },
+   "M8rise": 0.00546448087431694,
+   "M9rise": 0.007036087592295055,
+   "rafFps": {
+    "q1": 74.7,
+    "g1": 71.8
+   }
+  },
+  {
+   "view": "V3",
+   "seg": "hover",
+   "M8": {
+    "q1": 1531,
+    "g1": 1530
+   },
+   "M9": {
+    "q1": 462440,
+    "g1": 461382
+   },
+   "M8rise": -0.0006531678641410843,
+   "M9rise": -0.0022878643715941527,
+   "rafFps": {
+    "q1": 137.4,
+    "g1": 135.9
+   }
+  },
+  {
+   "view": "V4",
+   "seg": "idle",
+   "M8": {
+    "q1": 542,
+    "g1": 542
+   },
+   "M9": {
+    "q1": 464067,
+    "g1": 464067
+   },
+   "M8rise": 0,
+   "M9rise": 0,
+   "rafFps": {
+    "q1": 144,
+    "g1": 144
+   }
+  },
+  {
+   "view": "V4",
+   "seg": "active",
+   "M8": {
+    "q1": 511,
+    "g1": 512
+   },
+   "M9": {
+    "q1": 460251,
+    "g1": 461427
+   },
+   "M8rise": 0.0019569471624266144,
+   "M9rise": 0.0025551275282400254,
+   "rafFps": {
+    "q1": 119.8,
+    "g1": 117
+   }
+  },
+  {
+   "view": "V4",
+   "seg": "hover",
+   "M8": {
+    "q1": 515,
+    "g1": 516
+   },
+   "M9": {
+    "q1": 458055,
+    "g1": 458119
+   },
+   "M8rise": 0.001941747572815534,
+   "M9rise": 0.00013972121251814738,
+   "rafFps": {
+    "q1": 144,
+    "g1": 144
+   }
+  }
+ ],
+ "maxM8rise": 0.007778738115816767,
+ "maxM9rise": 0.007036087592295055,
+ "M10": {
+  "q1Loads": {
+   "cold": [
+    {
+     "M10_readyMs": 2595,
+     "M10_forearmEnabledMs": 2595,
+     "domContentLoadedMs": 633,
+     "loadEventMs": 640,
+     "resources": 34,
+     "transferKB": 26978,
+     "wallClockToReadyDetectedMs": 2634,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1736,
+     "M10_forearmEnabledMs": 1736,
+     "domContentLoadedMs": 547,
+     "loadEventMs": 667,
+     "resources": 34,
+     "transferKB": 26978,
+     "wallClockToReadyDetectedMs": 1790,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1515,
+     "M10_forearmEnabledMs": 1515,
+     "domContentLoadedMs": 534,
+     "loadEventMs": 539,
+     "resources": 34,
+     "transferKB": 26978,
+     "wallClockToReadyDetectedMs": 1538,
+     "consoleErrors": 0
+    }
+   ],
+   "warm": [
+    {
+     "M10_readyMs": 1197,
+     "M10_forearmEnabledMs": 1197,
+     "domContentLoadedMs": 379,
+     "loadEventMs": 385,
+     "resources": 34,
+     "transferKB": 20997,
+     "wallClockToReadyDetectedMs": 1203,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1216,
+     "M10_forearmEnabledMs": 1216,
+     "domContentLoadedMs": 326,
+     "loadEventMs": 332,
+     "resources": 34,
+     "transferKB": 20997,
+     "wallClockToReadyDetectedMs": 1253,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1135,
+     "M10_forearmEnabledMs": 1135,
+     "domContentLoadedMs": 314,
+     "loadEventMs": 320,
+     "resources": 34,
+     "transferKB": 20997,
+     "wallClockToReadyDetectedMs": 1179,
+     "consoleErrors": 0
+    }
+   ]
+  },
+  "g1Loads": {
+   "cold": [
+    {
+     "M10_readyMs": 2572,
+     "M10_forearmEnabledMs": 2572,
+     "domContentLoadedMs": 605,
+     "loadEventMs": 612,
+     "resources": 39,
+     "transferKB": 27085,
+     "wallClockToReadyDetectedMs": 2608,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1927,
+     "M10_forearmEnabledMs": 1927,
+     "domContentLoadedMs": 683,
+     "loadEventMs": 689,
+     "resources": 39,
+     "transferKB": 27085,
+     "wallClockToReadyDetectedMs": 1961,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1600,
+     "M10_forearmEnabledMs": 1600,
+     "domContentLoadedMs": 452,
+     "loadEventMs": 540,
+     "resources": 39,
+     "transferKB": 27085,
+     "wallClockToReadyDetectedMs": 1616,
+     "consoleErrors": 0
+    }
+   ],
+   "warm": [
+    {
+     "M10_readyMs": 1244,
+     "M10_forearmEnabledMs": 1244,
+     "domContentLoadedMs": 339,
+     "loadEventMs": 345,
+     "resources": 39,
+     "transferKB": 21104,
+     "wallClockToReadyDetectedMs": 1268,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1290,
+     "M10_forearmEnabledMs": 1290,
+     "domContentLoadedMs": 348,
+     "loadEventMs": 355,
+     "resources": 39,
+     "transferKB": 21104,
+     "wallClockToReadyDetectedMs": 1304,
+     "consoleErrors": 0
+    },
+    {
+     "M10_readyMs": 1231,
+     "M10_forearmEnabledMs": 1231,
+     "domContentLoadedMs": 333,
+     "loadEventMs": 338,
+     "resources": 39,
+     "transferKB": 21104,
+     "wallClockToReadyDetectedMs": 1236,
+     "consoleErrors": 0
+    }
+   ]
+  }
+ },
+ "consoleErrors": [
+  [],
+  [],
+  [],
+  []
+ ],
+ "failedAttempts": [],
+ "browser": {
+  "q1": "157.0.8103.51",
+  "g1": "157.0.8103.79"
+ }
+}

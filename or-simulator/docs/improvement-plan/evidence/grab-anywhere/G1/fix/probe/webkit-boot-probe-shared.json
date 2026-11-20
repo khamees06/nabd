@@ -1,0 +1,213 @@
+{
+ "method": "one shared WebKit process, new context per load, ABBA order, ready timeout 45 s",
+ "base": {
+  "loads": 12,
+  "ready": 8,
+  "withContextLost": 5,
+  "lostAndRecovered": 1,
+  "otherErrors": 0,
+  "readyMsMedian": 2751
+ },
+ "work": {
+  "loads": 12,
+  "ready": 12,
+  "withContextLost": 1,
+  "lostAndRecovered": 1,
+  "otherErrors": 0,
+  "readyMsMedian": 3239
+ },
+ "loads": [
+  {
+   "k": 0,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3274,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 1,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2744,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 2,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2710,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 3,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 17899,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 4,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3316,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 5,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2752,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 6,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45369,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 7,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2748,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 8,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2787,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 9,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2719,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 10,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 17913,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 11,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2791,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 12,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3239,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 13,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45352,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 14,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2751,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 15,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3296,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 16,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3259,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 17,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45368,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 18,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2780,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 19,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3225,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 20,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2778,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 21,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45378,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 22,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2736,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 23,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3232,
+   "contextLost": 0,
+   "errors": []
+  }
+ ]
+}

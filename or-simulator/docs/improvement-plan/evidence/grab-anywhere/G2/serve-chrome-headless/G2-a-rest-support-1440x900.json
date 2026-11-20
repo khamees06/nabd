@@ -1,0 +1,297 @@
+{
+  "check": "G2-a-rest-support-1440x900",
+  "cluster": "G2",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T22:46:57.724Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "rest": {
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+    "deck": 0.9,
+    "compressionMm": {
+      "pelvis": 5,
+      "shank": 5,
+      "foot": 5
+    },
+    "belowTopOverAllowance": 0,
+    "belowTopOver2mm": 0,
+    "belowTopMaxMm": 1.9996460320735876,
+    "supportMaxMm": 1.9996460320735876,
+    "supportDownward": 0,
+    "gaps": {
+      "abdomen": {
+        "lowestGapMm": 27.95615189326739,
+        "support": "back_pad",
+        "at": [
+          -0.03466062558994521,
+          0.9279561533833836,
+          -0.06927023566109825
+        ],
+        "lowestY": 0.9279561533833836,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "pelvis": {
+        "lowestGapMm": -1.9996460320735876,
+        "support": "seat_pad",
+        "at": [
+          0.058700646167329854,
+          0.8980003554580426,
+          0.04296007723413531
+        ],
+        "lowestY": 0.8980003554580426,
+        "belowTopMaxMm": 1.9996460320735876,
+        "belowTopOver2mm": 0
+      },
+      "chest": {
+        "lowestGapMm": 5.453470240180058,
+        "support": "back_pad",
+        "at": [
+          0.09706126911147514,
+          0.9054534717302962,
+          -0.39267517988695977
+        ],
+        "lowestY": 0.9054534717302962,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "head": {
+        "lowestGapMm": 0.5046421865468886,
+        "support": "head_ring_gel",
+        "at": [
+          -0.004407030179629698,
+          0.9487919844369598,
+          -0.6646385280353365
+        ],
+        "lowestY": 0.9351181305605799,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "neck": {
+        "lowestGapMm": 13.32372109754132,
+        "support": "head_ring_gel",
+        "at": [
+          0.00001744521604087828,
+          0.9627122226254881,
+          -0.6436435384500735
+        ],
+        "lowestY": 0.9627122226254881,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "thigh.L": {
+        "lowestGapMm": 6.0389456757212745,
+        "support": "seat_pad",
+        "at": [
+          0.0935816028023959,
+          0.9060389471658374,
+          0.06396510617748807
+        ],
+        "lowestY": 0.9060389471658374,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "upperArm.L": {
+        "lowestGapMm": 0.5166380408154758,
+        "support": "back_pad",
+        "at": [
+          0.22495329176917123,
+          0.9005166395309316,
+          -0.274168511401211
+        ],
+        "lowestY": 0.9005166395309316,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "shank.L": {
+        "lowestGapMm": -1.7863784096714408,
+        "support": "leg_R_pad",
+        "at": [
+          0.15598568374380992,
+          0.8982136230804447,
+          0.5825428448469652
+        ],
+        "lowestY": 0.8982136230804447,
+        "belowTopMaxMm": 1.7863784096714408,
+        "belowTopOver2mm": 0
+      },
+      "foot.L": {
+        "lowestGapMm": null,
+        "support": null,
+        "at": null,
+        "lowestY": 0.9030876453692657,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "forearm.L": {
+        "lowestGapMm": 1.6689013030255495,
+        "support": "back_pad",
+        "at": [
+          0.24986436045210608,
+          0.9016689027931417,
+          -0.08592346118258043
+        ],
+        "lowestY": 0.9016689027931417,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "hand.L": {
+        "lowestGapMm": 0.3950566552671786,
+        "support": "seat_pad",
+        "at": [
+          0.2077528362475523,
+          0.9003950581453833,
+          0.22831797527026754
+        ],
+        "lowestY": 0.9003950581453833,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "thigh.R": {
+        "lowestGapMm": 7.112035375238968,
+        "support": "seat_pad",
+        "at": [
+          -0.0805378011308984,
+          0.9071120368653551,
+          0.07713040481898004
+        ],
+        "lowestY": 0.9071120368653551,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "upperArm.R": {
+        "lowestGapMm": 0.5166188055901744,
+        "support": "back_pad",
+        "at": [
+          -0.22495347938353485,
+          0.9005166202957063,
+          -0.2741684053380128
+        ],
+        "lowestY": 0.9005166202957063,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "shank.R": {
+        "lowestGapMm": -1.7863870637373491,
+        "support": "leg_L_pad",
+        "at": [
+          -0.1559857231565012,
+          0.8982136144263788,
+          0.5825427108107123
+        ],
+        "lowestY": 0.8982136144263788,
+        "belowTopMaxMm": 1.7863870637373491,
+        "belowTopOver2mm": 0
+      },
+      "foot.R": {
+        "lowestGapMm": null,
+        "support": null,
+        "at": null,
+        "lowestY": 0.9030876665709153,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "forearm.R": {
+        "lowestGapMm": 1.668807734568567,
+        "support": "back_pad",
+        "at": [
+          -0.2498643820452651,
+          0.9016688092246847,
+          -0.08592321427849703
+        ],
+        "lowestY": 0.9016688092246847,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      },
+      "hand.R": {
+        "lowestGapMm": 0.395136204096147,
+        "support": "seat_pad",
+        "at": [
+          -0.2077532825130537,
+          0.9003951376942123,
+          0.228318111371276
+        ],
+        "lowestY": 0.9003951376942123,
+        "belowTopMaxMm": 0,
+        "belowTopOver2mm": 0
+      }
+    },
+    "heel": {
+      "L": {
+        "overDrawnSupportMm": null,
+        "overLegPadPlaneMm": 3.0876438791495042,
+        "heelZ": 0.9527038563888939,
+        "legPadEndZ": 0.8850000023841857,
+        "overhangMm": 67.70385400470813
+      },
+      "R": {
+        "overDrawnSupportMm": null,
+        "overLegPadPlaneMm": 3.0876650807991624,
+        "heelZ": 0.952703725415687,
+        "legPadEndZ": 0.8850000023841857,
+        "overhangMm": 67.7037230315013
+      }
+    },
+    "wristsAbsX": {
+      "leftArm": 0.25175241482964233,
+      "rightArm": 0.25175251809897
+    },
+    "padEdgeX": 0.2824999988079071,
+    "legPadTopY": 0.9000000014901162,
+    "headRing": {
+      "triangles": 1040,
+      "vertices": 600,
+      "centre": [
+        0,
+        -0.722
+      ],
+      "semiAxes": [
+        0.11,
+        0.1
+      ],
+      "hole": 0.25,
+      "freeHeight": 0.055,
+      "clearance": 0.001,
+      "maxHeight": 0.055,
+      "clampedVertices": 33,
+      "touchingVertices": 50,
+      "topVertices": 520,
+      "baseY": 0.9,
+      "fieldTriangles": 31034,
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+    },
+    "bySupport": {
+      "seat_pad": {
+        "kind": "pad",
+        "vertices": 28,
+        "over2mm": 0,
+        "maxDepthMm": 1.9996460320735876
+      },
+      "leg_R_pad": {
+        "kind": "pad",
+        "vertices": 9,
+        "over2mm": 0,
+        "maxDepthMm": 1.7863784096714408
+      },
+      "leg_L_pad": {
+        "kind": "pad",
+        "vertices": 10,
+        "over2mm": 0,
+        "maxDepthMm": 1.7863870637373491
+      }
+    },
+    "selfMaxMm": 0,
+    "selfWorstPair": null,
+    "ms": 379.60000002384186
+  },
+  "jointHard": 0,
+  "jointWarn": 0,
+  "errors": []
+}

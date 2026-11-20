@@ -1,0 +1,254 @@
+{
+ "report": "smoke-webkit-report.json",
+ "startTime": "2026-11-18T23:16:58.036Z",
+ "durationMs": 363746.69,
+ "expected": 15,
+ "flaky": 2,
+ "unexpected": 0,
+ "skipped": 0,
+ "firstAttemptFailures": [
+  {
+   "title": "S4 training session (golden trace)",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  },
+  {
+   "title": "S6 room view and camera presets",
+   "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+  }
+ ],
+ "tests": [
+  {
+   "title": "S1 boot and assets",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 6126,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S2 forearm drill",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 13060,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S3 support and release",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 15825,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S4 training session (golden trace)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65536,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 14289,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — grasper (tray view)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5962,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — scope (tray view)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 6066,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — scissors (tray view)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 21164,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — needleHolder (tray view)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 6099,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — staff handover (#training-source = staff)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5671,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S6 room view and camera presets",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 65538,
+     "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. | Call log: |   - waiting for locator('#model-status[data-state=\"ready\"]')"
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 29567,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S7 internal anatomy",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10331,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S8 hands and locomotion",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 35184,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S9 port and scope",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 16100,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V1 default bedside view",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5275,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V2 forearm drill after approach",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 24655,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V3 room view preset",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 7315,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V4 internal anatomy full view",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 7454,
+     "error": null
+    }
+   ]
+  }
+ ]
+}

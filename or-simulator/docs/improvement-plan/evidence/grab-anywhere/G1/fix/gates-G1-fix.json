@@ -1,0 +1,97 @@
+{
+ "cluster": "G1",
+ "role": "implementer fix after independent verification (verify/verify-G1.json: blocking V1, V2)",
+ "branch": "grab-anywhere",
+ "baseCommit": "63ba7b2571be41942e3ff021c2cb87b9848c7d82",
+ "verifiedCommit": "84295af",
+ "fixCommits": ["2f77dca", "395c776"],
+ "date": "2026-11-18",
+ "browsers": {
+  "chrome": "installed Google Chrome 157 (headless; perf headed)",
+  "edge": "installed msedge channel (smoke)",
+  "webkit": "Playwright WebKit 27.2 on Windows (approximates Safari, not Safari)"
+ },
+ "label": "Every joint limit, threshold and blend below is DN5 illustrative - needs certified-clinician review (CR-09, CR-36).",
+ "blocking": {
+  "V1": {
+   "before": "Shoulder 170 -> 190 deg sweeps from the hanging arm: output jumped 120 deg (flexion) and 110 deg (abduction) at 180.25 deg; twist range widened to +-180 deg above 150 deg elevation.",
+   "rootCause": "The swing-twist split used the hanging-arm reference, whose 180 deg wrap is the flexion/abduction HARD value; the projection was nearest in the chart, which wraps there.",
+   "fix": [
+    "Shoulder swing-twist split about the anterior reference (doc 12 section 2.4): singularity posterior, 30 deg beyond the extension stop.",
+    "Swing limit kept in clinical hanging-arm terms (constant rotation to that limit chart).",
+    "Clamp projects the child axis to the nearest allowed direction on the sphere (coarse 32 points per quarter plus golden refinement), corrects by the shortest rotation, then clamps the twist about the limb at that direction.",
+    "Humeral rotation read from a swing-dependent neutral: hanging-arm neutral up to 120 deg elevation (readings identical to the hanging chart there), blended (smoothstep) to one overhead neutral halfway between the flexion and abduction paths by 180 deg (ASSUMED, DN5). IR 70 / ER 90 at every elevation; no widening.",
+    "Excess below 1e-9 rad is rounding (re-clamping a clamped rotation changes nothing)."
+   ],
+   "after": {
+    "shoulderOverhead170to190": "0 jumps; max output step 0.250 deg (flexion, scapular plane) and 0.566 deg (abduction) for 0.25 deg input steps; held within 1 deg of 180 deg elevation; fake rig and live rig (Chrome and WebKit, both sizes)",
+    "shoulderOverhead150to210": "0 jumps; output at most 2.35x the input step (abduction)",
+    "overheadRotationLimit": "160 deg of a 360 deg humeral turn untouched at elevations 90, 150, 165, 175, 179.9 and 180 deg on both paths and sides (160.5 at 180 deg right); one tie per full turn; IR always within [-90, 70]",
+    "overheadReadings": "pure flexion overhead reads IR -90 (at the ER 90 bound); pure abduction overhead reads IR +90 (clamped by 20 deg toward ER)"
+   }
+  },
+  "V2": {
+   "before": "SupportSurface.sd measured to the nearest face of 75 mm pads: calves 51.8 mm below the leg-pad tops read 23.2 mm, direction down; supportMaxMm 37.5 mm.",
+   "fix": [
+    "Resting surfaces (pads, arm boards, head rest) have no bottom face: inside a footprint, down to the bottom of the table-top stack, sd = -(nearest of the depth below the top and the four side distances), with that face's normal; never down.",
+    "depthBelowTop(p): plain depth below the highest resting top (the sinking reading).",
+    "skinPenetration reports both (support*, belowTop*), per support, the deepest vertex, downward exits and side exits.",
+    "supportAt reads resting boxes only."
+   ],
+   "after": {
+    "belowTopMaxMm": 51.81, "belowTopP95Mm": 41.72, "belowTopOver2mm": 2755, "belowTopVertices": 2954,
+    "independentInPage": {"maxMm": 51.81, "over2mm": 2755, "penetrating": 2954, "deeperThanHalfPad": 210},
+    "sdMaxMm": 51.81, "sdP95Mm": 36.58, "sdOver2mm": 2705, "downwardExits": 0,
+    "sideExits": {"vertices": 320, "maxSideDepthMm": 47.41, "maxBelowTopMm": 51.07, "belowTopMinusSideOver10mm": 200},
+    "deepest": "vertex 52206, shank.R, 51.81 mm below leg_L_pad",
+    "bySegmentMaxMm": {"shank": 51.8, "pelvis": 43.4, "thigh": 40.0, "chest": 37.3, "abdomen": 17.2, "head": 4.4, "hand": 1.2, "upperArm": 1.2},
+    "browsers": "identical in Chrome and WebKit at 1440x900 and 560x890"
+   }
+  }
+ },
+ "acceptance": [
+  {"check": "triSeg assigns 100% of non-privacy triangles; >=92% have w1>=0.65", "target": "100%; >=92%", "measured": "105,822/105,822; 94.17% (Chrome, WebKit, both sizes)", "pass": true},
+  {"check": ">=95% of each segment's dominant vertices outside its inner proxy", "target": ">=95%", "measured": "min 96.27% (head)", "pass": true},
+  {"check": "Each segment's lowest rest vertex is a sample", "target": "17/17", "measured": "17/17", "pass": true},
+  {"check": "SupportSurface pad tops within 1 mm of the GLB raycast", "target": "<=1 mm", "measured": "4.4e-13 mm over 1,049 points; same at the sitting deck", "pass": true},
+  {"check": "Joint model round trip", "target": "<=1e-9", "measured": "1.11e-15 rad parameters, 5.0e-16 quaternion", "pass": true},
+  {"check": "Nearest-point projection vs a 3,600-sample brute force", "target": "within 0.1 deg", "measured": "sphere projection (used by clamp): distance 5.3e-10 deg, point 2.96e-6 deg over 2,173 outside directions (730 near-ties: distance only); chart Newton: 3.26e-6 deg over 4,160", "pass": true},
+  {"check": "A continuous input path gives a continuous output path (incl. every joint's 180 deg wrap)", "target": "no jump except an unavoidable tie, never at a HARD value", "measured": "V1 case 170->190: 0 jumps (before 120/110 deg). Wrap sweeps 150->210 deg (18 paths per joint): 0 defects, ties only, each >=92.3 deg beyond a limit. Sweeps within 10 deg of any limit: 0 jumps, output <=3.69x input step. Within 25 deg: 0 defects, 0 swing ties. Swing ties start >=36.5 deg beyond the shoulder limit (5 deg separation) and >=70.9 deg for the other joints.", "pass": true},
+  {"check": "Overhead humerus keeps a rotation limit (V1)", "target": "finite, continuous", "measured": "160 deg of 360 allowed at every elevation up to 180 deg; 1 tie per full turn", "pass": true},
+  {"check": "Authored supine pose: 0 HARD", "target": "0 HARD", "measured": "0 HARD, 0 WARN (1 deg WARN deadband; before 2 WARN on 0.46 deg hip extension)", "pass": true},
+  {"check": "V1-V4 pixel diff 0 against 63ba7b2", "target": "0", "measured": "0 differing pixels rendered and page, Chrome and WebKit at 1440x900 and 560x890", "pass": true},
+  {"check": "npm test", "target": "all pass", "measured": "75/75", "pass": true},
+  {"check": "Smoke S1-S9 + V1-V4", "target": "green in Chrome, Edge, WebKit", "measured": "Chrome 17/17 (2f77dca and 395c776), Edge 17/17, WebKit 13 + 4 passed on retry (first attempts: boot timeout waiting for ready, U21)", "pass": true},
+  {"check": "S4 golden trace", "target": "identical", "measured": "20 entries identical to P1, P0 and G1 verify in Chrome, Edge, WebKit", "pass": true},
+  {"check": "Interaction suite", "target": "green", "measured": "Chrome 54 passed, 1 skipped by design (C3-9e at 560); WebKit C1-2b 2/2, C2-12 1440 pass, 560 pass on retry (first: boot timeout); click frame 22 ms, after move 25/33 ms", "pass": true},
+  {"check": "perf-capture V1-V4 M8/M9 rise", "target": "<=+10%", "measured": "M8 +0.20%, M9 +0.22% max (V3/V4 active); 0 console errors; M10 warm median 1378 ms (Q1 1197, G1 verify 1233), cold 1813 (Q1 1736, G1 verify 1928)", "pass": true},
+  {"check": "M11 = 0", "target": "0", "measured": "0 in every passing attempt; WebKit first attempts failed only by boot timeout or 'WebGL: context lost.'", "pass": true},
+  {"check": "Load-time cost (Chrome)", "target": "<=50 ms", "measured": "46.4 / 46.5 ms synchronous (joints 1.0-1.1, supports 1.2); WebKit 50 / 52 ms (1 ms timer); proxy fit 51-64 ms deferred to first use", "pass": true},
+  {"check": "S1 module count", "target": "deliberate", "measured": "28, unchanged (no module added)", "pass": true},
+  {"check": "Kind 'wrist' alias, SUPPORTED_EVENTS", "target": "unchanged", "measured": "no event or grip code touched; S4 identical", "pass": true},
+  {"check": "DN5 labels", "target": "every clinical value", "measured": "new ASSUMED values (neutral blend 120-180 deg, halfway overhead neutral, 1 deg WARN deadband) documented in JointModel.js; jointClampSweep and jointAngles carry the label", "pass": true}
+ ],
+ "webkitBoot": "One shared WebKit process, 12 loads per tree in ABBA order: fix 12/12 ready (1 context loss recovered), base 63ba7b2 8/12 (failures at load positions 6, 13, 17, 21, all base). probe/webkit-boot-probe-shared.json.",
+ "nonBlocking": {
+  "innerProxiesInsideSkin": "not changed (G3: needs a skin-tight self-contact measure); selfMaxMm is labelled a lower bound",
+  "hipRotationZero": "not changed (G4); supine hip reads IR 9.46 deg",
+  "warnDeadband": "fixed: 1 deg (ASSUMED)",
+  "proxyFitTiming": "not changed (G3 must schedule the 51-64 ms fit before the first grab)",
+  "designDeviations": "shoulder reference now anterior as doc 12 says, with a swing-dependent rotation neutral (new, needs owner sign-off); proxies still elliptic slices",
+  "supportAtAllBoxes": "fixed: resting boxes only",
+  "ofHitPrivacy": "fixed: part null and pickable false for privacy and eyes",
+  "g1eSlerpBranch": "not changed (no authored pose moves those bones)",
+  "smokeRequestFailedHandler": "fixed: r.failure()",
+  "sittingPose": "reads 6 HARD (before 4): elbows twist 0.32 deg (same), knees off-axis 12.46 deg on the sphere (16.68 deg in the chart before) plus a knee twist 5.20 deg beyond +-4 after the minimal swing correction (probe/sitting-pose-hard-before-after.json)"
+ },
+ "files": {
+  "liveRig": "serve-chrome-headless/, serve-webkit-headless/ (G1-a..f on 395c776)",
+  "suites": "suites/ (S1, S4 per browser; C2-12; suite-summary.json)",
+  "pixelDiff": "pixel-diff/",
+  "perf": "perf/ (compare-q1-g1-fix.json)",
+  "unit": "unit-tests.json",
+  "probes": "probe/ (verifier's jm-adversarial.mjs re-run, swing jump maps, random-rotation and band sweeps, sitting before/after, WebKit boot)",
+  "scripts": "scripts/ (absolute paths of this machine)"
+ },
+ "verifierScriptNote": "verify/scripts/jm-adversarial.mjs sweeps qRel in each joint's own frame. The shoulder's frame is now anterior, so its '+y 170-190' path turns the arm horizontally through straight back (about 30 deg beyond the extension stop) with the humerus turned about 171-180 deg; its 160 deg step at 189 deg is the twist tie, 99.8 deg beyond both rotation bounds. Its '+z' path now gives 0.000 deg jumps. The clinical-terms sweeps are unit tests and G1-f."
+}

@@ -1,0 +1,275 @@
+{
+ "unrestrictedWalks": {
+  "shoulder.L": {
+   "steps": 200000,
+   "jumps": 0,
+   "minBeyond": "none",
+   "within25": 0,
+   "byBeyond": {},
+   "examples": [],
+   "maxRatio": 2.275942991574471,
+   "maxRatioNear": 2.275942991574471
+  },
+  "hip.L": {
+   "steps": 200000,
+   "jumps": 171,
+   "minBeyond": 109.93112243812713,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 171
+   },
+   "examples": [],
+   "maxRatio": 2.5134430980564453,
+   "maxRatioNear": 0
+  },
+  "elbow.L": {
+   "steps": 200000,
+   "jumps": 50,
+   "minBeyond": 175.8299913198769,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 50
+   },
+   "examples": [],
+   "maxRatio": 2.1907143407856844,
+   "maxRatioNear": 0
+  },
+  "knee.L": {
+   "steps": 200000,
+   "jumps": 99,
+   "minBeyond": 85.52154595595157,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 90,
+    "70-92": 9
+   },
+   "examples": [],
+   "maxRatio": 31.382100170223072,
+   "maxRatioNear": 0
+  },
+  "wrist.L": {
+   "steps": 200000,
+   "jumps": 63,
+   "minBeyond": 114.29341193865393,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 63
+   },
+   "examples": [],
+   "maxRatio": 5.399772430952773,
+   "maxRatioNear": 1.016047014290437
+  },
+  "ankle.L": {
+   "steps": 200000,
+   "jumps": 0,
+   "minBeyond": "none",
+   "within25": 0,
+   "byBeyond": {},
+   "examples": [],
+   "maxRatio": 1.8256600072132974,
+   "maxRatioNear": 0
+  },
+  "shoulder.R": {
+   "steps": 200000,
+   "jumps": 252,
+   "minBeyond": 55.2073160027791,
+   "within25": 0,
+   "byBeyond": {
+    "36.5-70": 252
+   },
+   "examples": [],
+   "maxRatio": 1.6123072328797117,
+   "maxRatioNear": 1.1685162090560084
+  },
+  "hip.R": {
+   "steps": 200000,
+   "jumps": 0,
+   "minBeyond": "none",
+   "within25": 0,
+   "byBeyond": {},
+   "examples": [],
+   "maxRatio": 3.077874648184187,
+   "maxRatioNear": 0
+  },
+  "elbow.R": {
+   "steps": 200000,
+   "jumps": 50,
+   "minBeyond": 175.8299913198769,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 50
+   },
+   "examples": [],
+   "maxRatio": 2.1907143407856844,
+   "maxRatioNear": 0
+  },
+  "knee.R": {
+   "steps": 200000,
+   "jumps": 99,
+   "minBeyond": 85.52154595595157,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 90,
+    "70-92": 9
+   },
+   "examples": [],
+   "maxRatio": 31.382100170223072,
+   "maxRatioNear": 0
+  },
+  "wrist.R": {
+   "steps": 200000,
+   "jumps": 0,
+   "minBeyond": "none",
+   "within25": 0,
+   "byBeyond": {},
+   "examples": [],
+   "maxRatio": 2.3973749435977165,
+   "maxRatioNear": 1.0114810490031043
+  },
+  "ankle.R": {
+   "steps": 200000,
+   "jumps": 0,
+   "minBeyond": "none",
+   "within25": 0,
+   "byBeyond": {},
+   "examples": [],
+   "maxRatio": 1.9513156655677846,
+   "maxRatioNear": 0
+  },
+  "neck": {
+   "steps": 200000,
+   "jumps": 101,
+   "minBeyond": 100.37339080669365,
+   "within25": 0,
+   "byBeyond": {
+    ">=92": 101
+   },
+   "examples": [],
+   "maxRatio": 5.581539014199149,
+   "maxRatioNear": 0
+  }
+ },
+ "shoulder.L greatCirclesThroughOverhead": {
+  "steps": 1658880,
+  "jumps": 9826,
+  "minBeyond": 41.22722427217631,
+  "within25": 0,
+  "byBeyond": {
+   ">=92": 2510,
+   "36.5-70": 5360,
+   "70-92": 1956
+  },
+  "examples": [],
+  "maxRatio": 7.9948443124033854,
+  "maxRatioNear": 3.931860378940894
+ },
+ "shoulder.L azimuthCircles": {
+  "steps": 725760,
+  "jumps": 1424,
+  "minBeyond": 39.98505062333407,
+  "within25": 0,
+  "byBeyond": {
+   ">=92": 907,
+   "70-92": 125,
+   "36.5-70": 392
+  },
+  "examples": [],
+  "maxRatio": 7.594901855446978,
+  "maxRatioNear": 1.1604553840925513
+ },
+ "shoulder.R greatCirclesThroughOverhead": {
+  "steps": 1658880,
+  "jumps": 9826,
+  "minBeyond": 41.22722427217627,
+  "within25": 0,
+  "byBeyond": {
+   ">=92": 2510,
+   "36.5-70": 5360,
+   "70-92": 1956
+  },
+  "examples": [],
+  "maxRatio": 7.994844312767603,
+  "maxRatioNear": 3.931860378940894
+ },
+ "shoulder.R azimuthCircles": {
+  "steps": 725760,
+  "jumps": 1423,
+  "minBeyond": 39.98505062333407,
+  "within25": 0,
+  "byBeyond": {
+   ">=92": 906,
+   "36.5-70": 392,
+   "70-92": 125
+  },
+  "examples": [],
+  "maxRatio": 7.5948939790531735,
+  "maxRatioNear": 1.16045339275276
+ },
+ "idempotence": {
+  "shoulder.L": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004182619578303746
+  },
+  "hip.L": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004182619578303746
+  },
+  "elbow.L": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004182619578303746
+  },
+  "knee.L": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  },
+  "wrist.L": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004182619578303746
+  },
+  "ankle.L": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  },
+  "shoulder.R": {
+   "changedAgain": 1,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004182619578303746
+  },
+  "hip.R": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  },
+  "elbow.R": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  },
+  "knee.R": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  },
+  "wrist.R": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004182619578303746
+  },
+  "ankle.R": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  },
+  "neck": {
+   "changedAgain": 0,
+   "hardAfterOf2000": 0,
+   "maxReclampDeg": 0.000004517745487845101
+  }
+ }
+}

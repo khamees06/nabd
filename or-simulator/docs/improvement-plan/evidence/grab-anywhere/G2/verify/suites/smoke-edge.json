@@ -1,0 +1,233 @@
+{
+ "report": "smoke-edge-report.json",
+ "startTime": "2026-11-18T23:57:49.694Z",
+ "durationMs": 144534.411,
+ "expected": 17,
+ "flaky": 0,
+ "unexpected": 0,
+ "skipped": 0,
+ "firstAttemptFailures": [],
+ "tests": [
+  {
+   "title": "S1 boot and assets",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 6007,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S2 forearm drill",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10078,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S3 support and release",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 12846,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S4 training session (golden trace)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 9972,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — grasper (tray view)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4694,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — scope (tray view)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4764,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — scissors (tray view)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4786,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — needleHolder (tray view)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4743,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S5 instruments — staff handover (#training-source = staff)",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 3575,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S6 room view and camera presets",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 25978,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S7 internal anatomy",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 8852,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S8 hands and locomotion",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 13209,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "S9 port and scope",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 10683,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V1 default bedside view",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 4169,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V2 forearm drill after approach",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 7276,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V3 room view preset",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5709,
+     "error": null
+    }
+   ]
+  },
+  {
+   "title": "V4 internal anatomy full view",
+   "project": "edge",
+   "outcome": "expected",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "passed",
+     "ms": 5734,
+     "error": null
+    }
+   ]
+  }
+ ]
+}

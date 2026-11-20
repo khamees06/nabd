@@ -1,0 +1,119 @@
+{
+  "check": "Q1-c-context-restore-1440x900",
+  "cluster": "Q1",
+  "server": "serve",
+  "project": "edge",
+  "browser": "chromium",
+  "browserVersion": "157.0.4341.60",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T01:11:04.362Z",
+  "attempt": 0,
+  "webglContextLostMessages": 1,
+  "result": {
+    "gpuTimerSwitch": {
+      "available": true,
+      "enabled": true
+    },
+    "boot": {
+      "contextLost": false,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rendererRebuilds": 0,
+      "lostFrames": 0,
+      "gpuTimerResets": 0,
+      "frames": 36,
+      "gpuMs": 22.255,
+      "gpuSamples": 5
+    },
+    "before": {
+      "glDraws": 2416,
+      "glTris": 714680,
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "liveInfoCalls": 1206,
+      "liveInfoTris": 387848,
+      "shadowMapRender": "countedShadowRender",
+      "render": "countedRender"
+    },
+    "lose": {
+      "extension": true
+    },
+    "whileLost": {
+      "contextLost": true,
+      "framesAdded": 0,
+      "lostFramesAdded": 12,
+      "shadowUpdatesAdded": 0
+    },
+    "after": {
+      "glDraws": 2416,
+      "glTris": 714680,
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "liveInfoCalls": 1206,
+      "liveInfoTris": 387848,
+      "shadowMapRender": "countedShadowRender",
+      "render": "countedRender"
+    },
+    "replaced": {
+      "shadowMap": true,
+      "info": true
+    },
+    "oneSecondAfter": {
+      "frames": 12,
+      "shadowUpdates": 12
+    },
+    "overlay": {
+      "drawCalls": 1206,
+      "triangles": 387848
+    },
+    "render": {
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "shadowUpdates": 69,
+      "frames": 69,
+      "census": {
+        "light": "DirectionalLight",
+        "type": "DirectionalLight",
+        "lit": true,
+        "mapSize": [
+          2048,
+          2048
+        ],
+        "autoUpdate": true,
+        "casters": 1404,
+        "visible": 1212,
+        "drawn": 1210,
+        "alwaysDrawn": 372,
+        "drawCalls": 1210,
+        "sphereMissing": 0
+      },
+      "gpuTimer": "on",
+      "gpuMs": 21.015,
+      "gpuSamples": 31,
+      "contextLost": false,
+      "contextLosses": 1,
+      "contextRestores": 1,
+      "rendererRebuilds": 1,
+      "lostFrames": 13,
+      "gpuTimerResets": 1
+    },
+    "appNotice": {
+      "modelStatus": "error",
+      "loading": true
+    }
+  },
+  "contextConsole": [
+    "log: THREE.WebGLRenderer: Context Lost.",
+    "log: THREE.WebGLRenderer: Context Restored."
+  ],
+  "errors": []
+}

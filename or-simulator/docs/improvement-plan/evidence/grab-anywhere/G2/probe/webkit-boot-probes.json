@@ -1,0 +1,151 @@
+{
+ "what": "Playwright WebKit on Windows boot probes, one shared process per run (a new context per load, as the suites do), ready within 45 s; base = c2b9409 (exported tree), work = G2 working tree",
+ "interleaved": {
+  "ABBA": {
+   "base": {
+    "loads": 10,
+    "ready": 10,
+    "withContextLost": 0,
+    "lostAndRecovered": 0,
+    "otherErrors": 0,
+    "readyMsMedian": 3191
+   },
+   "work": {
+    "loads": 10,
+    "ready": 5,
+    "withContextLost": 5,
+    "lostAndRecovered": 0,
+    "otherErrors": 0,
+    "readyMsMedian": 3240
+   },
+   "failedLoads": [
+    [
+     3,
+     "work"
+    ],
+    [
+     7,
+     "work"
+    ],
+    [
+     11,
+     "work"
+    ],
+    [
+     15,
+     "work"
+    ],
+    [
+     19,
+     "work"
+    ]
+   ],
+   "lostLoads": [
+    [
+     3,
+     "work"
+    ],
+    [
+     7,
+     "work"
+    ],
+    [
+     11,
+     "work"
+    ],
+    [
+     15,
+     "work"
+    ],
+    [
+     19,
+     "work"
+    ]
+   ]
+  },
+  "BAAB": {
+   "base": {
+    "loads": 10,
+    "ready": 10,
+    "withContextLost": 1,
+    "lostAndRecovered": 1,
+    "otherErrors": 0,
+    "readyMsMedian": 3187
+   },
+   "work": {
+    "loads": 10,
+    "ready": 7,
+    "withContextLost": 4,
+    "lostAndRecovered": 1,
+    "otherErrors": 0,
+    "readyMsMedian": 3246
+   },
+   "failedLoads": [
+    [
+     6,
+     "work"
+    ],
+    [
+     10,
+     "work"
+    ],
+    [
+     14,
+     "work"
+    ]
+   ],
+   "lostLoads": [
+    [
+     3,
+     "base"
+    ],
+    [
+     6,
+     "work"
+    ],
+    [
+     10,
+     "work"
+    ],
+    [
+     14,
+     "work"
+    ],
+    [
+     18,
+     "work"
+    ]
+   ]
+  }
+ },
+ "aloneOneProcess": {
+  "base": {
+   "ready": 10,
+   "of": 12,
+   "fails": [
+    3,
+    7
+   ],
+   "contextLost": [
+    3,
+    7,
+    11
+   ]
+  },
+  "work": {
+   "ready": 9,
+   "of": 12,
+   "fails": [
+    3,
+    7,
+    11
+   ],
+   "contextLost": [
+    3,
+    7,
+    11
+   ]
+  }
+ },
+ "reading": "Every 4th load of a process loses its WebGL context (loads 3, 7, 11 of 0-based), for the base and the G2 tree alike when each runs alone; whether the page recovers within 45 s varies (base 1 of 3 recovered, work 0 of 3). In the interleaved runs the losing positions fell on work loads (ABBA 5/5, BAAB 3 failures + 1 recovered, base 1 recovered), which the alone runs do not support as a tree effect. Every first-attempt failure in the WebKit suites was a ready timeout or \"WebGL: context lost.\" and passed on retry (U21). Not caused by G2 as far as these probes show; samples are small."
+}

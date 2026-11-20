@@ -1,0 +1,282 @@
+{
+  "check": "G2-b-drawn-table-560x890",
+  "cluster": "G2",
+  "server": "serve",
+  "project": "webkit",
+  "browser": "webkit",
+  "browserVersion": "27.2",
+  "viewport": {
+    "width": 560,
+    "height": 890
+  },
+  "capturedAt": "2026-11-18T23:14:18.718Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "drawn": {
+    "topY": 0.8475,
+    "carrier": {
+      "visible": false
+    },
+    "plateBottomY": 0.709999999627471,
+    "below": [],
+    "ring": {
+      "parent": "Nabd_Operating_Table_Top_GLTF",
+      "castShadow": true,
+      "receiveShadow": true,
+      "material": "Gel head ring (G2, DN5 illustrative)",
+      "triangles": 1040,
+      "worldY": 0.9
+    }
+  },
+  "supports": {
+    "buildMs": 1,
+    "boxes": 69,
+    "deckMeasuredAt": 0.8475,
+    "offset": 0,
+    "rootRotatedOrScaled": false,
+    "kinds": {
+      "deck": 6,
+      "pad": 5,
+      "trim": 8,
+      "fitting": 18,
+      "headrest": 3,
+      "rail": 16,
+      "armboard": 6,
+      "control": 7
+    },
+    "resting": [
+      {
+        "name": "head_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2524999976158142,
+          0.2524999976158142
+        ],
+        "z": [
+          -0.9809999993443489,
+          -0.7390000006556511
+        ]
+      },
+      {
+        "name": "back_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2824999988079071,
+          0.2824999988079071
+        ],
+        "z": [
+          -0.7009999907016754,
+          -0.01900000929832457
+        ]
+      },
+      {
+        "name": "seat_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2824999988079071,
+          0.2824999988079071
+        ],
+        "z": [
+          0.013999995589256298,
+          0.3860000044107437
+        ]
+      },
+      {
+        "name": "leg_L_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2725000023841858,
+          -0.027499997615814217
+        ],
+        "z": [
+          0.5149999976158142,
+          0.8850000023841857
+        ]
+      },
+      {
+        "name": "leg_R_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          0.027499997615814217,
+          0.2725000023841858
+        ],
+        "z": [
+          0.5149999976158142,
+          0.8850000023841857
+        ]
+      },
+      {
+        "name": "headrest_cushion",
+        "kind": "headrest",
+        "topY": 0.9275000017881394,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2150000035762787,
+          0.2150000035762787
+        ],
+        "z": [
+          -1.1399999994039536,
+          -0.9200000005960465
+        ]
+      },
+      {
+        "name": "headrest_top",
+        "kind": "headrest",
+        "topY": 0.9550000008940697,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.20000000298023224,
+          0.20000000298023224
+        ],
+        "z": [
+          -1.1249999988079071,
+          -0.9350000011920929
+        ]
+      },
+      {
+        "name": "L_armboard_plate",
+        "kind": "armboard",
+        "topY": 0.8250000000745058,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          -0.613500005364418,
+          -0.3434999946355819
+        ],
+        "z": [
+          -0.72,
+          -0.21999999999999997
+        ]
+      },
+      {
+        "name": "L_armboard_pad",
+        "kind": "armboard",
+        "topY": 0.8799999998509884,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          -0.6010000023841857,
+          -0.35599999761581413
+        ],
+        "z": [
+          -0.7049999994039535,
+          -0.23500000059604642
+        ]
+      },
+      {
+        "name": "L_armboard_top",
+        "kind": "armboard",
+        "topY": 0.8984999996125699,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          -0.5909999970197677,
+          -0.36600000298023216
+        ],
+        "z": [
+          -0.6924999964237213,
+          -0.24750000357627866
+        ]
+      },
+      {
+        "name": "R_armboard_plate",
+        "kind": "armboard",
+        "topY": 0.8250000000745058,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          0.3434999946355819,
+          0.613500005364418
+        ],
+        "z": [
+          -0.72,
+          -0.21999999999999997
+        ]
+      },
+      {
+        "name": "R_armboard_pad",
+        "kind": "armboard",
+        "topY": 0.8799999998509884,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          0.35599999761581413,
+          0.6010000023841857
+        ],
+        "z": [
+          -0.7049999994039535,
+          -0.23500000059604642
+        ]
+      },
+      {
+        "name": "R_armboard_top",
+        "kind": "armboard",
+        "topY": 0.8984999996125699,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          0.36600000298023216,
+          0.5909999970197677
+        ],
+        "z": [
+          -0.6924999964237213,
+          -0.24750000357627866
+        ]
+      },
+      {
+        "name": "head_ring_gel",
+        "kind": "headrest",
+        "topY": 0.9549999997019768,
+        "stackBottomY": 0.9,
+        "x": [
+          -0.10999999940395355,
+          0.10999999940395355
+        ],
+        "z": [
+          -0.8220000014901161,
+          -0.6219999985098839
+        ]
+      }
+    ],
+    "deck": 0.9,
+    "check": {
+      "samples": 1127,
+      "worstErrorMm": 6.661338147750939e-13,
+      "worstAt": {
+        "name": "head_ring_gel",
+        "x": 0,
+        "z": -0.6959999907016754,
+        "raycastY": 0.9111405344784412,
+        "supportY": 0.9111405344784406
+      }
+    }
+  },
+  "ring": {
+    "triangles": 1040,
+    "vertices": 600,
+    "centre": [
+      0,
+      -0.722
+    ],
+    "semiAxes": [
+      0.11,
+      0.1
+    ],
+    "hole": 0.25,
+    "freeHeight": 0.055,
+    "clearance": 0.001,
+    "maxHeight": 0.055,
+    "clampedVertices": 33,
+    "touchingVertices": 50,
+    "topVertices": 520,
+    "baseY": 0.9,
+    "fieldTriangles": 31034,
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+  },
+  "shots": {},
+  "errors": []
+}

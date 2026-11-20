@@ -1,0 +1,422 @@
+{
+ "browserName": "chrome",
+ "size": "1440x900",
+ "startedAt": "2026-11-18T18:46:11.937Z",
+ "browserVersion": "157.0.8103.79",
+ "v2": {
+  "restingMeshes": [
+   "head_pad",
+   "back_pad",
+   "seat_pad",
+   "leg_L_pad",
+   "leg_R_pad",
+   "headrest_cushion",
+   "headrest_top",
+   "L_armboard_plate",
+   "L_armboard_pad",
+   "L_armboard_top",
+   "R_armboard_plate",
+   "R_armboard_pad",
+   "R_armboard_top"
+  ],
+  "readout": {
+   "supportMaxMm": 51.8100071002432,
+   "supportP95Mm": 36.5768137185023,
+   "belowTopMaxMm": 51.8100071002432,
+   "belowTopP95Mm": 41.71803452694933,
+   "belowTopOver2mm": 2755,
+   "belowTopVertices": 2954,
+   "supportDownward": 0,
+   "sideExit": {
+    "vertices": 320,
+    "maxSideDepthMm": 47.41049530670627,
+    "maxBelowTopMm": 51.07089442469304,
+    "belowTopMinusSideOver10mm": 200
+   },
+   "supportDeepest": {
+    "vertex": 52206,
+    "depthMm": 51.8100071002432,
+    "support": "leg_L_pad",
+    "segment": "shank.R",
+    "y": 0.900689994389873
+   },
+   "bySupport": {
+    "back_pad": {
+     "kind": "pad",
+     "vertices": 1658,
+     "over2mm": 1522,
+     "maxDepthMm": 37.3272292118435
+    },
+    "head_pad": {
+     "kind": "pad",
+     "vertices": 12,
+     "over2mm": 4,
+     "maxDepthMm": 2.363994627717636
+    },
+    "seat_pad": {
+     "kind": "pad",
+     "vertices": 670,
+     "over2mm": 603,
+     "maxDepthMm": 43.41655263119021
+    },
+    "leg_R_pad": {
+     "kind": "pad",
+     "vertices": 307,
+     "over2mm": 289,
+     "maxDepthMm": 51.810002034718636
+    },
+    "leg_L_pad": {
+     "kind": "pad",
+     "vertices": 307,
+     "over2mm": 287,
+     "maxDepthMm": 51.8100071002432
+    }
+   },
+   "ms": 317.7000000476837
+  },
+  "own": {
+   "maxMm": 51.8100071002432,
+   "p95Mm": 41.71803452694933,
+   "over2mm": 2755,
+   "penetrating": 2954
+  },
+  "perVertex": {
+   "depthBelowTopVsOwnMaxDiffMm": 0,
+   "sdMaxMm": 51.8100071002432,
+   "downwardNormals": 0,
+   "sdDeeperThanDepthBelowTop": 0,
+   "sideExits": 320,
+   "sideExitsIntoSolid": 0,
+   "sideIntoSolidMaxDepthMm": 0,
+   "sideRows": []
+  }
+ },
+ "v2grid": {
+  "points": 60000,
+  "inResingColumns": 10533,
+  "downwardNormals": 566,
+  "insideColumnReadOutside": 0,
+  "lipschitzViolations": 0,
+  "worstLipschitzRatio": 0.9999483879304412
+ },
+ "v1": {
+  "supineHard": 0,
+  "supineMaxDiffVsAppDeg": 0,
+  "appHard": 0,
+  "appWarn": 0,
+  "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+  "sweeps": {
+   "shoulder.L flexion 170-190": {
+    "jumps": 0,
+    "maxStepDeg": 0.25000000001809924,
+    "maxRatio": 1,
+    "end": {
+     "elevation": 179.6796233268649,
+     "flexion": -179.9932327853746,
+     "abduction": 179.67969480272157,
+     "internalRotation": -90
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.L flexion 150-210": {
+    "jumps": 0,
+    "maxStepDeg": 0.25000000001809924,
+    "maxRatio": 1,
+    "end": {
+     "elevation": 176.40915264763566,
+     "flexion": -179.74220770699822,
+     "abduction": 176.41837000252298,
+     "internalRotation": -90
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.L flexion 90-270": {
+    "jumps": 42,
+    "maxStepDeg": 1.945293228444663,
+    "maxRatio": 7.781172913215318,
+    "end": {
+     "elevation": 60.00000000000001,
+     "flexion": -60.00000000000001,
+     "abduction": -9.887150107632352e-30,
+     "internalRotation": -4.593249774770632e-15
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.L abduction 170-190": {
+    "jumps": 0,
+    "maxStepDeg": 0.56558160838292,
+    "maxRatio": 2.2623264334734356,
+    "end": {
+     "elevation": 179.54244979850424,
+     "flexion": 179.54265786736195,
+     "abduction": -179.98620229093888,
+     "internalRotation": 70
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.L abduction 150-210": {
+    "jumps": 0,
+    "maxStepDeg": 0.5874082378745671,
+    "maxRatio": 2.349632951382969,
+    "end": {
+     "elevation": 174.7692561617,
+     "flexion": 174.79748936261197,
+     "abduction": -179.4542665317571,
+     "internalRotation": 69.99999999999997
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.L abduction 90-270": {
+    "jumps": 44,
+    "maxStepDeg": 1.959036055472072,
+    "maxRatio": 7.836144221686544,
+    "end": {
+     "elevation": 70,
+     "flexion": -5.5795918635733994e-14,
+     "abduction": -70,
+     "internalRotation": 3.81666561775622e-14
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.L twist at 90": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.L twist at 120": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.L twist at 150": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.L twist at 165": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.L twist at 175": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.L twist at 179.5": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.L twist at 180": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R flexion 170-190": {
+    "jumps": 0,
+    "maxStepDeg": 0.25000000001809924,
+    "maxRatio": 1,
+    "end": {
+     "elevation": 179.6796222590002,
+     "flexion": -179.99323275150968,
+     "abduction": 179.679693735334,
+     "internalRotation": -90
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.R flexion 150-210": {
+    "jumps": 0,
+    "maxStepDeg": 0.25000000001809924,
+    "maxRatio": 1,
+    "end": {
+     "elevation": 176.4091515504994,
+     "flexion": -179.7422075874391,
+     "abduction": 176.41836891109452,
+     "internalRotation": -90
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.R flexion 90-270": {
+    "jumps": 42,
+    "maxStepDeg": 1.9453019866697105,
+    "maxRatio": 7.781207946115506,
+    "end": {
+     "elevation": 60.00000000000001,
+     "flexion": -60.00000000000001,
+     "abduction": 9.887150107632352e-30,
+     "internalRotation": 4.593249774770632e-15
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.R abduction 170-190": {
+    "jumps": 0,
+    "maxStepDeg": 0.5655816083854978,
+    "maxRatio": 2.2623264334837465,
+    "end": {
+     "elevation": 179.54245003656408,
+     "flexion": 179.54265810520482,
+     "abduction": -179.98620230172114,
+     "internalRotation": 70.00000000000001
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.R abduction 150-210": {
+    "jumps": 0,
+    "maxStepDeg": 0.5874082378770489,
+    "maxRatio": 2.349632951392896,
+    "end": {
+     "elevation": 174.76925744896533,
+     "flexion": 174.79749063572427,
+     "abduction": -179.4542667369776,
+     "internalRotation": 70
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.R abduction 90-270": {
+    "jumps": 44,
+    "maxStepDeg": 1.9590271623094468,
+    "maxRatio": 7.836108649036044,
+    "end": {
+     "elevation": 70.00000000000001,
+     "flexion": 1.8598639545244688e-14,
+     "abduction": -70.00000000000001,
+     "internalRotation": 2.5444437451708134e-14
+    },
+    "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+   },
+   "shoulder.R twist at 90": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R twist at 120": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R twist at 150": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R twist at 165": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R twist at 175": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R twist at 179.5": {
+    "jumps": 1,
+    "maxRatio": 1
+   },
+   "shoulder.R twist at 180": {
+    "jumps": 1,
+    "maxRatio": 1
+   }
+  },
+  "great": {
+   "shoulder.L": {
+    "steps": 552960,
+    "jumps": 3266,
+    "minBeyond": 41.683890604108846,
+    "within25": 0,
+    "maxRatioWithin10": 3.9283732320232243
+   },
+   "shoulder.R": {
+    "steps": 552960,
+    "jumps": 3266,
+    "minBeyond": 41.68389060410888,
+    "within25": 0,
+    "maxRatioWithin10": 3.9283732319994726
+   }
+  },
+  "near": {
+   "shoulder.L": {
+    "steps": 120000,
+    "jumps": 1,
+    "minBeyond": 99.89382468469427,
+    "within25": 0,
+    "maxRatioWithin10": 3.314413222005919
+   },
+   "hip.L": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.21744869615988
+   },
+   "elbow.L": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 3.611711081012325
+   },
+   "knee.L": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 2.563010541099137
+   },
+   "wrist.L": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.1940960621208139
+   },
+   "ankle.L": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.0800125076546647
+   },
+   "shoulder.R": {
+    "steps": 120000,
+    "jumps": 3,
+    "minBeyond": 26.988281008803966,
+    "within25": 0,
+    "maxRatioWithin10": 3.3225747497139198
+   },
+   "hip.R": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.3415244981014776
+   },
+   "elbow.R": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 2.901750654636408
+   },
+   "knee.R": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 2.6124703729277634
+   },
+   "wrist.R": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.2333810910004421
+   },
+   "ankle.R": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.1160638242707213
+   },
+   "neck": {
+    "steps": 120000,
+    "jumps": 0,
+    "minBeyond": 1000000000,
+    "within25": 0,
+    "maxRatioWithin10": 1.1293592866552593
+   }
+  }
+ },
+ "errors": 0,
+ "console": []
+}

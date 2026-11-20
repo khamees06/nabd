@@ -1,0 +1,100 @@
+{
+ "report": "ev-webkit-inter-report.json",
+ "stats": {
+  "startTime": "2026-11-18T22:39:22.666Z",
+  "duration": 287439.169,
+  "expected": 4,
+  "skipped": 0,
+  "unexpected": 0,
+  "flaky": 2
+ },
+ "expected": 4,
+ "flaky": 2,
+ "unexpected": 0,
+ "skipped": 0,
+ "notPassed": [
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+   "file": "interaction.spec.mjs",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 40207,
+     "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3 | - Array [] | + Array [",
+     "stdoutContextLost": false
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 25437,
+     "error": null,
+     "stdoutContextLost": false
+    }
+   ]
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (560x890)",
+   "file": "interaction.spec.mjs",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": [
+    {
+     "retry": 0,
+     "status": "failed",
+     "ms": 64139,
+     "error": "Error: M11 = 0 | expect(received).toEqual(expected) // deep equality | - Expected  - 1 | + Received  + 3 | - Array [] | + Array [",
+     "stdoutContextLost": false
+    },
+    {
+     "retry": 1,
+     "status": "passed",
+     "ms": 48845,
+     "error": null,
+     "stdoutContextLost": false
+    }
+   ]
+  }
+ ],
+ "skippedTitles": [],
+ "tests": [
+  {
+   "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (560x890)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": 2
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (1440x900)",
+   "project": "webkit",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (560x890)",
+   "project": "webkit",
+   "outcome": "flaky",
+   "attempts": 2
+  }
+ ]
+}

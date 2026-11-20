@@ -1,0 +1,173 @@
+{
+  "check": "G1-d-skin-penetration-1440x900",
+  "cluster": "G1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T18:19:03.064Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "penetration": {
+    "vertices": 70278,
+    "supportMaxMm": 51.8100071002432,
+    "supportP95Mm": 36.5768137185023,
+    "supportPenetrating": 2954,
+    "over2mm": 2705,
+    "supportDeepest": {
+      "vertex": 52206,
+      "depthMm": 51.8100071002432,
+      "support": "leg_L_pad",
+      "segment": "shank.R",
+      "y": 0.900689994389873
+    },
+    "supportDownward": 0,
+    "bySupport": {
+      "back_pad": {
+        "kind": "pad",
+        "vertices": 1658,
+        "over2mm": 1522,
+        "maxDepthMm": 37.3272292118435
+      },
+      "head_pad": {
+        "kind": "pad",
+        "vertices": 12,
+        "over2mm": 4,
+        "maxDepthMm": 2.363994627717636
+      },
+      "seat_pad": {
+        "kind": "pad",
+        "vertices": 670,
+        "over2mm": 603,
+        "maxDepthMm": 43.41655263119021
+      },
+      "leg_R_pad": {
+        "kind": "pad",
+        "vertices": 307,
+        "over2mm": 289,
+        "maxDepthMm": 51.810002034718636
+      },
+      "leg_L_pad": {
+        "kind": "pad",
+        "vertices": 307,
+        "over2mm": 287,
+        "maxDepthMm": 51.8100071002432
+      }
+    },
+    "supportMethod": "signed distance with no bottom face for resting surfaces (way out through the top or a side); signed box distance for rails, trim, fittings and the deck",
+    "belowTopMaxMm": 51.8100071002432,
+    "belowTopP95Mm": 41.71803452694933,
+    "belowTopOver2mm": 2755,
+    "belowTopVertices": 2954,
+    "sideExit": {
+      "vertices": 320,
+      "maxSideDepthMm": 47.41049530670627,
+      "maxBelowTopMm": 51.07089442469304,
+      "belowTopMinusSideOver10mm": 200
+    },
+    "selfMaxMm": 0,
+    "selfWorstPair": null,
+    "selfMethod": "depth inside non-adjacent inner proxies (a lower bound: proxies sit 3-25 mm inside the skin)",
+    "bySegment": {
+      "abdomen": {
+        "minGapMm": -17.24420083054912,
+        "maxDepthMm": 17.24420083054912,
+        "selfMaxMm": 0
+      },
+      "pelvis": {
+        "minGapMm": -43.41655263119021,
+        "maxDepthMm": 43.41655263119021,
+        "selfMaxMm": 0
+      },
+      "chest": {
+        "minGapMm": -37.3272292118435,
+        "maxDepthMm": 37.3272292118435,
+        "selfMaxMm": 0
+      },
+      "head": {
+        "minGapMm": -4.396502211650555,
+        "maxDepthMm": 4.396502211650555,
+        "selfMaxMm": 0
+      },
+      "neck": {
+        "minGapMm": 20.555544516678516,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "thigh.L": {
+        "minGapMm": -40.0037091041342,
+        "maxDepthMm": 40.0037091041342,
+        "selfMaxMm": 0
+      },
+      "upperArm.L": {
+        "minGapMm": -1.2103984751817842,
+        "maxDepthMm": 1.2103984751817842,
+        "selfMaxMm": 0
+      },
+      "shank.L": {
+        "minGapMm": -51.810002034718636,
+        "maxDepthMm": 51.810002034718636,
+        "selfMaxMm": 0
+      },
+      "foot.L": {
+        "minGapMm": 14.29439789075504,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "forearm.L": {
+        "minGapMm": 5.60384788832557,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "hand.L": {
+        "minGapMm": -1.1622512006457253,
+        "maxDepthMm": 1.1622512006457253,
+        "selfMaxMm": 0
+      },
+      "thigh.R": {
+        "minGapMm": -39.05153675427086,
+        "maxDepthMm": 39.05153675427086,
+        "selfMaxMm": 0
+      },
+      "upperArm.R": {
+        "minGapMm": -1.2102730616496693,
+        "maxDepthMm": 1.2102730616496693,
+        "selfMaxMm": 0
+      },
+      "shank.R": {
+        "minGapMm": -51.8100071002432,
+        "maxDepthMm": 51.8100071002432,
+        "selfMaxMm": 0
+      },
+      "foot.R": {
+        "minGapMm": 14.435716777811635,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "forearm.R": {
+        "minGapMm": 5.603947293838826,
+        "maxDepthMm": 0,
+        "selfMaxMm": 0
+      },
+      "hand.R": {
+        "minGapMm": -1.1618478575410318,
+        "maxDepthMm": 1.1618478575410318,
+        "selfMaxMm": 0
+      }
+    },
+    "deck": 0.9,
+    "ms": 323.39999997615814
+  },
+  "independent": {
+    "maxMm": 51.8100071002432,
+    "over2mm": 2755,
+    "penetrating": 2954,
+    "deeperThanHalfPad": 210
+  },
+  "restingOver2mm": 2705,
+  "errors": []
+}

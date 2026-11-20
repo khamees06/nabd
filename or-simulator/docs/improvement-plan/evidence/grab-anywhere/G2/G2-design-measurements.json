@@ -1,0 +1,322 @@
+{
+ "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+ "method": "node, three r180, patient.glb re-skinned on the CPU (getVertexPosition); supports from top.glb through SupportSurface; lowest skin over a drawn resting surface per segment (supportAt); \"plane\" = lowest vertex minus 0.900 m (the design 13 §1 method)",
+ "f27Alone": {
+  "over": {
+   "abdomen": 35.26,
+   "pelvis": 4.69,
+   "chest": 15.17,
+   "head": 47.3,
+   "neck": 73.06,
+   "thigh.L": 12.5,
+   "upperArm.L": 51.29,
+   "shank.L": 0.69,
+   "forearm.L": 58.45,
+   "hand.L": 33.75,
+   "thigh.R": 13.45,
+   "upperArm.R": 51.29,
+   "shank.R": 0.69,
+   "forearm.R": 58.45,
+   "hand.R": 33.75
+  },
+  "plane": {
+   "abdomen": 35.26,
+   "pelvis": 4.69,
+   "chest": 15.17,
+   "head": 45.88,
+   "neck": 73.06,
+   "thigh.L": 12.5,
+   "upperArm.L": 51.29,
+   "shank.L": 0.69,
+   "foot.L": 9.52,
+   "forearm.L": 54.74,
+   "hand.L": 11.13,
+   "thigh.R": 13.45,
+   "upperArm.R": 51.29,
+   "shank.R": 0.69,
+   "foot.R": 9.52,
+   "forearm.R": 53.61,
+   "hand.R": 11.13
+  },
+  "deepOver2mm": 0,
+  "deepOverAllowance": 0,
+  "maxDepthMm": 0,
+  "wristAbsX": [
+   0.3052,
+   0.3052
+  ],
+  "armSelfEnvelopeMm": {},
+  "upperArmMidGapMm": {
+   "L": 55.78,
+   "R": 55.78
+  }
+ },
+ "finalPose": {
+  "params": {
+   "position": [
+    0,
+    0.9292,
+    0.025
+   ],
+   "pitch": -1.5760963267948966,
+   "thigh": [
+    0.07,
+    -1,
+    0
+   ],
+   "shin": [
+    0.05,
+    -1,
+    -0.055
+   ],
+   "upperArm": [
+    0.18,
+    -1,
+    -0.165
+   ],
+   "lowerArm": [
+    0.03,
+    -1,
+    0
+   ],
+   "handTilt": 0.09,
+   "wristTwist": -0.19,
+   "girdle": [
+    0,
+    0.22,
+    0
+   ]
+  },
+  "readout": {
+   "over": {
+    "abdomen": 27.96,
+    "pelvis": -2,
+    "chest": 5.45,
+    "head": 36.68,
+    "neck": 62.71,
+    "thigh.L": 6.04,
+    "upperArm.L": 0.52,
+    "shank.L": -1.79,
+    "forearm.L": 1.67,
+    "hand.L": 0.4,
+    "thigh.R": 7.11,
+    "upperArm.R": 0.52,
+    "shank.R": -1.79,
+    "forearm.R": 1.67,
+    "hand.R": 0.4
+   },
+   "plane": {
+    "abdomen": 27.96,
+    "pelvis": -2,
+    "chest": 5.45,
+    "head": 35.12,
+    "neck": 62.71,
+    "thigh.L": 6.04,
+    "upperArm.L": 0.52,
+    "shank.L": -1.79,
+    "foot.L": 3.09,
+    "forearm.L": 1.67,
+    "hand.L": 0.4,
+    "thigh.R": 7.11,
+    "upperArm.R": 0.52,
+    "shank.R": -1.79,
+    "foot.R": 3.09,
+    "forearm.R": 1.67,
+    "hand.R": 0.4
+   },
+   "deepOver2mm": 0,
+   "deepOverAllowance": 0,
+   "maxDepthMm": 2,
+   "wristAbsX": [
+    0.2518,
+    0.2518
+   ],
+   "armSelfEnvelopeMm": {},
+   "upperArmMidGapMm": {
+    "L": 0.69,
+    "R": 0.69
+   }
+  }
+ },
+ "spineExtensionOption": {
+  "spine02Rad": -0.03469,
+  "abdomenPatchMaxShiftMm": 3.58,
+  "gateMm": 1,
+  "chosen": false,
+  "readout": {
+   "over": {
+    "abdomen": 32.63,
+    "pelvis": 2.06,
+    "chest": 5.96,
+    "head": 26.97,
+    "neck": 55.08,
+    "thigh.L": 9.88,
+    "upperArm.L": 40.41,
+    "shank.L": -2.91,
+    "forearm.L": 47.3,
+    "hand.L": 22.6,
+    "thigh.R": 10.83,
+    "upperArm.R": 40.41,
+    "shank.R": -2.91,
+    "forearm.R": 47.3,
+    "hand.R": 22.6
+   },
+   "plane": {
+    "abdomen": 32.63,
+    "pelvis": 2.06,
+    "chest": 5.96,
+    "head": 25.19,
+    "neck": 55.08,
+    "thigh.L": 9.88,
+    "upperArm.L": 40.41,
+    "shank.L": -2.91,
+    "foot.L": 2.97,
+    "forearm.L": 43.58,
+    "hand.L": -0.03,
+    "thigh.R": 10.83,
+    "upperArm.R": 40.41,
+    "shank.R": -2.91,
+    "foot.R": 2.97,
+    "forearm.R": 42.45,
+    "hand.R": -0.03
+   },
+   "deepOver2mm": 12,
+   "deepOverAllowance": 0,
+   "maxDepthMm": 2.91,
+   "wristAbsX": [
+    0.3052,
+    0.3052
+   ],
+   "armSelfEnvelopeMm": {},
+   "upperArmMidGapMm": {
+    "L": 44.66,
+    "R": 44.66
+   }
+  }
+ },
+ "girdle": {
+  "0": {
+   "upperArmMidGapMm": {
+    "L": 39.88,
+    "R": 39.88
+   },
+   "upperArm": 39.71,
+   "forearm": 40.86,
+   "hand": 39.59
+  },
+  "0.08": {
+   "upperArmMidGapMm": {
+    "L": 25.49,
+    "R": 25.49
+   },
+   "upperArm": 25.32,
+   "forearm": 26.48,
+   "hand": 25.2
+  },
+  "0.15": {
+   "upperArmMidGapMm": {
+    "L": 13.01,
+    "R": 13.01
+   },
+   "upperArm": 12.84,
+   "forearm": 13.99,
+   "hand": 12.72
+  },
+  "0.22": {
+   "upperArmMidGapMm": {
+    "L": 0.69,
+    "R": 0.69
+   },
+   "upperArm": 0.52,
+   "forearm": 1.67,
+   "hand": 0.4
+  }
+ },
+ "headRing": {
+  "centreZ": -0.722,
+  "occiputLowest": [
+   0,
+   0.9351,
+   -0.7222
+  ],
+  "rows": [
+   {
+    "freeHeightM": 0.0455,
+    "hole": 0.25,
+    "pressedToSkin": false,
+    "headLowestGapMm": 1.89,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 0,
+    "within2mmVertices": 0,
+    "triangles": 1040,
+    "chosen": false
+   },
+   {
+    "freeHeightM": 0.045,
+    "hole": 0.25,
+    "pressedToSkin": true,
+    "headLowestGapMm": 2.37,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 0,
+    "within2mmVertices": 2,
+    "triangles": 1040,
+    "chosen": false
+   },
+   {
+    "freeHeightM": 0.05,
+    "hole": 0.25,
+    "pressedToSkin": true,
+    "headLowestGapMm": 0.54,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 10,
+    "within2mmVertices": 17,
+    "triangles": 1040,
+    "chosen": false
+   },
+   {
+    "freeHeightM": 0.055,
+    "hole": 0.25,
+    "pressedToSkin": true,
+    "headLowestGapMm": 0.5,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 33,
+    "within2mmVertices": 50,
+    "triangles": 1040,
+    "chosen": true
+   },
+   {
+    "freeHeightM": 0.06,
+    "hole": 0.25,
+    "pressedToSkin": true,
+    "headLowestGapMm": 0.16,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 65,
+    "within2mmVertices": 89,
+    "triangles": 1040,
+    "chosen": false
+   },
+   {
+    "freeHeightM": 0.055,
+    "hole": 0.2,
+    "pressedToSkin": true,
+    "headLowestGapMm": 0.23,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 51,
+    "within2mmVertices": 71,
+    "triangles": 1040,
+    "chosen": false
+   },
+   {
+    "freeHeightM": 0.055,
+    "hole": 0.3,
+    "pressedToSkin": true,
+    "headLowestGapMm": 0.46,
+    "skinVerticesOver2mmInside": 0,
+    "pressedVertices": 17,
+    "within2mmVertices": 24,
+    "triangles": 1040,
+    "chosen": false
+   }
+  ]
+ }
+}

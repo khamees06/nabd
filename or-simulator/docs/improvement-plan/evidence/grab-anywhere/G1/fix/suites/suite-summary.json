@@ -1,0 +1,91 @@
+{
+ "smoke-chrome": {
+  "passedFirst": 17,
+  "passedOnRetry": 0,
+  "failed": 0,
+  "skipped": 0,
+  "firstAttemptFailures": []
+ },
+ "smoke-edge": {
+  "passedFirst": 17,
+  "passedOnRetry": 0,
+  "failed": 0,
+  "skipped": 0,
+  "firstAttemptFailures": []
+ },
+ "smoke-webkit": {
+  "passedFirst": 13,
+  "passedOnRetry": 4,
+  "failed": 0,
+  "skipped": 0,
+  "firstAttemptFailures": [
+   {
+    "test": "S4 training session (golden trace)",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 72 | const started = Date.now();"
+   },
+   {
+    "test": "S6 room view and camera presets",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 72 | const started = Date.now();"
+   },
+   {
+    "test": "S8 hands and locomotion",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 72 | const started = Date.now();"
+   },
+   {
+    "test": "V2 forearm drill after approach",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 72 | const started = Date.now();"
+   }
+  ]
+ },
+ "interaction-chrome": {
+  "passedFirst": 54,
+  "passedOnRetry": 0,
+  "failed": 0,
+  "skipped": 1,
+  "firstAttemptFailures": []
+ },
+ "interaction-webkit": {
+  "passedFirst": 3,
+  "passedOnRetry": 1,
+  "failed": 0,
+  "skipped": 0,
+  "firstAttemptFailures": [
+   {
+    "test": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 48 | async boot() {"
+   }
+  ]
+ },
+ "g1final-chrome": {
+  "passedFirst": 12,
+  "passedOnRetry": 0,
+  "failed": 0,
+  "skipped": 0,
+  "firstAttemptFailures": []
+ },
+ "g1final-webkit": {
+  "passedFirst": 9,
+  "passedOnRetry": 3,
+  "failed": 0,
+  "skipped": 0,
+  "firstAttemptFailures": [
+   {
+    "test": "G1-d skin penetration readout: supports and self contact on re-skinned vertices (1440x900)",
+    "error": "Error: M11 = 0 expect(received).toEqual(expected) // deep equality - Expected - 1 + Received + 3"
+   },
+   {
+    "test": "G1-a segments, proxies and supports meet the G1 gates (560x890)",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 54 | async boot() {"
+   },
+   {
+    "test": "G1-d skin penetration readout: supports and self contact on re-skinned vertices (560x890)",
+    "error": "TimeoutError: locator.waitFor: Timeout 60000ms exceeded. Call log: - waiting for locator('#model-status[data-state=\"ready\"]') 54 | async boot() {"
+   }
+  ]
+ },
+ "smoke-chrome-final-tree": {
+  "passedFirst": 17,
+  "other": 0,
+  "note": "re-run on 395c776; the runs above were on 2f77dca (the later change only touches JointModel readouts)"
+ }
+}

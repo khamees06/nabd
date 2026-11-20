@@ -1,0 +1,852 @@
+{
+ "walkLiveContext179": {
+  "shoulder.L": {
+   "worstOutStepDeg": 0.2499928822417164,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 3545,
+    "inStepDeg": 0.2499928822417164,
+    "inAngleDeg": 3.274491702128165,
+    "st": {
+     "sy": 0.18847671185586698,
+     "sz": -1.4550748619366516,
+     "t": 2.9274558813248763
+    }
+   }
+  },
+  "hip.L": {
+   "worstOutStepDeg": 0.2499659924024965,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 4294,
+    "inStepDeg": 0.2499659924024965,
+    "inAngleDeg": 5.20741210409893,
+    "st": {
+     "sy": 3.7907454806195577,
+     "sz": -3.011736658300048,
+     "t": -1.9180774862576753
+    }
+   }
+  },
+  "elbow.L": {
+   "worstOutStepDeg": 0.24987455994035881,
+   "worstRatio": 1.0330787754201989,
+   "worstAt": {
+    "k": 2572,
+    "inStepDeg": 0.24987455994035881,
+    "inAngleDeg": 0.8164813129720937,
+    "st": {
+     "sy": -0.6484797888352821,
+     "sz": -0.3453510673004996,
+     "t": 0.35616018361389784
+    }
+   }
+  },
+  "knee.L": {
+   "worstOutStepDeg": 0.24990107544247703,
+   "worstRatio": 1.0044198140019074,
+   "worstAt": {
+    "k": 4493,
+    "inStepDeg": 0.24990107544247703,
+    "inAngleDeg": 3.8509058117792394,
+    "st": {
+     "sy": -0.7875576469896589,
+     "sz": -1.1729109238781128,
+     "t": 3.582479421895319
+    }
+   }
+  },
+  "wrist.L": {
+   "worstOutStepDeg": 0.24993713532416206,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 17781,
+    "inStepDeg": 0.24993713532416206,
+    "inAngleDeg": 16.920387059343014,
+    "st": {
+     "sy": 10.228931076021949,
+     "sz": -8.994492711515322,
+     "t": -10.062062181151244
+    }
+   }
+  },
+  "ankle.L": {
+   "worstOutStepDeg": 0.24999023414198226,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 17350,
+    "inStepDeg": 0.24999023414198226,
+    "inAngleDeg": 18.208509975138984,
+    "st": {
+     "sy": -6.638417692687045,
+     "sz": -14.443490422725144,
+     "t": -8.909367907373376
+    }
+   }
+  },
+  "shoulder.R": {
+   "worstOutStepDeg": 0.2499871442019633,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 17416,
+    "inStepDeg": 0.2499871442019633,
+    "inAngleDeg": 13.857966217400469,
+    "st": {
+     "sy": 11.088460931688825,
+     "sz": 3.059881988000663,
+     "t": 7.74130921529771
+    }
+   }
+  },
+  "hip.R": {
+   "worstOutStepDeg": 0.24997770931827407,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 5022,
+    "inStepDeg": 0.24997770931827407,
+    "inAngleDeg": 11.36883675568121,
+    "st": {
+     "sy": -6.872334327910247,
+     "sz": -4.401558331159697,
+     "t": 7.921737293411234
+    }
+   }
+  },
+  "elbow.R": {
+   "worstOutStepDeg": 0.252300606323032,
+   "worstRatio": 1.0374605352006374,
+   "worstAt": {
+    "k": 18027,
+    "inStepDeg": 0.2494640967297347,
+    "inAngleDeg": 18.661242414218393,
+    "st": {
+     "sy": -10.17194673442303,
+     "sz": 15.631728166588788,
+     "t": -0.6529267411168481
+    }
+   }
+  },
+  "knee.R": {
+   "worstOutStepDeg": 0.2497096117533971,
+   "worstRatio": 1.0254738167919066,
+   "worstAt": {
+    "k": 1541,
+    "inStepDeg": 0.2497096117533971,
+    "inAngleDeg": 4.617871112355112,
+    "st": {
+     "sy": 0.1359960276252392,
+     "sz": 3.059644276492544,
+     "t": -3.4565388359200333
+    }
+   }
+  },
+  "wrist.R": {
+   "worstOutStepDeg": 0.249996475301721,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 14651,
+    "inStepDeg": 0.249996475301721,
+    "inAngleDeg": 8.57763058131275,
+    "st": {
+     "sy": -8.033536621994608,
+     "sz": -3.006210525478135,
+     "t": -0.027117946463207903
+    }
+   }
+  },
+  "ankle.R": {
+   "worstOutStepDeg": 0.24999963876595313,
+   "worstRatio": 1.0047495408444334,
+   "worstAt": {
+    "k": 194,
+    "inStepDeg": 0.24999963876595313,
+    "inAngleDeg": 1.8972249690401504,
+    "st": {
+     "sy": 0.5324457747062246,
+     "sz": -1.5900538228628305,
+     "t": -0.8875523354089551
+    }
+   }
+  },
+  "neck": {
+   "worstOutStepDeg": 0.2499741135449063,
+   "worstRatio": 1,
+   "worstAt": {
+    "k": 10541,
+    "inStepDeg": 0.2499741135449063,
+    "inAngleDeg": 17.323931695581276,
+    "st": {
+     "sy": 9.590606664848217,
+     "sz": -14.426965179533507,
+     "t": -0.039507099493357324
+    }
+   }
+  }
+ },
+ "walkLiveContext150": {
+  "shoulder.L": {
+   "worstOutStepDeg": 0.24999518045548083
+  },
+  "hip.L": {
+   "worstOutStepDeg": 0.24999642379187872
+  },
+  "elbow.L": {
+   "worstOutStepDeg": 0.24998439086487828
+  },
+  "knee.L": {
+   "worstOutStepDeg": 0.2499316029140858
+  },
+  "wrist.L": {
+   "worstOutStepDeg": 0.24998586665107517
+  },
+  "ankle.L": {
+   "worstOutStepDeg": 0.24999028147179483
+  },
+  "shoulder.R": {
+   "worstOutStepDeg": 0.24999073636472105
+  },
+  "hip.R": {
+   "worstOutStepDeg": 0.24999715085934704
+  },
+  "elbow.R": {
+   "worstOutStepDeg": 0.2604886300835202
+  },
+  "knee.R": {
+   "worstOutStepDeg": 0.24990055150713777
+  },
+  "wrist.R": {
+   "worstOutStepDeg": 0.24998893321011262
+  },
+  "ankle.R": {
+   "worstOutStepDeg": 0.2502377150447816
+  },
+  "neck": {
+   "worstOutStepDeg": 0.24998044314544368
+  }
+ },
+ "shoulderOverheadSweeps": {
+  "shoulder.L flexion(+z)": {
+   "worstOutStepDeg": 120.00000000000001,
+   "atInputDeg": 180.25,
+   "trace": [
+    {
+     "inputDeg": 170,
+     "outSy": 0,
+     "outSz": 170,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 172,
+     "outSy": 0,
+     "outSz": 172,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 174,
+     "outSy": 0,
+     "outSz": 174,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 176,
+     "outSy": 0,
+     "outSz": 176,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 178,
+     "outSy": 0,
+     "outSz": 178,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 180,
+     "outSy": 0,
+     "outSz": 180,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 182,
+     "outSy": 1.1021821192326176e-14,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 184,
+     "outSy": 1.1021821192326176e-14,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 186,
+     "outSy": 1.1021821192326176e-14,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 188,
+     "outSy": 1.1021821192326176e-14,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 190,
+     "outSy": 1.1021821192326176e-14,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    }
+   ]
+  },
+  "shoulder.L abductionLeft(+y)": {
+   "worstOutStepDeg": 110.00000000000001,
+   "atInputDeg": 180.25,
+   "trace": [
+    {
+     "inputDeg": 170,
+     "outSy": 170,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 172,
+     "outSy": 172,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 174,
+     "outSy": 174,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 176,
+     "outSy": 176,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 178,
+     "outSy": 178,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 180,
+     "outSy": 180,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 182,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 184,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 186,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 188,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 190,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    }
+   ]
+  },
+  "shoulder.L abductionRight(-y)": {
+   "worstOutStepDeg": 110.25000000000001,
+   "atInputDeg": 180.25,
+   "trace": [
+    {
+     "inputDeg": 170,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 172,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 174,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 176,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 178,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 180,
+     "outSy": -70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 182,
+     "outSy": 178.00000000000003,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 184,
+     "outSy": 176.00000000000003,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 186,
+     "outSy": 174,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 188,
+     "outSy": 171.99999999999997,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 190,
+     "outSy": 170,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    }
+   ]
+  },
+  "shoulder.R flexion(+z)": {
+   "worstOutStepDeg": 120.00000000000001,
+   "atInputDeg": 180.25,
+   "trace": [
+    {
+     "inputDeg": 170,
+     "outSy": 0,
+     "outSz": 170,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 172,
+     "outSy": 0,
+     "outSz": 172,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 174,
+     "outSy": 0,
+     "outSz": 174,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 176,
+     "outSy": 0,
+     "outSz": 176,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 178,
+     "outSy": 0,
+     "outSz": 178,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 180,
+     "outSy": 0,
+     "outSz": 180,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 182,
+     "outSy": 4.286263797015735e-15,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 184,
+     "outSy": 4.286263797015735e-15,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 186,
+     "outSy": 4.286263797015735e-15,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 188,
+     "outSy": 4.286263797015735e-15,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 190,
+     "outSy": 4.286263797015735e-15,
+     "outSz": -59.99999999999998,
+     "outT": 0,
+     "changed": true
+    }
+   ]
+  },
+  "shoulder.R abductionLeft(+y)": {
+   "worstOutStepDeg": 110.25000000000001,
+   "atInputDeg": 180.25,
+   "trace": [
+    {
+     "inputDeg": 170,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 172,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 174,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 176,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 178,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 180,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 182,
+     "outSy": -178.00000000000003,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 184,
+     "outSy": -176.00000000000003,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 186,
+     "outSy": -174,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 188,
+     "outSy": -171.99999999999997,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 190,
+     "outSy": -170,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    }
+   ]
+  },
+  "shoulder.R abductionRight(-y)": {
+   "worstOutStepDeg": 110.00000000000001,
+   "atInputDeg": 180.25,
+   "trace": [
+    {
+     "inputDeg": 170,
+     "outSy": -170,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 172,
+     "outSy": -172,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 174,
+     "outSy": -174,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 176,
+     "outSy": -176,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 178,
+     "outSy": -178,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 180,
+     "outSy": -180,
+     "outSz": 0,
+     "outT": 0,
+     "changed": false
+    },
+    {
+     "inputDeg": 182,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 184,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 186,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 188,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    },
+    {
+     "inputDeg": 190,
+     "outSy": 70,
+     "outSz": 0,
+     "outT": 0,
+     "changed": true
+    }
+   ]
+  }
+ },
+ "otherSweeps360": {
+  "hip.L +z 0..360": {
+   "worstOutStepDeg": 103.19946384614742,
+   "atInputDeg": 180.25
+  },
+  "hip.L +y 0..360": {
+   "worstOutStepDeg": 75,
+   "atInputDeg": 180.25
+  },
+  "hip.L -y 0..360": {
+   "worstOutStepDeg": 75,
+   "atInputDeg": 180.25
+  },
+  "hip.L -z 0..360": {
+   "worstOutStepDeg": 103.19946384614742,
+   "atInputDeg": 180.25
+  },
+  "elbow.L +z 0..360": {
+   "worstOutStepDeg": 155,
+   "atInputDeg": 180.25
+  },
+  "elbow.L +y 0..360": {
+   "worstOutStepDeg": 7.9999999999999,
+   "atInputDeg": 180.25
+  },
+  "elbow.L -y 0..360": {
+   "worstOutStepDeg": 7.9999999999999,
+   "atInputDeg": 180.25
+  },
+  "elbow.L -z 0..360": {
+   "worstOutStepDeg": 155,
+   "atInputDeg": 180.25
+  },
+  "knee.L +z 0..360": {
+   "worstOutStepDeg": 144.99999999999997,
+   "atInputDeg": 180.25
+  },
+  "knee.L +y 0..360": {
+   "worstOutStepDeg": 7.9999999999999,
+   "atInputDeg": 180.25
+  },
+  "knee.L -y 0..360": {
+   "worstOutStepDeg": 7.9999999999999,
+   "atInputDeg": 180.25
+  },
+  "knee.L -z 0..360": {
+   "worstOutStepDeg": 144.99999999999997,
+   "atInputDeg": 180.25
+  },
+  "neck +z 0..360": {
+   "worstOutStepDeg": 110.00000000000001,
+   "atInputDeg": 180.25
+  },
+  "neck +y 0..360": {
+   "worstOutStepDeg": 90.00000000000001,
+   "atInputDeg": 180.25
+  },
+  "neck -y 0..360": {
+   "worstOutStepDeg": 90.00000000000001,
+   "atInputDeg": 180.25
+  },
+  "neck -z 0..360": {
+   "worstOutStepDeg": 110.00000000000001,
+   "atInputDeg": 180.25
+  },
+  "wrist.L +z 0..360": {
+   "worstOutStepDeg": 160.00000000000003,
+   "atInputDeg": 180.25
+  },
+  "wrist.L +y 0..360": {
+   "worstOutStepDeg": 60.00000000000001,
+   "atInputDeg": 180.25
+  },
+  "wrist.L -y 0..360": {
+   "worstOutStepDeg": 60.00000000000001,
+   "atInputDeg": 180.25
+  },
+  "wrist.L -z 0..360": {
+   "worstOutStepDeg": 160.00000000000003,
+   "atInputDeg": 180.25
+  },
+  "ankle.L +z 0..360": {
+   "worstOutStepDeg": 66.42198393162107,
+   "atInputDeg": 180.25
+  },
+  "ankle.L +y 0..360": {
+   "worstOutStepDeg": 49.99999999999998,
+   "atInputDeg": 180.25
+  },
+  "ankle.L -y 0..360": {
+   "worstOutStepDeg": 49.99999999999998,
+   "atInputDeg": 180.25
+  },
+  "ankle.L -z 0..360": {
+   "worstOutStepDeg": 66.42198393162107,
+   "atInputDeg": 180.25
+  }
+ },
+ "projection": {
+  "points": 3714,
+  "worstPointDiffDeg": 0.000002240946629134647,
+  "worstExtraDistanceDeg": 5.088887490341627e-14,
+  "worstCase": {
+   "id": "shoulder.L",
+   "axesDeg": {
+    "yPos": 180,
+    "yNeg": 70,
+    "zPos": 180,
+    "zNeg": 59.99999999999999
+   },
+   "yDeg": 9.238214423222859,
+   "zDeg": 302.56137520478273,
+   "got": [
+    5.493444090499783,
+    179.91615289357583
+   ],
+   "ref": [
+    5.4934418505970255,
+    179.91615296196755
+   ]
+  }
+ },
+ "roundTripNear180": {
+  "worstQuatComponentError": 4.440892098500626e-16
+ }
+}

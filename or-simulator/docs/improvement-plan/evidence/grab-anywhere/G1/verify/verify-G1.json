@@ -1,0 +1,66 @@
+{
+  "cluster": "G1",
+  "role": "independent verifier",
+  "verifiedCommit": "84295af",
+  "baseCommit": "63ba7b2571be41942e3ff021c2cb87b9848c7d82",
+  "date": "2026-11-18",
+  "verdict": "fail",
+  "browsers": { "chrome": "157.0.8103.79", "edge": "installed msedge channel", "webkit": "Playwright WebKit 27.2 on Windows (approximates Safari, not Safari)" },
+  "method": "Every gate re-measured on the live app with independently written code where possible (scripts/g1-probe.mjs: own bone-to-segment table, own downward ray cast of the table-top GLB, own skin-vs-pad depth, own lowest vertex per segment, joint angles from bone positions); joint-model clamp probed in node beyond the implementer's 150 deg walk bound (scripts/jm-adversarial.mjs); SupportSurface.sd compared with the depth below the drawn pad top (scripts/sd-probe.mjs); WebKit boot probed with fresh and shared processes (scripts/boot-probe.mjs). Scripts carry absolute paths of this machine.",
+  "blocking": [
+    {
+      "id": "V1",
+      "title": "Shoulder clamp jumps at the overhead HARD boundary; continuity gate fails for the shoulders",
+      "file": "src/patient/JointModel.js (shoulder reference frameXY(-UP, FRONT) at line 266; limitsOf shoulder at lines 338-350)",
+      "measured": "Sweeping the shoulder relative rotation in 0.25 deg steps from 170 to 190 deg: pure flexion output jumps 120.0 deg at an input of 180.25 deg (from flexion 180 to the extension limit 60); pure abduction jumps 110.0 deg (shoulder.L and shoulder.R). The swing-twist split wraps at 180 deg swing, which with the hanging-down reference is exactly the flexion and abduction HARD value, so an input 0.25 deg past overhead is read as extension or adduction near 180 deg and projected onto the 60/70 deg ellipse. In addition the twist range widens to +-180 deg between 150 and 180 deg elevation, i.e. an overhead humerus has no rotation limit. The implementer's continuity test keeps its walks within 150 deg of neutral, which excludes exactly this region. Other joints only wrap far beyond their HARD range (hip 50 deg beyond, elbow 30 deg beyond).",
+      "evidence": "probe/joint-model-adversarial.json shoulderOverheadSweeps, otherSweeps360",
+      "needed": "Either doc 12's anterior reference with swing-dependent rotation limits, or a clamp that compares the candidate projections of both swing-twist representations near the wrap and keeps the one nearest the input in rotation angle; and a bounded humeral rotation above 150 deg elevation. Then a continuity test that crosses the 180 deg wrap of every joint."
+    },
+    {
+      "id": "V2",
+      "title": "SupportSurface.sd (and skinPenetration) under-reads how deep skin is below a pad top; its direction points down for deep points",
+      "file": "src/patient/SupportSurface.js roundedBoxSd/nearest (lines 31-38, 87-97); src/patient/BodyProxies.js measureSkinPenetration (lines 297-332)",
+      "measured": "The pads are 75 mm thick plain boxes (y 0.8775-0.9525). A box SDF gives the distance to the NEAREST face, so a vertex more than 37.5 mm below the top reads its distance to the pad's bottom face. On today's rest pose the calves/heels lie 51.8 mm below the leg-pad tops (independent depth below the drawn top, 2,755 vertices deeper than 2 mm), but SupportSurface.sd reads them as 23.2 mm; 283 vertices are under-read by more than 10 mm; skinPenetration().supportMaxMm reports 37.5 mm (owner was told 'up to 37.5 mm into the pads'). For such points the sd gradient points down, so the G3 hard-constraint pass (§4.6 step 3, 'move T out along the contact normals') would push them out through the bottom of the pad.",
+      "evidence": "probe/sd-probe-chrome.json; probe/probe-*.json independent.penetration (51.8 mm in Chrome and WebKit, both sizes)",
+      "needed": "For resting surfaces, measure and constrain the depth below the top inside the footprint (one-sided support: box extended downward, or use supportAt), and report max/p95 on that; keep the SDF only for side contact with rails and fittings."
+    }
+  ],
+  "acceptance": [
+    { "check": "triSeg assigns 100% of non-privacy triangles; >=92% w1>=0.65", "measured": "Clinical skin 105,822/105,822 assigned, 94.172% w1>=0.65; all 107,530 non-privacy triangles (skin, brows 648, eyes 1,060) assigned; independent bone table gives the identical 0.94172. Chrome and WebKit, 1440x900 and 560x890.", "pass": true },
+    { "check": ">=95% of each segment's dominant vertices outside its inner proxy", "measured": "min 96.27% (head), 17/17 segments >= 95%, all four browser/size combinations. Satisfied by construction: the inner layer is the 4th percentile of each slice's normalised radius. Neck and pelvis have 0 vertices with weight >= 0.8 and are measured on all their vertices.", "pass": true },
+    { "check": "Each segment's lowest rest vertex is a sample", "measured": "17/17; the lowest vertex index of every segment equals the one found by the independent table (seeded into the farthest-point sampling by construction).", "pass": true },
+    { "check": "SupportSurface pad tops within 1 mm of the GLB raycast; arm boards |x| 0.356-0.601, z -0.705..-0.235, top 0.951", "measured": "Own Moller-Trumbore cast of the drawn top on 6,292 points (13 resting boxes, 22x22 grid, 1 mm from the edges): 0 mm error on every box; pads 0.9525; L/R_armboard_pad x 0.356..0.601, z -0.705..-0.235; armboard_top 0.951. Implementer's check reproduced: 4.4e-13 mm on 1,049 points, also at the sitting deck 0.58 (offset -0.32).", "pass": true },
+    { "check": "JointModel decompose/compose round trip <= 1e-9", "measured": "npm test diagnostic 1.11e-15 rad / 5.0e-16; own probe near the 180 deg swing (20,000 cases within 1e-3 rad of pi): 4.4e-16.", "pass": true },
+    { "check": "Nearest-point projection within 0.1 deg of a 3,600-sample brute force", "measured": "Own probe, 3,714 points from 1e-4 rad to 3 rad outside, every joint, 4 contexts: worst point difference 2.2e-6 deg, never farther than the brute force (5e-14 deg).", "pass": true },
+    { "check": "A continuous input path gives a continuous output path", "measured": "Within 150 deg of neutral: largest output step 0.26 deg for 0.25 deg input (live context, 20,000 steps per joint). Across the shoulder's overhead HARD boundary: 120 deg (flexion) and 110 deg (abduction) output jumps for a 0.25 deg input step. See blocking V1.", "pass": false },
+    { "check": "Authored supine pose: 0 HARD violations", "measured": "0 HARD, 2 WARN (hip extension 0.46 deg both sides), Chrome and WebKit, both sizes. Independent angles from bone positions agree: shoulder abduction 16.67 vs 16.7, hip abduction 4.00 vs 4.0, elbow 11.76 deg between segments = sqrt(2.91^2 + 11.40^2), knee 2.01 = sqrt(1.45^2 + 1.40^2).", "pass": true },
+    { "check": "V1-V4 pixel diff 0 against the base", "measured": "0 differing pixels, rendered and page, V1-V4, in Chrome 1440x900, Chrome 560x890, WebKit 1440x900 and WebKit 560x890 (each tree also 0 against itself).", "pass": true },
+    { "check": "Load-time cost <= 50 ms in Chrome", "measured": "Synchronous build 44.1/44.3 ms in Chrome (segments 31.6), 52.0/51.0 ms in WebKit; proxy fit 50.9-51.8 ms in Chrome deferred to first use (total fitting about 95 ms).", "pass": true }
+  ],
+  "globalGates": {
+    "npmTest": "65/65 pass",
+    "smoke": { "chrome": "17/17 (a first run during a machine clock jump failed S5 scope and scissors at boot; S5 rerun 5/5 and a full rerun 17/17)", "edge": "17/17", "webkit": "14 passed + 3 flaky (S5 scissors, S6, V2: boot timeouts, the known context-loss issue), all passed on retry" },
+    "s1": "28 modules HTTP 200, 9 GLBs, rapier 200, 0 foreign requests, M11 0 in Chrome, Edge and WebKit",
+    "s4GoldenTrace": "20 entries, identical to P1 and P0 in Chrome, Edge and WebKit",
+    "interaction": { "chrome": "54 passed, 1 skipped by design (C3-9e at 560)", "webkitC1-2b_C2-12x3": "C1-2b 6/6; C2-12 1440 3/3; C2-12 560 3/3 on retry, every first attempt failed only on 'WebGL: context lost.' (the 4th load in the process); retry click frames 42/23/29 ms (< 50), hover-then-click 0 raycasts near the click, burst 1, tiny 0" },
+    "perf": "Headed Chrome, 1 run vs the Q1 baseline: max M8 rise +3.5% (V4 hover 515 -> 533), max M9 rise +0.95%; idle identical; 0 console errors; M10 warm 1363/1233/1213 ms (Q1 1197/1216/1135), cold 2547/1928/1656 (Q1 2595/1736/1515)",
+    "M11": "0 in every passing attempt; failing WebKit attempts logged only 'WebGL: context lost.'",
+    "eventsAndWristAlias": "src/simulation, src/staff untouched; BedsideInteraction only changes pickKey",
+    "DN5": "jointAngles() carries the DN5 label; JOINT_LIMITS documented as DN5 with ASSUMED values marked; no UI text added",
+    "poseVersion": "unchanged at idle (3 s) and under 30 hover moves in Chrome and WebKit, so the click still reuses the hover pick"
+  },
+  "webkitBoot": {
+    "freshProcessPerLoad": "base 30/30 ready, G1 30/30 ready, 0 context losses (probe/webkit-boot-probe-fresh.json)",
+    "sharedProcess": "base 26/30, G1 21/30, but the failures follow the load position, not the tree: loads 3,7,...,35 (all G1 in ABBA order) then 42,46,50,53,57 (all base). The G1 browser checks failed at positions 4, 8 and 12 of their WebKit process. No evidence that G1 changes boot reliability (probe/webkit-boot-probe-shared.json)."
+  },
+  "nonBlocking": [
+    "Inner proxies lie 3-25 mm inside the skin (median gap head 23.5, chest 24.9, hand 15.3, pelvis 10.4, foot 9.9 mm): self-penetration of that size is invisible to the planned constraint pass and to skinPenetration().selfMaxMm; G3 needs a skin-tight measure.",
+    "Hip rotation zero: the joint model reads hip internal rotation 9.46 deg at the supine rest while the feet point 6.2 deg outward (independent, bone positions); the knee hinge comes from the nearly straight bind leg (about 4 deg, implementer's figure). The sitting pose reads 4 HARD (knees 16.7 deg beyond the hinge tolerance).",
+    "WARN thresholds of 0 deg (hip extension, elbow and knee hyperextension) fire at rest on 0.46 deg of calibration noise.",
+    "Proxy fit (51 ms) is deferred to the first use, so the first grab will hitch unless G3 schedules it.",
+    "SupportSurface.supportAt iterates every box, not only resting ones, despite its comment.",
+    "BodySegments.ofHit returns a part for privacy triangles (flag only); G3 must refuse them explicitly.",
+    "G1-e never exercises the new slerp path for the 19 extra snapshot bones (their two snapshots are always equal).",
+    "tests/browser/smoke.spec.mjs:60 (pre-existing): the requestfailed handler calls r.request() on a Request and throws."
+  ]
+}

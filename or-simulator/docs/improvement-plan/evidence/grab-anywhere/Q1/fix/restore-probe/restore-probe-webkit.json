@@ -1,0 +1,892 @@
+{
+ "what": "WebKit 27.2 on Windows, headless, 1440x900, V1: boot, loseContext (WEBGL_lose_context), 1 s, restoreContext, then the ?qa readout every 500 ms for 15 s; a hook on top of renderer.render counts the app frames and throws. Same script and machine for both trees, run one after the other.",
+ "script": "scripts/restore-probe.mjs",
+ "summary": {
+  "fix": {
+   "trials": 8,
+   "recovered": 6,
+   "hung": 2,
+   "shadowCallsAfter": [
+    1210,
+    1210,
+    1210,
+    1210,
+    1210,
+    1210
+   ],
+   "webkitOwnLoss": 4
+  },
+  "previous": {
+   "trials": 8,
+   "recovered": 6,
+   "hung": 2,
+   "shadowCallsAfter": [
+    0,
+    0,
+    0,
+    0,
+    0,
+    0
+   ],
+   "webkitOwnLoss": 4
+  }
+ },
+ "fix": {
+  "tree": "fix (working tree)",
+  "browser": "webkit",
+  "version": "27.2",
+  "trials": [
+   {
+    "t": 0,
+    "summary": {
+     "framesAfter": 161,
+     "appCallsAfter": 161,
+     "rafAfter": 691,
+     "throws": 0,
+     "restores": 1,
+     "rebuilds": 1,
+     "lost": false,
+     "glLost": false,
+     "shadowCalls": 1210
+    },
+    "boot": {
+     "frames": 34,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 34,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 60
+    },
+    "last": {
+     "frames": 195,
+     "lostFrames": 11,
+     "lost": false,
+     "losses": 1,
+     "restores": 1,
+     "rebuilds": 1,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 172,
+     "throws": 0,
+     "lastError": null,
+     "raf": 751
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 1,
+    "summary": {
+     "last": "evaluate timeout"
+    },
+    "boot": {
+     "frames": 34,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 34,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 62
+    },
+    "last": "evaluate timeout",
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 2,
+    "summary": {
+     "framesAfter": 161,
+     "appCallsAfter": 161,
+     "rafAfter": 713,
+     "throws": 0,
+     "restores": 1,
+     "rebuilds": 1,
+     "lost": false,
+     "glLost": false,
+     "shadowCalls": 1210
+    },
+    "boot": {
+     "frames": 34,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 1
+    },
+    "lost": {
+     "frames": 34,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 62
+    },
+    "last": {
+     "frames": 195,
+     "lostFrames": 11,
+     "lost": false,
+     "losses": 1,
+     "restores": 1,
+     "rebuilds": 1,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 172,
+     "throws": 0,
+     "lastError": null,
+     "raf": 775
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 3,
+    "summary": {
+     "last": "evaluate timeout"
+    },
+    "boot": {
+     "frames": 34,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 34,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 61
+    },
+    "last": "evaluate timeout",
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 4,
+    "summary": {
+     "framesAfter": 161,
+     "appCallsAfter": 161,
+     "rafAfter": 698,
+     "throws": 0,
+     "restores": 1,
+     "rebuilds": 1,
+     "lost": false,
+     "glLost": false,
+     "shadowCalls": 1210
+    },
+    "boot": {
+     "frames": 34,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 34,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 63
+    },
+    "last": {
+     "frames": 195,
+     "lostFrames": 11,
+     "lost": false,
+     "losses": 1,
+     "restores": 1,
+     "rebuilds": 1,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 172,
+     "throws": 0,
+     "lastError": null,
+     "raf": 761
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 5,
+    "summary": {
+     "framesAfter": 145,
+     "appCallsAfter": 147,
+     "rafAfter": 629,
+     "throws": 0,
+     "restores": 2,
+     "rebuilds": 2,
+     "lost": false,
+     "glLost": false,
+     "shadowCalls": 1210
+    },
+    "boot": {
+     "frames": 33,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 33,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 62
+    },
+    "last": {
+     "frames": 178,
+     "lostFrames": 13,
+     "lost": false,
+     "losses": 2,
+     "restores": 2,
+     "rebuilds": 2,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 158,
+     "throws": 0,
+     "lastError": null,
+     "raf": 691
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 6,
+    "summary": {
+     "framesAfter": 161,
+     "appCallsAfter": 161,
+     "rafAfter": 715,
+     "throws": 0,
+     "restores": 1,
+     "rebuilds": 1,
+     "lost": false,
+     "glLost": false,
+     "shadowCalls": 1210
+    },
+    "boot": {
+     "frames": 36,
+     "lostFrames": 0,
+     "lost": false,
+     "losses": 0,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 36,
+     "lostFrames": 11,
+     "lost": true,
+     "losses": 1,
+     "restores": 0,
+     "rebuilds": 0,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 63
+    },
+    "last": {
+     "frames": 197,
+     "lostFrames": 11,
+     "lost": false,
+     "losses": 1,
+     "restores": 1,
+     "rebuilds": 1,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 172,
+     "throws": 0,
+     "lastError": null,
+     "raf": 778
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 7,
+    "summary": {
+     "framesAfter": 161,
+     "appCallsAfter": 161,
+     "rafAfter": 710,
+     "throws": 0,
+     "restores": 2,
+     "rebuilds": 2,
+     "lost": false,
+     "glLost": false,
+     "shadowCalls": 1210
+    },
+    "boot": {
+     "frames": 34,
+     "lostFrames": 1,
+     "lost": false,
+     "losses": 1,
+     "restores": 1,
+     "rebuilds": 1,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 34,
+     "lostFrames": 12,
+     "lost": true,
+     "losses": 2,
+     "restores": 1,
+     "rebuilds": 1,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 62
+    },
+    "last": {
+     "frames": 195,
+     "lostFrames": 12,
+     "lost": false,
+     "losses": 2,
+     "restores": 2,
+     "rebuilds": 2,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 172,
+     "throws": 0,
+     "lastError": null,
+     "raf": 772
+    },
+    "contextConsole": [
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   }
+  ]
+ },
+ "previous": {
+  "tree": "previous Q1 code (HEAD bdb95d1)",
+  "browser": "webkit",
+  "version": "27.2",
+  "trials": [
+   {
+    "t": 0,
+    "summary": {
+     "framesAfter": 160,
+     "appCallsAfter": 160,
+     "rafAfter": 686,
+     "throws": 0,
+     "glLost": false,
+     "shadowCalls": 0
+    },
+    "boot": {
+     "frames": 34,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 45,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 62
+    },
+    "last": {
+     "frames": 205,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 171,
+     "throws": 0,
+     "lastError": null,
+     "raf": 748
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 1,
+    "summary": {
+     "last": "evaluate timeout"
+    },
+    "boot": {
+     "frames": 34,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 45,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 61
+    },
+    "last": "evaluate timeout",
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 2,
+    "summary": {
+     "framesAfter": 162,
+     "appCallsAfter": 162,
+     "rafAfter": 704,
+     "throws": 0,
+     "glLost": false,
+     "shadowCalls": 0
+    },
+    "boot": {
+     "frames": 33,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 44,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 61
+    },
+    "last": {
+     "frames": 206,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 173,
+     "throws": 0,
+     "lastError": null,
+     "raf": 765
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 3,
+    "summary": {
+     "framesAfter": 146,
+     "appCallsAfter": 146,
+     "rafAfter": 632,
+     "throws": 0,
+     "glLost": false,
+     "shadowCalls": 0
+    },
+    "boot": {
+     "frames": 33,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 44,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 61
+    },
+    "last": {
+     "frames": 190,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 157,
+     "throws": 0,
+     "lastError": null,
+     "raf": 693
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 4,
+    "summary": {
+     "framesAfter": 160,
+     "appCallsAfter": 160,
+     "rafAfter": 700,
+     "throws": 0,
+     "glLost": false,
+     "shadowCalls": 0
+    },
+    "boot": {
+     "frames": 33,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 44,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 62
+    },
+    "last": {
+     "frames": 204,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 171,
+     "throws": 0,
+     "lastError": null,
+     "raf": 762
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 5,
+    "summary": {
+     "framesAfter": 161,
+     "appCallsAfter": 161,
+     "rafAfter": 699,
+     "throws": 0,
+     "glLost": false,
+     "shadowCalls": 0
+    },
+    "boot": {
+     "frames": 35,
+     "shadowCalls": 0,
+     "calls": 1119,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 46,
+     "shadowCalls": 0,
+     "calls": 1119,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 60
+    },
+    "last": {
+     "frames": 207,
+     "shadowCalls": 0,
+     "calls": 1119,
+     "glLost": false,
+     "appCalls": 172,
+     "throws": 0,
+     "lastError": null,
+     "raf": 759
+    },
+    "contextConsole": [
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 6,
+    "summary": {
+     "last": "evaluate timeout"
+    },
+    "boot": {
+     "frames": 33,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 44,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 61
+    },
+    "last": "evaluate timeout",
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored.",
+     "error: WebGL: context lost.",
+     "log: THREE.WebGLRenderer: Context Lost."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   },
+   {
+    "t": 7,
+    "summary": {
+     "framesAfter": 162,
+     "appCallsAfter": 162,
+     "rafAfter": 693,
+     "throws": 0,
+     "glLost": false,
+     "shadowCalls": 0
+    },
+    "boot": {
+     "frames": 34,
+     "shadowCalls": 1210,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 0,
+     "throws": 0,
+     "lastError": null,
+     "raf": 0
+    },
+    "lost": {
+     "frames": 45,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": true,
+     "appCalls": 11,
+     "throws": 0,
+     "lastError": null,
+     "raf": 59
+    },
+    "last": {
+     "frames": 207,
+     "shadowCalls": 0,
+     "calls": 1206,
+     "glLost": false,
+     "appCalls": 173,
+     "throws": 0,
+     "lastError": null,
+     "raf": 752
+    },
+    "contextConsole": [
+     "log: THREE.WebGLRenderer: Context Lost.",
+     "log: THREE.WebGLRenderer: Context Restored."
+    ],
+    "pageErrors": [],
+    "fatal": null
+   }
+  ]
+ }
+}

@@ -1,0 +1,73 @@
+{
+  "cluster": "G1",
+  "role": "independent verifier, round 2 (after fix round 1)",
+  "verifiedCommit": "a00ec35",
+  "baseCommit": "63ba7b2571be41942e3ff021c2cb87b9848c7d82",
+  "previousVerify": "bffe5b3 (verdict fail: V1, V2)",
+  "date": "2026-11-18",
+  "verdict": "pass",
+  "browsers": { "chrome": "157.0.8103.79", "edge": "installed msedge channel", "webkit": "Playwright WebKit 27.2 on Windows (approximates Safari, not Safari)" },
+  "method": "Every G1 gate re-measured. Node probes of JointModel written for this round (scripts/jm-*.mjs): a 0.1 deg grid of the shoulder's rotation neutral over every allowed direction, unrestricted random walks over the whole rotation group, great circles through the overhead point, full azimuth circles at 100-179.9 deg elevation, 40 deg near-limit lines, an independent brute force with a different boundary parametrisation (chart polar angle) and an own inside test. Browser probes (scripts/g1v2-live.mjs, g1v2-sd.mjs) on the live scene: per-vertex depth below the drawn resting surfaces by an own vertical ray cast of the resting meshes' triangles (no footprint list), every way out checked (never down, side exits lead into free space), 60,000 and 200,000 random points in and around the table, the app's jointClampSweep plus a JointModel built in the page on the live skeleton. The round-1 verifier's independent probe (verify/scripts/g1-probe.mjs) re-run in Chrome and WebKit at both sizes. Scripts carry absolute paths of this machine.",
+  "roundOneDefects": {
+    "V1": {
+      "status": "fixed",
+      "measured": "Hanging-arm flexion and abduction 170->190 and 150->210 deg in 0.25 deg steps: 0 jumps on the live rig (Chrome and WebKit, both sizes; before: 120 and 110 deg), max output step 0.25 deg (flexion) and 0.566 deg (abduction), output held 0.32-0.46 deg from overhead. Rotation neutral continuous over every allowed direction (0.1 deg grid, elevation 60-180 deg, 1,873,268 allowed points per shoulder): largest change 0.28 deg between neighbours 0.1 deg apart; the blend's wrap stays at least 54.2 deg away from the allowed region. Humeral rotation range 160 deg at every elevation 90-180 deg, one tie per full turn (live rig, 7 elevations per shoulder). No output jump for any input within 25 deg of any limit: 0 in 15.2 million node steps (walks, great circles, azimuth circles, near-limit lines) and 2.67 million live-rig steps per browser run."
+    },
+    "V2": {
+      "status": "fixed",
+      "measured": "Own ray cast of the 13 drawn resting meshes, per clinical-skin vertex: depth below the top max 51.81 mm, p95 41.72 mm, 2,755 vertices over 2 mm, 2,954 below a top; depthBelowTop() and skinPenetration().belowTop* equal it to 0 mm per vertex. Signed distance max 51.81 mm (was 37.47), p95 36.58 mm; 0 downward normals on skin; 320 side exits, 0 of them into another solid. Identical in Chrome and WebKit at 1440x900 and 560x890. 60,000 random points: 10,533 inside a resting column, 0 of them read outside; 1-Lipschitz (worst ratio 0.99995)."
+    }
+  },
+  "acceptance": [
+    { "check": "triSeg assigns 100% of non-privacy triangles; >=92% w1>=0.65", "measured": "105,822/105,822 clinical-skin triangles, 0.941723 with w1>=0.65, identical to the independent bone table; all 107,530 non-privacy triangles assigned. Chrome and WebKit, 1440x900 and 560x890.", "pass": true },
+    { "check": ">=95% of each segment's dominant vertices outside its inner proxy", "measured": "min 96.27% (head), 17/17 segments, all four browser/size runs.", "pass": true },
+    { "check": "Each segment's lowest rest vertex is a sample", "measured": "17/17; 0 disagreements with the independent lowest vertex.", "pass": true },
+    { "check": "SupportSurface pad tops within 1 mm of the GLB raycast; arm boards |x| .356-.601, z -.705..-.235, top .951", "measured": "Own Moller-Trumbore cast, 6,292 points: 0 mm on every resting box; pads 0.9525; armboard_pad x 0.356..0.601, z -0.705..-0.235; armboard_top 0.951. App check 4.4e-13 mm on 1,049 points. Sitting deck: G1-e passed in Chrome and WebKit, both sizes.", "pass": true },
+    { "check": "JointModel decompose/compose round trip <= 1e-9", "measured": "npm test 1.11e-15 rad / 5.0e-16; round-1 near-180 probe re-run 4.4e-16.", "pass": true },
+    { "check": "Nearest-point projection within 0.1 deg of a 3,600-sample brute force", "measured": "Independent polar-angle brute force (3,600 per quadrant, golden refinement, own exp map, own inside test), 3,836 outside directions, 13 joints x 3 contexts: worst distance difference 2.1e-8 deg, worst point difference 3.5e-6 deg (1,279 near-ties compared by distance only), 0 inside/outside disagreements; clamp() puts the child axis within 3.2e-6 deg of the brute-force point. Round-1 chart-Newton probe re-run: 2.2e-6 deg.", "pass": true },
+    { "check": "A continuous input path gives a continuous output path", "measured": "No output jump (> 2 deg and > 8x the input step) for any input within 25 deg of a limit, any joint: unrestricted walks 2.6 M steps, shoulder great circles 3.3 M steps, azimuth circles 1.5 M steps, near-limit lines 7.8 M steps (node) and 2.67 M live-rig steps per browser run. Within 10 deg of a limit the output moves at most 3.93x the input (shoulder great circles; elbow 3.61x on the live rig). The jumps that remain are deep beyond the limits: shoulder from 27.0 deg (live) / 28.3 deg (node) beyond, other joints from 85.5 deg (knee) beyond; twist ties at 99.7-99.9 deg beyond. Accepted as the unavoidable ties of a clamp that puts every forbidden input on its limit (see nonBlocking for the numbers that differ from the implementer's report).", "pass": true },
+    { "check": "Authored supine pose: 0 HARD", "measured": "0 HARD, 0 WARN (app readout and a JointModel built in the page on the live skeleton agree to 0 deg), Chrome and WebKit, both sizes.", "pass": true },
+    { "check": "V1-V4 pixel diff 0 against 63ba7b2", "measured": "0 differing pixels, rendered and page, V1-V4: Chrome 560x890, WebKit 1440x900, WebKit 560x890, Chrome 1440x900 (run 2, repeat 3). Chrome 1440x900 run 1: V3 37 px (max delta 10) base-vs-work and also base-vs-base, work-vs-work 0: the base tree was not self-consistent in that run; kept as pixel-diff-chrome-1440x900-run1.json.", "pass": true },
+    { "check": "Load-time cost of fitting <= 50 ms (Chrome)", "measured": "46.4 and 44.8 ms synchronous in Chrome (segments 32.3/32.0 ms); WebKit 50 and 52 ms. Proxy fit 47-55 ms deferred to first use.", "pass": true }
+  ],
+  "globalGates": {
+    "npmTest": "75/75 pass (node --test, three@0.180.0)",
+    "smoke": { "chrome": "17/17", "edge": "17/17", "webkit": "15 passed + 2 flaky (S6, V2): first attempts timed out waiting for ready at boot; passed on retry. Shared-process WebKit boot probe, 10 loads per tree ABBA: a00ec35 9/10, base 7/10, every failed load logged 'context lost' (U21, no regression)" },
+    "s1": "28 /src modules HTTP 200, 9 GLBs, rapier 200, 0 foreign, 0 failed requests in Chrome, Edge and WebKit (23 at the base + the 5 new patient modules)",
+    "s4GoldenTrace": "20 entries, identical to P0, P0-post-fix, P1, G1 verify and G1 fix in Chrome, Edge and WebKit: simulation_started@idle camera_changed@idle simulation_stage_changed@monitor checklist_item_completed@monitor simulation_stage_changed@pickup camera_changed@pickup instrument_picked@pickup checklist_item_completed@pickup simulation_stage_changed@aim checklist_item_completed@aim simulation_stage_changed@deposit instrument_released@deposit simulation_stage_changed@wrist checklist_item_completed@wrist camera_changed@wrist patient_interaction@wrist patient_interaction@wrist checklist_item_completed@wrist simulation_stage_changed@complete simulation_completed@complete",
+    "interaction": { "chrome": "54 passed, 1 skipped by design (C3-9e at 560), 16.5 min", "webkit": "C1-2b 2/2; C2-12 1440 passed, 560 passed on retry (first attempt: 'console.error: WebGL: context lost.'); click frame Chrome 11.9/13.5 ms, WebKit 20/21 ms; burst 1 raycast for 30 moves, tiny moves 0" },
+    "grabSpec": { "chrome": "Q1-a/b/c and G1-a..f at both sizes 16/16", "webkit": "G1-a..f both sizes 9 passed + 3 flaky (G1-d 1440, G1-a 560, G1-d 560: boot timeouts at load positions 4, 8 and 12 of the process), all passed on retry" },
+    "perf": "Headed Chrome, 1 run, 3 cold + 3 warm loads, vs Q1: max M8 rise +0.78% (V1 active 1157->1166), max M9 rise +0.70% (V3 active); idle and hover identical within 0.25%; 0 console errors. M10 warm 1244/1290/1231 ms (Q1 1197/1216/1135), cold 2572/1927/1600 (Q1 2595/1736/1515); 39 resources vs 34",
+    "M11": "0 in every passing attempt; the failing WebKit attempts were boot timeouts or 'WebGL: context lost.'",
+    "eventsAndWristAlias": "src/simulation and src/staff untouched since 63ba7b2; BedsideInteraction only changes pickKey; SUPPORTED_EVENTS unchanged; S4 identical",
+    "DN5": "JOINT_LIMITS, WARN_DEADBAND_DEG and the shoulder's neutral blend are labelled DN5/ASSUMED in JointModel.js; jointAngles() and jointClampSweep() carry DN5_LABEL; no UI text added",
+    "visualChange": "none intended; pixel diff 0",
+    "hygiene": "git diff --check clean; no CR in any changed file; no attribution trailers in 63ba7b2..a00ec35; no debug output added (one console.warn on a failed foundation build, by design); no images in G1 evidence; G1 evidence 2.25 MB before this round, 2.58 MB with it (no images)",
+    "invariants": "G1 writes no bone: pose version unchanged over 3 s idle and 30 hover moves (Chrome and WebKit); privacy hits return part null and pickable false (G1-c privacy samples); new modules import no three.js"
+  },
+  "nonBlocking": [
+    "JointModel near the shoulder's overhead apex, deep beyond the limit: the implementer's numbers are optimistic. Output jumps of 2.1-4.5 deg in one 0.1 deg input step start 27.0 deg (live rig) / 28.3 deg (node) beyond the limit, not 36.5 deg (that figure counts only jumps of >= 5 deg); for inputs 18-25 deg beyond, steps under 2 deg move up to 14.2x faster than the input (report: up to 9x). Within 10 deg the worst is 3.93x on great circles through overhead (report: 3.69x). tests/joint-model.test.js:280 says 26.7 deg, the report 36.5 deg. G3 must keep clamp inputs within about 15 deg of the limit (its per-second caps) or rate-limit the clamp output.",
+    "Far beyond the shoulder limit the ties are spread, not single: a pure flexion sweep 90->270 deg makes 42 consecutive output steps of 2-20 deg between 233.5 and 243.75 deg (56-110 deg beyond), abduction 44 between 228.5 and 239.25 deg (probe/jm-shoulder-sweep-90-270.json).",
+    "SupportSurface stackBottom is the lowest bottom of ANY box whose footprint overlaps, even a small fitting: both arm-board columns reach down to 0.782 (L/R_armboard_joint) although the plate's underside is at 0.8425, so 60 mm of free space under each arm board reads as solid; the back and seat pad columns reach 0.7275 over their full +-0.2825 m width from central_carrier (+-0.22 m). Not reached at rest; a hand passing under an arm board in G3 would be pushed out of a solid that is not drawn.",
+    "Non-resting boxes keep the plain box distance, so their way out can still point down: 1,852 of 200,000 random points around the table, 95 of them within the reach of skin (<= 80 mm under a resting top, <= 60 mm outside its footprint), all in radiolucent_deck or a rail mount near the arm-board/table-edge junction. 0 for skin at rest. G3 should not push a sample out through the bottom of the deck.",
+    "sd under-reads sinking near pad edges by design: 320 vertices exit through a pad side, 200 of them more than 10 mm shallower than their depth below the top; all 320 lead into free space. G2 'no sinking' gates must use belowTop*, as the implementer says.",
+    "The coarse-boundary cache is keyed by the four semi-axes, so knee-coupled limits (hip, ankle) rebuild it on every call when the knee moves: 14-16 us per clamp against 3-4 us with fixed limits (probe/jm-clamp-cost.json). Within budget, worth a quantised key in G3/G4.",
+    "Idempotence is not exact for every seed: 1 of 20,000 random shoulder.R rotations still reports changed on a second clamp (it moves 4.2e-6 deg); harmless for write discipline (1e-5 rad).",
+    "The sitting pose reads 6 HARD (implementer's open issue 2): G3/G4 must not clamp authored poses or the pose tween.",
+    "Pixel diff Chrome 1440x900 run 1: base-vs-base 37 px in V3 (base nondeterminism caught by the self-check); run 2 with --repeat 3 gave 0 everywhere.",
+    "WebKit boot flakiness (U21) unchanged: failures follow the load position in a shared process and always log 'context lost'; three passing WebKit smoke tests (S4, S5 scissors, S8) also lost and recovered the context at boot."
+  ],
+  "files": {
+    "probe/jm-neutral-continuity.json": "shoulder rotation neutral over the allowed directions (0.1 deg grid)",
+    "probe/jm-walks-unrestricted-and-overhead.json": "unrestricted walks, great circles through overhead, azimuth circles, idempotence",
+    "probe/jm-near-limit-lines.json and jm-near-limit-shoulder-detail.json": "40 deg lines near every limit; every shoulder jump and every step faster than 8x with its distance beyond the limit",
+    "probe/jm-projection-vs-polar-brute-force.json": "projection gate",
+    "probe/jm-round1-script-rerun.json": "verify/scripts/jm-adversarial.mjs re-run on a00ec35 (its joint-frame '+y' sweeps are now in the anterior chart: the 160 deg steps there are twist ties)",
+    "probe/jm-shoulder-sweep-90-270.json, jm-clamp-cost.json": "far-beyond behaviour and clamp cost",
+    "probe/live-{chrome,webkit}-{1440x900,560x890}.json": "V2 per-vertex and random-point checks, V1 on the live rig",
+    "probe/support-normals-random-points-chrome.json": "every support box, downward ways out by box",
+    "probe/g1-probe-round1-script-summary.json": "round-1 independent probe re-run, four browser/size runs",
+    "probe/webkit-boot-shared-abba.json": "WebKit boot reliability base vs a00ec35",
+    "pixel-diff/*.json, perf/*.json": "pixel diff and perf capture"
+  }
+}

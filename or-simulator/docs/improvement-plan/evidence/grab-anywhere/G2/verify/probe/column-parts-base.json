@@ -1,0 +1,482 @@
+[
+ {
+  "tree": "top",
+  "name": "leg_L_hinge",
+  "drawn": true,
+  "min": [
+   -0.285,
+   0.825,
+   0.435
+  ],
+  "max": [
+   -0.015,
+   0.915,
+   0.525
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "leg_R_hinge",
+  "drawn": true,
+  "min": [
+   0.015,
+   0.825,
+   0.435
+  ],
+  "max": [
+   0.285,
+   0.915,
+   0.525
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "L_armboard_stem",
+  "drawn": true,
+  "min": [
+   -0.4538,
+   0.804,
+   -0.488
+  ],
+  "max": [
+   -0.3217,
+   0.896,
+   -0.452
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "R_armboard_stem",
+  "drawn": true,
+  "min": [
+   0.3217,
+   0.804,
+   -0.488
+  ],
+  "max": [
+   0.4538,
+   0.896,
+   -0.452
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "rail_socket_-031_-025",
+  "drawn": true,
+  "min": [
+   -0.3225,
+   0.857,
+   -0.268
+  ],
+  "max": [
+   -0.2975,
+   0.893,
+   -0.232
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "rail_socket_-031_025",
+  "drawn": true,
+  "min": [
+   -0.3225,
+   0.857,
+   0.232
+  ],
+  "max": [
+   -0.2975,
+   0.893,
+   0.268
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "rail_socket_031_-025",
+  "drawn": true,
+  "min": [
+   0.2975,
+   0.857,
+   -0.268
+  ],
+  "max": [
+   0.3225,
+   0.893,
+   -0.232
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "rail_socket_031_025",
+  "drawn": true,
+  "min": [
+   0.2975,
+   0.857,
+   0.232
+  ],
+  "max": [
+   0.3225,
+   0.893,
+   0.268
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "L_rail_mount_-01",
+  "drawn": true,
+  "min": [
+   -0.35,
+   0.8404,
+   -0.125
+  ],
+  "max": [
+   -0.31,
+   0.8896,
+   -0.075
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "L_rail_mount_042",
+  "drawn": true,
+  "min": [
+   -0.35,
+   0.8404,
+   0.395
+  ],
+  "max": [
+   -0.31,
+   0.8896,
+   0.445
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "R_rail_mount_-01",
+  "drawn": true,
+  "min": [
+   0.31,
+   0.8404,
+   -0.125
+  ],
+  "max": [
+   0.35,
+   0.8896,
+   -0.075
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "R_rail_mount_042",
+  "drawn": true,
+  "min": [
+   0.31,
+   0.8404,
+   0.395
+  ],
+  "max": [
+   0.35,
+   0.8896,
+   0.445
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "leg_L_hinge_pin",
+  "drawn": true,
+  "min": [
+   -0.295,
+   0.852,
+   0.462
+  ],
+  "max": [
+   -0.005,
+   0.888,
+   0.498
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "leg_R_hinge_pin",
+  "drawn": true,
+  "min": [
+   0.005,
+   0.852,
+   0.462
+  ],
+  "max": [
+   0.295,
+   0.888,
+   0.498
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "back_support",
+  "drawn": true,
+  "min": [
+   -0.295,
+   0.8425,
+   -0.71
+  ],
+  "max": [
+   0.295,
+   0.8875,
+   -0.01
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "seat_support",
+  "drawn": true,
+  "min": [
+   -0.295,
+   0.8425,
+   0.005
+  ],
+  "max": [
+   0.295,
+   0.8875,
+   0.395
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "L_side_rail_front",
+  "drawn": true,
+  "min": [
+   -0.344,
+   0.851,
+   -0.68
+  ],
+  "max": [
+   -0.316,
+   0.879,
+   0.55
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "R_side_rail_front",
+  "drawn": true,
+  "min": [
+   0.316,
+   0.851,
+   -0.68
+  ],
+  "max": [
+   0.344,
+   0.879,
+   0.55
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "L_armboard_plate",
+  "drawn": true,
+  "min": [
+   -0.6135,
+   0.8425,
+   -0.72
+  ],
+  "max": [
+   -0.3435,
+   0.8775,
+   -0.22
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "R_armboard_plate",
+  "drawn": true,
+  "min": [
+   0.3435,
+   0.8425,
+   -0.72
+  ],
+  "max": [
+   0.6135,
+   0.8775,
+   -0.22
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "L_armboard_joint",
+  "drawn": true,
+  "min": [
+   -0.4835,
+   0.782,
+   -0.508
+  ],
+  "max": [
+   -0.4075,
+   0.858,
+   -0.432
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "R_armboard_joint",
+  "drawn": true,
+  "min": [
+   0.4075,
+   0.782,
+   -0.508
+  ],
+  "max": [
+   0.4835,
+   0.858,
+   -0.432
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "radiolucent_deck",
+  "drawn": true,
+  "min": [
+   -0.31,
+   0.7975,
+   -1.01
+  ],
+  "max": [
+   0.31,
+   0.8525,
+   1.01
+  ]
+ },
+ {
+  "tree": "top",
+  "name": "central_carrier",
+  "drawn": true,
+  "min": [
+   -0.22,
+   0.7275,
+   -0.34
+  ],
+  "max": [
+   0.22,
+   0.8025,
+   0.38
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "table_mount_top",
+  "drawn": true,
+  "min": [
+   -0.29,
+   0.76,
+   -0.33
+  ],
+  "max": [
+   0.29,
+   0.778,
+   0.33
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "column_bolt_-023",
+  "drawn": true,
+  "min": [
+   -0.262,
+   0.7525,
+   -0.032
+  ],
+  "max": [
+   -0.198,
+   0.7775,
+   0.032
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "column_bolt_023",
+  "drawn": true,
+  "min": [
+   0.198,
+   0.7525,
+   -0.032
+  ],
+  "max": [
+   0.262,
+   0.7775,
+   0.032
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "table_mount_plate",
+  "drawn": true,
+  "min": [
+   -0.32,
+   0.71,
+   -0.36
+  ],
+  "max": [
+   0.32,
+   0.76,
+   0.36
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "column_guide_-023",
+  "drawn": true,
+  "min": [
+   -0.252,
+   0.46,
+   -0.022
+  ],
+  "max": [
+   -0.208,
+   0.74,
+   0.022
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "column_guide_023",
+  "drawn": true,
+  "min": [
+   0.208,
+   0.46,
+   -0.022
+  ],
+  "max": [
+   0.252,
+   0.74,
+   0.022
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "pedestal_upper",
+  "drawn": true,
+  "min": [
+   -0.11,
+   0.63,
+   -0.125
+  ],
+  "max": [
+   0.11,
+   0.71,
+   0.125
+  ]
+ },
+ {
+  "tree": "base",
+  "name": "pedestal_mid",
+  "drawn": true,
+  "min": [
+   -0.125,
+   0.48,
+   -0.145
+  ],
+  "max": [
+   0.125,
+   0.63,
+   0.145
+  ]
+ }
+]

@@ -1,0 +1,65 @@
+{
+  "browser": "chrome",
+  "browserVersion": "157.0.8103.79",
+  "before": {
+    "glDraws": 2416,
+    "glTris": 714680,
+    "readout": {
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "shadowUpdates": 48,
+      "frames": 48
+    },
+    "liveInfoCalls": 1206,
+    "liveInfoTris": 387848,
+    "shadowMapRenderName": "countedShadowRender",
+    "renderName": "countedRender",
+    "overlay": "Draw 1206"
+  },
+  "lose": {
+    "shadowMapReplaced": true,
+    "infoReplaced": true
+  },
+  "after": {
+    "glDraws": 2416,
+    "glTris": 714680,
+    "readout": {
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "shadowUpdates": 98,
+      "frames": 98
+    },
+    "liveInfoCalls": 1206,
+    "liveInfoTris": 387848,
+    "shadowMapRenderName": "countedShadowRender",
+    "renderName": "countedRender",
+    "overlay": "Draw 1206"
+  },
+  "after2": {
+    "glDraws": 2416,
+    "glTris": 714680,
+    "readout": {
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "shadowUpdates": 99,
+      "frames": 99
+    },
+    "liveInfoCalls": 1206,
+    "liveInfoTris": 387848,
+    "shadowMapRenderName": "countedShadowRender",
+    "renderName": "countedRender",
+    "overlay": "Draw 1206"
+  },
+  "logs": [
+    "log: THREE.WebGLRenderer: Context Lost.",
+    "log: THREE.WebGLRenderer: Context Restored."
+  ],
+  "consistentBefore": true,
+  "consistentAfter": true
+}

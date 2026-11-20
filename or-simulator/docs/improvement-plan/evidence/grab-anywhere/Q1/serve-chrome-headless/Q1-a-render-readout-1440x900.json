@@ -1,0 +1,213 @@
+{
+  "check": "Q1-a-render-readout-1440x900",
+  "cluster": "Q1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-17T23:43:28.488Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "result": {
+    "render": {
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "shadowUpdates": 43,
+      "shadowUpdatesLastFrame": 1,
+      "frames": 43,
+      "rendersLastFrame": 1,
+      "programs": 18,
+      "casters": [
+        {
+          "light": "DirectionalLight",
+          "type": "DirectionalLight",
+          "lit": true,
+          "mapSize": [
+            2048,
+            2048
+          ],
+          "autoUpdate": true,
+          "casters": 1404,
+          "visible": 1212,
+          "drawn": 1210,
+          "alwaysDrawn": 372,
+          "drawCalls": 1210,
+          "sphereMissing": 0
+        }
+      ],
+      "envReady": false,
+      "toneMapping": "ACESFilmic",
+      "exposure": 0.88,
+      "pixelRatio": 1,
+      "gpuMs": null,
+      "gpuTimer": "off",
+      "gpuSamples": 0,
+      "gpuTimerResets": 0,
+      "infoAutoReset": true,
+      "contextLost": false,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rendererRebuilds": 0,
+      "lostFrames": 0
+    },
+    "overlay": {
+      "drawCalls": 1206,
+      "triangles": 387848
+    },
+    "getRenderStats": {
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "shadowUpdates": 43,
+      "shadowUpdatesLastFrame": 1,
+      "frames": 43,
+      "rendersLastFrame": 1,
+      "programs": 18,
+      "casters": [
+        {
+          "light": "DirectionalLight",
+          "type": "DirectionalLight",
+          "lit": true,
+          "mapSize": [
+            2048,
+            2048
+          ],
+          "autoUpdate": true,
+          "casters": 1404,
+          "visible": 1212,
+          "drawn": 1210,
+          "alwaysDrawn": 372,
+          "drawCalls": 1210,
+          "sphereMissing": 0
+        }
+      ],
+      "envReady": false,
+      "toneMapping": "ACESFilmic",
+      "exposure": 0.88,
+      "pixelRatio": 1,
+      "gpuMs": null,
+      "gpuTimer": "off",
+      "gpuSamples": 0,
+      "gpuTimerResets": 0,
+      "infoAutoReset": true,
+      "contextLost": false,
+      "contextLosses": 0,
+      "contextRestores": 0,
+      "rendererRebuilds": 0,
+      "lostFrames": 0
+    },
+    "census": [
+      {
+        "light": "DirectionalLight",
+        "type": "DirectionalLight",
+        "lit": true,
+        "mapSize": [
+          2048,
+          2048
+        ],
+        "autoUpdate": true,
+        "casters": 1404,
+        "visible": 1212,
+        "drawn": 1210,
+        "alwaysDrawn": 372,
+        "drawCalls": 1210,
+        "sphereMissing": 0,
+        "groups": [
+          {
+            "group": "Group/Group",
+            "casters": 1025,
+            "visible": 833,
+            "drawn": 831,
+            "alwaysDrawn": 0
+          },
+          {
+            "group": "Group/Nabd_Surgical_Light_and_Pendant_System_GLTF",
+            "casters": 129,
+            "visible": 129,
+            "drawn": 129,
+            "alwaysDrawn": 129
+          },
+          {
+            "group": "Group/Nabd_Anesthesia_Workstation_GLTF",
+            "casters": 112,
+            "visible": 112,
+            "drawn": 112,
+            "alwaysDrawn": 112
+          },
+          {
+            "group": "Group/Nabd_Operating_Table_Top_GLTF",
+            "casters": 69,
+            "visible": 69,
+            "drawn": 69,
+            "alwaysDrawn": 69
+          },
+          {
+            "group": "Group/Nabd_Operating_Table_Base_GLTF",
+            "casters": 45,
+            "visible": 45,
+            "drawn": 45,
+            "alwaysDrawn": 45
+          },
+          {
+            "group": "Rigged supervising clinician",
+            "casters": 13,
+            "visible": 13,
+            "drawn": 13,
+            "alwaysDrawn": 13
+          },
+          {
+            "group": "Group/Mesh",
+            "casters": 4,
+            "visible": 4,
+            "drawn": 4,
+            "alwaysDrawn": 0
+          },
+          {
+            "group": "VirtualPatient",
+            "casters": 4,
+            "visible": 4,
+            "drawn": 4,
+            "alwaysDrawn": 4
+          },
+          {
+            "group": "Trainee practice tray",
+            "casters": 3,
+            "visible": 3,
+            "drawn": 3,
+            "alwaysDrawn": 0
+          }
+        ]
+      }
+    ],
+    "pixelRatioExpected": 1,
+    "oneSecond": {
+      "frames": 12,
+      "shadowUpdates": 12
+    },
+    "gpuTimerDefault": {
+      "gpuTimer": "off",
+      "gpuMs": null
+    },
+    "gpuTimerSwitch": {
+      "available": true,
+      "enabled": true
+    },
+    "gpu": {
+      "gpuTimer": "on",
+      "gpuMs": 20.934,
+      "gpuSamples": 10
+    },
+    "gpuTimerOff": {
+      "available": true,
+      "enabled": false
+    }
+  },
+  "errors": []
+}

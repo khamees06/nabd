@@ -1,0 +1,1640 @@
+{
+  "check": "G1-a-foundations-1440x900",
+  "cluster": "G1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T22:45:14.191Z",
+  "attempt": 0,
+  "webglContextLostMessages": 0,
+  "body": {
+    "timing": {
+      "poseVersionMs": 0.20000004768371582,
+      "segmentsMs": 30.80000001192093,
+      "jointsMs": 2.100000023841858,
+      "skinCaptureMs": 9.5,
+      "headRingMs": 7.400000035762787,
+      "supportsMs": 1.2999999523162842,
+      "restCaptureMs": 0.20000004768371582,
+      "loadMs": 51.700000047683716,
+      "proxiesMs": 46.80000001192093
+    },
+    "segments": {
+      "buildMs": 30.600000023841858,
+      "unassignedBones": [],
+      "triangles": 109248,
+      "nonPrivacyTriangles": 107530,
+      "assigned": 107530,
+      "unassigned": 0,
+      "singleWeight": 101363,
+      "privacyTriangles": 1718,
+      "assignedFraction": 1,
+      "singleWeightFraction": 0.9426485631916675,
+      "clinical": {
+        "triangles": 105822,
+        "assigned": 105822,
+        "assignedFraction": 1,
+        "singleWeightFraction": 0.9417228931602124
+      },
+      "segments": [
+        {
+          "id": "head",
+          "triangles": 33285,
+          "vertices": 22856
+        },
+        {
+          "id": "neck",
+          "triangles": 1731,
+          "vertices": 1201
+        },
+        {
+          "id": "chest",
+          "triangles": 7048,
+          "vertices": 4453
+        },
+        {
+          "id": "abdomen",
+          "triangles": 3178,
+          "vertices": 1946
+        },
+        {
+          "id": "pelvis",
+          "triangles": 894,
+          "vertices": 625
+        },
+        {
+          "id": "upperArm.L",
+          "triangles": 2522,
+          "vertices": 1526
+        },
+        {
+          "id": "forearm.L",
+          "triangles": 1981,
+          "vertices": 1237
+        },
+        {
+          "id": "hand.L",
+          "triangles": 12763,
+          "vertices": 8127
+        },
+        {
+          "id": "thigh.L",
+          "triangles": 2525,
+          "vertices": 1658
+        },
+        {
+          "id": "shank.L",
+          "triangles": 1854,
+          "vertices": 1238
+        },
+        {
+          "id": "foot.L",
+          "triangles": 8526,
+          "vertices": 5999
+        },
+        {
+          "id": "upperArm.R",
+          "triangles": 2522,
+          "vertices": 1534
+        },
+        {
+          "id": "forearm.R",
+          "triangles": 1982,
+          "vertices": 1243
+        },
+        {
+          "id": "hand.R",
+          "triangles": 12762,
+          "vertices": 8122
+        },
+        {
+          "id": "thigh.R",
+          "triangles": 2518,
+          "vertices": 1660
+        },
+        {
+          "id": "shank.R",
+          "triangles": 1876,
+          "vertices": 1244
+        },
+        {
+          "id": "foot.R",
+          "triangles": 8503,
+          "vertices": 5989
+        }
+      ],
+      "regions": {
+        "forearm": 3494,
+        "hand": 25280,
+        "elbow": 508,
+        "wrist": 474,
+        "upperArm": 4284,
+        "shoulder": 822,
+        "thigh": 4793,
+        "knee": 487,
+        "shank": 3293,
+        "ankle": 397,
+        "foot": 16832,
+        "head": 33285,
+        "neck": 1731,
+        "chest": 5732,
+        "abdomen": 2049,
+        "flank": 2404,
+        "pelvis": 605,
+        "privacy": 1718,
+        "eyes": 1060
+      }
+    },
+    "proxies": {
+      "buildMs": 46.39999997615814,
+      "innerQuantile": 0.04,
+      "outerQuantile": 0.85,
+      "slices": 10,
+      "samples": 440,
+      "allowances": 0,
+      "restOverlapMm": {},
+      "segments": [
+        {
+          "id": "head",
+          "vertices": 22476,
+          "dominant": 21851,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9627477003340809,
+          "innerGapMm": {
+            "p50": 23.53138726535591,
+            "p95": 49.12150837414801
+          },
+          "samples": 40,
+          "lowestVertex": 170,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9351181305605799,
+          "lengthM": 0.17548243207449754,
+          "innerSemiAxesMm": [
+            [
+              15,
+              16
+            ],
+            [
+              38,
+              39
+            ],
+            [
+              40,
+              43
+            ],
+            [
+              35,
+              40
+            ],
+            [
+              48,
+              41
+            ],
+            [
+              45,
+              51
+            ],
+            [
+              59,
+              51
+            ],
+            [
+              96,
+              69
+            ],
+            [
+              93,
+              67
+            ],
+            [
+              25,
+              18
+            ]
+          ]
+        },
+        {
+          "id": "neck",
+          "vertices": 1201,
+          "dominant": 0,
+          "fittedOn": "all",
+          "outsideInner": 0.9825145711906744,
+          "innerGapMm": {
+            "p50": 4.718379483414358,
+            "p95": 23.9444374392573
+          },
+          "samples": 24,
+          "lowestVertex": 306,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9627122226254881,
+          "lengthM": 0.10940671556761347,
+          "innerSemiAxesMm": [
+            [
+              50,
+              20
+            ],
+            [
+              61,
+              42
+            ],
+            [
+              57,
+              46
+            ],
+            [
+              60,
+              45
+            ],
+            [
+              57,
+              43
+            ],
+            [
+              53,
+              35
+            ],
+            [
+              47,
+              24
+            ],
+            [
+              46,
+              24
+            ],
+            [
+              37,
+              14
+            ],
+            [
+              26,
+              9
+            ]
+          ]
+        },
+        {
+          "id": "chest",
+          "vertices": 4453,
+          "dominant": 3239,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9682000617474529,
+          "innerGapMm": {
+            "p50": 44.57493667162749,
+            "p95": 104.74248205083839
+          },
+          "samples": 24,
+          "lowestVertex": 14420,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9054534717302962,
+          "lengthM": 0.2320065682820441,
+          "innerSemiAxesMm": [
+            [
+              98,
+              106
+            ],
+            [
+              103,
+              113
+            ],
+            [
+              104,
+              112
+            ],
+            [
+              100,
+              107
+            ],
+            [
+              87,
+              95
+            ],
+            [
+              68,
+              70
+            ],
+            [
+              47,
+              49
+            ],
+            [
+              25,
+              27
+            ],
+            [
+              25,
+              27
+            ],
+            [
+              22,
+              25
+            ]
+          ]
+        },
+        {
+          "id": "abdomen",
+          "vertices": 1946,
+          "dominant": 783,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9731800766283525,
+          "innerGapMm": {
+            "p50": 6.427796367423719,
+            "p95": 21.08826330935125
+          },
+          "samples": 24,
+          "lowestVertex": 42067,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9279561533833836,
+          "lengthM": 0.08648128574887651,
+          "innerSemiAxesMm": [
+            [
+              136,
+              86
+            ],
+            [
+              137,
+              93
+            ],
+            [
+              136,
+              92
+            ],
+            [
+              136,
+              93
+            ],
+            [
+              135,
+              93
+            ],
+            [
+              133,
+              79
+            ],
+            [
+              135,
+              94
+            ],
+            [
+              135,
+              85
+            ],
+            [
+              138,
+              68
+            ],
+            [
+              139,
+              63
+            ]
+          ]
+        },
+        {
+          "id": "pelvis",
+          "vertices": 625,
+          "dominant": 0,
+          "fittedOn": "all",
+          "outsideInner": 0.9792,
+          "innerGapMm": {
+            "p50": 10.239213176024343,
+            "p95": 26.18200306659376
+          },
+          "samples": 24,
+          "lowestVertex": 10373,
+          "lowestIsSample": true,
+          "lowestRestY": 0.8980003554580426,
+          "lengthM": 0.16197521244386795,
+          "innerSemiAxesMm": [
+            [
+              36,
+              10
+            ],
+            [
+              36,
+              4
+            ],
+            [
+              41,
+              2
+            ],
+            [
+              98,
+              12
+            ],
+            [
+              137,
+              112
+            ],
+            [
+              138,
+              115
+            ],
+            [
+              152,
+              107
+            ],
+            [
+              148,
+              108
+            ],
+            [
+              143,
+              100
+            ],
+            [
+              136,
+              68
+            ]
+          ]
+        },
+        {
+          "id": "upperArm.L",
+          "vertices": 1526,
+          "dominant": 1214,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9802306425041186,
+          "innerGapMm": {
+            "p50": 8.504548894114635,
+            "p95": 26.657853493736706
+          },
+          "samples": 24,
+          "lowestVertex": 25593,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9005166395309316,
+          "lengthM": 0.30436580429194976,
+          "innerSemiAxesMm": [
+            [
+              9,
+              8
+            ],
+            [
+              37,
+              27
+            ],
+            [
+              46,
+              29
+            ],
+            [
+              56,
+              36
+            ],
+            [
+              57,
+              47
+            ],
+            [
+              48,
+              43
+            ],
+            [
+              43,
+              39
+            ],
+            [
+              44,
+              36
+            ],
+            [
+              45,
+              37
+            ],
+            [
+              40,
+              31
+            ]
+          ]
+        },
+        {
+          "id": "forearm.L",
+          "vertices": 1237,
+          "dominant": 914,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9660831509846827,
+          "innerGapMm": {
+            "p50": 2.9999174192006315,
+            "p95": 7.308035283693226
+          },
+          "samples": 24,
+          "lowestVertex": 26467,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9016689027931417,
+          "lengthM": 0.25194603424372325,
+          "innerSemiAxesMm": [
+            [
+              37,
+              33
+            ],
+            [
+              36,
+              35
+            ],
+            [
+              35,
+              36
+            ],
+            [
+              34,
+              36
+            ],
+            [
+              32,
+              34
+            ],
+            [
+              31,
+              32
+            ],
+            [
+              28,
+              31
+            ],
+            [
+              26,
+              27
+            ],
+            [
+              24,
+              23
+            ],
+            [
+              21,
+              21
+            ]
+          ]
+        },
+        {
+          "id": "hand.L",
+          "vertices": 8127,
+          "dominant": 7974,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9668924003009782,
+          "innerGapMm": {
+            "p50": 15.278920575739496,
+            "p95": 39.45292824585429
+          },
+          "samples": 32,
+          "lowestVertex": 34473,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9003950581453833,
+          "lengthM": 0.15822311330922506,
+          "innerSemiAxesMm": [
+            [
+              16,
+              8
+            ],
+            [
+              20,
+              8
+            ],
+            [
+              25,
+              11
+            ],
+            [
+              25,
+              9
+            ],
+            [
+              24,
+              7
+            ],
+            [
+              15,
+              4
+            ],
+            [
+              17,
+              3
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              9,
+              2
+            ],
+            [
+              6,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "thigh.L",
+          "vertices": 1658,
+          "dominant": 1285,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9929961089494164,
+          "innerGapMm": {
+            "p50": 6.340734768964769,
+            "p95": 18.048310252305527
+          },
+          "samples": 24,
+          "lowestVertex": 14263,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9060389471658374,
+          "lengthM": 0.3424082102316518,
+          "innerSemiAxesMm": [
+            [
+              26,
+              50
+            ],
+            [
+              77,
+              75
+            ],
+            [
+              88,
+              78
+            ],
+            [
+              86,
+              77
+            ],
+            [
+              82,
+              77
+            ],
+            [
+              79,
+              74
+            ],
+            [
+              73,
+              70
+            ],
+            [
+              66,
+              61
+            ],
+            [
+              61,
+              55
+            ],
+            [
+              51,
+              46
+            ]
+          ]
+        },
+        {
+          "id": "shank.L",
+          "vertices": 1238,
+          "dominant": 880,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9784090909090909,
+          "innerGapMm": {
+            "p50": 3.628175771130942,
+            "p95": 8.019721998700003
+          },
+          "samples": 24,
+          "lowestVertex": 17495,
+          "lowestIsSample": true,
+          "lowestRestY": 0.8982136230804447,
+          "lengthM": 0.3761074348342172,
+          "innerSemiAxesMm": [
+            [
+              54,
+              49
+            ],
+            [
+              57,
+              53
+            ],
+            [
+              56,
+              54
+            ],
+            [
+              54,
+              53
+            ],
+            [
+              50,
+              50
+            ],
+            [
+              48,
+              46
+            ],
+            [
+              45,
+              42
+            ],
+            [
+              39,
+              34
+            ],
+            [
+              40,
+              30
+            ],
+            [
+              35,
+              25
+            ]
+          ]
+        },
+        {
+          "id": "foot.L",
+          "vertices": 5999,
+          "dominant": 5825,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9699570815450643,
+          "innerGapMm": {
+            "p50": 9.850064770667514,
+            "p95": 22.979241862397156
+          },
+          "samples": 24,
+          "lowestVertex": 20410,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9030876453692657,
+          "lengthM": 0.24285036110904462,
+          "innerSemiAxesMm": [
+            [
+              10,
+              10
+            ],
+            [
+              30,
+              29
+            ],
+            [
+              32,
+              27
+            ],
+            [
+              30,
+              30
+            ],
+            [
+              25,
+              22
+            ],
+            [
+              25,
+              17
+            ],
+            [
+              31,
+              16
+            ],
+            [
+              22,
+              8
+            ],
+            [
+              10,
+              3
+            ],
+            [
+              8,
+              3
+            ]
+          ]
+        },
+        {
+          "id": "upperArm.R",
+          "vertices": 1534,
+          "dominant": 1218,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9811165845648604,
+          "innerGapMm": {
+            "p50": 8.119444533444678,
+            "p95": 27.31504156501412
+          },
+          "samples": 24,
+          "lowestVertex": 60301,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9005166202957063,
+          "lengthM": 0.3029935833910081,
+          "innerSemiAxesMm": [
+            [
+              8,
+              8
+            ],
+            [
+              37,
+              27
+            ],
+            [
+              47,
+              31
+            ],
+            [
+              57,
+              40
+            ],
+            [
+              56,
+              47
+            ],
+            [
+              48,
+              42
+            ],
+            [
+              42,
+              39
+            ],
+            [
+              44,
+              36
+            ],
+            [
+              45,
+              37
+            ],
+            [
+              41,
+              32
+            ]
+          ]
+        },
+        {
+          "id": "forearm.R",
+          "vertices": 1243,
+          "dominant": 919,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9793253536452666,
+          "innerGapMm": {
+            "p50": 3.103520375778465,
+            "p95": 8.044516870811798
+          },
+          "samples": 24,
+          "lowestVertex": 61181,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9016688092246847,
+          "lengthM": 0.2522225002780918,
+          "innerSemiAxesMm": [
+            [
+              36,
+              33
+            ],
+            [
+              34,
+              35
+            ],
+            [
+              35,
+              35
+            ],
+            [
+              34,
+              35
+            ],
+            [
+              32,
+              34
+            ],
+            [
+              31,
+              32
+            ],
+            [
+              28,
+              30
+            ],
+            [
+              26,
+              27
+            ],
+            [
+              23,
+              23
+            ],
+            [
+              20,
+              21
+            ]
+          ]
+        },
+        {
+          "id": "hand.R",
+          "vertices": 8122,
+          "dominant": 7972,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9653788258906172,
+          "innerGapMm": {
+            "p50": 15.262281420392677,
+            "p95": 39.48934535293205
+          },
+          "samples": 32,
+          "lowestVertex": 69193,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9003951376942123,
+          "lengthM": 0.15800190060781746,
+          "innerSemiAxesMm": [
+            [
+              16,
+              8
+            ],
+            [
+              19,
+              8
+            ],
+            [
+              29,
+              13
+            ],
+            [
+              25,
+              9
+            ],
+            [
+              24,
+              7
+            ],
+            [
+              16,
+              4
+            ],
+            [
+              17,
+              3
+            ],
+            [
+              12,
+              4
+            ],
+            [
+              9,
+              3
+            ],
+            [
+              6,
+              2
+            ]
+          ]
+        },
+        {
+          "id": "thigh.R",
+          "vertices": 1660,
+          "dominant": 1323,
+          "fittedOn": "dominant",
+          "outsideInner": 0.999244142101285,
+          "innerGapMm": {
+            "p50": 5.878865844555011,
+            "p95": 16.638293403538505
+          },
+          "samples": 24,
+          "lowestVertex": 48267,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9071120368653551,
+          "lengthM": 0.3512818747406972,
+          "innerSemiAxesMm": [
+            [
+              30,
+              54
+            ],
+            [
+              81,
+              76
+            ],
+            [
+              86,
+              77
+            ],
+            [
+              85,
+              78
+            ],
+            [
+              82,
+              77
+            ],
+            [
+              79,
+              74
+            ],
+            [
+              72,
+              69
+            ],
+            [
+              67,
+              62
+            ],
+            [
+              58,
+              53
+            ],
+            [
+              50,
+              46
+            ]
+          ]
+        },
+        {
+          "id": "shank.R",
+          "vertices": 1244,
+          "dominant": 982,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9775967413441955,
+          "innerGapMm": {
+            "p50": 3.7077423894241712,
+            "p95": 8.802618794462607
+          },
+          "samples": 24,
+          "lowestVertex": 52206,
+          "lowestIsSample": true,
+          "lowestRestY": 0.8982136144263788,
+          "lengthM": 0.3876582602423544,
+          "innerSemiAxesMm": [
+            [
+              53,
+              47
+            ],
+            [
+              56,
+              52
+            ],
+            [
+              55,
+              53
+            ],
+            [
+              54,
+              53
+            ],
+            [
+              48,
+              49
+            ],
+            [
+              47,
+              46
+            ],
+            [
+              41,
+              38
+            ],
+            [
+              42,
+              33
+            ],
+            [
+              38,
+              28
+            ],
+            [
+              39,
+              26
+            ]
+          ]
+        },
+        {
+          "id": "foot.R",
+          "vertices": 5989,
+          "dominant": 5828,
+          "fittedOn": "dominant",
+          "outsideInner": 0.9694577899794098,
+          "innerGapMm": {
+            "p50": 9.864215678776183,
+            "p95": 23.190990489178095
+          },
+          "samples": 24,
+          "lowestVertex": 55130,
+          "lowestIsSample": true,
+          "lowestRestY": 0.9030876665709153,
+          "lengthM": 0.2431916189043405,
+          "innerSemiAxesMm": [
+            [
+              9,
+              10
+            ],
+            [
+              30,
+              28
+            ],
+            [
+              31,
+              27
+            ],
+            [
+              29,
+              28
+            ],
+            [
+              23,
+              21
+            ],
+            [
+              26,
+              17
+            ],
+            [
+              32,
+              16
+            ],
+            [
+              22,
+              8
+            ],
+            [
+              10,
+              3
+            ],
+            [
+              8,
+              3
+            ]
+          ]
+        }
+      ]
+    },
+    "supports": {
+      "buildMs": 1.0999999642372131,
+      "boxes": 69,
+      "deckMeasuredAt": 0.8475,
+      "offset": 0,
+      "rootRotatedOrScaled": false,
+      "kinds": {
+        "deck": 6,
+        "pad": 5,
+        "trim": 8,
+        "fitting": 18,
+        "headrest": 3,
+        "rail": 16,
+        "armboard": 6,
+        "control": 7
+      },
+      "resting": [
+        {
+          "name": "head_pad",
+          "kind": "pad",
+          "topY": 0.9000000014901162,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            -0.2524999976158142,
+            0.2524999976158142
+          ],
+          "z": [
+            -0.9809999993443489,
+            -0.7390000006556511
+          ]
+        },
+        {
+          "name": "back_pad",
+          "kind": "pad",
+          "topY": 0.9000000014901162,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            -0.2824999988079071,
+            0.2824999988079071
+          ],
+          "z": [
+            -0.7009999907016754,
+            -0.01900000929832457
+          ]
+        },
+        {
+          "name": "seat_pad",
+          "kind": "pad",
+          "topY": 0.9000000014901162,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            -0.2824999988079071,
+            0.2824999988079071
+          ],
+          "z": [
+            0.013999995589256298,
+            0.3860000044107437
+          ]
+        },
+        {
+          "name": "leg_L_pad",
+          "kind": "pad",
+          "topY": 0.9000000014901162,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            -0.2725000023841858,
+            -0.027499997615814217
+          ],
+          "z": [
+            0.5149999976158142,
+            0.8850000023841857
+          ]
+        },
+        {
+          "name": "leg_R_pad",
+          "kind": "pad",
+          "topY": 0.9000000014901162,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            0.027499997615814217,
+            0.2725000023841858
+          ],
+          "z": [
+            0.5149999976158142,
+            0.8850000023841857
+          ]
+        },
+        {
+          "name": "headrest_cushion",
+          "kind": "headrest",
+          "topY": 0.9275000017881394,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            -0.2150000035762787,
+            0.2150000035762787
+          ],
+          "z": [
+            -1.1399999994039536,
+            -0.9200000005960465
+          ]
+        },
+        {
+          "name": "headrest_top",
+          "kind": "headrest",
+          "topY": 0.9550000008940697,
+          "stackBottomY": 0.7450000001490117,
+          "x": [
+            -0.20000000298023224,
+            0.20000000298023224
+          ],
+          "z": [
+            -1.1249999988079071,
+            -0.9350000011920929
+          ]
+        },
+        {
+          "name": "L_armboard_plate",
+          "kind": "armboard",
+          "topY": 0.8250000000745058,
+          "stackBottomY": 0.7295000012218953,
+          "x": [
+            -0.613500005364418,
+            -0.3434999946355819
+          ],
+          "z": [
+            -0.72,
+            -0.21999999999999997
+          ]
+        },
+        {
+          "name": "L_armboard_pad",
+          "kind": "armboard",
+          "topY": 0.8799999998509884,
+          "stackBottomY": 0.7295000012218953,
+          "x": [
+            -0.6010000023841857,
+            -0.35599999761581413
+          ],
+          "z": [
+            -0.7049999994039535,
+            -0.23500000059604642
+          ]
+        },
+        {
+          "name": "L_armboard_top",
+          "kind": "armboard",
+          "topY": 0.8984999996125699,
+          "stackBottomY": 0.7295000012218953,
+          "x": [
+            -0.5909999970197677,
+            -0.36600000298023216
+          ],
+          "z": [
+            -0.6924999964237213,
+            -0.24750000357627866
+          ]
+        },
+        {
+          "name": "R_armboard_plate",
+          "kind": "armboard",
+          "topY": 0.8250000000745058,
+          "stackBottomY": 0.7295000012218953,
+          "x": [
+            0.3434999946355819,
+            0.613500005364418
+          ],
+          "z": [
+            -0.72,
+            -0.21999999999999997
+          ]
+        },
+        {
+          "name": "R_armboard_pad",
+          "kind": "armboard",
+          "topY": 0.8799999998509884,
+          "stackBottomY": 0.7295000012218953,
+          "x": [
+            0.35599999761581413,
+            0.6010000023841857
+          ],
+          "z": [
+            -0.7049999994039535,
+            -0.23500000059604642
+          ]
+        },
+        {
+          "name": "R_armboard_top",
+          "kind": "armboard",
+          "topY": 0.8984999996125699,
+          "stackBottomY": 0.7295000012218953,
+          "x": [
+            0.36600000298023216,
+            0.5909999970197677
+          ],
+          "z": [
+            -0.6924999964237213,
+            -0.24750000357627866
+          ]
+        },
+        {
+          "name": "head_ring_gel",
+          "kind": "headrest",
+          "topY": 0.9549999997019768,
+          "stackBottomY": 0.9,
+          "x": [
+            -0.10999999940395355,
+            0.10999999940395355
+          ],
+          "z": [
+            -0.8220000014901161,
+            -0.6219999985098839
+          ]
+        }
+      ]
+    },
+    "joints": {
+      "ids": [
+        "shoulder.L",
+        "hip.L",
+        "elbow.L",
+        "knee.L",
+        "wrist.L",
+        "ankle.L",
+        "shoulder.R",
+        "hip.R",
+        "elbow.R",
+        "knee.R",
+        "wrist.R",
+        "ankle.R",
+        "neck"
+      ],
+      "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)"
+    },
+    "snapshotBones": [
+      "upperarm02L",
+      "upperarm02R",
+      "lowerarm02L",
+      "lowerarm02R",
+      "upperleg02L",
+      "upperleg02R",
+      "lowerleg02L",
+      "lowerleg02R",
+      "clavicleL",
+      "clavicleR",
+      "shoulder01L",
+      "shoulder01R",
+      "neck02",
+      "neck03",
+      "head",
+      "orbicularis03L",
+      "orbicularis03R",
+      "orbicularis04L",
+      "orbicularis04R"
+    ],
+    "poseVersion": 0,
+    "gates": {
+      "triSegAssignedFraction": 1,
+      "triSegSingleWeightFraction": 0.9417228931602124,
+      "minOutsideInner": 0.9627477003340809,
+      "lowestRestVertexIsSample": true
+    }
+  },
+  "supports": {
+    "buildMs": 1.0999999642372131,
+    "boxes": 69,
+    "deckMeasuredAt": 0.8475,
+    "offset": 0,
+    "rootRotatedOrScaled": false,
+    "kinds": {
+      "deck": 6,
+      "pad": 5,
+      "trim": 8,
+      "fitting": 18,
+      "headrest": 3,
+      "rail": 16,
+      "armboard": 6,
+      "control": 7
+    },
+    "resting": [
+      {
+        "name": "head_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2524999976158142,
+          0.2524999976158142
+        ],
+        "z": [
+          -0.9809999993443489,
+          -0.7390000006556511
+        ]
+      },
+      {
+        "name": "back_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2824999988079071,
+          0.2824999988079071
+        ],
+        "z": [
+          -0.7009999907016754,
+          -0.01900000929832457
+        ]
+      },
+      {
+        "name": "seat_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2824999988079071,
+          0.2824999988079071
+        ],
+        "z": [
+          0.013999995589256298,
+          0.3860000044107437
+        ]
+      },
+      {
+        "name": "leg_L_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2725000023841858,
+          -0.027499997615814217
+        ],
+        "z": [
+          0.5149999976158142,
+          0.8850000023841857
+        ]
+      },
+      {
+        "name": "leg_R_pad",
+        "kind": "pad",
+        "topY": 0.9000000014901162,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          0.027499997615814217,
+          0.2725000023841858
+        ],
+        "z": [
+          0.5149999976158142,
+          0.8850000023841857
+        ]
+      },
+      {
+        "name": "headrest_cushion",
+        "kind": "headrest",
+        "topY": 0.9275000017881394,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.2150000035762787,
+          0.2150000035762787
+        ],
+        "z": [
+          -1.1399999994039536,
+          -0.9200000005960465
+        ]
+      },
+      {
+        "name": "headrest_top",
+        "kind": "headrest",
+        "topY": 0.9550000008940697,
+        "stackBottomY": 0.7450000001490117,
+        "x": [
+          -0.20000000298023224,
+          0.20000000298023224
+        ],
+        "z": [
+          -1.1249999988079071,
+          -0.9350000011920929
+        ]
+      },
+      {
+        "name": "L_armboard_plate",
+        "kind": "armboard",
+        "topY": 0.8250000000745058,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          -0.613500005364418,
+          -0.3434999946355819
+        ],
+        "z": [
+          -0.72,
+          -0.21999999999999997
+        ]
+      },
+      {
+        "name": "L_armboard_pad",
+        "kind": "armboard",
+        "topY": 0.8799999998509884,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          -0.6010000023841857,
+          -0.35599999761581413
+        ],
+        "z": [
+          -0.7049999994039535,
+          -0.23500000059604642
+        ]
+      },
+      {
+        "name": "L_armboard_top",
+        "kind": "armboard",
+        "topY": 0.8984999996125699,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          -0.5909999970197677,
+          -0.36600000298023216
+        ],
+        "z": [
+          -0.6924999964237213,
+          -0.24750000357627866
+        ]
+      },
+      {
+        "name": "R_armboard_plate",
+        "kind": "armboard",
+        "topY": 0.8250000000745058,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          0.3434999946355819,
+          0.613500005364418
+        ],
+        "z": [
+          -0.72,
+          -0.21999999999999997
+        ]
+      },
+      {
+        "name": "R_armboard_pad",
+        "kind": "armboard",
+        "topY": 0.8799999998509884,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          0.35599999761581413,
+          0.6010000023841857
+        ],
+        "z": [
+          -0.7049999994039535,
+          -0.23500000059604642
+        ]
+      },
+      {
+        "name": "R_armboard_top",
+        "kind": "armboard",
+        "topY": 0.8984999996125699,
+        "stackBottomY": 0.7295000012218953,
+        "x": [
+          0.36600000298023216,
+          0.5909999970197677
+        ],
+        "z": [
+          -0.6924999964237213,
+          -0.24750000357627866
+        ]
+      },
+      {
+        "name": "head_ring_gel",
+        "kind": "headrest",
+        "topY": 0.9549999997019768,
+        "stackBottomY": 0.9,
+        "x": [
+          -0.10999999940395355,
+          0.10999999940395355
+        ],
+        "z": [
+          -0.8220000014901161,
+          -0.6219999985098839
+        ]
+      }
+    ],
+    "deck": 0.9,
+    "check": {
+      "samples": 1127,
+      "worstErrorMm": 6.661338147750939e-13,
+      "worstAt": {
+        "name": "head_ring_gel",
+        "x": 0,
+        "z": -0.6959999907016754,
+        "raycastY": 0.9111405344784412,
+        "supportY": 0.9111405344784406
+      }
+    }
+  },
+  "errors": []
+}

@@ -1,0 +1,125 @@
+{
+  "label": "serve-webkit-headless",
+  "S1": {
+    "readyMs": 3266,
+    "modules": 28,
+    "glbs": 9,
+    "foreign": [],
+    "M11": 0
+  },
+  "S4": {
+    "goldenTrace": [
+      "simulation_started@idle",
+      "camera_changed@idle",
+      "simulation_stage_changed@monitor",
+      "checklist_item_completed@monitor",
+      "simulation_stage_changed@pickup",
+      "camera_changed@pickup",
+      "instrument_picked@pickup",
+      "checklist_item_completed@pickup",
+      "simulation_stage_changed@aim",
+      "checklist_item_completed@aim",
+      "simulation_stage_changed@deposit",
+      "instrument_released@deposit",
+      "simulation_stage_changed@wrist",
+      "checklist_item_completed@wrist",
+      "camera_changed@wrist",
+      "patient_interaction@wrist",
+      "patient_interaction@wrist",
+      "checklist_item_completed@wrist",
+      "simulation_stage_changed@complete",
+      "simulation_completed@complete"
+    ],
+    "identicalToP1": true,
+    "results": [
+      "monitor",
+      "pickup",
+      "aim",
+      "deposit",
+      "wrist"
+    ]
+  },
+  "flows": {
+    "S1-boot": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S2-forearm-drill": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S3-support-release": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S4-training-session": {
+      "attempt": 1,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-grasper": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-needleHolder": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-scissors": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 2,
+      "browserVersion": "27.2"
+    },
+    "S5-scope": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-staff-handover": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S5-summary": {
+      "M11": null
+    },
+    "S6-room-presets": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 2,
+      "browserVersion": "27.2"
+    },
+    "S7-anatomy": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    },
+    "S8-hands-locomotion": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 2,
+      "browserVersion": "27.2"
+    },
+    "S9-port-scope": {
+      "attempt": 0,
+      "M11": 0,
+      "webglContextLostMessages": 0,
+      "browserVersion": "27.2"
+    }
+  }
+}

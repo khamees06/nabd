@@ -1,0 +1,214 @@
+{
+ "label": "serve-chrome-headless",
+ "files": 54,
+ "pick": {
+  "C1-1-keys-buttons-1440x900": {
+   "errors": 0
+  },
+  "C1-1-keys-buttons-560x890": {
+   "errors": 0
+  },
+  "C1-1b-nudge-priority-1440x900": {
+   "errors": 0
+  },
+  "C1-1b-nudge-priority-560x890": {
+   "errors": 0
+  },
+  "C1-2-grid-drill-1440x900": {
+   "errors": 0
+  },
+  "C1-2-grid-drill-560x890": {
+   "errors": 0
+  },
+  "C1-2-grid-free-1440x900": {
+   "errors": 0
+  },
+  "C1-2-grid-free-560x890": {
+   "errors": 0
+  },
+  "C1-2-grid-monitor-1440x900": {
+   "errors": 0
+  },
+  "C1-2-grid-monitor-560x890": {
+   "errors": 0
+  },
+  "C1-2b-patient-drag-cursors-1440x900": {
+   "errors": 0
+  },
+  "C1-2b-patient-drag-cursors-560x890": {
+   "errors": 0
+  },
+  "C1-4-look-not-cut-1440x900": {
+   "errors": 0
+  },
+  "C1-4-look-not-cut-560x890": {
+   "errors": 0
+  },
+  "C1-7-view-on-screen-wheel-1440x900": {
+   "errors": 0
+  },
+  "C1-7-view-on-screen-wheel-560x890": {
+   "errors": 0
+  },
+  "C2-12-no-hitches-1440x900": {
+   "errors": 0
+  },
+  "C2-12-no-hitches-560x890": {
+   "errors": 0
+  },
+  "C2-3-glove-faces-skin-1440x900": {
+   "errors": 0
+  },
+  "C2-3-glove-faces-skin-560x890": {
+   "errors": 0
+  },
+  "C2-5-surface-grip-1440x900": {
+   "errors": 0
+  },
+  "C2-5-surface-grip-560x890": {
+   "errors": 0
+  },
+  "C2-6-human-speed-1440x900": {
+   "errors": 0
+  },
+  "C2-6-human-speed-560x890": {
+   "errors": 0
+  },
+  "C3-9a-drill-grips-1440x900": {
+   "errors": 0
+  },
+  "C3-9a-drill-grips-560x890": {
+   "errors": 0
+  },
+  "C3-9b-workstation-limbs-1440x900": {
+   "wristDepthAtAttachM": 0.0088,
+   "ankleDepthAtAttachM": 0,
+   "lift": {
+    "pointerUpPx": 110,
+    "dxM": -0.0018,
+    "dyM": 0.1929,
+    "dzM": -0.018
+   },
+   "settle2sM": [
+    0,
+    0,
+    0.0001
+   ],
+   "maxSpeed": [
+    0.32,
+    0.321,
+    0.267
+   ],
+   "attached": 4
+  },
+  "C3-9b-workstation-limbs-560x890": {
+   "wristDepthAtAttachM": 0.0088,
+   "ankleDepthAtAttachM": 0,
+   "lift": {
+    "pointerUpPx": 110,
+    "dxM": -0.0037,
+    "dyM": 0.2434,
+    "dzM": -0.0359
+   },
+   "settle2sM": [
+    0,
+    0,
+    0.0001
+   ],
+   "maxSpeed": [
+    0.32,
+    0.321,
+    0.32
+   ],
+   "attached": 4
+  },
+  "C3-9c-bedside-wrist-1440x900": {
+   "errors": 0
+  },
+  "C3-9c-bedside-wrist-560x890": {
+   "errors": 0
+  },
+  "C3-9d-drill-pause-1440x900": {
+   "errors": 0
+  },
+  "C3-9d-drill-pause-560x890": {
+   "errors": 0
+  },
+  "C3-9e-step5-settle-1440x900": {
+   "errors": 0
+  },
+  "C4-11a-pickup-carry-1440x900": {
+   "errors": 0
+  },
+  "C4-11a-pickup-carry-560x890": {
+   "errors": 0
+  },
+  "C4-11b-free-carry-work-area-1440x900": {
+   "errors": 0
+  },
+  "C4-11b-free-carry-work-area-560x890": {
+   "errors": 0
+  },
+  "C4-11c-look-reanchor-1440x900": {
+   "errors": 0
+  },
+  "C4-11c-look-reanchor-560x890": {
+   "errors": 0
+  },
+  "C4-11d-scope-monitor-roll-escape-1440x900": {
+   "errors": 0
+  },
+  "C4-11d-scope-monitor-roll-escape-560x890": {
+   "errors": 0
+  },
+  "C5-10a-refusals-explained-1440x900": {
+   "errors": 0
+  },
+  "C5-10a-refusals-explained-560x890": {
+   "errors": 0
+  },
+  "C5-10b-no-contact-1440x900": {
+   "errors": 0
+  },
+  "C5-8a-work-area-moves-1440x900": {
+   "aim": [
+    "\"finalAimErrorDeg\":0",
+    "\"midWalkAimErrorDeg\":6.8",
+    "\"finalAimErrorDeg\":0",
+    "\"finalAimErrorDeg\":0"
+   ]
+  },
+  "C5-8a-work-area-moves-560x890": {
+   "aim": [
+    "\"finalAimErrorDeg\":0",
+    "\"midWalkAimErrorDeg\":6.9",
+    "\"finalAimErrorDeg\":0",
+    "\"finalAimErrorDeg\":0"
+   ]
+  },
+  "C5-8b-bedside-moves-1440x900": {
+   "errors": 0
+  },
+  "C5-8b-bedside-moves-560x890": {
+   "errors": 0
+  },
+  "C6-a-lamp-lights-1440x900": {
+   "errors": 0
+  },
+  "C6-a2-lamp-lights-fallback-1440x900": {
+   "errors": 1
+  },
+  "C6-b-forearm-contact-1440x900": {
+   "errors": 0
+  },
+  "C6-b-forearm-contact-560x890": {
+   "errors": 0
+  },
+  "C6-c-rapier-licence-1440x900": {
+   "errors": 0
+  },
+  "C6-e-F27-table-measurement-1440x900": {
+   "errors": 0
+  }
+ }
+}

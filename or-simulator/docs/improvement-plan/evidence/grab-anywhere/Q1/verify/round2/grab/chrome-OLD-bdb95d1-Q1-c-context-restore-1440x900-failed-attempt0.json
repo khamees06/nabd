@@ -1,0 +1,46 @@
+{
+  "check": "Q1-c-context-restore-1440x900-failed-attempt0",
+  "cluster": "Q1",
+  "server": "serve",
+  "project": "chrome",
+  "browser": "chromium",
+  "browserVersion": "157.0.8103.79",
+  "viewport": {
+    "width": 1440,
+    "height": 900
+  },
+  "capturedAt": "2026-11-18T01:42:37.349Z",
+  "attempt": 0,
+  "webglContextLostMessages": 1,
+  "failedAt": "page.waitForFunction: Timeout 15000ms exceeded.",
+  "result": {
+    "gpuTimerSwitch": {
+      "available": true,
+      "enabled": true
+    },
+    "boot": {
+      "frames": 39,
+      "gpuMs": 19.276,
+      "gpuSamples": 5
+    },
+    "before": {
+      "glDraws": 2416,
+      "glTris": 714680,
+      "calls": 1206,
+      "tris": 387848,
+      "shadowCalls": 1210,
+      "shadowTris": 326832,
+      "liveInfoCalls": 1206,
+      "liveInfoTris": 387848,
+      "shadowMapRender": "countedShadowRender",
+      "render": "countedRender"
+    },
+    "lose": {
+      "extension": true
+    }
+  },
+  "contextConsole": [
+    "log: THREE.WebGLRenderer: Context Lost."
+  ],
+  "errors": []
+}

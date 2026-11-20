@@ -57,7 +57,8 @@ const test = base.extend({
       if (!url.startsWith(origin) && !/^(data|blob|about):/.test(url)) log.foreign.push(url);
     });
     page.on('response', (r) => log.responses.push({ path: r.url().replace(origin, ''), status: r.status(), type: r.request().resourceType() }));
-    page.on('requestfailed', (r) => log.failed.push({ url: r.url().replace(origin, ''), error: r.request().failure()?.errorText ?? null }));
+    // r is the Request itself: r.failure(), not r.request().failure() (that threw inside the handler).
+    page.on('requestfailed', (r) => log.failed.push({ url: r.url().replace(origin, ''), error: r.failure()?.errorText ?? null }));
 
     const errorsOf = (from = { c: 0, p: 0 }) => [
       ...log.console.slice(from.c).filter((m) => m.type === 'error').map((m) => `console.error: ${m.text}`),
@@ -235,7 +236,7 @@ test('S1 boot and assets', async ({ page, nabd }) => {
     'getState', 'getCamera', 'workMoving', 'getJoints', 'setPose']));
   expect(s.supervisorVisible).toBe(true);
   expect(ui.forearmEnabled).toBe(true);
-  if (SERVER === 'serve') expect(modules.length, '22 JavaScript modules (R3 + SkinPickCache.js)').toBe(22);
+  if (SERVER === 'serve') expect(modules.length, '29 JavaScript modules (R3 + SkinPickCache.js + render/LookDev.js + the five G1 patient modules + render/GeometryFixes.js)').toBe(29);
   expect(modules.every((r) => r.status === 200)).toBe(true);
   expect(glbs.length, '9 GLBs (R3)').toBe(9);
   expect(glbs.every((r) => r.status === 200)).toBe(true);

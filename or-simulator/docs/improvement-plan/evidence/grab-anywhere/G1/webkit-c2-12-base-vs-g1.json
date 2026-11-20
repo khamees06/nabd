@@ -1,0 +1,77 @@
+{
+  "what": "C2-12 (560x890) in Playwright WebKit 27.2 on Windows, alternating the base tree (63ba7b2) and the G1 tree, one fresh run each, retries 0",
+  "field": "click = hoverThenClick.frameMs (check: < 50), straight = clickStraightAfterMove.frameMs, near = raycasts within 60 ms of the click (0 = the hover pick was reused), drag/plain = limb drag and plain render fps",
+  "runs": {
+    "base-1": {
+      "click": 37,
+      "straight": 34,
+      "near": 0,
+      "drag": 31.5,
+      "plain": 33.9
+    },
+    "work-1": {
+      "click": 42,
+      "straight": 27,
+      "near": 0,
+      "drag": 31.7,
+      "plain": 34.1
+    },
+    "base-2": {
+      "click": 42,
+      "straight": 31,
+      "near": 0,
+      "drag": 30.7,
+      "plain": 34.2
+    },
+    "work-2": {
+      "click": 22,
+      "straight": 32,
+      "near": 0,
+      "drag": 33.8,
+      "plain": 34.2
+    },
+    "base-3": {
+      "click": 24,
+      "straight": 32,
+      "near": 0,
+      "drag": 31.9,
+      "plain": 34.2
+    },
+    "work-3": {
+      "click": 23,
+      "straight": 26,
+      "near": 0,
+      "drag": 32.1,
+      "plain": 34
+    },
+    "base-4": {
+      "click": 25,
+      "straight": 32,
+      "near": 0,
+      "drag": 32,
+      "plain": 34.3
+    },
+    "work-4": {
+      "click": 42,
+      "straight": 32,
+      "near": 0,
+      "drag": 31.9,
+      "plain": 33.9
+    },
+    "base-5": {
+      "click": 26,
+      "straight": 31,
+      "near": 0,
+      "drag": 32.2,
+      "plain": 34.5
+    },
+    "work-5": {
+      "click": 217,
+      "straight": 270,
+      "near": 0,
+      "drag": 6.9,
+      "plain": 8.3
+    }
+  },
+  "note": "work-5: the whole session ran at about 8 fps (plain rendering without a limb 8.3 fps), no console error; G1 adds no per-frame code. Earlier single readings in this cluster: 58 ms (retry after a boot timeout, failed the check) and 43 ms; Q1 evidence: 26 ms."
+}

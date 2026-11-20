@@ -1,0 +1,474 @@
+{
+  "browser": "webkit",
+  "size": "1440x900",
+  "startedAt": "2026-11-17T22:47:41.563Z",
+  "browserVersion": "27.2",
+  "A": {
+    "noQa": {
+      "render": "",
+      "shadow": "",
+      "studioQA": false,
+      "autoReset": true,
+      "errors": []
+    },
+    "qa": {
+      "render": "countedRender",
+      "shadow": "countedShadowRender",
+      "studioQA": true,
+      "autoReset": true,
+      "errors": []
+    }
+  },
+  "B": {
+    "V1": [
+      {
+        "glDraws": 2416,
+        "glTris": 714680,
+        "byMode": {
+          "4": 2416
+        },
+        "calls": 1206,
+        "shadowCalls": 1210,
+        "tris": 387848,
+        "shadowTris": 326832,
+        "rendersLastFrame": 1,
+        "predicted": 1210,
+        "infoCalls": 1206,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      },
+      {
+        "glDraws": 2416,
+        "glTris": 714680,
+        "byMode": {
+          "4": 2416
+        },
+        "calls": 1206,
+        "shadowCalls": 1210,
+        "tris": 387848,
+        "shadowTris": 326832,
+        "rendersLastFrame": 1,
+        "predicted": 1210,
+        "infoCalls": 1206,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      },
+      {
+        "glDraws": 2416,
+        "glTris": 714680,
+        "byMode": {
+          "4": 2416
+        },
+        "calls": 1206,
+        "shadowCalls": 1210,
+        "tris": 387848,
+        "shadowTris": 326832,
+        "rendersLastFrame": 1,
+        "predicted": 1210,
+        "infoCalls": 1206,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      }
+    ],
+    "V1Errors": {
+      "errors": [],
+      "attempt": 1
+    },
+    "V2": [
+      {
+        "glDraws": 1692,
+        "glTris": 653668,
+        "byMode": {
+          "4": 1692
+        },
+        "calls": 1119,
+        "shadowCalls": 0,
+        "tris": 126642,
+        "shadowTris": 0,
+        "rendersLastFrame": 1,
+        "predicted": 1213,
+        "infoCalls": 479,
+        "drawsMatch": false,
+        "trisMatch": false,
+        "predictionMatch": false
+      },
+      {
+        "glDraws": 1692,
+        "glTris": 653668,
+        "byMode": {
+          "4": 1692
+        },
+        "calls": 1119,
+        "shadowCalls": 0,
+        "tris": 126642,
+        "shadowTris": 0,
+        "rendersLastFrame": 1,
+        "predicted": 1213,
+        "infoCalls": 479,
+        "drawsMatch": false,
+        "trisMatch": false,
+        "predictionMatch": false
+      },
+      {
+        "glDraws": 1692,
+        "glTris": 653668,
+        "byMode": {
+          "4": 1692
+        },
+        "calls": 1119,
+        "shadowCalls": 0,
+        "tris": 126642,
+        "shadowTris": 0,
+        "rendersLastFrame": 1,
+        "predicted": 1213,
+        "infoCalls": 479,
+        "drawsMatch": false,
+        "trisMatch": false,
+        "predictionMatch": false
+      }
+    ],
+    "V2Errors": {
+      "errors": [
+        "WebGL: context lost."
+      ],
+      "attempt": 1
+    },
+    "V3": [
+      {
+        "glDraws": 2738,
+        "glTris": 789072,
+        "byMode": {
+          "4": 2738
+        },
+        "calls": 1528,
+        "shadowCalls": 1210,
+        "tris": 462240,
+        "shadowTris": 326832,
+        "rendersLastFrame": 1,
+        "predicted": 1210,
+        "infoCalls": 1528,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      },
+      {
+        "glDraws": 2738,
+        "glTris": 789072,
+        "byMode": {
+          "4": 2738
+        },
+        "calls": 1528,
+        "shadowCalls": 1210,
+        "tris": 462240,
+        "shadowTris": 326832,
+        "rendersLastFrame": 1,
+        "predicted": 1210,
+        "infoCalls": 1528,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      },
+      {
+        "glDraws": 2738,
+        "glTris": 789072,
+        "byMode": {
+          "4": 2738
+        },
+        "calls": 1528,
+        "shadowCalls": 1210,
+        "tris": 462240,
+        "shadowTris": 326832,
+        "rendersLastFrame": 1,
+        "predicted": 1210,
+        "infoCalls": 1528,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      }
+    ],
+    "V3Errors": {
+      "errors": [],
+      "attempt": 1
+    },
+    "V4": [
+      {
+        "glDraws": 1747,
+        "glTris": 681587,
+        "byMode": {
+          "4": 1747
+        },
+        "calls": 541,
+        "shadowCalls": 1206,
+        "tris": 464003,
+        "shadowTris": 217584,
+        "rendersLastFrame": 1,
+        "predicted": 1206,
+        "infoCalls": 541,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      },
+      {
+        "glDraws": 1747,
+        "glTris": 681587,
+        "byMode": {
+          "4": 1747
+        },
+        "calls": 541,
+        "shadowCalls": 1206,
+        "tris": 464003,
+        "shadowTris": 217584,
+        "rendersLastFrame": 1,
+        "predicted": 1206,
+        "infoCalls": 541,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      },
+      {
+        "glDraws": 1747,
+        "glTris": 681587,
+        "byMode": {
+          "4": 1747
+        },
+        "calls": 541,
+        "shadowCalls": 1206,
+        "tris": 464003,
+        "shadowTris": 217584,
+        "rendersLastFrame": 1,
+        "predicted": 1206,
+        "infoCalls": 541,
+        "drawsMatch": true,
+        "trisMatch": true,
+        "predictionMatch": true
+      }
+    ],
+    "V4Errors": {
+      "errors": [],
+      "attempt": 1
+    }
+  },
+  "C": {
+    "railBlueSharePct": 0,
+    "V1": {
+      "repeat": {
+        "differing": 0,
+        "maxChannelDelta": 0,
+        "differingPct": 0
+      },
+      "exposurePlus0002": {
+        "differing": 194168,
+        "maxChannelDelta": 2,
+        "differingPct": 29.8091
+      },
+      "shadowBiasPlus0002": {
+        "differing": 23020,
+        "maxChannelDelta": 50,
+        "differingPct": 3.5341
+      },
+      "restored": {
+        "differing": 0,
+        "maxChannelDelta": 0,
+        "differingPct": 0
+      }
+    },
+    "V2": {
+      "repeat": {
+        "differing": 0,
+        "maxChannelDelta": 0,
+        "differingPct": 0
+      },
+      "exposurePlus0002": {
+        "differing": 219995,
+        "maxChannelDelta": 2,
+        "differingPct": 36.6182
+      },
+      "shadowBiasPlus0002": {
+        "differing": 20293,
+        "maxChannelDelta": 41,
+        "differingPct": 3.3778
+      },
+      "restored": {
+        "differing": 0,
+        "maxChannelDelta": 0,
+        "differingPct": 0
+      }
+    }
+  },
+  "D": {
+    "work-V1": {
+      "getSimulationState": {
+        "median": 0,
+        "max": 2
+      },
+      "getRenderStats": {
+        "median": 0,
+        "max": 1
+      },
+      "renderCensus": {
+        "median": 1,
+        "max": 1
+      }
+    },
+    "work-V2": {
+      "getSimulationState": {
+        "median": 3,
+        "max": 4
+      },
+      "getRenderStats": {
+        "median": 0,
+        "max": 1
+      },
+      "renderCensus": {
+        "median": 1,
+        "max": 1
+      }
+    },
+    "work-V3": {
+      "getSimulationState": {
+        "median": 0,
+        "max": 2
+      },
+      "getRenderStats": {
+        "median": 0,
+        "max": 1
+      },
+      "renderCensus": {
+        "median": 1,
+        "max": 1
+      }
+    },
+    "work-V4": {
+      "getSimulationState": {
+        "median": 0,
+        "max": 1
+      },
+      "getRenderStats": {
+        "median": 0,
+        "max": 1
+      },
+      "renderCensus": {
+        "median": 1,
+        "max": 1
+      }
+    },
+    "base-V1": {
+      "getSimulationState": {
+        "median": 0,
+        "max": 1
+      },
+      "renderIsWrapped": "",
+      "errors": [
+        "WebGL: context lost."
+      ]
+    },
+    "base-V2": {
+      "getSimulationState": {
+        "median": 3,
+        "max": 3
+      },
+      "renderIsWrapped": "",
+      "errors": []
+    }
+  },
+  "E": {
+    "work": {
+      "state": [
+        "abdomen",
+        "points",
+        "focus",
+        "lamps",
+        "forearm",
+        "input",
+        "skinPick",
+        "render",
+        "anatomy",
+        "scope",
+        "instrument",
+        "mode",
+        "phase",
+        "patientPositioning",
+        "supervisorVisible",
+        "handsVisible",
+        "grip",
+        "crew",
+        "practice",
+        "cameraPosition",
+        "cameraRotation",
+        "cameraFov",
+        "vitals",
+        "operatingTableDeck",
+        "patientLeftHandCurl",
+        "patientRightHandCurl"
+      ],
+      "qa": [
+        "getTargets",
+        "getAssetStatus",
+        "getSimulationState",
+        "getScopePixels",
+        "getState",
+        "getCamera",
+        "workMoving",
+        "getJoints",
+        "setPose",
+        "getRenderStats",
+        "renderCensus",
+        "setGpuTimer"
+      ]
+    },
+    "base": {
+      "state": [
+        "abdomen",
+        "points",
+        "focus",
+        "lamps",
+        "forearm",
+        "input",
+        "skinPick",
+        "anatomy",
+        "scope",
+        "instrument",
+        "mode",
+        "phase",
+        "patientPositioning",
+        "supervisorVisible",
+        "handsVisible",
+        "grip",
+        "crew",
+        "practice",
+        "cameraPosition",
+        "cameraRotation",
+        "cameraFov",
+        "vitals",
+        "operatingTableDeck",
+        "patientLeftHandCurl",
+        "patientRightHandCurl"
+      ],
+      "qa": [
+        "getTargets",
+        "getAssetStatus",
+        "getSimulationState",
+        "getScopePixels",
+        "getState",
+        "getCamera",
+        "workMoving",
+        "getJoints",
+        "setPose"
+      ]
+    },
+    "stateAdded": [
+      "render"
+    ],
+    "stateRemoved": [],
+    "qaAdded": [
+      "getRenderStats",
+      "renderCensus",
+      "setGpuTimer"
+    ],
+    "qaRemoved": []
+  },
+  "finishedAt": "2026-11-17T22:49:22.972Z"
+}

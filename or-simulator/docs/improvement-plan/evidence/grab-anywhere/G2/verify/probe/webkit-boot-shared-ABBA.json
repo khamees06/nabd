@@ -1,0 +1,149 @@
+{
+ "method": "one shared WebKit process, new context per load, ABBA order, ready timeout 45 s",
+ "base": {
+  "loads": 8,
+  "ready": 7,
+  "withContextLost": 1,
+  "lostAndRecovered": 0,
+  "otherErrors": 0,
+  "readyMsMedian": 2773
+ },
+ "work": {
+  "loads": 8,
+  "ready": 6,
+  "withContextLost": 3,
+  "lostAndRecovered": 1,
+  "otherErrors": 0,
+  "readyMsMedian": 3291
+ },
+ "loads": [
+  {
+   "k": 0,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3291,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 1,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2773,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 2,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2691,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 3,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45373,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 4,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2774,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 5,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 3221,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 6,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2713,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 7,
+   "tree": "work",
+   "ready": false,
+   "readyMs": 45379,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 8,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 2768,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 9,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 3251,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 10,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 2728,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 11,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 17917,
+   "contextLost": 2,
+   "errors": []
+  },
+  {
+   "k": 12,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3259,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 13,
+   "tree": "base",
+   "ready": true,
+   "readyMs": 3278,
+   "contextLost": 0,
+   "errors": []
+  },
+  {
+   "k": 14,
+   "tree": "base",
+   "ready": false,
+   "readyMs": 45356,
+   "contextLost": 1,
+   "errors": []
+  },
+  {
+   "k": 15,
+   "tree": "work",
+   "ready": true,
+   "readyMs": 3343,
+   "contextLost": 0,
+   "errors": []
+  }
+ ]
+}

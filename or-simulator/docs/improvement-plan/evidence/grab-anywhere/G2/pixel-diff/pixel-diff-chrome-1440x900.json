@@ -1,0 +1,766 @@
+{
+  "label": "pixel-diff-chrome-1440x900",
+  "startedAt": "2026-11-18T22:29:00.596Z",
+  "browserKind": "chrome",
+  "viewport": "1440x900",
+  "entry": "/?qa",
+  "reducedMotion": "reduce",
+  "repeat": 2,
+  "base": {
+    "ref": "c2b9409",
+    "sha": "c2b94097e8a589b4b120f4c0d43b7954819664ca"
+  },
+  "work": {
+    "head": "f8ce489835e736f5fecf47f8302d34159cb8b27e",
+    "dirtyFiles": []
+  },
+  "method": "rendered = canvas readback of one frame through the app renderer (the gate); page = PNG screenshot cropped to the canvas box; every R, G, B byte compared; no mask",
+  "views": {
+    "V1": {
+      "canvas": {
+        "x": 17,
+        "y": 83,
+        "width": 1054,
+        "height": 617.953125
+      },
+      "renderedSize": {
+        "base": [
+          1054,
+          618
+        ],
+        "work": [
+          1054,
+          618
+        ]
+      },
+      "baseVsWork": {
+        "pixels": 651372,
+        "differing": 273675,
+        "differingPct": 42.0152,
+        "maxChannelDelta": 224,
+        "differingBox": [
+          0,
+          225,
+          1054,
+          618
+        ]
+      },
+      "baseVsBase": {
+        "pixels": 651372,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "workVsWork": {
+        "pixels": 651372,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "page": {
+        "baseVsWork": {
+          "pixels": 651372,
+          "differing": 271786,
+          "differingPct": 41.7252,
+          "maxChannelDelta": 224,
+          "differingBox": [
+            17,
+            308,
+            1071,
+            701
+          ]
+        },
+        "baseVsBase": {
+          "pixels": 651372,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "workVsWork": {
+          "pixels": 651372,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "canvasLumaSd": 58.14
+      },
+      "renderedLumaSd": 51.92,
+      "consoleErrors": {
+        "base": [
+          [],
+          []
+        ],
+        "work": [
+          [],
+          []
+        ]
+      },
+      "attempts": {
+        "base": [
+          1,
+          1
+        ],
+        "work": [
+          1,
+          1
+        ]
+      },
+      "readout": {
+        "base": {
+          "calls": 1206,
+          "tris": 387848,
+          "shadowCalls": 1210,
+          "shadowTris": 326832,
+          "shadowUpdates": 5,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 5,
+          "rendersLastFrame": 1,
+          "programs": 18,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1404,
+              "visible": 1212,
+              "drawn": 1210,
+              "alwaysDrawn": 372,
+              "drawCalls": 1210,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        },
+        "work": {
+          "calls": 1206,
+          "tris": 388876,
+          "shadowCalls": 1210,
+          "shadowTris": 327860,
+          "shadowUpdates": 5,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 5,
+          "rendersLastFrame": 1,
+          "programs": 17,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1403,
+              "visible": 1212,
+              "drawn": 1210,
+              "alwaysDrawn": 371,
+              "drawCalls": 1210,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        }
+      },
+      "images": [
+        "pixel-diff-chrome-1440x900-V1-base.png",
+        "pixel-diff-chrome-1440x900-V1-work.png"
+      ]
+    },
+    "V2": {
+      "canvas": {
+        "x": 17,
+        "y": 83,
+        "width": 1054,
+        "height": 570
+      },
+      "renderedSize": {
+        "base": [
+          1054,
+          570
+        ],
+        "work": [
+          1054,
+          570
+        ]
+      },
+      "baseVsWork": {
+        "pixels": 600780,
+        "differing": 568373,
+        "differingPct": 94.6058,
+        "maxChannelDelta": 234,
+        "differingBox": [
+          0,
+          0,
+          1054,
+          570
+        ]
+      },
+      "baseVsBase": {
+        "pixels": 600780,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "workVsWork": {
+        "pixels": 600780,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "page": {
+        "baseVsWork": {
+          "pixels": 600780,
+          "differing": 541639,
+          "differingPct": 90.156,
+          "maxChannelDelta": 234,
+          "differingBox": [
+            17,
+            83,
+            1071,
+            653
+          ]
+        },
+        "baseVsBase": {
+          "pixels": 600780,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "workVsWork": {
+          "pixels": 600780,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "canvasLumaSd": 57.81
+      },
+      "renderedLumaSd": 48.16,
+      "consoleErrors": {
+        "base": [
+          [],
+          []
+        ],
+        "work": [
+          [],
+          []
+        ]
+      },
+      "attempts": {
+        "base": [
+          1,
+          1
+        ],
+        "work": [
+          1,
+          1
+        ]
+      },
+      "readout": {
+        "base": {
+          "calls": 479,
+          "tris": 299400,
+          "shadowCalls": 1213,
+          "shadowTris": 354268,
+          "shadowUpdates": 8,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 8,
+          "rendersLastFrame": 1,
+          "programs": 19,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1410,
+              "visible": 1215,
+              "drawn": 1213,
+              "alwaysDrawn": 378,
+              "drawCalls": 1213,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        },
+        "work": {
+          "calls": 486,
+          "tris": 301348,
+          "shadowCalls": 1213,
+          "shadowTris": 355296,
+          "shadowUpdates": 8,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 8,
+          "rendersLastFrame": 1,
+          "programs": 19,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1409,
+              "visible": 1215,
+              "drawn": 1213,
+              "alwaysDrawn": 377,
+              "drawCalls": 1213,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        }
+      },
+      "images": [
+        "pixel-diff-chrome-1440x900-V2-base.png",
+        "pixel-diff-chrome-1440x900-V2-work.png"
+      ]
+    },
+    "V3": {
+      "canvas": {
+        "x": 17,
+        "y": 83,
+        "width": 1054,
+        "height": 764
+      },
+      "renderedSize": {
+        "base": [
+          1054,
+          764
+        ],
+        "work": [
+          1054,
+          764
+        ]
+      },
+      "baseVsWork": {
+        "pixels": 805256,
+        "differing": 15861,
+        "differingPct": 1.9697,
+        "maxChannelDelta": 213,
+        "differingBox": [
+          344,
+          346,
+          614,
+          672
+        ]
+      },
+      "baseVsBase": {
+        "pixels": 805256,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "workVsWork": {
+        "pixels": 805256,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "page": {
+        "baseVsWork": {
+          "pixels": 805256,
+          "differing": 15861,
+          "differingPct": 1.9697,
+          "maxChannelDelta": 213,
+          "differingBox": [
+            361,
+            429,
+            631,
+            755
+          ]
+        },
+        "baseVsBase": {
+          "pixels": 805256,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "workVsWork": {
+          "pixels": 805256,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "canvasLumaSd": 50.47
+      },
+      "renderedLumaSd": 43.57,
+      "consoleErrors": {
+        "base": [
+          [],
+          []
+        ],
+        "work": [
+          [],
+          []
+        ]
+      },
+      "attempts": {
+        "base": [
+          1,
+          1
+        ],
+        "work": [
+          1,
+          1
+        ]
+      },
+      "readout": {
+        "base": {
+          "calls": 1528,
+          "tris": 462240,
+          "shadowCalls": 1210,
+          "shadowTris": 326832,
+          "shadowUpdates": 8,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 8,
+          "rendersLastFrame": 1,
+          "programs": 17,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1404,
+              "visible": 1212,
+              "drawn": 1210,
+              "alwaysDrawn": 372,
+              "drawCalls": 1210,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        },
+        "work": {
+          "calls": 1528,
+          "tris": 463268,
+          "shadowCalls": 1210,
+          "shadowTris": 327860,
+          "shadowUpdates": 8,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 8,
+          "rendersLastFrame": 1,
+          "programs": 17,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1403,
+              "visible": 1212,
+              "drawn": 1210,
+              "alwaysDrawn": 371,
+              "drawCalls": 1210,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        }
+      },
+      "images": [
+        "pixel-diff-chrome-1440x900-V3-base.png",
+        "pixel-diff-chrome-1440x900-V3-work.png"
+      ]
+    },
+    "V4": {
+      "canvas": {
+        "x": 17,
+        "y": 83,
+        "width": 1054,
+        "height": 620
+      },
+      "renderedSize": {
+        "base": [
+          1054,
+          620
+        ],
+        "work": [
+          1054,
+          620
+        ]
+      },
+      "baseVsWork": {
+        "pixels": 653480,
+        "differing": 574005,
+        "differingPct": 87.8382,
+        "maxChannelDelta": 243,
+        "differingBox": [
+          0,
+          0,
+          1054,
+          620
+        ]
+      },
+      "baseVsBase": {
+        "pixels": 653480,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "workVsWork": {
+        "pixels": 653480,
+        "differing": 0,
+        "differingPct": 0,
+        "maxChannelDelta": 0,
+        "differingBox": null
+      },
+      "page": {
+        "baseVsWork": {
+          "pixels": 653480,
+          "differing": 565397,
+          "differingPct": 86.5209,
+          "maxChannelDelta": 243,
+          "differingBox": [
+            17,
+            83,
+            1071,
+            703
+          ]
+        },
+        "baseVsBase": {
+          "pixels": 653480,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "workVsWork": {
+          "pixels": 653480,
+          "differing": 0,
+          "differingPct": 0,
+          "maxChannelDelta": 0,
+          "differingBox": null
+        },
+        "canvasLumaSd": 44.56
+      },
+      "renderedLumaSd": 37.49,
+      "consoleErrors": {
+        "base": [
+          [],
+          []
+        ],
+        "work": [
+          [],
+          []
+        ]
+      },
+      "attempts": {
+        "base": [
+          1,
+          1
+        ],
+        "work": [
+          1,
+          1
+        ]
+      },
+      "readout": {
+        "base": {
+          "calls": 541,
+          "tris": 464003,
+          "shadowCalls": 1206,
+          "shadowTris": 217584,
+          "shadowUpdates": 8,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 8,
+          "rendersLastFrame": 1,
+          "programs": 21,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1400,
+              "visible": 1208,
+              "drawn": 1206,
+              "alwaysDrawn": 368,
+              "drawCalls": 1206,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        },
+        "work": {
+          "calls": 539,
+          "tris": 463855,
+          "shadowCalls": 1206,
+          "shadowTris": 218612,
+          "shadowUpdates": 8,
+          "shadowUpdatesLastFrame": 1,
+          "frames": 8,
+          "rendersLastFrame": 1,
+          "programs": 21,
+          "casters": [
+            {
+              "light": "DirectionalLight",
+              "type": "DirectionalLight",
+              "lit": true,
+              "mapSize": [
+                2048,
+                2048
+              ],
+              "autoUpdate": true,
+              "casters": 1399,
+              "visible": 1208,
+              "drawn": 1206,
+              "alwaysDrawn": 367,
+              "drawCalls": 1206,
+              "sphereMissing": 0
+            }
+          ],
+          "envReady": false,
+          "toneMapping": "ACESFilmic",
+          "exposure": 0.88,
+          "pixelRatio": 1,
+          "gpuMs": null,
+          "gpuTimer": "off",
+          "gpuSamples": 0,
+          "gpuTimerResets": 0,
+          "infoAutoReset": true,
+          "contextLost": false,
+          "contextLosses": 0,
+          "contextRestores": 0,
+          "rendererRebuilds": 0,
+          "lostFrames": 0
+        }
+      },
+      "images": [
+        "pixel-diff-chrome-1440x900-V4-base.png",
+        "pixel-diff-chrome-1440x900-V4-work.png"
+      ]
+    }
+  },
+  "browserVersion": "157.0.8103.79",
+  "finishedAt": "2026-11-18T22:30:29.196Z"
+}

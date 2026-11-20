@@ -1,0 +1,351 @@
+{
+ "report": "ev-final/report-inter-chrome.json",
+ "stats": {
+  "startTime": "2026-11-18T21:29:22.479Z",
+  "duration": 988125.212,
+  "expected": 54,
+  "skipped": 1,
+  "unexpected": 0,
+  "flaky": 0
+ },
+ "expected": 54,
+ "flaky": 0,
+ "unexpected": 0,
+ "skipped": 1,
+ "notPassed": [],
+ "skippedTitles": [
+  "C3-9e step 5: a failed return settles back instead of jumping (560x890)"
+ ],
+ "tests": [
+  {
+   "title": "C1-1 keys and buttons turn the view (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-1b arrows nudge a held tool instead of turning (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2 left-drag grid turns the view: free (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2 left-drag grid turns the view: monitor (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2 left-drag grid turns the view: drill (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-4 look is never cut or ignored (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-7 view stays on screen and the wheel zooms (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-1 keys and buttons turn the view (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-1b arrows nudge a held tool instead of turning (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2 left-drag grid turns the view: free (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2 left-drag grid turns the view: monitor (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2 left-drag grid turns the view: drill (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-2b drag on the patient looks; out-of-reach only on a still click (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-4 look is never cut or ignored (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C1-7 view stays on screen and the wheel zooms (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-3 glove faces the skin; press attaches; flank is touch only (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-5 surface grip attaches 5/5; a sliding press keeps its dent (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-6 hands move at human speed (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-3 glove faces the skin; press attaches; flank is touch only (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-5 surface grip attaches 5/5; a sliding press keeps its dent (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-6 hands move at human speed (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C2-12 no hitches: limb drag frame rate, click frame, hover picks (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9a drill wrist grips at least 13 of 14 clicks (PR-6) (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9b ankles attach, an upward drag lifts the arm, released limbs settle (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9c bedside wrist: glove from the trainee's side, vertical lift, settles back (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9d drill: the held forearm stays put outside the view; only a press resumes (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9e step 5: a failed return settles back instead of jumping (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9c bedside wrist: glove from the trainee's side, vertical lift, settles back (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9d drill: the held forearm stays put outside the view; only a press resumes (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C3-9e step 5: a failed return settles back instead of jumping (560x890)",
+   "project": "chrome",
+   "outcome": "skipped",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11a every tool is picked up at human speed and carried pointing ahead (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11b free instruments follow the pointer at the work area on both sides of the bed (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11c a held tool keeps its place through a look, then points along the new heading (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11d scope: monitor fills the view, steering resumes in place, roll stops at ±90°, Escape places it (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11a every tool is picked up at human speed and carried pointing ahead (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11b free instruments follow the pointer at the work area on both sides of the bed (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11c a held tool keeps its place through a look, then points along the new heading (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C4-11d scope: monitor fills the view, steering resumes in place, roll stops at ±90°, Escape places it (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-8a work-area moves turn smoothly and keep the trainee's look (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-8b bedside steps, «إعادة المنظور» and the room view glide instead of jumping (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-10a every refused move or action says why (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-8a work-area moves turn smoothly and keep the trainee's look (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-8b bedside steps, «إعادة المنظور» and the room view glide instead of jumping (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-10a every refused move or action says why (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C5-10b a reach that times out says the fingers did not touch, and the text stays (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C6-a the lamp task lights are in the scene, lit and aimed at the work point (default GLB path) (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C6-a2 the fallback lamp path has the same lights (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C6-b only the hand that holds the forearm keeps its collision object (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C6-b only the hand that holds the forearm keeps its collision object (560x890)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C6-c the page lists Rapier 0.21.0 with its Apache-2.0 licence text (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  },
+  {
+   "title": "C6-e F27 table pads against the code constants and the patient (measure only) (1440x900)",
+   "project": "chrome",
+   "outcome": "expected",
+   "attempts": 1
+  }
+ ]
+}

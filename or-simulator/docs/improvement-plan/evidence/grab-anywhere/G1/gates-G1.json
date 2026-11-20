@@ -1,0 +1,1312 @@
+{
+  "cluster": "G1",
+  "generatedAt": "2026-11-18T04:53:47.421Z",
+  "base": "63ba7b2571be41942e3ff021c2cb87b9848c7d82",
+  "browsers": {
+    "chrome": {
+      "browserVersion": "157.0.8103.79",
+      "triSeg": {
+        "clinicalTriangles": 105822,
+        "assignedFraction": 1,
+        "singleWeightFraction": 0.9417228931602124,
+        "privacyTriangles": 1718,
+        "unassignedBones": []
+      },
+      "proxies": {
+        "head": {
+          "outsideInner": 0.9627477003340809,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 23.53138712969919,
+          "samples": 40,
+          "lowestIsSample": true
+        },
+        "neck": {
+          "outsideInner": 0.9825145711906744,
+          "fittedOn": "all",
+          "innerGapMmP50": 4.736821210174032,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "chest": {
+          "outsideInner": 0.9700524853349799,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 24.923890541526045,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "abdomen": {
+          "outsideInner": 0.9731800766283525,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 6.427795984695093,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "pelvis": {
+          "outsideInner": 0.9824,
+          "fittedOn": "all",
+          "innerGapMmP50": 10.421007225600517,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "upperArm.L": {
+          "outsideInner": 0.9785831960461285,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 7.934966991843562,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "forearm.L": {
+          "outsideInner": 0.9671772428884027,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.1007426210323996,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "hand.L": {
+          "outsideInner": 0.9668924003009782,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 15.302020052759268,
+          "samples": 32,
+          "lowestIsSample": true
+        },
+        "thigh.L": {
+          "outsideInner": 0.9953307392996109,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 6.336391110957125,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "shank.L": {
+          "outsideInner": 0.9818181818181818,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.615974194231465,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "foot.L": {
+          "outsideInner": 0.9699570815450643,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 9.858027689604612,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "upperArm.R": {
+          "outsideInner": 0.9778325123152709,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 7.7578913529521385,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "forearm.R": {
+          "outsideInner": 0.9727965179542981,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.0139871216591527,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "hand.R": {
+          "outsideInner": 0.965253386853989,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 15.208629827903032,
+          "samples": 32,
+          "lowestIsSample": true
+        },
+        "thigh.R": {
+          "outsideInner": 1,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 5.886086568795983,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "shank.R": {
+          "outsideInner": 0.9765784114052953,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.7123085482213645,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "foot.R": {
+          "outsideInner": 0.9694577899794098,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 9.868852430003937,
+          "samples": 24,
+          "lowestIsSample": true
+        }
+      },
+      "restOverlapMm": {},
+      "allowances": 0,
+      "supports": {
+        "padTops": [
+          [
+            "head_pad",
+            0.9525000014901162
+          ],
+          [
+            "back_pad",
+            0.9525000014901162
+          ],
+          [
+            "seat_pad",
+            0.9525000014901162
+          ],
+          [
+            "leg_L_pad",
+            0.9525000014901162
+          ],
+          [
+            "leg_R_pad",
+            0.9525000014901162
+          ]
+        ],
+        "armboards": [
+          [
+            "L_armboard_plate",
+            [
+              -0.613500005364418,
+              -0.3434999946355819
+            ],
+            [
+              -0.72,
+              -0.21999999999999997
+            ],
+            0.8775000000745058
+          ],
+          [
+            "L_armboard_pad",
+            [
+              -0.6010000023841857,
+              -0.35599999761581413
+            ],
+            [
+              -0.7049999994039535,
+              -0.23500000059604642
+            ],
+            0.9324999998509884
+          ],
+          [
+            "L_armboard_top",
+            [
+              -0.5909999970197677,
+              -0.36600000298023216
+            ],
+            [
+              -0.6924999964237213,
+              -0.24750000357627866
+            ],
+            0.9509999996125699
+          ],
+          [
+            "R_armboard_plate",
+            [
+              0.3434999946355819,
+              0.613500005364418
+            ],
+            [
+              -0.72,
+              -0.21999999999999997
+            ],
+            0.8775000000745058
+          ],
+          [
+            "R_armboard_pad",
+            [
+              0.35599999761581413,
+              0.6010000023841857
+            ],
+            [
+              -0.7049999994039535,
+              -0.23500000059604642
+            ],
+            0.9324999998509884
+          ],
+          [
+            "R_armboard_top",
+            [
+              0.36600000298023216,
+              0.5909999970197677
+            ],
+            [
+              -0.6924999964237213,
+              -0.24750000357627866
+            ],
+            0.9509999996125699
+          ]
+        ],
+        "glbRaycast": {
+          "samples": 1049,
+          "worstErrorMm": 4.440892098500626e-13,
+          "worstAt": {
+            "name": "headrest_cushion",
+            "x": -0.21000000357627868,
+            "z": -1.1349999994039537,
+            "raycastY": 0.980000001788139,
+            "supportY": 0.9800000017881394
+          }
+        },
+        "sittingDeck": {
+          "deck": 0.58,
+          "check": {
+            "samples": 1049,
+            "worstErrorMm": 4.440892098500626e-13,
+            "worstAt": {
+              "name": "seat_pad",
+              "x": -0.2774999988079071,
+              "z": 0.0189999955892563,
+              "raycastY": 0.6325000014901165,
+              "supportY": 0.6325000014901161
+            }
+          }
+        }
+      },
+      "supine": {
+        "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+        "hardCount": 0,
+        "warn": {
+          "hip.L": [
+            {
+              "motion": "extension",
+              "valueDeg": 0.45845004663779465,
+              "thresholdDeg": 0
+            }
+          ],
+          "hip.R": [
+            {
+              "motion": "extension",
+              "valueDeg": 0.458460514318347,
+              "thresholdDeg": 0
+            }
+          ]
+        },
+        "restOffsetDeg": {
+          "elbow.L": 11.397438711617767,
+          "knee.L": -1.3989591647381499,
+          "elbow.R": -11.397470185547222,
+          "knee.R": 1.3989645299872253
+        }
+      },
+      "grabSamples1440": {
+        "forearm.left": "40/40",
+        "forearm.right": "40/40",
+        "hand.left": "40/40",
+        "hand.right": "40/40",
+        "elbow.left": "40/40",
+        "elbow.right": "40/40",
+        "wrist.left": "40/40",
+        "wrist.right": "40/40",
+        "upperArm.left": "40/40",
+        "upperArm.right": "40/40",
+        "shoulder.left": "40/40",
+        "shoulder.right": "40/40",
+        "thigh.left": "40/40",
+        "thigh.right": "40/40",
+        "knee.left": "40/40",
+        "knee.right": "40/40",
+        "shank.left": "40/40",
+        "shank.right": "40/40",
+        "ankle.left": "40/40",
+        "ankle.right": "40/40",
+        "foot.left": "40/40",
+        "foot.right": "40/40",
+        "head": "40/40",
+        "neck": "40/40",
+        "chest": "40/40",
+        "abdomen": "40/40",
+        "flank": "40/40",
+        "pelvis": "40/40",
+        "privacy": "40/40"
+      },
+      "skinPenetration": {
+        "supportMaxMm": 37.474908451206936,
+        "supportP95Mm": 33.850759746736124,
+        "over2mm": 2705,
+        "selfMaxMm": 0,
+        "ms": 241.5
+      },
+      "poseRoundTrip": {
+        "snapshotBonesIdentical": true,
+        "poseVersion": [
+          0,
+          1,
+          2
+        ],
+        "sittingHardCount": 4
+      },
+      "timingMs": {
+        "poseVersionMs": 0.20000004768371582,
+        "segmentsMs": 32.39999997615814,
+        "jointsMs": 1,
+        "supportsMs": 1.199999988079071,
+        "restCaptureMs": 9.900000035762787,
+        "loadMs": 44.700000047683716,
+        "proxiesMs": 61.39999997615814
+      }
+    },
+    "webkit": {
+      "browserVersion": "27.2",
+      "triSeg": {
+        "clinicalTriangles": 105822,
+        "assignedFraction": 1,
+        "singleWeightFraction": 0.9417228931602124,
+        "privacyTriangles": 1718,
+        "unassignedBones": []
+      },
+      "proxies": {
+        "head": {
+          "outsideInner": 0.9627477003340809,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 23.53138712969917,
+          "samples": 40,
+          "lowestIsSample": true
+        },
+        "neck": {
+          "outsideInner": 0.9825145711906744,
+          "fittedOn": "all",
+          "innerGapMmP50": 4.736821210174057,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "chest": {
+          "outsideInner": 0.9700524853349799,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 24.92389054152527,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "abdomen": {
+          "outsideInner": 0.9731800766283525,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 6.427795984695377,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "pelvis": {
+          "outsideInner": 0.9824,
+          "fittedOn": "all",
+          "innerGapMmP50": 10.421007225600405,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "upperArm.L": {
+          "outsideInner": 0.9785831960461285,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 7.934966991843617,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "forearm.L": {
+          "outsideInner": 0.9671772428884027,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.1007426210325595,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "hand.L": {
+          "outsideInner": 0.9668924003009782,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 15.302020052759449,
+          "samples": 32,
+          "lowestIsSample": true
+        },
+        "thigh.L": {
+          "outsideInner": 0.9953307392996109,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 6.3363911109571,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "shank.L": {
+          "outsideInner": 0.9818181818181818,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.615974194231342,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "foot.L": {
+          "outsideInner": 0.9699570815450643,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 9.858027689604679,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "upperArm.R": {
+          "outsideInner": 0.9778325123152709,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 7.757891352952268,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "forearm.R": {
+          "outsideInner": 0.9727965179542981,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.013987121659284,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "hand.R": {
+          "outsideInner": 0.965253386853989,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 15.208629827903039,
+          "samples": 32,
+          "lowestIsSample": true
+        },
+        "thigh.R": {
+          "outsideInner": 1,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 5.88608656879586,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "shank.R": {
+          "outsideInner": 0.9765784114052953,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 3.712308548221301,
+          "samples": 24,
+          "lowestIsSample": true
+        },
+        "foot.R": {
+          "outsideInner": 0.9694577899794098,
+          "fittedOn": "dominant",
+          "innerGapMmP50": 9.868852430003834,
+          "samples": 24,
+          "lowestIsSample": true
+        }
+      },
+      "restOverlapMm": {},
+      "allowances": 0,
+      "supports": {
+        "padTops": [
+          [
+            "head_pad",
+            0.9525000014901162
+          ],
+          [
+            "back_pad",
+            0.9525000014901162
+          ],
+          [
+            "seat_pad",
+            0.9525000014901162
+          ],
+          [
+            "leg_L_pad",
+            0.9525000014901162
+          ],
+          [
+            "leg_R_pad",
+            0.9525000014901162
+          ]
+        ],
+        "armboards": [
+          [
+            "L_armboard_plate",
+            [
+              -0.613500005364418,
+              -0.3434999946355819
+            ],
+            [
+              -0.72,
+              -0.21999999999999997
+            ],
+            0.8775000000745058
+          ],
+          [
+            "L_armboard_pad",
+            [
+              -0.6010000023841857,
+              -0.35599999761581413
+            ],
+            [
+              -0.7049999994039535,
+              -0.23500000059604642
+            ],
+            0.9324999998509884
+          ],
+          [
+            "L_armboard_top",
+            [
+              -0.5909999970197677,
+              -0.36600000298023216
+            ],
+            [
+              -0.6924999964237213,
+              -0.24750000357627866
+            ],
+            0.9509999996125699
+          ],
+          [
+            "R_armboard_plate",
+            [
+              0.3434999946355819,
+              0.613500005364418
+            ],
+            [
+              -0.72,
+              -0.21999999999999997
+            ],
+            0.8775000000745058
+          ],
+          [
+            "R_armboard_pad",
+            [
+              0.35599999761581413,
+              0.6010000023841857
+            ],
+            [
+              -0.7049999994039535,
+              -0.23500000059604642
+            ],
+            0.9324999998509884
+          ],
+          [
+            "R_armboard_top",
+            [
+              0.36600000298023216,
+              0.5909999970197677
+            ],
+            [
+              -0.6924999964237213,
+              -0.24750000357627866
+            ],
+            0.9509999996125699
+          ]
+        ],
+        "glbRaycast": {
+          "samples": 1049,
+          "worstErrorMm": 4.440892098500626e-13,
+          "worstAt": {
+            "name": "headrest_cushion",
+            "x": -0.21000000357627868,
+            "z": -1.1349999994039537,
+            "raycastY": 0.980000001788139,
+            "supportY": 0.9800000017881394
+          }
+        },
+        "sittingDeck": {
+          "deck": 0.58,
+          "check": {
+            "samples": 1049,
+            "worstErrorMm": 4.440892098500626e-13,
+            "worstAt": {
+              "name": "seat_pad",
+              "x": -0.2774999988079071,
+              "z": 0.0189999955892563,
+              "raycastY": 0.6325000014901165,
+              "supportY": 0.6325000014901161
+            }
+          }
+        }
+      },
+      "supine": {
+        "label": "illustrative — needs certified-clinician review (DN5; CR-09, CR-36)",
+        "hardCount": 0,
+        "warn": {
+          "hip.L": [
+            {
+              "motion": "extension",
+              "valueDeg": 0.4584500466378238,
+              "thresholdDeg": 0
+            }
+          ],
+          "hip.R": [
+            {
+              "motion": "extension",
+              "valueDeg": 0.458460514318363,
+              "thresholdDeg": 0
+            }
+          ]
+        },
+        "restOffsetDeg": {
+          "elbow.L": 11.397438711617788,
+          "knee.L": -1.3989591647381345,
+          "elbow.R": -11.397470185547249,
+          "knee.R": 1.3989645299872178
+        }
+      },
+      "grabSamples1440": {
+        "forearm.left": "40/40",
+        "forearm.right": "40/40",
+        "hand.left": "40/40",
+        "hand.right": "40/40",
+        "elbow.left": "40/40",
+        "elbow.right": "40/40",
+        "wrist.left": "40/40",
+        "wrist.right": "40/40",
+        "upperArm.left": "40/40",
+        "upperArm.right": "40/40",
+        "shoulder.left": "40/40",
+        "shoulder.right": "40/40",
+        "thigh.left": "40/40",
+        "thigh.right": "40/40",
+        "knee.left": "40/40",
+        "knee.right": "40/40",
+        "shank.left": "40/40",
+        "shank.right": "40/40",
+        "ankle.left": "40/40",
+        "ankle.right": "40/40",
+        "foot.left": "40/40",
+        "foot.right": "40/40",
+        "head": "40/40",
+        "neck": "40/40",
+        "chest": "40/40",
+        "abdomen": "40/40",
+        "flank": "40/40",
+        "pelvis": "40/40",
+        "privacy": "40/40"
+      },
+      "skinPenetration": {
+        "supportMaxMm": 37.474908451206936,
+        "supportP95Mm": 33.85075974673646,
+        "over2mm": 2705,
+        "selfMaxMm": 0,
+        "ms": 269
+      },
+      "poseRoundTrip": {
+        "snapshotBonesIdentical": true,
+        "poseVersion": [
+          0,
+          1,
+          2
+        ],
+        "sittingHardCount": 4
+      },
+      "timingMs": {
+        "poseVersionMs": 0,
+        "segmentsMs": 35,
+        "jointsMs": 2,
+        "supportsMs": 1,
+        "restCaptureMs": 13,
+        "loadMs": 51,
+        "proxiesMs": 47
+      }
+    }
+  },
+  "pixelDiff:pixel-diff-chrome-1440x900": {
+    "V1": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V2": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V3": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V4": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    }
+  },
+  "pixelDiff:pixel-diff-chrome-560x890": {
+    "V1": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V2": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V3": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V4": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    }
+  },
+  "pixelDiff:pixel-diff-webkit-1440x900": {
+    "V1": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V2": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V3": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    },
+    "V4": {
+      "rendered": 0,
+      "page": 0,
+      "selfBase": 0,
+      "selfWork": 0
+    }
+  },
+  "unitTests": {
+    "npm": [
+      "ℹ tests 65",
+      "ℹ pass 65",
+      "ℹ fail 0"
+    ],
+    "jointModelDiagnostics": [
+      "round trip: worst parameter error 1.11e-15 rad, worst quaternion component error 5.00e-16",
+      "projection: 4160 points, worst point difference 3.26e-6°, worst distance difference 7.63e-14°",
+      "continuity: largest output step 0.250° for input steps ≤ 0.25°, largest output/input ratio 1.012"
+    ]
+  },
+  "proxyShapeComparison": {
+    "source": "node, design-phase transcription of hd() supine (scratchpad grab-design/designA/setup.mjs), dominant vertices (top weight >= 0.8)",
+    "gate": ">= 95 % outside the inner proxy",
+    "roundCapsuleAt0_9xMedian_outsideFraction": {
+      "upperArm.L": 0.674,
+      "forearm.L": 0.656,
+      "hand.L": 0.571,
+      "thigh.L": 0.712,
+      "shank.L": 0.603,
+      "foot.L": 0.574,
+      "upperArm.R": 0.672,
+      "forearm.R": 0.662,
+      "hand.R": 0.57,
+      "thigh.R": 0.692,
+      "shank.R": 0.596,
+      "foot.R": 0.571
+    },
+    "ellipticSlicesAt0_9xMedian_leftSide_outsideFraction": {
+      "upperArm.L": 0.778,
+      "forearm.L": 0.863,
+      "hand.L": 0.608,
+      "thigh.L": 0.83,
+      "shank.L": 0.856,
+      "foot.L": 0.654
+    },
+    "chosen": "elliptic slices fitted to the p2-p98 cross-section extents, inner scale = 4th percentile of the normalised radius (live values per segment above)"
+  },
+  "perf": {
+    "rows": [
+      {
+        "view": "V1",
+        "seg": "idle",
+        "M8": {
+          "q1": 1206,
+          "g1": 1206
+        },
+        "M9": {
+          "q1": 387848,
+          "g1": 387848
+        },
+        "rafFps": {
+          "q1": 131.3,
+          "g1": 129.7
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 13.8,
+          "g1": 13.8
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V1",
+        "seg": "active",
+        "M8": {
+          "q1": 1157,
+          "g1": 1127
+        },
+        "M9": {
+          "q1": 380676,
+          "g1": 378214
+        },
+        "rafFps": {
+          "q1": 113.9,
+          "g1": 111.7
+        },
+        "renderFps": {
+          "q1": 85.4,
+          "g1": 83.4
+        },
+        "p95": {
+          "q1": 14.1,
+          "g1": 14.3
+        },
+        "M8rise": -0.02592912705272256,
+        "M9rise": -0.0064674421292647815
+      },
+      {
+        "view": "V1",
+        "seg": "hover",
+        "M8": {
+          "q1": 1206,
+          "g1": 1206
+        },
+        "M9": {
+          "q1": 387848,
+          "g1": 387848
+        },
+        "rafFps": {
+          "q1": 135.1,
+          "g1": 132.4
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 13.7,
+          "g1": 13.9
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V2",
+        "seg": "idle",
+        "M8": {
+          "q1": 479,
+          "g1": 479
+        },
+        "M9": {
+          "q1": 299400,
+          "g1": 299400
+        },
+        "rafFps": {
+          "q1": 144,
+          "g1": 144
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 7.2,
+          "g1": 7.2
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V2",
+        "seg": "active",
+        "M8": {
+          "q1": 478,
+          "g1": 478
+        },
+        "M9": {
+          "q1": 299328,
+          "g1": 299328
+        },
+        "rafFps": {
+          "q1": 143.8,
+          "g1": 143.7
+        },
+        "renderFps": {
+          "q1": 93,
+          "g1": 98.5
+        },
+        "p95": {
+          "q1": 7.1,
+          "g1": 7.1
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V2",
+        "seg": "hover",
+        "M8": {
+          "q1": 479,
+          "g1": 479
+        },
+        "M9": {
+          "q1": 299400,
+          "g1": 299400
+        },
+        "rafFps": {
+          "q1": 143.9,
+          "g1": 144
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 7.3,
+          "g1": 7.3
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V3",
+        "seg": "idle",
+        "M8": {
+          "q1": 1528,
+          "g1": 1528
+        },
+        "M9": {
+          "q1": 462240,
+          "g1": 462240
+        },
+        "rafFps": {
+          "q1": 133.4,
+          "g1": 133.9
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 13.7,
+          "g1": 13.7
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V3",
+        "seg": "active",
+        "M8": {
+          "q1": 1464,
+          "g1": 1464
+        },
+        "M9": {
+          "q1": 443144,
+          "g1": 445706
+        },
+        "rafFps": {
+          "q1": 74.7,
+          "g1": 73.5
+        },
+        "renderFps": {
+          "q1": 74.6,
+          "g1": 73.4
+        },
+        "p95": {
+          "q1": 27.7,
+          "g1": 27.7
+        },
+        "M8rise": 0,
+        "M9rise": 0.005781416424457964
+      },
+      {
+        "view": "V3",
+        "seg": "hover",
+        "M8": {
+          "q1": 1531,
+          "g1": 1531
+        },
+        "M9": {
+          "q1": 462440,
+          "g1": 462440
+        },
+        "rafFps": {
+          "q1": 137.4,
+          "g1": 137.3
+        },
+        "renderFps": {
+          "q1": 12.3,
+          "g1": 12.3
+        },
+        "p95": {
+          "q1": 7.4,
+          "g1": 7.4
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V4",
+        "seg": "idle",
+        "M8": {
+          "q1": 542,
+          "g1": 542
+        },
+        "M9": {
+          "q1": 464067,
+          "g1": 464067
+        },
+        "rafFps": {
+          "q1": 144,
+          "g1": 144
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 7.2,
+          "g1": 7.2
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      },
+      {
+        "view": "V4",
+        "seg": "active",
+        "M8": {
+          "q1": 511,
+          "g1": 512
+        },
+        "M9": {
+          "q1": 460251,
+          "g1": 461427
+        },
+        "rafFps": {
+          "q1": 119.8,
+          "g1": 119.1
+        },
+        "renderFps": {
+          "q1": 118.1,
+          "g1": 117.3
+        },
+        "p95": {
+          "q1": 14,
+          "g1": 14
+        },
+        "M8rise": 0.0019569471624266144,
+        "M9rise": 0.0025551275282400254
+      },
+      {
+        "view": "V4",
+        "seg": "hover",
+        "M8": {
+          "q1": 515,
+          "g1": 515
+        },
+        "M9": {
+          "q1": 458055,
+          "g1": 458055
+        },
+        "rafFps": {
+          "q1": 144,
+          "g1": 144
+        },
+        "renderFps": {
+          "q1": 12,
+          "g1": 12
+        },
+        "p95": {
+          "q1": 7.2,
+          "g1": 7.2
+        },
+        "M8rise": 0,
+        "M9rise": 0
+      }
+    ],
+    "M10": {
+      "q1": {
+        "cold": [
+          2595,
+          1736,
+          1515
+        ],
+        "warm": [
+          1197,
+          1216,
+          1135
+        ]
+      },
+      "g1": {
+        "cold": [
+          2606,
+          1772,
+          1675
+        ],
+        "warm": [
+          1349,
+          1250,
+          1257
+        ]
+      }
+    },
+    "q1Runs": 3,
+    "g1Runs": 1,
+    "browser": {
+      "q1": "157.0.8103.51",
+      "g1": "157.0.8103.79"
+    }
+  },
+  "webkitBootProbe": {
+    "totals": {
+      "base": {
+        "loads": 30,
+        "ready": 28,
+        "lost": 6
+      },
+      "work": {
+        "loads": 30,
+        "ready": 23,
+        "lost": 9
+      }
+    },
+    "fisherTwoSidedReady": 0.14549922499361057,
+    "failuresOrContextLoss": [
+      {
+        "round": 1,
+        "order": "base-first",
+        "globalLoad": 4,
+        "tree": "base",
+        "ready": false,
+        "contextLost": 2
+      },
+      {
+        "round": 1,
+        "order": "base-first",
+        "globalLoad": 8,
+        "tree": "base",
+        "ready": true,
+        "contextLost": 2
+      },
+      {
+        "round": 1,
+        "order": "base-first",
+        "globalLoad": 11,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 1,
+        "order": "base-first",
+        "globalLoad": 15,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 1,
+        "order": "base-first",
+        "globalLoad": 19,
+        "tree": "work",
+        "ready": true,
+        "contextLost": 2
+      },
+      {
+        "round": 2,
+        "order": "base-first",
+        "globalLoad": 4,
+        "tree": "base",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 2,
+        "order": "base-first",
+        "globalLoad": 8,
+        "tree": "base",
+        "ready": true,
+        "contextLost": 2
+      },
+      {
+        "round": 2,
+        "order": "base-first",
+        "globalLoad": 11,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 2,
+        "order": "base-first",
+        "globalLoad": 15,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 2,
+        "order": "base-first",
+        "globalLoad": 19,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 3,
+        "order": "work-first",
+        "globalLoad": 4,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 3,
+        "order": "work-first",
+        "globalLoad": 8,
+        "tree": "work",
+        "ready": false,
+        "contextLost": 1
+      },
+      {
+        "round": 3,
+        "order": "work-first",
+        "globalLoad": 12,
+        "tree": "work",
+        "ready": true,
+        "contextLost": 2
+      },
+      {
+        "round": 3,
+        "order": "work-first",
+        "globalLoad": 15,
+        "tree": "base",
+        "ready": true,
+        "contextLost": 2
+      },
+      {
+        "round": 3,
+        "order": "work-first",
+        "globalLoad": 18,
+        "tree": "base",
+        "ready": true,
+        "contextLost": 2
+      }
+    ]
+  },
+  "standaloneBundle": {
+    "built": "scripts/build-preview.mjs copy with the output redirected to the scratchpad (dist/ untouched), 34.88 MiB",
+    "chrome": {
+      "gates": {
+        "triSegAssignedFraction": 1,
+        "triSegSingleWeightFraction": 0.9417228931602124,
+        "minOutsideInner": 0.9627477003340809,
+        "lowestRestVertexIsSample": true
+      },
+      "loadMs": 45.8,
+      "proxiesMs": 51.5,
+      "supineHard": 0,
+      "supportWorstErrorMm": 4.4e-13,
+      "consoleErrorsOrWarnings": 0
+    }
+  },
+  "authoredPosesHard": {
+    "supine": 0,
+    "sitting": {
+      "knee.L": "swing beyond the +-4 deg hinge tolerance by 16.7 deg (shank 20.7 deg off the hinge plane at 72.5 deg flexion)",
+      "knee.R": "same",
+      "elbow.L": "twist 4.3 deg (0.3 beyond +-4)",
+      "elbow.R": "same"
+    },
+    "standing": 0,
+    "note": "informational: the G1 gate is the supine pose; G3 must not clamp authored poses"
+  }
+}

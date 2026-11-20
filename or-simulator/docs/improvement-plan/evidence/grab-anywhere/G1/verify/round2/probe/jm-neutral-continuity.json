@@ -1,0 +1,172 @@
+{
+ "stepDeg": 0.1,
+ "elevationFromDeg": 60,
+ "shoulder.L": {
+  "allowedGridPoints": 1873268,
+  "largestNeutralJumpBetweenNeighbours": {
+   "diffDeg": 0.27978724430459356,
+   "arcDeg": 0.09999999999655489,
+   "elevationDeg": 149.5,
+   "azimuthDeg": 16.400000000000002,
+   "to": [
+    149.60000000000002,
+    16.400000000000002
+   ]
+  },
+  "largestNeutralRatio": {
+   "ratio": 3.1546864959827574,
+   "diffDeg": 0.2732038559811949,
+   "arcDeg": 0.0866025376306325,
+   "elevationDeg": 60,
+   "azimuthDeg": 180
+  },
+  "blendWrapCrossingsInsideAllowed": 6,
+  "wrapExamples": [
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 269.40000000000003,
+    "rDeg": [
+     -91.10000456930914,
+     90
+    ],
+    "neutralDiffDeg": 0.0007583231861809827
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 269.5,
+    "rDeg": [
+     -90.900003046184,
+     90
+    ],
+    "neutralDiffDeg": 0.0007566583586867947
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 269.6,
+    "rDeg": [
+     -90.70000182773732,
+     90
+    ],
+    "neutralDiffDeg": 0.0007549935337243283
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 269.7,
+    "rDeg": [
+     -90.50000091385701,
+     90
+    ],
+    "neutralDiffDeg": 0.0007533287112935832
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 269.8,
+    "rDeg": [
+     -90.30000030461225,
+     90
+    ],
+    "neutralDiffDeg": 0.0007516638914200042
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 269.90000000000003,
+    "rDeg": [
+     -90.10000000001497,
+     90
+    ],
+    "neutralDiffDeg": 0.0007499990740654245
+   }
+  ],
+  "smallestMarginToBlendWrapInsideBandDeg": {
+   "elevationDeg": 120.1,
+   "azimuthDeg": 28.1,
+   "rDeg": 125.79923430446084,
+   "marginDeg": 54.200765695539154
+  },
+  "overheadOffsetDeg": -90
+ },
+ "shoulder.R": {
+  "allowedGridPoints": 1873268,
+  "largestNeutralJumpBetweenNeighbours": {
+   "diffDeg": 0.27978724430458085,
+   "arcDeg": 0.09999999999655489,
+   "elevationDeg": 149.5,
+   "azimuthDeg": 343.6,
+   "to": [
+    149.60000000000002,
+    343.6
+   ]
+  },
+  "largestNeutralRatio": {
+   "ratio": 3.1546864959827574,
+   "diffDeg": 0.2732038559811949,
+   "arcDeg": 0.0866025376306325,
+   "elevationDeg": 60,
+   "azimuthDeg": 180
+  },
+  "blendWrapCrossingsInsideAllowed": 6,
+  "wrapExamples": [
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 90.10000000000001,
+    "rDeg": [
+     90.10000000001497,
+     -90
+    ],
+    "neutralDiffDeg": 0.0007499990740654245
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 90.2,
+    "rDeg": [
+     90.30000030461225,
+     -90
+    ],
+    "neutralDiffDeg": 0.0007516638914200042
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 90.30000000000001,
+    "rDeg": [
+     90.50000091385701,
+     -90
+    ],
+    "neutralDiffDeg": 0.0007533287112935832
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 90.4,
+    "rDeg": [
+     90.70000182773732,
+     -90
+    ],
+    "neutralDiffDeg": 0.0007549935337243283
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 90.5,
+    "rDeg": [
+     90.900003046184,
+     -90
+    ],
+    "neutralDiffDeg": 0.0007566583586867947
+   },
+   {
+    "elevationDeg": 179.9,
+    "azimuthDeg": 90.60000000000001,
+    "rDeg": [
+     91.10000456930914,
+     -90
+    ],
+    "neutralDiffDeg": 0.0007583231861809827
+   }
+  ],
+  "smallestMarginToBlendWrapInsideBandDeg": {
+   "elevationDeg": 120.1,
+   "azimuthDeg": 331.90000000000003,
+   "rDeg": -125.79923430446082,
+   "marginDeg": 54.200765695539175
+  },
+  "overheadOffsetDeg": 90
+ }
+}
